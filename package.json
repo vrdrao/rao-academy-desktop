@@ -10,6 +10,8 @@
     "test:styles": "node tools/verify-styles.js",
     "test:structural": "node tools/verify-structural.js",
     "test:scoper": "python tools/scope-css.test.py",
+    "test:content": "node tools/verify-content-guards.js",
+    "test:content:coverage": "node tools/verify-content-guards.js --coverage",
     "review": "node tools/make-review.js"
   },
   "devDependencies": {

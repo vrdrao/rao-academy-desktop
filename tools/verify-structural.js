@@ -142,6 +142,66 @@ for (const c of cases) {
   }
 }
 
+/* ── CORPUS NESTING GUARD: no real lesson may have @q inside unclosed question div ──
+   _type-coverage.html had this exact bug: a missing </div> caused the construct
+   question to nest inside the single-select, and the engine silently swallowed it.
+   This scans every lesson file and fails if any @q appears while a question div is
+   still open. */
+{
+  const LESSONS = path.join(ROOT, "lessons");
+  function collectLessons(dir) {
+    let out = [];
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (entry.name === "_preview") continue;
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) out = out.concat(collectLessons(full));
+      else if (entry.name.endsWith(".html")) out.push(full);
+    }
+    return out;
+  }
+  const lessonFiles = collectLessons(LESSONS);
+  const nestingBugs = [];
+  for (const f of lessonFiles) {
+    const html = fs.readFileSync(f, "utf8");
+    const srcMatch = html.match(/<div id="source">([\s\S]*?)(?:<div id="preview"|$)/);
+    if (!srcMatch) continue;
+    const src = srcMatch[1];
+    // Tokenize: @q blocks, question opens, any </div>
+    const tokens = [];
+    const tokenRe = /(<!--@q[\s\S]*?-->)|(<div\s+class="question"[^>]*>)|(<\/div>)/gi;
+    let m;
+    while ((m = tokenRe.exec(src)) !== null) {
+      if (m[1]) tokens.push("fq");
+      else if (m[2]) tokens.push("open");
+      else if (m[3]) tokens.push("close");
+    }
+    // Walk: if @q appears while a question div is open, the HTML is malformed
+    let depth = 0;
+    for (const tok of tokens) {
+      if (tok === "fq") {
+        if (depth > 0) {
+          const rel = path.relative(LESSONS, f).replace(/\\/g, "/");
+          nestingBugs.push(rel);
+          break; // one report per file is enough
+        }
+        depth = 0;
+      } else if (tok === "open") {
+        depth++;
+      } else if (tok === "close") {
+        depth = Math.max(0, depth - 1);
+      }
+    }
+  }
+  if (nestingBugs.length > 0) {
+    failed += nestingBugs.length;
+    console.log(`${C.r}✗ MALFORMED NESTING — <!--@q--> found inside unclosed <div class="question">:${C.x}`);
+    for (const b of nestingBugs) console.log(`    ${b}`);
+    console.log(`  This means a question is swallowing the next one. Add the missing </div>.`);
+  } else {
+    console.log(`${C.g}✓${C.x} no malformed question nesting across ${lessonFiles.length} lessons`);
+  }
+}
+
 if (failed) {
   console.log(`\n${C.r}STRUCTURAL: ${failed} case(s) failed — malformed authoring is not being rejected.${C.x}`);
   process.exit(1);
