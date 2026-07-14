@@ -397,3 +397,289 @@ These look tempting to "fix" or "clean up." Each was decided deliberately; don't
   whole layout.
 - **Do NOT rewrite the HTML authoring format as JSON.** Big rewrite of a working system; every
   real bug so far was fixable without it.
+
+---
+
+## 13. Solutions — the explanation system
+
+**Read this before authoring or rendering any explanation. It is `rao-master-14`.**
+
+A one-line `explain:` string is enough for "70 + 40 = 110". It is not enough for a five-step
+Grade 8 solution, and it never will be. The fix is not a longer string — it is a **list of
+typed blocks**. Adding a new kind of explanation later means adding one renderer, not
+rewriting anything.
+
+---
+
+### 13.1 The grading firewall — the hardest rule in this file
+
+**Rendering a solution must be structurally incapable of touching grading.**
+
+```
+grading module  →  produces an immutable result
+                        ↓
+question controller  →  passes that result, read-only
+                        ↓
+solution renderer  →  displays. Calls nothing. Mutates nothing.
+```
+
+The solution renderer must not import, call, or mutate anything in the grading path.
+It must never call `check()`. It must never alter the stored answer or the student's response.
+
+**This is enforced by four guards, not by good intentions.** See §13.7.
+
+Every visual change to an explanation is a change that could silently corrupt grading.
+That is why the firewall comes first and why it is guarded four ways.
+
+---
+
+### 13.2 The three-tier ladder
+
+A child who got it wrong does not want the full solution. They want the smallest nudge that
+lets them fix it *themselves*. Dumping six steps on them steals the win — and the win is the
+whole product.
+
+| Tier | Shown when | What it is |
+|---|---|---|
+| **Hint ladder** | Before checking, on demand | 1–3 rungs. Names the move. Never performs it. |
+| **`whyWrong`** | On a wrong answer | One line about **the option they chose**. |
+| **Walkthrough** | On demand ("Show me") | The full block list, revealed **one step at a time**. |
+
+The walkthrough is never dumped. The child taps to advance. A **"I've got it — let me try
+again"** button is present at every step, because bailing out early is exactly the moment
+learning happens.
+
+---
+
+### 13.3 Hints — a ladder, with the leak rules intact
+
+The single `hint:` becomes an optional list of 1–3.
+
+```yaml
+hint:
+  - "Find the place you are rounding to."
+  - "Look at the digit just to the right of that place."
+  - "Round both numbers first, then add."
+```
+
+Each rung **names the move more specifically**. **No rung ever performs the move.**
+
+A hint **never**:
+- performs arithmetic on the child's numbers — ❌ *"689 is closer to 700 than to 600"*
+- eliminates options
+- states or restates the answer, including disguised ("it's 4 tens" for 40)
+
+A ladder is *not* a slow reveal of the answer. It is three increasingly specific descriptions
+of the strategy. If the last rung gives the answer away, the ladder is wrong.
+
+A single string `hint:` remains valid forever and is treated as a one-rung ladder.
+
+---
+
+### 13.4 `whyWrong` — this is how §7's distractor rule becomes enforceable
+
+§7 already says: *every distractor must be traceable to a specific misconception; never
+invent a distractor to fill a slot.* Today that traceability lives nowhere. `whyWrong` makes
+the author **write the misconception down** — and a guard then checks they did.
+
+**Mandatory for every incorrect option of every `single-select` and `multi-select`.**
+A distractor with no `whyWrong` is not a distractor. It is a slot-filler, and the lesson
+fails validation.
+
+```yaml
+whyWrong:
+  "30,937 + 97,021":
+    code: sum-far-too-large
+    message: "This pair rounds to about 130,000 — much more than 70,000."
+  "92,327 + 49,921":
+    code: first-addend-alone-too-large
+    message: "The first number on its own is already close to 90,000."
+```
+
+- **Keyed by the literal option text** — the same key the engine already uses. (See §13.9
+  for why not IDs.)
+- **`code`** — a stable machine key. Never shown to a child. This is the analytics key: it
+  is how the platform will one day know *what kind* of error a child made, not merely that
+  they were wrong. It costs nothing to author now and cannot be retrofitted later.
+- **`message`** — student-facing, one line.
+
+#### Describe the option. Do not diagnose the child.
+
+A tap proves what they picked. It does not prove why. Telling a nine-year-old confidently
+what they were thinking, when it isn't what they were thinking, is corrosive.
+
+- ✅ *"This estimate is too large — this pair is closer to 130,000."*
+- ❌ *"You forgot to round the first number."*
+
+Second person is permitted **only** when the option uniquely demonstrates that error, and the
+author marks it `diagnostic: true`. A guard rejects "You forgot / You didn't / You added"
+without that flag.
+
+---
+
+### 13.5 The block list
+
+Four block types. **Four. Not ten.** More exist in the deferred list (§13.9) and are to be
+built when a lesson actually needs one — one at a time, never speculatively.
+
+| Type | Fields | Renders as |
+|---|---|---|
+| `step` | `goal`, `working`, `reason` — all optional | A numbered step card. `goal` = what we're doing. `working` = the maths, mono, large. `reason` = the why, small, muted. |
+| `figure` | same SVG/`<figure>` handling as question figures | A diagram inside the solution. |
+| `takeaway` | `text` | Highlighted band. **The generalisable rule.** Always last-but-one. |
+| `verification` | `text` | "Does this answer make sense?" Sanity check. |
+
+**`verification` is deliberately not called `check`.** `check()` is the grading function.
+Reusing the word would weaken the vocabulary firewall in code, in logs, and in this file.
+
+A `step` is **one meaningful change in the reasoning** — not one sentence.
+
+Every block must have a **text fallback**. If a renderer dies, the child still sees the
+working. This is cheap now and expensive to retrofit.
+
+---
+
+### 13.6 Authoring — the simple case stays simple
+
+**The existing `explain:` string remains valid forever.** All 2,710 existing questions keep
+working with zero migration and must render **byte-identical** after this change (§13.7).
+
+Simple case — unchanged:
+```yaml
+type: fill-blanks
+answer: ["110"]
+hint: Round each number to the nearest ten, then add.
+explain: 66 rounds to 70 and 39 rounds to 40; 70 + 40 = 110.
+```
+
+Full case:
+```yaml
+type: fill-blanks
+answer: ["16000"]
+hint:
+  - "Find the place you are rounding to."
+  - "Look at the digit just to the right of that place."
+  - "Round both numbers first, then add."
+explain: 9,827 rounds to 10,000 and 5,519 rounds to 6,000; the sum is about 16,000.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "9,827 → 10,000"
+    reason: The digit to the right of the thousands place is 8, so round up.
+  - type: step
+    goal: Round the second number.
+    working: "5,519 → 6,000"
+    reason: The digit to the right of the thousands place is 5, so round up.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "10,000 + 6,000 = 16,000"
+  - type: takeaway
+    text: Round each number first, then add. Never add first.
+  - type: verification
+    text: The exact answer should land close to 16,000.
+```
+
+`explain:` stays as the **fallback and short summary** even when `solution:` is present. It
+is what Rapid Fire shows. It is what renders if a block renderer fails.
+
+**All solution data lives in frontmatter.** Never in `data-*` attributes on `<li>`. The
+frontmatter is the source of truth (§8); splitting authoring across frontmatter *and* DOM
+attributes recreates exactly the drift this project has spent ninety sessions fighting. The
+engine already double-encodes entities in `data-val` — prose in a `data-` attribute walks
+straight into that bug class.
+
+**The DOM is an authoring format, not the internal model.** Parse frontmatter + markup →
+one normalized object → render. One parse point, exactly as `sanitizeMarkup()` has one
+emission point.
+
+---
+
+### 13.7 Guards — every one proved to fail
+
+Per §2: a guard that has never been observed failing is faith, not a guard.
+
+**Firewall guards (4):**
+
+| Guard | Asserts | Proved by |
+|---|---|---|
+| Dependency | The solution renderer does not import/reference the grading module | Add the import → FAIL |
+| Runtime | Opening, stepping through and closing a solution never calls `check()` (spy on it) | Call `check()` from the renderer → FAIL |
+| Mutation | Rendering a solution cannot alter the stored answer or the student's response | Mutate the response object → FAIL |
+| Source-diff | Solution work does not modify grading files without explicit authorisation | Touch a grading file → FAIL |
+
+**Content guards (4):**
+
+| Guard | Asserts |
+|---|---|
+| Legacy snapshot | Every legacy string `explain:` produces **byte-identical renderer output** |
+| Distractor coverage | Every incorrect option of every select question has a `whyWrong` entry |
+| Key match | Every `whyWrong` key matches an actual option **exactly** — no orphans, no typos |
+| Tone | No `message` opens with "You forgot / You didn't / You added / You should have" unless `diagnostic: true` |
+
+Plus the existing hint leak test (§7), now run against **every rung** of every ladder.
+
+#### Snapshot comparison — do it at the right layer
+
+Browsers normalise whitespace, reorder attributes and re-encode entities. A DOM-serialisation
+byte-compare produces false failures — and the "fix" for a false failure is always to loosen
+the guard until it stops firing. That is how a guard dies.
+
+- **Legacy `explain:` output** → capture the renderer's HTML string **before DOM insertion**.
+  Byte-compare **that**.
+- **Rendered pages** → screenshot comparison, representative question types.
+- **Live DOM serialisation** → **never** used for byte-comparison.
+
+---
+
+### 13.8 Mode behaviour — one content, three timings
+
+The content does not need three versions. The mode decides *when* it is shown.
+
+| Mode | Behaviour |
+|---|---|
+| **Adaptive** | Full ladder. Hints on demand → `whyWrong` on a wrong answer → walkthrough on "Show me" → retry. This is where explanations live. |
+| **Rapid Fire** | Correct/incorrect only. `explain:` one-liner, nothing more — speed is the point. **Log the `code`.** Solutions collected for end-of-round review. |
+| **Quiz** | Nothing during. Full walkthroughs on the review screen after submission, with the child's answer shown beside the correct one. |
+
+---
+
+### 13.9 Deferred — and the trigger that un-defers each one
+
+The schema **permits** these. **Build none of them** until the trigger fires. Building a
+mature-platform architecture on Grade 4 estimation is how four months disappear.
+
+| Deferred | Trigger to build it |
+|---|---|
+| Multiple solution paths ("Another way") | A lesson has a genuine second method worth teaching. Grade 4 estimation does not. |
+| Block families 5+ (number line, place-value chart, bar model, ten-frame, algebra tiles, graphs, proofs) | **A specific lesson needs one.** Build that one. Not a library. |
+| Grade-band renderers | A second grade band exists. |
+| Interactive checkpoints inside a solution | Probably never in this form. A child who just got it wrong should not be able to fail *twice* on the same question. Offer a fresh similar question instead. |
+| Ternary grading (`partially-correct`) | `check()` returns a boolean. Changing it goes through the firewall. Needs a separate, deliberate decision. |
+| **Stable option IDs** for `answer` / `whyWrong` | **Localisation, or per-student option shuffling.** Neither exists. Adding a *third* keying scheme to an engine where mixing *two* is already a documented silent-bug generator (§8) is a bad trade today. Revisit when a trigger fires — this is a decision, not an oversight. |
+
+---
+
+### 13.10 Video — the escape hatch, not the goal
+
+**Structured animation is the rule. Video is the exception.**
+
+You cannot shoot 2,710 videos. You *can* author an animation in one line:
+
+```yaml
+- type: animate
+  script: "move 8 counters · group into pairs · highlight no remainder · label even"
+```
+
+That is data. It is rendered by a component you own, it scales to the whole bank, and it is
+re-styleable for free. A video file is none of those things.
+
+When video genuinely earns its place (motion, narration, a construction that must be watched):
+
+- **Never embed a URL per question.** The same "how to round" video will be referenced by 200
+  questions. Re-shoot it and you would be editing 200 files.
+- Videos are a **library keyed by concept**: `video: round-to-nearest-thousand`, resolved
+  through a `concepts.json` registry to `{ src, poster, duration, title, captions, transcript }`.
+- **A video is never the only explanation.** Captions, transcript, and a step summary beneath
+  it are mandatory.
+
+Build the registry when the first video exists. Not before.
