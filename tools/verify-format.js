@@ -62,6 +62,7 @@ async function probe(page, file) {
       paint: (() => {
         const fr = document.querySelector(".pv-frame");
         const ck = document.querySelector(".pv-check");
+        const qb = document.querySelector(".pv-frame .qbody");
         const g = (el, p) => (el ? getComputedStyle(el)[p] : null);
         return {
           frameBg: g(fr, "backgroundImage"),
@@ -69,6 +70,14 @@ async function probe(page, file) {
           checkBg: g(ck, "backgroundImage"),
           checkShadow: g(ck, "boxShadow"),
           checkFont: g(ck, "fontFamily"),
+          // The soft work-panel behind the question is a REAL painted surface, not
+          // structure. A stale review that predates the panel (or one that drops it)
+          // computes a transparent qbody here and DIFFERS from the fresh render — so
+          // this must be part of the paint fingerprint, or that class of bug goes
+          // green again. (Both sides render at data-theme="grape", so a current
+          // review matches; only a stale/wrong background fails.)
+          qbodyBg: g(qb, "backgroundColor"),
+          qbodyRadius: g(qb, "borderRadius"),
         };
       })(),
     };
