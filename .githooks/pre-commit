@@ -1,0 +1,19 @@
+#!/bin/sh
+# Rao Academy pre-commit hook.
+# THE ONE RULE: never commit without a green harness.
+# Runs `npm test` and blocks the commit if anything fails.
+
+echo "pre-commit: running npm test (this takes ~30s)..."
+
+npm test
+status=$?
+
+if [ "$status" -ne 0 ]; then
+  echo ""
+  echo "❌ pre-commit: npm test FAILED — commit blocked."
+  echo "   Fix the failure (or, only if you truly must, bypass with 'git commit --no-verify')."
+  exit 1
+fi
+
+echo "✅ pre-commit: npm test passed — proceeding with commit."
+exit 0
