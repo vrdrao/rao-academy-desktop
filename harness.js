@@ -128,8 +128,9 @@ function fillAnswer(el, behavior, answer) {
   }
 
   if (behavior === 'time') {
-    // regex-free on purpose: '3:45 PM' -> ['3:45','PM']
-    const raw = String(A[0] || '').trim();
+    // '3:45 P.M.' / '3:45 PM' / '3:45 p.m.' -> clock='3:45', ap='PM'
+    // Strip dots first — answer keys use P.M./A.M., buttons have data-ap="PM"/"AM".
+    const raw = String(A[0] || '').replace(/\\./g, '').replace(/\\s+/g, ' ').trim();
     const sp = raw.lastIndexOf(' ');
     if (sp < 0) return false;
     const clock = raw.slice(0, sp).trim();
@@ -232,7 +233,8 @@ function wrongAnswer(el, behavior, answer) {
   }
   if (behavior === 'time') {
     // flip AM/PM — same digits, wrong half of the day
-    const v = String(A[0] || '');
+    // Strip dots first so P.M. / A.M. are recognized as PM / AM.
+    const v = String(A[0] || '').replace(/\\./g, '').replace(/\\s+/g, ' ').trim();
     return [/PM/i.test(v) ? v.replace(/PM/i, 'AM') : v.replace(/AM/i, 'PM')];
   }
   return null;
@@ -340,13 +342,36 @@ async function runLesson(page, file, engine, css) {
   const engine = read(ENGINE), css = fs.existsSync(CSS) ? read(CSS) : "";
   const ver = (engine.match(/__version[^"']*["']([^"']+)/) || [, "unknown"])[1];
 
+  /* Recursively collect all .html lesson files under lessons/, excluding
+     _preview/ (throwaway scratch). This was a flat readdirSync until session
+     ~95 — which means the harness silently skipped lessons/incoming/ and
+     every "green" was a claim about 4% of the corpus. Never again. */
+  function collectLessons(dir) {
+    let out = [];
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (entry.name === "_preview") continue;
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) { out = out.concat(collectLessons(full)); }
+      else if (entry.name.endsWith(".html")) { out.push(full); }
+    }
+    return out;
+  }
+
   const arg = process.argv[2];
   const files = arg ? [path.resolve(arg)]
-    : fs.existsSync(LESSONS)
-      ? fs.readdirSync(LESSONS).filter(f => f.endsWith(".html")).map(f => path.join(LESSONS, f))
-      : [];
+    : fs.existsSync(LESSONS) ? collectLessons(LESSONS) : [];
 
   if (!files.length) { console.error(`${C.r}no lessons found in lessons/${C.x}`); process.exit(2); }
+
+  /* Minimum corpus guard — the harness silently tested 4 files while 105
+     sat untouched in lessons/incoming/. If the count drops below 100 the
+     discovery logic is broken again and every "green" is a lie. */
+  const MIN_LESSONS = 100;
+  if (!arg && files.length < MIN_LESSONS) {
+    console.error(`${C.r}${C.b}CORPUS TOO SMALL: found ${files.length} lessons, expected >= ${MIN_LESSONS}${C.x}`);
+    console.error(`${C.r}The harness once silently skipped 96% of the bank. This guard exists to prevent that.${C.x}`);
+    process.exit(2);
+  }
 
   console.log(`\n${C.b}RAO REGRESSION SUITE${C.x}  ${C.d}engine ${ver} · ${files.length} lesson(s)${C.x}\n`);
 

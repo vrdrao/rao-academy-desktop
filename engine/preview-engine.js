@@ -2306,12 +2306,15 @@ function check(behavior, user, correct) {
   if (user == null) return null;
   user = user.map(String); correct = (correct || []).map(String);
   if (behavior === "time") {
+    // Normalize ALL time variants to one canonical form on the way IN.
+    // P.M. / p.m. / PM / pm / Pm / P.m / p.M.  →  PM.  Same for AM.
+    // Strip dots first, then match — no regex heroics.
     const _tn = function (x) {
-      const v = String(x).trim();
-      const m = v.match(/^(\d{1,2}):(\d{2})\s*([AaPp])\.?\s*[Mm]?\.?$/);
-      if (!m) return v;
+      const v = String(x).replace(/\./g, "").replace(/\s+/g, " ").trim();
+      const m = v.match(/^(\d{1,2}):(\d{2})\s*([AaPp])[Mm]?$/);
+      if (!m) return String(x).trim();
       const h = parseInt(m[1], 10);
-      if (h < 1 || h > 12) return v;
+      if (h < 1 || h > 12) return String(x).trim();
       return h + ":" + m[2] + " " + m[3].toUpperCase() + "M";
     };
     user = user.map(_tn); correct = correct.map(_tn);
