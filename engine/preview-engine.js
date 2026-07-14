@@ -1603,12 +1603,14 @@ function matchBalancedDiv(html, fromIdx) {
   let depth = 1, m;
   while ((m = re.exec(html))) {
     if (m[0].toLowerCase() === "</div>") {
-      if (--depth === 0) return { content: html.slice(fromIdx, m.index), end: re.lastIndex };
+      if (--depth === 0) return { content: html.slice(fromIdx, m.index), end: re.lastIndex, unbalanced: false };
     } else {
       depth++;
     }
   }
-  return { content: html.slice(fromIdx), end: html.length }; // unbalanced; take the rest
+  // No matching </div>: take the rest, but FLAG it. A silent slice-to-end here is
+  // how an unclosed question swallows every question after it with no error.
+  return { content: html.slice(fromIdx), end: html.length, unbalanced: true };
 }
 
 // Walk the document in order, pairing each <div class="question"> with the @q
@@ -1622,13 +1624,23 @@ function parseAuthoringHtml(html) {
   const finder = /<!--@q\s*([\s\S]*?)-->|<div\s+class="question"([^>]*)>/g;
   const items = [];
   const warnings = [];
+  // Structural issues found while scanning between questions (e.g. a discarded
+  // duplicate frontmatter) have no item yet — stash them and flush onto the next
+  // built question so validate() surfaces them.
+  let pendingStruct = [];
   let m, i = 0, pendingFm = null;
   while ((m = finder.exec(clean))) {
     if (m[1] != null) {
+      // STRUCTURAL: a second @q with no question div between it and the previous
+      // one means the earlier frontmatter — TYPE and ANSWER KEY — is silently lost.
+      if (pendingFm != null) {
+        pendingStruct.push({ level: "error", code: "DUPLICATE_FRONTMATTER",
+          message: `two @q frontmatter blocks with no question between them — the earlier block (and its answer key) is silently discarded` });
+      }
       pendingFm = parseFrontmatter(m[1]); // an @q frontmatter block
       continue;
     }
-    const { content, end } = matchBalancedDiv(clean, finder.lastIndex);
+    const { content, end, unbalanced } = matchBalancedDiv(clean, finder.lastIndex);
     finder.lastIndex = end; // resume after this question's matching </div>
     const fm = pendingFm || {};
     pendingFm = null;
@@ -1645,10 +1657,38 @@ function parseAuthoringHtml(html) {
         issues: [{ level: "error", code: "BUILD_FAILED", message: String(e && e.message || e) }],
       };
     }
+    // STRUCTURAL diagnostics — silent recovery is how malformed authoring reaches a child.
+    const _sid = item.qIdStr || `auth-q${i + 1}`;
+    if (unbalanced) {
+      // Unclosed <div class="question">: matchBalancedDiv absorbed everything after
+      // it — including any following questions — into this one block.
+      item.issues.push({ level: "error", code: "UNCLOSED_QUESTION",
+        message: `${_sid}: <div class="question"> is never closed — the rest of the document (and any later questions) was absorbed into this one question` });
+    } else {
+      // A whole question nested inside another's markup is never parsed on its own;
+      // it is silently swallowed. (Only meaningful when this block IS balanced.)
+      if (/<div\s+class="question"/i.test(content)) {
+        item.issues.push({ level: "error", code: "NESTED_QUESTION",
+          message: `${_sid}: a <div class="question"> is nested inside this question — the inner question is silently swallowed` });
+      }
+      if (/<!--@q\b/i.test(content)) {
+        item.issues.push({ level: "error", code: "NESTED_FRONTMATTER",
+          message: `${_sid}: an @q frontmatter block is nested inside this question and is never applied` });
+      }
+    }
+    if (pendingStruct.length) { item.issues.push(...pendingStruct); pendingStruct = []; }
     i++;
     warnings.push(...(item.warnings || []));
     delete item.warnings;
     items.push(item);
+  }
+  // STRUCTURAL: a trailing @q with no question after it authored an answer key that
+  // does nothing. Attach to the last question so validate() reports it.
+  if (pendingFm != null || pendingStruct.length) {
+    const orphan = { level: "warn", code: "ORPHAN_FRONTMATTER",
+      message: `a trailing @q frontmatter block has no question after it — it is silently ignored` };
+    if (items.length) { items[items.length - 1].issues.push(orphan); items[items.length - 1].issues.push(...pendingStruct); }
+    else warnings.push(orphan.message);
   }
   if (!items.length) throw new Error('No <div class="question"> blocks found.');
   return { items, warnings };
@@ -2325,5 +2365,5 @@ module.exports = { attach, serialize, check, BEHAVIORS };
     return { ok: errs === 0, errors: errs, warnings: warns, items: report };
   }
   var B = MODS["preview-behaviors"];
-  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-12"};
+  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-13"};
 })();
