@@ -1,66 +1,134 @@
-# Batch Import Status — Class 4 HTML Files
+# Project Status — Rao Academy
 
 Last updated: 2026-07-14
 
 ---
 
-## What is done
+## Corpus
 
-- **102 lesson files** copied from `Class 4 HTML Files/Class 4/` into `lessons/incoming/`
-- All 102 had the identical stale wrapper (embedded engine JS, embedded card CSS, Google
-  Fonts link, inline theme vars on `#preview`). **All stripped** — each file is now
-  content-only (`<div id="source">…</div>`).
-- **2,710 questions** across 104 files (102 freshly extracted + 2 pre-existing in incoming)
-- `tools/batch-extract.js` — the extraction script (reusable)
-- `tools/batch-validate.js` — bulk build + grade + reject validation
-- `tools/preview.js` — generates fully interactive preview pages at
-  `lessons/_preview/<name>.preview.html` (loads real engine, real CSS, has mode/theme/reveal
-  controls, opens in browser). `lessons/_preview/` is gitignored.
-- Backup branch `backup/pre-cleanup-2026-07-14` pushed to GitHub (contains all pre-cleanup
-  untracked files).
-- Post-commit auto-push hook removed.
+**108 lesson files. 2,808 questions. 0 failures.**
 
-## Validation results
+All tested in a real Chromium browser: build, render, grade correct, reject wrong, 8 themes,
+CSS containment, container queries, double-attach idempotency, type coverage (12/12), zero
+blank figures.
 
-**104/104 files pass** build + grade + reject.
+The corpus lives in `lessons/` (4 authored lessons + `_type-coverage.html` fixture) and
+`lessons/incoming/` (105 imported from the Class 4 Word doc bank). `lessons/_preview/` is
+gitignored scratch.
 
-### 3 failures (all fixed)
+---
 
-1. **`divide-larger-numbers.html`** — FIXED.
-   - 14 questions used `type: long-division` with `answer: []`. `long-division` is not a
-     supported engine type — the engine rejected all 14 with build errors.
-   - Converted to `fill-blanks` with quotient (and remainder where applicable). All 14
-     answers verified with Python `divmod()`. Now 24/24 pass.
+## What the harness actually tests
 
-2. **`multiplication-patterns-over-increasing-place-values-1to1.html`** — FIXED.
-   - 31 questions used unsupported `layout: stack` + `rows:` frontmatter. The engine's
-     `fill-blanks` needs `[]` blanks in the prompt, not `_` in a `rows` array. All 31
-     built with `answer: []` (empty) → wrong answers accepted.
-   - Converted all 31 to standard `fill-blanks` with `[]` inline in prompt text.
-     Now 31/31 pass.
+Until 2026-07-14, the harness used a flat `readdirSync("lessons/")` that found 4 `.html` files
+and silently skipped the 105 files in `lessons/incoming/`. Every "green" claim in the project's
+history — across ~95 sessions — was a claim about **98 questions out of 2,808**. That is 4% of
+the bank.
 
-3. **`multiplication-patterns-over-increasing-place-values.html`** — FIXED.
-   - Same root cause as #2. 3 of 21 questions used `layout: stack` + `rows:`.
-   - Converted to standard `fill-blanks`. Now 21/21 pass.
+The harness now recurses `lessons/` (excluding `_preview/`) and has a **minimum-corpus-count
+guard**: if it finds fewer than 100 lesson files, it exits with code 2 and the message
+`CORPUS TOO SMALL`. This guard exists because the harness silently skipped 96% of the corpus
+and nobody noticed.
 
-**Important lesson:** the batch validator flagged these as "reject failures" (wrong
-answer accepted). The root cause was not a test heuristic problem — it was a real authoring
-bug (empty answer keys). When a test fails, investigate the content before blaming the test.
+---
 
-## Files individually reviewed this session
+## Bugs found and fixed when the full corpus was first tested
+
+### 1. Time normalizer — ENGINE BUG (13 questions, 1 lesson)
+
+`find-start-and-end-times-remix.html`. Answer keys used `P.M.`/`A.M.` (with periods). The
+engine's `check()` normalizer had a fragile regex that happened to handle `P.M.` but the
+harness's answer-entry code could not match `P.M.` to the AM/PM toggle button (which uses
+`data-ap="PM"`). **A child typing "12:35 P.M." in the live app was at risk of being graded
+wrong** if the serializer/normalizer path diverged.
+
+**Fix:** Normalizer now strips all dots before matching — `P.M.` / `p.m.` / `PM` / `pm` / `Pm`
+all canonicalize to `PM`. One normalization point, on the way in to `check()`.
+
+### 2. SVG 0×0 blank figures (22 figures across 4 questions, 1 lesson)
+
+`identify-three-dimensional-figures.html`. 58 SVGs had `viewBox` but no `width`/`height`
+attributes. Without intrinsic size, SVGs inside categorize tiles collapsed to 0×0 in the
+browser. The harness detected this (it checks `getBoundingClientRect()` on every figure).
+
+**Fix:** Batch-added `width`/`height` derived from `viewBox` to 147 SVGs across 3 files.
+
+### 3. Sanitizer silently deleting prompt text — ENGINE BUG (1 question, 1 lesson)
+
+`Place_values_remix.html` Q13. The prompt `"8 ones = []"` was destroyed by the engine's
+sanitizer. The regex `/\son[a-z]+\s*=\s*[^\s>]+/gi` — meant to strip event handlers like
+`onclick=` — ran globally on the entire HTML string and matched `ones = <input` in prose text.
+The word `ones` starts with `on`, and the `= <input` looked like an unquoted attribute value.
+
+This silently deleted the word, the equals sign, and the `<input>` tag. The question rendered
+as a blank. **`npm test` passed** because the harness wasn't testing this file.
+
+**Fix:** The sanitizer now constrains `on*` attribute stripping to only run inside HTML opening
+tags (`<tag ...attrs...>`), never in text content. Guard added: prompts containing `ones`,
+`online`, `ongoing` must survive the sanitizer; event handlers (`onclick`, `onmouseover`) must
+still be stripped. Guard proved to fail against the old regex.
+
+### 4. Order answer key mismatch (1 question, 1 lesson)
+
+`estimate-products_remix.html` Q8. The answer key had estimated products `["80","180","280"]`
+but `order` type requires tile text. Fixed to `["4 × 22","6 × 31","4 × 67"]`.
+
+### 5. batch-validate.js — deleted
+
+`batch-validate.js` ran in Node only (no browser), tested only `lessons/incoming/`, and was
+not wired into `npm test`. It was a strict subset of what the harness does. A second, weaker
+validation path that covers less than the primary path is not a safety net — it is an illusion
+of coverage that lets you believe things are tested when they are not.
+
+---
+
+## Guards added
+
+| Guard | File | Asserts |
+|---|---|---|
+| Untracked-file | `verify-tracked.js` | Every file in `lessons/` and `tools/` is git-tracked |
+| Minimum corpus count | `harness.js` | Harness sees ≥ 100 lesson files (was silently seeing 4) |
+| Blank-figure detection | `harness.js` | Every SVG/canvas/figure renders at > 2×2 px |
+| Sanitizer prose | `verify-structural.js` | Prompts with `ones`/`online`/`ongoing` survive; `onclick`/`onmouseover` are stripped |
+| Grading firewall: DEPENDENCY | `verify-firewall.js` | Solution renderer has no import/reference to the grading module |
+| Grading firewall: RUNTIME | `verify-firewall.js` | Rendering a solution never calls `check()` |
+| Grading firewall: MUTATION | `verify-firewall.js` | Rendering a solution cannot mutate the stored answer or response |
+| Grading firewall: SOURCE-DIFF | `verify-firewall.js` | Solution and grading files not modified together without `FIREWALL_ALLOW_GRADING=1` |
+
+Every guard was proved to fail before being trusted.
+
+---
+
+## Solution system — Brief 7
+
+**Spec written:** `CLAUDE.md` §13 + `docs/SOLUTION_SPEC.md`.
+
+**7.1 — Firewall: DONE.** Four guards, each proved to fail. Solution renderer stub
+(`engine/solution-renderer.js`) exists and is structurally incapable of touching grading.
+
+**7.2 — Renderer + blocks: NEXT.** `normalizeExplain()`, 4 block renderers (`step`, `figure`,
+`takeaway`, `verification`), legacy snapshot guard.
+
+---
+
+## Files individually reviewed
 
 | File | Qs | Status | Notes |
 |------|---:|--------|-------|
 | `addition-missing-digits.html` | 27 | clean | Content unchanged, wrapper stripped |
-| `estimate-sums-faithful.html` | 23 | clean | Content unchanged, wrapper stripped |
+| `estimate-sums-faithful.html` | 23 | clean | Representative failure — pedagogically dead explanations |
 | `even_odd_faithful.html` | 19 | clean | Content unchanged, wrapper stripped |
 | `divide-larger-numbers.html` | 24 | **fixed** | 14 `long-division` → `fill-blanks` |
+| `Place_values_remix.html` | 30 | **fixed** | Q13 destroyed by sanitizer (engine fix) |
+| `estimate-products_remix.html` | 20 | **fixed** | Q8 order key had products not tile text |
+| `identify-three-dimensional-figures.html` | 25 | **fixed** | 58 SVGs missing width/height |
+| `simple-fractions-30.html` | 30 | **fixed** | 41 SVGs missing width/height |
+| `Simple fractions - what fraction does the shape show.html` | 30 | **fixed** | 48 SVGs missing width/height |
+| `find-start-and-end-times-remix.html` | 30 | **fixed** | Time normalizer engine bug |
 
 ## What is next
 
-- Continue individual review of remaining ~98 files (name a file → validate → preview → report)
-- Investigate the 2 remaining failures (`multiplication-patterns-*`)
-- Once a file is approved by Venkat, move it from `lessons/incoming/` to `lessons/` and
-  generate its review page
+- Brief 7.2: solution renderer + block types
+- Continue individual review of remaining ~95 files
 - Duplicates to watch: `bar_graphs_1to1.html` / `bar_graphs_1to1 (2).html` and similar
   `(2)` pairs — likely identical, need dedup

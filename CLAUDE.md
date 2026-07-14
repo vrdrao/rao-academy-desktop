@@ -363,8 +363,13 @@ what ships.
   sweep — do not process file by file. (Example: all 102 legacy lesson files had the same
   stale wrapper; a batch extractor handled them in one pass.)
 - **When a test fails, investigate before blaming the test.** In this project, 3 "test
-  heuristic" failures in `batch-validate.js` included a real authoring bug (14 questions
-  with empty answer keys). The test was right; the content was wrong.
+  heuristic" failures included a real authoring bug (14 questions with empty answer keys).
+  The test was right; the content was wrong.
+- **A harness that silently skips files is worse than no harness.** The harness used a flat
+  `readdirSync("lessons/")` for ~95 sessions and silently tested 4 files while 105 sat in
+  `lessons/incoming/`. Every "green" was a claim about 4% of the bank. **Assert the corpus
+  size** (`MIN_LESSONS = 100`); do not assume discovery works. If the count drops, the
+  harness is broken again and every "green" is a lie.
 - Disclose bugs and self-corrections **explicitly and directly**. Do not bury them.
 - Never re-litigate settled decisions.
 - Engine fixes go **in the engine**, so every future lesson inherits them. Never patch around
