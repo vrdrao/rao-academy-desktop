@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test": "python tools/scope-css.test.py && node tools/verify-structural.js && node harness.js && node tools/verify-format.js && node tools/verify-styles.js",
+    "test": "node tools/verify-tracked.js && python tools/scope-css.test.py && node tools/verify-structural.js && node harness.js && node tools/verify-format.js && node tools/verify-styles.js",
     "test:engine": "node harness.js",
     "test:format": "node tools/verify-format.js",
     "test:styles": "node tools/verify-styles.js",
