@@ -1,0 +1,492 @@
+<div id="source">
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"even","label":"Even"},{"id":"odd","label":"Odd"}]
+answer: ["even","odd","even","odd","even","odd"]
+description: Sort numbers into Even and Odd
+hint: Look at the last digit. 0,2,4,6,8 are even.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each number into the right box.</p>
+  <ul class="tiles">
+    <li>58</li>
+    <li>45</li>
+    <li>20</li>
+    <li>37</li>
+    <li>26</li>
+    <li>71</li>
+  </ul>
+  <p class="explain">A number is even if its last digit is 0, 2, 4, 6 or 8.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["14","20","26"]
+description: Tap every even number
+hint: Even numbers end in 0, 2, 4, 6 or 8.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap all the even numbers.</p>
+  <ul class="options">
+    <li data-val="14">14</li>
+    <li data-val="17">17</li>
+    <li data-val="20">20</li>
+    <li data-val="23">23</li>
+    <li data-val="26">26</li>
+    <li data-val="31">31</li>
+  </ul>
+  <p class="explain">14, 20 and 26 all end in an even digit.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["15","37","53"]
+description: Tap every odd number
+hint: Odd numbers end in 1, 3, 5, 7 or 9.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap all the odd numbers.</p>
+  <ul class="options">
+    <li data-val="15">15</li>
+    <li data-val="22">22</li>
+    <li data-val="37">37</li>
+    <li data-val="40">40</li>
+    <li data-val="53">53</li>
+    <li data-val="66">66</li>
+  </ul>
+  <p class="explain">15, 37 and 53 all end in an odd digit.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Even"]
+description: Rule: even + even
+hint: Try 2 + 4 and 6 + 8 — what do you notice?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">even + even = ?</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">Even + even is always even (2 + 4 = 6).</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Even"]
+description: Rule: odd + odd
+hint: Try 3 + 5 and 7 + 1 — what do you notice?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">odd + odd = ?</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">Odd + odd is always even (3 + 5 = 8).</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Odd"]
+description: Rule: even + odd
+hint: Try 4 + 3 — what do you get?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">even + odd = ?</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">Even + odd is always odd (4 + 3 = 7).</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["8 + 6","12 + 8","7 + 5"]
+description: Which sums are even?
+hint: Use the rules: even+even and odd+odd both give even.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every sum that is even.</p>
+  <ul class="options">
+    <li data-val="8 + 6">8 + 6</li>
+    <li data-val="9 + 4">9 + 4</li>
+    <li data-val="12 + 8">12 + 8</li>
+    <li data-val="7 + 5">7 + 5</li>
+  </ul>
+  <p class="explain">8+6=14, 12+8=20, 7+5=12 are even. 9+4=13 is odd.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Even"]
+description: Rule: odd − odd
+hint: Try 9 − 3 — is the answer even or odd?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">odd − odd = ?</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">Odd − odd is always even (9 − 3 = 6).</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Odd"]
+description: Rule: even − odd
+hint: Try 8 − 3 — is the answer even or odd?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">even − odd = ?</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">Even − odd is always odd (8 − 3 = 5).</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"even","label":"Even answer"},{"id":"odd","label":"Odd answer"}]
+answer: ["even","odd","even","odd"]
+description: Sort each problem by its answer
+hint: Work out each one, then check the last digit.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Solve each one and drag it to Even or Odd.</p>
+  <ul class="tiles">
+    <li>20 − 6</li>
+    <li>17 − 8</li>
+    <li>15 + 7</li>
+    <li>9 + 4</li>
+  </ul>
+  <p class="explain">20−6=14 even, 17−8=9 odd, 15+7=22 even, 9+4=13 odd.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Even"]
+description: Rule: even × even
+hint: Try 4 × 6 — is the answer even or odd?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">even × even = ?</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">Even × even is always even (4 × 6 = 24).</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Odd"]
+description: Rule: odd × odd
+hint: Try 3 × 5 — is the answer even or odd?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">odd × odd = ?</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">Odd × odd is always odd (3 × 5 = 15).</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Even"]
+description: Rule: even × odd
+hint: Try 4 × 3 — is the answer even or odd?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">even × odd = ?</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">Even × odd is always even (4 × 3 = 12).</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["odd × odd"]
+description: Which product is odd?
+hint: A product is only odd when BOTH numbers are odd.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which one gives an ODD answer?</p>
+  <ul class="options">
+    <li data-val="even × even">even × even</li>
+    <li data-val="even × odd">even × odd</li>
+    <li data-val="odd × odd">odd × odd</li>
+  </ul>
+  <p class="explain">Only odd × odd is odd. If either number is even, the product is even.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Odd"]
+description: Rule: odd + odd + odd
+hint: Add two of them first, then add the third.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">odd + odd + odd = ?</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">Odd + odd = even, then even + odd = odd (3 + 5 + 7 = 15).</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Odd"]
+description: Rule: even + even + odd
+hint: The two evens make an even. Then add the odd one.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">even + even + odd = ?</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">Even + even = even, then even + odd = odd (2 + 4 + 3 = 9).</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["even + even","odd + odd","odd × even"]
+description: Which rules always give EVEN?
+hint: Only one of these can land on an odd answer.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every rule that ALWAYS gives an even answer.</p>
+  <ul class="options">
+    <li data-val="even + even">even + even</li>
+    <li data-val="odd + odd">odd + odd</li>
+    <li data-val="even + odd">even + odd</li>
+    <li data-val="odd × even">odd × even</li>
+  </ul>
+  <p class="explain">Only even + odd is odd. The other three are always even.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Even"]
+description: Predict parity without adding (big numbers)
+hint: Look at the last digit of each number, not the whole sum.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Without adding, decide:  348 + 156  is…</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">348 is even and 156 is even, so even + even = even.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Odd"]
+description: Predict parity without subtracting (big numbers)
+hint: Check the parity of each number first.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Without subtracting, decide:  921 − 458  is…</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">921 is odd and 458 is even, so odd − even = odd.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["130","508","664"]
+description: Tap all even (3-digit)
+hint: A number is even if its LAST digit is 0, 2, 4, 6 or 8.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap all the even numbers.</p>
+  <ul class="options">
+    <li data-val="130">130</li>
+    <li data-val="247">247</li>
+    <li data-val="508">508</li>
+    <li data-val="891">891</li>
+    <li data-val="664">664</li>
+    <li data-val="355">355</li>
+  </ul>
+  <p class="explain">130, 508 and 664 end in 0, 8 and 4 — all even.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Even"]
+description: Word problem — combine two even amounts
+hint: Add the two amounts, or use the even + even rule.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Maya has 8 stickers and Raj has 6 stickers. If they put them together, is the total even or odd?</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">8 + 6 = 14. Even + even is always even.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Odd"]
+description: Word problem — array 5 x 5
+hint: Rows times chairs. Then check the rule for odd × odd.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A classroom has 5 rows of chairs with 5 chairs in each row. Is the total number of chairs even or odd?</p>
+  <ul class="options">
+    <li data-val="Even">Even</li>
+    <li data-val="Odd">Odd</li>
+  </ul>
+  <p class="explain">5 × 5 = 25. Odd × odd is always odd.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["18"]
+description: Even = splits into two equal groups
+hint: Which one can be shared equally between two friends?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">An even number splits into two equal groups with none left over. Which number splits evenly?</p>
+  <ul class="options">
+    <li data-val="15">15</li>
+    <li data-val="18">18</li>
+    <li data-val="23">23</li>
+    <li data-val="31">31</li>
+  </ul>
+  <p class="explain">18 = 9 + 9, two equal groups. The others leave one over.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["27"]
+description: Odd = one left over when making pairs
+hint: Try making pairs. Which one has a leftover?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">When you make pairs, which number has exactly ONE left over?</p>
+  <ul class="options">
+    <li data-val="12">12</li>
+    <li data-val="20">20</li>
+    <li data-val="27">27</li>
+    <li data-val="46">46</li>
+  </ul>
+  <p class="explain">27 makes 13 pairs with 1 left over, so it is odd.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"even","label":"Even answer"},{"id":"odd","label":"Odd answer"}]
+answer: ["even","odd","even","odd"]
+description: Sort each sum by its answer
+hint: Work each one out, then check the last digit.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Solve each sum and drag it to Even or Odd.</p>
+  <ul class="tiles">
+    <li>9 + 9</li>
+    <li>6 + 5</li>
+    <li>8 + 4</li>
+    <li>7 + 2</li>
+  </ul>
+  <p class="explain">9+9=18 even, 6+5=11 odd, 8+4=12 even, 7+2=9 odd.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"even","label":"Even answer"},{"id":"odd","label":"Odd answer"}]
+answer: ["even","odd","even","odd"]
+description: Sort each product by its answer
+hint: If either number is even, the product is even.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Solve each product and drag it to Even or Odd.</p>
+  <ul class="tiles">
+    <li>4 × 5</li>
+    <li>3 × 3</li>
+    <li>6 × 2</li>
+    <li>5 × 7</li>
+  </ul>
+  <p class="explain">4×5=20 even, 3×3=9 odd, 6×2=12 even, 5×7=35 odd.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"even","label":"Always Even"},{"id":"odd","label":"Always Odd"}]
+answer: ["even","even","odd","even","even","odd"]
+description: Sort each rule by the answer it always gives
+hint: A result is only odd when you break the "pairs" — one even and one odd added, or two odds multiplied.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Sort each rule by the kind of answer it always gives.</p>
+  <ul class="tiles">
+    <li>even + even</li>
+    <li>odd + odd</li>
+    <li>even + odd</li>
+    <li>odd − odd</li>
+    <li>even × odd</li>
+    <li>odd × odd</li>
+  </ul>
+  <p class="explain">Only even + odd and odd × odd are odd. The rest are even.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["12 + 5","7 × 5"]
+description: Tap the calculations with an ODD answer
+hint: Solve each one, then check if the answer is odd.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every calculation that has an ODD answer.</p>
+  <ul class="options">
+    <li data-val="12 + 5">12 + 5</li>
+    <li data-val="8 × 3">8 × 3</li>
+    <li data-val="9 + 7">9 + 7</li>
+    <li data-val="7 × 5">7 × 5</li>
+  </ul>
+  <p class="explain">12+5=17 and 7×5=35 are odd. 8×3=24 and 9+7=16 are even.</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["10","12"]
+palette: ["9","10","12","14"]
+description: Continue the even-number pattern
+hint: Even numbers go up by 2 each time.
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Keep the even-number pattern going. What are the next two?</p>
+  <p class="reference">2, 4, 6, 8, … , …</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["odd","even","odd","even"]
+palette: ["even","odd"]
+description: Mark each number even or odd
+hint: Numbers switch even, odd, even, odd as you count.
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Is each number even or odd? Build the pattern for 1, 2, 3, 4.</p>
+  <p class="reference">1, 2, 3, 4</p>
+</div>
+</div>

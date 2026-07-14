@@ -1,0 +1,442 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["3"]
+description: Pick the pair with sum 12 and product 35
+hint: A guess works only if it passes BOTH tests. Add to 12? Then multiply — does it make 35?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which two numbers add up to 12 AND multiply to make 35? Test each guess against both rules.</p>
+  <ul class="options">
+    <li data-val="1">3 and 9</li>
+    <li data-val="2">4 and 8</li>
+    <li data-val="3">5 and 7</li>
+    <li data-val="4">6 and 6</li>
+  </ul>
+  <p class="explain">All four add to 12 — that's why you must also check the product. 5 × 7 = 35. ✓</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["12","8"]
+description: Jake and Emma, 20 cards, Jake 4 more
+hint: Guess Emma's number, add 4 for Jake, then check they total 20.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Jake and Emma have 20 cards in all. Jake has 4 more than Emma. Jake has [] cards and Emma has [] cards.</p>
+  <p class="explain">Guess Emma = 8 → Jake = 12 → 8 + 12 = 20. ✓ Adjust your guess until the total fits.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"yes","label":"✓ Works"},{"id":"no","label":"✗ Doesn't work"}]
+answer: ["no","yes","no"]
+description: Sort candidate pairs for sum 15 and product 54
+hint: A pair "works" only if it adds to 15 AND multiplies to 54. Test each one.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">We need two numbers that add to 15 and multiply to 54. Drag each guess into the right box.</p>
+  <ul class="tiles">
+    <li>5 and 10</li>
+    <li>6 and 9</li>
+    <li>7 and 8</li>
+  </ul>
+  <p class="explain">All add to 15, but only 6 × 9 = 54. The others fail the product test.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2"]
+description: 16 items, pencils are 3 times the pens
+hint: Guess the pens. Pencils must be 3 times that, and the two must total 16.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">There are 16 pens and pencils. There are 3 times as many pencils as pens. Which guess works?</p>
+  <ul class="options">
+    <li data-val="1">6 pencils, 2 pens</li>
+    <li data-val="2">12 pencils, 4 pens</li>
+    <li data-val="3">9 pencils, 3 pens</li>
+    <li data-val="4">10 pencils, 6 pens</li>
+  </ul>
+  <p class="explain">12 = 3 × 4 (three times as many) AND 12 + 4 = 16. ✓</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["12","8"]
+description: Two numbers, sum 20 and difference 4
+hint: Start with a guess like 10 and 10, then move them apart until they differ by 4.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Two numbers add up to 20. Their difference is 4. The larger number is [] and the smaller number is [].</p>
+  <p class="explain">12 + 8 = 20 and 12 − 8 = 4. ✓ Nudge your two numbers apart, keeping the sum at 20.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["4"]
+description: Two numbers, sum 13 and product 40
+hint: Every choice adds to 13 — so check the product. Which makes 40?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which two numbers add up to 13 AND multiply to make 40?</p>
+  <ul class="options">
+    <li data-val="1">4 and 9</li>
+    <li data-val="2">6 and 7</li>
+    <li data-val="3">3 and 10</li>
+    <li data-val="4">5 and 8</li>
+  </ul>
+  <p class="explain">All add to 13. Only 5 × 8 = 40. ✓ The product is the deciding test.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["10","8"]
+description: Maria and brother, ages total 18, Maria 2 older
+hint: Guess the brother's age, add 2 for Maria, check the total is 18.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Maria and her brother are 18 years old in all. Maria is 2 years older. Maria is [] and her brother is [].</p>
+  <p class="explain">Brother 8 → Maria 10 → 8 + 10 = 18. ✓</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1"]
+description: Two numbers, sum 11 and product 30
+hint: All choices add to 11. Multiply each — which gives 30?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which two numbers add up to 11 AND multiply to make 30?</p>
+  <ul class="options">
+    <li data-val="1">5 and 6</li>
+    <li data-val="2">4 and 7</li>
+    <li data-val="3">3 and 8</li>
+    <li data-val="4">2 and 9</li>
+  </ul>
+  <p class="explain">5 × 6 = 30. ✓ The others add to 11 but miss the product.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2"]
+description: 10 animals, 32 legs, chickens and cows
+hint: Chickens have 2 legs, cows have 4. Guess a split of 10, then count the legs.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A farm has 10 animals — chickens (2 legs) and cows (4 legs) — with 32 legs in all. Which guess fits?</p>
+  <ul class="options">
+    <li data-val="1">5 chickens, 5 cows</li>
+    <li data-val="2">4 chickens, 6 cows</li>
+    <li data-val="3">6 chickens, 4 cows</li>
+    <li data-val="4">3 chickens, 7 cows</li>
+  </ul>
+  <p class="explain">4 chickens = 8 legs, 6 cows = 24 legs → 32 legs, 10 animals. ✓</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["9","5"]
+description: Two numbers, sum 14 and product 45
+hint: List pairs that add to 14, then check which multiplies to 45.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Two numbers add up to 14 and multiply to make 45. The larger number is [] and the smaller number is [].</p>
+  <p class="explain">9 + 5 = 14 and 9 × 5 = 45. ✓</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3"]
+description: 24 fruit, apples twice the oranges
+hint: Guess the oranges, double for apples, check the total is 24.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">There are 24 pieces of fruit. There are twice as many apples as oranges. Which guess works?</p>
+  <ul class="options">
+    <li data-val="1">12 apples, 12 oranges</li>
+    <li data-val="2">18 apples, 9 oranges</li>
+    <li data-val="3">16 apples, 8 oranges</li>
+    <li data-val="4">14 apples, 10 oranges</li>
+  </ul>
+  <p class="explain">16 = 2 × 8 (twice as many) AND 16 + 8 = 24. ✓</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["9","7"]
+description: Two numbers, sum 16 and difference 2
+hint: Start near 8 and 8, then move them apart until they differ by 2.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Two numbers add up to 16. Their difference is 2. The larger number is [] and the smaller number is [].</p>
+  <p class="explain">9 + 7 = 16 and 9 − 7 = 2. ✓</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["4"]
+description: Sam and Leo, 30 marbles, Sam 6 more
+hint: Guess Leo's number, add 6 for Sam, check they total 30.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Sam and Leo have 30 marbles. Sam has 6 more than Leo. Which guess works?</p>
+  <ul class="options">
+    <li data-val="1">Sam 20, Leo 10</li>
+    <li data-val="2">Sam 21, Leo 15</li>
+    <li data-val="3">Sam 16, Leo 14</li>
+    <li data-val="4">Sam 18, Leo 12</li>
+  </ul>
+  <p class="explain">18 is 6 more than 12 AND 18 + 12 = 30. ✓</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["12","6"]
+description: Two numbers, sum 18 and product 72
+hint: List pairs that add to 18, then check which multiplies to 72.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Two numbers add up to 18 and multiply to make 72. The larger number is [] and the smaller number is [].</p>
+  <p class="explain">12 + 6 = 18 and 12 × 6 = 72. ✓</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"yes","label":"✓ 17 wheels"},{"id":"no","label":"✗ Not 17"}]
+answer: ["no","yes","no"]
+description: 7 vehicles, bicycles and tricycles, find 17 wheels
+hint: Bicycles have 2 wheels, tricycles have 3. Each guess has 7 vehicles — count the wheels.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">7 vehicles: bicycles (2 wheels) and tricycles (3 wheels). We want 17 wheels. Sort each guess.</p>
+  <ul class="tiles">
+    <li>5 bikes, 2 trikes</li>
+    <li>4 bikes, 3 trikes</li>
+    <li>3 bikes, 4 trikes</li>
+  </ul>
+  <p class="explain">Every guess has 7 vehicles, but only 4 bikes (8) + 3 trikes (9) = 17 wheels.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2"]
+description: Two numbers, sum 10 and product 21
+hint: All choices add to 10. Which one multiplies to 21?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which two numbers add up to 10 AND multiply to make 21?</p>
+  <ul class="options">
+    <li data-val="1">4 and 6</li>
+    <li data-val="2">3 and 7</li>
+    <li data-val="3">2 and 8</li>
+    <li data-val="4">1 and 9</li>
+  </ul>
+  <p class="explain">3 × 7 = 21. ✓ The others add to 10 but miss the product.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["15","10"]
+description: Nina, 25 stickers, 5 more red than blue
+hint: Guess the blue stickers, add 5 for red, check the total is 25.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Nina has 25 stickers — red and blue. She has 5 more red than blue. She has [] red stickers and [] blue stickers.</p>
+  <p class="explain">10 blue → 15 red → 10 + 15 = 25 and 15 is 5 more than 10. ✓</p>
+</div>
+<!--@q
+type: single-select
+answer: ["2"]
+description: Two numbers, sum 13 and product 36
+hint: Every choice adds to 13 — so check the product. Which pair multiplies to 36?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which two numbers add up to 13 AND multiply to make 36? Test each guess against both rules.</p>
+  <ul class="options">
+    <li data-val="1">3 and 10</li>
+    <li data-val="2">4 and 9</li>
+    <li data-val="3">5 and 8</li>
+    <li data-val="4">6 and 7</li>
+  </ul>
+  <p class="explain">All four add to 13 — that's why you also check the product. 4 × 9 = 36. ✓</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["13","9"]
+description: Priya and Arjun collect 22 shells, Arjun has 4 more
+hint: Guess Priya's number, add 4 for Arjun, then check they total 22.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Priya and Arjun collected 22 seashells in all. Arjun has 4 more than Priya. Arjun has [] shells and Priya has [] shells.</p>
+  <p class="explain">Guess Priya = 9 → Arjun = 13 → 9 + 13 = 22. ✓ Adjust your guess until the total fits.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3"]
+description: Two numbers, sum 14 and product 48
+hint: All choices add to 14. Multiply each — which gives 48?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which two numbers add up to 14 AND multiply to make 48?</p>
+  <ul class="options">
+    <li data-val="1">4 and 10</li>
+    <li data-val="2">5 and 9</li>
+    <li data-val="3">6 and 8</li>
+    <li data-val="4">7 and 7</li>
+  </ul>
+  <p class="explain">All add to 14. Only 6 × 8 = 48. ✓ The product is the deciding test.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"yes","label":"✓ Works"},{"id":"no","label":"✗ Doesn't work"}]
+answer: ["no","yes","no"]
+description: Sort candidate pairs for sum 17 and product 72
+hint: A pair "works" only if it adds to 17 AND multiplies to 72. Test each one.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">We need two numbers that add to 17 and multiply to 72. Drag each guess into the right box.</p>
+  <ul class="tiles">
+    <li>7 and 10</li>
+    <li>8 and 9</li>
+    <li>6 and 11</li>
+  </ul>
+  <p class="explain">All add to 17, but only 8 × 9 = 72. The others fail the product test.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["15","9"]
+description: Two numbers, sum 24 and difference 6
+hint: Start near 12 and 12, then move them apart until they differ by 6.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Two numbers add up to 24. Their difference is 6. The larger number is [] and the smaller number is [].</p>
+  <p class="explain">15 + 9 = 24 and 15 − 9 = 6. ✓ Nudge your two numbers apart, keeping the sum at 24.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1"]
+description: 20 balloons, red is 3 times the blue
+hint: Guess the blue balloons. Red must be 3 times that, and the two must total 20.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">There are 20 balloons — red and blue. There are 3 times as many red as blue. Which guess works?</p>
+  <ul class="options">
+    <li data-val="1">15 red, 5 blue</li>
+    <li data-val="2">12 red, 4 blue</li>
+    <li data-val="3">16 red, 8 blue</li>
+    <li data-val="4">10 red, 10 blue</li>
+  </ul>
+  <p class="explain">15 = 3 × 5 (three times as many) AND 15 + 5 = 20. ✓</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["18","10"]
+description: Rohan and Diya have 28 stamps, Rohan has 8 more
+hint: Guess Diya's number, add 8 for Rohan, then check they total 28.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Rohan and Diya have 28 stamps in all. Rohan has 8 more than Diya. Rohan has [] stamps and Diya has [] stamps.</p>
+  <p class="explain">Guess Diya = 10 → Rohan = 18 → 10 + 18 = 28. ✓</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["4"]
+description: Two numbers, sum 10 and product 24
+hint: All choices add to 10. Which one multiplies to 24?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which two numbers add up to 10 AND multiply to make 24?</p>
+  <ul class="options">
+    <li data-val="1">2 and 8</li>
+    <li data-val="2">3 and 7</li>
+    <li data-val="3">5 and 5</li>
+    <li data-val="4">4 and 6</li>
+  </ul>
+  <p class="explain">4 × 6 = 24. ✓ The others add to 10 but miss the product.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3"]
+description: 9 insects, spiders and beetles, 66 legs
+hint: Spiders have 8 legs, beetles have 6. Guess a split of 9, then count the legs.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A jar has 9 insects — spiders (8 legs) and beetles (6 legs) — with 66 legs in all. Which guess fits?</p>
+  <ul class="options">
+    <li data-val="1">4 spiders, 5 beetles</li>
+    <li data-val="2">5 spiders, 4 beetles</li>
+    <li data-val="3">6 spiders, 3 beetles</li>
+    <li data-val="4">7 spiders, 2 beetles</li>
+  </ul>
+  <p class="explain">6 spiders = 48 legs, 3 beetles = 18 legs → 66 legs, 9 insects. ✓</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["20","10"]
+description: Two numbers, sum 30 and difference 10
+hint: Start near 15 and 15, then move them apart until they differ by 10.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Two numbers add up to 30. Their difference is 10. The larger number is [] and the smaller number is [].</p>
+  <p class="explain">20 + 10 = 30 and 20 − 10 = 10. ✓</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2"]
+description: 35 items bought, notebooks 4 times the erasers
+hint: Guess the erasers. Notebooks must be 4 times that, and the two must total 35.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Kiran bought 35 items — notebooks and erasers. There are 4 times as many notebooks as erasers. Which guess works?</p>
+  <ul class="options">
+    <li data-val="1">24 notebooks, 6 erasers</li>
+    <li data-val="2">28 notebooks, 7 erasers</li>
+    <li data-val="3">30 notebooks, 5 erasers</li>
+    <li data-val="4">32 notebooks, 8 erasers</li>
+  </ul>
+  <p class="explain">28 = 4 × 7 (four times as many) AND 28 + 7 = 35. ✓</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["9","3"]
+description: Meena's laddoos, sweets per packet is 3 times the number of packets, 27 total
+hint: Guess the number of packets. Sweets per packet is 3 times that. Multiply to check you reach 27.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Meena packed 27 laddoos. The number of laddoos in each packet was 3 times the number of packets. There were [] laddoos in each packet and [] packets.</p>
+  <p class="explain">3 packets, 9 laddoos each → 9 is 3 × 3 and 3 × 9 = 27. ✓</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1"]
+description: 8 vehicles, cars and motorbikes, 26 wheels
+hint: Cars have 4 wheels, motorbikes have 2. Guess a split of 8, then count the wheels.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A garage has 8 vehicles — cars (4 wheels) and motorbikes (2 wheels) — with 26 wheels in all. Which guess fits?</p>
+  <ul class="options">
+    <li data-val="1">5 cars, 3 motorbikes</li>
+    <li data-val="2">4 cars, 4 motorbikes</li>
+    <li data-val="3">6 cars, 2 motorbikes</li>
+    <li data-val="4">3 cars, 5 motorbikes</li>
+  </ul>
+  <p class="explain">5 cars = 20 wheels, 3 motorbikes = 6 wheels → 26 wheels, 8 vehicles. ✓</p>
+</div>
+
+</div>

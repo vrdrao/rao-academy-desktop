@@ -1,0 +1,135 @@
+<div id="source">
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"comm","label":"Commutative"},{"id":"assoc","label":"Associative"},{"id":"ident","label":"Identity"}]
+answer: ["comm","assoc","ident","assoc","comm","ident"]
+description: Sort each number sentence by the property it shows
+hint: For each chip ask one question: did the numbers swap places, did the brackets move, or is there a zero?
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Sort each number sentence into the property it shows.</p>
+  <ul class="tiles">
+    <li>14 + 6 = 6 + 14</li>
+    <li>(2 + 7) + 5 = 2 + (7 + 5)</li>
+    <li>38 + 0 = 38</li>
+    <li>9 + (1 + 4) = (9 + 1) + 4</li>
+    <li>25 + 30 = 30 + 25</li>
+    <li>0 + 61 = 61</li>
+  </ul>
+  <p class="explain">Swapped order is commutative, new brackets is associative, and adding 0 is identity.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Associative Property"]
+description: Which property lets you regroup 47 + (3 + 20) to add easily?
+hint: Priya did not move any numbers around — they are still 47, 3, 20 in that order. So what did she move?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya wants to add 47 + 3 + 20. She rewrites it as (47 + 3) + 20 so she can add 47 + 3 = 50 first. Which property lets her do this?</p>
+  <ul class="options">
+    <li>Associative Property</li>
+    <li>Commutative Property</li>
+    <li>Identity Property</li>
+  </ul>
+  <p class="explain">She only changed the grouping, not the order — that's the associative property.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["45"]
+description: Use the commutative property to make a friendly twenty: 18 + 25 + 2
+hint: Do the easy pair first: 18 + 2. Then add what is left over.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Arjun adds 18 + 25 + 2. He swaps the numbers to get 18 + 2 + 25, because 18 + 2 = 20 is easy. What is the total?</p>
+  <ul class="options">
+    <li>45</li>
+    <li>43</li>
+    <li>20</li>
+    <li>47</li>
+  </ul>
+  <p class="explain">18 + 2 = 20, then 20 + 25 = 45. Swapping the order never changes the sum.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["Adding 0 to a number leaves it unchanged.", "0 + 94 = 94"]
+description: Select all true statements about the Identity Property
+hint: Two of these describe swapping or regrouping. Those belong to different rules — leave them out.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select all the statements that are true about the Identity Property of addition.</p>
+  <ul class="options">
+    <li>Adding 0 to a number leaves it unchanged.</li>
+    <li>0 + 94 = 94</li>
+    <li>It lets you change the order of the addends.</li>
+    <li>It lets you move the brackets.</li>
+  </ul>
+  <p class="explain">Identity is only about adding 0. Changing order is commutative; moving brackets is associative.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["436"]
+description: Apply the commutative property: 436 + 189 = 189 + []
+hint: Both sides have 189. Look at the number sitting next to it on each side.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">436 + 189 = 189 + []</p>
+  <p class="explain">Swapping the order keeps the same numbers, so the blank is 436.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Commutative Property"]
+description: Distinguish commutative from associative for 5 + 8 = 8 + 5
+hint: There are no brackets anywhere in 5 + 8 = 8 + 5. So the change cannot be about grouping.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Rohan says 5 + 8 = 8 + 5 shows the associative property. Which property does it actually show?</p>
+  <ul class="options">
+    <li>Commutative Property</li>
+    <li>Associative Property</li>
+    <li>Identity Property</li>
+  </ul>
+  <p class="explain">There are no brackets here — the numbers just trade places, so it is commutative.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["(35 + 65) + 47", "100 + 47", "147"]
+low: first step
+high: final answer
+description: Order the steps for adding 35 + 65 + 47 the easy way
+hint: Two of these numbers add up to a nice round 100. Start by putting those two together.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Diya adds 35 + 65 + 47 by grouping the friendly pair first. Put her steps in the correct order.</p>
+  <ol class="order">
+    <li>100 + 47</li>
+    <li>147</li>
+    <li>(35 + 65) + 47</li>
+  </ol>
+  <p class="explain">Group 35 + 65 to make 100, then add 47 to reach 147.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["₹0"]
+description: Rupee word problem using the identity property
+hint: She put nothing in the piggy bank. How many rupees is 'nothing'?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Meera has ₹275 in her piggy bank. This week she adds no money at all, and she still has ₹275. How many rupees did she add?</p>
+  <ul class="options">
+    <li>₹0</li>
+    <li>₹1</li>
+    <li>₹275</li>
+    <li>₹550</li>
+  </ul>
+  <p class="explain">Adding 0 leaves the amount unchanged — that is the identity property.</p>
+</div>
+
+</div>

@@ -1,0 +1,275 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["3"]
+description: How many whole 7s fit inside 23
+hint: Count up in 7s: 7, 14, 21, 28. Stop before you go past 23.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">How many whole 7s fit inside 23?</p>
+  <ul class="options"><li>2</li><li>3</li><li>4</li></ul>
+  <p class="explain">7 × 3 = 21, and 7 × 4 = 28 is too big. So 3 fit, with 2 left over.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["4","2"]
+description: Divide 26 by 6 with a remainder
+hint: Find the biggest multiple of 6 that is not more than 26.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Divide: 26 ÷ 6 = [] R []</p>
+  <p class="explain">6 × 4 = 24, and 26 − 24 = 2 left over.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["R5"]
+description: Which value can be a remainder when dividing by 6
+hint: If the leftover is as big as 6, you could make one more group of 6. So how big can a leftover be?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which of these could be a remainder when you divide by 6?</p>
+  <ul class="options"><li data-val="R5">5</li><li data-val="R6">6</li><li data-val="R9">9</li></ul>
+  <p class="explain">If 6 or more were left over, you could make another group of 6. So dividing by 6 leaves 0, 1, 2, 3, 4 or 5.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["21","3"]
+description: Divide 87 by 4
+hint: Start at the left. How many 4s fit into the first digit? Write that above it, subtract, then bring the next digit down.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Divide: 87 ÷ 4 = [] R []</p>
+  <p class="explain">4 into 8 goes 2 times, leaving 0. Bring down the 7: 4 into 7 goes 1 time, leaving 3. Answer: 21 remainder 3.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["15","4"]
+description: Divide 94 by 6
+hint: Start with the tens digit. How many 6s fit into it? Then bring the 4 down beside what is left.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Divide: 94 ÷ 6 = [] R []</p>
+  <p class="explain">6 into 9 goes 1 time, leaving 3. Bring down the 4 to make 34: 6 × 5 = 30, leaving 4. Answer: 15 remainder 4.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["29 ÷ 4","83 ÷ 9","52 ÷ 7","68 ÷ 8"]
+low: smallest remainder
+high: largest remainder
+description: Order four divisions by the size of their remainder
+hint: Work out the remainder for each one first, then line them up.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Work out each remainder, then order them from smallest remainder to largest.</p>
+  <ol class="order"><li>52 ÷ 7</li><li>68 ÷ 8</li><li>29 ÷ 4</li><li>83 ÷ 9</li></ol>
+  <p class="explain">29 ÷ 4 leaves 1, 83 ÷ 9 leaves 2, 52 ÷ 7 leaves 3, and 68 ÷ 8 leaves 4.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["276"]
+description: Divide 828 by 3
+hint: Take one digit at a time. After each subtraction, bring the next digit down beside what is left, and divide again.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Divide: 828 ÷ 3 = []</p>
+  <p class="explain">3 into 8 goes 2 times, leaving 2. Bring down the 2 to make 22: 3 × 7 = 21, leaving 1. Bring down the 8 to make 18: 3 × 6 = 18. Answer: 276.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["134","2"]
+description: Divide 538 by 4
+hint: Begin with the hundreds digit. Whatever is left over joins the next digit to make the number you divide into.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Divide: 538 ÷ 4 = [] R []</p>
+  <p class="explain">4 into 5 goes 1 time, leaving 1. Bring down the 3 to make 13: 4 × 3 = 12, leaving 1. Bring down the 8 to make 18: 4 × 4 = 16, leaving 2. Answer: 134 remainder 2.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["135"]
+description: Divide 945 by 7
+hint: Ask 'how many 7s fit?' at every step. What is left over always joins the next digit.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Divide: 945 ÷ 7 = []</p>
+  <p class="explain">7 into 9 goes 1 time, leaving 2. Bring down the 4 to make 24: 7 × 3 = 21, leaving 3. Bring down the 5 to make 35: 7 × 5 = 35. Answer: 135.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2"]
+description: How many digits the answer to 243 divided by 6 will have
+hint: Can 6 fit inside 2?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">For 6⟌243, how many digits will the answer have?</p>
+  <ul class="options"><li>2</li><li>3</li><li>4</li></ul>
+  <p class="explain">6 does not fit into 2, so nothing is written above the 2. You start at 24 instead, so the answer has 2 digits: 40 remainder 3.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["40","3"]
+description: Divide 243 by 6 where the divisor is bigger than the first digit
+hint: 6 cannot fit into 2, so no digit goes above it. Which two digits must you look at instead?
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Divide: 243 ÷ 6 = [] R []</p>
+  <p class="explain">6 does not fit into 2, so start at 24. 6 × 4 = 24 exactly, leaving 0. Bring down the 3: 6 does not fit into 3. Answer: 40 remainder 3.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["15"]
+description: Divide 120 by 8
+hint: Can 8 fit into the first digit? If not, take the first two digits together.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Divide: 120 ÷ 8 = []</p>
+  <p class="explain">8 does not fit into 1, so start at 12. 8 × 1 = 8, leaving 4. Bring down the 0 to make 40: 8 × 5 = 40. Answer: 15.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["104"]
+description: Spot the missing zero in a quotient
+hint: What must you write when 9 will not fit into the next number?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya divided 937 by 9 and wrote 14 remainder 1. What should the answer be?</p>
+  <ul class="options"><li>104</li><li>14</li><li>140</li></ul>
+  <p class="explain">9 goes into 9 once, leaving 0. Then 9 does not fit into 3, so a 0 must be written there. The answer is 104 remainder 1 — Priya skipped the 0.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["104","1"]
+description: Divide 937 by 9 with a zero inside the quotient
+hint: After the first step, check whether 9 fits into what is left. If it does not, that column still needs a digit — what must it be?
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Now work it out yourself: 937 ÷ 9 = [] R []</p>
+  <p class="explain">9 into 9 is 1, leaving 0. 9 does not fit into 3, so write 0. Bring down the 7 to make 37: 9 × 4 = 36, leaving 1. Answer: 104 remainder 1.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["206"]
+description: Divide 618 by 3 with a zero inside the quotient
+hint: Work the first digit, then look at what you have next. If 3 cannot fit into it, the answer still needs a digit there.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Divide: 618 ÷ 3 = []</p>
+  <p class="explain">3 into 6 is 2, leaving 0. 3 does not fit into 1, so write 0. Bring down the 8 to make 18: 3 × 6 = 18. Answer: 206.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["945 ÷ 7","618 ÷ 3","828 ÷ 3"]
+description: Which divisions come out exactly
+hint: Work each one out and look at the leftover. Tick only the ones where nothing is left over.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select every division that comes out exactly, with no remainder.</p>
+  <ul class="options"><li>945 ÷ 7</li><li>538 ÷ 4</li><li>618 ÷ 3</li><li>828 ÷ 3</li><li>94 ÷ 6</li></ul>
+  <p class="explain">945 ÷ 7 = 135, 618 ÷ 3 = 206 and 828 ÷ 3 = 276 all come out exactly. 538 ÷ 4 leaves 2, and 94 ÷ 6 leaves 4.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["210"]
+description: Divide 840 by 4 where the quotient ends in zero
+hint: Look at the last digit. Can 4 fit into 0?
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Divide: 840 ÷ 4 = []</p>
+  <p class="explain">4 into 8 is 2, leaving 0. 4 into 4 is 1, leaving 0. 4 does not fit into 0, so write 0. Answer: 210.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["954"]
+description: Divide 2,862 by 3
+hint: The working is filled in for you. Read each step and write the quotient digit above it.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Divide: 2,862 ÷ 3 = []</p>
+  <p class="explain">3 does not fit into 2, so the working starts at 28. Answer: 954.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["1175"]
+description: Divide 8,225 by 7, four digits
+hint: Four digits means four steps. Take them one at a time.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A big one! Divide: 8,225 ÷ 7 = []</p>
+  <p class="explain">7 into 8 is 1 (leaving 1), into 12 is 1 (leaving 5), into 52 is 7 (leaving 3), into 35 is 5. Answer: 1,175.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["579","1"]
+description: Divide 3,475 by 6, four digits with a remainder
+hint: Check the first digit. If 6 cannot fit into it, you must look at the first two digits together.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Divide: 3,475 ÷ 6 = [] R []</p>
+  <p class="explain">6 does not fit into 3, so start at 34: 6 × 5 = 30 (leaving 4). Then 47: 6 × 7 = 42 (leaving 5). Then 55: 6 × 9 = 54 (leaving 1). Answer: 579 remainder 1.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["136"]
+description: Word problem, 952 stickers into packs of 7
+hint: Equal packs means divide. Share the stickers by the pack size and count how many packs you get.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Arjun packs 952 stickers into packs of 7. How many packs does he make? []</p>
+  <p class="explain">952 ÷ 7 = 136 packs, with no stickers left over.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["18","2"]
+description: Word problem where the remainder is children left over
+hint: Divide 146 by 8. The remainder is the children who do not fill a van.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">146 children go to camp. Each van holds 8 children. How many vans are completely full: [] and how many children are left over: []</p>
+  <p class="explain">146 ÷ 8 = 18 remainder 2. So 18 vans are completely full, and 2 children are left over.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["19"]
+description: Interpreting the remainder in context
+hint: Some children will not fit into the full vans. Do they still need to travel?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">All 146 children must travel, and each van holds 8. How many vans should the school book?</p>
+  <ul class="options"><li>18</li><li>19</li><li>20</li></ul>
+  <p class="explain">18 vans are full, but 2 children are still waiting — and they need a van too. So the school books 19.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["153","4"]
+description: Divide 769 by 5
+hint: Same routine every step: how many 5s fit, subtract, bring the next digit down.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Last one! Divide: 769 ÷ 5 = [] R []</p>
+  <p class="explain">5 into 7 is 1 (leaving 2), into 26 is 5 (leaving 1), into 19 is 3 (leaving 4). Answer: 153 remainder 4.</p>
+</div>
+
+</div>

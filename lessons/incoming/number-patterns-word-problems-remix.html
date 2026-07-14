@@ -1,0 +1,528 @@
+<div id="source">
+
+
+
+
+
+<!--@q
+type: fill-blanks
+answer: ["20","25","30"]
+description: Continue the count-by-5 pattern (type the next terms)
+hint: Each number is 5 more than the one before.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Continue the pattern:</p>
+  <p class="sequence">5, 10, 15, [], [], []</p>
+  <p class="explain">Add 5 each time: 20, 25, 30.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Add 3"]
+description: Find the rule of the pattern
+hint: How much bigger is each number than the one before?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is the rule for this pattern?</p>
+  <figure data-show="sequence" data-values="3,6,9,12,15"></figure>
+  <ul class="options">
+    <li data-val="Add 2">Add 2</li>
+    <li data-val="Add 3">Add 3</li>
+    <li data-val="Add 5">Add 5</li>
+    <li data-val="Multiply by 2">Multiply by 2</li>
+  </ul>
+  <p class="explain">6 − 3 = 3, so each number adds 3.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"up2","label":"Counts up by 2"},{"id":"up7","label":"Counts up by 7"},{"id":"up25","label":"Counts up by 25"}]
+answer: ["up2","up7","up25"]
+description: Sort each pattern by its counting rule
+hint: Look at the jump between the first two numbers.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Sort each pattern into the box that shows its rule.</p>
+  <ul class="tiles">
+    <li>2, 4, 6, 8</li>
+    <li>7, 14, 21, 28</li>
+    <li>25, 50, 75, 100</li>
+  </ul>
+  <p class="explain">Jumps of 2, 7, and 25 — the next numbers would be 10, 35, and 125.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["10"]
+description: Word problem — saving money
+hint: Add $2 for each of the 5 weeks.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Sarah saves $2 each week. How much money does she have after 5 weeks? $[]</p>
+  <p class="explain">$2 × 5 weeks = $10.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["30","27","24","21","18","15"]
+low: first
+high: last
+description: Put the count-down-by-3 pattern in order
+hint: The pattern goes down by 3 each step.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">These numbers make a pattern that counts down by 3. Put them in order from first to last.</p>
+  <ol class="order">
+    <li>21</li>
+    <li>30</li>
+    <li>15</li>
+    <li>24</li>
+    <li>18</li>
+    <li>27</li>
+  </ol>
+  <p class="explain">Subtract 3 each time: 30, 27, 24, 21, 18, 15.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["30"]
+description: Missing number (count by 10s)
+hint: Count up by 10 each time.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Find the missing number:</p>
+  <p class="sequence">10, 20, [], 40, 50</p>
+  <p class="explain">20 + 10 = 30.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Subtract 10"]
+description: Find the rule of the pattern
+hint: The numbers are getting smaller.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is the rule for this pattern?</p>
+  <figure data-show="sequence" data-values="100,90,80,70"></figure>
+  <ul class="options">
+    <li data-val="Subtract 5">Subtract 5</li>
+    <li data-val="Subtract 10">Subtract 10</li>
+    <li data-val="Add 10">Add 10</li>
+    <li data-val="Subtract 20">Subtract 20</li>
+  </ul>
+  <p class="explain">100 − 90 = 10, so each number subtracts 10.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["10","13","16"]
+description: Continue the add-3 pattern (type the next terms)
+hint: Each number is 3 more than the one before.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">What are the next three numbers?</p>
+  <p class="sequence">1, 4, 7, [], [], []</p>
+  <p class="explain">Add 3 each time: 10, 13, 16.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["24"]
+description: Word problem — plant growth
+hint: Add 4 cm for each of the 6 weeks.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A plant grows 4 cm each week. How tall is it after 6 weeks if it started at 0 cm? [] cm</p>
+  <p class="explain">4 cm × 6 weeks = 24 cm.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["5, 10, 15, 20"]
+description: Which shows counting by 5s
+hint: Look for jumps of 5.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which pattern shows counting by 5s?</p>
+  <ul class="options">
+    <li data-val="2, 4, 6, 8">2, 4, 6, 8</li>
+    <li data-val="5, 10, 15, 20">5, 10, 15, 20</li>
+    <li data-val="10, 20, 30, 40">10, 20, 30, 40</li>
+    <li data-val="3, 6, 9, 12">3, 6, 9, 12</li>
+  </ul>
+  <p class="explain">5, 10, 15, 20 jumps by 5 each time.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["28"]
+description: Complete the pattern (count by 7s)
+hint: Count up by 7 each time.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Complete the pattern:</p>
+  <p class="sequence">7, 14, 21, [], 35</p>
+  <p class="explain">21 + 7 = 28.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Add 6"]
+description: Find the rule of the pattern
+hint: How much bigger is each number?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A library adds books in this pattern. What is the rule?</p>
+  <figure data-show="sequence" data-values="6,12,18,24"></figure>
+  <ul class="options">
+    <li data-val="Add 4">Add 4</li>
+    <li data-val="Add 5">Add 5</li>
+    <li data-val="Add 6">Add 6</li>
+    <li data-val="Multiply by 2">Multiply by 2</li>
+  </ul>
+  <p class="explain">12 − 6 = 6, so each number adds 6.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["50","45","40","35","30"]
+low: first
+high: last
+description: Put the count-down-by-5 pattern in order
+hint: The pattern goes down by 5 each step.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">These numbers count down by 5. Put them in order from first to last.</p>
+  <ol class="order">
+    <li>35</li>
+    <li>50</li>
+    <li>40</li>
+    <li>30</li>
+    <li>45</li>
+  </ol>
+  <p class="explain">Subtract 5 each time: 50, 45, 40, 35, 30.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["9","11"]
+description: Next two odd numbers
+hint: Odd numbers go up by 2.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">These are odd numbers. What are the next two?</p>
+  <p class="sequence">1, 3, 5, 7, [], []</p>
+  <p class="explain">Add 2: 7 + 2 = 9, then 11.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["40"]
+description: Word problem — reading pages
+hint: Add 10 pages for each of the 4 days.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Tom reads 10 pages every day. How many pages has he read after 4 days? []</p>
+  <p class="explain">10 pages × 4 days = 40 pages.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["24"]
+description: Missing number (count by 8s)
+hint: Count up by 8 each time.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Find the missing number:</p>
+  <p class="sequence">8, 16, [], 32</p>
+  <p class="explain">16 + 8 = 24.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["4, 8, 12, 16"]
+description: Which is skip-counting by 4
+hint: Look for jumps of 4.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which pattern is skip-counting by 4?</p>
+  <ul class="options">
+    <li data-val="2, 4, 6, 8">2, 4, 6, 8</li>
+    <li data-val="4, 8, 12, 16">4, 8, 12, 16</li>
+    <li data-val="4, 6, 8, 10">4, 6, 8, 10</li>
+    <li data-val="1, 4, 8, 12">1, 4, 8, 12</li>
+  </ul>
+  <p class="explain">4, 8, 12, 16 jumps by 4 each time.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["400","500"]
+description: Continue the count-by-100 pattern (type the next terms)
+hint: Each number is 100 more than the one before.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Fill in the missing numbers:</p>
+  <p class="sequence">100, 200, 300, [], []</p>
+  <p class="explain">Add 100 each time: 400, 500.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Multiply by 2"]
+description: Find the rule (doubling)
+hint: Each number is the one before it, times something.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is the rule for this pattern?</p>
+  <figure data-show="sequence" data-values="2,4,8,16"></figure>
+  <ul class="options">
+    <li data-val="Add 2">Add 2</li>
+    <li data-val="Multiply by 2">Multiply by 2</li>
+    <li data-val="Add 4">Add 4</li>
+    <li data-val="Subtract 2">Subtract 2</li>
+  </ul>
+  <p class="explain">2 × 2 = 4, 4 × 2 = 8 — each number doubles.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["20"]
+description: Word problem — chairs at tables
+hint: Add 4 chairs for each of the 5 tables.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Each table has 4 chairs. How many chairs are at 5 tables? []</p>
+  <p class="explain">4 chairs × 5 tables = 20 chairs.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["15","12","9","6","3"]
+low: first
+high: last
+description: Put the count-down-by-3 pattern in order
+hint: The pattern goes down by 3 each step.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">These numbers count down by 3. Put them in order from first to last.</p>
+  <ol class="order">
+    <li>6</li>
+    <li>15</li>
+    <li>3</li>
+    <li>12</li>
+    <li>9</li>
+  </ol>
+  <p class="explain">Subtract 3 each time: 15, 12, 9, 6, 3.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["36"]
+description: Complete the pattern (count by 9s)
+hint: Count up by 9 each time.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Complete the pattern:</p>
+  <p class="sequence">9, 18, 27, [], 45</p>
+  <p class="explain">27 + 9 = 36.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["100"]
+description: Next number (count by 25s)
+hint: Count up by 25 each time.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Count by 25:</p>
+  <p class="sequence">25, 50, 75, []</p>
+  <p class="explain">75 + 25 = 100.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Add 11"]
+description: Find the rule of the pattern
+hint: How much bigger is each number?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is the rule for this pattern?</p>
+  <figure data-show="sequence" data-values="11,22,33,44"></figure>
+  <ul class="options">
+    <li data-val="Add 10">Add 10</li>
+    <li data-val="Add 11">Add 11</li>
+    <li data-val="Add 12">Add 12</li>
+    <li data-val="Multiply by 2">Multiply by 2</li>
+  </ul>
+  <p class="explain">22 − 11 = 11, so each number adds 11.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["16"]
+description: Word problem — doubling money
+hint: The amount doubles each day.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Each day your money doubles:</p>
+  <p class="sequence">1, 2, 4, 8, []</p>
+  <p class="explain">8 × 2 = 16.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["18"]
+description: Find the missing number in the middle of the pattern (count by 6)
+hint: The numbers go up by 6 each time.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Find the missing number:</p>
+  <p class="sequence">6, 12, [], 24, 30</p>
+  <p class="explain">The pattern adds 6 each time, so 12 + 6 = 18.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["20","28"]
+description: Which numbers would appear in a count-by-4 pattern (multiples of 4)
+hint: Keep adding 4: 4, 8, 12, 16, 20, 24, 28 ...
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">This pattern counts by 4: 4, 8, 12, 16, and keeps going. Select ALL the numbers below that would appear in the pattern.</p>
+  <ul class="options">
+    <li data-val="20">20</li>
+    <li data-val="22">22</li>
+    <li data-val="28">28</li>
+    <li data-val="30">30</li>
+  </ul>
+  <p class="explain">Only multiples of 4 appear: 20 (4×5) and 28 (4×7). 22 and 30 are skipped.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["21"]
+description: Spot the number that breaks the pattern
+hint: The pattern should go up by 5 each time.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">One number does not belong in this pattern. Which one? 5, 10, 15, 21, 25</p>
+  <ul class="options">
+    <li data-val="21">21</li>
+    <li data-val="15">15</li>
+    <li data-val="10">10</li>
+    <li data-val="25">25</li>
+  </ul>
+  <p class="explain">Adding 5 each time gives 5, 10, 15, 20, 25 — so 21 should be 20.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["16"]
+description: Growing-step pattern (differences increase 1,2,3,4)
+hint: Look at how much bigger each jump is: +1, +2, +3, +4 ...
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Look at how this pattern grows: 1, 2, 4, 7, 11, ... What number comes next?</p>
+  <ul class="options">
+    <li data-val="16">16</li>
+    <li data-val="15">15</li>
+    <li data-val="13">13</li>
+    <li data-val="22">22</li>
+  </ul>
+  <p class="explain">The jumps grow: +1, +2, +3, +4, then +5. So 11 + 5 = 16.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["10","15"]
+description: Work backward to find the first two terms (up by 5)
+hint: Each number is 5 more than the one before, so work backward by 5.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">This pattern goes up by 5. What are the first two numbers?</p>
+  <p class="sequence">[], [], 20, 25, 30</p>
+  <p class="explain">Work backward by 5: 20 − 5 = 15, and 15 − 5 = 10.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["15"]
+description: Number-machine input-output rule (times 3)
+hint: Compare each "in" number with its "out" number to find the rule.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A number machine follows a rule. Put in 2, you get 6. Put in 4, you get 12. Put in 6, you get 18. If you put in 5, you get []</p>
+  <p class="explain">The machine multiplies by 3, so 5 × 3 = 15.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Pattern A"]
+description: Compare the 5th term of two patterns
+hint: Keep both patterns going until each has five numbers, then compare.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Pattern A adds 3: 3, 6, 9, 12, ... Pattern B adds 2: 2, 4, 6, 8, ... Which pattern has the bigger 5th number?</p>
+  <ul class="options">
+    <li data-val="Pattern A">Pattern A</li>
+    <li data-val="Pattern B">Pattern B</li>
+    <li data-val="They are the same">They are the same</li>
+    <li data-val="You cannot tell">You cannot tell</li>
+  </ul>
+  <p class="explain">Pattern A reaches 15 (3, 6, 9, 12, 15); Pattern B reaches 10 (2, 4, 6, 8, 10).</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["17","22"]
+description: Skip-count by 5 starting from a non-multiple
+hint: Add 5 each time, starting from 2.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Keep counting by 5:</p>
+  <p class="sequence">2, 7, 12, [], []</p>
+  <p class="explain">Add 5 each time: 12 + 5 = 17, then 17 + 5 = 22.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"up","label":"Counts up"},{"id":"down","label":"Counts down"}]
+answer: ["up","down","up","down"]
+description: Sort patterns by whether they count up or down
+hint: Does each pattern get bigger or smaller as it goes?
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Sort each pattern into the right box.</p>
+  <ul class="tiles">
+    <li>3, 6, 9</li>
+    <li>20, 15, 10</li>
+    <li>2, 4, 6</li>
+    <li>50, 40, 30</li>
+  </ul>
+  <p class="explain">3, 6, 9 and 2, 4, 6 grow (count up); 20, 15, 10 and 50, 40, 30 shrink (count down).</p>
+</div>
+
+<!--@q
+type: order
+answer: ["6","12","18","24","30"]
+low: smallest
+high: largest
+description: Un-scramble a skip-counting pattern (count by 6)
+hint: These are a count-by-6 pattern that got mixed up.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">These numbers make a counting pattern, but they are mixed up. Put them in order from smallest to largest.</p>
+  <ol class="order">
+    <li>18</li>
+    <li>6</li>
+    <li>24</li>
+    <li>12</li>
+    <li>30</li>
+  </ol>
+  <p class="explain">In order they count by 6: 6, 12, 18, 24, 30.</p>
+</div>
+
+</div>

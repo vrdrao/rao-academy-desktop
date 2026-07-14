@@ -1,0 +1,436 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["400"]
+description: Round ₹361 to the nearest 100
+hint: Find the two hundreds on either side of ₹361. Which of the two is it nearer to?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹361 rounded to the nearest ₹100?</p>
+  <ul class="options">
+    <li data-val="360">₹360</li>
+    <li data-val="300">₹300</li>
+    <li data-val="500">₹500</li>
+    <li data-val="400">₹400</li>
+  </ul>
+  <p class="explain">The part below is 61, which is 50 or more, so ₹361 rounds UP to ₹400.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["140"]
+description: Round ₹141 to the nearest 10
+hint: Find the two tens on either side of ₹141. Which of the two is it nearer to?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹141 rounded to the nearest ₹10?</p>
+  <ul class="options">
+    <li data-val="110">₹110</li>
+    <li data-val="200">₹200</li>
+    <li data-val="140">₹140</li>
+    <li data-val="150">₹150</li>
+  </ul>
+  <p class="explain">The part below is 1, which is less than 5, so ₹141 rounds DOWN to ₹140.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"down","label":"Rounds DOWN"},{"id":"up","label":"Rounds UP"}]
+answer: ["down","up","down","up"]
+description: Sort by rounding direction to the nearest ₹10
+hint: For each amount, find the two tens on either side of it. Is it nearer the lower ten or the upper one?
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Round each amount to the nearest ₹10. Does it round down or up?</p>
+  <ul class="tiles">
+    <li>₹141</li>
+    <li>₹69</li>
+    <li>₹23</li>
+    <li>₹46</li>
+  </ul>
+  <p class="explain">₹141→₹140 and ₹23→₹20 round down. ₹69→₹70 and ₹46→₹50 round up.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["70"]
+description: Round ₹69 to the nearest 10
+hint: Find the two tens on either side of ₹69. Which of the two is it nearer to?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹69 rounded to the nearest ₹10?</p>
+  <ul class="options">
+    <li data-val="100">₹100</li>
+    <li data-val="60">₹60</li>
+    <li data-val="80">₹80</li>
+    <li data-val="70">₹70</li>
+  </ul>
+  <p class="explain">The part below is 9, which is 5 or more, so ₹69 rounds UP to ₹70.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["600"]
+description: Round ₹601 to the nearest 100
+hint: Find the two hundreds on either side of ₹601. Which of the two is it nearer to?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹601 rounded to the nearest ₹100?</p>
+  <ul class="options">
+    <li data-val="600">₹600</li>
+    <li data-val="700">₹700</li>
+    <li data-val="500">₹500</li>
+    <li data-val="1000">₹1,000</li>
+  </ul>
+  <p class="explain">The part below is 1, which is less than 50, so ₹601 rounds DOWN to ₹600.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["90"]
+description: Round ₹85 to the nearest 10
+hint: Find the two tens on either side of ₹85. It sits exactly in the middle of them — so what does our rule say to do with a perfect tie?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹85 rounded to the nearest ₹10?</p>
+  <ul class="options">
+    <li data-val="100">₹100</li>
+    <li data-val="90">₹90</li>
+    <li data-val="80">₹80</li>
+    <li data-val="110">₹110</li>
+  </ul>
+  <p class="explain">The part below is 5, which is 5 or more, so ₹85 rounds UP to ₹90.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["300"]
+description: Round ₹298 to the nearest 10
+hint: Find the two tens on either side of ₹298. Careful with the one above — count it out, it may be rounder than you expect.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹298 rounded to the nearest ₹10?</p>
+  <ul class="options">
+    <li data-val="320">₹320</li>
+    <li data-val="300">₹300</li>
+    <li data-val="310">₹310</li>
+    <li data-val="290">₹290</li>
+  </ul>
+  <p class="explain">The part below is 8, which is 5 or more, so ₹298 rounds UP to ₹300.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["651","726","689","659"]
+description: Which amounts round to ₹700?
+hint: Work through them one at a time. For each, find the two hundreds it sits between — you are only after the ones whose nearer hundred is ₹700.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select all the amounts that round to ₹700 when rounded to the nearest ₹100.</p>
+  <ul class="options">
+    <li data-val="651">₹651</li>
+    <li data-val="726">₹726</li>
+    <li data-val="601">₹601</li>
+    <li data-val="689">₹689</li>
+    <li data-val="659">₹659</li>
+  </ul>
+  <p class="explain">₹651, ₹726, ₹689 and ₹659 all round to ₹700. ₹601 rounds down to ₹600.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["200"]
+description: Round ₹170 to the nearest 100
+hint: Find the two hundreds on either side of ₹170. Which of the two is it nearer to?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹170 rounded to the nearest ₹100?</p>
+  <ul class="options">
+    <li data-val="200">₹200</li>
+    <li data-val="100">₹100</li>
+    <li data-val="300">₹300</li>
+    <li data-val="400">₹400</li>
+  </ul>
+  <p class="explain">The part below is 70, which is 50 or more, so ₹170 rounds UP to ₹200.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["500"]
+description: Round ₹450 to the nearest 100
+hint: Find the two hundreds on either side of ₹450. It sits exactly in the middle of them — so what does our rule say to do with a perfect tie?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹450 rounded to the nearest ₹100?</p>
+  <ul class="options">
+    <li data-val="600">₹600</li>
+    <li data-val="500">₹500</li>
+    <li data-val="700">₹700</li>
+    <li data-val="400">₹400</li>
+  </ul>
+  <p class="explain">The part below is 50, which is 50 or more, so ₹450 rounds UP to ₹500.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1000"]
+description: Round ₹1,049 to the nearest 100
+hint: Find the two hundreds on either side of ₹1,049. Which of the two is it nearer to?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹1,049 rounded to the nearest ₹100?</p>
+  <ul class="options">
+    <li data-val="1000">₹1,000</li>
+    <li data-val="900">₹900</li>
+    <li data-val="1100">₹1,100</li>
+    <li data-val="1050">₹1,050</li>
+  </ul>
+  <p class="explain">The part below is 49, which is less than 50, so ₹1,049 rounds DOWN to ₹1,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["4000"]
+description: Round ₹3,950 to the nearest 100
+hint: Find the two hundreds on either side of ₹3,950 — the one above is rounder than you might expect. And ₹3,950 lands exactly in the middle of them, so remember the tie rule.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹3,950 rounded to the nearest ₹100?</p>
+  <ul class="options">
+    <li data-val="3900">₹3,900</li>
+    <li data-val="4200">₹4,200</li>
+    <li data-val="4100">₹4,100</li>
+    <li data-val="4000">₹4,000</li>
+  </ul>
+  <p class="explain">The part below is 50, which is 50 or more, so ₹3,950 rounds UP to ₹4,000.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"r600","label":"Rounds to ₹600"},{"id":"r700","label":"Rounds to ₹700"}]
+answer: ["r600","r600","r700","r700"]
+description: Round to nearest ₹100 and sort into the right hundred
+hint: Take one amount at a time. Which two hundreds does it sit between, and which is it nearer?
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Round each amount to the nearest ₹100. Which hundred does it land on?</p>
+  <ul class="tiles">
+    <li>₹556</li>
+    <li>₹601</li>
+    <li>₹651</li>
+    <li>₹689</li>
+  </ul>
+  <p class="explain">₹556→₹600 and ₹601→₹600. ₹651→₹700 and ₹689→₹700.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["₹340","₹360","₹480","₹620"]
+low: rounds to the smallest
+high: rounds to the largest
+description: Round each to the nearest ₹100, then order by the rounded result
+hint: Take each amount on its own: which two hundreds does it sit between, and which is it nearer? Order the rounded answers, not the originals — two amounts that look close can still land on different hundreds.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Round each amount to the nearest ₹100. Then put the amounts in order, from the one that rounds to the smallest hundred to the one that rounds to the largest.</p>
+  <ol class="order">
+    <li>₹480</li>
+    <li>₹340</li>
+    <li>₹620</li>
+    <li>₹360</li>
+  </ol>
+  <p class="explain">₹340→₹300, ₹360→₹400, ₹480→₹500, ₹620→₹600. Careful: ₹340 and ₹360 are only ₹20 apart, but they round to different hundreds!</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["970"]
+description: Round ₹974 to the nearest 10
+hint: Find the two tens on either side of ₹974. Which of the two is it nearer to?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹974 rounded to the nearest ₹10?</p>
+  <ul class="options">
+    <li data-val="1000">₹1,000</li>
+    <li data-val="960">₹960</li>
+    <li data-val="980">₹980</li>
+    <li data-val="970">₹970</li>
+  </ul>
+  <p class="explain">The part below is 4, which is less than 5, so ₹974 rounds DOWN to ₹970.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["7000"]
+description: Round ₹7,499 to the nearest 1,000
+hint: Find the two thousands on either side of ₹7,499. Which of the two is it nearer to?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹7,499 rounded to the nearest ₹1,000?</p>
+  <ul class="options">
+    <li data-val="7000">₹7,000</li>
+    <li data-val="8000">₹8,000</li>
+    <li data-val="7500">₹7,500</li>
+    <li data-val="6000">₹6,000</li>
+  </ul>
+  <p class="explain">The part below is 499, which is less than 500, so ₹7,499 rounds DOWN to ₹7,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["8000"]
+description: Round ₹7,500 to the nearest 1,000
+hint: Find the two thousands on either side of ₹7,500. It sits exactly in the middle of them — so what does our rule say to do with a perfect tie?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹7,500 rounded to the nearest ₹1,000?</p>
+  <ul class="options">
+    <li data-val="8000">₹8,000</li>
+    <li data-val="7000">₹7,000</li>
+    <li data-val="9000">₹9,000</li>
+    <li data-val="10000">₹10,000</li>
+  </ul>
+  <p class="explain">The part below is 500, which is 500 or more, so ₹7,500 rounds UP to ₹8,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["93500"]
+description: Round ₹93,520 to the nearest 100
+hint: Find the two hundreds on either side of ₹93,520. Which of the two is it nearer to?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹93,520 rounded to the nearest ₹100?</p>
+  <ul class="options">
+    <li data-val="93400">₹93,400</li>
+    <li data-val="94000">₹94,000</li>
+    <li data-val="93600">₹93,600</li>
+    <li data-val="93500">₹93,500</li>
+  </ul>
+  <p class="explain">The part below is 20, which is less than 50, so ₹93,520 rounds DOWN to ₹93,500.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["92000"]
+description: Round ₹92,461 to the nearest 1,000
+hint: Find the two thousands on either side of ₹92,461. Which of the two is it nearer to?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹92,461 rounded to the nearest ₹1,000?</p>
+  <ul class="options">
+    <li data-val="92000">₹92,000</li>
+    <li data-val="93000">₹93,000</li>
+    <li data-val="91000">₹91,000</li>
+    <li data-val="92500">₹92,500</li>
+  </ul>
+  <p class="explain">The part below is 461, which is less than 500, so ₹92,461 rounds DOWN to ₹92,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["25000"]
+description: Round ₹24,680 to the nearest 1,000
+hint: Find the two thousands on either side of ₹24,680. Which of the two is it nearer to?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹24,680 rounded to the nearest ₹1,000?</p>
+  <ul class="options">
+    <li data-val="26000">₹26,000</li>
+    <li data-val="24700">₹24,700</li>
+    <li data-val="25000">₹25,000</li>
+    <li data-val="24000">₹24,000</li>
+  </ul>
+  <p class="explain">The part below is 680, which is 500 or more, so ₹24,680 rounds UP to ₹25,000.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"k50","label":"Rounds to ₹50,000"},{"id":"k60","label":"Rounds to ₹60,000"}]
+answer: ["k50","k50","k60","k60"]
+description: Round to the nearest ₹10,000 and sort
+hint: Take one amount at a time. Which two ten-thousands does it sit between, and which is it nearer? Watch out for any that land exactly in the middle.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Round each amount to the nearest ₹10,000. Which ten-thousand does it land on?</p>
+  <ul class="tiles">
+    <li>₹53,998</li>
+    <li>₹45,000</li>
+    <li>₹58,200</li>
+    <li>₹61,300</li>
+  </ul>
+  <p class="explain">₹53,998→₹50,000 and ₹45,000→₹50,000. ₹58,200→₹60,000 and ₹61,300→₹60,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["50000"]
+description: Round ₹53,998 to the nearest ₹10,000
+hint: Find the two ten-thousands on either side of ₹53,998. Which of the two is it nearer to?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹53,998 rounded to the nearest ₹10,000?</p>
+  <ul class="options">
+    <li data-val="54000">₹54,000</li>
+    <li data-val="40000">₹40,000</li>
+    <li data-val="60000">₹60,000</li>
+    <li data-val="50000">₹50,000</li>
+  </ul>
+  <p class="explain">The part below is 3,998, which is less than 5,000, so ₹53,998 rounds DOWN to ₹50,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["50000"]
+description: Round ₹45,000 to the nearest ₹10,000
+hint: Find the two ten-thousands on either side of ₹45,000. It sits exactly in the middle of them — so what does our rule say to do with a perfect tie?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹45,000 rounded to the nearest ₹10,000?</p>
+  <ul class="options">
+    <li data-val="60000">₹60,000</li>
+    <li data-val="40000">₹40,000</li>
+    <li data-val="70000">₹70,000</li>
+    <li data-val="50000">₹50,000</li>
+  </ul>
+  <p class="explain">The part below is 5,000, which is 5,000 or more, so ₹45,000 rounds UP to ₹50,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["20000"]
+description: Round ₹19,296 to the nearest ₹10,000
+hint: Find the two ten-thousands on either side of ₹19,296. Which of the two is it nearer to?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹19,296 rounded to the nearest ₹10,000?</p>
+  <ul class="options">
+    <li data-val="10000">₹10,000</li>
+    <li data-val="30000">₹30,000</li>
+    <li data-val="20000">₹20,000</li>
+    <li data-val="19000">₹19,000</li>
+  </ul>
+  <p class="explain">The part below is 9,296, which is 5,000 or more, so ₹19,296 rounds UP to ₹20,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["100000"]
+description: Round ₹99,640 to the nearest 1,000
+hint: Find the two thousands on either side of ₹99,640. Careful with the one above — count it out, it may be rounder than you expect.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is ₹99,640 rounded to the nearest ₹1,000?</p>
+  <ul class="options">
+    <li data-val="100000">₹100,000</li>
+    <li data-val="101000">₹101,000</li>
+    <li data-val="99600">₹99,600</li>
+    <li data-val="99000">₹99,000</li>
+  </ul>
+  <p class="explain">The part below is 640, which is 500 or more, so ₹99,640 rounds UP to ₹100,000.</p>
+</div>
+
+</div>

@@ -4,3 +4,4 @@ last-run.json
 __pycache__/
 *.pyc
 ~$*
+lessons/_preview/

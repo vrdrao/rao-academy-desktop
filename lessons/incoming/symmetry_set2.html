@@ -1,0 +1,425 @@
+<div id="source">
+<!-- ═══════════ JUDGE A GIVEN LINE (yes / no) ═══════════ -->
+<!--@q
+type: single-select
+answer: ["yes"]
+description: Star — vertical through top point
+hint: A 5-pointed star has 5 lines of symmetry. Does one run straight down from a point?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Is the dotted line a line of symmetry?</p>
+  <svg viewBox="0 0 200 150" width="200" height="150" role="img" aria-label="five-pointed star with a vertical dotted line through the top point">
+    <polygon points="100,22 116,70 167,70 126,100 141,148 100,119 59,148 74,100 33,70 84,70" fill="#f4b400"/>
+    <line x1="100" y1="12" x2="100" y2="140" stroke="#333" stroke-width="2.6" stroke-dasharray="7 6"/>
+  </svg>
+  <ul class="options"><li>yes</li><li>no</li></ul>
+  <p class="explain">The line runs from the top point straight down to the opposite dip, splitting the star into matching halves. Yes.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["no"]
+description: Letter P — vertical
+hint: Try folding the letter P down the middle. Do both sides match?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Is the dotted line a line of symmetry?</p>
+  <svg viewBox="0 0 200 150" width="200" height="150" role="img" aria-label="letter P with a vertical dotted line">
+    <text x="100" y="118" font-size="120" font-family="Baloo 2, sans-serif" font-weight="800" text-anchor="middle" fill="#7b5cff">P</text>
+    <line x1="100" y1="16" x2="100" y2="140" stroke="#333" stroke-width="2.6" stroke-dasharray="7 6"/>
+  </svg>
+  <ul class="options"><li>yes</li><li>no</li></ul>
+  <p class="explain">The letter P has no line of symmetry — the bump is only on one side, so the halves don't match. No.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["yes"]
+description: Kite — long (vertical) axis
+hint: A kite folds along its longest line. Does this one match up?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Is the dotted line a line of symmetry?</p>
+  <svg viewBox="0 0 200 150" width="200" height="150" role="img" aria-label="kite with a vertical dotted line down its long axis">
+    <polygon points="100,20 140,68 100,132 60,68" fill="#2ec4d6"/>
+    <line x1="100" y1="12" x2="100" y2="142" stroke="#333" stroke-width="2.6" stroke-dasharray="7 6"/>
+  </svg>
+  <ul class="options"><li>yes</li><li>no</li></ul>
+  <p class="explain">A kite has one line of symmetry — its long line. The two sides fold to match. Yes.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["no"]
+description: Scalene triangle — a line
+hint: This triangle has three different side lengths. Can any fold make it match?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Is the dotted line a line of symmetry?</p>
+  <svg viewBox="0 0 200 150" width="200" height="150" role="img" aria-label="scalene triangle with a vertical dotted line">
+    <polygon points="55,120 150,120 120,40" fill="#f4a63a"/>
+    <line x1="102" y1="30" x2="102" y2="132" stroke="#333" stroke-width="2.6" stroke-dasharray="7 6"/>
+  </svg>
+  <ul class="options"><li>yes</li><li>no</li></ul>
+  <p class="explain">A scalene triangle (all sides different) has no lines of symmetry. No fold matches. No.</p>
+</div>
+
+<!-- ═══════════ WHICH line is the axis? ═══════════ -->
+<!--@q
+type: single-select
+answer: ["2"]
+description: House pentagon — which line is the axis?
+hint: A house shape folds down the middle, from the roof tip to the floor.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which line folds this house shape onto itself?</p>
+  <ul class="options">
+    <li>
+      <svg viewBox="0 0 120 120" width="118" height="118" role="img" aria-label="house pentagon with a horizontal line">
+        <polygon points="60,20 95,50 95,95 25,95 25,50" fill="#f28d3a"/>
+        <line x1="16" y1="60" x2="104" y2="60" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="118" height="118" role="img" aria-label="house pentagon with a vertical line">
+        <polygon points="60,20 95,50 95,95 25,95 25,50" fill="#f28d3a"/>
+        <line x1="60" y1="12" x2="60" y2="104" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="118" height="118" role="img" aria-label="house pentagon with a diagonal line">
+        <polygon points="60,20 95,50 95,95 25,95 25,50" fill="#f28d3a"/>
+        <line x1="25" y1="30" x2="100" y2="100" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+  </ul>
+  <p class="explain">The vertical line from the roof tip straight down splits the house into matching halves.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2"]
+description: Isosceles trapezoid — which line is the axis?
+hint: The two slanted sides are equal. The fold goes straight up and down between them.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which line is a line of symmetry of this trapezoid?</p>
+  <ul class="options">
+    <li>
+      <svg viewBox="0 0 120 120" width="118" height="118" role="img" aria-label="isosceles trapezoid with a diagonal line">
+        <polygon points="40,40 80,40 100,85 20,85" fill="#22b07d"/>
+        <line x1="25" y1="32" x2="98" y2="95" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="118" height="118" role="img" aria-label="isosceles trapezoid with a vertical line">
+        <polygon points="40,40 80,40 100,85 20,85" fill="#22b07d"/>
+        <line x1="60" y1="30" x2="60" y2="95" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="118" height="118" role="img" aria-label="isosceles trapezoid with a horizontal line">
+        <polygon points="40,40 80,40 100,85 20,85" fill="#22b07d"/>
+        <line x1="14" y1="62" x2="106" y2="62" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+  </ul>
+  <p class="explain">The vertical line down the middle matches the two equal slanted sides. That's the one.</p>
+</div>
+
+<!-- ═══════════ COUNT the lines of symmetry ═══════════ -->
+<!--@q
+type: single-select
+answer: ["5"]
+description: Count — regular pentagon
+hint: For a regular shape, count the corners. Each one gives a line of symmetry.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">How many lines of symmetry does this regular pentagon have?</p>
+  <svg viewBox="0 0 200 140" width="200" height="140" role="img" aria-label="regular pentagon">
+    <polygon points="100,25 168,72 142,125 58,125 32,72" fill="#7b5cff"/>
+  </svg>
+  <ul class="options"><li>2</li><li>3</li><li>5</li><li>0</li></ul>
+  <p class="explain">A regular pentagon has 5 equal sides, so it has 5 lines of symmetry — one from each corner.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2"]
+description: Count — rectangle
+hint: A rectangle is not a square. Its diagonals do NOT count.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">How many lines of symmetry does this rectangle have?</p>
+  <svg viewBox="0 0 200 140" width="200" height="140" role="img" aria-label="rectangle wider than tall">
+    <rect x="35" y="45" width="130" height="55" rx="4" fill="#2ec4d6"/>
+  </svg>
+  <ul class="options"><li>1</li><li>2</li><li>4</li><li>0</li></ul>
+  <p class="explain">A rectangle has exactly 2 lines of symmetry — up-and-down and across. Its diagonals don't match up.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["too many to count"]
+description: Count — circle
+hint: How many ways can you fold a circle so the halves match?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">How many lines of symmetry does a circle have?</p>
+  <svg viewBox="0 0 200 140" width="200" height="140" role="img" aria-label="circle">
+    <circle cx="100" cy="70" r="45" fill="#f4b400"/>
+  </svg>
+  <ul class="options"><li>2</li><li>4</li><li>8</li><li>too many to count</li></ul>
+  <p class="explain">Every line through the centre of a circle is a line of symmetry — there are endless numbers of them!</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["8"]
+description: Count — regular octagon
+hint: Count the sides of this stop-sign shape. Each side pairs with a line of symmetry.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">How many lines of symmetry does this regular octagon have?</p>
+  <svg viewBox="0 0 200 140" width="200" height="140" role="img" aria-label="regular octagon">
+    <polygon points="78,25 122,25 155,58 155,102 122,135 78,135 45,102 45,58" fill="#22b07d"/>
+  </svg>
+  <ul class="options"><li>4</li><li>6</li><li>8</li><li>10</li></ul>
+  <p class="explain">A regular octagon has 8 equal sides, so it has 8 lines of symmetry.</p>
+</div>
+
+<!-- ═══════════ SELECT ALL lines of symmetry ═══════════ -->
+<!--@q
+type: multi-select
+answer: ["1","2","3"]
+description: Select all lines — equilateral triangle
+hint: A triangle with all equal sides has one line from each corner. That's three.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every card that shows a line of symmetry of this equilateral triangle.</p>
+  <ul class="options">
+    <li>
+      <svg viewBox="0 0 120 120" width="116" height="116" role="img" aria-label="equilateral triangle with a vertical line from the top corner">
+        <polygon points="60,22 100,96 20,96" fill="#f4a63a"/>
+        <line x1="60" y1="14" x2="60" y2="104" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="116" height="116" role="img" aria-label="equilateral triangle with a line from the bottom-left corner">
+        <polygon points="60,22 100,96 20,96" fill="#f4a63a"/>
+        <line x1="20" y1="96" x2="82" y2="47" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="116" height="116" role="img" aria-label="equilateral triangle with a line from the bottom-right corner">
+        <polygon points="60,22 100,96 20,96" fill="#f4a63a"/>
+        <line x1="100" y1="96" x2="38" y2="47" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+  </ul>
+  <p class="explain">An equilateral triangle has 3 lines of symmetry — one from each corner to the middle of the opposite side. All three are correct!</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["1","2"]
+description: Select all lines — rectangle (trap: diagonal)
+hint: A rectangle folds up-and-down and across. Corner-to-corner does not work.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every card that shows a line of symmetry of this rectangle.</p>
+  <ul class="options">
+    <li>
+      <svg viewBox="0 0 130 110" width="126" height="106" role="img" aria-label="rectangle with a vertical line">
+        <rect x="20" y="35" width="90" height="45" fill="#7b5cff"/>
+        <line x1="65" y1="26" x2="65" y2="90" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 130 110" width="126" height="106" role="img" aria-label="rectangle with a horizontal line">
+        <rect x="20" y="35" width="90" height="45" fill="#7b5cff"/>
+        <line x1="12" y1="57" x2="118" y2="57" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 130 110" width="126" height="106" role="img" aria-label="rectangle with a diagonal line">
+        <rect x="20" y="35" width="90" height="45" fill="#7b5cff"/>
+        <line x1="20" y1="35" x2="110" y2="80" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+  </ul>
+  <p class="explain">Only up-and-down and across work. A rectangle's diagonal is a common trap — it does NOT fold to match.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["1","2","3"]
+description: Select all lines — regular hexagon (one off-centre trap)
+hint: A regular hexagon has 6 lines of symmetry, but the line must pass through the exact centre.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every card that shows a line of symmetry of this regular hexagon.</p>
+  <ul class="options">
+    <li>
+      <svg viewBox="0 0 120 120" width="116" height="116" role="img" aria-label="hexagon with a vertical line through two corners">
+        <polygon points="60,20 95,40 95,80 60,100 25,80 25,40" fill="#22b07d"/>
+        <line x1="60" y1="12" x2="60" y2="108" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="116" height="116" role="img" aria-label="hexagon with a horizontal line through two side midpoints">
+        <polygon points="60,20 95,40 95,80 60,100 25,80 25,40" fill="#22b07d"/>
+        <line x1="14" y1="60" x2="106" y2="60" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="116" height="116" role="img" aria-label="hexagon with a slanted line through two opposite corners">
+        <polygon points="60,20 95,40 95,80 60,100 25,80 25,40" fill="#22b07d"/>
+        <line x1="25" y1="40" x2="95" y2="80" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="116" height="116" role="img" aria-label="hexagon with an off-centre line that misses the middle">
+        <polygon points="60,20 95,40 95,80 60,100 25,80 25,40" fill="#22b07d"/>
+        <line x1="40" y1="14" x2="40" y2="106" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+  </ul>
+  <p class="explain">Cards 1, 2, and 3 all pass through the centre and match the halves. Card 4 is off to the side, so it does NOT work.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["1","2","3","4"]
+description: Select all lines — plus / Greek cross
+hint: A plus sign is very symmetric. Try folding it up-down, across, AND corner-to-corner.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every card that shows a line of symmetry of this plus shape.</p>
+  <ul class="options">
+    <li>
+      <svg viewBox="0 0 120 120" width="116" height="116" role="img" aria-label="plus shape with a vertical line">
+        <path d="M48 24 h24 v24 h24 v24 h-24 v24 h-24 v-24 h-24 v-24 h24 z" fill="#e15b97"/>
+        <line x1="60" y1="14" x2="60" y2="106" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="116" height="116" role="img" aria-label="plus shape with a horizontal line">
+        <path d="M48 24 h24 v24 h24 v24 h-24 v24 h-24 v-24 h-24 v-24 h24 z" fill="#e15b97"/>
+        <line x1="14" y1="60" x2="106" y2="60" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="116" height="116" role="img" aria-label="plus shape with a diagonal line">
+        <path d="M48 24 h24 v24 h24 v24 h-24 v24 h-24 v-24 h-24 v-24 h24 z" fill="#e15b97"/>
+        <line x1="22" y1="22" x2="98" y2="98" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="116" height="116" role="img" aria-label="plus shape with the other diagonal line">
+        <path d="M48 24 h24 v24 h24 v24 h-24 v24 h-24 v-24 h-24 v-24 h24 z" fill="#e15b97"/>
+        <line x1="98" y1="22" x2="22" y2="98" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+  </ul>
+  <p class="explain">A plus (Greek cross) has 4 lines of symmetry — up-down, across, and both diagonals. All four match!</p>
+</div>
+
+<!-- ═══════════ SORT into bins ═══════════ -->
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"none","label":"0 lines"},{"id":"one","label":"1 line"},{"id":"many","label":"More than 1 line"}]
+answer: ["none","one","many","many"]
+description: Sort shapes by how many lines of symmetry
+hint: Scalene triangle has 0, isosceles has 1, and both the square and pentagon have several.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Sort each shape by how many lines of symmetry it has.</p>
+  <ul class="tiles">
+    <li><svg viewBox="0 0 60 60" width="52" height="52" role="img" aria-label="scalene triangle"><polygon points="14,48 52,48 42,18" fill="#e15b97"/></svg></li>
+    <li><svg viewBox="0 0 60 60" width="52" height="52" role="img" aria-label="isosceles triangle"><polygon points="30,12 48,48 12,48" fill="#22b07d"/></svg></li>
+    <li><svg viewBox="0 0 60 60" width="52" height="52" role="img" aria-label="square"><rect x="12" y="12" width="36" height="36" rx="3" fill="#7b5cff"/></svg></li>
+    <li><svg viewBox="0 0 60 60" width="52" height="52" role="img" aria-label="regular pentagon"><polygon points="30,10 50,25 42,48 18,48 10,25" fill="#f4a63a"/></svg></li>
+  </ul>
+  <p class="explain">Scalene triangle → 0. Isosceles triangle → 1. Square → 4 and pentagon → 5, so both go in "more than 1".</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"has","label":"Has a line of symmetry"},{"id":"none","label":"No line of symmetry"}]
+answer: ["has","none","has","none"]
+description: Sort by has-symmetry vs none
+hint: A circle and the letter A fold to match. A parallelogram and the letter F never do.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Sort each one: does it have a line of symmetry, or not?</p>
+  <ul class="tiles">
+    <li><svg viewBox="0 0 60 60" width="52" height="52" role="img" aria-label="circle"><circle cx="30" cy="30" r="20" fill="#2ec4d6"/></svg></li>
+    <li><svg viewBox="0 0 60 60" width="52" height="52" role="img" aria-label="parallelogram"><polygon points="20,16 52,16 40,44 8,44" fill="#e15b97"/></svg></li>
+    <li><svg viewBox="0 0 60 60" width="52" height="52" role="img" aria-label="letter A"><text x="30" y="46" font-size="46" font-family="Baloo 2, sans-serif" font-weight="800" text-anchor="middle" fill="#7b5cff">A</text></svg></li>
+    <li><svg viewBox="0 0 60 60" width="52" height="52" role="img" aria-label="letter F"><text x="30" y="46" font-size="46" font-family="Baloo 2, sans-serif" font-weight="800" text-anchor="middle" fill="#f4a63a">F</text></svg></li>
+  </ul>
+  <p class="explain">Circle → endless lines, letter A → one vertical line. Parallelogram and letter F have none — no fold matches.</p>
+</div>
+
+<!-- ═══════════ VENN: vertical vs horizontal ═══════════ -->
+<!--@q
+type: categorize
+layout: venn2
+left_label: vertical line of symmetry
+right_label: horizontal line of symmetry
+answer: ["A","B","AB","OUT"]
+description: Sort letters by vertical vs horizontal symmetry
+hint: T folds down the middle. D folds across. O folds both ways. R folds neither way.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each letter into the Venn diagram by the line of symmetry it has.</p>
+  <ul class="tiles">
+    <li><svg viewBox="0 0 60 60" width="50" height="50" role="img" aria-label="letter T"><text x="30" y="46" font-size="46" font-family="Baloo 2, sans-serif" font-weight="800" text-anchor="middle" fill="#7b5cff">T</text></svg></li>
+    <li><svg viewBox="0 0 60 60" width="50" height="50" role="img" aria-label="letter D"><text x="30" y="46" font-size="46" font-family="Baloo 2, sans-serif" font-weight="800" text-anchor="middle" fill="#2ec4d6">D</text></svg></li>
+    <li><svg viewBox="0 0 60 60" width="50" height="50" role="img" aria-label="letter O"><text x="30" y="46" font-size="46" font-family="Baloo 2, sans-serif" font-weight="800" text-anchor="middle" fill="#e15b97">O</text></svg></li>
+    <li><svg viewBox="0 0 60 60" width="50" height="50" role="img" aria-label="letter R"><text x="30" y="46" font-size="46" font-family="Baloo 2, sans-serif" font-weight="800" text-anchor="middle" fill="#f4a63a">R</text></svg></li>
+  </ul>
+  <p class="explain">T folds down the middle (vertical). D folds across (horizontal). O folds BOTH ways, so it sits in the overlap. R folds neither way — it stays outside.</p>
+</div>
+
+<!-- ═══════════ DRAW / MARK (geometry) ═══════════ -->
+<!--@q
+type: construct
+tag: CONSTRUCT
+description: Draw ALL 6 lines of symmetry of a regular hexagon (both types)
+hint: There are two kinds. Some go corner to corner. Others go from the middle of one side to the middle of the opposite side. Find all 6!
+-->
+<div class="question" data-type="construct">
+  <p class="prompt">A regular hexagon has 6 lines of symmetry. Use the Line tool to draw every single one. (Hint: some join opposite corners, and some join the middles of opposite sides.)</p>
+  <div class="rao-construct" data-construct='{"kind":"geo-construct-tools","cfg":{"board":{"bounds":[-1,9,9,-1]},"objects":[{"kind":"polygon","points":[[4.0,7.0],[6.5981,5.5],[6.5981,2.5],[4.0,1.0],[1.4019,2.5],[1.4019,5.5]],"color":"#22b07d","fill":0.18,"width":2},{"kind":"point","id":"V0","at":[4.0,7.0],"helper":true},{"kind":"point","id":"V1","at":[6.5981,5.5],"helper":true},{"kind":"point","id":"V2","at":[6.5981,2.5],"helper":true},{"kind":"point","id":"V3","at":[4.0,1.0],"helper":true},{"kind":"point","id":"V4","at":[1.4019,2.5],"helper":true},{"kind":"point","id":"V5","at":[1.4019,5.5],"helper":true},{"kind":"point","id":"M0","at":[5.299,6.25],"helper":true},{"kind":"point","id":"M1","at":[6.5981,4.0],"helper":true},{"kind":"point","id":"M2","at":[5.299,1.75],"helper":true},{"kind":"point","id":"M3","at":[2.7009,1.75],"helper":true},{"kind":"point","id":"M4","at":[1.4019,4.0],"helper":true},{"kind":"point","id":"M5","at":[2.7009,6.25],"helper":true}],"tools":["line"],"axisSnap":{"center":[4,4],"angles":[0,30,60,90,120,150],"tolAng":0.28,"tolDist":1.2},"targets":[{"kind":"line","through":["V0","V3"]},{"kind":"line","through":["V1","V4"]},{"kind":"line","through":["V2","V5"]},{"kind":"line","through":["M0","M3"]},{"kind":"line","through":["M1","M4"]},{"kind":"line","through":["M2","M5"]}],"hint":"3 lines join opposite corners; 3 lines join opposite side-middles","tol":0.35,"tolAng":0.03}}'></div>
+  <p class="explain">A regular hexagon has 6 lines of symmetry: 3 that join opposite corners, and 3 that join the middles of opposite sides. You need all six!</p>
+</div>
+
+<!--@q
+type: construct
+tag: CONSTRUCT
+description: Draw the line of symmetry between two dots (perpendicular bisector)
+hint: The fold line sits exactly halfway between the two dots and crosses the join at a right angle.
+-->
+<div class="question" data-type="construct">
+  <p class="prompt">Draw the line of symmetry that would make the blue dot land exactly on the red dot when folded.</p>
+  <div class="rao-construct" data-construct='{"kind":"geo-construct-tools","cfg":{"board":{"bounds":[-1,9,9,-1]},"objects":[{"kind":"point","id":"A","at":[2,4],"label":"","color":"#2b6cff"},{"kind":"point","id":"Bd","at":[6,4],"label":"","color":"#e8402a"},{"kind":"point","id":"PT","at":[4,7],"helper":true},{"kind":"point","id":"PB","at":[4,1],"helper":true}],"tools":["line"],"axisSnap":{"center":[4,4],"angles":[90],"tolAng":0.45,"tolDist":1.5},"targets":[{"kind":"line","perpBisectorOf":["A","Bd"]}],"hint":"halfway between the dots, straight up and down","tol":0.35,"tolAng":0.03}}'></div>
+  <p class="explain">The line of symmetry is the vertical line halfway between the dots — every point on it is the same distance from both dots.</p>
+</div>
+
+<!--@q
+type: construct
+tag: CONSTRUCT
+description: Mark the point where a pentagon's lines of symmetry cross
+hint: All 5 lines of symmetry meet at the very middle of the pentagon.
+-->
+<div class="question" data-type="construct">
+  <p class="prompt">All of a regular pentagon's lines of symmetry cross at one point. Tap that centre point.</p>
+  <div class="rao-construct" data-construct='{"kind":"geo-mark","cfg":{"board":{"bounds":[0.64,7.65,7.36,0.92]},"objects":[{"kind":"polygon","points":[[4,7],[6.85,4.93],[5.76,1.57],[2.24,1.57],[1.15,4.93]],"color":"#7b5cff","fill":0.18,"width":2}],"targets":[[4,4]],"tolerance":0.6,"hint":"tap the very middle of the pentagon","markLabel":"C"}}'></div>
+  <p class="explain">The centre sits in the exact middle. Every line of symmetry passes through this one point.</p>
+</div>
+
+</div>

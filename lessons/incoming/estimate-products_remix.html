@@ -1,0 +1,346 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["60"]
+description: Estimate 3 × 19
+hint: Round 19 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 3 × 19 ≈ ?</p>
+  <ul class="options">
+    <li data-val="60">60</li>
+    <li data-val="57">57</li>
+    <li data-val="30">30</li>
+    <li data-val="90">90</li>
+  </ul>
+  <p class="explain">19 rounds up to 20, and 20 × 3 = 60.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["240"]
+description: Estimate 6 × 42
+hint: Round 42 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 6 × 42 ≈ ?</p>
+  <ul class="options">
+    <li data-val="240">240</li>
+    <li data-val="252">252</li>
+    <li data-val="300">300</li>
+    <li data-val="180">180</li>
+  </ul>
+  <p class="explain">42 rounds down to 40, and 40 × 6 = 240.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"down","label":"Rounds DOWN (to a smaller ten)"},{"id":"up","label":"Rounds UP (to a bigger ten)"}]
+answer: ["down","up","down","up"]
+description: Sort by which way the number rounds
+hint: 1, 2, 3, 4 round down. 5, 6, 7, 8, 9 round up.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Before you estimate, you have to round. Sort each number by which way it rounds to the nearest ten.</p>
+  <ul class="tiles">
+    <li>51</li>
+    <li>67</li>
+    <li>84</li>
+    <li>88</li>
+  </ul>
+  <p class="explain">51 and 84 round down (to 50 and 80). 67 and 88 round up (to 70 and 90).</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["350"]
+description: Estimate 51 × 7
+hint: Round 51 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 51 × 7 ≈ ?</p>
+  <ul class="options">
+    <li data-val="350">350</li>
+    <li data-val="357">357</li>
+    <li data-val="420">420</li>
+    <li data-val="280">280</li>
+  </ul>
+  <p class="explain">51 rounds down to 50, and 50 × 7 = 350.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["280"]
+description: Estimate 4 × 67
+hint: Round 67 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 4 × 67 ≈ ?</p>
+  <ul class="options">
+    <li data-val="280">280</li>
+    <li data-val="268">268</li>
+    <li data-val="240">240</li>
+    <li data-val="320">320</li>
+  </ul>
+  <p class="explain">67 rounds up to 70, and 70 × 4 = 280.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["360"]
+description: Estimate 9 × 38
+hint: Round 38 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 9 × 38 ≈ ?</p>
+  <ul class="options">
+    <li data-val="360">360</li>
+    <li data-val="342">342</li>
+    <li data-val="270">270</li>
+    <li data-val="450">450</li>
+  </ul>
+  <p class="explain">38 rounds up to 40, and 40 × 9 = 360.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["160"]
+description: Estimate 84 × 2
+hint: Round 84 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 84 × 2 ≈ ?</p>
+  <ul class="options">
+    <li data-val="160">160</li>
+    <li data-val="168">168</li>
+    <li data-val="180">180</li>
+    <li data-val="140">140</li>
+  </ul>
+  <p class="explain">84 rounds down to 80, and 80 × 2 = 160.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["80","180","280"]
+low: smallest
+high: largest
+description: Order three estimates from smallest to largest
+hint: Estimate each one first, then line them up.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Estimate each product, then order the estimates from smallest to largest.</p>
+  <ol class="order">
+    <li>4 × 67</li>
+    <li>4 × 22</li>
+    <li>6 × 31</li>
+  </ol>
+  <p class="explain">4 × 22 ≈ 80, 6 × 31 ≈ 180, 4 × 67 ≈ 280.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["630"]
+description: Estimate 7 × 88
+hint: Round 88 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 7 × 88 ≈ ?</p>
+  <ul class="options">
+    <li data-val="630">630</li>
+    <li data-val="616">616</li>
+    <li data-val="560">560</li>
+    <li data-val="700">700</li>
+  </ul>
+  <p class="explain">88 rounds up to 90, and 90 × 7 = 630.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["300"]
+description: Estimate 95 × 3 (rounding crosses 100)
+hint: What ten is 95 closest to? It's a tricky one.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 95 × 3 ≈ ?</p>
+  <ul class="options">
+    <li data-val="300">300</li>
+    <li data-val="285">285</li>
+    <li data-val="270">270</li>
+    <li data-val="330">330</li>
+  </ul>
+  <p class="explain">95 rounds all the way up to 100, and 100 × 3 = 300.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["160"]
+description: Estimate 8 × 24
+hint: Round 24 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 8 × 24 ≈ ?</p>
+  <ul class="options">
+    <li data-val="160">160</li>
+    <li data-val="192">192</li>
+    <li data-val="240">240</li>
+    <li data-val="80">80</li>
+  </ul>
+  <p class="explain">24 rounds down to 20, and 20 × 8 = 160.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["540"]
+description: Estimate 63 × 9
+hint: Round 63 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 63 × 9 ≈ ?</p>
+  <ul class="options">
+    <li data-val="540">540</li>
+    <li data-val="567">567</li>
+    <li data-val="630">630</li>
+    <li data-val="450">450</li>
+  </ul>
+  <p class="explain">63 rounds down to 60, and 60 × 9 = 540.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["yes"]
+description: Is 250 a good estimate for 5 × 46?
+hint: Round 46 first, then multiply, and compare.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A student says 5 × 46 is about 250. Is that a good estimate?</p>
+  <ul class="options">
+    <li data-val="yes">Yes — 46 rounds to 50, and 50 × 5 = 250</li>
+    <li data-val="no-low">No, it should be about 200</li>
+    <li data-val="no-high">No, it should be about 300</li>
+    <li data-val="no-exact">No, the answer is exactly 230</li>
+  </ul>
+  <p class="explain">46 rounds up to 50, so 50 × 5 = 250 is a good estimate.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["160"]
+description: Estimate 2 × 79
+hint: Round 79 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 2 × 79 ≈ ?</p>
+  <ul class="options">
+    <li data-val="160">160</li>
+    <li data-val="158">158</li>
+    <li data-val="140">140</li>
+    <li data-val="180">180</li>
+  </ul>
+  <p class="explain">79 rounds up to 80, and 80 × 2 = 160.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["120"]
+description: Estimate 4 × 33
+hint: Round 33 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 4 × 33 ≈ ?</p>
+  <ul class="options">
+    <li data-val="120">120</li>
+    <li data-val="132">132</li>
+    <li data-val="160">160</li>
+    <li data-val="80">80</li>
+  </ul>
+  <p class="explain">33 rounds down to 30, and 30 × 4 = 120.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["480"]
+description: Estimate 76 × 6
+hint: Round 76 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 76 × 6 ≈ ?</p>
+  <ul class="options">
+    <li data-val="480">480</li>
+    <li data-val="456">456</li>
+    <li data-val="420">420</li>
+    <li data-val="540">540</li>
+  </ul>
+  <p class="explain">76 rounds up to 80, and 80 × 6 = 480.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"about300","label":"About 300"},{"id":"about420","label":"About 420"}]
+answer: ["about300","about420","about300","about420"]
+description: Sort products by their estimate
+hint: Estimate each one, then match it to the closest group.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Estimate each product, then drop it into the group that matches its estimate.</p>
+  <ul class="tiles">
+    <li>5 × 61</li>
+    <li>7 × 58</li>
+    <li>3 × 95</li>
+    <li>6 × 69</li>
+  </ul>
+  <p class="explain">5 × 61 ≈ 300 and 3 × 95 ≈ 300. 7 × 58 ≈ 420 and 6 × 69 ≈ 420.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["420"]
+description: Estimate 55 × 7
+hint: Round 55 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 55 × 7 ≈ ?</p>
+  <ul class="options">
+    <li data-val="420">420</li>
+    <li data-val="385">385</li>
+    <li data-val="350">350</li>
+    <li data-val="490">490</li>
+  </ul>
+  <p class="explain">55 rounds up to 60, and 60 × 7 = 420.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["270"]
+description: Estimate 9 × 27
+hint: Round 27 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 9 × 27 ≈ ?</p>
+  <ul class="options">
+    <li data-val="270">270</li>
+    <li data-val="243">243</li>
+    <li data-val="180">180</li>
+    <li data-val="360">360</li>
+  </ul>
+  <p class="explain">27 rounds up to 30, and 30 × 9 = 270.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["320"]
+description: Estimate 82 × 4
+hint: Round 82 to the nearest ten first, then multiply.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate the product. 82 × 4 ≈ ?</p>
+  <ul class="options">
+    <li data-val="320">320</li>
+    <li data-val="328">328</li>
+    <li data-val="360">360</li>
+    <li data-val="280">280</li>
+  </ul>
+  <p class="explain">82 rounds down to 80, and 80 × 4 = 320.</p>
+</div>
+</div>

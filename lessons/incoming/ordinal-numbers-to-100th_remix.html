@@ -1,0 +1,203 @@
+<div id="source">
+  <!--@q
+type: fill-blanks
+answer: ["32nd"]
+description: Write 32 as an ordinal number
+hint: Ordinals tell position: 1st, 2nd, 3rd, 4th...
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Write 32 as an ordinal number: []</p>
+  <p class="explain">32 ends in 2, so it is 32nd.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"st","label":"-st"},{"id":"nd","label":"-nd"},{"id":"rd","label":"-rd"},{"id":"th","label":"-th"}]
+answer: ["st","nd","rd","th","th"]
+description: Sort each number by its ordinal ending
+hint: 1 to -st, 2 to -nd, 3 to -rd, everything else to -th (0,4-9).
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Which ending does each number get? Drop it in the right box.</p>
+  <ul class="tiles">
+    <li>41</li>
+    <li>82</li>
+    <li>93</li>
+    <li>27</li>
+    <li>15</li>
+  </ul>
+  <p class="explain">Look at the last digit: 41 to -st, 82 to -nd, 93 to -rd, 27 and 15 to -th.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["5th"]
+description: Which position is coloured?
+hint: Count from the left: 1st, 2nd, 3rd...
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the position of the orange circle.</p>
+  <svg viewBox="0 0 300 40" width="100%" height="40" role="img" aria-label="row of circles">
+    <circle cx="20" cy="20" r="12" fill="#c3c8ce"/>
+    <circle cx="55" cy="20" r="12" fill="#c3c8ce"/>
+    <circle cx="90" cy="20" r="12" fill="#c3c8ce"/>
+    <circle cx="125" cy="20" r="12" fill="#c3c8ce"/>
+    <circle cx="160" cy="20" r="12" fill="#ff7a1a"/>
+    <circle cx="195" cy="20" r="12" fill="#c3c8ce"/>
+    <circle cx="230" cy="20" r="12" fill="#c3c8ce"/>
+  </svg>
+  <ul class="options">
+    <li data-val="3rd">3rd</li>
+    <li data-val="4th">4th</li>
+    <li data-val="5th">5th</li>
+    <li data-val="6th">6th</li>
+  </ul>
+  <p class="explain">Counting from the left, the orange circle is 5th.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["3rd","21st","44th","70th"]
+low: smallest
+high: largest
+description: Order the ordinals from smallest to largest
+hint: Ignore the ending and compare the numbers: 3, 21, 44, 70.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Drag these into order, smallest position first.</p>
+  <ol class="order">
+    <li>44th</li>
+    <li>3rd</li>
+    <li>70th</li>
+    <li>21st</li>
+  </ol>
+  <p class="explain">In order: 3rd, 21st, 44th, 70th.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["21st"]
+description: Which comes right after 20th?
+hint: One position later than 20th. Watch the ending!
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which comes right after 20th?</p>
+  <ul class="options">
+    <li data-val="21th">21th</li>
+    <li data-val="20th">20th</li>
+    <li data-val="21st">21st</li>
+    <li data-val="19th">19th</li>
+  </ul>
+  <p class="explain">After 20th comes 21st (ends in 1, so -st, not -th).</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["10th","20th","30th","40th","50th"]
+palette: ["10th","20th","30th","40th","50th"]
+description: Continue the counting-by-tens pattern
+hint: Each step jumps by ten: 10th, 20th, 30th...
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Build the pattern: count the tens in order.</p>
+  <p class="reference">10th, 20th, 30th, ___ , ___</p>
+  <p class="explain">The pattern is 10th, 20th, 30th, 40th, 50th.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["71st"]
+description: Write 71 as an ordinal number
+hint: A number ending in 1 (but not 11) uses -st.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Write 71 as an ordinal number: []</p>
+  <p class="explain">71 ends in 1, so it is 71st.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["8th"]
+description: Which position is coloured?
+hint: Count from the left: 1st, 2nd, 3rd...
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the position of the orange square.</p>
+  <svg viewBox="0 0 375 40" width="100%" height="40" role="img" aria-label="row of squares">
+    <rect x="8"   y="8" width="24" height="24" rx="3" fill="#c3c8ce"/>
+    <rect x="43"  y="8" width="24" height="24" rx="3" fill="#c3c8ce"/>
+    <rect x="78"  y="8" width="24" height="24" rx="3" fill="#c3c8ce"/>
+    <rect x="113" y="8" width="24" height="24" rx="3" fill="#c3c8ce"/>
+    <rect x="148" y="8" width="24" height="24" rx="3" fill="#c3c8ce"/>
+    <rect x="183" y="8" width="24" height="24" rx="3" fill="#c3c8ce"/>
+    <rect x="218" y="8" width="24" height="24" rx="3" fill="#c3c8ce"/>
+    <rect x="253" y="8" width="24" height="24" rx="3" fill="#ff7a1a"/>
+    <rect x="288" y="8" width="24" height="24" rx="3" fill="#c3c8ce"/>
+  </svg>
+  <ul class="options">
+    <li data-val="6th">6th</li>
+    <li data-val="7th">7th</li>
+    <li data-val="8th">8th</li>
+    <li data-val="9th">9th</li>
+  </ul>
+  <p class="explain">Counting from the left, the orange square is 8th.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["23rd"]
+description: Write 23 as an ordinal number
+hint: A number ending in 3 (but not 13) uses -rd.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Write 23 as an ordinal number: []</p>
+  <p class="explain">23 ends in 3, so it is 23rd.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["39th"]
+description: Which comes right before 40th?
+hint: One position earlier than 40th.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which comes right before 40th?</p>
+  <ul class="options">
+    <li data-val="41st">41st</li>
+    <li data-val="39th">39th</li>
+    <li data-val="38th">38th</li>
+    <li data-val="40th">40th</li>
+  </ul>
+  <p class="explain">Just before 40th comes 39th.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["62nd"]
+description: Choose the ordinal form of 62
+hint: A number ending in 2 (but not 12) uses -nd. Watch for the -th trap!
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which is the correct ordinal form of 62?</p>
+  <ul class="options">
+    <li data-val="62th">62th</li>
+    <li data-val="62nd">62nd</li>
+    <li data-val="62rd">62rd</li>
+    <li data-val="62st">62st</li>
+  </ul>
+  <p class="explain">62 ends in 2, so it is 62nd (not 62th).</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["100th"]
+description: Write 100 as an ordinal number
+hint: One hundred in order is one hundredth.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Write 100 as an ordinal number: []</p>
+  <p class="explain">100 in ordinal form is 100th.</p>
+</div>
+
+</div>

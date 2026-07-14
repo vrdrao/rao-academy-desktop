@@ -1,0 +1,512 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["8:30 PM"]
+description: Which time is in the evening
+hint: Evening times are PM, from 6 PM onward.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which of these times happens in the evening?</p>
+  <ul class="options">
+    <li data-val="8:30 AM">8:30 AM</li>
+    <li data-val="11:15 AM">11:15 AM</li>
+    <li data-val="1:00 PM">1:00 PM</li>
+    <li data-val="8:30 PM">8:30 PM</li>
+  </ul>
+  <p class="explain">Evening is PM from about 6 PM on, so 8:30 PM is the evening time.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3:15 PM"]
+description: Words to 12-hour time
+hint: "Quarter past" means 15 minutes after the hour.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which clock time means "quarter past three in the afternoon"?</p>
+  <ul class="options">
+    <li data-val="3:15 AM">3:15 AM</li>
+    <li data-val="3:15 PM">3:15 PM</li>
+    <li data-val="3:45 PM">3:45 PM</li>
+    <li data-val="15:15 PM">15:15 PM</li>
+  </ul>
+  <p class="explain">"Quarter past three" is 3:15, and afternoon is PM, so 3:15 PM.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"morning","label":"Morning"},{"id":"afternoon","label":"Afternoon"},{"id":"evening","label":"Evening"}]
+answer: ["morning","afternoon","evening","morning"]
+description: Sort times into parts of the day
+hint: AM is morning. PM before 6 is afternoon; 6 PM and later is evening.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each departure time into the right part of the day.</p>
+  <ul class="tiles">
+    <li>6:45 AM</li>
+    <li>2:15 PM</li>
+    <li>7:20 PM</li>
+    <li>11:20 AM</li>
+  </ul>
+  <p class="explain">6:45 AM and 11:20 AM are morning, 2:15 PM is afternoon, and 7:20 PM is evening.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["7:45 AM"]
+description: Words to 12-hour time (quarter to)
+hint: "Quarter to eight" is 15 minutes before 8:00.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which clock time means "quarter to eight in the morning"?</p>
+  <ul class="options">
+    <li data-val="7:45 AM">7:45 AM</li>
+    <li data-val="8:15 AM">8:15 AM</li>
+    <li data-val="8:45 AM">8:45 AM</li>
+    <li data-val="7:15 AM">7:15 AM</li>
+  </ul>
+  <p class="explain">"Quarter to eight" is 15 minutes before 8:00, which is 7:45 AM.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2:30 PM"]
+description: Words to 12-hour time (half past)
+hint: "Half past two" is 30 minutes after 2:00.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which clock time means "half past two in the afternoon"?</p>
+  <ul class="options">
+    <li data-val="2:30 PM">2:30 PM</li>
+    <li data-val="2:15 PM">2:15 PM</li>
+    <li data-val="3:30 PM">3:30 PM</li>
+    <li data-val="12:30 PM">12:30 PM</li>
+  </ul>
+  <p class="explain">"Half past two" is 2:30, and afternoon is PM, so 2:30 PM.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"am","label":"AM (before noon)"},{"id":"pm","label":"PM (noon or later)"}]
+answer: ["am","pm","pm","am","pm"]
+description: Sort times into AM and PM
+hint: AM is before noon; PM is from noon onward.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each time into AM or PM.</p>
+  <ul class="tiles">
+    <li>9:30 AM</li>
+    <li>4:00 PM</li>
+    <li>11:45 PM</li>
+    <li>6:20 AM</li>
+    <li>1:10 PM</li>
+  </ul>
+  <p class="explain">9:30 AM and 6:20 AM are AM; 4:00 PM, 11:45 PM, and 1:10 PM are PM.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["11:40 AM"]
+description: Which departure is earliest
+hint: The smallest time of day comes first. Watch AM and PM.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Four buses leave at these times. Which one leaves earliest?</p>
+  <ul class="options">
+    <li data-val="11:55 AM">11:55 AM</li>
+    <li data-val="12:05 PM">12:05 PM</li>
+    <li data-val="11:40 AM">11:40 AM</li>
+    <li data-val="12:15 PM">12:15 PM</li>
+  </ul>
+  <p class="explain">11:40 AM is before all the others, so it leaves earliest.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["9:40 AM"]
+description: Bus arrival time
+hint: Count on 25 minutes from 9:15.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A bus leaves Elm Street at 9:15 AM. The trip to Central Station takes 25 minutes. What time does it arrive?</p>
+  <ul class="options">
+    <li data-val="9:30 AM">9:30 AM</li>
+    <li data-val="9:40 AM">9:40 AM</li>
+    <li data-val="9:45 AM">9:45 AM</li>
+    <li data-val="10:40 AM">10:40 AM</li>
+  </ul>
+  <p class="explain">9:15 + 25 minutes = 9:40 AM.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3:30 PM"]
+description: Train arrival time
+hint: Add 40 minutes to 2:50 PM.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A train departs at 2:50 PM. The journey takes 40 minutes. What time does it arrive?</p>
+  <ul class="options">
+    <li data-val="3:10 PM">3:10 PM</li>
+    <li data-val="3:20 PM">3:20 PM</li>
+    <li data-val="3:30 PM">3:30 PM</li>
+    <li data-val="2:90 PM">2:90 PM</li>
+  </ul>
+  <p class="explain">2:50 + 40 minutes = 3:30 PM.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["7:40 AM","8:05 AM","8:50 AM","9:15 AM"]
+low: earliest
+high: latest
+description: Order departures earliest to latest
+hint: Compare the hours first, then the minutes.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Put these train departures in order from earliest to latest.</p>
+  <ol class="order">
+    <li>9:15 AM</li>
+    <li>7:40 AM</li>
+    <li>8:50 AM</li>
+    <li>8:05 AM</li>
+  </ol>
+  <p class="explain">Earliest to latest: 7:40, 8:05, 8:50, 9:15 AM.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["8:15 PM"]
+description: Movie end time
+hint: 1 hour 45 minutes after 6:30 PM.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A movie starts at 6:30 PM and lasts 1 hour 45 minutes. What time does it end?</p>
+  <ul class="options">
+    <li data-val="7:15 PM">7:15 PM</li>
+    <li data-val="8:00 PM">8:00 PM</li>
+    <li data-val="8:15 PM">8:15 PM</li>
+    <li data-val="8:75 PM">8:75 PM</li>
+  </ul>
+  <p class="explain">6:30 + 1 hour = 7:30, then + 45 minutes = 8:15 PM.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3:55 PM"]
+description: Flight landing time
+hint: 2 hours 20 minutes after 1:35 PM.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A flight departs at 1:35 PM and lasts 2 hours 20 minutes. What time does it land?</p>
+  <ul class="options">
+    <li data-val="3:15 PM">3:15 PM</li>
+    <li data-val="3:45 PM">3:45 PM</li>
+    <li data-val="3:55 PM">3:55 PM</li>
+    <li data-val="4:05 PM">4:05 PM</li>
+  </ul>
+  <p class="explain">1:35 + 2 hours = 3:35, then + 20 minutes = 3:55 PM.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["45"]
+description: Journey length in minutes
+hint: Count the minutes from 8:05 to 8:50.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A train departs at 8:05 AM and arrives at 8:50 AM. The journey lasts [] minutes.</p>
+  <p class="explain">From 8:05 to 8:50 is 45 minutes.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2:25 PM"]
+description: Arrive early
+hint: Count back 20 minutes from 2:45 PM.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya has a dentist appointment at 2:45 PM. She wants to arrive 20 minutes early. What time should she get there?</p>
+  <ul class="options">
+    <li data-val="2:15 PM">2:15 PM</li>
+    <li data-val="2:25 PM">2:25 PM</li>
+    <li data-val="3:05 PM">3:05 PM</li>
+    <li data-val="2:65 PM">2:65 PM</li>
+  </ul>
+  <p class="explain">20 minutes before 2:45 is 2:25 PM.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2 hours 30 minutes"]
+description: Elapsed time in hours and minutes
+hint: Count whole hours first, then the extra minutes.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A trip starts at 9:20 AM and ends at 11:50 AM. How long is the trip?</p>
+  <ul class="options">
+    <li data-val="2 hours 30 minutes">2 hours 30 minutes</li>
+    <li data-val="2 hours">2 hours</li>
+    <li data-val="2 hours 50 minutes">2 hours 50 minutes</li>
+    <li data-val="1 hour 30 minutes">1 hour 30 minutes</li>
+  </ul>
+  <p class="explain">9:20 to 11:20 is 2 hours, plus 30 more minutes to 11:50 = 2 hours 30 minutes.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["10:00 AM","10:15 AM","10:30 AM","10:45 AM"]
+description: Pick all the bus departure times
+hint: Buses leave every 15 minutes starting at 10:00 AM.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Buses leave every 15 minutes starting at 10:00 AM. Tap ALL the times a bus leaves.</p>
+  <ul class="options">
+    <li data-val="10:00 AM">10:00 AM</li>
+    <li data-val="10:15 AM">10:15 AM</li>
+    <li data-val="10:20 AM">10:20 AM</li>
+    <li data-val="10:30 AM">10:30 AM</li>
+    <li data-val="10:45 AM">10:45 AM</li>
+  </ul>
+  <p class="explain">Every 15 minutes: 10:00, 10:15, 10:30, 10:45. 10:20 is not a departure.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["20 minutes"]
+description: How long until the next bus
+hint: Count the minutes from 3:40 to 4:00.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">It is 3:40 PM now. The next bus comes at 4:00 PM. How long is the wait?</p>
+  <ul class="options">
+    <li data-val="20 minutes">20 minutes</li>
+    <li data-val="40 minutes">40 minutes</li>
+    <li data-val="10 minutes">10 minutes</li>
+    <li data-val="1 hour">1 hour</li>
+  </ul>
+  <p class="explain">From 3:40 to 4:00 is 20 minutes.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["6:45 AM, 7:00 AM"]
+description: Continue the interval pattern
+hint: The times go up by 15 minutes each step.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A tram comes every 15 minutes: 6:00 AM, 6:15 AM, 6:30 AM, ... What are the next two times?</p>
+  <ul class="options">
+    <li data-val="6:45 AM, 7:00 AM">6:45 AM, 7:00 AM</li>
+    <li data-val="6:40 AM, 6:55 AM">6:40 AM, 6:55 AM</li>
+    <li data-val="6:45 AM, 6:60 AM">6:45 AM, 6:60 AM</li>
+    <li data-val="7:00 AM, 7:15 AM">7:00 AM, 7:15 AM</li>
+  </ul>
+  <p class="explain">Add 15 minutes each time: 6:30 → 6:45 → 7:00 AM.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["11:30 AM","11:55 AM","12:05 PM","12:45 PM"]
+low: earliest
+high: latest
+description: Order departures across noon
+hint: The two AM times come before the two PM times.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Put these departures in order from earliest to latest.</p>
+  <ol class="order">
+    <li>12:05 PM</li>
+    <li>11:30 AM</li>
+    <li>12:45 PM</li>
+    <li>11:55 AM</li>
+  </ol>
+  <p class="explain">Earliest to latest: 11:30 AM, 11:55 AM, 12:05 PM, 12:45 PM.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["8:00 AM","8:30 AM","9:00 AM"]
+description: Pick all the ferry departure times
+hint: Ferries leave every 30 minutes starting at 8:00 AM.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Ferries leave every 30 minutes starting at 8:00 AM. Tap ALL the times a ferry leaves.</p>
+  <ul class="options">
+    <li data-val="8:00 AM">8:00 AM</li>
+    <li data-val="8:30 AM">8:30 AM</li>
+    <li data-val="8:45 AM">8:45 AM</li>
+    <li data-val="9:00 AM">9:00 AM</li>
+    <li data-val="9:15 AM">9:15 AM</li>
+  </ul>
+  <p class="explain">Every 30 minutes: 8:00, 8:30, 9:00. 8:45 and 9:15 are not departures.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3:45 PM"]
+description: Convert 24-hour to 12-hour
+hint: After 12:00, subtract 12 and use PM.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A departure board shows 15:45. What is this time in 12-hour form?</p>
+  <ul class="options">
+    <li data-val="3:45 AM">3:45 AM</li>
+    <li data-val="3:45 PM">3:45 PM</li>
+    <li data-val="5:45 PM">5:45 PM</li>
+    <li data-val="15:45 PM">15:45 PM</li>
+  </ul>
+  <p class="explain">15 − 12 = 3, and afternoon is PM, so 15:45 is 3:45 PM.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["12:30 AM"]
+description: Convert 24-hour to 12-hour (midnight)
+hint: 00:xx is just after midnight, in the early morning.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A night train shows 00:30 on the board. What is this time in 12-hour form?</p>
+  <ul class="options">
+    <li data-val="12:30 AM">12:30 AM</li>
+    <li data-val="12:30 PM">12:30 PM</li>
+    <li data-val="0:30 AM">0:30 AM</li>
+    <li data-val="00:30 AM">00:30 AM</li>
+  </ul>
+  <p class="explain">00:30 is just after midnight, so it is 12:30 AM.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["12:00 PM"]
+description: Convert 24-hour to 12-hour (noon)
+hint: 12:00 in the middle of the day is noon.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A schedule shows 12:00 in the middle of the day. What is this time in 12-hour form?</p>
+  <ul class="options">
+    <li data-val="12:00 AM">12:00 AM</li>
+    <li data-val="12:00 PM">12:00 PM</li>
+    <li data-val="0:00 PM">0:00 PM</li>
+    <li data-val="24:00 PM">24:00 PM</li>
+  </ul>
+  <p class="explain">Noon is 12:00 PM. (Midnight is 12:00 AM.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["12:10 AM"]
+description: Bus arrival crossing midnight
+hint: 30 minutes after 11:40 PM passes midnight into the next day.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A late-night bus leaves at 11:40 PM. The ride takes 30 minutes. What time does it arrive?</p>
+  <ul class="options">
+    <li data-val="12:10 AM">12:10 AM</li>
+    <li data-val="12:10 PM">12:10 PM</li>
+    <li data-val="11:70 PM">11:70 PM</li>
+    <li data-val="12:20 AM">12:20 AM</li>
+  </ul>
+  <p class="explain">11:40 PM + 20 minutes = midnight, then + 10 more = 12:10 AM.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["4:50 PM","2:30 PM","1:05 PM","11:15 AM"]
+low: latest
+high: earliest
+description: Order departures latest to earliest
+hint: The latest time of day comes first. Watch the AM one.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Put these departures in order from latest to earliest.</p>
+  <ol class="order">
+    <li>2:30 PM</li>
+    <li>11:15 AM</li>
+    <li>4:50 PM</li>
+    <li>1:05 PM</li>
+  </ol>
+  <p class="explain">Latest to earliest: 4:50 PM, 2:30 PM, 1:05 PM, 11:15 AM.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["15:45"]
+description: Convert 12-hour to 24-hour
+hint: For PM times, add 12 to the hour.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A clock reads 3:45 PM. What is this time in 24-hour (railway) form?</p>
+  <ul class="options">
+    <li data-val="15:45">15:45</li>
+    <li data-val="03:45">03:45</li>
+    <li data-val="13:45">13:45</li>
+    <li data-val="05:45">05:45</li>
+  </ul>
+  <p class="explain">3 + 12 = 15, so 3:45 PM is 15:45.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["09:20"]
+description: Convert 12-hour to 24-hour (AM)
+hint: Morning hours keep the same number, with a leading zero.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A clock reads 9:20 AM. What is this time in 24-hour (railway) form?</p>
+  <ul class="options">
+    <li data-val="09:20">09:20</li>
+    <li data-val="21:20">21:20</li>
+    <li data-val="19:20">19:20</li>
+    <li data-val="92:00">92:00</li>
+  </ul>
+  <p class="explain">Morning stays the same: 9:20 AM is 09:20.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3:25 PM"]
+description: Work backwards to latest departure
+hint: Count back 35 minutes from 4:00 PM.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Leo must arrive by 4:00 PM. His trip takes 35 minutes. What is the latest time he can leave?</p>
+  <ul class="options">
+    <li data-val="3:25 PM">3:25 PM</li>
+    <li data-val="4:35 PM">4:35 PM</li>
+    <li data-val="3:35 PM">3:35 PM</li>
+    <li data-val="3:25 AM">3:25 AM</li>
+  </ul>
+  <p class="explain">35 minutes before 4:00 is 3:25 PM.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["12:00 AM"]
+description: Naming midnight
+hint: Midnight is the start of a new day.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which time is midnight?</p>
+  <ul class="options">
+    <li data-val="12:00 AM">12:00 AM</li>
+    <li data-val="12:00 PM">12:00 PM</li>
+    <li data-val="24:00 PM">24:00 PM</li>
+    <li data-val="0:00 PM">0:00 PM</li>
+  </ul>
+  <p class="explain">Midnight is 12:00 AM. (Noon is 12:00 PM.)</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["45"]
+description: Duration crossing midnight
+hint: Count from 11:50 PM to midnight, then to 12:35 AM.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A train departs at 11:50 PM and arrives at 12:35 AM. The journey lasts [] minutes.</p>
+  <p class="explain">11:50 PM to midnight is 10 minutes, plus 35 more to 12:35 AM = 45 minutes.</p>
+</div>
+</div>

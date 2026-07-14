@@ -1,0 +1,188 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["4:00 PM"]
+description: Convert 24-hour to 12-hour
+hint: 16 is past 12, so it's afternoon. 16 - 12 = 4.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">The library closes at 16:00. Tap the same time on a 12-hour clock.</p>
+  <ul class="options"><li data-val="4:00 PM">4:00 PM</li><li data-val="6:00 PM">6:00 PM</li><li data-val="4:00 AM">4:00 AM</li><li data-val="1:60 PM">1:60 PM</li></ul>
+  <p class="explain">16:00 is 4 hours past noon = 4:00 PM.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["20:30"]
+description: Convert 12-hour to 24-hour
+hint: PM means add 12 to the hour. 8 + 12 = 20.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">The show starts at 8:30 PM. Tap the same time in 24-hour time.</p>
+  <ul class="options"><li data-val="20:30">20:30</li><li data-val="08:30">08:30</li><li data-val="18:30">18:30</li><li data-val="20:03">20:03</li></ul>
+  <p class="explain">8 PM + 12 = 20, so 8:30 PM = 20:30.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"am","label":"AM (before noon)"},{"id":"pm","label":"PM (noon or later)"}]
+answer: ["am","pm","am","pm"]
+description: Sort 24-hour times into AM and PM
+hint: In 24-hour time, anything under 12:00 is AM.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each 24-hour time into AM or PM.</p>
+  <ul class="tiles"><li>09:15</li><li>13:05</li><li>11:45</li><li>20:00</li></ul>
+  <p class="explain">09:15 and 11:45 are AM; 13:05 and 20:00 are PM.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["00:20"]
+description: Adding time that crosses midnight
+hint: From 23:40 to midnight is 20 minutes. That uses 20 of the 40. 20 minutes left after 00:00.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A night bus leaves at 23:40 and the ride takes 40 minutes. Tap the arrival time.</p>
+  <ul class="options"><li data-val="00:20">00:20</li><li data-val="23:80">23:80</li><li data-val="24:20">24:20</li><li data-val="00:80">00:80</li></ul>
+  <p class="explain">23:40 + 40 min crosses midnight to 00:20 (12:20 AM).</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["45"]
+description: Count elapsed minutes
+hint: From 08:20 to 09:00 is 40 minutes, then 5 more to 09:05.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A train leaves at 08:20 and arrives at 09:05. The trip takes [] minutes.</p>
+  <p class="explain">08:20 to 09:05 is 45 minutes.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1 hour 45 minutes"]
+description: Journey longer than an hour
+hint: 14:15 to 15:15 is one hour, then 15:15 to 16:00 is 45 more minutes.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A ferry leaves at 14:15 and docks at 16:00. Tap how long the crossing takes.</p>
+  <ul class="options"><li data-val="1 hour 45 minutes">1 hour 45 minutes</li><li data-val="2 hours 15 minutes">2 hours 15 minutes</li><li data-val="1 hour 15 minutes">1 hour 15 minutes</li><li data-val="45 minutes">45 minutes</li></ul>
+  <p class="explain">14:15 to 16:00 is 1 hour and 45 minutes.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["14:00"]
+description: Start time plus duration
+hint: 13:10 + 50 min. 13:10 to 14:00 is exactly 50 minutes.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A movie starts at 13:10 and lasts 50 minutes. Tap the time it ends.</p>
+  <ul class="options"><li data-val="14:00">14:00</li><li data-val="13:60">13:60</li><li data-val="13:50">13:50</li><li data-val="14:10">14:10</li></ul>
+  <p class="explain">13:10 + 50 min = 14:00.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["06:50","11:20","15:45","22:10"]
+low: earliest
+high: latest
+description: Put 24-hour times in order
+hint: Compare the hours first (the number before the colon).
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Drag these departure times in order, earliest to latest.</p>
+  <ol class="order"><li>15:45</li><li>06:50</li><li>22:10</li><li>11:20</li></ol>
+  <p class="explain">06:50, 11:20, 15:45, 22:10.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["a","c","d"]
+description: Select all PM times
+hint: PM means 12:00 or later in 24-hour time.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select ALL the times that are in the afternoon or evening (12:00 or later).</p>
+  <ul class="options"><li data-val="a">13:00</li><li data-val="b">09:30</li><li data-val="c">17:45</li><li data-val="d">21:15</li></ul>
+  <p class="explain">13:00, 17:45 and 21:15 are all PM; 09:30 is morning.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["12:35"]
+description: Read arrival from a schedule
+hint: Find 11:40 in the Milford row, then read Hillsdale in that same column.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Using the schedule, tap the time the 11:40 train from Milford reaches Hillsdale.</p>
+  <svg viewBox="0 0 560 282" width="100%" style="max-width:560px;font-family:Quicksand,DM Sans,sans-serif" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="560" height="42" fill="#0d5c2c"/><text x="280.0" y="26.0" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">Train schedule</text><rect x="0" y="42" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="67.0" fill="#2c2150" font-size="15" font-weight="600">Dayton</text><rect x="168.0" y="42" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="207.2" y="67.0" text-anchor="middle" fill="#333" font-size="15">08:00</text><rect x="246.4" y="42" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="285.6" y="67.0" text-anchor="middle" fill="#333" font-size="15">09:25</text><rect x="324.8" y="42" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="364.0" y="67.0" text-anchor="middle" fill="#333" font-size="15">09:40</text><rect x="403.20000000000005" y="42" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="442.40000000000003" y="67.0" text-anchor="middle" fill="#333" font-size="15">10:25</text><rect x="481.6" y="42" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="520.8000000000001" y="67.0" text-anchor="middle" fill="#333" font-size="15">10:55</text><rect x="0" y="82" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="107.0" fill="#2c2150" font-size="15" font-weight="600">Richmond</text><rect x="168.0" y="82" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="207.2" y="107.0" text-anchor="middle" fill="#333" font-size="15">08:35</text><rect x="246.4" y="82" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="285.6" y="107.0" text-anchor="middle" fill="#333" font-size="15">10:00</text><rect x="324.8" y="82" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="364.0" y="107.0" text-anchor="middle" fill="#333" font-size="15">10:15</text><rect x="403.20000000000005" y="82" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="442.40000000000003" y="107.0" text-anchor="middle" fill="#333" font-size="15">11:00</text><rect x="481.6" y="82" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="520.8000000000001" y="107.0" text-anchor="middle" fill="#333" font-size="15">11:30</text><rect x="0" y="122" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="147.0" fill="#2c2150" font-size="15" font-weight="600">Milford</text><rect x="168.0" y="122" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="207.2" y="147.0" text-anchor="middle" fill="#333" font-size="15">10:15</text><rect x="246.4" y="122" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="285.6" y="147.0" text-anchor="middle" fill="#333" font-size="15">11:40</text><rect x="324.8" y="122" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="364.0" y="147.0" text-anchor="middle" fill="#333" font-size="15">11:55</text><rect x="403.20000000000005" y="122" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="442.40000000000003" y="147.0" text-anchor="middle" fill="#333" font-size="15">12:40</text><rect x="481.6" y="122" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="520.8000000000001" y="147.0" text-anchor="middle" fill="#333" font-size="15">13:10</text><rect x="0" y="162" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="187.0" fill="#2c2150" font-size="15" font-weight="600">Hillsdale</text><rect x="168.0" y="162" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="207.2" y="187.0" text-anchor="middle" fill="#333" font-size="15">11:10</text><rect x="246.4" y="162" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="285.6" y="187.0" text-anchor="middle" fill="#333" font-size="15">12:35</text><rect x="324.8" y="162" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="364.0" y="187.0" text-anchor="middle" fill="#333" font-size="15">12:50</text><rect x="403.20000000000005" y="162" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="442.40000000000003" y="187.0" text-anchor="middle" fill="#333" font-size="15">13:35</text><rect x="481.6" y="162" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="520.8000000000001" y="187.0" text-anchor="middle" fill="#333" font-size="15">14:05</text><rect x="0" y="202" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="227.0" fill="#2c2150" font-size="15" font-weight="600">Ashland</text><rect x="168.0" y="202" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="207.2" y="227.0" text-anchor="middle" fill="#333" font-size="15">12:00</text><rect x="246.4" y="202" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="285.6" y="227.0" text-anchor="middle" fill="#333" font-size="15">13:25</text><rect x="324.8" y="202" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="364.0" y="227.0" text-anchor="middle" fill="#333" font-size="15">13:40</text><rect x="403.20000000000005" y="202" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="442.40000000000003" y="227.0" text-anchor="middle" fill="#333" font-size="15">14:25</text><rect x="481.6" y="202" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="520.8000000000001" y="227.0" text-anchor="middle" fill="#333" font-size="15">14:55</text><rect x="0" y="242" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="267.0" fill="#2c2150" font-size="15" font-weight="600">Westford</text><rect x="168.0" y="242" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="207.2" y="267.0" text-anchor="middle" fill="#333" font-size="15">13:10</text><rect x="246.4" y="242" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="285.6" y="267.0" text-anchor="middle" fill="#333" font-size="15">14:35</text><rect x="324.8" y="242" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="364.0" y="267.0" text-anchor="middle" fill="#333" font-size="15">14:50</text><rect x="403.20000000000005" y="242" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="442.40000000000003" y="267.0" text-anchor="middle" fill="#333" font-size="15">15:35</text><rect x="481.6" y="242" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="520.8000000000001" y="267.0" text-anchor="middle" fill="#333" font-size="15">16:05</text><rect x="1" y="1" width="558" height="280" fill="none" stroke="#c9ced6" stroke-width="2" rx="2"/></svg>
+  <ul class="options"><li data-val="12:35">12:35</li><li data-val="11:55">11:55</li><li data-val="13:35">13:35</li><li data-val="12:50">12:50</li></ul>
+  <p class="explain">Same column: the 11:40 Milford train reaches Hillsdale at 12:35.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["25"]
+description: Count the wait until the next departure
+hint: The next Zoo bus after 10:40 is 10:45? No, look down the Kickball row... use the Zoo row: next is 10:45. Actually count 10:40 to the NEXT listed, which is 5 apart here.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">On the tour bus schedule, the 10:35 bus just left Historic house. The next is at 11:00. The wait is [] minutes.</p>
+  <svg viewBox="0 0 560 402" width="100%" style="max-width:560px;font-family:Quicksand,DM Sans,sans-serif" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="560" height="42" fill="#a8400f"/><text x="280.0" y="26.0" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">Tour bus schedule</text><rect x="0" y="42" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="67.0" fill="#2c2150" font-size="15" font-weight="600">Historic house</text><rect x="168.0" y="42" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="233.33333333333331" y="67.0" text-anchor="middle" fill="#333" font-size="15">10:35</text><rect x="298.66666666666663" y="42" width="130.66666666666666" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="363.99999999999994" y="67.0" text-anchor="middle" fill="#333" font-size="15">10:55</text><rect x="429.3333333333333" y="42" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="494.66666666666663" y="67.0" text-anchor="middle" fill="#333" font-size="15">11:00</text><rect x="0" y="82" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="107.0" fill="#2c2150" font-size="15" font-weight="600">City hall</text><rect x="168.0" y="82" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="233.33333333333331" y="107.0" text-anchor="middle" fill="#333" font-size="15">11:00</text><rect x="298.66666666666663" y="82" width="130.66666666666666" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="363.99999999999994" y="107.0" text-anchor="middle" fill="#333" font-size="15">11:20</text><rect x="429.3333333333333" y="82" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="494.66666666666663" y="107.0" text-anchor="middle" fill="#333" font-size="15">11:25</text><rect x="0" y="122" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="147.0" fill="#2c2150" font-size="15" font-weight="600">Riverfront</text><rect x="168.0" y="122" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="233.33333333333331" y="147.0" text-anchor="middle" fill="#333" font-size="15">11:10</text><rect x="298.66666666666663" y="122" width="130.66666666666666" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="363.99999999999994" y="147.0" text-anchor="middle" fill="#333" font-size="15">11:30</text><rect x="429.3333333333333" y="122" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="494.66666666666663" y="147.0" text-anchor="middle" fill="#333" font-size="15">11:35</text><rect x="0" y="162" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="187.0" fill="#2c2150" font-size="15" font-weight="600">Governor's mansion</text><rect x="168.0" y="162" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="233.33333333333331" y="187.0" text-anchor="middle" fill="#333" font-size="15">11:30</text><rect x="298.66666666666663" y="162" width="130.66666666666666" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="363.99999999999994" y="187.0" text-anchor="middle" fill="#333" font-size="15">11:50</text><rect x="429.3333333333333" y="162" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="494.66666666666663" y="187.0" text-anchor="middle" fill="#333" font-size="15">11:55</text><rect x="0" y="202" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="227.0" fill="#2c2150" font-size="15" font-weight="600">Skyscraper</text><rect x="168.0" y="202" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="233.33333333333331" y="227.0" text-anchor="middle" fill="#333" font-size="15">12:00</text><rect x="298.66666666666663" y="202" width="130.66666666666666" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="363.99999999999994" y="227.0" text-anchor="middle" fill="#333" font-size="15">12:20</text><rect x="429.3333333333333" y="202" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="494.66666666666663" y="227.0" text-anchor="middle" fill="#333" font-size="15">12:25</text><rect x="0" y="242" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="267.0" fill="#2c2150" font-size="15" font-weight="600">Downtown</text><rect x="168.0" y="242" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="233.33333333333331" y="267.0" text-anchor="middle" fill="#333" font-size="15">12:40</text><rect x="298.66666666666663" y="242" width="130.66666666666666" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="363.99999999999994" y="267.0" text-anchor="middle" fill="#333" font-size="15">13:00</text><rect x="429.3333333333333" y="242" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="494.66666666666663" y="267.0" text-anchor="middle" fill="#333" font-size="15">13:05</text><rect x="0" y="282" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="307.0" fill="#2c2150" font-size="15" font-weight="600">University campus</text><rect x="168.0" y="282" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="233.33333333333331" y="307.0" text-anchor="middle" fill="#333" font-size="15">12:50</text><rect x="298.66666666666663" y="282" width="130.66666666666666" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="363.99999999999994" y="307.0" text-anchor="middle" fill="#333" font-size="15">13:10</text><rect x="429.3333333333333" y="282" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="494.66666666666663" y="307.0" text-anchor="middle" fill="#333" font-size="15">13:15</text><rect x="0" y="322" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="347.0" fill="#2c2150" font-size="15" font-weight="600">Zoo</text><rect x="168.0" y="322" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="233.33333333333331" y="347.0" text-anchor="middle" fill="#333" font-size="15">13:15</text><rect x="298.66666666666663" y="322" width="130.66666666666666" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="363.99999999999994" y="347.0" text-anchor="middle" fill="#333" font-size="15">13:35</text><rect x="429.3333333333333" y="322" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="494.66666666666663" y="347.0" text-anchor="middle" fill="#333" font-size="15">13:40</text><rect x="0" y="362" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="387.0" fill="#2c2150" font-size="15" font-weight="600">Art museum</text><rect x="168.0" y="362" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="233.33333333333331" y="387.0" text-anchor="middle" fill="#333" font-size="15">13:35</text><rect x="298.66666666666663" y="362" width="130.66666666666666" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="363.99999999999994" y="387.0" text-anchor="middle" fill="#333" font-size="15">13:55</text><rect x="429.3333333333333" y="362" width="130.66666666666666" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="494.66666666666663" y="387.0" text-anchor="middle" fill="#333" font-size="15">14:00</text><rect x="1" y="1" width="558" height="400" fill="none" stroke="#c9ced6" stroke-width="2" rx="2"/></svg>
+  <p class="explain">10:35 to 11:00 is 25 minutes.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"morning","label":"Morning"},{"id":"afternoon","label":"Afternoon"},{"id":"evening","label":"Evening"}]
+answer: ["morning","afternoon","evening","morning"]
+description: Sort times into morning, afternoon, evening
+hint: Morning is before 12:00, afternoon is 12:00 to 17:00, evening is 17:00 and later.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each time into Morning, Afternoon, or Evening.</p>
+  <ul class="tiles"><li>08:00</li><li>14:20</li><li>19:45</li><li>10:40</li></ul>
+  <p class="explain">08:00 & 10:40 morning; 14:20 afternoon; 19:45 evening.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["12:30 AM"]
+description: Convert 00:30 to 12-hour (midnight hour)
+hint: After midnight the 12-hour clock uses 12, not 0. 00:30 is half an hour past midnight.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A bakery starts baking at 00:30. Tap that time on a 12-hour clock.</p>
+  <ul class="options"><li data-val="12:30 AM">12:30 AM</li><li data-val="12:30 PM">12:30 PM</li><li data-val="0:30 AM">0:30 AM</li><li data-val="10:30 PM">10:30 PM</li></ul>
+  <p class="explain">00:30 is 30 minutes past midnight = 12:30 AM.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["00:05"]
+description: Adding time across midnight
+hint: 23:15 to midnight is 45 minutes; 50 - 45 = 5 minutes past midnight.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A baker's dough needs to rest 50 minutes starting at 23:15. Tap the time it is ready.</p>
+  <ul class="options"><li data-val="00:05">00:05</li><li data-val="23:65">23:65</li><li data-val="00:65">00:65</li><li data-val="01:05">01:05</li></ul>
+  <p class="explain">23:15 + 50 min crosses midnight to 00:05.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["13:25"]
+description: Earliest arrival, must skip buses already gone
+hint: You are at the softball field at 12:35. The 12:20 and 12:30 buses have left; the next leaves 12:45.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">You reach the softball field at 12:35. Using the shuttle schedule, tap the earliest time you can be at the train station.</p>
+  <svg viewBox="0 0 560 242" width="100%" style="max-width:560px;font-family:Quicksand,DM Sans,sans-serif" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="560" height="42" fill="#a8400f"/><text x="280.0" y="26.0" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">Hotel shuttle bus schedule</text><rect x="0" y="42" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="67.0" fill="#2c2150" font-size="15" font-weight="600">Main Street</text><rect x="168.0" y="42" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="207.2" y="67.0" text-anchor="middle" fill="#333" font-size="15">10:20</text><rect x="246.4" y="42" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="285.6" y="67.0" text-anchor="middle" fill="#333" font-size="15">10:25</text><rect x="324.8" y="42" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="364.0" y="67.0" text-anchor="middle" fill="#333" font-size="15">10:30</text><rect x="403.20000000000005" y="42" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="442.40000000000003" y="67.0" text-anchor="middle" fill="#333" font-size="15">10:45</text><rect x="481.6" y="42" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="520.8000000000001" y="67.0" text-anchor="middle" fill="#333" font-size="15">10:50</text><rect x="0" y="82" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="107.0" fill="#2c2150" font-size="15" font-weight="600">Art museum</text><rect x="168.0" y="82" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="207.2" y="107.0" text-anchor="middle" fill="#333" font-size="15">11:00</text><rect x="246.4" y="82" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="285.6" y="107.0" text-anchor="middle" fill="#333" font-size="15">11:05</text><rect x="324.8" y="82" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="364.0" y="107.0" text-anchor="middle" fill="#333" font-size="15">11:10</text><rect x="403.20000000000005" y="82" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="442.40000000000003" y="107.0" text-anchor="middle" fill="#333" font-size="15">11:25</text><rect x="481.6" y="82" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="520.8000000000001" y="107.0" text-anchor="middle" fill="#333" font-size="15">11:30</text><rect x="0" y="122" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="147.0" fill="#2c2150" font-size="15" font-weight="600">Hotel</text><rect x="168.0" y="122" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="207.2" y="147.0" text-anchor="middle" fill="#333" font-size="15">11:50</text><rect x="246.4" y="122" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="285.6" y="147.0" text-anchor="middle" fill="#333" font-size="15">11:55</text><rect x="324.8" y="122" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="364.0" y="147.0" text-anchor="middle" fill="#333" font-size="15">12:00</text><rect x="403.20000000000005" y="122" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="442.40000000000003" y="147.0" text-anchor="middle" fill="#333" font-size="15">12:15</text><rect x="481.6" y="122" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="520.8000000000001" y="147.0" text-anchor="middle" fill="#333" font-size="15">12:20</text><rect x="0" y="162" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="187.0" fill="#2c2150" font-size="15" font-weight="600">Softball field</text><rect x="168.0" y="162" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="207.2" y="187.0" text-anchor="middle" fill="#333" font-size="15">12:20</text><rect x="246.4" y="162" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="285.6" y="187.0" text-anchor="middle" fill="#333" font-size="15">12:25</text><rect x="324.8" y="162" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="364.0" y="187.0" text-anchor="middle" fill="#333" font-size="15">12:30</text><rect x="403.20000000000005" y="162" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="442.40000000000003" y="187.0" text-anchor="middle" fill="#333" font-size="15">12:45</text><rect x="481.6" y="162" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="520.8000000000001" y="187.0" text-anchor="middle" fill="#333" font-size="15">12:50</text><rect x="0" y="202" width="168" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="16" y="227.0" fill="#2c2150" font-size="15" font-weight="600">Train station</text><rect x="168.0" y="202" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="207.2" y="227.0" text-anchor="middle" fill="#333" font-size="15">13:00</text><rect x="246.4" y="202" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="285.6" y="227.0" text-anchor="middle" fill="#333" font-size="15">13:05</text><rect x="324.8" y="202" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="364.0" y="227.0" text-anchor="middle" fill="#333" font-size="15">13:10</text><rect x="403.20000000000005" y="202" width="78.4" height="40" fill="#eef0f2" stroke="#d7dbe0" stroke-width="1"/><text x="442.40000000000003" y="227.0" text-anchor="middle" fill="#333" font-size="15">13:25</text><rect x="481.6" y="202" width="78.4" height="40" fill="#ffffff" stroke="#d7dbe0" stroke-width="1"/><text x="520.8000000000001" y="227.0" text-anchor="middle" fill="#333" font-size="15">13:30</text><rect x="1" y="1" width="558" height="240" fill="none" stroke="#c9ced6" stroke-width="2" rx="2"/></svg>
+  <ul class="options"><li data-val="12:50">12:50</li><li data-val="13:00">13:00</li><li data-val="13:10">13:10</li><li data-val="13:25">13:25</li></ul>
+  <p class="explain">The first bus you can still catch leaves 12:45 and arrives 13:25.</p>
+</div>
+</div>

@@ -1,0 +1,170 @@
+<div id="source">
+  <!--@q
+type: fill-blanks
+answer: ["46th"]
+description: Write 46 as an ordinal number
+hint: A number ending in 6 uses -th.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Write 46 as an ordinal number: []</p>
+  <p class="explain">46 in ordinal form is 46th.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["13th"]
+description: Choose the correct ordinal form of 13
+hint: Careful! 11, 12 and 13 always use -th, even though they end in 1, 2, 3.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which is the correct ordinal form of 13?</p>
+  <ul class="options">
+    <li data-val="13rd">13rd</li>
+    <li data-val="13th">13th</li>
+    <li data-val="13st">13st</li>
+    <li data-val="13nd">13nd</li>
+  </ul>
+  <p class="explain">13 is a teen number, so it is 13th (not 13rd).</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"st","label":"-st"},{"id":"nd","label":"-nd"},{"id":"rd","label":"-rd"},{"id":"th","label":"-th"}]
+answer: ["st","th","th","rd","nd"]
+description: Sort by ending, including the teen trap
+hint: The teens 11, 12, 13 always get -th, even though they end in 1, 2, 3!
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drop each number in the box for its ending. Watch out for the teens!</p>
+  <ul class="tiles">
+    <li>81</li>
+    <li>12</li>
+    <li>11</li>
+    <li>33</li>
+    <li>52</li>
+  </ul>
+  <p class="explain">81 to -st, but 12 and 11 are teens so they take -th; 33 to -rd, 52 to -nd.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["81st"]
+description: Write 81 as an ordinal number
+hint: A number ending in 1 (but not 11) uses -st.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Write 81 as an ordinal number: []</p>
+  <p class="explain">81 ends in 1, so it is 81st.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["50th"]
+description: Which ordinal comes between 40th and 60th?
+hint: Halfway between 40 and 60.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which ordinal number comes exactly between 40th and 60th?</p>
+  <ul class="options">
+    <li data-val="45th">45th</li>
+    <li data-val="55th">55th</li>
+    <li data-val="50th">50th</li>
+    <li data-val="49th">49th</li>
+  </ul>
+  <p class="explain">Halfway between 40th and 60th is 50th.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["4th","13th","42nd","90th"]
+low: smallest
+high: largest
+description: Order the ordinals from smallest to largest
+hint: Ignore the endings and compare the numbers: 4, 13, 42, 90.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Drag these into order, smallest position first.</p>
+  <ol class="order">
+    <li>42nd</li>
+    <li>90th</li>
+    <li>4th</li>
+    <li>13th</li>
+  </ol>
+  <p class="explain">In order: 4th, 13th, 42nd, 90th.</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["60th","70th","80th","90th","100th"]
+palette: ["60th","70th","80th","90th","100th"]
+description: Continue the counting-by-tens pattern to 100th
+hint: Each step jumps by ten: 60th, 70th, 80th...
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Build the pattern: keep counting the tens in order.</p>
+  <p class="reference">60th, 70th, 80th, ___ , ___</p>
+  <p class="explain">The pattern is 60th, 70th, 80th, 90th, 100th.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["5th"]
+description: Which position is coloured?
+hint: Count the stars from the left: 1st, 2nd, 3rd...
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the position of the orange star.</p>
+  <svg viewBox="0 0 340 44" width="100%" height="44" role="img" aria-label="row of stars">
+    <polygon points="24,8 29,20 42,20 31,28 35,40 24,32 13,40 17,28 6,20 19,20"    fill="#c3c8ce"/>
+    <polygon points="70,8 75,20 88,20 77,28 81,40 70,32 59,40 63,28 52,20 65,20"   fill="#c3c8ce"/>
+    <polygon points="116,8 121,20 134,20 123,28 127,40 116,32 105,40 109,28 98,20 111,20" fill="#c3c8ce"/>
+    <polygon points="162,8 167,20 180,20 169,28 173,40 162,32 151,40 155,28 144,20 157,20" fill="#c3c8ce"/>
+    <polygon points="208,8 213,20 226,20 215,28 219,40 208,32 197,40 201,28 190,20 203,20" fill="#ff7a1a"/>
+    <polygon points="254,8 259,20 272,20 261,28 265,40 254,32 243,40 247,28 236,20 249,20" fill="#c3c8ce"/>
+    <polygon points="300,8 305,20 318,20 307,28 311,40 300,32 289,40 293,28 282,20 295,20" fill="#c3c8ce"/>
+  </svg>
+  <ul class="options">
+    <li data-val="4th">4th</li>
+    <li data-val="5th">5th</li>
+    <li data-val="6th">6th</li>
+    <li data-val="7th">7th</li>
+  </ul>
+  <p class="explain">Counting from the left, the orange star is 5th.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["29th"]
+description: Which comes right before 30th?
+hint: One position earlier than 30th.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which comes right before 30th?</p>
+  <ul class="options">
+    <li data-val="31st">31st</li>
+    <li data-val="28th">28th</li>
+    <li data-val="29th">29th</li>
+    <li data-val="30th">30th</li>
+  </ul>
+  <p class="explain">Just before 30th comes 29th.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["72nd"]
+description: Choose the ordinal form of 72
+hint: A number ending in 2 (but not 12) uses -nd. Watch for the -th trap!
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which is the correct ordinal form of 72?</p>
+  <ul class="options">
+    <li data-val="72th">72th</li>
+    <li data-val="72nd">72nd</li>
+    <li data-val="72st">72st</li>
+    <li data-val="72rd">72rd</li>
+  </ul>
+  <p class="explain">72 ends in 2, so it is 72nd (not 72th).</p>
+</div>
+
+</div>

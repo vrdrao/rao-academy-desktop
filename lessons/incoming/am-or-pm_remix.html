@@ -1,0 +1,298 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["A.M."]
+description: Morning means A.M.
+hint: "Morning" is the first half of the day.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Derek is getting dressed in the morning. His clock shows 7:30. Is it A.M. or P.M.?</p>
+  <ul class="options">
+    <li data-val="A.M.">7:30 A.M.</li>
+    <li data-val="P.M.">7:30 P.M.</li>
+  </ul>
+  <p class="explain">Morning is A.M. — from midnight until noon.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["P.M."]
+description: Afternoon means P.M.
+hint: "Afternoon" comes after noon (12:00).
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Kevin is taking an afternoon nap. His clock shows 2:00. Is it A.M. or P.M.?</p>
+  <ul class="options">
+    <li data-val="A.M.">2:00 A.M.</li>
+    <li data-val="P.M.">2:00 P.M.</li>
+  </ul>
+  <p class="explain">Afternoon is P.M. — from noon until midnight.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"am","label":"A.M. (Morning)"},{"id":"pm","label":"P.M. (Afternoon / Night)"}]
+answer: ["am","pm","pm","am"]
+description: Sort each activity into A.M. or P.M.
+hint: When in the day does each one usually happen?
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each activity into A.M. or P.M.</p>
+  <ul class="tiles">
+    <li>Eating breakfast</li>
+    <li>Eating dinner</li>
+    <li>Fireworks in the sky</li>
+    <li>The sun rising</li>
+  </ul>
+  <p class="explain">Breakfast and sunrise are morning (A.M.); dinner and fireworks are night (P.M.).</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["A.M."]
+description: Sunrise is in the morning
+hint: The sun comes up at the start of the day.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Farmer Nicholas gets up just before sunrise to milk the cows. His watch shows 5:00. Is it A.M. or P.M.?</p>
+  <ul class="options">
+    <li data-val="A.M.">5:00 A.M.</li>
+    <li data-val="P.M.">5:00 P.M.</li>
+  </ul>
+  <p class="explain">Sunrise is early morning, so it's A.M.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["P.M."]
+description: Sunset is in the evening
+hint: The sun goes down at the end of the day.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Lucy plays basketball until the sun sets. Her watch shows 8:45. Is it A.M. or P.M.?</p>
+  <ul class="options">
+    <li data-val="A.M.">8:45 A.M.</li>
+    <li data-val="P.M.">8:45 P.M.</li>
+  </ul>
+  <p class="explain">Sunset is in the evening, so it's P.M.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["Eating dinner","Watching fireworks","Reading a bedtime story"]
+description: Which happen in the P.M.?
+hint: P.M. is afternoon and night — after 12 noon.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap ALL the things that usually happen in the P.M.</p>
+  <ul class="options">
+    <li>Eating breakfast</li>
+    <li>Eating dinner</li>
+    <li>Watching fireworks</li>
+    <li>Reading a bedtime story</li>
+    <li>The rooster crows at sunrise</li>
+  </ul>
+  <p class="explain">Dinner, fireworks, and bedtime stories are all in the P.M.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["P.M."]
+description: After dark is night
+hint: "After dark" means the sky is already dark.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Jenny is looking for frogs after dark. Her watch shows 8:25. Is it A.M. or P.M.?</p>
+  <ul class="options">
+    <li data-val="A.M.">8:25 A.M.</li>
+    <li data-val="P.M.">8:25 P.M.</li>
+  </ul>
+  <p class="explain">After dark is night, so it's P.M.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["A.M."]
+description: School starts in the morning
+hint: Think about when the school day begins.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Seth walks into class just as school begins. The clock shows 9:15. Is it A.M. or P.M.?</p>
+  <ul class="options">
+    <li data-val="A.M.">9:15 A.M.</li>
+    <li data-val="P.M.">9:15 P.M.</li>
+  </ul>
+  <p class="explain">School starts in the morning, so it's A.M.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"am","label":"A.M. (Morning)"},{"id":"pm","label":"P.M. (Afternoon / Night)"}]
+answer: ["am","pm","am","pm"]
+description: Sort each clue into A.M. or P.M.
+hint: Some clues tell you the sky is bright or dark.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each clue into A.M. or P.M.</p>
+  <ul class="tiles">
+    <li>The sun is coming up</li>
+    <li>It is getting dark</li>
+    <li>Getting dressed for school</li>
+    <li>Watching an evening show</li>
+  </ul>
+  <p class="explain">Sunrise and getting ready for school are A.M.; getting dark and evening shows are P.M.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["P.M."]
+description: Evening means P.M.
+hint: "Evening" is late in the day.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Ellie is baking a cake one evening. The clock shows 6:00. Is it A.M. or P.M.?</p>
+  <ul class="options">
+    <li data-val="A.M.">6:00 A.M.</li>
+    <li data-val="P.M.">6:00 P.M.</li>
+  </ul>
+  <p class="explain">Evening is P.M.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["P.M."]
+description: Just after lunch is afternoon
+hint: Lunch is around noon; just after it is the afternoon.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Right after lunch, Bella runs to the playground. Her watch shows 12:45. Is it A.M. or P.M.?</p>
+  <ul class="options">
+    <li data-val="A.M.">12:45 A.M.</li>
+    <li data-val="P.M.">12:45 P.M.</li>
+  </ul>
+  <p class="explain">Just after lunch is early afternoon, so it's P.M.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["12:00 P.M."]
+description: Noon is 12:00 P.M.
+hint: Midday, when the sun is highest, is noon.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">The clock shows 12:00 and the sun is high in the middle of the day. What do we call this time?</p>
+  <ul class="options">
+    <li data-val="12:00 A.M.">12:00 A.M. (midnight)</li>
+    <li data-val="12:00 P.M.">12:00 P.M. (noon)</li>
+  </ul>
+  <p class="explain">Midday is noon, which is 12:00 P.M. Midnight is 12:00 A.M.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["The sun is rising","Eating breakfast","Getting ready for school"]
+description: Which happen in the A.M.?
+hint: A.M. is the morning — after midnight, before noon.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap ALL the things that usually happen in the A.M.</p>
+  <ul class="options">
+    <li>The sun is rising</li>
+    <li>Eating breakfast</li>
+    <li>Getting ready for school</li>
+    <li>The stars are out</li>
+    <li>Eating dinner</li>
+  </ul>
+  <p class="explain">Sunrise, breakfast, and getting ready for school are all A.M.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["A.M."]
+description: Midnight is A.M.
+hint: A brand-new day starts at 12:00 midnight.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">It is exactly midnight — the start of a brand-new day. Is midnight A.M. or P.M.?</p>
+  <ul class="options">
+    <li data-val="A.M.">A.M.</li>
+    <li data-val="P.M.">P.M.</li>
+  </ul>
+  <p class="explain">A new day begins at 12:00 A.M. (midnight).</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"am","label":"A.M. (Morning)"},{"id":"pm","label":"P.M. (Afternoon / Night)"}]
+answer: ["pm","am","pm","am","pm"]
+description: Sort five daily events into A.M. or P.M.
+hint: Picture the sky and what people are doing.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each event into A.M. or P.M.</p>
+  <ul class="tiles">
+    <li>Bedtime story</li>
+    <li>Rooster crows at dawn</li>
+    <li>Fireworks light the sky</li>
+    <li>Morning cartoons</li>
+    <li>Dinner with family</li>
+  </ul>
+  <p class="explain">Bedtime, fireworks, and dinner are P.M.; dawn and morning cartoons are A.M.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["A.M."]
+description: Brushing teeth after waking up
+hint: This happens right after you wake up.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Maya brushes her teeth right after she wakes up. The clock shows 7:00. Is it A.M. or P.M.?</p>
+  <ul class="options">
+    <li data-val="A.M.">7:00 A.M.</li>
+    <li data-val="P.M.">7:00 P.M.</li>
+  </ul>
+  <p class="explain">Waking up and brushing your teeth is in the morning, so it's A.M.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"am","label":"A.M. (Morning)"},{"id":"pm","label":"P.M. (Afternoon / Night)"}]
+answer: ["am","pm","pm","am"]
+description: Sort four more events into A.M. or P.M.
+hint: Think about whether the sky is light or dark for each one.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each event into A.M. or P.M.</p>
+  <ul class="tiles">
+    <li>Catching the school bus</li>
+    <li>Counting stars at night</li>
+    <li>Brushing teeth before bed</li>
+    <li>Birds singing at dawn</li>
+  </ul>
+  <p class="explain">The school bus and dawn are A.M.; stars and brushing before bed are P.M.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["Morning cartoons","Eating breakfast","Sunrise over the hills"]
+description: Which happen in the A.M.?
+hint: A.M. is the morning — after midnight, before noon.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap ALL the things that usually happen in the A.M.</p>
+  <ul class="options">
+    <li>Morning cartoons</li>
+    <li>Eating breakfast</li>
+    <li>Sunrise over the hills</li>
+    <li>Fireworks display</li>
+    <li>Tucking into bed</li>
+  </ul>
+  <p class="explain">Morning cartoons, breakfast, and sunrise are all A.M.</p>
+</div>
+
+</div>

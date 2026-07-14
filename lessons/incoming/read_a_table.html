@@ -1,0 +1,402 @@
+<div id="source">
+  <!--@q
+type: single-select
+answer: ["26"]
+description: Cricket: Diya's Match 2 runs
+hint: Find the Diya row, then slide across to the Match 2 column.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This table shows the runs four friends scored in two gully cricket matches. How many runs did Diya score in Match 2?</p>
+  <figure data-show="data-table" data-cols="Player|Match 1|Match 2" data-rows="Arjun|34|12;Priya|28|19;Rohan|45|8;Diya|17|26"></figure>
+  <ul class="options"><li>17</li><li>19</li><li>26</li><li>43</li></ul>
+  <p class="explain">Diya's row meets the Match 2 column at 26 runs.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Rohan"]
+description: Cricket: best total across both matches
+hint: Add each player's two scores first. Then compare the totals.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This table shows runs scored in two gully cricket matches. Who scored the most runs ACROSS BOTH matches together?</p>
+  <figure data-show="data-table" data-cols="Player|Match 1|Match 2" data-rows="Arjun|34|12;Priya|28|19;Rohan|45|8;Diya|17|26"></figure>
+  <ul class="options"><li>Arjun</li><li>Priya</li><li>Rohan</li><li>Diya</li></ul>
+  <p class="explain">Arjun 46, Priya 47, Rohan 53, Diya 43. Rohan has the most.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id": "true", "label": "True"}, {"id": "false", "label": "False"}]
+answer: ["true", "false", "true"]
+description: Cricket: judge the claims
+hint: Check each claim against the table. Some are true, some are false.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">This table shows runs scored in two gully cricket matches. Drag each statement into True or False.</p>
+  <figure data-show="data-table" data-cols="Player|Match 1|Match 2" data-rows="Arjun|34|12;Priya|28|19;Rohan|45|8;Diya|17|26"></figure>
+  <ul class="tiles"><li>Rohan scored the most in Match 1</li><li>Diya scored more in Match 1 than Match 2</li><li>Priya scored 28 in Match 1</li></ul>
+  <p class="explain">Rohan's 45 is the best Match 1 score (true). Priya did score 28 (true). But Diya scored 17 then 26 — she did BETTER in Match 2, so that one is false.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["50"]
+description: Auto fares: station vs school
+hint: Subtract the school fare from the railway station fare.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This table shows the autorickshaw fare from Priya's home to different places. How many rupees MORE does it cost to go to the railway station than to school?</p>
+  <figure data-show="data-table" data-cols="Trip|Fare (₹)" data-rows="School|40;Market|65;Railway station|90;Cousin&#x27;s house|55"></figure>
+  <ul class="options"><li>25</li><li>50</li><li>90</li><li>130</li></ul>
+  <p class="explain">₹90 − ₹40 = ₹50 more.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["120"]
+description: Auto fares: two trips added
+hint: Add the market fare and the cousin's house fare.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This table shows autorickshaw fares from Priya's home. She rides to the market, and later to her cousin's house. What is the total fare she pays?</p>
+  <figure data-show="data-table" data-cols="Trip|Fare (₹)" data-rows="School|40;Market|65;Railway station|90;Cousin&#x27;s house|55"></figure>
+  <ul class="options"><li>10</li><li>105</li><li>120</li><li>155</li></ul>
+  <p class="explain">₹65 + ₹55 = ₹120.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Wednesday"]
+description: Tiffin: find the wrong total
+hint: Add the two numbers in each row yourself, then compare with the printed total.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Meera's mother wrote down what she packed in the tiffin box each day. One row has a MISTAKE in the Total items column. Which day's total is wrong?</p>
+  <figure data-show="data-table" data-cols="Day|Rotis|Idlis|Total items" data-rows="Monday|3|2|5;Tuesday|4|5|9;Wednesday|2|4|9;Thursday|5|3|8" data-hi="2"></figure>
+  <ul class="options"><li>Monday</li><li>Tuesday</li><li>Wednesday</li><li>Thursday</li></ul>
+  <p class="explain">Wednesday: 2 + 4 = 6, but the table says 9. Every other row adds up correctly.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["6"]
+description: Tiffin: correct Wednesday's total
+hint: Add Wednesday's rotis and idlis.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Meera's tiffin table has one wrong total. What SHOULD Wednesday's total be?</p>
+  <figure data-show="data-table" data-cols="Day|Rotis|Idlis|Total items" data-rows="Monday|3|2|5;Tuesday|4|5|9;Wednesday|2|4|9;Thursday|5|3|8" data-hi="2"></figure>
+  <ul class="options"><li>4</li><li>6</li><li>9</li><li>11</li></ul>
+  <p class="explain">2 rotis + 4 idlis = 6 items.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["Tuesday", "Thursday"]
+description: Tiffin: days with more than 6 items (real totals)
+hint: Add each day's two numbers yourself. One printed total is wrong.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Meera's tiffin table has one wrong total. Select every day she got MORE than 6 items. Careful — do not trust the Total column!</p>
+  <figure data-show="data-table" data-cols="Day|Rotis|Idlis|Total items" data-rows="Monday|3|2|5;Tuesday|4|5|9;Wednesday|2|4|9;Thursday|5|3|8" data-hi="2"></figure>
+  <ul class="options"><li>Monday</li><li>Tuesday</li><li>Wednesday</li><li>Thursday</li></ul>
+  <p class="explain">Real totals: Mon 5, Tue 9, Wed 6, Thu 8. Only Tuesday and Thursday beat 6. Wednesday's printed 9 is wrong — she really got 6, so she does NOT count.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["21"]
+description: Rainfall: deduce the missing August value
+hint: June + July + August must add up to the Total. Subtract June and July from the Total.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This table counts the rainy days in Kochi during the monsoon. The August number has been smudged out. Use the Total to work out how many rainy days August had.</p>
+  <figure data-show="data-table" data-cols="Month|Rainy days" data-rows="June|18;July|26;August|?;Total|65" data-hi="2"></figure>
+  <ul class="options"><li>21</li><li>44</li><li>47</li><li>65</li></ul>
+  <p class="explain">65 − 18 − 26 = 21 rainy days in August.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["The rainy days in all three months added together"]
+description: Rainfall: what a Total row means
+hint: A Total row adds up everything above it.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">In this rainfall table, what does the number 65 in the Total row actually mean?</p>
+  <figure data-show="data-table" data-cols="Month|Rainy days" data-rows="June|18;July|26;August|?;Total|65" data-hi="2"></figure>
+  <ul class="options"><li>The rainy days in all three months added together</li><li>The rainy days in the wettest month</li><li>The number of days in the three months</li><li>The average rainy days each month</li></ul>
+  <p class="explain">65 is 18 + 26 + 21 — the three months added together.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["30"]
+description: Pet shop: total animals
+hint: Add the number of every animal in the table.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This table shows the animals in a pet shop window. How many animals are in the window altogether?</p>
+  <figure data-show="data-table" data-cols="Animal|How many" data-rows="Puppies|6;Kittens|9;Rabbits|4;Parrots|11"></figure>
+  <ul class="options"><li>11</li><li>15</li><li>26</li><li>30</li></ul>
+  <p class="explain">6 + 9 + 4 + 11 = 30 animals.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id": "yes", "label": "The table CAN answer this"}, {"id": "no", "label": "The table CANNOT answer this"}]
+answer: ["yes", "no", "yes", "no"]
+description: Pet shop: what can this table tell us?
+hint: A table only knows what its columns actually show. This one counts animals — nothing else.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">This table shows the animals in a pet shop window. Drag each question into the right box.</p>
+  <figure data-show="data-table" data-cols="Animal|How many" data-rows="Puppies|6;Kittens|9;Rabbits|4;Parrots|11"></figure>
+  <ul class="tiles"><li>How many kittens are there?</li><li>What are the puppies&#x27; names?</li><li>Which animal is there the most of?</li><li>How much does a rabbit cost?</li></ul>
+  <p class="explain">It can give the kitten count and the most common animal. It says nothing about names or prices — there is no column for those.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["5"]
+description: Canteen: dosa saving at Counter B
+hint: Find the dosa row. Subtract the Counter B price from the Counter A price.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">The school canteen has two counters with different prices. How many rupees do you SAVE by buying a dosa at Counter B instead of Counter A?</p>
+  <figure data-show="data-table" data-cols="Snack|Counter A (₹)|Counter B (₹)" data-rows="Samosa|15|12;Idli|30|35;Dosa|45|40;Juice|25|25"></figure>
+  <ul class="options"><li>3</li><li>5</li><li>40</li><li>85</li></ul>
+  <p class="explain">₹45 − ₹40 = ₹5 saved.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["Samosa", "Dosa"]
+description: Canteen: which snacks are cheaper at Counter B
+hint: Compare the two prices in each row. Cheaper at B means the B number is smaller.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">The school canteen has two counters. Select every snack that is CHEAPER at Counter B.</p>
+  <figure data-show="data-table" data-cols="Snack|Counter A (₹)|Counter B (₹)" data-rows="Samosa|15|12;Idli|30|35;Dosa|45|40;Juice|25|25"></figure>
+  <ul class="options"><li>Samosa</li><li>Idli</li><li>Dosa</li><li>Juice</li></ul>
+  <p class="explain">Samosa (₹12 < ₹15) and dosa (₹40 < ₹45) are cheaper at Counter B. Idli costs more there, and juice is the same price at both.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Counter A"]
+description: Canteen: cheaper counter for the full order
+hint: Add the three prices at Counter A. Then add the same three at Counter B. Compare.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Arjun wants one samosa, one idli and one juice. Which counter is cheaper for his whole order?</p>
+  <figure data-show="data-table" data-cols="Snack|Counter A (₹)|Counter B (₹)" data-rows="Samosa|15|12;Idli|30|35;Dosa|45|40;Juice|25|25"></figure>
+  <ul class="options"><li>Counter A</li><li>Counter B</li><li>Both cost the same</li></ul>
+  <p class="explain">Counter A: 15 + 30 + 25 = ₹70. Counter B: 12 + 35 + 25 = ₹72. Counter A is cheaper.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Deccan Queen"]
+description: Trains: reverse lookup by platform
+hint: Search down the Platform column until you find 5, then look left at the train name.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This is the departure board at a railway station. A train is leaving from Platform 5. Which train is it?</p>
+  <figure data-show="data-table" data-cols="Train|Departs|Platform" data-rows="Chennai Express|6:15 am|3;Deccan Queen|9:40 am|5;Shatabdi|2:20 pm|1;Night Mail|10:05 pm|7"></figure>
+  <ul class="options"><li>Chennai Express</li><li>Deccan Queen</li><li>Shatabdi</li><li>Night Mail</li></ul>
+  <p class="explain">Platform 5 is on the Deccan Queen row.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Chennai Express"]
+description: Trains: earliest departure
+hint: Compare the times in the Departs column. 'am' times come before 'pm' times.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This is the departure board at a railway station. Which train leaves EARLIEST in the morning?</p>
+  <figure data-show="data-table" data-cols="Train|Departs|Platform" data-rows="Chennai Express|6:15 am|3;Deccan Queen|9:40 am|5;Shatabdi|2:20 pm|1;Night Mail|10:05 pm|7"></figure>
+  <ul class="options"><li>Chennai Express</li><li>Deccan Queen</li><li>Shatabdi</li><li>Night Mail</li></ul>
+  <p class="explain">Chennai Express leaves at 6:15 am — earlier than every other train.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["28", "42", "51", "65"]
+low: fewest
+high: most
+description: Fruit stall: order the kilos sold
+hint: Find the smallest number first, then the next smallest.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">This table shows how many kilos of each fruit a stall sold today. Drag the numbers in order, from the fewest kilos to the most.</p>
+  <figure data-show="data-table" data-cols="Fruit|Kilos sold" data-rows="Bananas|42;Mangoes|65;Apples|28;Guavas|51"></figure>
+  <ol class="order"><li>42</li><li>65</li><li>28</li><li>51</li></ol>
+  <p class="explain">28 (apples), 42 (bananas), 51 (guavas), 65 (mangoes).</p>
+</div>
+
+<!--@q
+type: order
+answer: ["Mangoes", "Guavas", "Bananas", "Apples"]
+low: best seller
+high: worst seller
+description: Fruit stall: order the fruits by sales
+hint: Find the biggest number, then look left to see which fruit it belongs to.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">This table shows kilos of fruit sold today. Drag the FRUITS into order, from the best-selling fruit to the worst-selling one.</p>
+  <figure data-show="data-table" data-cols="Fruit|Kilos sold" data-rows="Bananas|42;Mangoes|65;Apples|28;Guavas|51"></figure>
+  <ol class="order"><li>Bananas</li><li>Mangoes</li><li>Apples</li><li>Guavas</li></ol>
+  <p class="explain">Mangoes 65, guavas 51, bananas 42, apples 28.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1"]
+description: Fruit stall: pick the table that matches the sentence
+hint: The banana number must be 42 and the apple number must be 28.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A stall sold 42 kilos of bananas and 28 kilos of apples. Which table shows this correctly?</p>
+  <ul class="options"><li data-val="1"><svg viewBox="0 0 188 78" width="188" height="78" xmlns="http://www.w3.org/2000/svg" role="img"><path d="M8,2 h172 a6,6 0 0 1 6,6 v20 h-184 v-20 a6,6 0 0 1 6,-6 z" fill="#7b5cff"/><text x="54.0" y="19.0" fill="#ffffff" font-family="Baloo 2, Quicksand, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Fruit</text><text x="146.0" y="19.0" fill="#ffffff" font-family="Baloo 2, Quicksand, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Kilos</text><rect x="2" y="28" width="184" height="24" fill="#ffffff"/><line x1="106" y1="28" x2="106" y2="52" stroke="#e1e7f3" stroke-width="1"/><line x1="2" y1="52" x2="186" y2="52" stroke="#e1e7f3" stroke-width="1"/><text x="54.0" y="44.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Bananas</text><text x="146.0" y="44.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="600" text-anchor="middle">42</text><rect x="2" y="52" width="184" height="24" fill="#f6f8fe"/><line x1="106" y1="52" x2="106" y2="76" stroke="#e1e7f3" stroke-width="1"/><line x1="2" y1="76" x2="186" y2="76" stroke="#e1e7f3" stroke-width="1"/><text x="54.0" y="68.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Apples</text><text x="146.0" y="68.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="600" text-anchor="middle">28</text><rect x="2" y="2" width="184" height="74" rx="6" fill="none" stroke="#e1e7f3" stroke-width="1"/></svg></li><li data-val="2"><svg viewBox="0 0 188 78" width="188" height="78" xmlns="http://www.w3.org/2000/svg" role="img"><path d="M8,2 h172 a6,6 0 0 1 6,6 v20 h-184 v-20 a6,6 0 0 1 6,-6 z" fill="#7b5cff"/><text x="54.0" y="19.0" fill="#ffffff" font-family="Baloo 2, Quicksand, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Fruit</text><text x="146.0" y="19.0" fill="#ffffff" font-family="Baloo 2, Quicksand, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Kilos</text><rect x="2" y="28" width="184" height="24" fill="#ffffff"/><line x1="106" y1="28" x2="106" y2="52" stroke="#e1e7f3" stroke-width="1"/><line x1="2" y1="52" x2="186" y2="52" stroke="#e1e7f3" stroke-width="1"/><text x="54.0" y="44.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Bananas</text><text x="146.0" y="44.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="600" text-anchor="middle">28</text><rect x="2" y="52" width="184" height="24" fill="#f6f8fe"/><line x1="106" y1="52" x2="106" y2="76" stroke="#e1e7f3" stroke-width="1"/><line x1="2" y1="76" x2="186" y2="76" stroke="#e1e7f3" stroke-width="1"/><text x="54.0" y="68.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Apples</text><text x="146.0" y="68.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="600" text-anchor="middle">42</text><rect x="2" y="2" width="184" height="74" rx="6" fill="none" stroke="#e1e7f3" stroke-width="1"/></svg></li><li data-val="3"><svg viewBox="0 0 188 78" width="188" height="78" xmlns="http://www.w3.org/2000/svg" role="img"><path d="M8,2 h172 a6,6 0 0 1 6,6 v20 h-184 v-20 a6,6 0 0 1 6,-6 z" fill="#7b5cff"/><text x="54.0" y="19.0" fill="#ffffff" font-family="Baloo 2, Quicksand, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Fruit</text><text x="146.0" y="19.0" fill="#ffffff" font-family="Baloo 2, Quicksand, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Kilos</text><rect x="2" y="28" width="184" height="24" fill="#ffffff"/><line x1="106" y1="28" x2="106" y2="52" stroke="#e1e7f3" stroke-width="1"/><line x1="2" y1="52" x2="186" y2="52" stroke="#e1e7f3" stroke-width="1"/><text x="54.0" y="44.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Bananas</text><text x="146.0" y="44.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="600" text-anchor="middle">42</text><rect x="2" y="52" width="184" height="24" fill="#f6f8fe"/><line x1="106" y1="52" x2="106" y2="76" stroke="#e1e7f3" stroke-width="1"/><line x1="2" y1="76" x2="186" y2="76" stroke="#e1e7f3" stroke-width="1"/><text x="54.0" y="68.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Apples</text><text x="146.0" y="68.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="600" text-anchor="middle">51</text><rect x="2" y="2" width="184" height="74" rx="6" fill="none" stroke="#e1e7f3" stroke-width="1"/></svg></li><li data-val="4"><svg viewBox="0 0 188 78" width="188" height="78" xmlns="http://www.w3.org/2000/svg" role="img"><path d="M8,2 h172 a6,6 0 0 1 6,6 v20 h-184 v-20 a6,6 0 0 1 6,-6 z" fill="#7b5cff"/><text x="54.0" y="19.0" fill="#ffffff" font-family="Baloo 2, Quicksand, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Fruit</text><text x="146.0" y="19.0" fill="#ffffff" font-family="Baloo 2, Quicksand, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Kilos</text><rect x="2" y="28" width="184" height="24" fill="#ffffff"/><line x1="106" y1="28" x2="106" y2="52" stroke="#e1e7f3" stroke-width="1"/><line x1="2" y1="52" x2="186" y2="52" stroke="#e1e7f3" stroke-width="1"/><text x="54.0" y="44.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Bananas</text><text x="146.0" y="44.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="600" text-anchor="middle">70</text><rect x="2" y="52" width="184" height="24" fill="#f6f8fe"/><line x1="106" y1="52" x2="106" y2="76" stroke="#e1e7f3" stroke-width="1"/><line x1="2" y1="76" x2="186" y2="76" stroke="#e1e7f3" stroke-width="1"/><text x="54.0" y="68.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Apples</text><text x="146.0" y="68.0" fill="#2c2150" font-family="Baloo 2, Quicksand, sans-serif" font-size="12" font-weight="600" text-anchor="middle">28</text><rect x="2" y="2" width="184" height="74" rx="6" fill="none" stroke="#e1e7f3" stroke-width="1"/></svg></li></ul>
+  <p class="explain">Only the first table puts 42 next to Bananas and 28 next to Apples.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Plan D"]
+description: Recharge: longest validity
+hint: Look only down the 'Days valid' column and find the biggest number.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This table compares mobile recharge plans. Which plan is valid for the MOST days?</p>
+  <figure data-show="data-table" data-cols="Plan|Price (₹)|Days valid" data-rows="Plan A|199|28;Plan B|299|56;Plan C|149|21;Plan D|399|84"></figure>
+  <ul class="options"><li>Plan A</li><li>Plan B</li><li>Plan C</li><li>Plan D</li></ul>
+  <p class="explain">Plan D lasts 84 days — longer than any other plan.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["Plan A", "Plan C"]
+description: Recharge: plans under ₹250
+hint: Check each price. Keep the plan only if its price is below 250.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">This table compares mobile recharge plans. Select every plan that costs LESS than ₹250.</p>
+  <figure data-show="data-table" data-cols="Plan|Price (₹)|Days valid" data-rows="Plan A|199|28;Plan B|299|56;Plan C|149|21;Plan D|399|84"></figure>
+  <ul class="options"><li>Plan A</li><li>Plan B</li><li>Plan C</li><li>Plan D</li></ul>
+  <p class="explain">Plan A is ₹199 and Plan C is ₹149 — both under ₹250. Plans B and D cost more.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["35"]
+description: Library: Meera's Term 1 books
+hint: Find the Meera row, then slide across to the Term 1 column.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This table shows how many library books each student borrowed in two terms. How many books did Meera borrow in Term 1?</p>
+  <figure data-show="data-table" data-cols="Student|Term 1|Term 2" data-rows="Priya|24|31;Arjun|18|27;Meera|35|22;Kabir|29|40"></figure>
+  <ul class="options"><li>18</li><li>22</li><li>29</li><li>35</li></ul>
+  <p class="explain">Meera's row meets the Term 1 column at 35.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Meera"]
+description: Library: biggest change between terms
+hint: For each student, find the difference between their two numbers. Then compare.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This table shows library books borrowed in two terms. For which student did the number change the MOST between Term 1 and Term 2?</p>
+  <figure data-show="data-table" data-cols="Student|Term 1|Term 2" data-rows="Priya|24|31;Arjun|18|27;Meera|35|22;Kabir|29|40"></figure>
+  <ul class="options"><li>Priya</li><li>Arjun</li><li>Meera</li><li>Kabir</li></ul>
+  <p class="explain">Priya changed by 7, Arjun by 9, Meera by 13, Kabir by 11. Meera changed the most.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id": "t1", "label": "More in Term 1"}, {"id": "t2", "label": "More in Term 2"}]
+answer: ["t2", "t2", "t1", "t2"]
+description: Library: which term was bigger
+hint: Compare the two numbers in each student's row.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">This table shows library books borrowed in two terms. Drag each student into the term in which they borrowed MORE books.</p>
+  <figure data-show="data-table" data-cols="Student|Term 1|Term 2" data-rows="Priya|24|31;Arjun|18|27;Meera|35|22;Kabir|29|40"></figure>
+  <ul class="tiles"><li>Priya</li><li>Arjun</li><li>Meera</li><li>Kabir</li></ul>
+  <p class="explain">Only Meera borrowed more in Term 1 (35 > 22). Priya, Arjun and Kabir all borrowed more in Term 2.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Route 21 carried twice as many as Route 3"]
+description: Buses: find the false statement
+hint: Test each statement against the table, one at a time.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This table shows how many passengers each bus route carried this morning. Three of these statements are TRUE and one is FALSE. Which one is FALSE?</p>
+  <figure data-show="data-table" data-cols="Bus route|Passengers" data-rows="Route 12|46;Route 7|62;Route 21|85;Route 3|38"></figure>
+  <ul class="options"><li>Route 7 carried more than Route 12</li><li>Route 3 was the quietest</li><li>Route 21 carried twice as many as Route 3</li><li>Route 12 carried fewer than 50</li></ul>
+  <p class="explain">Route 21 carried 85. Twice Route 3 would be 38 + 38 = 76, not 85. So that one is false.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Less than Route 21"]
+description: Buses: two routes versus Route 21
+hint: Add Route 12 and Route 3 first. Then compare that total with Route 21's number.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This table shows passengers on each bus route. Route 12 and Route 3's passengers are added together. Is that MORE or LESS than Route 21 on its own?</p>
+  <figure data-show="data-table" data-cols="Bus route|Passengers" data-rows="Route 12|46;Route 7|62;Route 21|85;Route 3|38"></figure>
+  <ul class="options"><li>More than Route 21</li><li>Less than Route 21</li><li>Exactly the same as Route 21</li></ul>
+  <p class="explain">46 + 38 = 84, and Route 21 alone carried 85. So it is LESS — by just one passenger.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["39"]
+description: Trip vote: total voters
+hint: Add up the votes for all four places.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Class 4B voted on where to go for their trip. How many children voted altogether?</p>
+  <figure data-show="data-table" data-cols="Place|Votes" data-rows="Zoo|11;Museum|8;Beach|14;Planetarium|6"></figure>
+  <ul class="options"><li>14</li><li>25</li><li>33</li><li>39</li></ul>
+  <p class="explain">11 + 8 + 14 + 6 = 39 children voted.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["7"]
+description: Trip vote: votes needed for Museum to win
+hint: The Museum must go PAST the Beach, not just tie with it. The Beach has 14.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Class 4B voted on their trip. How many MORE votes would the Museum have needed to BEAT the Beach?</p>
+  <figure data-show="data-table" data-cols="Place|Votes" data-rows="Zoo|11;Museum|8;Beach|14;Planetarium|6"></figure>
+  <ul class="options"><li>6</li><li>7</li><li>8</li><li>22</li></ul>
+  <p class="explain">Museum has 8. To beat the Beach's 14 it needs 15 — that is 7 more votes.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id": "true", "label": "True"}, {"id": "false", "label": "False"}]
+answer: ["true", "false", "true"]
+description: Trip vote: judge the claims
+hint: Winning the vote is NOT the same as everybody voting for it.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Class 4B voted on their trip. Drag each statement into True or False.</p>
+  <figure data-show="data-table" data-cols="Place|Votes" data-rows="Zoo|11;Museum|8;Beach|14;Planetarium|6"></figure>
+  <ul class="tiles"><li>The Beach got more votes than the Zoo</li><li>Everyone in the class voted for the Beach</li><li>The Planetarium was the least popular</li></ul>
+  <p class="explain">Beach 14 > Zoo 11 (true). Planetarium 6 is the smallest (true). But only 14 of the 39 children chose the Beach — so 'everyone' is false.</p>
+</div>
+</div>

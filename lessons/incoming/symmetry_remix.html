@@ -1,0 +1,245 @@
+<div id="source">
+<!-- ============ WARM-UP: judge a given line (kept, but fewer) ============ -->
+<!--@q
+type: single-select
+answer: ["no"]
+description: Warm-up — is this a line of symmetry?
+hint: Fold along the line. A rectangle's corner-to-corner line does not match up.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Fold along the dotted line. Is it a line of symmetry?</p>
+  <svg viewBox="0 0 220 150" width="220" height="150" role="img" aria-label="rectangle with a diagonal dotted line">
+    <rect x="45" y="40" width="130" height="70" rx="4" fill="#7b5cff"/>
+    <line x1="45" y1="40" x2="175" y2="110" stroke="#333" stroke-width="2.6" stroke-dasharray="7 6"/>
+  </svg>
+  <ul class="options"><li>yes</li><li>no</li></ul>
+  <p class="explain">A rectangle has only 2 lines of symmetry — straight up-and-down and straight across. The diagonal doesn't fold to match. No.</p>
+</div>
+
+<!-- ============ WHICH line? (pick the correct axis) ============ -->
+<!--@q
+type: single-select
+answer: ["2"]
+description: Which dotted line is the line of symmetry?
+hint: The triangle has two equal sides. The fold must go straight down from the top point.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which line folds this triangle onto itself?</p>
+  <ul class="options">
+    <li>
+      <svg viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="isosceles triangle with a horizontal line">
+        <polygon points="60,25 95,95 25,95" fill="#22b07d"/>
+        <line x1="18" y1="60" x2="102" y2="60" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="isosceles triangle with a vertical line through the top point">
+        <polygon points="60,25 95,95 25,95" fill="#22b07d"/>
+        <line x1="60" y1="15" x2="60" y2="105" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="isosceles triangle with a slanted line">
+        <polygon points="60,25 95,95 25,95" fill="#22b07d"/>
+        <line x1="30" y1="30" x2="100" y2="100" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+  </ul>
+  <p class="explain">The vertical line from the top point splits the two equal sides evenly. That's the one.</p>
+</div>
+
+<!-- ============ SELECT ALL lines of symmetry (the "shapes can have many" idea) ============ -->
+<!--@q
+type: multi-select
+answer: ["1","2","3","4"]
+description: Select every line of symmetry of the square
+hint: Try folding a square four different ways — straight down, across, and both diagonals.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">A square has more than one line of symmetry. Tap every card that shows one.</p>
+  <ul class="options">
+    <li>
+      <svg viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="square with a vertical line">
+        <rect x="30" y="30" width="60" height="60" fill="#7b5cff"/>
+        <line x1="60" y1="20" x2="60" y2="100" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="square with a horizontal line">
+        <rect x="30" y="30" width="60" height="60" fill="#7b5cff"/>
+        <line x1="20" y1="60" x2="100" y2="60" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="square with a diagonal line">
+        <rect x="30" y="30" width="60" height="60" fill="#7b5cff"/>
+        <line x1="30" y1="30" x2="90" y2="90" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="square with the other diagonal line">
+        <rect x="30" y="30" width="60" height="60" fill="#7b5cff"/>
+        <line x1="90" y1="30" x2="30" y2="90" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+  </ul>
+  <p class="explain">A square has 4 lines of symmetry: up-down, across, and both diagonals. All four are correct!</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["1","2"]
+description: Select the lines of symmetry of the rectangle
+hint: A rectangle is not a square. Only two of these folds actually match up.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Which of these are lines of symmetry of the rectangle? Tap all that work.</p>
+  <ul class="options">
+    <li>
+      <svg viewBox="0 0 130 110" width="130" height="110" role="img" aria-label="rectangle with a vertical line">
+        <rect x="20" y="35" width="90" height="45" fill="#2ec4d6"/>
+        <line x1="65" y1="25" x2="65" y2="90" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 130 110" width="130" height="110" role="img" aria-label="rectangle with a horizontal line">
+        <rect x="20" y="35" width="90" height="45" fill="#2ec4d6"/>
+        <line x1="12" y1="57" x2="118" y2="57" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 130 110" width="130" height="110" role="img" aria-label="rectangle with a diagonal line">
+        <rect x="20" y="35" width="90" height="45" fill="#2ec4d6"/>
+        <line x1="20" y1="35" x2="110" y2="80" stroke="#333" stroke-width="2.6" stroke-dasharray="6 5"/>
+      </svg>
+    </li>
+  </ul>
+  <p class="explain">A rectangle has just 2 lines of symmetry — up-down and across. Its diagonals do NOT match up.</p>
+</div>
+
+<!-- ============ COUNT the lines of symmetry ============ -->
+<!--@q
+type: single-select
+answer: ["3"]
+description: How many lines of symmetry does an equilateral triangle have?
+hint: This triangle has all three sides equal. Try each corner.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">How many lines of symmetry does this equilateral triangle have?</p>
+  <svg viewBox="0 0 200 130" width="200" height="130" role="img" aria-label="equilateral triangle">
+    <polygon points="100,25 155,105 45,105" fill="#f4a63a"/>
+  </svg>
+  <ul class="options"><li>1</li><li>2</li><li>3</li><li>0</li></ul>
+  <p class="explain">One line from each corner to the middle of the opposite side — that's 3 lines of symmetry.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["0"]
+description: How many lines of symmetry does a parallelogram have?
+hint: Try folding it every way you can. Does any fold make the halves match?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">How many lines of symmetry does this parallelogram have?</p>
+  <svg viewBox="0 0 200 130" width="200" height="130" role="img" aria-label="parallelogram (slanted)">
+    <polygon points="60,40 165,40 130,95 25,95" fill="#e15b97"/>
+  </svg>
+  <ul class="options"><li>2</li><li>1</li><li>0</li><li>4</li></ul>
+  <p class="explain">A slanted parallelogram has NO lines of symmetry — no fold makes the two halves match. (It does have rotational symmetry, which is different!)</p>
+</div>
+
+<!-- ============ SORT into bins: how many lines of symmetry ============ -->
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"one","label":"Exactly 1 line"},{"id":"many","label":"More than 1 line"}]
+answer: ["one","many","many","one"]
+description: Sort shapes by how many lines of symmetry they have
+hint: A square and a circle have lots. A heart and an isosceles triangle have just one.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Sort each shape by how many lines of symmetry it has.</p>
+  <ul class="tiles">
+    <li>
+      <svg viewBox="0 0 60 60" width="52" height="52" role="img" aria-label="heart">
+        <path d="M30 50 C10 34 12 16 24 16 C29 16 30 22 30 24 C30 22 31 16 36 16 C48 16 50 34 30 50 Z" fill="#e74c3c"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 60 60" width="52" height="52" role="img" aria-label="square">
+        <rect x="12" y="12" width="36" height="36" rx="3" fill="#7b5cff"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 60 60" width="52" height="52" role="img" aria-label="circle">
+        <circle cx="30" cy="30" r="20" fill="#2ec4d6"/>
+      </svg>
+    </li>
+    <li>
+      <svg viewBox="0 0 60 60" width="52" height="52" role="img" aria-label="isosceles triangle">
+        <polygon points="30,12 48,48 12,48" fill="#22b07d"/>
+      </svg>
+    </li>
+  </ul>
+  <p class="explain">Heart → 1, isosceles triangle → 1. Square → 4 and circle → endless, so both go in "more than 1".</p>
+</div>
+
+<!-- ============ VENN: vertical vs horizontal line of symmetry (the AND idea) ============ -->
+<!--@q
+type: categorize
+layout: venn2
+left_label: has a vertical line of symmetry
+right_label: has a horizontal line of symmetry
+answer: ["A","B","AB","OUT"]
+description: Sort the letters by which mirror line they have
+hint: A folds nicely down the middle. B folds nicely across. H folds both ways. F folds neither way.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each letter into the Venn diagram by which line of symmetry it has.</p>
+  <ul class="tiles">
+    <li><svg viewBox="0 0 60 60" width="50" height="50" role="img" aria-label="letter A"><text x="30" y="46" font-size="46" font-family="Baloo 2, sans-serif" font-weight="800" text-anchor="middle" fill="#7b5cff">A</text></svg></li>
+    <li><svg viewBox="0 0 60 60" width="50" height="50" role="img" aria-label="letter B"><text x="30" y="46" font-size="46" font-family="Baloo 2, sans-serif" font-weight="800" text-anchor="middle" fill="#2ec4d6">B</text></svg></li>
+    <li><svg viewBox="0 0 60 60" width="50" height="50" role="img" aria-label="letter H"><text x="30" y="46" font-size="46" font-family="Baloo 2, sans-serif" font-weight="800" text-anchor="middle" fill="#e15b97">H</text></svg></li>
+    <li><svg viewBox="0 0 60 60" width="50" height="50" role="img" aria-label="letter F"><text x="30" y="46" font-size="46" font-family="Baloo 2, sans-serif" font-weight="800" text-anchor="middle" fill="#f4a63a">F</text></svg></li>
+  </ul>
+  <p class="explain">A folds down the middle (vertical). B folds across (horizontal). H folds BOTH ways, so it sits in the overlap. F folds neither way — it stays outside.</p>
+</div>
+
+<!-- ============ DRAW the line of symmetry (geometry engine — the real skill) ============ -->
+<!--@q
+type: construct
+tag: CONSTRUCT
+description: Draw the line of symmetry of the square
+hint: Pick the Line tool, then tap the two dots. The fold should split the square into matching halves.
+-->
+<div class="question" data-type="construct">
+  <p class="prompt">Use the Line tool to draw a line of symmetry for this square.</p>
+  <div class="rao-construct" data-construct='{"kind":"geo-construct-tools","cfg":{"board":{"bounds":[-1,9,9,-1]},"objects":[{"kind":"polygon","points":[[2,2],[6,2],[6,6],[2,6]],"color":"#7b5cff","fill":0.18,"width":2},{"kind":"point","id":"T","at":[4,6],"label":""},{"kind":"point","id":"B","at":[4,2],"label":""}],"tools":["line"],"targets":[{"kind":"line","through":["T","B"]}],"hint":"draw the vertical fold line","tol":0.35,"tolAng":0.03}}'></div>
+  <p class="explain">The line straight down the middle folds the square into two matching halves. (The two side midpoints work too!)</p>
+</div>
+
+<!--@q
+type: construct
+tag: CONSTRUCT
+description: Draw the line of symmetry of the isosceles triangle
+hint: The fold goes from the top point straight down to the middle of the bottom edge.
+-->
+<div class="question" data-type="construct">
+  <p class="prompt">Draw the line of symmetry of this triangle with the Line tool.</p>
+  <div class="rao-construct" data-construct='{"kind":"geo-construct-tools","cfg":{"board":{"bounds":[-1,9,9,-1]},"objects":[{"kind":"polygon","points":[[4,7],[7,2],[1,2]],"color":"#22b07d","fill":0.18,"width":2},{"kind":"point","id":"P","at":[4,7],"label":""},{"kind":"point","id":"M","at":[4,2],"label":""}],"tools":["line"],"targets":[{"kind":"line","through":["P","M"]}],"hint":"top point down to the middle of the base","tol":0.35,"tolAng":0.03}}'></div>
+  <p class="explain">From the top point straight down to the middle of the base — that fold matches the two equal sides.</p>
+</div>
+
+<!--@q
+type: construct
+tag: CONSTRUCT
+description: Mark the point of symmetry of the rectangle
+hint: The centre is where the two diagonals would cross — halfway across and halfway up.
+-->
+<div class="question" data-type="construct">
+  <p class="prompt">Tap the centre point of the rectangle (where its lines of symmetry cross).</p>
+  <div class="rao-construct" data-construct='{"kind":"geo-mark","cfg":{"board":{"bounds":[-1,9,9,-1]},"objects":[{"kind":"polygon","points":[[1,2],[7,2],[7,5],[1,5]],"color":"#2ec4d6","fill":0.18,"width":2}],"targets":[[4,3.5]],"tolerance":0.6,"hint":"tap the middle of the rectangle","markLabel":"C"}}'></div>
+  <p class="explain">The centre is halfway across and halfway up — both lines of symmetry pass through it.</p>
+</div>
+
+</div>
