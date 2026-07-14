@@ -1,0 +1,123 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE — CONTAINER QUERIES
+   ══════════════════════════════════════════════════════════════════════════
+   The problem with the @media rules above: they measure the WINDOW, not the
+   box the lesson is actually rendered into. A lesson in a 340px side panel on
+   a 1400px desktop gets DESKTOP styling — the media queries never fire — and
+   the Venn's .vs-out zone (hardcoded 440px) punches 111px out of the panel.
+
+   Container queries measure the CONTAINER. They fire correctly whether the
+   lesson is on a phone, in a panel, in a modal, or in an iframe.
+
+   Requires the app to render lessons inside .rao-lesson (it already does).
+   Chrome 105+ / Safari 16+ / Firefox 110+. The @media rules above remain as
+   a fallback for anything older, so nothing regresses.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.rao-lesson {
+  container-type: inline-size;
+  container-name: lesson;
+}
+
+/* ── Never let a lesson punch out of its own box, whatever happens ────────── */
+.rao-lesson .qbody {
+  max-width: 100%;
+  overflow-x: clip;          /* clip, not hidden: doesn't create a scroll container */
+}
+
+/* ── Wide stimuli get their own scroll rail instead of breaking the layout ──
+   A table/plot that genuinely cannot shrink should scroll horizontally on its
+   own, rather than widening the whole question. */
+.rao-lesson .data-wrap,
+.rao-lesson .dt-wrap,
+.rao-lesson .lp-row,
+.rao-lesson .bg-row,
+.rao-lesson .lat-wrap,
+.rao-lesson .hchart-wrap,
+.rao-lesson .cal-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* SVG-based figures scale instead of scrolling */
+.rao-lesson .lat-svg,
+.rao-lesson .nl-svg,
+.rao-lesson .poly-svg,
+.rao-lesson .spin-svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── VENN ────────────────────────────────────────────────────────────────────
+   .venn-box is a fixed 460px with absolutely-positioned zones inside it
+   (.vs-out is 440px wide). It cannot reflow — so it must SCALE.
+   `transform: scale()` alone is not enough: the transformed element keeps its
+   original 460px layout box, so it still overflows. The wrapper must clip and
+   the negative margin must reclaim the vertical space the scale gives back. */
+@container lesson (max-width: 520px) {
+  .rao-lesson .venn-wrap { overflow: hidden; }
+  .rao-lesson .venn-box  { transform: scale(0.86); transform-origin: top center; margin-bottom: -45px; }
+}
+@container lesson (max-width: 460px) {
+  .rao-lesson .venn-box  { transform: scale(0.76); margin-bottom: -77px; }
+}
+@container lesson (max-width: 380px) {
+  .rao-lesson .venn-box  { transform: scale(0.66); margin-bottom: -109px; }
+}
+@container lesson (max-width: 330px) {
+  .rao-lesson .venn-box  { transform: scale(0.58); margin-bottom: -134px; }
+}
+
+/* ── Narrow container: everything else that assumed a wide window ─────────── */
+@container lesson (max-width: 600px) {
+  .rao-lesson .opts        { grid-template-columns: repeat(var(--rz-opt-cols, 2), 1fr); }
+  .rao-lesson .opts.opts-stack { grid-template-columns: 1fr; }
+  .rao-lesson .order-target-lbl { display: none; }
+  .rao-lesson .order-slots { grid-template-columns: 1fr; }
+  .rao-lesson .order-bank  { grid-template-columns: 1fr; }
+  .rao-lesson .order-cap   { display: block; text-align: center; font-family: var(--fs);
+                             font-size: .72rem; font-weight: 700; color: var(--sub);
+                             text-transform: uppercase; letter-spacing: .06em; margin: 3px 0; }
+  .rao-lesson .order-cap-top::after { content: ' ↓'; }
+
+  .rao-lesson .dt-table th { padding: 8px 6px; font-size: .68rem; }
+  .rao-lesson .dt-table td { padding: 6px 6px; font-size: .92rem; }
+  .rao-lesson .dt-table .blank-input { width: 42px; font-size: .98rem; }
+
+  .rao-lesson .rsf-num   { font-size: 1.4rem; }
+  .rao-lesson .rsf-given { font-size: 1.2rem; padding: 2px 8px; }
+  .rao-lesson .rsf-grid  { gap: 6px 10px; }
+  .rao-lesson .rsf-blank { width: 58px; }
+
+  .rao-lesson .seq { padding: 13px 12px; letter-spacing: .03em; }
+  .rao-lesson .prompt.qprompt-split .qp-expr { font-size: 1.5rem; }
+  .rao-lesson .bins { gap: 8px; }
+  .rao-lesson .bin  { flex: 1 1 120px; min-width: 110px; }
+}
+
+@container lesson (max-width: 480px) {
+  .rao-lesson .prompt        { font-size: 1.0625rem; }
+  .rao-lesson .opt,
+  .rao-lesson .opt-text      { font-size: 1.125rem; }
+  .rao-lesson .hcell         { font-size: .62rem; }
+  .rao-lesson .lp-col,
+  .rao-lesson .lp-tick       { width: 28px; }
+  .rao-lesson .lp-cols,
+  .rao-lesson .lp-ticks      { gap: 6px; }
+  .rao-lesson .bg-bar        { width: 22px; }
+  .rao-lesson .bg-clusters   { gap: 10px; }
+  .rao-lesson .time-row      { gap: 10px; }
+  .rao-lesson .time-input    { width: 110px; font-size: 1.15rem; }
+  .rao-lesson .ampm-btn      { min-width: 54px; padding: 0 12px; font-size: .95rem; }
+}
+
+/* Very tight: the last resort before things genuinely cannot fit */
+@container lesson (max-width: 360px) {
+  .rao-lesson .opts        { grid-template-columns: 1fr; }
+  .rao-lesson .lp-col,
+  .rao-lesson .lp-tick     { width: 24px; }
+  .rao-lesson .bg-bar      { width: 18px; }
+  .rao-lesson .vs-text     { font-size: .95rem; padding: 8px 11px; }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "rao-academy",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "python tools/scope-css.test.py && node harness.js && node tools/verify-format.js && node tools/verify-styles.js",
+    "test:engine": "node harness.js",
+    "test:format": "node tools/verify-format.js",
+    "test:styles": "node tools/verify-styles.js",
+    "test:scoper": "python tools/scope-css.test.py",
+    "review": "node tools/make-review.js"
+  },
+  "devDependencies": {
+    "playwright": "1.56.1"
+  }
+}

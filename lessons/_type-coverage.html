@@ -1,0 +1,161 @@
+<!-- TYPE COVERAGE FIXTURE
+     One question per supported type. This exists because the harness previously only
+     tested the types that happened to appear in one real lesson — so the completely
+     dead `time` behavior (controls rendered, nothing bound, unanswerable) passed as
+     SAFE TO SHIP. A safety net only catches what you point it at.
+     Every type the engine claims to support must appear here. -->
+<div id="source">
+
+<!--@q
+type: single-select
+answer: ["30"]
+description: single-select coverage
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is the value of 3 in 4,532?</p>
+  <ul class="options"><li>3</li><li>30</li><li>300</li><li>3000</li></ul>
+<!--@q
+type: construct
+tag: CONSTRUCT
+description: construct coverage — self-grades via RaoGeo
+hint: Tap each dot on the grid.
+-->
+<div class="question" data-type="construct">
+  <p class="prompt">Plot a triangle with corners at (2, 1), (6, 1), and (4, 5).</p>
+  <div class="rao-construct" data-construct='{"kind":"geo-construct","cfg":{"board":{"min":0,"max":8},"shape":"polygon","targets":[[2,1],[6,1],[4,5]],"tolerance":0,"showTargets":true}}'></div>
+</div>
+
+</div>
+<!--@q
+type: multi-select
+answer: ["2","4","6"]
+description: multi-select coverage
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select all the even numbers.</p>
+  <ul class="options"><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["14"]
+description: fill-blanks coverage
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Add: 7 + 7 = []</p>
+</div>
+
+<!--@q
+type: expression
+answer: ["17 + 2 = 19"]
+description: expression coverage
+-->
+<div class="question" data-type="expression">
+  <p class="prompt">Write an addition sentence: 17 and 2 more.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["17","42","58"]
+low: smallest
+high: largest
+description: order coverage
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Order from smallest to largest.</p>
+  <ol class="order"><li>42</li><li>17</li><li>58</li></ol>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["2","4","6","8"]
+palette: ["2","4","6","8"]
+description: sequence-build coverage
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Continue the skip-counting pattern.</p>
+  <p class="reference">2, 4, 6, … , …</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"even","label":"Even"},{"id":"odd","label":"Odd"}]
+answer: ["even","odd","even"]
+description: categorize/bins coverage
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Sort the numbers into Even and Odd.</p>
+  <ul class="tiles"><li>4</li><li>7</li><li>10</li></ul>
+</div>
+
+<!--@q
+type: categorize
+layout: venn2
+left_label: purple
+right_label: square
+answer: ["AB","A","OUT"]
+description: categorize/venn2 coverage
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Put the shapes into the Venn diagram.</p>
+  <ul class="tiles">
+    <li><svg viewBox="0 0 36 36" width="38" height="38"><rect x="6" y="6" width="24" height="24" rx="2.5" fill="#8b6fe0"/></svg></li>
+    <li><svg viewBox="0 0 36 36" width="38" height="38"><circle cx="18" cy="18" r="12" fill="#8b6fe0"/></svg></li>
+    <li><svg viewBox="0 0 36 36" width="38" height="38"><circle cx="18" cy="18" r="12" fill="#46b86a"/></svg></li>
+  </ul>
+</div>
+
+<!--@q
+type: line-plot
+categories: ["1","2","3","4"]
+answer: ["2","1","3","2"]
+unit: student
+description: line-plot coverage
+-->
+<div class="question" data-type="line-plot">
+  <p class="prompt">Build the line plot from the data.</p>
+</div>
+
+<!--@q
+type: time
+answer: ["3:45 PM"]
+description: time coverage — was COMPLETELY DEAD until rao-master-11
+-->
+<div class="question" data-type="time">
+  <p class="prompt">School ends at quarter to four in the afternoon. Write the time.</p>
+</div>
+
+<!--@q
+type: bar-graph
+categories: ["Red","Blue","Green"]
+values: [4, 2, 5]
+answer: ["4","2","5"]
+description: bar-graph coverage
+-->
+<div class="question" data-type="bar-graph">
+  <p class="prompt">Build the bar graph from the data.</p>
+</div>
+
+<!--@q
+type: lattice
+factors: [24, 21]
+answer: ["504"]
+description: lattice coverage
+-->
+<div class="question" data-type="lattice">
+  <p class="prompt">Use the lattice to multiply 24 by 21.</p>
+</div>
+
+<!--@q
+type: construct
+tag: CONSTRUCT
+description: construct coverage — self-grades via RaoGeo
+hint: Tap each dot on the grid.
+-->
+<div class="question" data-type="construct">
+  <p class="prompt">Plot a triangle with corners at (2, 1), (6, 1), and (4, 5).</p>
+  <div class="rao-construct" data-construct='{"kind":"geo-construct","cfg":{"board":{"min":0,"max":8},"shape":"polygon","targets":[[2,1],[6,1],[4,5]],"tolerance":0,"showTargets":true}}'></div>
+</div>
+
+</div>
