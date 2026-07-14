@@ -108,7 +108,7 @@ function guardRuntime() {
 
   // Load solution renderer fresh (clear any cached version)
   delete require.cache[require.resolve(RENDERER)];
-  const { renderSolution } = require(RENDERER);
+  const { renderSolution, normalizeExplain } = require(RENDERER);
 
   // Simulate rendering a solution — open, step through, close
   // NOTE: objects are NOT frozen here — the RUNTIME guard only checks whether
@@ -120,11 +120,16 @@ function guardRuntime() {
     { type: "step", goal: "Round first", working: "66 → 70", reason: "6 ≥ 5" },
     { type: "step", goal: "Round second", working: "39 → 40", reason: "9 ≥ 5" },
     { type: "step", goal: "Add", working: "70 + 40 = 110" },
+    { type: "figure", html: "<svg></svg>", text: "diagram" },
     { type: "takeaway", text: "5 or more, round up." },
     { type: "verification", text: "Close to 110." },
   ];
 
   try {
+    // Exercise normalizeExplain directly
+    normalizeExplain({ explain: "70 + 40 = 110", solution: null });
+    normalizeExplain({ explain: "70 + 40 = 110", solution });
+    // Exercise renderSolution — block path
     renderSolution({ gradingResult, answer, userResponse, solution, explain: "70 + 40 = 110" });
     // Also test legacy path
     renderSolution({ gradingResult, answer, userResponse, explain: "70 + 40 = 110" });
@@ -154,7 +159,7 @@ function guardMutation() {
   const label = "MUTATION";
 
   delete require.cache[require.resolve(RENDERER)];
-  const { renderSolution } = require(RENDERER);
+  const { renderSolution, normalizeExplain } = require(RENDERER);
 
   // Create deeply frozen objects
   const gradingResult = deepFreeze({ correct: false });
@@ -162,11 +167,19 @@ function guardMutation() {
   const userResponse  = deepFreeze(["100"]);
   const solution = deepFreeze([
     { type: "step", goal: "Round first", working: "66 → 70", reason: "6 ≥ 5" },
+    { type: "figure", html: "<svg></svg>", text: "diagram" },
     { type: "takeaway", text: "5 or more, round up." },
+    { type: "verification", text: "Check: 110 is near 100." },
   ]);
 
   try {
+    // Exercise normalizeExplain with frozen objects
+    normalizeExplain({ explain: "70 + 40 = 110", solution });
+    normalizeExplain({ explain: "70 + 40 = 110" });
+    // Exercise renderSolution with all block types
     renderSolution({ gradingResult, answer, userResponse, solution, explain: "70 + 40 = 110" });
+    // Legacy path
+    renderSolution({ gradingResult, answer, userResponse, explain: "70 + 40 = 110" });
     pass(label, "No mutation of frozen answer/response/gradingResult");
   } catch (err) {
     if (err instanceof TypeError && /Cannot (assign|add|delete|define|set)/i.test(err.message)) {
@@ -202,6 +215,8 @@ function guardSourceDiff() {
   const SOLUTION_FILES = [
     "engine/solution-renderer.js",
     "tools/verify-firewall.js",
+    "tools/verify-snapshot.js",
+    "tools/capture-explain-baseline.js",
   ];
 
   let changedFiles;

@@ -8,33 +8,96 @@
  *   - Must NOT call check()
  *   - Must NOT mutate the stored answer or student response
  *   - Must NOT modify grading files
+ *
+ * ONE PARSE POINT: normalizeExplain() is the single entry. Downstream code
+ * never sees the raw explain string or the raw solution array — only the
+ * normalized object. A legacy string explain normalizes to a single-block
+ * list so the renderer has no idea the old format ever existed.
  */
 
 "use strict";
 
-/**
- * Render a solution walkthrough to an HTML string.
- * @param {Object} opts
- * @param {Object} opts.gradingResult  — immutable {correct: boolean}
- * @param {Array}  opts.answer         — immutable correct answer array
- * @param {Array}  opts.userResponse   — immutable student response array
- * @param {Array}  [opts.solution]     — block list [{type, goal, working, reason, text}]
- * @param {string} [opts.explain]      — legacy one-line explanation
- * @returns {string} HTML string
- */
-function renderSolution(opts) {
-  const { gradingResult, answer, userResponse, solution, explain } = opts;
+// ════════════════════════════════════════════════════════════════
+// normalizeExplain — THE SINGLE PARSE POINT
+//
+// Input:  { explain, solution }  from the engine's build() output
+//   explain  — string (legacy one-liner) or null
+//   solution — array of block objects, or null/undefined
+//
+// Output: { legacy: bool, explain: string|null, blocks: [] }
+//   legacy  — true when the output came from a plain string explain
+//   explain — the original string (preserved for Rapid Fire / fallback)
+//   blocks  — normalized block list, always an array
+//
+// A legacy string becomes a single block of type "legacy-explain" so
+// the renderer can emit the exact same HTML the engine has always emitted.
+// ════════════════════════════════════════════════════════════════
 
-  // Legacy path: explain-only
-  if (!solution || solution.length === 0) {
-    if (!explain) return "";
-    return '<p class="explain">' + escapeHtml(explain) + "</p>";
+function normalizeExplain(opts) {
+  var explain = (opts && opts.explain) || null;
+  var solution = (opts && opts.solution) || null;
+
+  // Full solution path: solution blocks + explain as fallback/summary
+  if (Array.isArray(solution) && solution.length > 0) {
+    return {
+      legacy: false,
+      explain: explain,
+      blocks: solution.map(function (b) {
+        // Validate known types; unknown types get a text fallback
+        var type = String(b.type || "unknown");
+        return {
+          type: type,
+          goal: b.goal || null,
+          working: b.working || null,
+          reason: b.reason || null,
+          text: b.text || null,
+          html: b.html || null
+        };
+      })
+    };
+  }
+
+  // Legacy path: explain-only → single "legacy-explain" block
+  if (explain) {
+    return {
+      legacy: true,
+      explain: explain,
+      blocks: [{ type: "legacy-explain", text: explain }]
+    };
+  }
+
+  // Nothing
+  return { legacy: false, explain: null, blocks: [] };
+}
+
+// ════════════════════════════════════════════════════════════════
+// renderSolution — renders a normalized explain object to HTML
+//
+// Takes the OUTPUT of normalizeExplain() plus immutable grading context.
+// The grading context is passed through for future use (whyWrong display)
+// but is NEVER used to call check() or mutate anything.
+// ════════════════════════════════════════════════════════════════
+
+function renderSolution(opts) {
+  var normalized = normalizeExplain({
+    explain: opts && opts.explain,
+    solution: opts && opts.solution
+  });
+
+  if (normalized.blocks.length === 0) return "";
+
+  // Legacy path: emit the exact HTML the engine has always emitted.
+  // The engine does NOT escape the explain string — it passes raw HTML through.
+  // We must do the same for byte-identical output.
+  if (normalized.legacy) {
+    return '<p class="explain">' + normalized.explain + "</p>";
   }
 
   // Block list rendering
-  const parts = [];
-  let stepNum = 0;
-  for (const block of solution) {
+  var parts = [];
+  var stepNum = 0;
+  for (var i = 0; i < normalized.blocks.length; i++) {
+    var block = normalized.blocks[i];
     switch (block.type) {
       case "step":
         stepNum++;
@@ -50,14 +113,19 @@ function renderSolution(opts) {
         parts.push(renderVerification(block));
         break;
       default:
-        parts.push('<div class="sol-unknown">' + escapeHtml(block.text || "") + "</div>");
+        // Unknown block type — text fallback
+        parts.push(renderFallback(block));
     }
   }
   return parts.join("\n");
 }
 
+// ════════════════════════════════════════════════════════════════
+// Block renderers — four types, each with a text fallback
+// ════════════════════════════════════════════════════════════════
+
 function renderStep(block, num) {
-  let html = '<div class="sol-step">';
+  var html = '<div class="sol-step" data-fallback="' + escAttr(stepFallback(block, num)) + '">';
   html += '<span class="sol-step-num">' + num + "</span>";
   if (block.goal) html += '<span class="sol-goal">' + escapeHtml(block.goal) + "</span>";
   if (block.working) html += '<span class="sol-working">' + escapeHtml(block.working) + "</span>";
@@ -66,18 +134,39 @@ function renderStep(block, num) {
   return html;
 }
 
+function stepFallback(block, num) {
+  var parts = [];
+  if (block.goal) parts.push(block.goal);
+  if (block.working) parts.push(block.working);
+  if (block.reason) parts.push("(" + block.reason + ")");
+  return "Step " + num + ": " + parts.join(" — ");
+}
+
 function renderFigure(block) {
   // Figures are passed as pre-built HTML (SVG); fallback to text
-  return '<div class="sol-figure">' + (block.html || escapeHtml(block.text || "")) + "</div>";
+  var fallback = block.text || "[figure]";
+  var content = block.html || escapeHtml(fallback);
+  return '<div class="sol-figure" data-fallback="' + escAttr(fallback) + '">' + content + "</div>";
 }
 
 function renderTakeaway(block) {
-  return '<div class="sol-takeaway">' + escapeHtml(block.text || "") + "</div>";
+  var text = block.text || "";
+  return '<div class="sol-takeaway" data-fallback="' + escAttr(text) + '">' + escapeHtml(text) + "</div>";
 }
 
 function renderVerification(block) {
-  return '<div class="sol-verification">' + escapeHtml(block.text || "") + "</div>";
+  var text = block.text || "";
+  return '<div class="sol-verification" data-fallback="' + escAttr(text) + '">' + escapeHtml(text) + "</div>";
 }
+
+function renderFallback(block) {
+  var text = block.text || "";
+  return '<div class="sol-fallback">' + escapeHtml(text) + "</div>";
+}
+
+// ════════════════════════════════════════════════════════════════
+// Utilities — no grading references, no check(), no mutation
+// ════════════════════════════════════════════════════════════════
 
 function escapeHtml(s) {
   return String(s)
@@ -87,6 +176,14 @@ function escapeHtml(s) {
     .replace(/"/g, "&quot;");
 }
 
+function escAttr(s) {
+  return escapeHtml(s).replace(/'/g, "&#39;");
+}
+
+// ════════════════════════════════════════════════════════════════
+// Exports
+// ════════════════════════════════════════════════════════════════
+
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { renderSolution };
+  module.exports = { normalizeExplain: normalizeExplain, renderSolution: renderSolution };
 }
