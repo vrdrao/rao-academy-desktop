@@ -607,6 +607,12 @@ Per §2: a guard that has never been observed failing is faith, not a guard.
 | Mutation | Rendering a solution cannot alter the stored answer or the student's response | Mutate the response object → FAIL |
 | Source-diff | Solution work does not modify grading files without explicit authorisation | Touch a grading file → FAIL |
 
+**SOURCE-DIFF escape hatch:** `FIREWALL_ALLOW_GRADING=1` overrides the source-diff guard
+when a change legitimately needs to touch both solution and grading files (e.g. an engine
+upgrade). It prints a **loud warning to stderr** naming every grading file being modified.
+**Never set this without Venkat's explicit instruction.** If you think a change needs it,
+STOP and ASK — explain which grading files and why.
+
 **Content guards (4):**
 
 | Guard | Asserts |
