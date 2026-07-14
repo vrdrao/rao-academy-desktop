@@ -1,0 +1,26 @@
+#!/bin/sh
+# Rao Academy post-commit hook.
+# Auto-push after every successful commit so that "committed" == "backed up".
+# A post-commit hook runs AFTER the commit is written, so it cannot block it;
+# its only job is to push and to shout if the push does not reach GitHub.
+
+echo "post-commit: pushing to remote..."
+
+if git push; then
+  echo "✅ post-commit: pushed to remote — you are backed up."
+else
+  echo ""
+  echo "################################################################"
+  echo "#                                                              #"
+  echo "#   ⚠️   NOT PUSHED — YOU ARE NOT BACKED UP                    #"
+  echo "#                                                              #"
+  echo "#   The commit is saved on THIS computer only. It did NOT      #"
+  echo "#   reach GitHub. If this machine dies, the commit is gone.    #"
+  echo "#                                                              #"
+  echo "#   Check your internet, then run:   git push                  #"
+  echo "#                                                              #"
+  echo "################################################################"
+fi
+
+# Never fail the commit — it has already happened.
+exit 0
