@@ -353,6 +353,18 @@ what ships.
   unnecessary. Use bare commands: `git status`, `npm test`, etc.
 - **Never push without explicit instruction from Venkat.** Commits stay local until he
   says push. The post-commit auto-push hook has been removed for this reason.
+- **Honesty about verification.** Never assert a check passed if it did not actually run.
+  Say "I don't know." Label inferences as inferences. If context auto-compaction happens,
+  announce it and re-read CLAUDE.md before continuing.
+- **Every new guard must be proved to fail before it is trusted.** Break the CSS rule it
+  protects, run the guard, show the FAIL output, then restore. A guard that cannot fail is
+  worthless — same standard as the qbody work-panel proof.
+- **When 3+ files share the same defect, fix the general case.** Write a batch script and
+  sweep — do not process file by file. (Example: all 102 legacy lesson files had the same
+  stale wrapper; a batch extractor handled them in one pass.)
+- **When a test fails, investigate before blaming the test.** In this project, 3 "test
+  heuristic" failures in `batch-validate.js` included a real authoring bug (14 questions
+  with empty answer keys). The test was right; the content was wrong.
 - Disclose bugs and self-corrections **explicitly and directly**. Do not bury them.
 - Never re-litigate settled decisions.
 - Engine fixes go **in the engine**, so every future lesson inherits them. Never patch around
