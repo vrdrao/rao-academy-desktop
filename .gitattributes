@@ -1,2 +1,1 @@
-# Git hooks must stay LF or the #!/bin/sh shebang breaks on Windows checkouts.
-.githooks/** text eol=lf
+* text=auto eol=lf
