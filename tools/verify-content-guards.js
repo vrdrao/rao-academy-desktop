@@ -492,7 +492,8 @@ function guardHintLeak(allQuestions) {
 // Main
 // ════════════════════════════════════════════════════════════════
 
-const coverageOnly = process.argv.includes("--coverage");
+const coverageOnly  = process.argv.includes("--coverage");
+const hintLeakOnly  = process.argv.includes("--hint-leak-only");
 
 console.log("\n── Content Guards ──\n");
 
@@ -512,6 +513,13 @@ for (const f of files) {
 
 const totalQ = allQuestions.reduce((s, x) => s + x.questions.length, 0);
 console.log(`  Parsed ${totalQ} questions from ${files.length} files.`);
+
+if (hintLeakOnly) {
+  // Only run the hint leak guard — used by npm test until whyWrong is populated
+  const hintLeakOk = guardHintLeak(allQuestions);
+  console.log(`\n── ${hintLeakOk ? "1 passed" : "0 passed, 1 failed"} ──\n`);
+  process.exit(hintLeakOk ? 0 : 1);
+}
 
 // Run all four guards
 const coverageResult = guardDistractorCoverage(allQuestions);
