@@ -39,7 +39,8 @@
  /* Mobile card padding — a @container query (not @media) so it fires on a narrow
     LESSON, e.g. a 340px side-panel on a wide desktop, not just a narrow window.
     Relies on `.rao-lesson`'s container-name:lesson (set in rao.css). */
- @container lesson (max-width: 480px){ .pv-card{padding:22px 16px 16px} }
+ @container lesson (max-width: 480px){ .pv-card{padding:18px 12px 14px} }
+ @container lesson (max-width: 380px){ .pv-card{padding:14px 8px 12px} }
  .pv-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
  .pv-tlabel{font-family:'Quicksand',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#a99ccf}
  .pv-ring{width:44px;height:44px;border-radius:50%;background:conic-gradient(#7b5cff 75%,#f0e9fb 0);display:flex;align-items:center;justify-content:center}
@@ -54,6 +55,12 @@
  .pv-fb.bad{color:#b04a6a;background:linear-gradient(135deg,#fff0f3,#fff6f7)}
  .pv-check{font-family:'Baloo 2',cursive;font-weight:800;color:#fff;background:linear-gradient(90deg,#ff9d4d,#ff6b9d);border:0;border-radius:18px;padding:13px 28px;box-shadow:0 5px 0 #d4477a;cursor:pointer;font-size:1.02rem;margin-left:auto}
  .pv-check:active{transform:translateY(4px);box-shadow:0 1px 0 #d4477a}
+ /* ── MOBILE: shrink Hint/Check buttons, keep 44px tap target ────────────── */
+ @container lesson (max-width: 480px){
+   .pv-hint{font-size:.88rem;padding:10px 14px;min-height:44px}
+   .pv-check{font-size:.9rem;padding:11px 20px;min-height:44px}
+   .pv-foot{gap:8px;margin-top:14px}
+ }
  .pv-ans{margin:0 6px 22px;font-size:.86rem;color:#0f9d6b;font-weight:600}.pv-ans b{color:#047857}
  .qbody .lp-slot.on{background:var(--brand,#4361ee);border-radius:3px}
  .qbody .md-ruler{cursor:grab}

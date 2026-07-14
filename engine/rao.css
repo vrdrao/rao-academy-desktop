@@ -112,8 +112,8 @@
 .rao-lesson .eqn .op{color:var(--sub);font-weight:500;}
 .rao-lesson .eqn .eq{color:var(--pink);font-weight:700;}
 .rao-lesson .blank-input{width:64px;text-align:center;font-family:var(--fm);font-size:1.4rem;font-weight:700;
-  border:2.5px dashed var(--brand);border-radius:10px;background:rgba(var(--brand-rgb,123,92,255),.06);color:var(--brand);
-  padding:6px 4px;outline:none;transition:all .15s;}
+  border:2px solid var(--brand);border-radius:12px;background:rgba(var(--brand-rgb,123,92,255),.09);color:var(--brand);
+  padding:6px 4px;outline:none;transition:all .15s;min-width:44px;min-height:44px;box-sizing:border-box;}
 .rao-lesson .blank-input:focus{border-style:solid;background:#fff;box-shadow:0 0 0 5px rgba(var(--brand-rgb,123,92,255),.12);}
 .rao-lesson .blank-input.correct{border-style:solid;border-color:var(--green);background:rgba(16,185,129,.08);color:#047857;}
 .rao-lesson .blank-input.incorrect{border-color:var(--red);background:rgba(239,68,68,.06);}
@@ -771,7 +771,10 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
   margin: 6px 0 2px;
 }
 @container lesson (max-width: 480px) {
-  .rao-lesson .qbody { padding: 15px 14px; }   /* tighter on a narrow panel */
+  .rao-lesson .qbody { padding: 14px 10px; }   /* tighter on a narrow panel */
+}
+@container lesson (max-width: 380px) {
+  .rao-lesson .qbody { padding: 10px 6px; }    /* phone: max content width */
 }
 
 /* ── Wide stimuli get their own scroll rail instead of breaking the layout ──
@@ -869,6 +872,23 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
   .rao-lesson .lp-tick     { width: 24px; }
   .rao-lesson .bg-bar      { width: 18px; }
   .rao-lesson .vs-text     { font-size: .95rem; padding: 8px 11px; }
+}
+
+/* ── MOBILE FIX: column-arithmetic overflow ─────────────────────────────────
+   .vmul-grid uses fixed-width cells (vm-d 40px, vm-gut 26px, vm-c 12px).
+   A 5-digit multiplication is ~5×40 + 26 + 5×12 = 286px of cells, which clips
+   on a 380px phone after card + qbody padding eats both sides. Shrink the cells
+   so the grid fits. */
+@container lesson (max-width: 480px) {
+  .rao-lesson .vmul-grid   { font-size: 1.3rem; }
+  .rao-lesson .vm-d        { width: 32px; }
+  .rao-lesson .vm-gut      { width: 20px; }
+  .rao-lesson .vm-c        { width: 10px; }
+  .rao-lesson .vm-cell     { width: 28px; height: 36px; font-size: 1.1rem; }
+  .rao-lesson .vcol         { font-size: 1.4rem; }
+  .rao-lesson .vcol .cm-cell { width: 36px; height: 36px; flex: 0 0 36px; }
+  .rao-lesson .vcol .blank-input { width: 36px; height: 36px; flex: 0 0 36px; font-size: 1.15rem; }
+  .rao-lesson .vcol .cm-sep { width: 10px; flex: 0 0 10px; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════

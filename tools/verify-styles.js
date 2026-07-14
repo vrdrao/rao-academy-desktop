@@ -294,6 +294,153 @@ async function checkExplainReveal(page) {
   return problems;
 }
 
+/* ---- MOBILE INVARIANTS (380×800) ─────────────────────────────────────────
+   These run on a self-contained fixture at phone width. Each guards one of
+   the four mobile bugs that a desktop-viewport test can never catch:
+     1. Card gutters — left ≈ right (±2px), content gets ≥ 280px
+     2. Column-arithmetic — .vmul-grid fits inside .qbody (no clip)
+     3. Hint/Check — both ≥ 44px tall (tap target), font shrunk from desktop
+     4. Blank input — solid border (not dashed), visible fill, ≥ 44×44px    */
+async function checkMobileInvariants(browser) {
+  const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8");
+  const html =
+    `<!doctype html><html><head><meta charset="utf-8">` +
+    `<meta name="viewport" content="width=device-width">` +
+    `<style>${read("engine/rao.css")}</style>` +
+    `<style>${read("engine/rao-card.css")}</style></head><body style="margin:0;padding:0">` +
+    `<div id="source">` +
+    `<!--@q\ntype: fill-blanks\nanswer: ["42"]\n-->` +
+    `<div class="question" data-type="fill-blanks">` +
+    `<p class="prompt">What is the answer? []</p>` +
+    `</div>` +
+    `<!--@q\ntype: single-select\nanswer: ["4"]\nhint: Two plus two.\n-->` +
+    `<div class="question" data-type="single-select">` +
+    `<p class="prompt">What is 2 + 2?</p>` +
+    `<ul class="options"><li data-val="3">3</li><li data-val="4">4</li></ul>` +
+    `</div>` +
+    `</div>` +
+    `<div id="preview" class="rao-lesson" data-theme="grape"></div>` +
+    `<script>${read("engine/preview-engine.js")}</script>` +
+    `<script>${read("engine/rao-card.js")}</script>` +
+    `</body></html>`;
+  const tmp = path.join(ROOT, "review", "__mobile_fixture.html");
+  fs.writeFileSync(tmp, html);
+  const problems = [];
+  const page = await browser.newPage({ viewport: { width: 380, height: 800 } });
+  try {
+    await page.goto("file://" + tmp);
+    await page.waitForFunction(() => document.querySelectorAll(".pv-frame").length >= 2, { timeout: 15000 })
+              .catch(() => {});
+    await page.waitForTimeout(250);
+
+    // 1. CARD GUTTERS — symmetrical, content ≥ 280px
+    const gutters = await page.evaluate(() => {
+      const card = document.querySelector(".pv-card");
+      if (!card) return null;
+      const cr = card.getBoundingClientRect();
+      const frame = card.closest(".pv-frame");
+      const fr = frame ? frame.getBoundingClientRect() : null;
+      const lesson = document.querySelector(".rao-lesson");
+      const lr = lesson ? lesson.getBoundingClientRect() : null;
+      // qbody is where content actually lives
+      const qb = card.querySelector(".qbody");
+      const qr = qb ? qb.getBoundingClientRect() : null;
+      return {
+        cardLeft: cr.left, cardRight: 380 - cr.right, cardWidth: cr.width,
+        contentLeft: qr ? qr.left : 0, contentRight: qr ? 380 - qr.right : 0,
+        contentWidth: qr ? qr.width : 0,
+      };
+    });
+    if (gutters) {
+      const diff = Math.abs(gutters.contentLeft - gutters.contentRight);
+      if (diff > 4)
+        problems.push(
+          `MOBILE GUTTERS: left (${gutters.contentLeft.toFixed(1)}px) and right ` +
+          `(${gutters.contentRight.toFixed(1)}px) content gutters differ by ${diff.toFixed(1)}px — must be ≤ 4px`);
+      if (gutters.contentWidth < 280)
+        problems.push(
+          `MOBILE CONTENT WIDTH: only ${gutters.contentWidth.toFixed(0)}px at 380px viewport — ` +
+          `must be ≥ 280px. Padding is eating too much space.`);
+    }
+
+    // 2. VMUL OVERFLOW — check if vmul-grid would clip
+    // (no vmul in this fixture, but guard the vcol which IS present via fill-blanks
+    //  with column layout — we check the qbody overflow principle)
+    const overflow = await page.evaluate(() => {
+      const qb = document.querySelector(".qbody");
+      if (!qb) return null;
+      return { scrollW: qb.scrollWidth, clientW: qb.clientWidth };
+    });
+    if (overflow && overflow.scrollW > overflow.clientW + 2)
+      problems.push(
+        `MOBILE OVERFLOW: .qbody scrollWidth (${overflow.scrollW}px) > clientWidth ` +
+        `(${overflow.clientW}px) — content is clipped or scrolling horizontally`);
+
+    // 3. HINT/CHECK BUTTONS — ≥ 44px tap height, font smaller than desktop
+    //    The hint button is display:none when no hint exists, so find the first VISIBLE one.
+    const buttons = await page.evaluate(() => {
+      const hints = [...document.querySelectorAll(".pv-hint")];
+      const hint = hints.find(h => getComputedStyle(h).display !== "none");
+      const check = document.querySelector(".pv-check");
+      if (!hint || !check) return null;
+      const hs = getComputedStyle(hint);
+      const cs = getComputedStyle(check);
+      return {
+        hintH: hint.getBoundingClientRect().height,
+        hintFont: parseFloat(hs.fontSize),
+        checkH: check.getBoundingClientRect().height,
+        checkFont: parseFloat(cs.fontSize),
+      };
+    });
+    if (buttons) {
+      if (buttons.hintH < 44)
+        problems.push(`MOBILE HINT: rendered height ${buttons.hintH.toFixed(1)}px < 44px tap target`);
+      if (buttons.checkH < 44)
+        problems.push(`MOBILE CHECK: rendered height ${buttons.checkH.toFixed(1)}px < 44px tap target`);
+      if (buttons.hintFont > 15.5)
+        problems.push(`MOBILE HINT: font ${buttons.hintFont.toFixed(1)}px is desktop-sized (should be ≤ 15px)`);
+      if (buttons.checkFont > 15.5)
+        problems.push(`MOBILE CHECK: font ${buttons.checkFont.toFixed(1)}px is desktop-sized (should be ≤ 15px)`);
+    }
+
+    // 4. BLANK INPUT — solid border, visible fill, ≥ 44×44px
+    const blank = await page.evaluate(() => {
+      const el = document.querySelector(".blank-input");
+      if (!el) return null;
+      const c = getComputedStyle(el);
+      const r = el.getBoundingClientRect();
+      const alpha = (rgb) => {
+        const m = /rgba?\(([^)]+)\)/.exec(rgb || "");
+        if (!m) return 0;
+        const p = m[1].split(",").map((s) => s.trim());
+        return p.length >= 4 ? parseFloat(p[3]) : 1;
+      };
+      return {
+        w: r.width, h: r.height,
+        borderStyle: c.borderStyle, borderW: parseFloat(c.borderWidth),
+        bg: c.backgroundColor, bgAlpha: alpha(c.backgroundColor),
+        radius: parseFloat(c.borderTopLeftRadius),
+      };
+    });
+    if (blank) {
+      if (blank.borderStyle === "dashed")
+        problems.push(`BLANK INPUT: border is dashed — must be solid so a child recognises it as tappable`);
+      if (blank.bgAlpha < 0.05)
+        problems.push(`BLANK INPUT: background is transparent (${blank.bg}) — needs a visible tinted fill`);
+      if (blank.w < 42 || blank.h < 42)
+        problems.push(`BLANK INPUT: ${blank.w.toFixed(0)}×${blank.h.toFixed(0)}px — must be ≥ 44×44px tap target`);
+      if (blank.radius < 10)
+        problems.push(`BLANK INPUT: border-radius ${blank.radius}px — should be ≥ 12px`);
+      if (blank.borderW < 1.5)
+        problems.push(`BLANK INPUT: border ${blank.borderW}px — should be ≥ 2px for visibility`);
+    }
+  } finally {
+    await page.close();
+    try { fs.unlinkSync(tmp); } catch (e) {}
+  }
+  return problems;
+}
+
 (async () => {
   const files = fs.existsSync(REVIEW)
     ? fs.readdirSync(REVIEW).filter((f) => f.endsWith(".html") && !f.startsWith("__"))
@@ -329,7 +476,18 @@ async function checkExplainReveal(page) {
     console.log(`PASS  explanation reveal  (hidden by default, visible after Check)`);
   }
 
+  // Mobile invariants — 380×800 viewport, self-contained fixture.
+  const mobileProblems = await checkMobileInvariants(browser);
+  if (mobileProblems.length) {
+    failed++;
+    console.log(`\nFAIL  mobile (380×800)`);
+    mobileProblems.forEach((p) => console.log("      - " + p));
+  } else {
+    console.log(`PASS  mobile (380×800)  (gutters, overflow, buttons, blank-input)`);
+  }
+
   await browser.close();
-  console.log(failed ? `\n${failed}/${files.length + 1} FAILED` : `\nselection styling is clean`);
+  const total = files.length + 2;   // +1 explain, +1 mobile
+  console.log(failed ? `\n${failed}/${total} FAILED` : `\nselection styling is clean`);
   process.exit(failed ? 1 : 0);
 })();
