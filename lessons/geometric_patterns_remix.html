@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Geometric Number Patterns — Remix</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+ body{font-family:'Quicksand','DM Sans',system-ui,sans-serif;max-width:820px;margin:0 auto;padding:24px;background:#f4f1fb;color:#2c2150}
+ h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
+ .note{background:#fff;border-left:4px solid #7b5cff;padding:10px 14px;border-radius:8px;color:#6b5b9a;margin:8px 0 18px;font-size:.9rem}
+ #source{display:none}
+ .pv-frame{background:linear-gradient(160deg,#7b5cff 0%,#9b6bff 55%,#ff7eb6 130%);border-radius:18px;padding:6px;margin:20px 0 6px;box-shadow:0 10px 28px rgba(123,92,255,.22)}
+ .pv-card{position:relative;background:#fff;border-radius:14px;padding:24px 24px 18px;box-shadow:0 4px 0 rgba(123,92,255,.08);transition:box-shadow .2s}
+ .pv-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+ .pv-tlabel{font-family:'Quicksand',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#a99ccf}
+ .pv-ring{width:44px;height:44px;border-radius:50%;background:conic-gradient(#7b5cff 75%,#f0e9fb 0);display:flex;align-items:center;justify-content:center}
+ .pv-ring i{width:36px;height:36px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:700;font-size:.78rem;color:#7b5cff;font-family:'Baloo 2',cursive}
+ .pv-hintbox{margin:12px 2px 0;background:#fff7e6;border:1px solid #ffe2a8;border-radius:12px;padding:11px 14px;color:#7a5b12;font-weight:600;line-height:1.5}
+ .pv-foot{display:flex;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap}
+ .pv-hint{font-family:'Baloo 2',cursive;font-weight:700;color:#6b5b9a;background:#fff;border:2px solid #e7ddf8;border-radius:14px;padding:11px 18px;cursor:pointer;font-size:1rem}
+ .pv-hint:hover{border-color:#7b5cff;color:#7b5cff}
+ .pv-fb{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.05rem;margin-right:auto;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:12px}
+ .pv-fb-ic{font-size:1.5rem;line-height:1}
+ .pv-fb.good{color:#0b9468;background:linear-gradient(135deg,#dcffe9,#eafff2)}
+ .pv-fb.bad{color:#b04a6a;background:linear-gradient(135deg,#fff0f3,#fff6f7)}
+ .pv-check{font-family:'Baloo 2',cursive;font-weight:800;color:#fff;background:linear-gradient(90deg,#ff9d4d,#ff6b9d);border:0;border-radius:18px;padding:13px 28px;box-shadow:0 5px 0 #d4477a;cursor:pointer;font-size:1.02rem;margin-left:auto}
+ .pv-check:active{transform:translateY(4px);box-shadow:0 1px 0 #d4477a}
+ .pv-ans{margin:0 6px 22px;font-size:.86rem;color:#0f9d6b;font-weight:600}.pv-ans b{color:#047857}
+ .qbody .opt.is-sel{outline:3px solid var(--brand,#4361ee);outline-offset:2px}
+ .qbody .lp-slot.on{background:var(--brand,#4361ee);border-radius:3px}
+ .qbody .md-ruler{cursor:grab}@media(max-width:600px){body{padding:12px}.pv-frame{padding:5px;margin:14px 0 6px}.pv-card{padding:16px 14px 14px}.pv-ans{margin:0 4px 16px;font-size:.82rem}.pv-head{margin-bottom:6px}}</style></head><body>
+<h1>Question Preview <span class="sub">— exactly as it appears in the app</span></h1>
+<p class="note">Each card is the real app UI. Try it — click, type, drag, then press <b>Check</b>. The green line shows the correct answer for review.</p>
+<div id="source">
+<!--@q
+type: single-select
+answer: ["4"]
+description: Missing number (×2)
+hint: Multiply the number before the gap by 2.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the missing number: <span class="qseq">1, 2, ?, 8, 16, 32</span></p>
+  <ul class="options"><li data-val="3">3</li><li data-val="4">4</li><li data-val="6">6</li><li data-val="16">16</li></ul>
+  <p class="explain">Multiply by 2 each step, so the answer is 4.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3"]
+description: Missing number (×3)
+hint: Multiply the number before the gap by 3.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the missing number: <span class="qseq">1, ?, 9, 27, 81</span></p>
+  <ul class="options"><li data-val="2">2</li><li data-val="3">3</li><li data-val="6">6</li><li data-val="12">12</li></ul>
+  <p class="explain">Multiply by 3 each step, so the answer is 3.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["16"]
+description: Missing number (×2)
+hint: Multiply the number before the gap by 2.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the missing number: <span class="qseq">1, 2, 4, 8, ?</span></p>
+  <ul class="options"><li data-val="10">10</li><li data-val="12">12</li><li data-val="16">16</li><li data-val="24">24</li></ul>
+  <p class="explain">Multiply by 2 each step, so the answer is 16.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["64"]
+description: Missing number (×4)
+hint: Multiply the number before the gap by 4.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the missing number: <span class="qseq">1, 4, 16, ?, 256</span></p>
+  <ul class="options"><li data-val="20">20</li><li data-val="48">48</li><li data-val="64">64</li><li data-val="128">128</li></ul>
+  <p class="explain">Multiply by 4 each step, so the answer is 64.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["243"]
+description: Missing number (×3)
+hint: Multiply the number before the gap by 3.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the missing number: <span class="qseq">3, 9, 27, 81, ?, 729</span></p>
+  <ul class="options"><li data-val="162">162</li><li data-val="240">240</li><li data-val="243">243</li><li data-val="324">324</li></ul>
+  <p class="explain">Multiply by 3 each step, so the answer is 243.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["64"]
+description: Missing number (×2)
+hint: Multiply the number before the gap by 2.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the missing number: <span class="qseq">2, 4, 8, 16, 32, ?</span></p>
+  <ul class="options"><li data-val="34">34</li><li data-val="48">48</li><li data-val="64">64</li><li data-val="96">96</li></ul>
+  <p class="explain">Multiply by 2 each step, so the answer is 64.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["10000"]
+description: Missing number (×10)
+hint: Multiply the number before the gap by 10.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the missing number: <span class="qseq">1, 10, 100, 1000, ?</span></p>
+  <ul class="options"><li data-val="1010">1010</li><li data-val="2000">2000</li><li data-val="10000">10000</li><li data-val="100000">100000</li></ul>
+  <p class="explain">Multiply by 10 each step, so the answer is 10000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["7776"]
+description: Missing number (×6)
+hint: Multiply the number before the gap by 6.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the missing number: <span class="qseq">6, 36, 216, 1296, ?</span></p>
+  <ul class="options"><li data-val="1302">1302</li><li data-val="6480">6480</li><li data-val="7776">7776</li><li data-val="46656">46656</li></ul>
+  <p class="explain">Multiply by 6 each step, so the answer is 7776.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["343"]
+description: Missing number (×7)
+hint: Multiply the number before the gap by 7.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the missing number: <span class="qseq">1, 7, 49, ?, 2401</span></p>
+  <ul class="options"><li data-val="56">56</li><li data-val="98">98</li><li data-val="343">343</li><li data-val="392">392</li></ul>
+  <p class="explain">Multiply by 7 each step, so the answer is 343.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["15625"]
+description: Missing number (×5)
+hint: Multiply the number before the gap by 5.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the missing number: <span class="qseq">5, 25, 125, 625, 3125, ?</span></p>
+  <ul class="options"><li data-val="3130">3130</li><li data-val="15600">15600</li><li data-val="15625">15625</li><li data-val="18750">18750</li></ul>
+  <p class="explain">Multiply by 5 each step, so the answer is 15625.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["b"]
+description: Name the rule (×3)
+hint: Ask: what do you DO to 3 to get 9?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is the rule for this pattern? <span class="qseq">3, 9, 27, 81</span></p>
+  <ul class="options"><li data-val="a">Add 3</li><li data-val="b">Multiply by 3</li><li data-val="c">Multiply by 9</li><li data-val="d">Add 6</li></ul>
+  <p class="explain">3×3=9, 9×3=27… you multiply by 3.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["c"]
+description: Name the rule (×4)
+hint: 2 to 8 is ×4, check the next step too.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is the rule for this pattern? <span class="qseq">2, 8, 32, 128</span></p>
+  <ul class="options"><li data-val="a">Add 6</li><li data-val="b">Multiply by 2</li><li data-val="c">Multiply by 4</li><li data-val="d">Add 4</li></ul>
+  <p class="explain">2×4=8, 8×4=32… you multiply by 4.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["c"]
+description: Spot the multiplying pattern
+hint: Multiplying patterns grow faster and faster.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which pattern is made by MULTIPLYING?</p>
+  <ul class="options"><li data-val="a">2, 4, 6, 8</li><li data-val="b">3, 6, 9, 12</li><li data-val="c">2, 4, 8, 16</li><li data-val="d">5, 10, 15, 20</li></ul>
+  <p class="explain">2, 4, 8, 16 doubles each time (×2). The others just add.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["c"]
+description: Spot the odd one out
+hint: One of these ADDS the same number each time.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which pattern is NOT made by multiplying?</p>
+  <ul class="options"><li data-val="a">1, 3, 9, 27</li><li data-val="b">2, 6, 18, 54</li><li data-val="c">10, 20, 30, 40</li><li data-val="d">5, 25, 125, 625</li></ul>
+  <p class="explain">10, 20, 30, 40 adds 10 each time — it is not multiplying.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["250"]
+description: Find the mistake (×4)
+hint: Check each step: does ×4 give the next number?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This should multiply by 4, but one number is wrong. Tap the wrong number: <span class="qseq">1, 4, 16, 64, 250</span></p>
+  <ul class="options"><li data-val="4">4</li><li data-val="16">16</li><li data-val="64">64</li><li data-val="250">250</li></ul>
+  <p class="explain">64×4 = 256, not 250, so 250 is the wrong number.</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["2", "6", "18", "54"]
+palette: ["2", "6", "18", "54", "24", "72"]
+description: Continue the pattern (×3)
+hint: 2×3=6, 6×3=18… keep multiplying by 3.
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Drag the tiles to build the whole pattern (multiply by 3).</p>
+  <p class="reference">2, 6, 18, …</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["1", "5", "25", "125"]
+palette: ["1", "5", "25", "125", "30", "50"]
+description: Continue the pattern (×5)
+hint: 1×5=5, 5×5=25… keep multiplying by 5.
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Drag the tiles to build the whole pattern (multiply by 5).</p>
+  <p class="reference">1, 5, 25, …</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["4", "8", "16", "32"]
+palette: ["4", "8", "16", "32", "24", "48"]
+description: Continue the pattern (×2)
+hint: 4×2=8, 8×2=16… keep doubling.
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Drag the tiles to build the whole pattern (multiply by 2).</p>
+  <p class="reference">4, 8, 16, …</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id": "m2", "label": "Multiply by 2"}, {"id": "m3", "label": "Multiply by 3"}]
+answer: ["m2", "m3", "m2", "m3"]
+description: Sort by rule (×2 / ×3)
+hint: Find how many times bigger each number gets.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Sort each pattern by the number it multiplies by each step.</p>
+  <ul class="tiles"><li>2, 4, 8</li><li>3, 9, 27</li><li>10, 20, 40</li><li>1, 3, 9</li></ul>
+  <p class="explain">2,4,8 and 10,20,40 double; 3,9,27 and 1,3,9 triple.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["3", "9", "27", "81", "243"]
+low: smallest
+high: largest
+description: Order the ×3 pattern
+hint: They are a multiply-by-3 pattern, just jumbled.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Put these numbers in order from smallest to largest.</p>
+  <ol class="order"><li>27</li><li>3</li><li>243</li><li>9</li><li>81</li></ol>
+  <p class="explain">In order: 3, 9, 27, 81, 243.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["8", "16", "32"]
+description: Members of the ×2 pattern
+hint: Keep doubling from 1 and see which appear.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap EVERY number that belongs in the doubling pattern: <span class="qseq">1, 2, 4, 8, 16, 32</span></p>
+  <ul class="options"><li data-val="8">8</li><li data-val="12">12</li><li data-val="16">16</li><li data-val="20">20</li><li data-val="32">32</li></ul>
+  <p class="explain">8, 16 and 32 appear; 12 and 20 never do.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["125", "625"]
+description: Extend the ×5 pattern
+hint: Multiply by 5, then by 5 again.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Fill in the next two numbers: <span class="qseq">1, 5, 25, [], []</span></p>
+  <p class="explain">25×5 = 125, and 125×5 = 625.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["5"]
+description: Find the multiplier
+hint: Ask: 4 × ? = 20.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What do you multiply by each step? <span class="qseq">4, 20, 100, 500</span></p>
+  <ul class="options"><li data-val="4">4</li><li data-val="5">5</li><li data-val="16">16</li><li data-val="20">20</li></ul>
+  <p class="explain">4×5=20, 20×5=100, 100×5=500 — you multiply by 5.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id": "in", "label": "In the pattern"}, {"id": "no", "label": "Not in it"}]
+answer: ["in", "in", "no", "in", "no"]
+description: Spot the powers of 3
+hint: Only numbers you land on by tripling belong.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Sort each number — is it in this ×3 pattern? <span class="qseq">1, 3, 9, 27, 81</span></p>
+  <ul class="tiles"><li>9</li><li>27</li><li>45</li><li>81</li><li>50</li></ul>
+  <p class="explain">9, 27 and 81 are in the pattern; 45 and 50 are not.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["2", "8", "16", "32", "64"]
+low: smallest
+high: largest
+description: Order the ×2 pattern
+hint: They double each step, just jumbled.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Put these numbers in order from smallest to largest.</p>
+  <ol class="order"><li>16</li><li>2</li><li>64</li><li>8</li><li>32</li></ol>
+  <p class="explain">In order: 2, 8, 16, 32, 64.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["a", "c"]
+description: Spot the multiplying patterns
+hint: Multiplying patterns grow faster and faster.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap EVERY pattern that is made by MULTIPLYING.</p>
+  <ul class="options"><li data-val="a">2, 4, 8, 16</li><li data-val="b">3, 6, 9, 12</li><li data-val="c">1, 5, 25, 125</li><li data-val="d">7, 14, 21, 28</li></ul>
+  <p class="explain">2,4,8,16 (×2) and 1,5,25,125 (×5) multiply; the others just add.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["192"]
+description: Find the middle term (×4)
+hint: 48 × 4 = ? , and it should reach 768.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Fill in the blank: <span class="qseq">3, 12, 48, [], 768</span></p>
+  <p class="explain">48×4 = 192, and 192×4 = 768.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1296"]
+description: Next term (×6)
+hint: Multiply the last number by 6.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which number comes next? <span class="qseq">1, 6, 36, 216, ?</span></p>
+  <ul class="options"><li data-val="432">432</li><li data-val="1290">1290</li><li data-val="1296">1296</li><li data-val="246">246</li></ul>
+  <p class="explain">216×6 = 1296.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["4000"]
+description: Find the missing term (×10)
+hint: Adding a zero multiplies by 10.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">This pattern multiplies by 10. Fill in the blank: <span class="qseq">4, 40, 400, [], 40000</span></p>
+  <p class="explain">400×10 = 4000, and 4000×10 = 40000.</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["2", "20", "200", "2000"]
+palette: ["2", "20", "200", "2000", "400", "40"]
+description: Continue the pattern (×10)
+hint: 2×10=20, 20×10=200… keep adding a zero.
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Drag the tiles to build the whole pattern (multiply by 10).</p>
+  <p class="reference">2, 20, 200, …</p>
+</div>
+</div>
+<div id="preview" style="--brand:#7b5cff;--brand-rgb:123,92,255;--brand-dark:#5a3ec8;--blue:#9b6bff;--pink:#ff7eb6;--green:#10b981;--red:#ef4444;--ink:#2c2150;--sub:#6b5b9a;--fm:'Baloo 2',cursive;--fs:'Quicksand','DM Sans',sans-serif"></div>
+<!-- RENDERING ENGINE: replace the comment inside the next <script> with the FULL
+     contents of preview-engine.js (attached to this Claude project's files). -->
+<script id="rao-preview-engine">
+/* AUTO-GENERATED by scripts/generate-preview.js — do not edit by hand. */
+window.RaoPreview = (function(){
+  var MODS = {};
+MODS["shapes"] = (function(){
+  var module = { exports: {} }, exports = module.exports;
+  function require(p){ return MODS[p.replace(/^\.\//,"").replace(/\.js$/,"")]; }
+// Named-shape icon library for draggable tiles (sequence-build / order).
+//
+// Pattern questions use shape tiles (heart, square, triangle…). The authoring
+// format lets the author name a tile by a word key (`palette: ["heart","square"]`),
+// and this module turns that key into a small SVG icon so the generated tile shows
+// the SHAPE — not the word. data-val stays the key, so grading is unchanged.
+//
+// Geometry matches the Word→HTML preview (0..40 viewBox) so a tile looks like the
+// shapes drawn in the question figure. The caller supplies the fill colour.
+
+const SHAPES = {
+  circle: (c) => `<circle cx="20" cy="20" r="13" fill="${c}"/>`,
+  square: (c) => `<rect x="7" y="7" width="26" height="26" rx="2.5" fill="${c}"/>`,
+  rectangle: (c) => `<rect x="4" y="11" width="32" height="18" rx="2.5" fill="${c}"/>`,
+  triangle: (c) => `<polygon points="20,7 34,33 6,33" fill="${c}"/>`,
+  diamond: (c) => `<polygon points="20,5 33,20 20,35 7,20" fill="${c}"/>`,
+  star: (c) => `<polygon points="20,4 24,15 36,15 26,23 30,35 20,28 10,35 14,23 4,15 16,15" fill="${c}"/>`,
+  pentagon: (c) => `<polygon points="20,5 35,16 29,34 11,34 5,16" fill="${c}"/>`,
+  hexagon: (c) => `<polygon points="20,5 33,12 33,28 20,35 7,28 7,12" fill="${c}"/>`,
+  heart: (c) =>
+    `<path d="M20 33 C 6 23, 7 11, 15 11 C 19 11, 20 15, 20 16 C 20 15, 21 11, 25 11 C 33 11, 34 23, 20 33 Z" fill="${c}"/>`,
+  spade: (c) =>
+    `<path d="M20 8 C 28 16, 34 20, 34 26 C 34 31, 28 32, 24 29 C 25 31, 26 33, 28 34 L 12 34 C 14 33, 15 31, 16 29 C 12 32, 6 31, 6 26 C 6 20, 12 16, 20 8 Z" fill="${c}"/>`,
+  club: (c) =>
+    `<path d="M20 6a6 6 0 0 1 4 10 6 6 0 1 1-2 9c0 4 1 6 3 8H15c2-2 3-4 3-8a6 6 0 1 1-2-9 6 6 0 0 1 4-10Z" fill="${c}"/>`,
+};
+
+// stable, friendly colours; assigned per distinct tile in a question (by index)
+const SHAPE_COLORS = ["#5B8DEF", "#10b981", "#f2a900", "#c66fd6", "#ef4444", "#5a55e0", "#0ea5b7", "#e8643c"];
+
+const norm = (s) => String(s).trim().toLowerCase();
+
+function isShape(name) {
+  return typeof name === "string" && Object.prototype.hasOwnProperty.call(SHAPES, norm(name));
+}
+
+// Render a named shape as an inline SVG icon (or null if the name isn't a shape).
+function shapeIcon(name, color) {
+  const draw = SHAPES[norm(name)];
+  if (!draw) return null;
+  return `<svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">${draw(color || SHAPE_COLORS[0])}</svg>`;
+}
+
+module.exports = { isShape, shapeIcon, SHAPE_COLORS };
+
+  return module.exports;
+})();
+MODS["figures"] = (function(){
+  var module = { exports: {} }, exports = module.exports;
+  function require(p){ return MODS[p.replace(/^\.\//,"").replace(/\.js$/,"")]; }
+// Parametric figures for authoring mode: <figure data-show="..."> -> inert inline SVG.
+// Raw <svg> in the authoring HTML is passed through untouched (handled in authoring.js).
+// Each returns a self-contained, self-styled SVG wrapped in .fig-wrap (centered by the
+// bundled stylesheet). Add a new figure by adding a case here + documenting the tag.
+
+function baseTen(tens, ones) {
+  let s = "";
+  for (let i = 0; i < tens; i++)
+    s += `<rect x="${i * 16}" y="0" width="12" height="74" rx="1.5" fill="#5cba6a" stroke="#1f7d38" stroke-width="0.8"/>`;
+  const ox = tens * 16 + 6;
+  for (let i = 0; i < ones; i++)
+    s += `<rect x="${ox + (i % 5) * 14}" y="${60 - Math.floor(i / 5) * 14}" width="12" height="12" rx="2" fill="#5cba6a" stroke="#1f7d38" stroke-width="0.9"/>`;
+  const w = Math.max(20, ox + Math.min(ones, 5) * 14 + 4);
+  return svgWrap(w, 76, s);
+}
+
+function spinner(spec) {
+  const parts = String(spec)
+    .split(",")
+    .map((p) => {
+      const [c, w] = p.split(":");
+      return { c: (c || "#5B8DEF").trim(), w: Number(w) || 1 };
+    });
+  const tot = parts.reduce((a, b) => a + b.w, 0) || 1;
+  const cx = 60, cy = 60, r = 52;
+  const rad = (a) => (a * Math.PI) / 180;
+  let a = -90, paths = "";
+  parts.forEach((p) => {
+    const sweep = (p.w / tot) * 360;
+    const e = a + sweep;
+    const x1 = (cx + r * Math.cos(rad(a))).toFixed(2);
+    const y1 = (cy + r * Math.sin(rad(a))).toFixed(2);
+    const x2 = (cx + r * Math.cos(rad(e))).toFixed(2);
+    const y2 = (cy + r * Math.sin(rad(e))).toFixed(2);
+    const large = sweep > 180 ? 1 : 0;
+    paths += `<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${large} 1 ${x2},${y2} Z" fill="${p.c}" stroke="#fff" stroke-width="2"/>`;
+    a = e;
+  });
+  paths += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#cdd8f2" stroke-width="2"/>`;
+  paths += `<polygon points="${cx},${cy - r - 6} ${cx - 6},${cy - r + 8} ${cx + 6},${cy - r + 8}" fill="#14213d"/>`;
+  paths += `<circle cx="${cx}" cy="${cy}" r="6" fill="#14213d"/>`;
+  return svgWrap(120, 120, paths);
+}
+
+function numberLine(from, to, mark) {
+  from = Number(from); to = Number(to);
+  const n = Math.max(1, to - from);
+  const W = Math.max(240, n * 36);
+  let t = "";
+  for (let i = 0; i <= n; i++) {
+    const x = 14 + (i * (W - 28)) / n;
+    const v = from + i;
+    t += `<line x1="${x.toFixed(1)}" y1="24" x2="${x.toFixed(1)}" y2="34" stroke="#333" stroke-width="1.4"/>`;
+    t += `<text x="${x.toFixed(1)}" y="50" font-size="11" text-anchor="middle" fill="#14213d">${v}</text>`;
+    if (v === Number(mark))
+      t += `<rect x="${(x - 9).toFixed(1)}" y="6" width="18" height="18" rx="2" fill="#fff" stroke="#4361EE" stroke-width="2.4"/>`;
+  }
+  return svgWrap(W, 56, `<line x1="14" y1="29" x2="${W - 14}" y2="29" stroke="#333" stroke-width="1.4"/>${t}`);
+}
+
+const ICONS = {
+  circle: (x) => `<circle cx="${x + 12}" cy="14" r="10" fill="#aab6f0" stroke="#5A55E0" stroke-width="1.6"/>`,
+  star: (x) => `<polygon points="${x + 12},3 ${x + 15},11 ${x + 23},11 ${x + 17},16 ${x + 19},24 ${x + 12},19 ${x + 5},24 ${x + 7},16 ${x + 1},11 ${x + 9},11" fill="#bcdcff" stroke="#5B8DEF" stroke-width="1.2"/>`,
+};
+function icons(name, count) {
+  const draw = ICONS[name] || ICONS.circle;
+  let s = "";
+  for (let i = 0; i < count; i++) s += draw(i * 26);
+  return svgWrap(count * 26 + 4, 28, s);
+}
+
+function svgWrap(w, h, inner) {
+  return `<div class="fig-wrap"><svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img">${inner}</svg></div>`;
+}
+
+// attrs: a plain object of the figure's data-* (without the "data-" prefix)
+function renderFigure(show, attrs) {
+  switch (show) {
+    case "base-ten":
+      return baseTen(Number(attrs.tens) || 0, Number(attrs.ones) || 0);
+    case "spinner":
+      return spinner(attrs.slices || "");
+    case "number-line":
+      return numberLine(attrs.from, attrs.to, attrs.mark);
+    case "icons":
+      return icons(attrs.icon || "circle", Number(attrs.count) || 0);
+    default:
+      return ""; // unknown -> nothing (validation will flag it)
+  }
+}
+
+const SUPPORTED = ["base-ten", "spinner", "number-line", "icons"];
+
+module.exports = { renderFigure, SUPPORTED };
+
+  return module.exports;
+})();
+MODS["css"] = (function(){
+  var module = { exports: {} }, exports = module.exports;
+  function require(p){ return MODS[p.replace(/^\.\//,"").replace(/\.js$/,"")]; }
+// Per-question CSS: parse the catalog's <style> block once, then for each question
+// emit only the rules its classes use, scoped under .qbody, plus the theme variables
+// and any referenced keyframes. Makes each question_markup self-contained.
+
+function stripComments(s) {
+  return s.replace(/\/\*[\s\S]*?\*\//g, "");
+}
+
+function readBlock(css, braceIdx) {
+  let depth = 0;
+  for (let i = braceIdx; i < css.length; i++) {
+    if (css[i] === "{") depth++;
+    else if (css[i] === "}") {
+      depth--;
+      if (depth === 0) return { body: css.slice(braceIdx + 1, i), end: i + 1 };
+    }
+  }
+  return { body: css.slice(braceIdx + 1), end: css.length };
+}
+
+function parseRules(css) {
+  css = stripComments(css);
+  const out = [];
+  let i = 0;
+  while (i < css.length) {
+    while (i < css.length && /\s/.test(css[i])) i++;
+    if (i >= css.length) break;
+    const brace = css.indexOf("{", i);
+    if (brace < 0) break;
+    const prelude = css.slice(i, brace).trim();
+    const blk = readBlock(css, brace);
+    if (prelude.startsWith("@media") || prelude.startsWith("@supports")) {
+      out.push({ type: "at", prelude, inner: parseRules(blk.body) });
+    } else if (prelude.startsWith("@keyframes")) {
+      out.push({
+        type: "keyframes",
+        name: prelude.replace("@keyframes", "").trim(),
+        raw: prelude + "{" + blk.body + "}",
+      });
+    } else if (!prelude.startsWith("@")) {
+      out.push({
+        type: "rule",
+        selectors: prelude.split(",").map((s) => s.trim()).filter(Boolean),
+        decls: blk.body.trim(),
+      });
+    }
+    i = blk.end;
+  }
+  return out;
+}
+
+// Classes JS adds at runtime (not in stored markup, but their styles are still needed).
+const STATE = new Set([
+  "is-correct", "is-wrong", "is-sel", "correct", "incorrect", "shake",
+  "over", "filled", "placed", "dragging", "show", "active", "disabled",
+]);
+
+function classesIn(sel) {
+  return (sel.match(/\.([a-zA-Z0-9_-]+)/g) || []).map((s) => s.slice(1));
+}
+function selectorMatches(sel, used) {
+  const cls = classesIn(sel).filter((c) => !STATE.has(c));
+  return cls.length > 0 && cls.every((c) => used.has(c));
+}
+function ruleMatches(rule, used) {
+  return rule.selectors.some((sel) => selectorMatches(sel, used));
+}
+function scopeRule(rule) {
+  return rule.selectors.map((s) => ".qbody " + s).join(",") + "{" + rule.decls + "}";
+}
+
+// Returns styleFor(innerHtml) bound to a specific catalog stylesheet.
+function makeCssExtractor(styleBlock) {
+  const RULES = parseRules(styleBlock);
+  const ROOT_VARS = (
+    RULES.find((r) => r.type === "rule" && r.selectors.includes(":root")) || { decls: "" }
+  ).decls;
+  const KEYFRAMES = RULES.filter((r) => r.type === "keyframes");
+
+  // Theming: map each :root var to its default value, so we can emit usages as
+  // `var(--x, default)`. The default keeps the standalone look; a container that
+  // sets --x (a theme) cascades into .qbody and recolours only the question.
+  const VAR_DEFAULTS = {};
+  String(ROOT_VARS)
+    .split(";")
+    .forEach((decl) => {
+      const i = decl.indexOf(":");
+      if (i > 0) {
+        const name = decl.slice(0, i).trim();
+        const value = decl.slice(i + 1).trim();
+        if (name.startsWith("--") && value) VAR_DEFAULTS[name] = value;
+      }
+    });
+  // turn `var(--x)` (no fallback) into `var(--x, <default>)`
+  const withDefaults = (css) =>
+    css.replace(/var\(\s*(--[a-zA-Z0-9-]+)\s*\)/g, (m, name) =>
+      VAR_DEFAULTS[name] ? `var(${name}, ${VAR_DEFAULTS[name]})` : m
+    );
+
+  function styleFor(innerHtml) {
+    const used = new Set();
+    (innerHtml.match(/class="([^"]*)"/g) || []).forEach((m) =>
+      m.slice(7, -1).trim().split(/\s+/).forEach((c) => c && used.add(c))
+    );
+    const parts = [];
+    let declsAll = "";
+    RULES.forEach((node) => {
+      if (node.type === "rule") {
+        if (ruleMatches(node, used)) {
+          parts.push(scopeRule(node));
+          declsAll += " " + node.decls;
+        }
+      } else if (node.type === "at") {
+        const inner = node.inner
+          .filter((r) => r.type === "rule" && ruleMatches(r, used))
+          .map(scopeRule);
+        if (inner.length) {
+          parts.push(node.prelude + "{" + inner.join("") + "}");
+          declsAll += " " + inner.join(" ");
+        }
+      }
+    });
+    if (!parts.length) return "";
+    const kf = KEYFRAMES.filter((k) =>
+      new RegExp("\\b" + k.name.replace(/-/g, "\\-") + "\\b").test(declsAll)
+    ).map((k) => k.raw);
+    // Don't pin the variables on .qbody (that would block container theming);
+    // emit usages with their defaults baked in as fallbacks instead.
+    const css = withDefaults(parts.join("") + kf.join(""))
+      .replace(/\s+/g, " ")
+      .trim();
+    return "<style>" + css + "</style>";
+  }
+  // Bake var() fallbacks into the markup BODY too — inline SVG attrs like
+  // fill="var(--brand)" have no fallback, so a platform that doesn't define the
+  // variable would drop the colour (figure renders black/invisible). Same defaults
+  // as the CSS, so a theme container can still override.
+  styleFor.applyVarDefaults = withDefaults;
+  return styleFor;
+}
+
+module.exports = { makeCssExtractor };
+
+  return module.exports;
+})();
+MODS["authoring"] = (function(){
+  var module = { exports: {} }, exports = module.exports;
+  function require(p){ return MODS[p.replace(/^\.\//,"").replace(/\.js$/,"")]; }
+// Authoring mode: parse the product team's preview HTML (see docs/AUTHORING_FORMAT.md)
+// into the "prepared item" shape the SQL builder consumes:
+//   { behavior, qIdStr, description, inner, answerArr, help, styleFor }
+//
+// Source of truth = a frontmatter comment placed immediately before each question:
+//
+//   <!--@q
+//   type: fill-blanks
+//   answer: ["18"]
+//   description: Add the doubles: 9 + 9
+//   -->
+//   <div class="question" data-type="fill-blanks"> … visible preview … </div>
+//
+// The frontmatter carries the machine-readable facts (type, answer, per-type config);
+// the visible <div class="question"> carries the human preview (prompt/options/figures/
+// tiles). The builder reads the answer from the frontmatter (never re-derives it) and
+// strips it from the served markup. For backward compatibility, if a question has no
+// frontmatter, the older in-markup markers (data-correct / [brackets] / class="answer")
+// are still honoured.
+//
+// Format constraint: a question block must not contain a nested <div> for the simple
+// types (use <p>/<ul>/<figure>/<svg>); categorize/line-plot are built by this module.
+
+const { renderFigure, SUPPORTED } = require("./figures");
+const { isShape, shapeIcon, SHAPE_COLORS } = require("./shapes");
+
+// Render the visual for a draggable tile. Priority: an explicit SVG/HTML the
+// author put in the <li> (exact figure) > a named-shape icon (heart/square/…) >
+// the plain text. `keys` is the full distinct tile-key list so each shape gets a
+// stable colour within the question. Returns the tile's inner HTML.
+function tileVisual(key, html, keys) {
+  if (html && /<\s*(svg|img|figure)\b/i.test(html)) return html; // author-supplied picture
+  if (isShape(key)) return shapeIcon(key, SHAPE_COLORS[Math.max(0, keys.indexOf(key)) % SHAPE_COLORS.length]);
+  return String(key); // word/number tile
+}
+
+const TYPES = new Set([
+  "single-select", "multi-select", "fill-blanks", "expression", "order",
+  "sequence-build", "categorize", "line-plot", "construct",
+]);
+
+const attrEsc = (s) =>
+  String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const stripTags = (s) => String(s).replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+const getAttr = (attrs, name) => {
+  const m = attrs.match(new RegExp(name + '="([^"]*)"'));
+  return m ? m[1] : null;
+};
+const block = (content, cls, tag = "p") => {
+  const m = content.match(new RegExp(`<${tag}[^>]*class="${cls}"[^>]*>([\\s\\S]*?)<\\/${tag}>`));
+  return m ? m[1].trim() : null;
+};
+function listItems(content, cls) {
+  const lm = content.match(new RegExp(`<(ul|ol)[^>]*class="${cls}"([^>]*)>([\\s\\S]*?)<\\/\\1>`));
+  if (!lm) return { items: [], listAttrs: "" };
+  const items = [];
+  const re = /<li([^>]*)>([\s\S]*?)<\/li>/g;
+  let m;
+  while ((m = re.exec(lm[3]))) items.push({ attrs: m[1] || "", html: m[2].trim(), text: stripTags(m[2]) });
+  return { items, listAttrs: lm[2] || "" };
+}
+// From an opening "<svg" at fromIdx, return the whole element up to its MATCHING
+// </svg> (depth-counted, so nested <svg> cells — used to lay out a grid of shapes —
+// stay part of ONE figure instead of being split into fragments).
+function matchBalancedSvg(html, fromIdx) {
+  const re = /<svg\b|<\/svg\s*>/gi;
+  re.lastIndex = fromIdx;
+  let depth = 0, m;
+  while ((m = re.exec(html))) {
+    if (m[0][1] === "/") {
+      if (--depth === 0) return { whole: html.slice(fromIdx, re.lastIndex), end: re.lastIndex };
+    } else {
+      depth++;
+    }
+  }
+  return { whole: html.slice(fromIdx), end: html.length }; // unbalanced; take the rest
+}
+
+function figuresOf(content, warnings, qid) {
+  let out = "";
+  const re = /<figure\b([^>]*?)\s*\/?>(?:\s*<\/figure>)?|<svg\b/gi;
+  let m;
+  while ((m = re.exec(content))) {
+    if (m[0].toLowerCase().startsWith("<svg")) {
+      const { whole, end } = matchBalancedSvg(content, m.index); // whole (possibly-nested) svg
+      out += `<div class="fig-wrap">${whole}</div>`;
+      re.lastIndex = end; // skip past the entire svg, nested children included
+    } else {
+      const attrs = m[1] || "";
+      const data = {};
+      const ar = /data-([a-z-]+)="([^"]*)"/g;
+      let a;
+      while ((a = ar.exec(attrs))) data[a[1]] = a[2];
+      if (!SUPPORTED.includes(data.show)) warnings.push(`${qid}: unknown figure data-show="${data.show}"`);
+      out += renderFigure(data.show, data);
+    }
+  }
+  return out;
+}
+
+function deterministicShuffle(arr, seed) {
+  const a = arr.slice();
+  let s = (seed || 1) * 2654435761;
+  const rnd = () => {
+    s = (s * 1103515245 + 12345) & 0x7fffffff;
+    return s / 0x7fffffff;
+  };
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  if (a.length > 1 && a.join("|") === arr.join("|")) a.push(a.shift()); // avoid showing the answer
+  return a;
+}
+
+// Turn raw <li> options into {key, visual}. An option can be text OR a picture
+// (<img>/<svg>). key (-> data-val, the grading value): explicit data-val, else the
+// text, else the 1-based position (so an image-only option is keyed "1","2",… and a
+// numbered/lettered answer maps to it). visual (-> button content): the picture HTML
+// when present, else the text — so image options actually SHOW.
+function optionsOf(items) {
+  return items.map((o, i) => {
+    const explicit = getAttr(o.attrs, "data-val");
+    const hasPic = /<\s*(img|svg|figure)\b/i.test(o.html);
+    const key = explicit || o.text || String(i + 1);
+    return { key, visual: hasPic ? o.html : o.text, text: o.text, attrs: o.attrs };
+  });
+}
+
+function optionButtons(opts, multi) {
+  return (
+    '<div class="opts">' +
+    opts
+      .map(
+        (o) =>
+          `<button class="opt" data-val="${attrEsc(o.key)}">` +
+          (multi ? '<span class="check-ind"></span>' : "") +
+          `${o.visual}</button>`
+      )
+      .join("") +
+    "</div>"
+  );
+}
+
+// ---- frontmatter ------------------------------------------------------------
+
+// Parse a `<!--@q … -->` body into an object. `answer` and any value that begins
+// with [ or { is parsed as JSON; everything else is a trimmed string.
+function parseFrontmatter(body) {
+  const fm = {};
+  body.split(/\r?\n/).forEach((line) => {
+    const t = line.trim();
+    if (!t || t.startsWith("#")) return;
+    const i = t.indexOf(":");
+    if (i < 0) return;
+    const key = t.slice(0, i).trim();
+    let val = t.slice(i + 1).trim();
+    if (/^[[{]/.test(val)) {
+      try {
+        val = JSON.parse(val);
+      } catch (_) {
+        /* leave as string; validated later */
+      }
+    }
+    fm[key] = val;
+  });
+  return fm;
+}
+
+// If the author wrote an option by letter (A/B/C…) or 1-based index, map it to the
+// matching option KEY. Otherwise assume it already IS a key.
+function resolveOption(ans, optKeys) {
+  const s = String(ans).trim();
+  if (optKeys.includes(s)) return s; // already a key (incl. image options keyed "1","2",…)
+  const letter = /^[A-Za-z]$/.test(s) ? s.toUpperCase().charCodeAt(0) - 65 : -1;
+  if (letter >= 0 && letter < optKeys.length) return optKeys[letter];
+  const num = /^\d+$/.test(s) ? Number(s) - 1 : -1;
+  if (num >= 0 && num < optKeys.length) return optKeys[num];
+  return s; // fall through; validate() will flag if it isn't an option
+}
+
+// ---- per-type builders for the new interactive types ------------------------
+
+// categorize: build the tray of draggable tiles + the drop zones (venn2 or bins).
+// answer = the correct region id per tile, in tile order.
+function buildCategorize(fm, content, qid) {
+  const layout = fm.layout || "venn2";
+  const tiles = listItems(content, "tiles").items; // each <li> may carry data-region (the fixed/answer hint) + visual
+  if (!tiles.length) throw new Error(`${qid}: categorize needs <ul class="tiles"> with at least one tile`);
+  const answer = Array.isArray(fm.answer) ? fm.answer.map(String) : tiles.map((t) => getAttr(t.attrs, "data-region")).map(String);
+  if (answer.length !== tiles.length) throw new Error(`${qid}: categorize answer length ${answer.length} != ${tiles.length} tiles`);
+
+  const tray =
+    `<div class="vs-tray" data-qid="${qid}">` +
+    tiles.map((t, i) => `<span class="vs-tile" draggable="true" data-idx="${i}">${t.html}</span>`).join("") +
+    `</div>`;
+
+  let zonesHtml = "";
+  let regions = [];
+  if (layout === "venn2") {
+    regions = ["A", "AB", "B", "OUT"];
+    const left = attrEsc(fm.left_label || "A");
+    const right = attrEsc(fm.right_label || "B");
+    zonesHtml =
+      `<div class="venn-wrap"><div class="venn-box vs-box" data-qid="${qid}">` +
+      `<div class="venn-circle venn-left"></div><div class="venn-circle venn-right"></div>` +
+      `<span class="venn-label venn-label-left">${left}</span>` +
+      `<span class="venn-label venn-label-right">${right}</span>` +
+      `<div class="vs-zone vs-out" data-region="OUT"></div>` +
+      `<div class="vs-zone vs-a" data-region="A"></div>` +
+      `<div class="vs-zone vs-ab" data-region="AB"></div>` +
+      `<div class="vs-zone vs-b" data-region="B"></div>` +
+      `</div></div>`;
+  } else if (layout === "bins") {
+    const bins = (Array.isArray(fm.regions) ? fm.regions : []).map((r) =>
+      typeof r === "string" ? { id: r, label: r } : { id: String(r.id), label: String(r.label != null ? r.label : r.id) }
+    );
+    if (bins.length < 2) throw new Error(`${qid}: categorize bins needs "regions: [...]" (>=2) in the frontmatter`);
+    regions = bins.map((b) => b.id);
+    zonesHtml =
+      `<div class="bins">` +
+      bins
+        .map(
+          (b) =>
+            `<div class="bin"><div class="bin-head">${attrEsc(b.label)}</div>` +
+            `<div class="vs-zone" data-region="${attrEsc(b.id)}"><div class="bs-drop"></div></div></div>`
+        )
+        .join("") +
+      `</div>`;
+  } else {
+    throw new Error(`${qid}: categorize layout must be venn2 or bins (got "${layout}")`);
+  }
+  answer.forEach((r) => {
+    if (!regions.includes(r)) throw new Error(`${qid}: answer region "${r}" is not one of ${regions.join("/")}`);
+  });
+  return { answerArea: tray + zonesHtml, answerArr: answer };
+}
+
+// line-plot: build the column grid the learner clicks to set each count.
+// answer = the correct count per category, in category order.
+function buildLinePlot(fm, content, qid) {
+  const cats = (Array.isArray(fm.categories) ? fm.categories : []).map(String);
+  if (cats.length < 2) throw new Error(`${qid}: line-plot needs "categories: [...]" (>=2) in the frontmatter`);
+  const answer = (Array.isArray(fm.answer) ? fm.answer : []).map((n) => String(Number(n) || 0));
+  if (answer.length !== cats.length)
+    throw new Error(`${qid}: line-plot answer length ${answer.length} != ${cats.length} categories`);
+  const maxCount = Math.max(...answer.map(Number), 1);
+  const rows = Math.max(Number(fm.max) || 0, maxCount + 1, 5);
+  const ROW_PX = 24;
+  const height = rows * ROW_PX;
+  const unit = attrEsc(fm.unit || "item");
+  const xlabel = attrEsc(fm.x_label || "");
+  const ylabel = attrEsc(fm.y_label || `Number of ${unit}s`);
+
+  const gridlines = Array.from({ length: rows }, (_, i) => `<div class="lp-gridline" style="bottom:${i * ROW_PX}px"></div>`).join("");
+  const cols = cats
+    .map((label, x) => {
+      const slots = Array.from({ length: rows }, (_, r) => {
+        const row = rows - r; // top slot = highest count
+        return `<button class="lp-slot" data-row="${row}" aria-label="set ${row} over ${label}"></button>`;
+      }).join("");
+      return `<div class="lp-col" data-x="${x}" data-count="0" style="height:${height}px">${slots}</div>`;
+    })
+    .join("");
+  const ticks = cats.map((label) => `<span class="lp-tick">${attrEsc(label)}</span>`).join("");
+
+  // optional source table the author pasted into the question
+  const tableMatch = content.match(/<table[\s\S]*?<\/table>/);
+  const srcTable = tableMatch
+    ? `<div class="lp-srcwrap"><div class="data-wrap lp-src">${tableMatch[0]}</div></div>`
+    : "";
+
+  const plot =
+    `<div class="lp-plot" data-qid="${qid}" data-rows="${rows}" data-row-px="${ROW_PX}">` +
+    `<div class="lp-ylabel"><span>${ylabel}</span></div>` +
+    `<div class="lp-plotarea">` +
+    `<div class="lp-gridlines">${gridlines}</div>` +
+    `<div class="lp-cols" style="height:${height}px">${cols}</div>` +
+    `<div class="lp-baseline"></div>` +
+    `<div class="lp-ticks">${ticks}</div>` +
+    `</div>` +
+    (xlabel ? `<div class="lp-xlabel">${xlabel}</div>` : "") +
+    `<div class="lp-key"><span class="lp-key-x">✕</span> = 1 ${unit}</div>` +
+    `</div>`;
+
+  return { answerArea: `<div class="lp-row">${srcTable}${plot}</div>`, answerArr: answer };
+}
+
+// ---- main per-question parse ------------------------------------------------
+
+// Parse one question block + its frontmatter -> prepared item (throws on fatal error).
+// Sequence spotlight: when a prompt reads "<instruction ...>: <number sequence>",
+// drop the sequence onto its own centered, more-pronounced line so a child sees the
+// task at a glance. Author can mark it explicitly with <span class="qseq">...</span>;
+// this auto-wraps it when unmarked. Conservative: only fires when the tail after the
+// final colon is purely a number sequence (digits, commas, spaces, ? … . and [] blanks)
+// containing a comma, and the prompt isn't already using .qseq or .lbl.
+// Tag each .qseq with its character length (--sl) so mobile CSS can scale the font
+// to keep a number sequence on ONE line instead of wrapping mid-sequence. Blanks ([])
+// count as ~3 chars to approximate the width of an input cell.
+function annotateQseqLength(html) {
+  return html.replace(/<span class="qseq">([\s\S]*?)<\/span>/g, function (m, inner) {
+    var text = inner.replace(/<[^>]+>/g, '').replace(/\[\]/g, '000');
+    return '<span class="qseq" style="--sl:' + text.length + '">' + inner + '</span>';
+  });
+}
+function spotlightSequence(html) {
+  if (!html || /class="qseq"/.test(html) || /class="lbl"/.test(html)) return html;
+  var m = html.match(/^([\s\S]*?:)\s*([0-9,\s?\u2026.\[\]]+)$/);
+  if (!m) return html;
+  var lead = m[1], seq = m[2].trim();
+  if (seq.indexOf(',') === -1) return html;
+  if (!/[0-9]|\[/.test(seq)) return html;
+  return lead + ' <span class="qseq">' + seq + '</span>';
+}
+function parseQuestion(attrs, content, fm, index) {
+  const qid = `auth-q${index + 1}`;
+  const type = (fm.type || getAttr(attrs, "data-type") || "").trim();
+  if (!TYPES.has(type)) throw new Error(`${qid}: missing/invalid type ("${type}") — set it in the @q frontmatter`);
+  const warnings = [];
+  let promptHtml = block(content, "prompt") || "";
+  promptHtml = spotlightSequence(promptHtml);
+  promptHtml = annotateQseqLength(promptHtml);
+  const explain = block(content, "explain") || "";
+  const help = `<p>${explain}</p>`;
+  // Page figures come ONLY from the stimulus — not from SVGs that live inside an
+  // answer area (palette/tiles/options/order/sequence). Those belong to their tiles
+  // and are placed by the per-type builder; extracting them here would duplicate
+  // them as stray figures and wreck the layout.
+  const figContent = content
+    .replace(/<ul\b[^>]*class="(?:palette|tiles|options)"[\s\S]*?<\/ul>/gi, "")
+    .replace(/<ol\b[^>]*class="(?:order|sequence)"[\s\S]*?<\/ol>/gi, "");
+  const fig = figuresOf(figContent, warnings, qid);
+  const fmAnswer = Array.isArray(fm.answer) ? fm.answer.map(String) : null;
+
+  let promptInner = promptHtml;
+  let answerArr = [];
+  let answerArea = "";
+
+  if (type === "fill-blanks") {
+    // blanks are [] placeholders (or [value] for back-compat); answers come from frontmatter.
+    let i = 0;
+    const bracketVals = [];
+    promptInner = promptHtml.replace(/\[([^\]]*)\]/g, (_, val) => {
+      bracketVals.push(val.trim());
+      const provided = fmAnswer ? fmAnswer[i] : val.trim();
+      const numeric = /^-?\d+$/.test(String(provided));
+      return `<input class="blank-input" data-blank="${i++}"${numeric ? ' inputmode="numeric"' : ""} maxlength="6" aria-label="blank">`;
+    });
+    const nBlanks = i;
+    if (!nBlanks) throw new Error(`${qid}: fill-blanks needs at least one [] blank in the prompt`);
+    answerArr = fmAnswer || bracketVals;
+    if (answerArr.length !== nBlanks) throw new Error(`${qid}: ${nBlanks} blanks vs ${answerArr.length} answers`);
+  } else if (type === "single-select" || type === "multi-select") {
+    const { items } = listItems(content, "options");
+    if (items.length < 2) throw new Error(`${qid}: ${type} needs a <ul class="options"> with options`);
+    const opts = optionsOf(items); // {key, visual} — supports image/svg options
+    const optKeys = opts.map((o) => o.key);
+    let correct;
+    if (fmAnswer) {
+      correct = fmAnswer.map((a) => resolveOption(a, optKeys));
+    } else {
+      correct = opts.filter((o) => /\bdata-correct\b/.test(o.attrs)).map((o) => o.key);
+    }
+    if (type === "single-select" && correct.length !== 1)
+      throw new Error(`${qid}: single-select needs exactly one answer (found ${correct.length})`);
+    if (type === "multi-select" && correct.length < 1)
+      throw new Error(`${qid}: multi-select needs at least one answer`);
+    answerArea = optionButtons(opts, type === "multi-select");
+    answerArr = correct;
+  } else if (type === "expression") {
+    const ans = fmAnswer ? fmAnswer[0] : block(content, "answer");
+    if (!ans) throw new Error(`${qid}: expression needs an answer (frontmatter answer or <p class="answer">)`);
+    answerArea = '<div class="ans-row"><input class="ans-input" placeholder="e.g. 6 + 3 = 9" aria-label="number sentence"></div>';
+    answerArr = [stripTags(ans)];
+  } else if (type === "order") {
+    const { items, listAttrs } = listItems(content, "order");
+    if (items.length < 2) throw new Error(`${qid}: order needs an <ol class="order"> with items`);
+    const pool = items.map((o) => o.text);
+    const vals = fmAnswer || pool; // correct order from frontmatter; HTML order is just the pool
+    const htmlByVal = {}; // exact visual the author put in a <li>, keyed by data-val/text
+    items.forEach((o) => { htmlByVal[getAttr(o.attrs, "data-val") || o.text] = o.html; });
+    const keys = [...new Set(vals)];
+    const low = fm.low || getAttr(listAttrs, "data-low");
+    const high = fm.high || getAttr(listAttrs, "data-high");
+    const lbl =
+      low || high
+        ? `<div class="order-target-lbl"><span>← ${attrEsc(low || "")}</span><span>${attrEsc(high || "")} →</span></div>`
+        : "";
+    const slots = vals.map((_, i) => `<div class="order-slot" data-pos="${i}"></div>`).join("");
+    const bank = deterministicShuffle(vals, index + 1)
+      .map((v) => `<button class="tile" data-val="${attrEsc(v)}" draggable="true">${tileVisual(v, htmlByVal[v], keys)}</button>`)
+      .join("");
+    answerArea = `${lbl}<div class="order-slots">${slots}</div><div class="order-bank">${bank}</div>`;
+    answerArr = vals;
+  } else if (type === "sequence-build") {
+    const seq = listItems(content, "sequence");
+    const palItems = listItems(content, "palette").items;
+    const vals = fmAnswer || seq.items.map((o) => o.text);
+    if (!vals.length) throw new Error(`${qid}: sequence-build needs an answer (frontmatter answer or <ol class="sequence">)`);
+    const ref = block(content, "reference");
+    // palette tile keys: explicit <ul class="palette"> > frontmatter palette > distinct answer vals
+    const paletteAttr = fm.palette || getAttr(seq.listAttrs, "data-palette");
+    const paletteKeys = palItems.length
+      ? palItems.map((o) => getAttr(o.attrs, "data-val") || o.text)
+      : Array.isArray(paletteAttr)
+      ? paletteAttr.map(String)
+      : paletteAttr
+      ? String(paletteAttr).split(",").map((s) => s.trim())
+      : [...new Set(vals)];
+    const htmlByVal = {}; // exact visual the author put in a palette <li>
+    palItems.forEach((o) => { htmlByVal[getAttr(o.attrs, "data-val") || o.text] = o.html; });
+    const keys = [...new Set(paletteKeys)];
+    const refHtml = ref ? `<div class="seq-ref">${ref}</div>` : "";
+    const slots = vals.map((_, i) => `<div class="sb-slot" data-pos="${i}"></div>`).join("");
+    const pal = paletteKeys
+      .map((v) => `<button class="sb-tile" data-val="${attrEsc(v)}" draggable="true">${tileVisual(v, htmlByVal[v], keys)}</button>`)
+      .join("");
+    answerArea = `${refHtml}<div class="fig-wrap"><div class="sb-slots">${slots}</div></div><div class="sb-palette">${pal}</div>`;
+    answerArr = vals;
+  } else if (type === "categorize") {
+    const built = buildCategorize(fm, content, qid);
+    answerArea = built.answerArea;
+    answerArr = built.answerArr;
+  } else if (type === "line-plot") {
+    const built = buildLinePlot(fm, content, qid);
+    answerArea = built.answerArea;
+    answerArr = built.answerArr;
+  } else if (type === "construct") {
+    // Geometry. The interactive board + grading live in the geo engine (window.RaoGeo),
+    // which the runtime `construct` behavior mounts into the .rao-construct div. Carry
+    // that mount div (with its data-construct spec) through verbatim; answer is [] —
+    // RaoGeo.grade() is the arbiter, not check().
+    const m = content.match(/<div\b[^>]*class="rao-construct"[\s\S]*?<\/div>/i);
+    if (!m) throw new Error(`${qid}: construct needs a <div class="rao-construct" data-construct='{...}'></div>`);
+    answerArea = m[0];
+    answerArr = [];
+  }
+
+  const inner = `<div class="prompt"><span>${promptInner}</span></div>${fig}${answerArea}`;
+  const description = (fm.description ? String(fm.description) : stripTags(promptHtml)).replace(/[[\]]/g, "").trim();
+  const hint = fm.hint ? String(fm.hint) : null;
+  return { behavior: type, qIdStr: qid, description, inner, answerArr, help, hint, warnings };
+}
+
+// ---- whole-file parse -------------------------------------------------------
+
+// Given the index just after a question div's opening ">", return the inner
+// content up to its MATCHING </div> (depth-counted, so nested <div>s — e.g. a
+// <div class="fig"> figure wrapper — don't truncate the block early).
+function matchBalancedDiv(html, fromIdx) {
+  const re = /<div\b|<\/div>/gi;
+  re.lastIndex = fromIdx;
+  let depth = 1, m;
+  while ((m = re.exec(html))) {
+    if (m[0].toLowerCase() === "</div>") {
+      if (--depth === 0) return { content: html.slice(fromIdx, m.index), end: re.lastIndex };
+    } else {
+      depth++;
+    }
+  }
+  return { content: html.slice(fromIdx), end: html.length }; // unbalanced; take the rest
+}
+
+// Walk the document in order, pairing each <div class="question"> with the @q
+// frontmatter comment that immediately precedes it.
+function parseAuthoringHtml(html) {
+  // strip preview <script>/<style> so they aren't mistaken for content, but KEEP comments
+  const clean = html
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?<\/style>/gi, "");
+
+  const finder = /<!--@q\s*([\s\S]*?)-->|<div\s+class="question"([^>]*)>/g;
+  const items = [];
+  const warnings = [];
+  let m, i = 0, pendingFm = null;
+  while ((m = finder.exec(clean))) {
+    if (m[1] != null) {
+      pendingFm = parseFrontmatter(m[1]); // an @q frontmatter block
+      continue;
+    }
+    const { content, end } = matchBalancedDiv(clean, finder.lastIndex);
+    finder.lastIndex = end; // resume after this question's matching </div>
+    const fm = pendingFm || {};
+    pendingFm = null;
+    const item = parseQuestion(m[2] || "", content, fm, i++);
+    warnings.push(...item.warnings);
+    delete item.warnings;
+    items.push(item);
+  }
+  if (!items.length) throw new Error('No <div class="question"> blocks found.');
+  return { items, warnings };
+}
+
+// quick check: is this an authoring-format file (vs a SECTIONS catalog)?
+function isAuthoringHtml(html) {
+  if (/SECTIONS\s*=/.test(html)) return false;
+  return /<!--@q/.test(html) || /class="question"[^>]*data-type=/.test(html);
+}
+
+module.exports = { parseAuthoringHtml, isAuthoringHtml };
+
+  return module.exports;
+})();
+MODS["preview-behaviors"] = (function(){
+  var module = { exports: {} }, exports = module.exports;
+  function require(p){ return MODS[p.replace(/^\.\//,"").replace(/\.js$/,"")]; }
+// Interactive behaviours for the PREVIEW (plain DOM ports of the frontend's
+// markup behaviours). Each behaviour exposes bind(root) (attach interaction) and
+// serialize(root) (read the learner's answer). `check()` grades a serialized answer
+// against the correct one, the same way the app/backend does.
+//
+// Keep this in step with raoacademy-frontend/src/components/markup/* — it's the
+// same logic, just framework-free so it can run inside the standalone preview.
+
+// ── shared pointer drag (tiles → slots), from pointerDrag.js ──────────────────
+const MOVE_THRESHOLD = 6;
+function enableTileDrag(root, opts) {
+  const { tileSelector, slotSelector, isReusable, bank } = opts;
+  let active = null;
+  const nextEmptySlot = () => root.querySelector(`${slotSelector}:not(.filled)`);
+  const slotUnder = (x, y) => { const el = document.elementFromPoint(x, y); return el ? el.closest(slotSelector) : null; };
+  const placeInto = (slot, tile) => { slot.appendChild(tile); slot.classList.add("filled"); tile.classList.add("placed"); };
+  const clearOver = () => root.querySelectorAll(`${slotSelector}.over`).forEach((s) => s.classList.remove("over"));
+  function onPointerDown(e) {
+    if (e.button != null && e.button > 0) return;
+    const tile = e.target.closest(tileSelector);
+    if (!tile || root.dataset.locked === "1") return;
+    e.preventDefault();
+    active = { tile, placed: tile.classList.contains("placed"), fromSlot: tile.parentElement, startX: e.clientX, startY: e.clientY, dragging: false, ghost: null };
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("pointercancel", onCancel);
+  }
+  function startDrag() {
+    const src = active.tile, rect = src.getBoundingClientRect(), ghost = src.cloneNode(true);
+    ghost.classList.add("tile-ghost");
+    Object.assign(ghost.style, { position: "fixed", left: rect.left + "px", top: rect.top + "px", width: rect.width + "px", height: rect.height + "px", margin: "0", pointerEvents: "none", zIndex: "9999", opacity: "0.95" });
+    document.body.appendChild(ghost);
+    active.ghost = ghost; active.offsetX = active.startX - rect.left; active.offsetY = active.startY - rect.top;
+    src.classList.add("dragging"); src.style.opacity = "0.4"; active.dragging = true;
+  }
+  function onPointerMove(e) {
+    if (!active) return;
+    if (!active.dragging) { if (Math.hypot(e.clientX - active.startX, e.clientY - active.startY) > MOVE_THRESHOLD) startDrag(); else return; }
+    active.ghost.style.left = (e.clientX - active.offsetX) + "px"; active.ghost.style.top = (e.clientY - active.offsetY) + "px";
+    clearOver(); const slot = slotUnder(e.clientX, e.clientY); if (slot && !slot.classList.contains("filled")) slot.classList.add("over");
+  }
+  function finish() { window.removeEventListener("pointermove", onPointerMove); window.removeEventListener("pointerup", onPointerUp); window.removeEventListener("pointercancel", onCancel); }
+  function restoreTileOf(a) { if (a.ghost) a.ghost.remove(); a.tile.classList.remove("dragging"); a.tile.style.opacity = ""; }
+  function onPointerUp(e) {
+    finish(); if (!active) return; const a = active; active = null; clearOver();
+    if (!a.dragging) { handleTap(a); return; }
+    restoreTileOf(a); const slot = slotUnder(e.clientX, e.clientY); if (slot && !slot.classList.contains("filled")) dropInto(a, slot);
+  }
+  function onCancel() { finish(); if (!active) return; restoreTileOf(active); active = null; clearOver(); }
+  function handleTap(a) {
+    if (isReusable) {
+      if (a.placed) { a.fromSlot.classList.remove("filled"); a.tile.remove(); }
+      else { const slot = nextEmptySlot(); if (!slot) return; const clone = a.tile.cloneNode(true); clone.removeAttribute("draggable"); placeInto(slot, clone); }
+    } else if (a.placed) { a.fromSlot.classList.remove("filled"); if (bank) bank.appendChild(a.tile); a.tile.classList.remove("placed"); }
+    else { const slot = nextEmptySlot(); if (slot) placeInto(slot, a.tile); }
+  }
+  function dropInto(a, slot) {
+    if (isReusable) {
+      if (a.placed) { a.fromSlot.classList.remove("filled"); placeInto(slot, a.tile); }
+      else { const clone = a.tile.cloneNode(true); clone.removeAttribute("draggable"); placeInto(slot, clone); }
+    } else { if (a.placed) a.fromSlot.classList.remove("filled"); placeInto(slot, a.tile); }
+  }
+  root.addEventListener("pointerdown", onPointerDown);
+  return () => { root.removeEventListener("pointerdown", onPointerDown); finish(); };
+}
+
+// ── ruler slide (measure-drag), from rulerSlide.js ───────────────────────────
+function enableRulerSlide(root) {
+  const svg = root && root.querySelector(".md-svg");
+  const ruler = svg && svg.querySelector(".md-ruler");
+  if (!svg || !ruler) return () => {};
+  const num = (v, d) => (Number.isFinite(Number(v)) ? Number(v) : d);
+  const vbW = num((svg.getAttribute("viewBox") || "0 0 712 70").split(/\s+/)[2], 712);
+  const ppu = num(svg.dataset.ppu, 24), x0 = num(svg.dataset.x0, 10), objLeft = num(svg.dataset.objleft, 10);
+  const stageW = num(svg.dataset.stagew, vbW);
+  const rulerW = num(ruler.querySelector("rect") && ruler.querySelector("rect").getAttribute("width"), 500);
+  const target = objLeft - x0, TOL = Math.max(10, ppu * 0.7), SNAP = Math.max(TOL, ppu * 1.2);
+  const MIN = target - 2 * ppu, MAX = Math.max(target + 2 * ppu, stageW - rulerW + 2 * ppu);
+  const hint = root.querySelector(".md-hint"), sentence = root.querySelector(".md-sentence"), input = root.querySelector(".md-sentence .blank-input");
+  const startTxOf = () => { const m = /translate\(\s*(-?[\d.]+)/.exec(ruler.getAttribute("transform") || ""); return m ? Number(m[1]) : 0; };
+  let tx = startTxOf(), active = null;
+  const unitsPerPx = () => { const r = svg.getBoundingClientRect(); return r.width ? vbW / r.width : 1; };
+  const reflect = () => {
+    const aligned = Math.abs(tx - target) <= TOL;
+    if (hint) hint.dataset.state = aligned ? "aligned" : "unaligned";
+    if (sentence) sentence.classList.toggle("is-locked", !aligned);
+    if (input) input.disabled = !aligned;
+  };
+  const setTx = (x) => { tx = Math.max(MIN, Math.min(MAX, x)); ruler.setAttribute("transform", `translate(${tx.toFixed(1)},0)`); reflect(); };
+  const onMove = (e) => { if (active) setTx(active.startTx + (e.clientX - active.startX) * active.k); };
+  const onUp = () => { if (active && Math.abs(tx - target) <= SNAP) setTx(target); active = null; ruler.style.cursor = "grab"; window.removeEventListener("pointermove", onMove); window.removeEventListener("pointerup", onUp); window.removeEventListener("pointercancel", onUp); };
+  const onDown = (e) => { if (root.dataset.locked === "1" || (e.button != null && e.button > 0)) return; e.preventDefault(); active = { startX: e.clientX, startTx: tx, k: unitsPerPx() }; ruler.style.cursor = "grabbing"; window.addEventListener("pointermove", onMove); window.addEventListener("pointerup", onUp); window.addEventListener("pointercancel", onUp); };
+  ruler.style.cursor = "grab"; ruler.style.touchAction = "none"; svg.style.touchAction = "none"; reflect();
+  svg.addEventListener("pointerdown", onDown);
+  return () => { svg.removeEventListener("pointerdown", onDown); window.removeEventListener("pointermove", onMove); window.removeEventListener("pointerup", onUp); window.removeEventListener("pointercancel", onUp); };
+}
+
+// ── interactive input widgets (exponent pad / π / number-line mirror / fraction
+//    preview). The source app drove these via inline on* handlers, stripped by the
+//    generator; re-wired here by class. Ported verbatim so behaviour matches. ──────
+function escHtml(s) { return String(s).replace(/[<>&]/g, (c) => (c === "<" ? "&lt;" : c === ">" ? "&gt;" : "&amp;")); }
+function exprpowPreviewHtml(v) {
+  let out = "", i = 0;
+  while (i < v.length) {
+    const ch = v.charAt(i);
+    if (ch === "^") { i++; let e = ""; while (i < v.length && v.charAt(i) >= "0" && v.charAt(i) <= "9") { e += v.charAt(i); i++; } out += e.length ? "<sup>" + e + "</sup>" : "^"; }
+    else { out += ch === "<" ? "&lt;" : ch === ">" ? "&gt;" : ch === "&" ? "&amp;" : ch; i++; }
+  }
+  return out;
+}
+function fracParse(s) {
+  s = ("" + s).replace(/\s+/g, " ").trim();
+  let m = s.match(/^(-?\d+)\s+(\d+)\/(\d+)$/); if (m) return { w: m[1], n: m[2], d: m[3] };
+  m = s.match(/^(-?\d+)\/(\d+)$/); if (m) return { w: null, n: m[1], d: m[2] };
+  return null;
+}
+function fracStack(n, d) { return '<span class="fr-frac"><span class="fr-n">' + n + '</span><span class="fr-bar"></span><span class="fr-d">' + d + "</span></span>"; }
+function fracHtml(v) {
+  const p = fracParse(v); if (!p) return escHtml(("" + v).trim());
+  const st = fracStack(escHtml(p.n), escHtml(p.d));
+  return p.w !== null ? '<span class="fr-mixed"><span class="fr-w">' + escHtml(p.w) + "</span>" + st + "</span>" : st;
+}
+function insertAtCursor(inp, str) {
+  const s = inp.value, a = typeof inp.selectionStart === "number" ? inp.selectionStart : s.length, b = typeof inp.selectionEnd === "number" ? inp.selectionEnd : s.length;
+  inp.value = s.slice(0, a) + str + s.slice(b);
+  const p = a + str.length; try { inp.focus(); inp.setSelectionRange(p, p); } catch (_) {}
+}
+function enhanceInputWidgets(root) {
+  const cl = [], on = (el, ev, fn) => { el.addEventListener(ev, fn); cl.push(() => el.removeEventListener(ev, fn)); };
+  const exprInp = root.querySelector(".exprpow-input");
+  if (exprInp) {
+    const pv = root.querySelector(".exprpow-preview");
+    const sync = () => { if (pv) { pv.innerHTML = exprpowPreviewHtml(exprInp.value); pv.style.visibility = exprInp.value.length ? "visible" : "hidden"; } };
+    on(exprInp, "input", sync);
+    root.querySelectorAll(".exprpow-key").forEach((btn) => on(btn, "click", () => {
+      if (exprInp.disabled) return;
+      if (btn.classList.contains("exprpow-bksp")) {
+        const s = exprInp.value; let a = exprInp.selectionStart, b = exprInp.selectionEnd; if (a == null) { a = s.length; b = s.length; }
+        if (a === b && a > 0) { if (s.slice(a - 3, a) === " · ") { exprInp.value = s.slice(0, a - 3) + s.slice(b); a -= 3; } else { exprInp.value = s.slice(0, a - 1) + s.slice(b); a -= 1; } }
+        else if (a !== b) { exprInp.value = s.slice(0, a) + s.slice(b); }
+        try { exprInp.focus(); exprInp.setSelectionRange(a, a); } catch (_) {}
+      } else { insertAtCursor(exprInp, btn.querySelector("sup") ? "^" : " · "); }
+      sync();
+    }));
+    sync();
+  }
+  const alPi = root.querySelector(".al-pi"), alInp = root.querySelector(".al-input");
+  if (alPi && alInp) on(alPi, "click", () => { if (!alInp.disabled) insertAtCursor(alInp, "π"); });
+  const nlFill = root.querySelector(".nl-fill");
+  if (nlFill) {
+    const nlInp = root.querySelector(".nl-wrap .blank-input") || root.querySelector(".blank-input"), nlBox = root.querySelector(".nl-box");
+    if (nlInp) { const m = () => { const v = (nlInp.value || "").trim(); nlFill.textContent = v ? v.replace("-", "−") : ""; if (nlBox) nlBox.classList.toggle("nl-box-filled", !!v); }; on(nlInp, "input", m); m(); }
+  }
+  const fbInp = root.querySelector(".fracbox");
+  if (fbInp) {
+    const fbPv = root.querySelector(".fracbox-preview");
+    if (fbPv) { const f = () => { const v = (fbInp.value || "").trim(); if (v && fracParse(v)) { fbPv.innerHTML = fracHtml(v); fbPv.style.visibility = "visible"; } else { fbPv.innerHTML = ""; fbPv.style.visibility = "hidden"; } }; on(fbInp, "input", f); f(); }
+  }
+  return () => cl.forEach((fn) => fn());
+}
+
+// ── per-behaviour bind/serialize ─────────────────────────────────────────────
+// Selectable option elements. .st-apple is the scene-tree renderer's tappable SVG
+// <g> — it uses the same .is-sel + data-val convention as .opt (the source app's
+// own grader reads ".opt.is-sel,.opt-fig.is-sel,.st-apple.is-sel" together).
+const SEL_OPT_SINGLE = ".opt, .opt-fig, .hcell, .st-apple";
+const SEL_OPT_MULTI = ".opt, .opt-fig, .st-apple";
+// scene-tree shows a live count of selected apples in an [data-st-count] node
+function updateStCount(root) { const c = root.querySelector("[data-st-count]"); if (c) c.textContent = root.querySelectorAll(".st-apple.is-sel").length; }
+const single = {
+  serialize(root) { const c = root.querySelector(".opt.is-sel, .opt-fig.is-sel, .hcell.is-sel, .st-apple.is-sel"); return c ? [c.dataset.val] : null; },
+  bind(root) {
+    const on = (e) => { const b = e.target.closest(SEL_OPT_SINGLE); if (!b || root.dataset.locked === "1") return; root.querySelectorAll(SEL_OPT_SINGLE).forEach((o) => o.classList.remove("is-sel")); b.classList.add("is-sel"); updateStCount(root); };
+    root.addEventListener("click", on); return () => root.removeEventListener("click", on);
+  },
+};
+const multi = {
+  serialize(root) { const c = Array.from(root.querySelectorAll(".opt.is-sel, .opt-fig.is-sel, .st-apple.is-sel")).map((o) => o.dataset.val); return c.length ? c : null; },
+  bind(root) {
+    const on = (e) => { const b = e.target.closest(SEL_OPT_MULTI); if (!b || root.dataset.locked === "1") return; b.classList.toggle("is-sel"); updateStCount(root); };
+    root.addEventListener("click", on); return () => root.removeEventListener("click", on);
+  },
+};
+const fill = {
+  serialize(root) { const ins = Array.from(root.querySelectorAll(".blank-input")).sort((a, b) => Number(a.dataset.blank) - Number(b.dataset.blank)); if (!ins.length || ins.some((i) => !i.value.trim())) return null; return ins.map((i) => i.value.trim()); },
+  bind(root) { const a = enableRulerSlide(root), b = enhanceInputWidgets(root); return () => { a && a(); b && b(); }; }, // ruler / π pad / number-line mirror / fraction preview (each no-ops if absent)
+};
+const expr = {
+  serialize(root) { const i = root.querySelector(".ans-input, .exprpow-input"); return i && i.value.trim() ? [i.value.trim()] : null; },
+  bind(root) { return enhanceInputWidgets(root); }, // exponent pad + live preview when present
+};
+const order = {
+  serialize(root) { const slots = root.querySelectorAll(".order-slot"); const filled = root.querySelectorAll(".order-slot.filled .tile"); if (!slots.length || filled.length !== slots.length) return null; return Array.from(filled).map((t) => t.dataset.val); },
+  bind(root) { const slots = root.querySelector(".order-slots"), bank = root.querySelector(".order-bank"); if (!slots || !bank) return () => {}; return enableTileDrag(root, { tileSelector: ".tile", slotSelector: ".order-slot", isReusable: false, bank }); },
+};
+const patSlots = (root) => Array.from(root.querySelectorAll(".pat-strip .pat-fillable"));
+const seq = {
+  serialize(root) {
+    if (root.querySelector(".pat-strip")) { const s = patSlots(root); if (!s.length || s.some((x) => !x.dataset.fill)) return null; return s.map((x) => x.dataset.fill); }
+    const slots = root.querySelectorAll(".sb-slot"); const filled = root.querySelectorAll(".sb-slot.filled .sb-tile");
+    if (!slots.length || filled.length !== slots.length) return null; return Array.from(filled).map((t) => t.dataset.val);
+  },
+  bind(root) {
+    // pattern-fill: tap a shape option → fill first empty blank; tap a filled blank → clear
+    if (root.querySelector(".pat-strip")) {
+      const refresh = () => { let d = false; patSlots(root).forEach((s) => { s.classList.remove("pat-active"); if (!d && !s.dataset.fill) { s.classList.add("pat-active"); d = true; } }); };
+      const on = (e) => {
+        if (root.dataset.locked === "1") return;
+        const opt = e.target.closest(".opt-fig"), slot = e.target.closest(".pat-fillable");
+        if (opt) { const t = patSlots(root).find((s) => !s.dataset.fill); if (!t) return; const svg = opt.querySelector("svg"); t.dataset.fill = opt.dataset.val; t.classList.remove("pat-blank"); t.classList.add("pat-filled"); t.innerHTML = '<span class="pat-chipin">' + (svg ? svg.outerHTML : "") + "</span>"; refresh(); }
+        else if (slot && slot.dataset.fill) { slot.removeAttribute("data-fill"); slot.classList.remove("pat-filled"); slot.classList.add("pat-blank"); slot.innerHTML = ""; refresh(); }
+      };
+      root.addEventListener("click", on); return () => root.removeEventListener("click", on);
+    }
+    const slots = root.querySelector(".sb-slots"), pal = root.querySelector(".sb-palette"); if (!slots || !pal) return () => {};
+    return enableTileDrag(root, { tileSelector: ".sb-tile", slotSelector: ".sb-slot", isReusable: true });
+  },
+};
+const categorize = {
+  serialize(root) { const tiles = Array.from(root.querySelectorAll(".vs-tile[data-idx]")).sort((a, b) => Number(a.dataset.idx) - Number(b.dataset.idx)); if (!tiles.length) return null; const out = []; for (const t of tiles) { const z = t.closest(".vs-zone"); if (!z) return null; out.push(z.dataset.region); } return out; },
+  bind(root) {
+    const tray = root.querySelector(".vs-tray"); if (!tray) return () => {};
+    document.querySelectorAll(".vs-ghost").forEach((g) => g.remove());
+    const dropOf = (z) => z.querySelector(".bs-drop") || z; const TH = 6; let active = null;
+    const targetUnder = (x, y) => { const el = document.elementFromPoint(x, y); return el ? el.closest(".vs-zone") || el.closest(".vs-tray") : null; };
+    const clearOver = () => root.querySelectorAll(".vs-zone.over, .vs-tray.over").forEach((z) => z.classList.remove("over"));
+    function onDown(e) { if (e.button != null && e.button > 0) return; const tile = e.target.closest(".vs-tile[data-idx]"); if (!tile || root.dataset.locked === "1") return; e.preventDefault(); active = { tile, startX: e.clientX, startY: e.clientY, dragging: false, ghost: null }; window.addEventListener("pointermove", onMove); window.addEventListener("pointerup", onUp); window.addEventListener("pointercancel", onCancel); }
+    function startDrag() { const r = active.tile.getBoundingClientRect(), g = active.tile.cloneNode(true); g.classList.add("vs-ghost"); Object.assign(g.style, { position: "fixed", left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", margin: "0", pointerEvents: "none", zIndex: "9999", opacity: "0.95" }); document.body.appendChild(g); active.ghost = g; active.offX = active.startX - r.left; active.offY = active.startY - r.top; active.tile.style.opacity = "0.4"; active.dragging = true; }
+    function onMove(e) { if (!active) return; if (!active.dragging) { if (Math.hypot(e.clientX - active.startX, e.clientY - active.startY) > TH) startDrag(); else return; } active.ghost.style.left = (e.clientX - active.offX) + "px"; active.ghost.style.top = (e.clientY - active.offY) + "px"; clearOver(); const t = targetUnder(e.clientX, e.clientY); if (t) t.classList.add("over"); }
+    function detach() { window.removeEventListener("pointermove", onMove); window.removeEventListener("pointerup", onUp); window.removeEventListener("pointercancel", onCancel); }
+    function restore(a) { if (a.ghost) a.ghost.remove(); a.tile.style.opacity = ""; }
+    function onUp(e) { detach(); if (!active) return; const a = active; active = null; clearOver(); if (!a.dragging) return; restore(a); const t = targetUnder(e.clientX, e.clientY); if (!t) return; if (t.classList.contains("vs-tray")) tray.appendChild(a.tile); else dropOf(t).appendChild(a.tile); }
+    function onCancel() { detach(); if (active) { restore(active); active = null; clearOver(); } }
+    root.addEventListener("pointerdown", onDown);
+    return () => { root.removeEventListener("pointerdown", onDown); detach(); if (active) restore(active); };
+  },
+};
+const linePlot = {
+  serialize(root) { const cols = Array.from(root.querySelectorAll(".lp-col[data-x]")).sort((a, b) => Number(a.dataset.x) - Number(b.dataset.x)); if (!cols.length) return null; return cols.map((c) => String(Number(c.dataset.count) || 0)); },
+  bind(root) {
+    const setCount = (col, n) => { col.dataset.count = String(n); col.querySelectorAll(".lp-slot").forEach((s) => s.classList.toggle("on", Number(s.dataset.row) <= n)); };
+    root.querySelectorAll(".lp-col").forEach((col) => setCount(col, Number(col.dataset.count) || 0));
+    const on = (e) => { const slot = e.target.closest(".lp-slot"); if (!slot || root.dataset.locked === "1") return; const col = slot.closest(".lp-col"); if (!col) return; const row = Number(slot.dataset.row), cur = Number(col.dataset.count) || 0; setCount(col, cur === row ? row - 1 : row); };
+    root.addEventListener("click", on); return () => root.removeEventListener("click", on);
+  },
+};
+
+// CONSTRUCT — geometry. The interactive board + grading live in the geo engine
+// (window.RaoGeo, from raoGeoEngine.js). Mirrors the frontend Construct.jsx.
+const construct = {
+  bind(root) {
+    const mount = root.querySelector(".rao-construct");
+    if (!mount) return () => {};
+    let spec; try { spec = JSON.parse(mount.getAttribute("data-construct") || "{}"); } catch (e) { spec = {}; }
+    if (window.RaoGeo && typeof window.RaoGeo.mount === "function") {
+      mount.innerHTML = "";
+      mount.__geo = window.RaoGeo.mount(mount, spec);
+    } else {
+      mount.innerHTML = '<div style="padding:14px;border:1.5px dashed #cbd5e1;border-radius:12px;color:#64748b;font-size:.9rem">Geometry engine not loaded.</div>';
+    }
+    return () => { const h = mount.__geo; try { h && h.destroy && h.destroy(); } catch (e) {} mount.__geo = null; };
+  },
+  serialize(root) {
+    const mount = root.querySelector(".rao-construct"), h = mount && mount.__geo;
+    if (!h || typeof h.grade !== "function") return null;
+    if (h.attempted && !h.attempted()) return null;   // not enough placed yet → "answer it first"
+    return h.grade() ? ["ok"] : ["_wrong_"];           // placed → let check() decide
+  },
+};
+
+const BEHAVIORS = {
+  "single-select": single, "multi-select": multi, "fill-blanks": fill, expression: expr,
+  order: order, "sequence-build": seq, categorize: categorize, "line-plot": linePlot,
+  construct: construct,
+};
+
+function attach(qbody, behavior) { const b = BEHAVIORS[behavior]; return b && b.bind ? b.bind(qbody) : () => {}; }
+function serialize(qbody, behavior) { const b = BEHAVIORS[behavior]; return b && b.serialize ? b.serialize(qbody) : null; }
+
+// grade like the app: set-compare for multi-select, normalized for expression,
+// ordered element-wise for everything else.
+function check(behavior, user, correct) {
+  if (user == null) return null;
+  user = user.map(String); correct = (correct || []).map(String);
+  if (behavior === "multi-select") { const a = [...user].sort(), b = [...correct].sort(); return a.length === b.length && a.every((v, i) => v === b[i]); }
+  if (behavior === "expression") { const norm = (s) => String(s).replace(/\s+/g, "").toLowerCase(); return norm(user[0]) === norm(correct[0]); }
+  return user.length === correct.length && user.every((v, i) => v === correct[i]);
+}
+
+module.exports = { attach, serialize, check, BEHAVIORS };
+
+  return module.exports;
+})();
+  var MARKUP_STYLE_CSS = ":root{\n  --brand:#4361EE; --blue:#5B8DEF; --green:#10b981; --amber:#f59e0b; --red:#ef4444;\n  --purple:#5A55E0; --pink:#5AC8FA;\n  --ink:#14213d; --sub:#4b5563; --mute:#9ca3af; --bg:#eef1f6; --card:#fff;\n  --fd:'DM Serif Display',serif; --fm:'JetBrains Mono',monospace; --fs:'DM Sans',sans-serif;\n}\n*{margin:0;padding:0;box-sizing:border-box;}\nbody{font-family:var(--fs);background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;}\n.wrap{max-width:880px;margin:0 auto;padding:28px 22px 90px;}\n\n/* ── Page header ── */\n.page-head{margin-bottom:8px;}\n.page-head h1{font-family:var(--fd);font-weight:400;font-size:2rem;letter-spacing:-0.01em;line-height:1.15;}\n.page-head p{color:var(--sub);font-size:0.98rem;margin-top:6px;}\n.miles-pill{display:inline-flex;align-items:center;gap:7px;margin-top:14px;padding:8px 16px;border-radius:999px;\n  background:linear-gradient(135deg,rgba(67,97,238,.1),rgba(90,200,250,.12));border:1.5px solid rgba(67,97,238,.2);\n  font-weight:800;color:var(--brand);font-size:.95rem;}\n\n/* ── Section label ── */\n.sec-label{display:flex;align-items:center;gap:14px;font-family:var(--fd);font-size:1.5rem;font-weight:400;\n  color:var(--ink);line-height:1.2;letter-spacing:-0.01em;margin:38px 0 6px;padding-bottom:16px;border-bottom:1px solid #e5e7eb;}\n.sec-label-num{flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;\n  border-radius:9px;background:rgba(67,97,238,.12);color:var(--brand);font-family:var(--fs);font-weight:800;font-size:.92rem;}\n.sec-tag{margin-left:auto;font-family:var(--fs);font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;\n  color:var(--brand);background:rgba(67,97,238,.1);padding:5px 11px;border-radius:6px;}\n.sec-desc{color:var(--sub);font-size:.92rem;margin:0 0 6px;}\n\n/* ── Quiz shell (mirrors prototype lnl/lr) ── */\n.quiz{position:relative;background:linear-gradient(135deg,#eaf2fd 0%,#e6eefb 55%,#eef6ff 100%);\n  border-radius:20px;padding:22px;margin:14px -10px 0;border:1.5px solid rgba(67,97,238,.14);\n  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);}\n@media(max-width:600px){.quiz{padding:16px;margin:14px -4px 0;}}\n.q{display:none;}\n.q.active{display:block;animation:slide-in .32s cubic-bezier(.22,1,.36,1);background:#fff;border:0;border-radius:16px;\n  padding:26px 28px 20px;position:relative;\n  box-shadow:0 0 0 1.5px rgba(67,97,238,.18),0 4px 12px rgba(67,97,238,.10),0 22px 44px -10px rgba(67,97,238,.18);}\n@media(max-width:600px){.q.active{padding:22px 16px 16px;}}\n@keyframes slide-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}\n\n.q-counter{position:absolute;top:14px;right:18px;font-family:var(--fm);font-weight:700;font-size:.86rem;color:var(--sub);\n  background:rgba(0,0,0,.05);padding:4px 12px;border-radius:99px;z-index:2;}\n.q-counter .sep{color:var(--mute);margin:0 1px;}\n.q:not(.active) .q-counter{display:none;}\n.tlabel{font-size:.78rem;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}\n\n/* prompt + audio icon */\n.prompt{display:flex;align-items:flex-start;gap:9px;font-size:1.02rem;color:var(--ink);margin-bottom:10px;font-weight:500;}\n/* a label (e.g. \"Add:\") on its own line, left-aligned, with the rest of the\n   prompt (the equation + blank) centered on the line below it */\n.prompt:has(.lbl){display:block;}\n.prompt:has(.lbl) > span{display:block;text-align:center;}\n.lbl{display:block;text-align:left;margin-bottom:4px;}\n.aud{flex-shrink:0;width:24px;height:24px;margin-top:2px;border:0;background:transparent;cursor:pointer;color:var(--blue);\n  display:inline-flex;align-items:center;justify-content:center;border-radius:6px;transition:background .15s,transform .1s;}\n.aud:hover{background:rgba(91,141,239,.12);}\n.aud:active{transform:scale(.9);}\n.aud svg{width:22px;height:22px;}\n\n/* ── Equation row (horizontal / token template) ── */\n.eqn{display:flex;align-items:center;justify-content:center;gap:9px;font-family:var(--fm);font-size:1.65rem;\n  font-weight:600;color:var(--ink);margin:18px 0;flex-wrap:wrap;}\n.eqn .op{color:var(--sub);font-weight:500;}\n.eqn .eq{color:var(--pink);font-weight:700;}\n.blank-input{width:64px;text-align:center;font-family:var(--fm);font-size:1.4rem;font-weight:700;\n  border:2.5px dashed var(--brand);border-radius:10px;background:rgba(67,97,238,.06);color:var(--brand);\n  padding:6px 4px;outline:none;transition:all .15s;}\n.blank-input:focus{border-style:solid;background:#fff;box-shadow:0 0 0 5px rgba(67,97,238,.12);}\n.blank-input.correct{border-style:solid;border-color:var(--green);background:rgba(16,185,129,.08);color:#047857;}\n.blank-input.incorrect{border-color:var(--red);background:rgba(239,68,68,.06);}\n.blank-input.shake{animation:shake .38s;}\n@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}\n\n/* ── Vertical column addition ── */\n.vcol{display:flex;flex-direction:column;align-items:flex-end;width:fit-content;margin:18px auto;\n  font-family:var(--fm);font-size:1.7rem;font-weight:600;color:var(--ink);line-height:1.35;}\n.vcol .row{display:flex;align-items:center;gap:10px;}\n.vcol .opsign{color:var(--sub);font-weight:500;margin-right:8px;}\n.vcol .rule{border-top:2.5px solid var(--ink);width:100%;margin:4px 0;}\n.vcol .blank-input{font-size:1.4rem;}\n/* place-value answer cells: one outer strip, dashed dividers, one digit per cell */\n.pv-strip{display:inline-flex;border:2.5px solid var(--brand);border-radius:10px;overflow:hidden;background:rgba(67,97,238,.06);}\n.pv-strip .pv-cell{width:42px;border:0;border-radius:0;background:transparent;border-left:2px dashed rgba(67,97,238,.4);}\n.pv-strip .pv-cell:first-child{border-left:0;}\n.pv-strip .pv-cell:focus{box-shadow:none;background:#fff;}\n.pv-strip .pv-cell.correct{background:rgba(16,185,129,.12);}\n.pv-strip .pv-cell.incorrect{background:rgba(239,68,68,.10);}\n\n/* ── Free-text expression / single answer row ── */\n.ans-row{display:flex;gap:10px;align-items:center;margin:14px 0 6px;flex-wrap:wrap;}\n.ans-input{flex:1;min-width:180px;padding:11px 15px;border:2px solid #d1d5db;border-radius:9px;font-family:var(--fm);\n  font-size:1.1rem;color:var(--ink);background:#fff;transition:border-color .2s,background .2s;outline:none;}\n.ans-input:focus{border-color:var(--brand);}\n.ans-input.correct{border-color:var(--green);background:rgba(16,185,129,.08);}\n.ans-input.incorrect{border-color:var(--red);background:rgba(239,68,68,.05);}\n.ans-input.shake{animation:shake .38s;}\n.unit-suffix{font-family:var(--fs);font-weight:600;color:var(--sub);font-size:1rem;}\n\n/* ── MCQ / multi-select option buttons ── */\n.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:6px 0;}\n.opt{font-family:var(--fm);font-size:1.15rem;font-weight:700;color:var(--brand);background:#fff;border:2px solid #dbe3f4;\n  border-radius:12px;padding:15px 12px;cursor:pointer;text-align:center;\n  transition:transform .12s,border-color .15s,background .15s,box-shadow .15s;}\n.opt:hover:not(:disabled){border-color:var(--brand);background:rgba(67,97,238,.05);transform:translateY(-2px);box-shadow:0 4px 12px rgba(67,97,238,.15);}\n.opt:active:not(:disabled){transform:translateY(0);}\n.opt.is-correct{border-color:var(--green);background:rgba(16,185,129,.1);color:#047857;box-shadow:0 0 0 3px rgba(16,185,129,.15);}\n.opt.is-wrong{border-color:var(--red);background:rgba(239,68,68,.08);color:#b91c1c;animation:shake .4s;}\n.opt.is-sel{border-color:var(--brand);background:rgba(67,97,238,.08);box-shadow:0 0 0 3px rgba(67,97,238,.12);}\n.opt:disabled{cursor:default;}\n.opt img,.opt svg{display:inline-block;max-width:96px;max-height:96px;width:auto;height:auto;vertical-align:middle;pointer-events:none;}\n.opt .check-ind{display:inline-block;width:18px;height:18px;border:2px solid #c7d2e8;border-radius:5px;margin-right:9px;\n  vertical-align:-3px;position:relative;background:#fff;transition:all .15s;}\n.opt.is-sel .check-ind{background:var(--brand);border-color:var(--brand);}\n.opt.is-sel .check-ind:after{content:\"\";position:absolute;left:4px;top:0px;width:5px;height:10px;border:solid #fff;\n  border-width:0 2.5px 2.5px 0;transform:rotate(45deg);}\n.opt-text{font-size:1.15rem;font-weight:700;}\n\n/* figure-option MCQ */\n.opts-fig{display:grid;grid-template-columns:1fr;gap:12px;}\n.opt-fig{display:flex;align-items:center;gap:14px;font-family:var(--fm);background:#fff;border:2px solid #dbe3f4;\n  border-radius:12px;padding:12px 16px;cursor:pointer;transition:transform .12s,border-color .15s,background .15s,box-shadow .15s;}\n.opt-fig:hover:not(:disabled){border-color:var(--brand);background:rgba(67,97,238,.05);transform:translateY(-2px);box-shadow:0 4px 12px rgba(67,97,238,.15);}\n.opt-fig.is-correct{border-color:var(--green);background:rgba(16,185,129,.1);box-shadow:0 0 0 3px rgba(16,185,129,.15);}\n.opt-fig.is-wrong{border-color:var(--red);background:rgba(239,68,68,.08);animation:shake .4s;}\n.opt-fig:disabled{cursor:default;}\n\n/* ════ v2 RENDERERS ════ */\n\n/* ORDER_TILES — tap-to-place sequencing (drag enhancement on top) */\n.order-target-lbl{display:flex;justify-content:space-between;font-family:var(--fs);font-size:.78rem;font-weight:700;\n  color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin:6px 2px;}\n.order-slots{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:62px;padding:12px;margin:4px 0 14px;\n  background:rgba(67,97,238,.05);border:2px dashed rgba(67,97,238,.28);border-radius:14px;}\n.order-slot{width:58px;height:54px;border-radius:11px;border:2px dashed rgba(67,97,238,.35);background:rgba(255,255,255,.55);\n  display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s;}\n.order-slot.over{border-color:var(--brand);background:rgba(67,97,238,.12);}\n.order-bank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:54px;margin:0 0 6px;}\n.tile{min-width:54px;height:54px;padding:0 14px;border-radius:11px;border:2px solid #cdd8f2;background:#fff;\n  font-family:var(--fm);font-size:1.3rem;font-weight:700;color:var(--brand);display:inline-flex;align-items:center;\n  justify-content:center;cursor:pointer;user-select:none;box-shadow:0 2px 6px rgba(67,97,238,.12);\n  transition:transform .12s,border-color .15s,box-shadow .15s,background .15s;}\n.tile:hover:not(.locked){transform:translateY(-2px);border-color:var(--brand);box-shadow:0 5px 14px rgba(67,97,238,.22);}\n.tile:active:not(.locked){transform:scale(.95);}\n.tile.placed{cursor:pointer;}\n.tile.dragging{opacity:.45;}\n.tile.locked{cursor:default;}\n.order-slots.correct .tile{border-color:var(--green);background:rgba(16,185,129,.1);color:#047857;}\n.order-slots.incorrect{animation:shake .4s;}\n\n/* DATA_TABLE — read-only lookup table */\n.data-wrap{display:flex;justify-content:center;margin:8px 0 14px;}\n.data-table{border-collapse:collapse;font-family:var(--fm);min-width:260px;border-radius:10px;overflow:hidden;\n  box-shadow:0 2px 10px rgba(67,97,238,.1);}\n.data-table caption{font-family:var(--fs);font-weight:700;font-size:.95rem;color:var(--ink);padding:0 0 8px;caption-side:top;\n  display:flex;align-items:center;gap:7px;justify-content:center;}\n.data-table th{padding:9px 22px;font-size:.9rem;font-weight:700;color:#fff;background:var(--brand);}\n.data-table td{padding:8px 22px;text-align:center;font-size:1.02rem;border:1.5px solid #e1e7f3;color:var(--ink);background:#fff;}\n.data-table tr:nth-child(even) td{background:#f6f8fe;}\n.data-table td:first-child{font-weight:600;}\n\n/* HUNDRED_CHART — 10×10 tappable grid */\n.hchart-wrap{display:flex;justify-content:center;margin:8px 0 14px;}\n.hchart{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;background:#e3e9f6;padding:6px;border-radius:12px;max-width:430px;width:100%;}\n.hcell{aspect-ratio:1;border:0;background:#fff;border-radius:5px;font-family:var(--fm);font-size:.74rem;font-weight:600;\n  color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .1s,background .12s,color .12s,box-shadow .12s;}\n.hcell:hover:not(:disabled){background:rgba(67,97,238,.14);transform:scale(1.08);z-index:2;}\n.hcell.hi{background:rgba(245,158,11,.22);font-weight:800;color:#b45309;}\n.hcell.is-correct{background:var(--green);color:#fff;box-shadow:0 0 0 2px rgba(16,185,129,.4);}\n.hcell.is-wrong{background:var(--red);color:#fff;animation:shake .4s;}\n.hcell:disabled{cursor:default;}\n@media(max-width:600px){.hcell{font-size:.62rem;}}\n\n/* TALLY_CHART — label rows + grouped tally strokes */\n.tally-wrap{display:flex;justify-content:center;margin:8px 0 14px;}\n.tally{background:#fff;border:1px solid #e6ebf6;border-radius:14px;padding:14px 18px;box-shadow:0 2px 10px rgba(67,97,238,.08);min-width:280px;}\n.tally-title{font-family:var(--fs);font-weight:700;font-size:.96rem;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:7px;}\n.tally-row{display:flex;align-items:center;gap:12px;padding:6px 0;border-bottom:1px dashed #eef1f6;}\n.tally-row:last-child{border-bottom:0;}\n.tally-label{display:flex;align-items:center;gap:7px;width:118px;font-family:var(--fs);font-weight:600;color:var(--sub);font-size:.92rem;}\n.tally-label svg{width:26px;height:26px;flex-shrink:0;}\n.tally-marks{display:flex;gap:9px;align-items:flex-end;}\n.tally-grp{position:relative;display:inline-flex;gap:3px;}\n.tally-grp .stk{width:2.5px;height:22px;background:var(--ink);border-radius:2px;}\n.tally-grp.five .slash{position:absolute;left:-3px;top:8px;width:30px;height:2.5px;background:var(--ink);border-radius:2px;\n  transform:rotate(-22deg);transform-origin:left center;}\n.opt-fig .tally{box-shadow:none;border:0;min-width:0;padding:6px 4px;}\n\n/* POLYGON_FIGURE — single parametric 2D shape */\n.poly-wrap{display:flex;justify-content:center;margin:8px 0 16px;}\n.poly-svg{width:150px;height:150px;}\n.poly-shape{fill:rgba(91,141,239,.22);stroke:var(--brand);stroke-width:3;stroke-linejoin:round;}\n.opt-fig .poly-svg{width:84px;height:84px;}\n\n/* TRANSFORM_DIAGRAM — before → after on a grid */\n.xf-wrap{display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0 16px;flex-wrap:wrap;}\n.xf-cell{background:#fff;border:1px solid #e1e7f3;border-radius:12px;padding:10px;box-shadow:0 2px 8px rgba(67,97,238,.08);}\n.xf-cell .cap{text-align:center;font-family:var(--fs);font-size:.72rem;font-weight:700;color:var(--mute);\n  text-transform:uppercase;letter-spacing:.06em;margin-top:6px;}\n.xf-grid-svg{width:104px;height:104px;display:block;}\n.xf-arrow{font-size:1.8rem;color:var(--brand);font-weight:800;}\n.xf-glyph{font-family:var(--fd);font-size:54px;fill:var(--purple);}\n\n/* MEASURE_SCALE — object laid against a ruler or a row of unit-objects */\n.ms-wrap{background:#eaf4fb;border:1px solid #d6e7f5;border-radius:14px;padding:16px 14px 12px;margin:8px 0 12px;}\n.ms-stage{position:relative;width:100%;max-width:520px;margin:0 auto;}\n.ms-object{display:flex;justify-content:flex-start;align-items:flex-end;min-height:54px;padding-left:6px;}\n.ms-object svg{height:46px;width:auto;}\n.ms-object .barobj{height:30px;border-radius:6px;}\n.ms-ruler-svg{width:100%;height:auto;display:block;margin-top:4px;}\n.ms-units{display:flex;gap:0;align-items:flex-end;margin-top:6px;padding-left:6px;}\n.ms-units svg{width:34px;height:34px;}\n.ms-sentence{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 2px 0;font-family:var(--fs);font-weight:500;color:var(--ink);}\n.ms-sentence .blank-input{width:60px;}\n\n/* CURRENCY_FIGURE — coins / notes as stimulus */\n.cur-wrap{display:flex;justify-content:center;margin:8px 0 14px;}\n.cur-stage{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;background:#f6f9ff;\n  border:1px solid #e6ecf8;border-radius:14px;padding:18px 20px;min-height:80px;max-width:480px;}\n.cur-stage.single{padding:22px 26px;}\n.coin{border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:var(--fm);\n  font-weight:800;color:#5a4a1e;box-shadow:0 2px 5px rgba(0,0,0,.18),inset 0 0 0 2px rgba(255,255,255,.4);}\n.coin.silver{background:radial-gradient(circle at 35% 30%,#e9edf2,#aab4c0);color:#3a4452;box-shadow:0 2px 5px rgba(0,0,0,.2),inset 0 0 0 2px rgba(255,255,255,.5);}\n.coin.gold{background:radial-gradient(circle at 35% 30%,#f7d978,#caa23c);color:#6a4e12;}\n.coin .cv{font-size:.62rem;line-height:1;text-align:center;}\n.note{position:relative;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;\n  font-family:var(--fm);font-weight:800;font-size:.78rem;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.18);}\n.note.n10{background:linear-gradient(135deg,#d98a6a,#c06848);}\n.note.n20{background:linear-gradient(135deg,#e08a8a,#c85a5a);}\n.cur-single-coin{transform:scale(1.7);transform-origin:center;}\n\n/* ── Figures: array grid, picture groups, puzzle, number line ── */\n.fig-wrap{display:flex;justify-content:center;margin:8px 0 16px;}\n.array-grid{display:inline-flex;flex-direction:column;gap:8px;}\n.array-grid .arow{display:flex;gap:8px;justify-content:center;}\n.array-cell{width:48px;height:40px;border:1.5px solid #9aa3af;border-radius:4px;display:flex;align-items:center;justify-content:center;}\n.array-cell svg{width:26px;height:26px;}\n\n.pic-groups{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;}\n.pic-box{border:1.5px solid #cbd5e1;border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:6px;}\n.pic-icons{display:flex;flex-wrap:wrap;gap:5px;max-width:200px;justify-content:center;}\n.pic-icons svg{width:30px;height:30px;}\n.pic-num{font-family:var(--fm);font-weight:700;font-size:1.2rem;color:var(--ink);}\n.pic-op{font-family:var(--fm);font-size:1.6rem;color:var(--sub);}\n\n.puzzle-grid{display:inline-grid;gap:0;justify-content:center;align-items:center;width:fit-content;margin:0 auto;}\n.pz{width:34px;height:30px;border-radius:5px;margin:2px 1px;border:1.5px solid rgba(0,0,0,.18);}\n\n.nl-wrap{width:100%;overflow-x:auto;margin:6px 0 14px;}\n.nl-svg{width:100%;max-width:680px;height:auto;display:block;margin:0 auto;}\n.nl-lbl{font-family:var(--fm);font-size:20px;font-weight:500;fill:var(--ink);}\n.nl-box{fill:#fff;stroke:var(--brand);stroke-width:2.4;filter:drop-shadow(0 2px 5px rgba(67,97,238,.25));\n  animation:nl-pulse 1.8s ease-in-out infinite;}\n@keyframes nl-pulse{0%,100%{stroke:var(--brand);}50%{stroke:#7FA0E8;}}\n\n/* ── IO table ── */\n.io-wrap{display:flex;justify-content:center;margin:8px 0 14px;}\n.io-table{border-collapse:collapse;font-family:var(--fm);min-width:220px;}\n.io-table th{padding:8px 26px;font-size:.95rem;font-weight:700;color:#fff;background:var(--brand);border:1.5px solid var(--brand);}\n.io-table td{padding:7px 26px;text-align:center;font-size:1.05rem;border:1.5px solid #d7dde9;color:var(--ink);}\n.io-table .io-blank{width:54px;}\n.io-table .blank-input{width:48px;font-size:1.1rem;}\n.io-rule-line{text-align:center;font-family:var(--fm);font-weight:700;font-size:1.05rem;color:var(--ink);margin:8px 0 4px;}\n\n/* ── Feedback + actions ── */\n.feedback{min-height:1.3em;font-size:.95rem;font-weight:600;margin:10px 0;transition:color .2s;}\n.feedback.ok{color:var(--green);}\n.feedback.no{color:var(--red);}\n.feedback.hint{color:var(--amber);}\n.actions{display:flex;align-items:center;gap:12px;margin-top:16px;}\n.reveal-btn{margin-right:auto;padding:8px 16px;border-radius:6px;border:1.5px solid #d1d5db;background:transparent;\n  color:var(--sub);font-family:var(--fs);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;}\n.reveal-btn:hover{background:#f3f4f6;color:var(--ink);border-color:var(--sub);}\n.check-btn{margin-left:auto;padding:11px 24px;border-radius:8px;border:0;background:var(--brand);color:#fff;\n  font-family:var(--fs);font-size:.94rem;font-weight:700;cursor:pointer;transition:background .2s,transform .1s;}\n.check-btn:hover:not(:disabled){background:#4f46e5;}\n.check-btn:active:not(:disabled){transform:scale(.97);}\n.check-btn:disabled{background:var(--mute);cursor:not-allowed;}\n.next-btn{display:none;margin-left:auto;align-items:center;gap:8px;padding:12px 26px;\n  background:linear-gradient(135deg,var(--brand),var(--blue));color:#fff;border:0;border-radius:999px;\n  font-family:var(--fs);font-weight:800;font-size:.98rem;cursor:pointer;box-shadow:0 4px 14px rgba(67,97,238,.4);\n  transition:transform .12s,box-shadow .2s;}\n.next-btn.show{display:inline-flex;animation:pop .3s cubic-bezier(.22,1,.36,1);}\n.next-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(67,97,238,.55);}\n@keyframes pop{from{transform:scale(.85);opacity:0;}to{transform:none;opacity:1;}}\n\n.solution{display:none;margin-top:14px;padding-top:14px;border-top:1px solid #e5e7eb;}\n.solution.show{display:block;}\n.solution p{font-size:.94rem;color:var(--sub);}\n.solution .ans{color:var(--green);font-weight:700;}\n.hn{font-family:var(--fm);font-weight:500;color:var(--brand);background:rgba(67,97,238,.08);padding:1px 6px;border-radius:4px;}\n\n/* ── Completion card ── */\n.complete{display:none;background:linear-gradient(135deg,#dbe6fb,#d8eafb,#e6f4fc);border-radius:20px;\n  padding:38px 26px 30px;text-align:center;box-shadow:0 4px 20px rgba(67,97,238,.18);border:2.5px solid rgba(67,97,238,.25);}\n.complete.show{display:block;animation:slide-in .4s;}\n.trophy{font-size:4rem;display:block;line-height:1;animation:bob 1.4s ease-in-out infinite;}\n@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-10px) rotate(2deg);}}\n.complete h3{font-family:var(--fd);font-size:2rem;margin:10px 0 6px;\n  background:linear-gradient(135deg,var(--brand),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}\n.complete-stat{display:inline-flex;align-items:baseline;gap:6px;margin:12px 0 6px;padding:12px 26px;background:#fff;\n  border-radius:14px;border:2.5px solid var(--brand);font-family:var(--fm);box-shadow:0 4px 12px rgba(67,97,238,.15);}\n.complete-stat .sf{font-size:2.5rem;font-weight:800;color:var(--brand);line-height:1;}\n.complete-stat .st{font-size:1.15rem;color:var(--mute);font-weight:600;}\n.complete .cmsg{color:var(--sub);margin:8px auto 20px;max-width:380px;}\n.restart-btn{padding:12px 30px;background:#fff;color:var(--brand);border:2.5px solid var(--brand);border-radius:999px;\n  font-family:var(--fs);font-weight:800;font-size:1rem;cursor:pointer;transition:transform .12s,background .2s;}\n.restart-btn:hover{transform:translateY(-2px);background:#eef2ff;}\n\n/* miles toast */\n.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);opacity:0;\n  background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-weight:700;font-size:.95rem;\n  box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .35s;z-index:50;}\n.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}\n\n.sound-toggle{position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1.5px solid #d1d5db;\n  background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--sub);z-index:40;\n  box-shadow:0 2px 8px rgba(0,0,0,.08);}\n.sound-toggle:hover{color:var(--brand);border-color:var(--brand);}\n\n/* ── v4: CURRENCY_EQUATION ── */\n.cur-eqn{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0;\n  font-family:var(--fm);font-size:1.5rem;font-weight:600;}\n.cur-eqn .eq{color:var(--pink);font-weight:700;}\n.cur-eqn .op{color:var(--sub);font-weight:500;}\n.cur-eqn .ce-mult{font-weight:700;color:var(--ink);}\n.cur-eqn .ce-target{font-weight:700;color:var(--ink);min-width:60px;text-align:center;}\n.cur-eqn.breakdown{font-size:1.3rem;gap:8px;}\n.ce-term{display:inline-flex;align-items:center;gap:6px;}\n.ce-times{color:var(--mute);font-size:1rem;}\n.cur-eqn .coin{flex-shrink:0;}\n\n/* ── v4: ORDINAL_SEQUENCE (icons) ── */\n.ord-anchor{text-align:center;margin:4px 0 2px;}\n.ord-pos{display:inline-block;font-family:var(--fm);font-size:.78rem;font-weight:700;color:var(--brand);\n  background:rgba(67,97,238,.1);padding:3px 12px;border-radius:99px;}\n.ord-strip{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;background:#f8fafc;border:1px solid #eef1f6;\n  border-radius:14px;padding:14px;}\n.ord-cell{width:46px;height:46px;display:inline-flex;align-items:center;justify-content:center;\n  background:#fff;border-radius:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);}\n.ord-cell svg{width:34px;height:34px;}\n\n/* ── v4: ORDINAL_SEQUENCE (passage) ── */\n.ord-passage{font-size:1.18rem;line-height:2;letter-spacing:.01em;color:var(--ink);background:#f8fafc;\n  border:1px solid #eef1f6;border-radius:14px;padding:16px 18px;margin:14px 0 6px;}\n.ord-passage .ol{padding:0 .2px;}\n.ord-passage .ord-mark{color:#d97706;font-weight:800;background:rgba(245,158,11,.16);border-radius:3px;}\n.ord-hint{font-size:.82rem;color:var(--sub);font-style:italic;margin-bottom:10px;}\n.letter-box{width:54px;text-transform:lowercase;font-size:1.4rem;}\n\n/* ── v4: PATTERN_SEQUENCE ── */\n.pat-strip,.seq-ref{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;background:#f8fafc;\n  border:1px solid #eef1f6;border-radius:14px;padding:14px;}\n.seq-ref{background:rgba(67,97,238,.05);border-color:rgba(67,97,238,.16);margin-bottom:10px;}\n.pat-cell{width:46px;height:46px;display:inline-flex;align-items:center;justify-content:center;\n  background:#fff;border-radius:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);}\n.pat-cell svg{width:34px;height:34px;}\n.pat-slot.pat-blank{width:46px;height:46px;border-radius:9px;border:2px dashed var(--brand);\n  background:rgba(67,97,238,.06);}\n\n/* ── v4: SEQUENCE_BUILD (palette → slots) ── */\n.sb-slots{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:58px;padding:12px;\n  background:#f8fafc;border:1px solid #eef1f6;border-radius:14px;}\n.sb-slots.correct{border-color:var(--green);background:rgba(16,185,129,.07);}\n.sb-slots.incorrect{animation:shake .4s;}\n.sb-slot{width:50px;height:50px;border-radius:10px;border:2px dashed rgba(67,97,238,.35);\n  background:rgba(255,255,255,.6);display:inline-flex;align-items:center;justify-content:center;transition:all .15s;}\n.sb-slot.over{border-color:var(--brand);background:rgba(67,97,238,.12);}\n.sb-slot.filled{border-style:solid;border-color:#cdd8f2;background:#fff;}\n.sb-palette{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;}\n.sb-tile{width:50px;height:50px;border-radius:10px;border:2px solid #cdd8f2;background:#fff;cursor:pointer;\n  display:inline-flex;align-items:center;justify-content:center;padding:0;transition:transform .1s,box-shadow .15s;\n  box-shadow:0 2px 5px rgba(0,0,0,.07);}\n.sb-palette .sb-tile:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(67,97,238,.18);border-color:var(--brand);}\n.sb-palette .sb-tile:active{transform:scale(.92);}\n.sb-tile.placed{cursor:pointer;box-shadow:none;border-color:transparent;width:46px;height:46px;}\n.sb-tile svg{width:34px;height:34px;pointer-events:none;}\n\n/* ── v4: GROWING_PATTERN_2D ── */\n.grow-stack{display:flex;flex-direction:column;gap:6px;align-items:flex-start;background:#f8fafc;\n  border:1px solid #eef1f6;border-radius:14px;padding:14px;margin-bottom:12px;}\n.grow-row{display:flex;gap:6px;}\n.grow-row .pat-cell{width:38px;height:38px;}\n.grow-row .pat-cell svg{width:28px;height:28px;}\n\n/* ══════════ v5 ══════════ */\n/* ── v5: BASE_TEN_BLOCKS (rods = tens, unit cubes = ones) ── */\n.btb-stage{display:flex;align-items:flex-end;justify-content:center;gap:18px;flex-wrap:wrap;\n  background:#f8fafc;border:1px solid #eef1f6;border-radius:14px;padding:18px 16px;min-height:96px;}\n.btb-tens,.btb-ones{display:flex;align-items:flex-end;gap:6px;flex-wrap:wrap;max-width:340px;}\n.btb-ones{align-content:flex-start;}\n.btb svg{display:block;}\n/* figure-option layout for \"which model shows N?\" */\n.btb-optstage{display:flex;align-items:flex-end;justify-content:center;gap:14px;flex-wrap:wrap;padding:6px;}\n\n/* ── v5: SPINNER (proportional coloured sectors) ── */\n.spin-wrap{display:flex;justify-content:center;margin:8px 0 16px;}\n.spin-stage{background:#f8fafc;border:1px solid #eef1f6;border-radius:16px;padding:16px;}\n.spin-svg{display:block;}\n.spin-legend{display:flex;flex-wrap:wrap;gap:10px 16px;justify-content:center;margin-top:10px;}\n.spin-leg{display:inline-flex;align-items:center;gap:6px;font-family:var(--fs);font-weight:600;font-size:.86rem;color:var(--sub);}\n.spin-leg .sw{width:14px;height:14px;border-radius:4px;border:1px solid rgba(0,0,0,.15);}\n\n/* ── v5: CALENDAR_MONTH (month grid, weekday columns) ── */\n.cal-wrap{display:flex;justify-content:center;margin:8px 0 16px;}\n.cal{border-collapse:collapse;font-family:var(--fm);border-radius:12px;overflow:hidden;\n  box-shadow:0 4px 14px rgba(67,97,238,.12);border:1px solid #e1e7f3;}\n.cal caption{font-family:var(--fd);font-weight:400;font-size:1.15rem;color:#fff;padding:9px 0;caption-side:top;}\n.cal caption .cap-inner{display:flex;align-items:center;justify-content:center;gap:8px;}\n.cal caption .aud{color:#fff;}\n.cal.m0 caption{background:#f59e0b;}.cal.m1 caption{background:#5A55E0;}\n.cal.m2 caption{background:#e0529e;}.cal.m3 caption{background:#7c3aed;}\n.cal.m4 caption{background:#5B8DEF;}.cal.m5 caption{background:#10b981;}\n.cal th{padding:6px 0;font-size:.74rem;font-weight:700;color:var(--sub);background:#eef2fb;width:38px;}\n.cal td{padding:0;text-align:center;font-size:.92rem;color:var(--ink);background:#fff;width:38px;height:34px;\n  border:1px solid #eef1f6;}\n.cal td.empty{background:#fafbff;}\n.cal td.hi{background:rgba(67,97,238,.14);font-weight:700;color:var(--brand);border-radius:6px;}\n\n/* ============================================================\n   AUTHORING MODE — categorize (venn + bins) & line-plot.\n   Hooks must match the frontend behaviours:\n     categorize: .vs-tray > .vs-tile[data-idx]; .vs-zone[data-region] (drop)\n     line-plot:  .lp-cols > .lp-col[data-x][data-count] > .lp-slot[data-row]\n   ============================================================ */\n/* ── Categorize: Venn (2-circle) layout ── */\n.venn-wrap{display:flex;justify-content:center;margin:6px 0 14px;}.venn-box{position:relative;width:460px;max-width:100%;height:320px;border:1.5px solid #cfd9ee; border-radius:12px;background:#fbfcff;}.venn-circle{position:absolute;top:40px;width:260px;height:260px;border:2px solid #7fb6e6;border-radius:50%;}.venn-left{left:35px;}.venn-right{right:35px;}.venn-label{position:absolute;top:24px;font-size:.84rem;font-weight:700;color:#3f5a86; background:#fff;border:1px solid #cfe0f3;border-radius:6px;padding:2px 8px;z-index:3;}.venn-label-left{left:96px;}.venn-label-right{right:96px;}.venn-shape{flex:0 0 auto;}@media(max-width:480px){.venn-wrap{overflow:hidden;}.venn-box{transform:scale(.76);transform-origin:top center;margin-bottom:-77px;}}@media(max-width:380px){.venn-box{transform:scale(.66);margin-bottom:-109px;}}.vs-tray{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:6px 0 12px; padding:10px;background:#f6f8fd;border:1.5px dashed #c3d2ee;border-radius:12px;min-height:54px;}.vs-tile{display:inline-flex;cursor:pointer;padding:3px;border-radius:8px;transition:transform .1s,box-shadow .1s;}.vs-tile:hover{transform:translateY(-2px);}.vs-box .vs-zone{position:absolute;display:flex;flex-wrap:wrap;gap:2px;align-content:center;justify-content:center; border-radius:10px;transition:background .12s;}.vs-zone.vs-a{left:35px;top:40px;width:175px;height:260px;justify-content:center;padding-left:14px;}.vs-zone.vs-ab{left:180px;top:90px;width:100px;height:160px;}.vs-zone.vs-b{right:35px;top:40px;width:175px;height:260px;justify-content:center;padding-right:14px;}.vs-zone.vs-out{left:10px;top:6px;width:440px;height:30px;justify-content:flex-start;}.vs-fixed{display:inline-flex;opacity:.92;}.prompt{font-family:'Quicksand';font-weight:700;color:var(--ink, #14213d);font-size:1.08rem;}\n\n/* ── Categorize: bins layout (sort into labelled boxes) ── */\n.bins{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:8px 0 12px;}\n.bin{flex:1 1 150px;min-width:130px;max-width:230px;border:1.5px solid #cfd9ee;border-radius:12px;background:#fbfcff;overflow:hidden;}\n.bin .bin-head{padding:8px 10px;text-align:center;font-weight:700;font-size:.9rem;color:#fff;background:var(--brand);}\n.bin .bs-drop{display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;justify-content:center;min-height:64px;padding:10px;transition:background .12s;}\n.bins .vs-zone.over .bs-drop{background:rgba(var(--brand-rgb,67,97,238),.08);}\n\n/* ── Line plot ── */\n.data-wrap{display:flex;justify-content:center;margin:8px 0 14px;}.data-table{border-collapse:collapse;font-family:var(--fm, 'JetBrains Mono',monospace);min-width:260px;border-radius:10px;overflow:hidden; box-shadow:0 2px 10px rgba(var(--brand-rgb, 67,97,238),.1);}.data-table caption{font-family:var(--fs, 'DM Sans',sans-serif);font-weight:700;font-size:.95rem;color:var(--ink, #14213d);padding:0 0 8px;caption-side:top; display:flex;align-items:center;gap:7px;justify-content:center;}.data-table th{padding:9px 22px;font-size:.9rem;font-weight:700;color:#fff;background:var(--brand, #4361EE);}.data-table td{padding:8px 22px;text-align:center;font-size:1.02rem;border:1.5px solid #e1e7f3;color:var(--ink, #14213d);background:#fff;}.data-table tr:nth-child(even) td{background:#f6f8fe;}.data-table td:first-child{font-weight:600;}.lp-row{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:28px;margin:8px 0 16px;}.lp-srcwrap{flex:0 1 auto;display:flex;flex-direction:column;justify-content:flex-start;}.lp-src{margin:0;}.lp-src caption{caption-side:top;font-weight:700;color:var(--ink, #14213d);padding-bottom:6px;font-size:.92rem;}.lp-plot{flex:0 1 auto;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto; grid-template-areas:\"ylabel plot\" \". xlabel\" \". key\";align-items:end;gap:2px 10px;}.lp-ylabel{grid-area:ylabel;align-self:center;}.lp-ylabel span{display:inline-block;writing-mode:vertical-rl;transform:rotate(180deg); font-size:.8rem;font-weight:700;color:var(--sub, #4b5563);white-space:nowrap;letter-spacing:.02em;}.lp-plotarea{grid-area:plot;position:relative;padding:0 4px;}.lp-gridlines{position:absolute;left:4px;right:4px;bottom:30px;top:0;pointer-events:none;}.lp-gridline{position:absolute;left:0;right:0;height:1px;background:rgba(20,33,61,.06);}.lp-cols{display:flex;align-items:flex-end;gap:10px;position:relative;}.lp-col{position:relative;width:34px;display:flex;flex-direction:column;justify-content:flex-end; border-radius:8px 8px 0 0;cursor:pointer;transition:background .12s;}.lp-col:hover{background:rgba(91,141,239,.06);}.lp-slot{flex:0 0 24px;height:24px;width:100%;border:0;background:transparent;padding:0;cursor:pointer; display:flex;align-items:center;justify-content:center;position:relative;}.lp-slot::before{content:\"✕\";font-size:1.15rem;font-weight:800;line-height:1;color:transparent;transition:color .1s;}.lp-col:hover .lp-slot:hover::before{color:rgba(91,141,239,.4);}.lp-col:hover .lp-slot:hover ~ .lp-slot::before{color:rgba(91,141,239,.4);}.lp-baseline{height:3px;background:#14213d;border-radius:2px;margin-top:0;}.lp-ticks{display:flex;gap:10px;margin-top:5px;padding:0;}.lp-tick{width:34px;text-align:center;font-size:.86rem;font-weight:700;color:var(--ink, #14213d);}.lp-xlabel{grid-area:xlabel;text-align:center;font-size:.8rem;font-weight:700;color:var(--sub, #4b5563);margin-top:3px;}.lp-key{grid-area:key;text-align:center;font-size:.78rem;color:var(--sub, #4b5563);margin-top:2px;}.lp-key-x{color:#5B8DEF;font-weight:800;}.prompt{font-family:'Quicksand';font-weight:700;color:var(--ink, #14213d);font-size:1.08rem;}/* sequence spotlight line (see spotlightSequence) */.prompt:has(.qseq){display:block;}.prompt:has(.qseq)>span{display:block;}.qseq{display:block;text-align:center;margin-top:10px;font-family:var(--fm);font-size:1.6rem;font-weight:700;color:var(--ink);letter-spacing:.06em;line-height:1.35;}.qseq .blank-input{width:2.6ch;min-width:32px;max-width:58px;padding:4px 2px;font-size:.92em;vertical-align:middle;}.qseq{white-space:normal;}@media(max-width:600px){.qseq{font-size:clamp(1.02rem,calc(1.62rem - max(0,var(--sl,12) - 11) * 0.042rem),1.5rem);letter-spacing:.02em;}.qseq .blank-input{min-width:28px;}.order-slot{width:46px;height:46px;}.order-slots{gap:8px;padding:10px;}.tile{min-width:42px;height:46px;padding:0 8px;font-size:1.12rem;}.order-bank{gap:8px;}.sb-slot{width:44px;height:44px;}.sb-slots{gap:7px;padding:10px;}.sb-tile{width:44px;height:44px;}.sb-tile.placed{width:40px;height:40px;}.sb-palette{gap:8px;}}/* make sequence-build reference read as prominently as the tap-missing line */.seq-ref{font-family:var(--fm);font-size:1.3rem;font-weight:700;color:var(--ink);letter-spacing:.05em;}\n";
+  function build(sourceHtml){
+    var styleFor = MODS.css.makeCssExtractor(MARKUP_STYLE_CSS);
+    return (MODS.authoring.parseAuthoringHtml(sourceHtml).items || []).map(function(item){
+      var sb = styleFor(item.inner);
+      var body = styleFor.applyVarDefaults ? styleFor.applyVarDefaults(item.inner) : item.inner;
+      return { behavior:item.behavior, description:item.description, answer:item.answerArr, hint:item.hint||null,
+               markup:'<div class="qbody" data-behavior="'+item.behavior+'">'+sb+body+'</div>' };
+    });
+  }
+  var B = MODS["preview-behaviors"];
+  return { build: build, attach: B.attach, serialize: B.serialize, check: B.check };
+})();
+
+</script>
+<!-- GEOMETRY ENGINE (only for "construct" questions — plotting / geometry). If this
+     preview has none, leave this block untouched. Otherwise replace the comment
+     with the FULL contents of raoGeoEngine.js (also a project file). -->
+<script id="rao-geo-engine">
+/* >>> PASTE THE ENTIRE raoGeoEngine.js FILE HERE (construct questions only) <<< */
+</script>
+<script>
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; });
+}
+function escAttr(s) { return esc(s).replace(/"/g, "&quot;"); }
+function card(inner, behavior, answer, hint, i, n) {
+  return (
+    '<div class="pv-frame" data-behavior="' + escAttr(behavior) + '" data-answer="' + escAttr(JSON.stringify(answer)) + '"' +
+      (hint ? ' data-hint="' + escAttr(hint) + '"' : "") + '><div class="pv-card">' +
+      '<div class="pv-head"><span class="pv-tlabel">Problem</span>' +
+        '<span class="pv-ring"><i>' + i + "/" + n + "</i></span></div>" +
+      inner +
+      '<div class="pv-hintbox" hidden></div>' +
+      '<div class="pv-foot"><button class="pv-hint" type="button">Hint</button>' +
+        '<span class="pv-fb"></span><button class="pv-check" type="button">Check ✓</button></div>' +
+    "</div></div>" +
+    '<div class="pv-ans">✓ Answer: <b>' + esc(Array.isArray(answer) ? answer.join(", ") : answer) + "</b></div>"
+  );
+}
+function wireCard(frame) {
+  var qbody = frame.querySelector(".qbody");
+  var behavior = frame.dataset.behavior;
+  var answer; try { answer = JSON.parse(frame.dataset.answer || "null"); } catch (e) { answer = null; }
+  if (qbody && window.RaoPreview && window.RaoPreview.attach) window.RaoPreview.attach(qbody, behavior);
+  var hintBtn = frame.querySelector(".pv-hint"), hintBox = frame.querySelector(".pv-hintbox"), hint = frame.dataset.hint;
+  if (hintBtn) {
+    if (!hint) hintBtn.style.display = "none";
+    else hintBtn.addEventListener("click", function () {
+      if (hintBox.hasAttribute("hidden")) { hintBox.textContent = "💡 " + hint; hintBox.removeAttribute("hidden"); hintBtn.textContent = "Hide hint"; }
+      else { hintBox.setAttribute("hidden", ""); hintBtn.textContent = "Hint"; }
+    });
+  }
+  var checkBtn = frame.querySelector(".pv-check"), fb = frame.querySelector(".pv-fb"), cardEl = frame.querySelector(".pv-card");
+  if (checkBtn) checkBtn.addEventListener("click", function () {
+    var user = window.RaoPreview.serialize(qbody, behavior);
+    if (user == null) { fb.className = "pv-fb"; fb.textContent = "✋ Answer it first"; fb.style.color = "#b58900"; return; }
+    var ok = window.RaoPreview.check(behavior, user, answer);
+    // app-style feedback: big emoji + coloured message on a soft good/bad pill
+    fb.style.color = "";
+    fb.className = "pv-fb " + (ok ? "good" : "bad");
+    fb.innerHTML = '<span class="pv-fb-ic">' + (ok ? "🎉" : "💪") + "</span>" + (ok ? "Correct!" : "Not quite");
+    if (cardEl) cardEl.style.boxShadow = ok ? "inset 0 0 0 3px #10b981" : "inset 0 0 0 3px #ef4444";
+  });
+}
+(function(){
+  var preview = document.getElementById('preview');
+  if(!window.RaoPreview || !window.RaoPreview.build){ preview.innerHTML = '<p style="color:#c00">Preview engine not loaded — make sure preview-engine.js is in the project files and try again.</p>'; return; }
+  var qs = window.RaoPreview.build(document.getElementById('source').innerHTML);
+  qs.forEach(function(q,i){ preview.insertAdjacentHTML('beforeend', card(q.markup, q.behavior, q.answer, q.hint, i+1, qs.length)); });
+  document.querySelectorAll('.pv-frame').forEach(wireCard);
+})();
+</script></body></html>
