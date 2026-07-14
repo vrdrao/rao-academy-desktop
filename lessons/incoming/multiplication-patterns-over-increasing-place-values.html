@@ -1,0 +1,274 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["4800"]
+description: Multiply by a power of ten
+hint: Start with the fact you already know: 6 × 8. Then look at how many zeros 800 has.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">6 × 800 = ?</p>
+  <ul class="options"><li data-val="480">480</li><li data-val="4800">4,800</li><li data-val="48000">48,000</li><li data-val="4800000">4,800,000</li></ul>
+  <p class="explain">6 × 8 = 48, and 800 has two zeros, so 4,800.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["800"]
+description: Find the missing factor
+hint: Ignore the zeros for a moment. What single digit times 8 gives you 64?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">8 × ? = 6,400</p>
+  <ul class="options"><li data-val="80">80</li><li data-val="800">800</li><li data-val="8000">8,000</li><li data-val="8">8</li></ul>
+  <p class="explain">8 × 800 = 6,400.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1"]
+description: Multiplying by one
+hint: What number leaves 700,000 completely unchanged?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">700,000 × ? = 700,000</p>
+  <ul class="options"><li data-val="0">0</li><li data-val="1">1</li><li data-val="10">10</li><li data-val="100">100</li></ul>
+  <p class="explain">Any number times 1 stays the same.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["4000000"]
+description: Find the large missing factor
+hint: First find the digit: what times 6 makes 24? Then work out how many zeros the missing factor needs.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">6 × ? = 24,000,000</p>
+  <ul class="options"><li data-val="400000">400,000</li><li data-val="4000000">4,000,000</li><li data-val="40000000">40,000,000</li><li data-val="4000">4,000</li></ul>
+  <p class="explain">6 × 4,000,000 = 24,000,000.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["7 × 6", "7 × 600", "7 × 60,000"]
+low: smallest
+high: largest
+description: Order the products by size
+hint: You cannot order these by looking at them. Work out all three products first, then compare.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Work out each product, then order them from smallest to largest.</p>
+  <ol class="order"><li>7 × 600</li><li>7 × 6</li><li>7 × 60,000</li></ol>
+  <p class="explain">42, then 4,200, then 420,000.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id": "ten", "label": "× 10"}, {"id": "hundred", "label": "× 100"}, {"id": "thousand", "label": "× 1,000"}]
+answer: ["ten", "hundred", "thousand", "hundred", "ten", "thousand"]
+description: Sort each fact by what it multiplies by
+hint: You do not need to multiply anything here. Just read the second number in each fact.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each fact into the box for the number it multiplies by.</p>
+  <ul class="tiles"><li>3 × 10</li><li>8 × 100</li><li>5 × 1,000</li><li>6 × 100</li><li>9 × 10</li><li>4 × 1,000</li></ul>
+  <p class="explain">× 10 adds one zero, × 100 adds two, × 1,000 adds three.</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["50", "5"]
+palette: ["50", "5", "55", "550"]
+description: Continue the pattern downward
+hint: Each step is ten times smaller. What happens to the zeros when a number shrinks by ten?
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">This pattern goes down. Drag the next two numbers.</p>
+  <p class="reference">50,000,&nbsp; 5,000,&nbsp; 500,&nbsp; … ,&nbsp; …</p>
+  <p class="explain">50 then 5 — one zero disappears each step.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["90", "900", "9000", "90000"]
+description: Complete the ×10 pattern
+hint: Do the top row first — you already know 9 × 1. Then work down one row at a time and watch what each new zero does.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Complete the pattern. Watch how the zeros grow.<br>9 × 10 = []<br>9 × 100 = []<br>9 × 1,000 = []<br>9 × 10,000 = []</p>
+  <p class="explain">90, 900, 9,000, 90,000 — one more zero each time.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["5"]
+description: Find the missing factor
+hint: Cover up the zeros on both sides. What small fact is hiding underneath?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">60,000 × ? = 300,000</p>
+  <ul class="options"><li data-val="5">5</li><li data-val="50">50</li><li data-val="500">500</li><li data-val="6">6</li></ul>
+  <p class="explain">6 × 5 = 30, so 60,000 × 5 = 300,000.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["8 × 60", "9 × 400", "3 × 5,000", "2 × 30,000"]
+low: smallest
+high: largest
+description: Order four products where counting zeros is not enough
+hint: Careful — you cannot just count zeros here. One of these looks big but is actually the smallest. Work every product out.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Work out each product, then order them from smallest to largest.</p>
+  <ol class="order"><li>9 × 400</li><li>2 × 30,000</li><li>8 × 60</li><li>3 × 5,000</li></ol>
+  <p class="explain">480, then 3,600, then 15,000, then 60,000. Notice 8 × 60 has more zeros written than 9 × 400, but it is still the smallest.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id": "h", "label": "Less than 1,000"}, {"id": "t", "label": "1,000 – 9,999"}, {"id": "tt", "label": "10,000 or more"}]
+answer: ["h", "h", "t", "t", "tt", "tt"]
+description: Sort each product into the right size band
+hint: Work out each product, then ask: is it under 1,000, in the thousands, or bigger still?
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Work out each product, then drag it into the right box.</p>
+  <ul class="tiles"><li>4 × 20</li><li>7 × 30</li><li>5 × 400</li><li>6 × 300</li><li>8 × 5,000</li><li>9 × 2,000</li></ul>
+  <p class="explain">80 and 210 are under 1,000. 2,000 and 1,800 are in the thousands. 40,000 and 18,000 are 10,000 or more.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["7", "7", "7"]
+description: Find the missing factor each time
+hint: Try the top row first. Then look at the next row — has the missing number really changed, or only the zeros?
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Find the missing factor in each row.<br>[] × 8 = 56<br>[] × 80 = 560<br>[] × 800 = 5,600</p>
+  <p class="explain">It is 7 every time — only the zeros in the answer change.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["6 × 800", "8 × 600", "48 × 100", "4 × 1,200"]
+description: Select every expression equal to 4,800
+hint: Do not stop at the first one you find. Work out every single option before you decide.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select every expression that equals 4,800.</p>
+  <ul class="options">
+    <li data-val="6 × 800">6 × 800</li>
+    <li data-val="8 × 600">8 × 600</li>
+    <li data-val="48 × 100">48 × 100</li>
+    <li data-val="6 × 80">6 × 80</li>
+    <li data-val="4 × 1,200">4 × 1,200</li>
+    <li data-val="60 × 8">60 × 8</li>
+  </ul>
+  <p class="explain">6 × 800, 8 × 600, 48 × 100 and 4 × 1,200 all make 4,800.</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["6,000", "60,000"]
+palette: ["6,000", "60,000", "600", "66,000"]
+description: Continue the ×10 pattern
+hint: Each step is ten times bigger. What does that do to the zeros?
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Continue the pattern by dragging the next two numbers.</p>
+  <p class="reference">6,&nbsp; 60,&nbsp; 600,&nbsp; … ,&nbsp; …</p>
+  <p class="explain">6,000 then 60,000 — one more zero each step.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2000"]
+description: Spot and fix the mistake
+hint: Rohan got the 4 × 5 part right. Count how many zeros are in 40 and 50 altogether — did he keep them all?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Rohan says 40 × 50 = 200. He is wrong. What is the correct answer?</p>
+  <ul class="options"><li data-val="200">200</li><li data-val="2000">2,000</li><li data-val="20000">20,000</li><li data-val="900">900</li></ul>
+  <p class="explain">4 × 5 = 20, and 40 and 50 have one zero each, so 40 × 50 = 2,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3"]
+description: Careful — count the zeros in the answer
+hint: Work out 5 × 4 first. Look hard at that answer — does it already end in a zero of its own?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">50 × 40 = ? &nbsp;How many zeros are at the end of the answer?</p>
+  <ul class="options"><li data-val="1">1</li><li data-val="2">2</li><li data-val="3">3</li><li data-val="4">4</li></ul>
+  <p class="explain">5 × 4 = 20, which already ends in a zero. Add the two zeros from 50 and 40 → 2,000, which ends in three zeros.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2100"]
+description: Word problem — multiply by a power of ten
+hint: This is 7 × 300. Start with 7 × 3, then think about what the two zeros in 300 do.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya packs 7 pens into every box. She fills 300 boxes. How many pens does she use?</p>
+  <ul class="options"><li data-val="210">210</li><li data-val="2100">2,100</li><li data-val="21000">21,000</li><li data-val="307">307</li></ul>
+  <p class="explain">7 × 300 = 2,100 pens.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["8000"]
+description: Word problem — total cost
+hint: This is 40 × 200. Find the small fact first, then count every zero in both numbers.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Arjun sells 40 tickets. Each ticket costs ₹200. How much money does he collect?<br>40 × ₹200 = ₹[]</p>
+  <p class="explain">4 × 2 = 8, plus three zeros → ₹8,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["lt"]
+description: Compare two products
+hint: Work out both sides properly. Do not guess from how long the numbers look.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Work out both sides. Which sign belongs in the box?<br>6 × 400 &nbsp;<b>[ ? ]</b>&nbsp; 6 × 4,000</p>
+  <ul class="options"><li data-val="lt">&lt; (less than)</li><li data-val="gt">&gt; (greater than)</li><li data-val="eq">= (equal to)</li></ul>
+  <p class="explain">2,400 is less than 24,000 — the same 6 × 4, but one extra zero on the right.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["42000"]
+description: Multiply into the ten-thousands
+hint: Start with 7 × 6. Check whether that answer ends in a zero of its own, then look at how many zeros 6,000 has.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">7 × 6,000 = ?</p>
+  <ul class="options"><li data-val="4200">4,200</li><li data-val="42000">42,000</li><li data-val="420000">420,000</li><li data-val="13000">13,000</li></ul>
+  <p class="explain">7 × 6 = 42 and 6,000 has three zeros, so 42,000.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["8 × 500 = 400", "7 × 900 = 63,000"]
+description: Find the statements that are wrong
+hint: Check every statement yourself. Exactly two of them are wrong — find both.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select every statement that is WRONG.</p>
+  <ul class="options">
+    <li data-val="3 × 200 = 600">3 × 200 = 600</li>
+    <li data-val="5 × 400 = 2,000">5 × 400 = 2,000</li>
+    <li data-val="9 × 30 = 270">9 × 30 = 270</li>
+    <li data-val="8 × 500 = 400">8 × 500 = 400</li>
+    <li data-val="7 × 900 = 63,000">7 × 900 = 63,000</li>
+  </ul>
+  <p class="explain">8 × 500 = 4,000 (not 400) and 7 × 900 = 6,300 (not 63,000).</p>
+</div>
+
+</div>

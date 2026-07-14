@@ -22,25 +22,28 @@ Last updated: 2026-07-14
 
 ## Validation results
 
-**101/104 files pass** build + grade + reject.
+**104/104 files pass** build + grade + reject.
 
-### 3 failures
+### 3 failures (all fixed)
 
-1. **`divide-larger-numbers.html`** — FIXED this session.
+1. **`divide-larger-numbers.html`** — FIXED.
    - 14 questions used `type: long-division` with `answer: []`. `long-division` is not a
      supported engine type — the engine rejected all 14 with build errors.
    - Converted to `fill-blanks` with quotient (and remainder where applicable). All 14
      answers verified with Python `divmod()`. Now 24/24 pass.
 
-2. **`multiplication-patterns-over-increasing-place-values-1to1.html`** — 31 reject failures.
-   - Not yet investigated. Likely fill-blanks questions where the synthetic wrong answer
-     (`answer + 7`) collides with a valid alternate, OR the same `answer: []` bug. Needs
-     per-question inspection next session.
+2. **`multiplication-patterns-over-increasing-place-values-1to1.html`** — FIXED.
+   - 31 questions used unsupported `layout: stack` + `rows:` frontmatter. The engine's
+     `fill-blanks` needs `[]` blanks in the prompt, not `_` in a `rows` array. All 31
+     built with `answer: []` (empty) → wrong answers accepted.
+   - Converted all 31 to standard `fill-blanks` with `[]` inline in prompt text.
+     Now 31/31 pass.
 
-3. **`multiplication-patterns-over-increasing-place-values.html`** — 3 reject failures.
-   - Same family as #2. Not yet investigated.
+3. **`multiplication-patterns-over-increasing-place-values.html`** — FIXED.
+   - Same root cause as #2. 3 of 21 questions used `layout: stack` + `rows:`.
+   - Converted to standard `fill-blanks`. Now 21/21 pass.
 
-**Important lesson from #1:** the batch validator flagged these as "reject failures" (wrong
+**Important lesson:** the batch validator flagged these as "reject failures" (wrong
 answer accepted). The root cause was not a test heuristic problem — it was a real authoring
 bug (empty answer keys). When a test fails, investigate the content before blaming the test.
 
