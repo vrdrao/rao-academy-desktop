@@ -463,6 +463,74 @@ function guardHintLeak(allQuestions) {
           }
         }
 
+        // Check for RULE-LEAK: hint states a conversion, identity, or
+        // classification rule using "is/are/=/means/equals" where the
+        // declared fact contains an answer-adjacent term.
+        //
+        // This is a HEURISTIC. It catches the two patterns that have
+        // burned this project:
+        //   (a) Unit conversions:  "1 L is 1000 mL"
+        //   (b) Classification:   "Hours under 12 are A.M."
+        //
+        // It does NOT catch every semantic leak — a hint can state a
+        // rule without using "is/are/=". Full coverage requires human
+        // review per CLAUDE.md §13.3. This guard catches the common
+        // mechanical patterns; it cannot reason about meaning.
+        if (!leaked) {
+          // (a) Unit conversion: "N unit is/are/= N unit"
+          // Requires unit-like words (not operators) on both sides.
+          const convPat = /\b(\d[\d,]*)\s*([a-z]+)\s+(?:is|are|=|equals)\s+(\d[\d,]*)\s*([a-z]+)\b/i;
+          const convM = convPat.exec(rung);
+          if (convM) {
+            const rungLow = rung.toLowerCase();
+            for (const rawAns of q.answer) {
+              const a = String(rawAns).trim();
+              if (a.length < 3) continue;
+              const aLow = a.toLowerCase();
+              if (HINT_SAFE_WORDS.has(aLow)) continue;
+              // Check if the full answer text appears in the hint
+              const esc = aLow.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+              if (new RegExp(`\\b${esc}\\b`).test(rungLow)) {
+                leaked = true;
+                leakDetail = `conversion statement contains answer term "${a}"`;
+                break;
+              }
+            }
+          }
+        }
+
+        if (!leaked) {
+          // (b) Classification: "X is/are TERM" where TERM is a
+          // non-numeric answer. Skips numeric terms like "is 800"
+          // (those are factor labels, not classifications).
+          const classPat = /\b(?:is|are)\s+(\S+(?:\.\S+)*)/gi;
+          let cm;
+          while (!leaked && (cm = classPat.exec(rung)) !== null) {
+            const stated = cm[1].replace(/[.,;:!?]+$/, "").toLowerCase();
+            if (stated.length < 2 || HINT_SAFE_WORDS.has(stated)) continue;
+            // Skip verb forms: "you are counting" is a progressive
+            // verb, not a classification. Check for pronoun subject.
+            const pre = rung.slice(Math.max(0, cm.index - 10), cm.index);
+            if (/\b(?:you|we|they)\s*$/i.test(pre)) continue;
+            // Skip purely numeric terms — "is 800" is a label, not
+            // a classification
+            if (/^\d[\d,]*$/.test(stated)) continue;
+            for (const rawAns of q.answer) {
+              const a = String(rawAns).trim().toLowerCase();
+              if (a.length < 2 || HINT_SAFE_WORDS.has(a)) continue;
+              // Match: exact OR answer ends with the classification
+              // term (e.g. "8:00 A.M." ends with "A.M.")
+              const aNorm = a.replace(/[^a-z0-9]/g, "");
+              const sNorm = stated.replace(/[^a-z0-9]/g, "");
+              if (sNorm.length >= 2 && (aNorm === sNorm || aNorm.endsWith(sNorm))) {
+                leaked = true;
+                leakDetail = `classification rule states "${stated}" which is the answer`;
+                break;
+              }
+            }
+          }
+        }
+
         if (leaked) {
           leaks++;
           if (leakExamples.length < 10) {
