@@ -102,6 +102,46 @@ for (const c of cases) {
   }
 }
 
+/* ── SANITIZER GUARD: prose with "on*" words must survive intact ────────────
+   The old sanitizer regex /\son[a-z]+=.../g was global and ate ANY word
+   starting with "on" followed by "=" — including "ones =" in a maths prompt.
+   It silently deleted content from Place_values_remix Q13 and shipped that way
+   for months. This guard exists so it can never happen again. */
+{
+  const sanitizerCases = [
+    { prompt: "8 ones = []",           mustContain: "ones =",  name: "ones = []" },
+    { prompt: "Sign up online = []",   mustContain: "online =",       name: "online = []" },
+    { prompt: "ongoing = []",          mustContain: "ongoing =",       name: "ongoing = []" },
+    { prompt: "Count on from 5. []",   mustContain: "on from",  name: "on from" },
+  ];
+  const securityCases = [
+    { tag: '<p class="prompt" onclick="alert(1)">text</p>', mustStrip: "onclick", name: "onclick stripped" },
+    { tag: '<li onmouseover="x">A</li>', mustStrip: "onmouseover", name: "onmouseover stripped" },
+  ];
+
+  let sanitizerFailed = 0;
+
+  for (const c of sanitizerCases) {
+    const src = `<div id="source"><!--@q\ntype: fill-blanks\nanswer: ["99"]\n--><div class="question" data-type="fill-blanks"><p class="prompt">${c.prompt}</p></div></div>`;
+    const qs = RP.build(src);
+    const ok = qs[0].markup.includes(c.mustContain);
+    if (!ok) { sanitizerFailed++; failed++; console.log(`${C.r}✗ sanitizer ate prose: ${c.name}${C.x}`); }
+    else { console.log(`${C.g}✓${C.x} sanitizer preserves prose: ${c.name}`); }
+  }
+
+  for (const c of securityCases) {
+    const src = `<div id="source"><!--@q\ntype: single-select\nanswer: ["A"]\n--><div class="question" data-type="single-select">${c.tag}<ul class="options"><li data-val="A">A</li><li data-val="B">B</li></ul></div></div>`;
+    const qs = RP.build(src);
+    const ok = !qs[0].markup.includes(c.mustStrip);
+    if (!ok) { sanitizerFailed++; failed++; console.log(`${C.r}✗ sanitizer MISSED event handler: ${c.name}${C.x}`); }
+    else { console.log(`${C.g}✓${C.x} sanitizer strips handler: ${c.name}`); }
+  }
+
+  if (sanitizerFailed) {
+    console.log(`\n${C.r}SANITIZER: ${sanitizerFailed} case(s) failed.${C.x}`);
+  }
+}
+
 if (failed) {
   console.log(`\n${C.r}STRUCTURAL: ${failed} case(s) failed — malformed authoring is not being rejected.${C.x}`);
   process.exit(1);

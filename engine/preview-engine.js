@@ -2335,12 +2335,20 @@ module.exports = { attach, serialize, check, BEHAVIORS };
   var DANGEROUS_TAGS = /<\s*\/?\s*(script|iframe|object|embed|link|meta|base|form)\b[^>]*>/gi;
   function sanitizeMarkup(html){
     if (typeof html !== "string" || !html) return html;
-    return html
-      .replace(DANGEROUS_TAGS, "")
-      .replace(/\son[a-z]+\s*=\s*"[^"]*"/gi, "")
-      .replace(/\son[a-z]+\s*=\s*'[^']*'/gi, "")
-      .replace(/\son[a-z]+\s*=\s*[^\s>]+/gi, "")
-      .replace(/((?:href|src|xlink:href)\s*=\s*)(["'])\s*(?:javascript:|data:text\/html)[^"']*\2/gi, '$1$2#$2');
+    // 1. Strip dangerous tags entirely
+    html = html.replace(DANGEROUS_TAGS, "");
+    // 2. Strip on* event handler ATTRIBUTES — only inside HTML tags, never in prose.
+    //    The old regex was global and ate "ones =" in text content (any word starting
+    //    with "on" followed by = looked like an event handler to it).
+    html = html.replace(/<[a-zA-Z][a-zA-Z0-9]*\s[^>]*>/g, function(tag) {
+      return tag
+        .replace(/\son[a-z]+\s*=\s*"[^"]*"/gi, "")
+        .replace(/\son[a-z]+\s*=\s*'[^']*'/gi, "")
+        .replace(/\son[a-z]+\s*=\s*[^\s>]+/gi, "");
+    });
+    // 3. Strip javascript: / data:text/html URIs
+    html = html.replace(/((?:href|src|xlink:href)\s*=\s*)(["'])\s*(?:javascript:|data:text\/html)[^"']*\2/gi, '$1$2#$2');
+    return html;
   }
   function build(sourceHtml){
     var styleFor = MODS.css.makeCssExtractor(MARKUP_STYLE_CSS);
