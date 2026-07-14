@@ -351,6 +351,8 @@ what ships.
 - **Do NOT prefix Bash commands with `cd "/c/Users/…" &&`.** The shell is already in the
   working directory. The `cd && …` pattern triggers a security prompt every time and is
   unnecessary. Use bare commands: `git status`, `npm test`, etc.
+- **Never push without explicit instruction from Venkat.** Commits stay local until he
+  says push. The post-commit auto-push hook has been removed for this reason.
 - Disclose bugs and self-corrections **explicitly and directly**. Do not bury them.
 - Never re-litigate settled decisions.
 - Engine fixes go **in the engine**, so every future lesson inherits them. Never patch around
