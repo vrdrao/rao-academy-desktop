@@ -20,6 +20,21 @@ executing a flawed request.
 
 ---
 
+## 🚨 NEVER REWRITE HISTORY
+
+Do NOT run: `git push --force`, `git push -f`, `git rebase`, `git reset --hard` on
+pushed commits, `git commit --amend` on pushed commits, or `git filter-branch`.
+Do NOT offer to "clean up" or "squash" history. History is append-only.
+If a fix seems to require any of these, STOP and ask Venkat first, explaining
+in plain language what would be lost.
+
+Enforcement (not just a promise): a **`pre-push` hook** in `.githooks/` blocks any
+non-fast-forward (history-rewriting) push, and `receive.denyNonFastForwards` is set
+`true` locally. Note — `git push` **cannot** be intercepted by a git alias (aliases
+only name *new* commands), so the hook, not an alias, is what actually guards this.
+
+---
+
 ## 🚨 THE ONE RULE
 
 ```

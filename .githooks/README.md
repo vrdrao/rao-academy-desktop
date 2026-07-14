@@ -19,3 +19,6 @@ git config core.hooksPath .githooks
   so a commit is also a backup. If the push fails (e.g. no internet) it prints
   a loud `NOT PUSHED — YOU ARE NOT BACKED UP` warning; the commit still stands
   locally, so just run `git push` again once you are online.
+- **pre-push** — **blocks force / history-rewriting pushes** (anything that is not
+  a fast-forward). History is append-only — see CLAUDE.md "NEVER REWRITE HISTORY".
+  A normal push adding new commits is a fast-forward and passes untouched.

@@ -1,0 +1,35 @@
+#!/bin/sh
+# Rao Academy pre-push hook.
+# History is append-only — see CLAUDE.md "NEVER REWRITE HISTORY".
+# Blocks any non-fast-forward (force) push that would overwrite remote history.
+# A normal push (adding new commits on top) is a fast-forward and passes untouched,
+# so this does NOT interfere with the post-commit auto-push.
+
+while read local_ref local_sha remote_ref remote_sha; do
+  # local all-zero  = branch deletion       -> nothing being overwritten with history
+  # remote all-zero = brand-new branch      -> nothing on the remote to overwrite
+  case "$local_sha"  in *[!0]*) : ;; *) continue ;; esac
+  case "$remote_sha" in *[!0]*) : ;; *) continue ;; esac
+
+  # If the remote commit is NOT an ancestor of what we're pushing, this push would
+  # discard/rewrite commits already on the remote. That is a force push. Block it.
+  if ! git merge-base --is-ancestor "$remote_sha" "$local_sha"; then
+    echo ""
+    echo "################################################################"
+    echo "#                                                              #"
+    echo "#   ⛔  FORCE / HISTORY-REWRITE PUSH BLOCKED                   #"
+    echo "#                                                              #"
+    echo "#   This push would overwrite commits already on GitHub.       #"
+    echo "#   History here is APPEND-ONLY (CLAUDE.md: NEVER REWRITE      #"
+    echo "#   HISTORY). Nothing was pushed.                              #"
+    echo "#                                                              #"
+    echo "#   Ref: $remote_ref"
+    echo "#                                                              #"
+    echo "#   If you genuinely need this, talk to Venkat first.          #"
+    echo "#                                                              #"
+    echo "################################################################"
+    exit 1
+  fi
+done
+
+exit 0
