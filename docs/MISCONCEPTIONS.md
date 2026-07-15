@@ -21,17 +21,17 @@ message         student-facing template. Describes the option, not the child.
 ### OFF_BY_ONE
 - **concept:** all arithmetic
 - **rule:** `|distractor − correct| == 1`
-- **message:** "This answer is off by 1 — check your last step."
+- **message:** "Just one away! A sneaky little 1 slipped in — or slipped out — at the very end."
 
 ### OFF_BY_TWO
 - **concept:** all arithmetic
 - **rule:** `|distractor − correct| == 2`
-- **message:** "This answer is off by 2 — recount carefully."
+- **message:** "Only two away! A small counting slip is hiding in here — count once more, slowly."
 
 ### CARRY_DROPPED
 - **concept:** multi-digit addition, subtraction
 - **rule:** `distractor == correct − 10^k` for some k ∈ {1,2,3,4} AND question is addition/subtraction
-- **message:** "A carry was missed — check where digits add past 9."
+- **message:** "Almost there! Somewhere a carry didn't make the jump to the next column."
 
 ### DROPPED_CARRY
 - **concept:** multi-digit addition
@@ -41,32 +41,33 @@ message         student-facing template. Describes the option, not the child.
 ### CARRY_EXTRA
 - **concept:** multi-digit addition, subtraction
 - **rule:** `distractor == correct + 10^k` for some k ∈ {1,2,3,4} AND question is addition/subtraction
-- **message:** "An extra carry crept in — recheck each column."
+- **message:** "An extra carry crept into a column where it wasn't invited — check each column again."
 
 ### WRONG_OP_ADD_FOR_SUB
 - **concept:** addition, subtraction
 - **rule:** `correct == a − b` AND `distractor == a + b` (or vice versa), where a, b are prompt operands
-- **message:** "This adds instead of subtracting (or vice versa)."
+- **message:** "This answer went the wrong direction — should the number be getting bigger or smaller here?"
 
 ### WRONG_OP_ADD_FOR_MULT
 - **concept:** multiplication, word problems
 - **rule:** `correct == a × b` AND `distractor == a + b`
-- **message:** "This adds the numbers instead of multiplying."
+- **message:** "This answer adds the numbers together — but 'times as much' is asking for something bigger!"
 
 ### WRONG_OP_SUB_FOR_MULT
 - **concept:** multiplication, word problems
 - **rule:** `correct == a × b` AND `distractor == a − b` (or `|a − b|`)
-- **message:** "This subtracts the numbers instead of multiplying."
+- **message:** "This answer took away instead of building up — should the total here be bigger or smaller than the numbers you started with?"
 
 ### WRONG_OP_MULT_FOR_ADD
 - **concept:** addition
 - **rule:** `correct == a + b` AND `distractor == a × b`
 - **message:** "This multiplies instead of adding."
+- **status:** DORMANT — documented rule, zero live assignments as of this commit.
 
 ### CONCATENATED_DIGITS
 - **concept:** arithmetic
 - **rule:** `distractor == parseInt(String(a) + String(b))` where a, b are operands
-- **message:** "The digits were placed side by side instead of being computed."
+- **message:** "These numbers got glued side by side instead of worked out — they need real maths, not sticking together."
 
 ### DIVIDED_NOT_MULTIPLIED
 - **concept:** multiplication, word problems
@@ -100,17 +101,17 @@ message         student-facing template. Describes the option, not the child.
 ### PLACE_SHIFT_UP
 - **concept:** place value, multiplication patterns
 - **rule:** `distractor == correct × 10^k` for some k ∈ {1,2,3}
-- **message:** "This is 10/100/1,000 times too large — check the place value."
+- **message:** "This answer grew too large — somewhere a place value climbed one step too high."
 
 ### PLACE_SHIFT_DOWN
 - **concept:** place value, multiplication patterns
 - **rule:** `distractor == correct / 10^k` for some k ∈ {1,2,3} AND result is integer
-- **message:** "This is 10/100/1,000 times too small — check the place value."
+- **message:** "This answer came out too small — somewhere a place value slipped down a step. Count those zeros!"
 
 ### WRONG_PLACE_IDENTIFIED
 - **concept:** place value
 - **rule:** prompt asks "value of digit D in number N"; `distractor == D × 10^j` where `j ≠ correct power`
-- **message:** "That is the value of this digit in a different place."
+- **message:** "Right digit, wrong home — this value belongs to a different place in the number."
 
 ---
 
@@ -119,32 +120,32 @@ message         student-facing template. Describes the option, not the child.
 ### ROUND_BOTH_DOWN
 - **concept:** estimation, rounding
 - **rule:** `correct == round(a, P) + round(b, P)` AND `distractor == floor(a, P) + floor(b, P)` AND distractor ≠ correct
-- **message:** "Both numbers were rounded down — check the rounding digit."
+- **message:** "Both numbers got rounded downhill — but one of them wanted to go up! Check each rounding digit."
 
 ### ROUND_BOTH_UP
 - **concept:** estimation, rounding
 - **rule:** `correct == round(a, P) + round(b, P)` AND `distractor == ceil(a, P) + ceil(b, P)` AND distractor ≠ correct
-- **message:** "Both numbers were rounded up — check the rounding digit."
+- **message:** "Both numbers got rounded uphill — but one of them wanted to come down! Check each rounding digit."
 
 ### ROUND_ONE_WRONG
 - **concept:** estimation, rounding
 - **rule:** `distractor == wrongRound(a, P) + round(b, P)` OR `round(a, P) + wrongRound(b, P)` where wrongRound is floor when should be ceil (or vice versa)
-- **message:** "One of the two numbers was rounded the wrong way."
+- **message:** "One of the two numbers rounded the wrong way — the other neighbour was closer for it."
 
 ### EXACT_NOT_ROUNDED
 - **concept:** estimation
 - **rule:** `distractor == a + b` (exact sum) where correct is the rounded sum, AND `distractor ≠ correct`
-- **message:** "This is the exact answer, not the estimate — round first, then compute."
+- **message:** "This is the exact answer showing off — but the question only wants an estimate! Round first."
 
 ### WRONG_ROUND_PLACE
 - **concept:** estimation
 - **rule:** `distractor == round(a, Q) + round(b, Q)` where `Q ≠ P` (rounded to wrong place value)
-- **message:** "The numbers were rounded to the wrong place value."
+- **message:** "The rounding happened at the wrong spot — check which place the question points to."
 
 ### ROUND_WRONG_DIRECTION_SINGLE
 - **concept:** rounding
 - **rule:** prompt asks to round number N to place P; `distractor == floor(N,P)` when `correct == ceil(N,P)` or vice versa
-- **message:** "This rounds the wrong way — check the digit to the right."
+- **message:** "This rounds the wrong way — the digit next door decides which neighbour wins."
 
 ### ROUND_WRONG_WAY
 - **concept:** rounding
@@ -158,27 +159,28 @@ message         student-facing template. Describes the option, not the child.
 ### AREA_FOR_PERIMETER
 - **concept:** area, perimeter
 - **rule:** prompt asks perimeter; `distractor == l × w` (area) where `correct == 2(l+w)`
-- **message:** "This is the area (length × width), not the perimeter."
+- **message:** "This measures the space *inside* — but the question is walking around the *edge*!"
 
 ### PERIMETER_FOR_AREA
 - **concept:** area, perimeter
 - **rule:** prompt asks area; `distractor == 2(l+w)` (perimeter) where `correct == l × w`
-- **message:** "This is the perimeter (2 × (l+w)), not the area."
+- **message:** "This walks around the edge — but the question wants the space inside!"
 
 ### FORGOT_DOUBLE_PERIMETER
 - **concept:** perimeter
 - **rule:** prompt asks perimeter; `distractor == l + w` (half perimeter) where `correct == 2(l+w)`
-- **message:** "This adds the two sides but forgets to double them."
+- **message:** "This walks only halfway around the shape — a rectangle has two of each side!"
 
 ### HALF_PERIMETER_FOR_AREA
 - **concept:** area
 - **rule:** prompt asks area; `distractor == l + w` where `correct == l × w`
-- **message:** "This adds the sides instead of multiplying them."
+- **message:** "This adds the sides — but area is about filling the inside, not walking the edge."
 
 ### SIDE_SQUARED_FOR_RECT
 - **concept:** area, perimeter of squares
 - **rule:** prompt about square with side s; distractor uses wrong formula (e.g., area=4s instead of s², or perimeter=s² instead of 4s)
 - **message:** "This uses the wrong formula for a square."
+- **status:** DORMANT — documented rule, zero live assignments as of this commit.
 
 ---
 
@@ -187,12 +189,12 @@ message         student-facing template. Describes the option, not the child.
 ### ADJACENT_TABLE_FACT
 - **concept:** multiplication facts, tables
 - **rule:** `distractor == (a±1) × b` OR `a × (b±1)` where `correct == a × b`
-- **message:** "This is one row off in the times table."
+- **message:** "So close — this answer lives one door down in the times table!"
 
 ### PARTIAL_PRODUCT_PLACE_ERROR
 - **concept:** multi-digit multiplication
 - **rule:** distractor differs from correct by a power of 10 in one partial product
-- **message:** "A partial product landed in the wrong column."
+- **message:** "One partial product wandered into the wrong column — every piece has its own place to sit."
 
 ---
 
@@ -201,17 +203,17 @@ message         student-facing template. Describes the option, not the child.
 ### DIVISOR_AS_ANSWER
 - **concept:** division
 - **rule:** `distractor == divisor` where correct is the quotient
-- **message:** "This is the divisor (the number you divide by), not the answer."
+- **message:** "Sneaky! This is the number you divide *by* — the question wants what comes out."
 
 ### REMAINDER_AS_ANSWER
 - **concept:** division
 - **rule:** `distractor == dividend mod divisor`
-- **message:** "This is the remainder, not the quotient."
+- **message:** "This is the little bit left over, not the answer — the question wants the big share."
 
 ### QUOTIENT_OFF_BY_ONE
 - **concept:** division word problems
 - **rule:** `distractor == correct ± 1` AND question involves division with remainder context (round up/down)
-- **message:** "This is off by one — check whether you need to round the quotient up or down."
+- **message:** "So close — one group too many, or one too few! Think about what happens to the leftover."
 
 ---
 
@@ -220,12 +222,13 @@ message         student-facing template. Describes the option, not the child.
 ### FRACTION_ADJACENT
 - **concept:** fractions
 - **rule:** distractor fraction differs from correct by ±1 in numerator or denominator (e.g., 1/3 vs 1/4, 2/3 vs 1/3)
-- **message:** "This fraction has the wrong number of parts shaded or the wrong total."
+- **message:** "So close — this fraction is just one step away from the picture. Count the parts once more."
 
 ### FRACTION_WHOLE_FOR_PART
 - **concept:** fractions
 - **rule:** `distractor == n/n` (whole) where correct is a proper fraction
 - **message:** "This fraction means all parts, not just the shaded ones."
+- **status:** DORMANT — documented rule, zero live assignments as of this commit.
 
 ---
 
@@ -234,22 +237,22 @@ message         student-facing template. Describes the option, not the child.
 ### AM_PM_SWAP
 - **concept:** time, AM/PM
 - **rule:** distractor is the opposite of AM/PM (answer is "A.M.", distractor is "P.M." or vice versa)
-- **message:** "A.M. is before noon, P.M. is after noon — check the clue in the question."
+- **message:** "Morning and evening traded places in this one — the clue in the story says which it really is."
 
 ### WRONG_24H_NO_ADD_12
 - **concept:** 12h/24h time conversion
 - **rule:** answer is PM time + 12; distractor omits adding 12 (e.g., 9:00 PM → distractor "09:00" instead of "21:00")
-- **message:** "For P.M. times after noon, add 12 to the hour."
+- **message:** "Careful — the clock's morning and afternoon got mixed up in this one. What does the hour number tell you?"
 
 ### WRONG_24H_WRONG_OFFSET
 - **concept:** 12h/24h time conversion
 - **rule:** distractor adds wrong offset (e.g., +2, +10 instead of +12)
-- **message:** "The conversion between 12-hour and 24-hour time is off."
+- **message:** "These two clocks aren't telling the same time — the 24-hour clock is being tricky here."
 
 ### ELAPSED_MINUTES_ERROR
 - **concept:** elapsed time
 - **rule:** distractor has correct hours but wrong minutes (or vice versa)
-- **message:** "The hours or minutes in the elapsed time are not quite right."
+- **message:** "The clock hands slipped a little here — the hours or the minutes aren't quite right."
 
 ### TIME_UNIT_CONFUSION
 - **concept:** time, duration
@@ -263,12 +266,12 @@ message         student-facing template. Describes the option, not the child.
 ### COMPARISON_REVERSED
 - **concept:** comparing numbers, money
 - **rule:** answer is "is less than" and distractor is "is greater than" (or vice versa)
-- **message:** "The comparison is the wrong way around."
+- **message:** "This comparison is standing on its head — check which side is really bigger."
 
 ### COMPARISON_EQUAL_WRONG
 - **concept:** comparing numbers
 - **rule:** answer is a comparison and distractor is "is equal to" (but numbers differ)
-- **message:** "These values are not equal."
+- **message:** "These two look like twins, but they're not — check every digit, right to the end."
 
 ---
 
@@ -277,12 +280,12 @@ message         student-facing template. Describes the option, not the child.
 ### ODD_EVEN_CONFUSED
 - **concept:** even/odd numbers
 - **rule:** answer is even, distractor is odd (or vice versa) — check digit parity
-- **message:** "Even numbers end in 0, 2, 4, 6, or 8. Odd numbers end in 1, 3, 5, 7, or 9."
+- **message:** "This number is pretending to be on the wrong team — its last digit gives it away!"
 
 ### PROPERTY_CONFUSED
 - **concept:** properties of addition/multiplication
 - **rule:** answer and distractor are both property names from {Commutative, Associative, Identity, Distributive}
-- **message:** "That is a different property — re-read what the equation shows."
+- **message:** "That's a different property wearing this one's coat — look at what actually moved in the equation."
 
 ---
 
@@ -291,7 +294,7 @@ message         student-facing template. Describes the option, not the child.
 ### SHAPE_CONFUSED
 - **concept:** 3D shapes, geometry
 - **rule:** answer and distractor are both shape names (cube, sphere, cone, cylinder, prism, pyramid)
-- **message:** "Look again at the faces, edges, and vertices to identify the shape."
+- **message:** "This name belongs to a look-alike shape — the faces and edges will tell them apart."
 
 ---
 
@@ -300,7 +303,7 @@ message         student-facing template. Describes the option, not the child.
 ### PROBABILITY_WRONG_LEVEL
 - **concept:** probability
 - **rule:** answer and distractor are both from {certain, probable, unlikely, impossible}
-- **message:** "Count how many match — that tells you how likely it is."
+- **message:** "This guess is too sure — or not sure enough! Count how many ways it can happen first."
 
 ---
 
@@ -309,7 +312,7 @@ message         student-facing template. Describes the option, not the child.
 ### PATTERN_WRONG_RULE
 - **concept:** number patterns, geometric sequences
 - **rule:** distractor applies a different (plausible) rule to the sequence
-- **message:** "Check the pattern rule — look at how each number changes."
+- **message:** "This rule fits the first jump but not all of them — a pattern's rule has to work every single step."
 
 ### PATTERN_WRONG_STEP
 - **concept:** number patterns, skip-counting, even/odd
@@ -323,12 +326,13 @@ message         student-facing template. Describes the option, not the child.
 ### DECIMAL_PLACE_ERROR
 - **concept:** money arithmetic
 - **rule:** distractor differs from correct by a factor of 10 or 100 (paise/rupee confusion)
-- **message:** "Check the decimal point — rupees and paise must line up."
+- **message:** "The decimal point wandered off — rupees and paise need to line up just right."
 
 ### MONEY_WRONG_OPERATION
 - **concept:** money word problems
 - **rule:** `correct == a + b` AND `distractor == a − b` (or vice versa) with money values
 - **message:** "Check whether the problem asks to add or subtract."
+- **status:** DORMANT — documented rule, zero live assignments as of this commit.
 
 ---
 
@@ -337,12 +341,13 @@ message         student-facing template. Describes the option, not the child.
 ### PARTIAL_COMPUTATION
 - **concept:** multi-step problems
 - **rule:** distractor equals an intermediate result (e.g., only the first step)
-- **message:** "This is only part of the answer — the problem needs another step."
+- **message:** "This answer stopped halfway — the problem still has one more move left in it."
 
 ### ALL_NUMBERS_COMBINED
 - **concept:** word problems with extra information
 - **rule:** distractor uses all numbers in the problem, including irrelevant ones
 - **message:** "Not all numbers in the problem are needed — re-read what is being asked."
+- **status:** DORMANT — documented rule, zero live assignments as of this commit.
 
 ---
 
@@ -360,17 +365,17 @@ message         student-facing template. Describes the option, not the child.
 ### DOUBLE_OR_HALF
 - **concept:** all arithmetic
 - **rule:** `distractor == correct × 2` OR `distractor == correct / 2`
-- **message:** "This is double (or half) of the correct answer."
+- **message:** "Whoa, this one grew — or shrank! Somewhere a number got doubled or halved along the way."
 
 ### OPERAND_ECHO
 - **concept:** all arithmetic
 - **rule:** `distractor ∈ {prompt operands}` (child selected one of the given numbers instead of computing)
-- **message:** "This is one of the numbers from the question, not the answer."
+- **message:** "Careful — this number came straight from the question, dressed up as an answer!"
 
 ### SUM_EVAL_ERROR
 - **concept:** multi-select "select all sums equal to X"
 - **rule:** distractor expression `a + b` evaluates to a value ≠ target
-- **message:** "This sum does not equal the target — compute it to check."
+- **message:** "This one doesn't add up to what the question asked — test it and see."
 
 ---
 
@@ -380,56 +385,57 @@ message         student-facing template. Describes the option, not the child.
 - **concept:** multi-digit subtraction
 - **rule:** `distractor == correct + 10^k` where question is subtraction (forgot to decrease next column)
 - **message:** "A borrow was missed — recheck the subtraction."
+- **status:** DORMANT — documented rule, zero live assignments as of this commit.
 
 ### DATA_READING_ERROR
 - **concept:** bar graphs, tables, line plots
 - **rule:** question reads from a chart/table; distractor is a value from a different row/column/bar
-- **message:** "Re-read the chart — check you are looking at the right bar or row."
+- **message:** "The chart is playing hide-and-seek — this answer came from a different row or bar than the question asked about."
 
 ### DIGIT_CONFUSION
 - **concept:** number names, place value
 - **rule:** distractor has same digits as correct but in wrong positions (e.g., 861 vs 681)
-- **message:** "The digits are right but in the wrong places."
+- **message:** "The digits got jumbled on the way in — match each word to its place, one at a time."
 
 ### DIVISIBILITY_CONFUSED
 - **concept:** divisibility rules
 - **rule:** answer is divisible by N; distractor is not (or vice versa)
-- **message:** "Test the divisibility rule for this number."
+- **message:** "This number doesn't pass the test — try actually sharing it out and see what's left over."
 
 ### ESTIMATE_WRONG_VALUE
 - **concept:** estimation (catch-all for estimation questions not matching specific rounding patterns)
 - **rule:** question is an estimation question; distractor is a plausible wrong estimate
-- **message:** "Round each number first, then compute."
+- **message:** "This estimate wandered too far from home — friendly, rounded numbers keep it close."
 
 ### FORMULA_ERROR
 - **concept:** geometry (perimeter missing side, area from dimensions)
 - **rule:** distractor uses wrong formula manipulation on geometric dimensions
-- **message:** "Check which formula applies to this shape."
+- **message:** "This answer borrowed the wrong recipe — a different shape's rule sneaked in here."
 
 ### MULTI_STEP_ERROR
 - **concept:** multi-step word problems
 - **rule:** distractor results from applying wrong operation sequence on 3+ operands
-- **message:** "Re-read the problem — check each step in order."
+- **message:** "One step in the journey went sideways — walk the problem again, one step at a time."
 
 ### NEAR_MISS
 - **concept:** all numeric
 - **rule:** `3 ≤ |d − c| ≤ 10` or within 15% of correct, no specific rule matched
-- **message:** "This is close but not quite — recheck the last step."
+- **message:** "So close! This answer trips right at the finish line — the last step wants one more look."
 
 ### ORDINAL_SUFFIX_ERROR
 - **concept:** ordinal numbers
 - **rule:** distractor has correct number but wrong suffix (e.g., "21th" instead of "21st")
-- **message:** "Check the ending — is it -st, -nd, -rd, or -th?"
+- **message:** "The ending doesn't match — say the number out loud and listen for how it finishes."
 
 ### SHAPE_PROPERTY_CONFUSED
 - **concept:** 3D shapes (faces, edges, vertices)
 - **rule:** distractor is a count belonging to a different shape or different property
-- **message:** "This count belongs to a different shape or a different property."
+- **message:** "This count belongs to a different shape — or a different part of this one. Count on the figure itself."
 
 ### TABLE_LOOKUP_ERROR
 - **concept:** price lists, unit prices
 - **rule:** question requires looking up a value from a table; distractor uses wrong table entry
-- **message:** "Check you are reading the right row and column from the table."
+- **message:** "This came from the wrong spot in the table — trace the row and column with your finger."
 
 ### VISUAL_DEPENDENT
 - **concept:** questions with operands in images (not prompt text)
@@ -439,32 +445,32 @@ message         student-facing template. Describes the option, not the child.
 ### WRONG_NUMBER_PAIR
 - **concept:** sum/difference/product/quotient pair selection
 - **rule:** distractor pair does not satisfy the stated condition (wrong sum, difference, etc.)
-- **message:** "Test this pair — it does not satisfy both conditions."
+- **message:** "This pair passes one test but fails the other — both clues have to be happy at the same time."
 
 ### WRONG_OP_IN_EXPRESSION
 - **concept:** number sentences, expressions
 - **rule:** distractor expression uses wrong operation (e.g., "35 − 5 = 30" instead of "35 ÷ 5 = 7")
-- **message:** "This uses the wrong operation."
+- **message:** "This rule doesn't always keep its promise — test it with real numbers and catch it slipping."
 
 ### WRONG_OP_SUB_FOR_DIV
 - **concept:** multiplicative comparison
 - **rule:** `correct == a/b`, `distractor == a − b` (subtracted instead of dividing)
-- **message:** "This subtracts instead of dividing."
+- **message:** "This answer subtracts — but the question is about making equal groups."
 
 ### WRONG_UNIT_CHOSEN
 - **concept:** metric measurement
 - **rule:** distractor has correct number but wrong unit (km vs mm, m vs cm, etc.)
-- **message:** "The number is right but the unit is wrong — think about the size."
+- **message:** "The number looks fine, but the unit doesn't fit — think about how big each unit really is."
 
 ### PLACE_SHIFT_IN_EXPRESSION
 - **concept:** expressions with place-value shifts
 - **rule:** distractor expression has operands shifted by powers of 10 (e.g., "6 × 80" vs "6 × 800")
-- **message:** "Check the place value of each number in the expression."
+- **message:** "One number here is wearing the wrong size — check what each part of this really means."
 
 ### DIGIT_SWAP
 - **concept:** division, multiplication
 - **rule:** distractor has same digits as correct but in different order
-- **message:** "The digits are right but swapped — check each column."
+- **message:** "Two digits traded seats on the way to the answer — check each place carefully."
 
 ---
 

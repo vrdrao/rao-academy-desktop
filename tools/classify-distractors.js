@@ -22,6 +22,81 @@ const REPORT_PATH = path.join(__dirname, 'unexplained-distractors.json');
 
 const data = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
 
+// ─── student-facing message lookup ────────────────────────────
+// One entry per live code with a student-facing message (59 template +
+// 9 approved). Must stay in lockstep with docs/MISCONCEPTIONS.md —
+// the message-count verification compares the two.
+const MESSAGES = {
+  ADJACENT_TABLE_FACT: "So close — this answer lives one door down in the times table!",
+  AM_PM_SWAP: "Morning and evening traded places in this one — the clue in the story says which it really is.",
+  AREA_FOR_PERIMETER: "This measures the space *inside* — but the question is walking around the *edge*!",
+  CARRY_DROPPED: "Almost there! Somewhere a carry didn't make the jump to the next column.",
+  CARRY_EXTRA: "An extra carry crept into a column where it wasn't invited — check each column again.",
+  COMPARISON_EQUAL_WRONG: "These two look like twins, but they're not — check every digit, right to the end.",
+  COMPARISON_REVERSED: "This comparison is standing on its head — check which side is really bigger.",
+  CONCATENATED_DIGITS: "These numbers got glued side by side instead of worked out — they need real maths, not sticking together.",
+  DATA_READING_ERROR: "The chart is playing hide-and-seek — this answer came from a different row or bar than the question asked about.",
+  DECIMAL_PLACE_ERROR: "The decimal point wandered off — rupees and paise need to line up just right.",
+  DIGIT_CONFUSION: "The digits got jumbled on the way in — match each word to its place, one at a time.",
+  DIGIT_INSERT_OR_SHIFT: "This has a digit in the wrong place, changing the number's size.",
+  DIGIT_REARRANGE: "These are the right digits, but not in the right order for this value.",
+  DIGIT_SWAP: "Two digits traded seats on the way to the answer — check each place carefully.",
+  DIVIDED_NOT_MULTIPLIED: "This divides the numbers when the problem asks you to multiply.",
+  DIVISIBILITY_CONFUSED: "This number doesn't pass the test — try actually sharing it out and see what's left over.",
+  DIVISOR_AS_ANSWER: "Sneaky! This is the number you divide *by* — the question wants what comes out.",
+  DOUBLE_OR_HALF: "Whoa, this one grew — or shrank! Somewhere a number got doubled or halved along the way.",
+  DROPPED_CARRY: "This adds the columns but misses carrying into the next place.",
+  DROP_INTERIOR_ZERO: "This skips a zero that belongs in the middle of the number.",
+  DROP_LEADING_DIGIT: "This leaves off the digit at the front of the number.",
+  ELAPSED_MINUTES_ERROR: "The clock hands slipped a little here — the hours or the minutes aren't quite right.",
+  ESTIMATE_WRONG_VALUE: "This estimate wandered too far from home — friendly, rounded numbers keep it close.",
+  EXACT_NOT_ROUNDED: "This is the exact answer showing off — but the question only wants an estimate! Round first.",
+  FORGOT_DOUBLE_PERIMETER: "This walks only halfway around the shape — a rectangle has two of each side!",
+  FORMULA_ERROR: "This answer borrowed the wrong recipe — a different shape's rule sneaked in here.",
+  FRACTION_ADJACENT: "So close — this fraction is just one step away from the picture. Count the parts once more.",
+  HALF_PERIMETER_FOR_AREA: "This adds the sides — but area is about filling the inside, not walking the edge.",
+  MULTI_STEP_ERROR: "One step in the journey went sideways — walk the problem again, one step at a time.",
+  NEAR_MISS: "So close! This answer trips right at the finish line — the last step wants one more look.",
+  ODD_EVEN_CONFUSED: "This number is pretending to be on the wrong team — its last digit gives it away!",
+  OFF_BY_ONE: "Just one away! A sneaky little 1 slipped in — or slipped out — at the very end.",
+  OFF_BY_TWO: "Only two away! A small counting slip is hiding in here — count once more, slowly.",
+  OPERAND_ECHO: "Careful — this number came straight from the question, dressed up as an answer!",
+  ORDINAL_SUFFIX_ERROR: "The ending doesn't match — say the number out loud and listen for how it finishes.",
+  PARTIAL_COMPUTATION: "This answer stopped halfway — the problem still has one more move left in it.",
+  PARTIAL_PRODUCT_PLACE_ERROR: "One partial product wandered into the wrong column — every piece has its own place to sit.",
+  PATTERN_WRONG_RULE: "This rule fits the first jump but not all of them — a pattern's rule has to work every single step.",
+  PATTERN_WRONG_STEP: "This follows a different step than the pattern's rule.",
+  PERIMETER_FOR_AREA: "This walks around the edge — but the question wants the space inside!",
+  PLACE_SHIFT_DOWN: "This answer came out too small — somewhere a place value slipped down a step. Count those zeros!",
+  PLACE_SHIFT_IN_EXPRESSION: "One number here is wearing the wrong size — check what each part of this really means.",
+  PLACE_SHIFT_UP: "This answer grew too large — somewhere a place value climbed one step too high.",
+  PROBABILITY_WRONG_LEVEL: "This guess is too sure — or not sure enough! Count how many ways it can happen first.",
+  PROPERTY_CONFUSED: "That's a different property wearing this one's coat — look at what actually moved in the equation.",
+  QUOTIENT_OFF_BY_ONE: "So close — one group too many, or one too few! Think about what happens to the leftover.",
+  REMAINDER_AS_ANSWER: "This is the little bit left over, not the answer — the question wants the big share.",
+  ROUND_BOTH_DOWN: "Both numbers got rounded downhill — but one of them wanted to go up! Check each rounding digit.",
+  ROUND_BOTH_UP: "Both numbers got rounded uphill — but one of them wanted to come down! Check each rounding digit.",
+  ROUND_ONE_WRONG: "One of the two numbers rounded the wrong way — the other neighbour was closer for it.",
+  ROUND_WRONG_DIRECTION_SINGLE: "This rounds the wrong way — the digit next door decides which neighbour wins.",
+  ROUND_WRONG_WAY: "This rounds to the wrong side — check which multiple is nearer.",
+  SHAPE_CONFUSED: "This name belongs to a look-alike shape — the faces and edges will tell them apart.",
+  SHAPE_PROPERTY_CONFUSED: "This count belongs to a different shape — or a different part of this one. Count on the figure itself.",
+  SUM_EVAL_ERROR: "This one doesn't add up to what the question asked — test it and see.",
+  TABLE_LOOKUP_ERROR: "This came from the wrong spot in the table — trace the row and column with your finger.",
+  TIME_UNIT_CONFUSION: "This uses the wrong amount of time for one of the units.",
+  WRONG_24H_NO_ADD_12: "Careful — the clock's morning and afternoon got mixed up in this one. What does the hour number tell you?",
+  WRONG_24H_WRONG_OFFSET: "These two clocks aren't telling the same time — the 24-hour clock is being tricky here.",
+  WRONG_NUMBER_PAIR: "This pair passes one test but fails the other — both clues have to be happy at the same time.",
+  WRONG_OP_ADD_FOR_MULT: "This answer adds the numbers together — but 'times as much' is asking for something bigger!",
+  WRONG_OP_ADD_FOR_SUB: "This answer went the wrong direction — should the number be getting bigger or smaller here?",
+  WRONG_OP_IN_EXPRESSION: "This rule doesn't always keep its promise — test it with real numbers and catch it slipping.",
+  WRONG_OP_SUB_FOR_DIV: "This answer subtracts — but the question is about making equal groups.",
+  WRONG_OP_SUB_FOR_MULT: "This answer took away instead of building up — should the total here be bigger or smaller than the numbers you started with?",
+  WRONG_PLACE_IDENTIFIED: "Right digit, wrong home — this value belongs to a different place in the number.",
+  WRONG_ROUND_PLACE: "The rounding happened at the wrong spot — check which place the question points to.",
+  WRONG_UNIT_CHOSEN: "The number looks fine, but the unit doesn't fit — think about how big each unit really is.",
+};
+
 // ─── helpers ───────────────────────────────────────────────────────────
 
 function stripUnits(s) {
@@ -245,6 +320,29 @@ function classify(q, d) {
     }
   }
 
+  // ── FRACTION_ADJACENT — MUST run before expression evaluation ──
+  // parseExpr treats "/" as division, so a fraction string like "4/6"
+  // parses as an expression and would be swallowed by the SUM_EVAL_ERROR
+  // check below. Doc rule (docs/MISCONCEPTIONS.md §7): distractor fraction
+  // differs from a correct fraction by ±1 in the numerator (same
+  // denominator) or ±1 in the denominator (same numerator).
+  // Non-adjacent fraction pairs deliberately fall through to the
+  // expression check (FRACTION_WHOLE_FOR_PART stays dormant).
+  {
+    const dF = parseFrac(d.value);
+    if (dF) {
+      for (const rawAns of q.answer) {
+        const aF = parseFrac(rawAns);
+        if (!aF) continue;
+        if (aF.num === dF.num && aF.den === dF.den) continue;
+        if ((aF.den === dF.den && Math.abs(aF.num - dF.num) === 1) ||
+            (aF.num === dF.num && Math.abs(aF.den - dF.den) === 1)) {
+          return ['FRACTION_ADJACENT'];
+        }
+      }
+    }
+  }
+
   // Expression-based distractors ("35 ÷ 5 = 7" vs "35 − 5 = 30")
   const dExpr = parseExpr(dStr);
   const aExpr = parseExpr(ansStr);
@@ -266,15 +364,9 @@ function classify(q, d) {
     return ['WRONG_NUMBER_PAIR'];
   }
 
-  // Fractions
-  const ansFrac = parseFrac(q.answer[0]), dFrac = parseFrac(d.value);
-  if (ansFrac && dFrac) {
-    if (dFrac.num === dFrac.den) return ['FRACTION_WHOLE_FOR_PART'];
-    if (Math.abs(ansFrac.num - dFrac.num) <= 1 || Math.abs(ansFrac.den - dFrac.den) <= 1) {
-      return ['FRACTION_ADJACENT'];
-    }
-    return ['FRACTION_ADJACENT']; // still a fraction confusion
-  }
+  // (Fraction-vs-fraction handling lives ABOVE the expression check —
+  //  a block here was unreachable: parseExpr accepts every string
+  //  parseFrac accepts, so all fraction pairs returned before reaching it.)
 
   // Multi-select expression options ("30 + 60" where sum should be 90)
   const exprM = dStr.match(/^([\d,]+)\s*\+\s*([\d,]+)$/);
@@ -874,67 +966,74 @@ function classify(q, d) {
 
 // ─── main ──────────────────────────────────────────────────────────────
 
-const results = [];
-const freq = {};
-let exactOne = 0, ambiguous = 0, unexplained = 0;
-const unexplainedList = [];
-let totalDistractors = 0;
+function main() {
 
-data.forEach(q => {
-  q.distractors.forEach(d => {
-    totalDistractors++;
-    const codes = classify(q, d);
-    const entry = {
-      file: q.file,
-      qIndex: q.qIndex,
-      prompt: q.prompt.slice(0, 120),
-      type: q.type,
-      answer: q.answer,
-      distractor: d.value,
-      codes
-    };
-    results.push(entry);
+  const results = [];
+  const freq = {};
+  let exactOne = 0, ambiguous = 0, unexplained = 0;
+  const unexplainedList = [];
+  let totalDistractors = 0;
 
-    if (codes.length === 1) exactOne++;
-    else if (codes.length > 1) ambiguous++;
-    else {
-      unexplained++;
-      unexplainedList.push(entry);
-    }
+  data.forEach(q => {
+    q.distractors.forEach(d => {
+      totalDistractors++;
+      const codes = classify(q, d);
+      const entry = {
+        file: q.file,
+        qIndex: q.qIndex,
+        prompt: q.prompt.slice(0, 120),
+        type: q.type,
+        answer: q.answer,
+        distractor: d.value,
+        codes
+      };
+      results.push(entry);
 
-    codes.forEach(c => { freq[c] = (freq[c] || 0) + 1; });
+      if (codes.length === 1) exactOne++;
+      else if (codes.length > 1) ambiguous++;
+      else {
+        unexplained++;
+        unexplainedList.push(entry);
+      }
+
+      codes.forEach(c => { freq[c] = (freq[c] || 0) + 1; });
+    });
   });
-});
 
-// ─── output ────────────────────────────────────────────────────────────
+  // ─── output ────────────────────────────────────────────────────────────
 
-fs.writeFileSync(OUT_PATH, JSON.stringify(results, null, 2), 'utf8');
-fs.writeFileSync(REPORT_PATH, JSON.stringify(unexplainedList, null, 2), 'utf8');
+  fs.writeFileSync(OUT_PATH, JSON.stringify(results, null, 2), 'utf8');
+  fs.writeFileSync(REPORT_PATH, JSON.stringify(unexplainedList, null, 2), 'utf8');
 
-console.log('=== DISTRACTOR CLASSIFICATION REPORT ===\n');
-console.log(`Total distractors:     ${totalDistractors}`);
-console.log(`Exactly one code:      ${exactOne}  (${(100*exactOne/totalDistractors).toFixed(1)}%)`);
-console.log(`Ambiguous (>1 code):   ${ambiguous}  (${(100*ambiguous/totalDistractors).toFixed(1)}%)`);
-console.log(`Unexplained (0 codes): ${unexplained}  (${(100*unexplained/totalDistractors).toFixed(1)}%)`);
-console.log();
+  console.log('=== DISTRACTOR CLASSIFICATION REPORT ===\n');
+  console.log(`Total distractors:     ${totalDistractors}`);
+  console.log(`Exactly one code:      ${exactOne}  (${(100*exactOne/totalDistractors).toFixed(1)}%)`);
+  console.log(`Ambiguous (>1 code):   ${ambiguous}  (${(100*ambiguous/totalDistractors).toFixed(1)}%)`);
+  console.log(`Unexplained (0 codes): ${unexplained}  (${(100*unexplained/totalDistractors).toFixed(1)}%)`);
+  console.log();
 
-console.log('=== FREQUENCY TABLE ===\n');
-const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]);
-sorted.forEach(([code, count]) => {
-  const pct = (100 * count / totalDistractors).toFixed(1);
-  console.log(`  ${String(count).padStart(5)}  ${pct.padStart(5)}%  ${code}`);
-});
+  console.log('=== FREQUENCY TABLE ===\n');
+  const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]);
+  sorted.forEach(([code, count]) => {
+    const pct = (100 * count / totalDistractors).toFixed(1);
+    console.log(`  ${String(count).padStart(5)}  ${pct.padStart(5)}%  ${code}`);
+  });
 
-console.log(`\nFull classification: ${OUT_PATH}`);
-console.log(`Unexplained list:    ${REPORT_PATH}`);
-console.log(`Unexplained count:   ${unexplainedList.length}`);
+  console.log(`\nFull classification: ${OUT_PATH}`);
+  console.log(`Unexplained list:    ${REPORT_PATH}`);
+  console.log(`Unexplained count:   ${unexplainedList.length}`);
 
-// ─── per-file unexplained breakdown ────────────────────────────────────
-console.log('\n=== UNEXPLAINED BY FILE (top 20) ===\n');
-const byFile = {};
-unexplainedList.forEach(e => {
-  const f = e.file.replace('incoming/', '');
-  byFile[f] = (byFile[f] || 0) + 1;
-});
-Object.entries(byFile).sort((a, b) => b[1] - a[1]).slice(0, 20)
-  .forEach(([f, c]) => console.log(`  ${String(c).padStart(4)}  ${f}`));
+  // ─── per-file unexplained breakdown ────────────────────────────────────
+  console.log('\n=== UNEXPLAINED BY FILE (top 20) ===\n');
+  const byFile = {};
+  unexplainedList.forEach(e => {
+    const f = e.file.replace('incoming/', '');
+    byFile[f] = (byFile[f] || 0) + 1;
+  });
+  Object.entries(byFile).sort((a, b) => b[1] - a[1]).slice(0, 20)
+    .forEach(([f, c]) => console.log(`  ${String(c).padStart(4)}  ${f}`));
+}
+
+if (require.main === module) main();
+
+module.exports = { MESSAGES, classify };
