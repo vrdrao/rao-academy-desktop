@@ -1,303 +1,1136 @@
 <div id="source">
 <!--@q
 type: fill-blanks
-answer: ["16000"]
-description: Estimate 9,827 + 5,519 (nearest thousand)
-hint: Round each number to the nearest thousand, then add.
+layout: round-scaffold
+top: [23, 81]
+op: +
+place: ten
+answer: ["20", "80", "100"]
+description: Estimate 23 + 81 (nearest ten, scaffold)
+hint:
+  - "Which place are you rounding to? Find that digit in each number."
+  - "The digit just to the right decides — 5 or more goes up, less than 5 stays down."
+  - "Round both numbers first, then add the two friendly numbers."
+explain: 23 rounds to 20 and 81 rounds to 80; 20 + 80 = 100.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "23 → 20"
+    reason: The ones digit is 3 — less than 5, so 23 stays down at 20.
+  - type: step
+    goal: Round the second number.
+    working: "81 → 80"
+    reason: The ones digit is 1 — less than 5, so 81 stays down at 80.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "20 + 80 = 100"
+  - type: takeaway
+    text: Round first, then add — friendly numbers make quick sums.
+  - type: verification
+    text: The exact sum, 104, sits right beside 100, so the estimate makes sense.
 -->
 <div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest thousand and then adding. 9,827 + 5,519. The sum is approximately []</p>
-  <p class="explain">9,827 rounds to 10,000 and 5,519 rounds to 6,000; 10,000 + 6,000 = 16,000.</p>
+  <p class="prompt">About how much is 23 + 81? Round each number to the nearest ten, then add.</p>
 </div>
 
 <!--@q
 type: fill-blanks
+layout: round-scaffold
+top: [66, 39]
+op: +
+place: ten
+answer: ["70", "40", "110"]
+description: Estimate 66 + 39 (nearest ten, scaffold)
+hint:
+  - "You are rounding to the tens place this time."
+  - "Look at the ones digit of each number — it decides up or down."
+  - "Make both numbers friendly first, then add them."
+explain: 66 rounds to 70 and 39 rounds to 40; 70 + 40 = 110.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "66 → 70"
+    reason: The ones digit is 6 — that is 5 or more, so 66 climbs up to 70.
+  - type: step
+    goal: Round the second number.
+    working: "39 → 40"
+    reason: The ones digit is 9, so 39 climbs up to 40.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "70 + 40 = 110"
+  - type: takeaway
+    text: Both numbers get rounded before anything is added — never round just one.
+  - type: verification
+    text: The exact sum, 105, lands close to 110 — the estimate is good.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Estimate 66 + 39. Round each number to the nearest ten, then add.</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["Pick the place to round to", "Round both numbers", "Add the rounded numbers", "Say about how much it is"]
+palette: ["Add the rounded numbers", "Pick the place to round to", "Say about how much it is", "Round both numbers"]
+description: Build the estimation plan in order
+hint:
+  - "Adding comes late in the plan — what must happen first?"
+  - "Before any rounding can happen, Priya needs to choose something."
+explain: "The plan is always: pick the place, round both numbers, add them, then say about how much."
+solution:
+  - type: step
+    goal: Start with a decision.
+    working: "Pick the place to round to"
+    reason: Tens? Hundreds? Nothing can be rounded until the place is chosen.
+  - type: step
+    goal: Make the numbers friendly.
+    working: "Round both numbers"
+    reason: Both of them — an estimate with one exact number is only half done.
+  - type: step
+    goal: Now the maths is easy.
+    working: "Add the rounded numbers"
+  - type: step
+    goal: Finish like an estimator.
+    working: "Say about how much it is"
+    reason: An estimate is an "about" answer, never an exact one.
+  - type: takeaway
+    text: Estimation is always the same dance — place, round, add, about.
+  - type: verification
+    text: Try the plan on 57 + 34 — it becomes 60 + 30, an add you can do in a blink.
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Priya wants to estimate 57 + 34 without working out the exact answer. Build her plan in order.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [48, 91]
+op: +
+place: ten
+answer: ["50", "90", "140"]
+description: Estimate 48 + 91 (nearest ten, scaffold)
+hint:
+  - "Round to the nearest ten — one number goes up, one stays down."
+  - "Check each ones digit against 5."
+  - "Add the two rounded numbers to finish."
+explain: 48 rounds to 50 and 91 rounds to 90; 50 + 90 = 140.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "48 → 50"
+    reason: The ones digit is 8, so 48 rounds up to 50.
+  - type: step
+    goal: Round the second number.
+    working: "91 → 90"
+    reason: The ones digit is only 1, so 91 stays down at 90.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "50 + 90 = 140"
+  - type: takeaway
+    text: Each number makes its own rounding choice — check them one at a time.
+  - type: verification
+    text: The exact sum, 139, is just one away from 140.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Kabir needs a quick estimate of 48 + 91. Round each number to the nearest ten, then add.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["19 + 24", "42 + 66", "58 + 77"]
+low: smallest estimate
+high: largest estimate
+description: Order three sums by their estimates (nearest ten)
+hint:
+  - "No exact adding allowed! Round each number to the nearest ten in your head."
+  - "Compare the rounded sums — they are much easier to line up."
+explain: "Rounded to the nearest ten: 19 + 24 is about 40, 42 + 66 is about 110, and 58 + 77 is about 140."
+solution:
+  - type: step
+    goal: Estimate the first pair.
+    working: "19 + 24 → 20 + 20 = 40"
+  - type: step
+    goal: Estimate the second pair.
+    working: "42 + 66 → 40 + 70 = 110"
+  - type: step
+    goal: Estimate the third pair.
+    working: "58 + 77 → 60 + 80 = 140"
+  - type: takeaway
+    text: Estimates are made for comparing — you can order sums without ever adding exactly.
+  - type: verification
+    text: The exact sums are 43, 108 and 135 — the same order the estimates gave.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Drag these into order, from the smallest estimated sum to the largest. Round to the nearest ten in your head.</p>
+  <ol class="order"><li>42 + 66</li><li>19 + 24</li><li>58 + 77</li></ol>
+</div>
+
+<!--@q
+type: fill-blanks
+helper: "7 + 6 = 13"
 answer: ["1300"]
-description: Estimate 689 + 607 (nearest hundred)
-hint: Round each number to the nearest hundred, then add.
+description: Known fact scaffold — 700 + 600
+hint:
+  - "Use the fact chip — hundreds add just like ones."
+  - "7 hundreds plus 6 hundreds makes how many hundreds?"
+explain: 7 + 6 = 13, so 700 + 600 = 1,300 — thirteen hundreds.
+solution:
+  - type: step
+    goal: Use the small fact.
+    working: "7 + 6 = 13 → 700 + 600 = 1,300"
+    reason: Adding hundreds uses exactly the same fact as adding ones.
+  - type: takeaway
+    text: After rounding, big sums turn into small facts wearing zeros.
+  - type: verification
+    text: 1,300 is 13 hundreds — the zeros never change the fact underneath.
 -->
 <div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest hundred and then adding. 689 + 607. The sum is approximately []</p>
-  <p class="explain">689 rounds to 700 and 607 rounds to 600; 700 + 600 = 1,300.</p>
+  <p class="prompt">700 + 600 = []</p>
 </div>
 
 <!--@q
 type: fill-blanks
-answer: ["100"]
-description: Estimate 23 + 81 (nearest ten)
-hint: Round each number to the nearest ten, then add.
+layout: round-scaffold
+top: [689, 607]
+op: +
+place: hundred
+answer: ["700", "600", "1300"]
+description: Estimate 689 + 607 (nearest hundred, scaffold)
+hint:
+  - "Now you are rounding to the hundreds place."
+  - "The tens digit is the decider — 5 or more sends the number up."
+  - "Round both numbers, then add the rounded pair."
+explain: 689 rounds to 700 and 607 rounds to 600; 700 + 600 = 1,300.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "689 → 700"
+    reason: The tens digit is 8, so 689 rounds up to 700.
+  - type: step
+    goal: Round the second number.
+    working: "607 → 600"
+    reason: The tens digit is 0, so 607 stays down at 600.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "700 + 600 = 1,300"
+  - type: takeaway
+    text: The digit to the right of the rounding place makes the decision — nothing else does.
+  - type: verification
+    text: The exact sum, 1,296, is almost exactly 1,300.
 -->
 <div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest ten and then adding. 23 + 81. The sum is approximately []</p>
-  <p class="explain">23 rounds to 20 and 81 rounds to 80; 20 + 80 = 100.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["1300"]
-description: Estimate 744 + 579 (nearest hundred)
-hint: Round each number to the nearest hundred, then add.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest hundred and then adding. 744 + 579. The sum is approximately []</p>
-  <p class="explain">744 rounds to 700 and 579 rounds to 600; 700 + 600 = 1,300.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["1500"]
-description: Estimate 801 + 694 (nearest hundred)
-hint: Round each number to the nearest hundred, then add.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest hundred and then adding. 801 + 694. The sum is approximately []</p>
-  <p class="explain">801 rounds to 800 and 694 rounds to 700; 800 + 700 = 1,500.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["10000"]
-description: Estimate 8,682 + 686 (nearest thousand)
-hint: Round each number to the nearest thousand, then add.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest thousand and then adding. 8,682 + 686. The sum is approximately []</p>
-  <p class="explain">8,682 rounds to 9,000 and 686 rounds to 1,000; 9,000 + 1,000 = 10,000.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["10000"]
-description: Estimate 863 + 9,257 (nearest thousand)
-hint: Round each number to the nearest thousand, then add.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest thousand and then adding. 863 + 9,257. The sum is approximately []</p>
-  <p class="explain">863 rounds to 1,000 and 9,257 rounds to 9,000; 1,000 + 9,000 = 10,000.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["110"]
-description: Estimate 66 + 39 (nearest ten)
-hint: Round each number to the nearest ten, then add.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest ten and then adding. 66 + 39. The sum is approximately []</p>
-  <p class="explain">66 rounds to 70 and 39 rounds to 40; 70 + 40 = 110.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["10000"]
-description: Estimate 3,007 + 6,582 (nearest thousand)
-hint: Round each number to the nearest thousand, then add.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest thousand and then adding. 3,007 + 6,582. The sum is approximately []</p>
-  <p class="explain">3,007 rounds to 3,000 and 6,582 rounds to 7,000; 3,000 + 7,000 = 10,000.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["1300"]
-description: Estimate 697 + 564 (nearest hundred)
-hint: Round each number to the nearest hundred, then add.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest hundred and then adding. 697 + 564. The sum is approximately []</p>
-  <p class="explain">697 rounds to 700 and 564 rounds to 600; 700 + 600 = 1,300.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["140"]
-description: Estimate 48 + 91 (nearest ten)
-hint: Round each number to the nearest ten, then add.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest ten and then adding. 48 + 91. The sum is approximately []</p>
-  <p class="explain">48 rounds to 50 and 91 rounds to 90; 50 + 90 = 140.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["12000"]
-description: Estimate 6,186 + 5,951 (nearest thousand)
-hint: Round each number to the nearest thousand, then add.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest thousand and then adding. 6,186 + 5,951. The sum is approximately []</p>
-  <p class="explain">6,186 rounds to 6,000 and 5,951 rounds to 6,000; 6,000 + 6,000 = 12,000.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["110000"]
-description: Estimate 73,267 + 41,573 (nearest ten thousand)
-hint: Round each number to the nearest ten thousand, then add.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest ten thousand and then adding. 73,267 + 41,573. The sum is approximately []</p>
-  <p class="explain">73,267 rounds to 70,000 and 41,573 rounds to 40,000; 70,000 + 40,000 = 110,000.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["18000"]
-description: Estimate 9,603 + 8,072 (nearest thousand)
-hint: Round each number to the nearest thousand, then add.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest thousand and then adding. 9,603 + 8,072. The sum is approximately []</p>
-  <p class="explain">9,603 rounds to 10,000 and 8,072 rounds to 8,000; 10,000 + 8,000 = 18,000.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["120000"]
-description: Estimate 62,678 + 57,041 (nearest ten thousand)
-hint: Round each number to the nearest ten thousand, then add.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Estimate the sum by rounding each number to the nearest ten thousand and then adding. 62,678 + 57,041. The sum is approximately []</p>
-  <p class="explain">62,678 rounds to 60,000 and 57,041 rounds to 60,000; 60,000 + 60,000 = 120,000.</p>
+  <p class="prompt">About how much is 689 + 607? Round each number to the nearest hundred, then add.</p>
 </div>
 
 <!--@q
 type: single-select
-answer: ["55,367 + 12,376"]
-description: Which pair has a sum of about 70,000?
-hint: Round each number to the nearest ten thousand and add.
+answer: ["1,500 kg"]
+description: Story — 801 + 694 kg of newspapers (nearest hundred)
+hint:
+  - "The story asks about how much — that means estimate, not exact adding."
+  - "Round each mass to the nearest hundred."
+  - "Add the two rounded masses."
+explain: 801 rounds to 800 and 694 rounds to 700; 800 + 700 = 1,500 kg.
+whyWrong:
+  "1,495 kg":
+    code: EXACT_NOT_ROUNDED
+    message: "That is the exact total showing off — the question only asks for an estimate."
+  "1,400 kg":
+    code: ROUND_ONE_WRONG
+    message: "This comes from rounding 694 down to 600 — but 694 is nearly 700."
+  "1,600 kg":
+    code: ROUND_ONE_WRONG
+    message: "This treats 801 as 900 — but 801 has only just stepped past 800."
+solution:
+  - type: step
+    goal: Round the first mass.
+    working: "801 → 800"
+    reason: The tens digit is 0, so 801 stays down at 800.
+  - type: step
+    goal: Round the second mass.
+    working: "694 → 700"
+    reason: The tens digit is 9, so 694 rounds up to 700.
+  - type: step
+    goal: Add the rounded masses.
+    working: "800 + 700 = 1,500"
+  - type: takeaway
+    text: In a story, "about how much" is your signal to round first, then add.
+  - type: verification
+    text: The exact total, 1,495 kg, sits right beside 1,500 kg.
 -->
 <div class="question" data-type="single-select">
-  <p class="prompt">Which addition problem has a sum of about 70,000?</p>
+  <p class="prompt">Rohan's school collected 801 kg of old newspapers in June and 694 kg in July. About how much paper is that altogether? Round each mass to the nearest hundred.</p>
   <ul class="options">
-    <li>30,937 + 97,021</li>
-    <li>27,612 + 82,436</li>
-    <li>92,327 + 49,921</li>
-    <li>55,367 + 12,376</li>
+    <li>1,500 kg</li>
+    <li>1,495 kg</li>
+    <li>1,400 kg</li>
+    <li>1,600 kg</li>
   </ul>
-  <p class="explain">60,000 + 10,000 = 70,000.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [744, 579]
+op: +
+place: hundred
+answer: ["700", "600", "1300"]
+description: Estimate 744 + 579 (nearest hundred, scaffold)
+hint:
+  - "Round each number to the nearest hundred."
+  - "One of these rounds down and one rounds up — the tens digit tells you which."
+  - "Add the two rounded numbers to finish."
+explain: 744 rounds to 700 and 579 rounds to 600; 700 + 600 = 1,300.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "744 → 700"
+    reason: The tens digit is 4 — less than 5, so 744 stays down at 700.
+  - type: step
+    goal: Round the second number.
+    working: "579 → 600"
+    reason: The tens digit is 7, so 579 rounds up to 600.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "700 + 600 = 1,300"
+  - type: takeaway
+    text: Up for one number and down for the other is completely normal — each one decides for itself.
+  - type: verification
+    text: The exact sum, 1,323, is close to 1,300 — the estimate holds.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Estimate 744 + 579. Round each number to the nearest hundred, then add.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"less","label":"Less than 1,000"},{"id":"more","label":"More than 1,000"}]
+answer: ["less", "more", "less", "more", "less"]
+description: Sort sums — less or more than 1,000 (estimate)
+hint:
+  - "Round each number to the nearest hundred in your head."
+  - "Add the two rounded numbers — does the total get past 1,000?"
+explain: "Rounding each pair: 612 + 285 and 302 + 594 and 156 + 731 all stay near 900, while 487 + 618 and 719 + 468 pass 1,000."
+solution:
+  - type: step
+    goal: Estimate the pairs that stay under.
+    working: "612 + 285 → 600 + 300 = 900 · 302 + 594 → 300 + 600 = 900 · 156 + 731 → 200 + 700 = 900"
+    reason: All three rounded sums stop short of 1,000.
+  - type: step
+    goal: Estimate the pairs that go over.
+    working: "487 + 618 → 500 + 600 = 1,100 · 719 + 468 → 700 + 500 = 1,200"
+    reason: Both rounded sums push past 1,000.
+  - type: takeaway
+    text: An estimate can answer "more or less than…?" without any exact adding at all.
+  - type: verification
+    text: The exact sums — 897, 1,105, 896, 1,187 and 887 — agree with every single estimate.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Estimate each sum in your head, then sort it — is it less than 1,000 or more than 1,000?</p>
+  <ul class="tiles">
+    <li>612 + 285</li>
+    <li>487 + 618</li>
+    <li>302 + 594</li>
+    <li>719 + 468</li>
+    <li>156 + 731</li>
+  </ul>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [697, 564]
+op: +
+place: hundred
+answer: ["700", "600", "1300"]
+description: Estimate 697 + 564 (nearest hundred, scaffold)
+hint:
+  - "Round to the nearest hundred — check the tens digit of each number."
+  - "Both of these numbers happen to round the same way."
+  - "Add the two friendly numbers."
+explain: 697 rounds to 700 and 564 rounds to 600; 700 + 600 = 1,300.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "697 → 700"
+    reason: The tens digit is 9, so 697 rounds up to 700.
+  - type: step
+    goal: Round the second number.
+    working: "564 → 600"
+    reason: The tens digit is 6, so 564 rounds up to 600.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "700 + 600 = 1,300"
+  - type: takeaway
+    text: Always look at the digit one step to the right of the place you are rounding to.
+  - type: verification
+    text: The exact sum, 1,261, lands near 1,300 — close enough for an estimate.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Ananya estimates 697 + 564 in her head. Round each number to the nearest hundred, then add.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [9827, 5519]
+op: +
+place: thousand
+answer: ["10000", "6000", "16000"]
+description: Estimate 9,827 + 5,519 (nearest thousand, scaffold)
+hint:
+  - "Find the place you are rounding to — the thousands."
+  - "Look at the digit just to the right of that place."
+  - "Round both numbers first, then add."
+explain: 9,827 rounds to 10,000 and 5,519 rounds to 6,000; 10,000 + 6,000 = 16,000.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "9,827 → 10,000"
+    reason: The digit to the right of the thousands place is 8, so round up.
+  - type: step
+    goal: Round the second number.
+    working: "5,519 → 6,000"
+    reason: The digit to the right of the thousands place is 5, so round up.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "10,000 + 6,000 = 16,000"
+  - type: takeaway
+    text: Round each number first, then add. Never add first.
+  - type: verification
+    text: The exact answer, 15,346, lands close to 16,000.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">About how much is 9,827 + 5,519? Round each number to the nearest thousand, then add.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [8682, 686]
+op: +
+place: thousand
+answer: ["9000", "1000", "10000"]
+description: Estimate 8,682 + 686 (nearest thousand, scaffold)
+hint:
+  - "Round to the nearest thousand — even the small number gets rounded."
+  - "For the small number, ask — is it closer to a whole thousand or to nothing?"
+  - "Round both, then add the rounded pair."
+explain: 8,682 rounds to 9,000 and 686 rounds to 1,000; 9,000 + 1,000 = 10,000.
+solution:
+  - type: step
+    goal: Round the big number.
+    working: "8,682 → 9,000"
+    reason: The hundreds digit is 6, so 8,682 rounds up to 9,000.
+  - type: step
+    goal: Round the small number.
+    working: "686 → 1,000"
+    reason: 686 is past the halfway mark, so it rounds up to a full thousand.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "9,000 + 1,000 = 10,000"
+  - type: takeaway
+    text: A small number never gets left behind — it rounds too, sometimes all the way up to a thousand.
+  - type: verification
+    text: The exact sum, 9,368, sits between 9,000 and 10,000 — the estimate is in the right neighbourhood.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Estimate 8,682 + 686. Round each number to the nearest thousand, then add — watch the small number!</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["10,000"]
+description: Estimate 863 + 9,257 (nearest thousand, select)
+hint:
+  - "Round each number to the nearest thousand — both of them."
+  - "A number in the hundreds still rounds to its nearest thousand."
+  - "Add the two rounded numbers and match."
+explain: 863 rounds to 1,000 and 9,257 rounds to 9,000; 1,000 + 9,000 = 10,000.
+whyWrong:
+  "9,000":
+    code: ROUND_ONE_WRONG
+    message: "This drops 863 to nothing — but 863 is much closer to 1,000 than to 0."
+  "11,000":
+    code: ROUND_ONE_WRONG
+    message: "This pushes 9,257 up to 10,000 — but 9,257 has not reached halfway there."
+  "10,120":
+    code: EXACT_NOT_ROUNDED
+    message: "That is the exact sum — an estimate wants rounded numbers, not perfect ones."
+solution:
+  - type: step
+    goal: Round the small number.
+    working: "863 → 1,000"
+    reason: 863 is well past 500, so it rounds up to 1,000.
+  - type: step
+    goal: Round the big number.
+    working: "9,257 → 9,000"
+    reason: The hundreds digit is 2, so 9,257 stays down at 9,000.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "1,000 + 9,000 = 10,000"
+  - type: takeaway
+    text: Small numbers round too — turning 863 into 0 throws away almost a whole thousand.
+  - type: verification
+    text: The exact sum, 10,120, is barely past 10,000 — the estimate is spot on.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">About how much is 863 + 9,257? Round each number to the nearest thousand first.</p>
+  <ul class="options">
+    <li>10,000</li>
+    <li>9,000</li>
+    <li>11,000</li>
+    <li>10,120</li>
+  </ul>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [3007, 6582]
+op: +
+place: thousand
+answer: ["3000", "7000", "10000"]
+description: Estimate 3,007 + 6,582 (nearest thousand, scaffold)
+hint:
+  - "Round each number to the nearest thousand."
+  - "Check the hundreds digit of each number against 5."
+  - "Add the rounded pair to finish."
+explain: 3,007 rounds to 3,000 and 6,582 rounds to 7,000; 3,000 + 7,000 = 10,000.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "3,007 → 3,000"
+    reason: The hundreds digit is 0, so 3,007 barely moves — it stays at 3,000.
+  - type: step
+    goal: Round the second number.
+    working: "6,582 → 7,000"
+    reason: The hundreds digit is 5, so 6,582 rounds up to 7,000.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "3,000 + 7,000 = 10,000"
+  - type: takeaway
+    text: A hundreds digit of exactly 5 is enough to round up — halfway always goes up.
+  - type: verification
+    text: The exact sum, 9,589, lands close to 10,000.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">About how much is 3,007 + 6,582? Round each number to the nearest thousand, then add.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["2,116 + 3,895", "4,872 + 1,309"]
+description: Select all pairs with a sum of about 6,000
+hint:
+  - "Test every pair — round each number to the nearest thousand, then add."
+  - "A hundreds digit of 5 or more sends the number up to the next thousand."
+explain: "2,116 + 3,895 rounds to 2,000 + 4,000 and 4,872 + 1,309 rounds to 5,000 + 1,000 — both make about 6,000."
+whyWrong:
+  "3,466 + 3,509":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 3,000 + 4,000 — about 7,000, one thousand over."
+  "1,510 + 3,482":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 2,000 + 3,000 — about 5,000, one thousand short."
+  "2,940 + 4,088":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 3,000 + 4,000 — about 7,000, past the target."
+solution:
+  - type: step
+    goal: Check the first winning pair.
+    working: "2,116 + 3,895 → 2,000 + 4,000 = 6,000"
+  - type: step
+    goal: Check the second winning pair.
+    working: "4,872 + 1,309 → 5,000 + 1,000 = 6,000"
+  - type: step
+    goal: Rule on the rest.
+    working: "3,466 + 3,509 → 7,000 · 1,510 + 3,482 → 5,000 · 2,940 + 4,088 → 7,000"
+    reason: None of these lands on 6,000.
+  - type: takeaway
+    text: Check every pair the same way — round, add, compare. No favourites.
+  - type: verification
+    text: The exact sums of the two winners are 6,011 and 6,181 — both truly close to 6,000.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select ALL the problems with a sum of about 6,000. Round each number to the nearest thousand.</p>
+  <ul class="options">
+    <li>2,116 + 3,895</li>
+    <li>3,466 + 3,509</li>
+    <li>4,872 + 1,309</li>
+    <li>1,510 + 3,482</li>
+    <li>2,940 + 4,088</li>
+  </ul>
+</div>
+
+<!--@q
+type: single-select
+answer: ["12,000"]
+description: Story — stadium tickets 6,186 + 5,951 (nearest thousand)
+hint:
+  - "About how many means estimate — round before you add."
+  - "Round each day's tickets to the nearest thousand."
+  - "Add the two rounded numbers."
+explain: 6,186 rounds to 6,000 and 5,951 rounds to 6,000; 6,000 + 6,000 = 12,000.
+whyWrong:
+  "11,000":
+    code: ROUND_BOTH_DOWN
+    message: "Both numbers went downhill here — but 5,951 is almost touching 6,000."
+  "13,000":
+    code: ROUND_BOTH_UP
+    message: "Both numbers went uphill here — but 6,186 has barely left 6,000."
+  "12,137":
+    code: EXACT_NOT_ROUNDED
+    message: "That is the exact count — the question only wants roughly how many."
+solution:
+  - type: step
+    goal: Round Saturday's tickets.
+    working: "6,186 → 6,000"
+    reason: The hundreds digit is 1, so 6,186 stays down at 6,000.
+  - type: step
+    goal: Round Sunday's tickets.
+    working: "5,951 → 6,000"
+    reason: The hundreds digit is 9, so 5,951 rounds up to 6,000.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "6,000 + 6,000 = 12,000"
+  - type: takeaway
+    text: Less than 5 keeps a number down; 5 or more sends it up — every number is checked on its own.
+  - type: verification
+    text: The exact total, 12,137, is close to 12,000 — the estimate works.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A cricket stadium sold 6,186 tickets on Saturday and 5,951 tickets on Sunday. About how many tickets were sold that weekend? Round each number to the nearest thousand.</p>
+  <ul class="options">
+    <li>12,000</li>
+    <li>11,000</li>
+    <li>13,000</li>
+    <li>12,137</li>
+  </ul>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [9603, 8072]
+op: +
+place: thousand
+answer: ["10000", "8000", "18000"]
+description: Estimate 9,603 + 8,072 (nearest thousand, scaffold)
+hint:
+  - "Round each number to the nearest thousand."
+  - "One number climbs to a five-digit friend; the other stays put."
+  - "Add the two rounded numbers."
+explain: 9,603 rounds to 10,000 and 8,072 rounds to 8,000; 10,000 + 8,000 = 18,000.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "9,603 → 10,000"
+    reason: The hundreds digit is 6, so 9,603 rounds up — all the way to 10,000.
+  - type: step
+    goal: Round the second number.
+    working: "8,072 → 8,000"
+    reason: The hundreds digit is 0, so 8,072 stays down at 8,000.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "10,000 + 8,000 = 18,000"
+  - type: takeaway
+    text: Rounding up can push a number into the next place — 9-something becomes 10,000. That is allowed!
+  - type: verification
+    text: The exact sum, 17,675, lands close to 18,000.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Estimate 9,603 + 8,072. Round each number to the nearest thousand, then add.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["₹8,000"]
+description: Story — Diya's savings ₹4,850 + ₹3,209 (nearest thousand)
+hint:
+  - "About how much — that is estimation language. Round first."
+  - "Round each amount to the nearest thousand rupees."
+  - "Add the two rounded amounts."
+explain: ₹4,850 rounds to ₹5,000 and ₹3,209 rounds to ₹3,000; 5,000 + 3,000 = ₹8,000.
+whyWrong:
+  "₹7,000":
+    code: ROUND_ONE_WRONG
+    message: "This rounds ₹4,850 down to ₹4,000 — but 850 is well past the halfway mark."
+  "₹9,000":
+    code: ROUND_ONE_WRONG
+    message: "This pushes ₹3,209 up to ₹4,000 — but 209 is nowhere near halfway."
+  "₹8,059":
+    code: EXACT_NOT_ROUNDED
+    message: "That is the exact amount — 'about how much' wants a rounded answer."
+solution:
+  - type: step
+    goal: Round last year's savings.
+    working: "₹4,850 → ₹5,000"
+    reason: The hundreds digit is 8, so 4,850 rounds up to 5,000.
+  - type: step
+    goal: Round this year's savings.
+    working: "₹3,209 → ₹3,000"
+    reason: The hundreds digit is 2, so 3,209 stays down at 3,000.
+  - type: step
+    goal: Add the rounded amounts.
+    working: "5,000 + 3,000 = 8,000"
+  - type: takeaway
+    text: Money estimates work exactly like number estimates — round each amount, then add.
+  - type: verification
+    text: The exact total, ₹8,059, is almost exactly ₹8,000.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Diya saved ₹4,850 last year and ₹3,209 this year. About how much has she saved in all? Round each amount to the nearest thousand.</p>
+  <ul class="options">
+    <li>₹8,000</li>
+    <li>₹7,000</li>
+    <li>₹9,000</li>
+    <li>₹8,059</li>
+  </ul>
 </div>
 
 <!--@q
 type: single-select
 answer: ["9,229 + 3,578"]
 description: Which pair has a sum of about 13,000?
-hint: Round each number to the nearest thousand and add.
+hint:
+  - "You never need the exact sums — rounded ones are enough."
+  - "Round each number to the nearest thousand, then add the rounded pair."
+  - "Compare each pair's rounded sum with the target."
+explain: 9,229 + 3,578 rounds to 9,000 + 4,000 = 13,000.
+whyWrong:
+  "7,617 + 3,112":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 8,000 + 3,000 — about 11,000, too small."
+  "4,988 + 4,637":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 5,000 + 5,000 — about 10,000."
+  "3,043 + 8,598":
+    code: WRONG_NUMBER_PAIR
+    message: "So close! This rounds to 3,000 + 9,000 — about 12,000, one thousand short."
+solution:
+  - type: step
+    goal: Round the winning pair.
+    working: "9,229 → 9,000 · 3,578 → 4,000"
+  - type: step
+    goal: Add the rounded numbers.
+    working: "9,000 + 4,000 = 13,000"
+  - type: takeaway
+    text: When sums are too big to add in your head, estimates do the comparing for you.
+  - type: verification
+    text: The other pairs land at about 11,000, 10,000 and 12,000 — none of them reaches 13,000.
 -->
 <div class="question" data-type="single-select">
-  <p class="prompt">Which addition problem has a sum of about 13,000?</p>
+  <p class="prompt">Which of these has a sum of about 13,000?</p>
   <ul class="options">
     <li>9,229 + 3,578</li>
     <li>7,617 + 3,112</li>
     <li>4,988 + 4,637</li>
     <li>3,043 + 8,598</li>
   </ul>
-  <p class="explain">9,000 + 4,000 = 13,000.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["1,036 + 1,307"]
-description: Which pair has a sum of about 2,000?
-hint: Round each number to the nearest thousand and add.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">Which addition problem has a sum of about 2,000?</p>
-  <ul class="options">
-    <li>1,036 + 1,307</li>
-    <li>1,852 + 2,771</li>
-    <li>6,164 + 2,501</li>
-    <li>1,837 + 2,077</li>
-  </ul>
-  <p class="explain">1,000 + 1,000 = 2,000.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["90,037 + 26,907"]
-description: Which pair has a sum of about 120,000?
-hint: Round each number to the nearest ten thousand and add.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">Which addition problem has a sum of about 120,000?</p>
-  <ul class="options">
-    <li>90,037 + 26,907</li>
-    <li>68,358 + 81,717</li>
-    <li>46,961 + 91,731</li>
-    <li>64,863 + 27,252</li>
-  </ul>
-  <p class="explain">90,000 + 30,000 = 120,000.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["98,923 + 62,844"]
-description: Which pair has a sum of about 160,000?
-hint: Round each number to the nearest ten thousand and add.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">Which addition problem has a sum of about 160,000?</p>
-  <ul class="options">
-    <li>70,144 + 80,443</li>
-    <li>98,923 + 62,844</li>
-    <li>80,693 + 38,233</li>
-    <li>98,954 + 78,388</li>
-  </ul>
-  <p class="explain">100,000 + 60,000 = 160,000.</p>
 </div>
 
 <!--@q
 type: single-select
 answer: ["8,314 + 2,034"]
 description: Which pair has a sum of about 10,000?
-hint: Round each number to the nearest thousand and add.
+hint:
+  - "Estimate each pair instead of adding exactly."
+  - "Round both numbers of a pair to the nearest thousand, then add."
+  - "Two pairs land close — only one lands exactly on the target."
+explain: 8,314 + 2,034 rounds to 8,000 + 2,000 = 10,000.
+whyWrong:
+  "5,824 + 2,792":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 6,000 + 3,000 — about 9,000, just under."
+  "4,118 + 2,806":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 4,000 + 3,000 — about 7,000, well short."
+  "7,119 + 3,532":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 7,000 + 4,000 — about 11,000, just over."
+solution:
+  - type: step
+    goal: Round the winning pair.
+    working: "8,314 → 8,000 · 2,034 → 2,000"
+  - type: step
+    goal: Add the rounded numbers.
+    working: "8,000 + 2,000 = 10,000"
+  - type: takeaway
+    text: When two pairs look close, trust the rounding — it separates "near" from "exactly about".
+  - type: verification
+    text: The near-misses estimate to 9,000 and 11,000 — each a full thousand away from 10,000.
 -->
 <div class="question" data-type="single-select">
-  <p class="prompt">Which addition problem has a sum of about 10,000?</p>
+  <p class="prompt">Tap the pair whose sum is close to 10,000.</p>
   <ul class="options">
     <li>5,824 + 2,792</li>
     <li>4,118 + 2,806</li>
     <li>8,314 + 2,034</li>
     <li>7,119 + 3,532</li>
   </ul>
-  <p class="explain">8,000 + 2,000 = 10,000.</p>
 </div>
 
 <!--@q
 type: single-select
-answer: ["12,966 + 36,787"]
-description: Which pair has a sum of about 50,000?
-hint: Round each number to the nearest ten thousand and add.
+answer: ["1,036 + 1,307"]
+description: Which pair has a sum of about 2,000?
+hint:
+  - "Round each number to the nearest thousand before comparing."
+  - "Some pairs are far too big — a quick round shows which."
+  - "The right pair's rounded numbers add to exactly the target."
+explain: 1,036 + 1,307 rounds to 1,000 + 1,000 = 2,000.
+whyWrong:
+  "1,852 + 2,771":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 2,000 + 3,000 — about 5,000, more than double the target."
+  "6,164 + 2,501":
+    code: WRONG_NUMBER_PAIR
+    message: "The first number alone is already about 6,000 — far past 2,000."
+  "1,837 + 2,077":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 2,000 + 2,000 — about 4,000, twice the target."
+solution:
+  - type: step
+    goal: Round the winning pair.
+    working: "1,036 → 1,000 · 1,307 → 1,000"
+  - type: step
+    goal: Add the rounded numbers.
+    working: "1,000 + 1,000 = 2,000"
+  - type: takeaway
+    text: Sometimes one glance at a single number rules a whole pair out — estimation saves work.
+  - type: verification
+    text: The other pairs estimate to 5,000, 9,000 and 4,000 — nowhere near 2,000.
 -->
 <div class="question" data-type="single-select">
-  <p class="prompt">Which addition problem has a sum of about 50,000?</p>
+  <p class="prompt">Which addition comes to about 2,000?</p>
   <ul class="options">
-    <li>53,833 + 46,814</li>
-    <li>12,966 + 36,787</li>
-    <li>96,499 + 30,159</li>
-    <li>39,487 + 71,274</li>
+    <li>1,036 + 1,307</li>
+    <li>1,852 + 2,771</li>
+    <li>6,164 + 2,501</li>
+    <li>1,837 + 2,077</li>
   </ul>
-  <p class="explain">10,000 + 40,000 = 50,000.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [73267, 41573]
+op: +
+place: ten-thousand
+answer: ["70000", "40000", "110000"]
+description: Estimate 73,267 + 41,573 (nearest ten thousand, scaffold)
+hint:
+  - "Big numbers now — round each one to the nearest ten thousand."
+  - "The thousands digit is the decider at this size."
+  - "Round both numbers, then add the rounded pair."
+explain: 73,267 rounds to 70,000 and 41,573 rounds to 40,000; 70,000 + 40,000 = 110,000.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "73,267 → 70,000"
+    reason: The thousands digit is 3 — less than 5, so 73,267 stays down at 70,000.
+  - type: step
+    goal: Round the second number.
+    working: "41,573 → 40,000"
+    reason: The thousands digit is 1, so 41,573 stays down at 40,000.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "70,000 + 40,000 = 110,000"
+  - type: takeaway
+    text: The rounding rule never changes with size — only the place you look at does.
+  - type: verification
+    text: The exact sum, 114,840, sits close to 110,000.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Big numbers now! Estimate 73,267 + 41,573. Round each number to the nearest ten thousand, then add.</p>
 </div>
 
 <!--@q
 type: single-select
 answer: ["4,419 + 4,763"]
 description: Which pair has a sum of about 9,000?
-hint: Round each number to the nearest thousand and add.
+hint:
+  - "Estimate each pair — no exact adding needed."
+  - "Round each number to the nearest thousand and add the pair."
+  - "Watch for pairs that overshoot as well as ones that fall short."
+explain: 4,419 + 4,763 rounds to 4,000 + 5,000 = 9,000.
+whyWrong:
+  "3,417 + 2,522":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 3,000 + 3,000 — only about 6,000."
+  "9,682 + 9,983":
+    code: WRONG_NUMBER_PAIR
+    message: "Each of these is nearly 10,000 by itself — together they make about 20,000."
+  "8,428 + 2,809":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 8,000 + 3,000 — about 11,000, past the mark."
+solution:
+  - type: step
+    goal: Round the winning pair.
+    working: "4,419 → 4,000 · 4,763 → 5,000"
+  - type: step
+    goal: Add the rounded numbers.
+    working: "4,000 + 5,000 = 9,000"
+  - type: takeaway
+    text: An estimate can be too big as well as too small — check both directions.
+  - type: verification
+    text: The other pairs estimate to 6,000, 20,000 and 11,000 — none is close to 9,000.
 -->
 <div class="question" data-type="single-select">
-  <p class="prompt">Which addition problem has a sum of about 9,000?</p>
+  <p class="prompt">One of these adds up to about 9,000. Which one?</p>
   <ul class="options">
     <li>4,419 + 4,763</li>
     <li>3,417 + 2,522</li>
     <li>9,682 + 9,983</li>
     <li>8,428 + 2,809</li>
   </ul>
-  <p class="explain">4,000 + 5,000 = 9,000.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [62678, 57041]
+op: +
+place: ten-thousand
+answer: ["60000", "60000", "120000"]
+description: Estimate 62,678 + 57,041 (nearest ten thousand, scaffold)
+hint:
+  - "Round each number to the nearest ten thousand."
+  - "Check each thousands digit against 5 — these two numbers disagree."
+  - "Add the two rounded numbers to finish."
+explain: 62,678 rounds to 60,000 and 57,041 rounds to 60,000; 60,000 + 60,000 = 120,000.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "62,678 → 60,000"
+    reason: The thousands digit is 2, so 62,678 stays down at 60,000.
+  - type: step
+    goal: Round the second number.
+    working: "57,041 → 60,000"
+    reason: The thousands digit is 7, so 57,041 rounds up to 60,000.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "60,000 + 60,000 = 120,000"
+  - type: takeaway
+    text: Two different numbers can round to the same friendly number — that is the point of rounding.
+  - type: verification
+    text: The exact sum, 119,719, is almost exactly 120,000.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Estimate 62,678 + 57,041. Round each number to the nearest ten thousand, then add.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["55,367 + 12,376"]
+description: Which pair has a sum of about 70,000?
+hint:
+  - "Round each number to the nearest ten thousand before comparing."
+  - "Some pairs have one number that is already too big on its own."
+  - "Add each rounded pair and compare with the target."
+explain: 55,367 + 12,376 rounds to 60,000 + 10,000 = 70,000.
+whyWrong:
+  "30,937 + 97,021":
+    code: WRONG_NUMBER_PAIR
+    message: "The second number alone is already about 100,000 — way past 70,000."
+  "27,612 + 82,436":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 30,000 + 80,000 — about 110,000."
+  "92,327 + 49,921":
+    code: WRONG_NUMBER_PAIR
+    message: "The first number alone is already bigger than 70,000."
+solution:
+  - type: step
+    goal: Round the winning pair.
+    working: "55,367 → 60,000 · 12,376 → 10,000"
+  - type: step
+    goal: Add the rounded numbers.
+    working: "60,000 + 10,000 = 70,000"
+  - type: takeaway
+    text: Before rounding anything, scan for pairs where one number alone already beats the target.
+  - type: verification
+    text: The other pairs land at about 130,000, 110,000 and 140,000 — all far too big.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which pair of numbers adds to about 70,000?</p>
+  <ul class="options">
+    <li>30,937 + 97,021</li>
+    <li>27,612 + 82,436</li>
+    <li>92,327 + 49,921</li>
+    <li>55,367 + 12,376</li>
+  </ul>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["48,236 + 51,470", "61,842 + 37,529"]
+description: Select all pairs with a sum of about 100,000
+hint:
+  - "Round each number to the nearest ten thousand, then add the pair."
+  - "Test every option — round, add, compare."
+explain: "48,236 + 51,470 rounds to 50,000 + 50,000 and 61,842 + 37,529 rounds to 60,000 + 40,000 — both make about 100,000."
+whyWrong:
+  "72,915 + 45,180":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 70,000 + 50,000 — about 120,000, too big."
+  "29,634 + 51,077":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 30,000 + 50,000 — about 80,000, too small."
+  "88,846 + 24,163":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 90,000 + 20,000 — about 110,000, just over."
+solution:
+  - type: step
+    goal: Check the first winning pair.
+    working: "48,236 + 51,470 → 50,000 + 50,000 = 100,000"
+    reason: 48,236 rounds UP because its thousands digit is 8.
+  - type: step
+    goal: Check the second winning pair.
+    working: "61,842 + 37,529 → 60,000 + 40,000 = 100,000"
+  - type: step
+    goal: Rule on the rest.
+    working: "72,915 + 45,180 → 120,000 · 29,634 + 51,077 → 80,000 · 88,846 + 24,163 → 110,000"
+    reason: None of these lands on 100,000.
+  - type: takeaway
+    text: Different pairs can share the same estimate — rounding shows the family resemblance.
+  - type: verification
+    text: The exact sums of the winners are 99,706 and 99,371 — both truly close to 100,000.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select ALL the pairs with a sum of about 100,000. Round each number to the nearest ten thousand.</p>
+  <ul class="options">
+    <li>48,236 + 51,470</li>
+    <li>72,915 + 45,180</li>
+    <li>61,842 + 37,529</li>
+    <li>29,634 + 51,077</li>
+    <li>88,846 + 24,163</li>
+  </ul>
+</div>
+
+<!--@q
+type: single-select
+answer: ["12,966 + 36,787"]
+description: Which pair has a sum of about 50,000?
+hint:
+  - "Estimate first — round each number to the nearest ten thousand."
+  - "One pair can be ruled out by its first number alone."
+  - "Add each rounded pair and compare with the target."
+explain: 12,966 + 36,787 rounds to 10,000 + 40,000 = 50,000.
+whyWrong:
+  "53,833 + 46,814":
+    code: WRONG_NUMBER_PAIR
+    message: "The first number alone is already past 50,000."
+  "96,499 + 30,159":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 100,000 + 30,000 — about 130,000."
+  "39,487 + 71,274":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 40,000 + 70,000 — about 110,000."
+solution:
+  - type: step
+    goal: Round the winning pair.
+    working: "12,966 → 10,000 · 36,787 → 40,000"
+  - type: step
+    goal: Add the rounded numbers.
+    working: "10,000 + 40,000 = 50,000"
+  - type: takeaway
+    text: Estimation is a comparing tool — it finds the right pair without a single exact sum.
+  - type: verification
+    text: The other pairs land at about 100,000, 130,000 and 110,000 — double the target or more.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Estimate first — which problem has a sum of about 50,000?</p>
+  <ul class="options">
+    <li>53,833 + 46,814</li>
+    <li>12,966 + 36,787</li>
+    <li>96,499 + 30,159</li>
+    <li>39,487 + 71,274</li>
+  </ul>
+</div>
+
+<!--@q
+type: single-select
+answer: ["90,037 + 26,907"]
+description: Which pair has a sum of about 120,000?
+hint:
+  - "Round each number to the nearest ten thousand, then add."
+  - "Check the thousands digit of each number to round correctly."
+  - "Compare every pair's rounded sum with the target before choosing."
+explain: 90,037 + 26,907 rounds to 90,000 + 30,000 = 120,000.
+whyWrong:
+  "68,358 + 81,717":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 70,000 + 80,000 — about 150,000."
+  "46,961 + 91,731":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 50,000 + 90,000 — about 140,000."
+  "64,863 + 27,252":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 60,000 + 30,000 — only about 90,000."
+solution:
+  - type: step
+    goal: Round the winning pair.
+    working: "90,037 → 90,000 · 26,907 → 30,000"
+  - type: step
+    goal: Add the rounded numbers.
+    working: "90,000 + 30,000 = 120,000"
+  - type: takeaway
+    text: Rounded sums can be too big OR too small — the right pair is the one that lands on target.
+  - type: verification
+    text: The other pairs estimate to 150,000, 140,000 and 90,000 — all miss 120,000.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which of these sums lands near 120,000?</p>
+  <ul class="options">
+    <li>90,037 + 26,907</li>
+    <li>68,358 + 81,717</li>
+    <li>46,961 + 91,731</li>
+    <li>64,863 + 27,252</li>
+  </ul>
+</div>
+
+<!--@q
+type: single-select
+answer: ["98,923 + 62,844"]
+description: Which pair has a sum of about 160,000?
+hint:
+  - "Round each number to the nearest ten thousand before adding."
+  - "A 9-something-thousand number can round all the way up to 100,000."
+  - "Add each rounded pair and match it against the target."
+explain: 98,923 + 62,844 rounds to 100,000 + 60,000 = 160,000.
+whyWrong:
+  "70,144 + 80,443":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 70,000 + 80,000 — about 150,000, close but ten thousand short."
+  "80,693 + 38,233":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 80,000 + 40,000 — about 120,000."
+  "98,954 + 78,388":
+    code: WRONG_NUMBER_PAIR
+    message: "This pair rounds to 100,000 + 80,000 — about 180,000, too far."
+solution:
+  - type: step
+    goal: Round the winning pair.
+    working: "98,923 → 100,000 · 62,844 → 60,000"
+    reason: 98,923 rounds up past 99,000 all the way to 100,000.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "100,000 + 60,000 = 160,000"
+  - type: takeaway
+    text: You just estimated with numbers near a lakh — the same round-then-add rule you started with.
+  - type: verification
+    text: The exact sum, 161,767, lands close to 160,000 — and the nearest rival is 10,000 away.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Last one — the biggest numbers yet! Which addition problem has a sum of about 160,000?</p>
+  <ul class="options">
+    <li>70,144 + 80,443</li>
+    <li>98,923 + 62,844</li>
+    <li>80,693 + 38,233</li>
+    <li>98,954 + 78,388</li>
+  </ul>
 </div>
 
 </div>

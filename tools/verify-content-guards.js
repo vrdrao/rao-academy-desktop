@@ -148,7 +148,13 @@ function buildLesson(file) {
     }
 
     const optionKeys = extractOptionKeys(q.markup);
-    const whyWrong = (typeof fm.whyWrong === "object" && fm.whyWrong !== null) ? fm.whyWrong : null;
+    // whyWrong comes from the ENGINE's build() output, not from the local
+    // parseFrontmatter above. The local parser is flat/line-based and cannot
+    // read the nested whyWrong map — using it here made KEY MATCH and TONE
+    // vacuously true across the entire corpus (checked: 0). One parse point:
+    // the engine's. (Bug found 2026-07-15 when 42 authored entries showed
+    // up as "Covered: 0".)
+    const whyWrong = (typeof q.whyWrong === "object" && q.whyWrong !== null) ? q.whyWrong : null;
 
     paired.push({
       type: q.behavior,

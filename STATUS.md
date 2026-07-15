@@ -106,8 +106,31 @@ Every guard was proved to fail before being trusted.
 **7.1 — Firewall: DONE.** Four guards, each proved to fail. Solution renderer stub
 (`engine/solution-renderer.js`) exists and is structurally incapable of touching grading.
 
-**7.2 — Renderer + blocks: NEXT.** `normalizeExplain()`, 4 block renderers (`step`, `figure`,
-`takeaway`, `verification`), legacy snapshot guard.
+**7.2 — Renderer + blocks: DONE.** (rao-master-14)
+
+**7.3 — Three-tier ladder: DONE.** (rao-master-15) Hint ladders, whyWrong display,
+stepped walkthrough, touch-verified at 380px.
+
+**7.4 — whyWrong + validation: DONE.** Taxonomy (docs/MISCONCEPTIONS.md), classifier,
+four content guards. Content debt: 3,989 distractors across 103 lessons still lack
+whyWrong (guard not in npm test until that reaches 0).
+
+**7.5 — The proof: DONE (2026-07-15).** `estimate-sums-faithful.html` re-authored,
+23 → 30 questions (all 23 supplied items kept; 7 added to fill interaction gaps).
+12 round-scaffolds, 12 selects, 2 multi-selects, 1 order, 1 categorize/bins,
+1 sequence-build, 1 helper-chip fill-blanks. Hint ladder + solution block list +
+takeaway on all 30; whyWrong (42 entries, taxonomy codes) on every distractor.
+All arithmetic re-verified in Python (round-half-up).
+
+Two tool bugs found and fixed during 7.5:
+1. **verify-content-guards.js was blind to whyWrong** — it used its own flat
+   line-based frontmatter parser instead of the engine's, so KEY MATCH and TONE
+   were vacuously true across the entire corpus (checked: 0). Now reads
+   `q.whyWrong` from `RaoPreview.build()`. Both guards re-proved to fail.
+2. **verify-format.js used a flat `readdirSync("lessons")`** — the same bug class
+   that hid 96% of the corpus from the harness. Review pages for `incoming/`
+   lessons were never checked. Now recursive; checks 4 pairs; proved to fail on
+   a stale review (card-count mismatch).
 
 ---
 
@@ -116,7 +139,7 @@ Every guard was proved to fail before being trusted.
 | File | Qs | Status | Notes |
 |------|---:|--------|-------|
 | `addition-missing-digits.html` | 27 | clean | Content unchanged, wrapper stripped |
-| `estimate-sums-faithful.html` | 23 | clean | Representative failure — pedagogically dead explanations |
+| `estimate-sums-faithful.html` | 30 | **re-authored** | Brief 7.5 proof lesson — full ladder/whyWrong/solution coverage |
 | `even_odd_faithful.html` | 19 | clean | Content unchanged, wrapper stripped |
 | `divide-larger-numbers.html` | 24 | **fixed** | 14 `long-division` → `fill-blanks` |
 | `Place_values_remix.html` | 30 | **fixed** | Q13 destroyed by sanitizer (engine fix) |

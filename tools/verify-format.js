@@ -86,12 +86,24 @@ async function probe(page, file) {
 
 (async () => {
   const wanted = process.argv.slice(2);
-  const lessons = fs
-    .readdirSync(path.join(ROOT, "lessons"))
-    .filter((f) => f.endsWith(".html") && !f.startsWith("_"))
-    .map((f) => f.replace(/\.html$/, ""))
-    .filter((n) => fs.existsSync(path.join(ROOT, "review", n + ".html")))
-    .filter((n) => !wanted.length || wanted.includes(n));
+  // RECURSIVE discovery — lessons/incoming/ holds ~105 of the ~108 lessons.
+  // A flat readdirSync here is the exact bug that let the harness silently
+  // test 4% of the corpus for ~95 sessions (see STATUS.md); a review page
+  // for an incoming/ lesson was invisible to this guard until 2026-07-15.
+  const collectLessons = (dir) => {
+    let out = [];
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (e.name.startsWith("_")) continue; // _preview/, _type-coverage.html
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) out = out.concat(collectLessons(full));
+      else if (e.name.endsWith(".html")) out.push(full);
+    }
+    return out;
+  };
+  const lessons = collectLessons(path.join(ROOT, "lessons"))
+    .map((f) => ({ name: path.basename(f, ".html"), file: f }))
+    .filter((l) => fs.existsSync(path.join(ROOT, "review", l.name + ".html")))
+    .filter((l) => !wanted.length || wanted.includes(l.name));
 
   // No lesson/review pairs = clean slate (all lessons wiped), not an error. When a real
   // lesson is asked for by name but its review page is missing, that IS an error.
@@ -104,7 +116,7 @@ async function probe(page, file) {
   const browser = await chromium.launch();
   let failed = 0;
 
-  for (const name of lessons) {
+  for (const { name, file } of lessons) {
     const page = await browser.newPage({ viewport: { width: WIDTH, height: 1200 } });
     // Lessons are content-only (their #source only) — they no longer self-render.
     // Render the lesson THROUGH the shared pipeline (engine + rao-card.js) into a temp
@@ -112,7 +124,7 @@ async function probe(page, file) {
     // the on-disk review page. Same renderer on both sides, so any mismatch means
     // review/<name>.html is stale or corrupt — regenerate it with `npm run review`.
     const tmp = `__vf_${name}`;
-    build(path.join(ROOT, "lessons", `${name}.html`), tmp);
+    build(file, tmp);
     const L = await probe(page, `review/${tmp}.html`);
     const R = await probe(page, `review/${name}.html`);
 
