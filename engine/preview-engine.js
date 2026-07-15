@@ -718,23 +718,122 @@ function optionButtons(opts, multi) {
 // Parse a `<!--@q … -->` body into an object. `answer` and any value that begins
 // with [ or { is parsed as JSON; everything else is a trimmed string.
 function parseFrontmatter(body) {
+  // Flat `key: value` lines parse exactly as they always have (values kept
+  // verbatim; inline [..]/{..} parsed as JSON). rao-master-15 adds BLOCKS:
+  // a key with an EMPTY value followed by MORE-INDENTED lines opens either
+  // a `- ` list (hint ladders, solution blocks) or a nested map (whyWrong).
+  // Malformed blocks are recorded on fm.__issues (non-enumerable) and are
+  // surfaced as build() issues — never silently dropped.
   const fm = {};
-  body.split(/\r?\n/).forEach((line) => {
-    const t = line.trim();
+  const issues = [];
+  const lines = [];
+  body.split(/\r?\n/).forEach((raw) => {
+    const t = raw.trim();
     if (!t || t.startsWith("#")) return;
+    lines.push({ indent: /^\s*/.exec(raw)[0].length, text: t });
+  });
+
+  const unquote = (s) => {
+    s = s.trim();
+    if (s.length >= 2 && ((s[0] === '"' && s[s.length - 1] === '"') || (s[0] === "'" && s[s.length - 1] === "'")))
+      return s.slice(1, -1);
+    return s;
+  };
+  // Split `key: value`, handling quoted keys that contain colons
+  // (whyWrong option text like "9:30 A.M." or "92,327 + 49,921").
+  const splitKV = (t) => {
+    if (t[0] === '"' || t[0] === "'") {
+      const q = t[0];
+      const close = t.indexOf(q, 1);
+      if (close > 0 && t[close + 1] === ":")
+        return { key: t.slice(1, close), val: t.slice(close + 2).trim() };
+      return null;
+    }
     const i = t.indexOf(":");
-    if (i < 0) return;
-    const key = t.slice(0, i).trim();
-    let val = t.slice(i + 1).trim();
+    if (i < 0) return null;
+    return { key: t.slice(0, i).trim(), val: t.slice(i + 1).trim() };
+  };
+  const scalar = (val) => {
     if (/^[[{]/.test(val)) {
-      try {
-        val = JSON.parse(val);
-      } catch (_) {
-        /* leave as string; validated later */
+      try { return JSON.parse(val); } catch (_) { /* leave as string; validated later */ }
+    }
+    return val;
+  };
+
+  let i = 0;
+  // `- ` list at a fixed indent; items are scalars (hint rungs) or maps (solution blocks)
+  function parseList(listIndent, key) {
+    const out = [];
+    while (i < lines.length && lines[i].indent === listIndent && lines[i].text.startsWith("- ")) {
+      const rest = lines[i].text.slice(2).trim();
+      i++;
+      const isMapItem = /^[A-Za-z_][\w-]*\s*:/.test(rest);
+      if (isMapItem) {
+        const kv = splitKV(rest);
+        const obj = {};
+        obj[kv.key] = scalar(unquote(kv.val));
+        while (i < lines.length && lines[i].indent > listIndent && !lines[i].text.startsWith("- ")) {
+          const fkv = splitKV(lines[i].text);
+          if (!fkv) { issues.push('"' + key + '": unparseable line "' + lines[i].text + '" inside a list item'); i++; continue; }
+          obj[fkv.key] = scalar(unquote(fkv.val));
+          i++;
+        }
+        out.push(obj);
+      } else {
+        out.push(unquote(rest));
+      }
+      // A DEEPER `- ` line is broken indentation, not a nested list.
+      if (i < lines.length && lines[i].indent > listIndent && lines[i].text.startsWith("- ")) {
+        issues.push('"' + key + '": list item "' + lines[i].text + '" is indented deeper than the first item — every item must start at the same column');
+        while (i < lines.length && lines[i].indent > listIndent) i++;
       }
     }
-    fm[key] = val;
-  });
+    return out;
+  }
+  // nested map (whyWrong): each key may be quoted option text; an empty value
+  // followed by a deeper block is that entry's field map ({code, message, …})
+  function parseMap(mapIndent, key) {
+    const out = {};
+    while (i < lines.length && lines[i].indent === mapIndent && !lines[i].text.startsWith("- ")) {
+      const kv = splitKV(lines[i].text);
+      if (!kv) { issues.push('"' + key + '": unparseable line "' + lines[i].text + '" inside a map'); i++; continue; }
+      i++;
+      if (kv.val !== "") { out[kv.key] = scalar(unquote(kv.val)); continue; }
+      if (i < lines.length && lines[i].indent > mapIndent) {
+        out[kv.key] = parseMap(lines[i].indent, key);
+      } else {
+        out[kv.key] = "";
+      }
+    }
+    return out;
+  }
+
+  while (i < lines.length) {
+    const line = lines[i];
+    const kv = splitKV(line.text);
+    if (!kv) {
+      // Old behavior: lines without a key are skipped. A stray `- ` item at
+      // top level means a broken block — say so instead of losing it.
+      if (line.text.startsWith("- "))
+        issues.push('stray list item "' + line.text + '" — the key above it must end with ":" and have nothing after it');
+      i++;
+      continue;
+    }
+    i++;
+    if (kv.val !== "") { fm[kv.key] = scalar(kv.val); continue; } // flat — legacy path, verbatim
+    if (i < lines.length && lines[i].indent > line.indent) {
+      if (lines[i].text.startsWith("- ")) {
+        fm[kv.key] = parseList(lines[i].indent, kv.key);
+      } else {
+        const m = parseMap(lines[i].indent, kv.key);
+        // an all-unparseable block degrades to the legacy "" (issues carry the loudness)
+        fm[kv.key] = Object.keys(m).length ? m : "";
+      }
+    } else {
+      fm[kv.key] = ""; // legacy: bare `key:` stays ""
+    }
+  }
+  if (issues.length) Object.defineProperty(fm, "__issues", { value: issues, enumerable: false });
   return fm;
 }
 
@@ -1568,7 +1667,28 @@ function parseQuestion(attrs, content, fm, index) {
   const _explainHtml = explain ? `<p class="explain">${explain}</p>` : "";
   const inner = `${_helperChip}<div class="prompt${_promptExtra}"${_plStyle}>${_promptHtmlOut}</div>${fig}${answerArea}${_explainHtml}`;
   const description = (fm.description ? String(fm.description) : stripTags(promptHtml)).replace(/[[\]]/g, "").trim();
-  const hint = fm.hint ? String(fm.hint) : null;
+  // Hint may be a legacy string (one-rung ladder, unchanged forever) or a
+  // rao-master-15 ladder (list of 1-3 rungs).
+  let hint = Array.isArray(fm.hint)
+    ? fm.hint.map(String).map((s) => s.trim()).filter(Boolean)
+    : (fm.hint ? String(fm.hint) : null);
+  if (Array.isArray(hint)) {
+    if (hint.length === 0) hint = null;
+    else if (hint.length > 3)
+      issues.push({ level: "warn", code: "HINT_LADDER_TOO_LONG",
+        message: `${qid}: hint ladder has ${hint.length} rungs — the spec allows 1-3` });
+  }
+  // whyWrong: map of option text -> { code, message[, diagnostic] }.
+  // solution: list of typed blocks. Both pass through UNTOUCHED by grading;
+  // display timing is the card's job, content shape is the guards' job.
+  const whyWrong = (fm.whyWrong && typeof fm.whyWrong === "object" && !Array.isArray(fm.whyWrong)) ? fm.whyWrong : null;
+  const solution = (Array.isArray(fm.solution) && fm.solution.length > 0) ? fm.solution : null;
+  if (fm.whyWrong != null && fm.whyWrong !== "" && whyWrong == null)
+    issues.push({ level: "error", code: "FRONTMATTER_MALFORMED",
+      message: `${qid}: whyWrong is not a map of option -> {code, message}` });
+  if (fm.solution != null && fm.solution !== "" && solution == null)
+    issues.push({ level: "error", code: "FRONTMATTER_MALFORMED",
+      message: `${qid}: solution is not a list of typed blocks` });
   // GUARD: an answer the child physically cannot type is unanswerable. Map each
   // blank input's maxlength to its answer slot and compare.
   {
@@ -1589,7 +1709,10 @@ function parseQuestion(attrs, content, fm, index) {
   }
   // surface parser warnings (e.g. unknown figure dropped) per-item instead of discarding them
   warnings.forEach((w) => issues.push({ level: "warn", code: "BUILD_WARNING", message: String(w) }));
-  return { behavior: type, qIdStr: qid, description, inner, answerArr, help, hint, explain, warnings, issues };
+  // frontmatter block problems (broken ladder indentation, unparseable whyWrong
+  // lines) are authoring errors a child would otherwise never see — fail loudly.
+  (fm.__issues || []).forEach((msg) => issues.push({ level: "error", code: "FRONTMATTER_MALFORMED", message: `${qid}: ${msg}` }));
+  return { behavior: type, qIdStr: qid, description, inner, answerArr, help, hint, explain, whyWrong, solution, warnings, issues };
 }
 
 // ---- whole-file parse -------------------------------------------------------
@@ -1653,7 +1776,7 @@ function parseAuthoringHtml(html) {
       item = {
         behavior: "fill-blanks", qIdStr: bad, description: "(question failed to build)",
         inner: `<div class="prompt"><span>⚠ ${bad} could not be built.</span></div>`,
-        answerArr: [], help: "", hint: null, explain: null, warnings: [],
+        answerArr: [], help: "", hint: null, explain: null, whyWrong: null, solution: null, warnings: [],
         issues: [{ level: "error", code: "BUILD_FAILED", message: String(e && e.message || e) }],
       };
     }
@@ -2356,7 +2479,7 @@ module.exports = { attach, serialize, check, BEHAVIORS };
       var sb = styleFor(item.inner);
       var body = styleFor.applyVarDefaults ? styleFor.applyVarDefaults(item.inner) : item.inner;
       return { behavior:item.behavior, description:item.description, answer:item.answerArr, hint:item.hint||null,
-               explain:item.explain||null,
+               explain:item.explain||null, whyWrong:item.whyWrong||null, solution:item.solution||null,
                markup: sanitizeMarkup('<div class="qbody" style="min-height:var(--rz-card-floor,300px)" data-behavior="'+item.behavior+'">'+sb+body+'</div>'),
                issues:item.issues||[] };
     });
@@ -2376,5 +2499,5 @@ module.exports = { attach, serialize, check, BEHAVIORS };
     return { ok: errs === 0, errors: errs, warnings: warns, items: report };
   }
   var B = MODS["preview-behaviors"];
-  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-14"};
+  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-15"};
 })();

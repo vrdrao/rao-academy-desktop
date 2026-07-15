@@ -47,6 +47,7 @@ const FONTS_CSS = path.join(ROOT, "engine", "fonts.css");
 const FONTS_DIR = path.join(ROOT, "engine", "fonts");
 const CARD_CSS = path.join(ROOT, "engine", "rao-card.css");
 const CARD_JS = path.join(ROOT, "engine", "rao-card.js");
+const SOLUTION_JS = path.join(ROOT, "engine", "solution-renderer.js");
 const OUT_DIR = path.join(ROOT, "review");
 
 /* ---------- inputs: questions from the lesson, chrome from shared files --- */
@@ -244,6 +245,10 @@ ${source}
 ${mount}</div>
 <script>/* engine/preview-engine.js — the CURRENT engine, verbatim */
 ${safeForScript(engine)}
+</script>
+<script>/* engine/solution-renderer.js — walkthrough renderer (display-only), verbatim.
+   Loaded BEFORE the card renderer so window.RaoSolution exists when cards wire up. */
+${safeForScript(fs.readFileSync(SOLUTION_JS, "utf8").trim())}
 </script>
 <script>/* card renderer — lifted VERBATIM from ${refName} */
 ${safeForScript(renderJs)}

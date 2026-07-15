@@ -181,9 +181,98 @@ function escAttr(s) {
 }
 
 // ════════════════════════════════════════════════════════════════
+// Walkthrough — Tier 2 of the ladder (SOLUTION_SPEC §2, rao-master-15).
+//
+// NEVER dumped: blocks are revealed ONE AT A TIME. Previous steps stay
+// visible above, dimmed (.sol-dim). An "I've got it — let me try again"
+// bail-out button is present at every step. Nothing auto-advances.
+//
+// Pure display. The retry action is a callback supplied by the card
+// controller — this module has no idea what it does, and must never
+// know: resetting the card is the controller's business, not the
+// renderer's.
+// ════════════════════════════════════════════════════════════════
+
+function renderWalkthrough(opts) {
+  var normalized = normalizeExplain({
+    explain: opts && opts.explain,
+    solution: opts && opts.solution
+  });
+  if (normalized.blocks.length === 0) return "";
+
+  var items = [];
+  var stepNum = 0;
+  for (var i = 0; i < normalized.blocks.length; i++) {
+    var block = normalized.blocks[i];
+    var inner;
+    switch (block.type) {
+      case "step": stepNum++; inner = renderStep(block, stepNum); break;
+      case "figure": inner = renderFigure(block); break;
+      case "takeaway": inner = renderTakeaway(block); break;
+      case "verification": inner = renderVerification(block); break;
+      case "legacy-explain": inner = '<p class="explain">' + block.text + "</p>"; break;
+      default: inner = renderFallback(block);
+    }
+    items.push('<div class="sol-walk-item" hidden>' + inner + "</div>");
+  }
+  return (
+    '<div class="sol-walk">' +
+      '<div class="sol-walk-steps">' + items.join("") + "</div>" +
+      '<div class="sol-walk-foot">' +
+        '<button type="button" class="sol-retry">I\u2019ve got it \u2014 let me try again</button>' +
+        '<button type="button" class="sol-next">Next step</button>' +
+      "</div>" +
+    "</div>"
+  );
+}
+
+function wireWalkthrough(root, opts) {
+  if (!root) return function () {};
+  var onRetry = (opts && opts.onRetry) || function () {};
+  var items = Array.prototype.slice.call(root.querySelectorAll(".sol-walk-item"));
+  var nextBtn = root.querySelector(".sol-next");
+  var retryBtn = root.querySelector(".sol-retry");
+  if (root.__solWalkCleanup) root.__solWalkCleanup(); // idempotent re-wire
+
+  var shown = 0;
+  function reveal() {
+    if (shown >= items.length) return;
+    if (shown > 0) items[shown - 1].classList.add("sol-dim"); // history stays visible, dimmed
+    items[shown].removeAttribute("hidden");
+    shown++;
+    if (shown >= items.length && nextBtn) nextBtn.setAttribute("hidden", "");
+  }
+  function onNext() { reveal(); }
+  function onBail() { onRetry(); }
+  if (nextBtn) nextBtn.addEventListener("click", onNext);
+  if (retryBtn) retryBtn.addEventListener("click", onBail);
+  reveal(); // opening shows the FIRST step only — the child taps for the rest
+
+  root.__solWalkCleanup = function () {
+    if (nextBtn) nextBtn.removeEventListener("click", onNext);
+    if (retryBtn) retryBtn.removeEventListener("click", onBail);
+    root.__solWalkCleanup = null;
+  };
+  return root.__solWalkCleanup;
+}
+
+// ════════════════════════════════════════════════════════════════
 // Exports
 // ════════════════════════════════════════════════════════════════
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { normalizeExplain: normalizeExplain, renderSolution: renderSolution };
+  module.exports = {
+    normalizeExplain: normalizeExplain,
+    renderSolution: renderSolution,
+    renderWalkthrough: renderWalkthrough,
+    wireWalkthrough: wireWalkthrough
+  };
+}
+if (typeof window !== "undefined") {
+  window.RaoSolution = {
+    normalizeExplain: normalizeExplain,
+    renderSolution: renderSolution,
+    renderWalkthrough: renderWalkthrough,
+    wireWalkthrough: wireWalkthrough
+  };
 }

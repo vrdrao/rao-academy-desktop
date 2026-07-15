@@ -148,4 +148,46 @@ hint: Tap each dot on the grid.
   <div class="rao-construct" data-construct='{"kind":"geo-construct","cfg":{"board":{"min":0,"max":8},"shape":"polygon","targets":[[2,1],[6,1],[4,5]],"tolerance":0,"showTargets":true}}'></div>
 </div>
 
+<!--@q
+type: single-select
+answer: ["70,000"]
+hint:
+  - "Find the place each number should be rounded to."
+  - "Look at the digit just to the right of that place."
+  - "Round both numbers first, then add the rounded numbers."
+explain: 55,367 rounds to 60,000 and 12,376 rounds to 10,000; 60,000 + 10,000 = 70,000.
+whyWrong:
+  "130,000":
+    code: sum-far-too-large
+    message: "This estimate is far larger than these two numbers can reach together."
+  "60,000":
+    code: first-addend-alone
+    message: "This is only the first number rounded — the second number still needs adding."
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "55,367 → 60,000"
+    reason: The digit to the right of the ten-thousands place is 5, so round up.
+  - type: step
+    goal: Round the second number.
+    working: "12,376 → 10,000"
+    reason: The digit to the right of the ten-thousands place is 2, so round down.
+  - type: step
+    goal: Add the rounded numbers.
+    working: "60,000 + 10,000 = 70,000"
+  - type: takeaway
+    text: Round each number first, then add.
+  - type: verification
+    text: Both numbers were rounded to ten-thousands, so the estimate ends in four zeros.
+description: ladder coverage — 3-rung hint + whyWrong + walkthrough (rao-master-15)
+-->
+<div class="question">
+  <p class="prompt">Estimate 55,367 + 12,376 by rounding each number to the nearest ten thousand.</p>
+  <ul class="options">
+    <li>70,000</li>
+    <li>130,000</li>
+    <li>60,000</li>
+  </ul>
+</div>
+
 </div>
