@@ -365,6 +365,13 @@ what ships.
 - **When a test fails, investigate before blaming the test.** In this project, 3 "test
   heuristic" failures included a real authoring bug (14 questions with empty answer keys).
   The test was right; the content was wrong.
+- **Never launder an unknown into a "benign" label.** When a classification or code change
+  affects a distractor that ALREADY had a code (a collision), STOP and print the collision
+  explicitly: file, question, old code, new code. Never summarize it as "benign," "same
+  pattern," or "wins" without showing the per-item list. The reviewer decides if it is
+  benign, not the classifier. When a count does not match its predicted target (e.g.
+  expected 96, got 78), STOP and print the exact rows causing the difference before
+  proceeding. Do not explain the gap in prose and move on.
 - **A harness that silently skips files is worse than no harness.** The harness used a flat
   `readdirSync("lessons/")` for ~95 sessions and silently tested 4 files while 105 sat in
   `lessons/incoming/`. Every "green" was a claim about 4% of the bank. **Assert the corpus
