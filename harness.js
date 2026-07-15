@@ -488,7 +488,10 @@ async function runLesson(page, file, engine, css) {
     const covered = new Set();
     for (const f of files) {
       const src = sourceOf(read(f));
-      (src.match(/type:\s*[a-z-]+/g) || []).forEach(function (m) {
+      // QUESTION types only. Solution blocks in rao-master-15 frontmatter are
+      // authored as `- type: step` list items — the `(?<!- )` excludes them, so
+      // a solution-block type can never mask a missing question type.
+      (src.match(/(?<!- )\btype:\s*[a-z-]+/g) || []).forEach(function (m) {
         covered.add(m.split(":")[1].trim());
       });
     }
