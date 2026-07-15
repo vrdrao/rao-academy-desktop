@@ -9,6 +9,9 @@
  *   c) TONE — no message opens with "You forgot / You didn't / You added /
  *      You should have" unless diagnostic: true.
  *   d) HINT LEAK — runs against every rung of every hint ladder.
+ *   e) CODE REGISTRY — every whyWrong `code` exists as a `### CODE`
+ *      entry in docs/MISCONCEPTIONS.md. The code is the analytics key;
+ *      an unregistered code is silent data loss.
  *
  * Uses the real engine (build()) for question parsing — the same questions
  * the harness tests are the questions this guard checks. No second parser.
@@ -563,6 +566,68 @@ function guardHintLeak(allQuestions) {
 }
 
 // ════════════════════════════════════════════════════════════════
+// Guard E: CODE REGISTRY
+// ════════════════════════════════════════════════════════════════
+// Every whyWrong `code` must exist as a `### CODE` heading in
+// docs/MISCONCEPTIONS.md. The code is never shown to a child — it is
+// the analytics key. A typo'd or invented code passes every other
+// guard and then silently aggregates to nothing, forever.
+
+function loadCodeRegistry() {
+  const doc = fs.readFileSync(path.join(ROOT, "docs", "MISCONCEPTIONS.md"), "utf8");
+  const codes = new Set();
+  const re = /^### ([A-Z][A-Z0-9_]*)\s*$/gm;
+  let m;
+  while ((m = re.exec(doc)) !== null) codes.add(m[1]);
+  return codes;
+}
+
+function guardCodeRegistry(allQuestions) {
+  const label = "CODE REGISTRY";
+  const registry = loadCodeRegistry();
+  let checked = 0;
+  const unknown = [];
+
+  for (const { file, questions } of allQuestions) {
+    for (let qi = 0; qi < questions.length; qi++) {
+      const q = questions[qi];
+      if (!q.whyWrong) continue;
+      for (const [key, entry] of Object.entries(q.whyWrong)) {
+        checked++;
+        const code = entry && entry.code ? String(entry.code) : "";
+        if (!registry.has(code)) {
+          unknown.push(
+            `${file}:q${qi + 1} — key "${key}": code "${code || "(missing)"}" not in docs/MISCONCEPTIONS.md`
+          );
+        }
+      }
+    }
+  }
+
+  console.log(`\n  ${label}:`);
+  console.log(`    Registry codes: ${registry.size} · whyWrong codes checked: ${checked}`);
+
+  // A registry that parses to zero codes means THIS guard is broken,
+  // not that the corpus is clean. Fail loudly rather than vacuously.
+  if (registry.size === 0) {
+    console.log(`    ${C.r}FAIL${C.x} — parsed ZERO codes from docs/MISCONCEPTIONS.md — registry parser is broken`);
+    return false;
+  }
+
+  if (unknown.length) {
+    console.log(`    ${C.r}FAIL${C.x} — ${unknown.length} code(s) not in the registry`);
+    for (const u of unknown.slice(0, 10)) console.log(`      ${u}`);
+    return false;
+  }
+  if (checked === 0) {
+    console.log(`    ${C.g}PASS${C.x} — no whyWrong codes to check (vacuously true)`);
+    return true;
+  }
+  console.log(`    ${C.g}PASS${C.x} — all ${checked} codes exist in the registry`);
+  return true;
+}
+
+// ════════════════════════════════════════════════════════════════
 // Main
 // ════════════════════════════════════════════════════════════════
 
@@ -595,15 +660,16 @@ if (hintLeakOnly) {
   process.exit(hintLeakOk ? 0 : 1);
 }
 
-// Run all four guards
+// Run all five guards
 const coverageResult = guardDistractorCoverage(allQuestions);
 const keyMatchOk     = guardKeyMatch(allQuestions);
 const toneOk         = guardTone(allQuestions);
+const codeRegOk      = guardCodeRegistry(allQuestions);
 const hintLeakOk     = guardHintLeak(allQuestions);
 
 // Summary
-const passed = [coverageResult.pass, keyMatchOk, toneOk, hintLeakOk].filter(Boolean).length;
-const failed = 4 - passed;
+const passed = [coverageResult.pass, keyMatchOk, toneOk, codeRegOk, hintLeakOk].filter(Boolean).length;
+const failed = 5 - passed;
 
 console.log(`\n── ${passed} passed, ${failed} failed ──\n`);
 

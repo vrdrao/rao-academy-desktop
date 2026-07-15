@@ -158,10 +158,10 @@ hint:
 explain: 55,367 rounds to 60,000 and 12,376 rounds to 10,000; 60,000 + 10,000 = 70,000.
 whyWrong:
   "130,000":
-    code: sum-far-too-large
+    code: ESTIMATE_WRONG_VALUE
     message: "This estimate is far larger than these two numbers can reach together."
   "60,000":
-    code: first-addend-alone
+    code: PARTIAL_COMPUTATION
     message: "This is only the first number rounded — the second number still needs adding."
 solution:
   - type: step

@@ -169,7 +169,7 @@ ${source}
   else fail("wrong answer grading", `fb="${afterWrong.fb}"`);
   if (afterWrong.why && /far larger/.test(afterWrong.why)) pass("whyWrong message shown", `"${afterWrong.why.replace(/Show me/, "").trim().slice(0, 60)}…"`);
   else fail("whyWrong message", `panel="${afterWrong.why}"`);
-  if (afterWrong.log.includes("sum-far-too-large")) pass("whyWrong code logged", JSON.stringify(afterWrong.log));
+  if (afterWrong.log.includes("ESTIMATE_WRONG_VALUE")) pass("whyWrong code logged", JSON.stringify(afterWrong.log));
   else fail("whyWrong code log", JSON.stringify(afterWrong.log));
   if (afterWrong.showme) pass("Show me button present");
   else fail("Show me button", "not found");
