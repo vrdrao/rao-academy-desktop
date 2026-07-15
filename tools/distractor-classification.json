@@ -208,7 +208,7 @@
     ],
     "distractor": "74150",
     "codes": [
-      "NEAR_MISS"
+      "DROPPED_CARRY"
     ]
   },
   {
@@ -247,7 +247,7 @@
     ],
     "distractor": "77831",
     "codes": [
-      "NEAR_MISS"
+      "DROPPED_CARRY"
     ]
   },
   {
@@ -312,7 +312,7 @@
     ],
     "distractor": "62933",
     "codes": [
-      "NEAR_MISS"
+      "DROPPED_CARRY"
     ]
   },
   {
@@ -390,7 +390,7 @@
     ],
     "distractor": "70208",
     "codes": [
-      "NEAR_MISS"
+      "DROPPED_CARRY"
     ]
   },
   {
@@ -403,7 +403,7 @@
     ],
     "distractor": "72082",
     "codes": [
-      "NEAR_MISS"
+      "DROPPED_CARRY"
     ]
   },
   {
@@ -468,7 +468,7 @@
     ],
     "distractor": "79672",
     "codes": [
-      "NEAR_MISS"
+      "DROPPED_CARRY"
     ]
   },
   {
@@ -480,7 +480,9 @@
       "61625"
     ],
     "distractor": "51525",
-    "codes": []
+    "codes": [
+      "DROPPED_CARRY"
+    ]
   },
   {
     "file": "add_5digit_word_problems.html",
@@ -518,7 +520,7 @@
     ],
     "distractor": "71021",
     "codes": [
-      "NEAR_MISS"
+      "DROPPED_CARRY"
     ]
   },
   {
@@ -570,7 +572,7 @@
     ],
     "distractor": "73790",
     "codes": [
-      "NEAR_MISS"
+      "DROPPED_CARRY"
     ]
   },
   {
@@ -609,7 +611,7 @@
     ],
     "distractor": "70477",
     "codes": [
-      "NEAR_MISS"
+      "DROPPED_CARRY"
     ]
   },
   {
@@ -850,7 +852,9 @@
       "13"
     ],
     "distractor": "1",
-    "codes": []
+    "codes": [
+      "DIGIT_INSERT_OR_SHIFT"
+    ]
   },
   {
     "file": "incoming/add-subtract-multiply-divide-remix-expanded.html",
@@ -1213,7 +1217,7 @@
     ],
     "distractor": "374",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -1225,7 +1229,9 @@
       "384"
     ],
     "distractor": "484",
-    "codes": []
+    "codes": [
+      "DIGIT_INSERT_OR_SHIFT"
+    ]
   },
   {
     "file": "incoming/add-subtract-multiply-divide-remix-expanded.html",
@@ -1237,7 +1243,7 @@
     ],
     "distractor": "394",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -1250,7 +1256,7 @@
     ],
     "distractor": "542",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -1262,7 +1268,9 @@
       "552"
     ],
     "distractor": "652",
-    "codes": []
+    "codes": [
+      "DIGIT_INSERT_OR_SHIFT"
+    ]
   },
   {
     "file": "incoming/add-subtract-multiply-divide-remix-expanded.html",
@@ -1274,7 +1282,7 @@
     ],
     "distractor": "562",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -1287,7 +1295,7 @@
     ],
     "distractor": "545",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -1299,7 +1307,9 @@
       "555"
     ],
     "distractor": "655",
-    "codes": []
+    "codes": [
+      "DIGIT_INSERT_OR_SHIFT"
+    ]
   },
   {
     "file": "incoming/add-subtract-multiply-divide-remix-expanded.html",
@@ -1311,7 +1321,7 @@
     ],
     "distractor": "565",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -1324,7 +1334,7 @@
     ],
     "distractor": "709",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -1337,7 +1347,7 @@
     ],
     "distractor": "819",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -1350,7 +1360,7 @@
     ],
     "distractor": "729",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -1671,7 +1681,7 @@
     ],
     "distractor": "134",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -1694,7 +1704,9 @@
       "124"
     ],
     "distractor": "224",
-    "codes": []
+    "codes": [
+      "DIGIT_INSERT_OR_SHIFT"
+    ]
   },
   {
     "file": "incoming/add-subtract-multiply-divide-remix-expanded.html",
@@ -1706,7 +1718,7 @@
     ],
     "distractor": "175",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -1729,7 +1741,9 @@
       "165"
     ],
     "distractor": "265",
-    "codes": []
+    "codes": [
+      "DIGIT_INSERT_OR_SHIFT"
+    ]
   },
   {
     "file": "incoming/add-subtract-multiply-divide-remix-expanded.html",
@@ -1741,7 +1755,7 @@
     ],
     "distractor": "192",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -1764,7 +1778,9 @@
       "182"
     ],
     "distractor": "282",
-    "codes": []
+    "codes": [
+      "DIGIT_INSERT_OR_SHIFT"
+    ]
   },
   {
     "file": "incoming/add-subtract-multiply-divide-remix-expanded.html",
@@ -1799,7 +1815,9 @@
       "53"
     ],
     "distractor": "153",
-    "codes": []
+    "codes": [
+      "DIGIT_INSERT_OR_SHIFT"
+    ]
   },
   {
     "file": "incoming/add-subtract-multiply-divide-remix-expanded.html",
@@ -3428,7 +3446,9 @@
       "5 m"
     ],
     "distractor": "20 m",
-    "codes": []
+    "codes": [
+      "FORMULA_ERROR"
+    ]
   },
   {
     "file": "incoming/area-and-perimeter-word-problems.html",
@@ -3544,7 +3564,9 @@
       "6 cm"
     ],
     "distractor": "40 cm",
-    "codes": []
+    "codes": [
+      "FORMULA_ERROR"
+    ]
   },
   {
     "file": "incoming/area-and-perimeter-word-problems.html",
@@ -3556,7 +3578,7 @@
     ],
     "distractor": "16 cm",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -3635,6 +3657,7 @@
     ],
     "distractor": "25 m",
     "codes": [
+      "DIGIT_INSERT_OR_SHIFT",
       "OPERAND_ECHO",
       "FORMULA_ERROR"
     ]
@@ -5987,7 +6010,7 @@
     ],
     "distractor": "6",
     "codes": [
-      "PARTIAL_PRODUCT_PLACE_ERROR"
+      "DROP_LEADING_DIGIT"
     ]
   },
   {
@@ -6840,7 +6863,7 @@
     ],
     "distractor": "14",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -6910,7 +6933,7 @@
     ],
     "distractor": "13",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -6924,7 +6947,7 @@
     ],
     "distractor": "15",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -6938,7 +6961,7 @@
     ],
     "distractor": "19",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -7245,7 +7268,7 @@
     ],
     "distractor": "163",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -7273,7 +7296,7 @@
     ],
     "distractor": "161",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -7515,7 +7538,7 @@
     ],
     "distractor": "147",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -7528,7 +7551,7 @@
     ],
     "distractor": "149",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -7639,7 +7662,7 @@
     ],
     "distractor": "215",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -7652,7 +7675,7 @@
     ],
     "distractor": "364",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -7665,7 +7688,7 @@
     ],
     "distractor": "362",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -7786,7 +7809,7 @@
     ],
     "distractor": "1591",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -7881,7 +7904,7 @@
     ],
     "distractor": "274",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -7907,7 +7930,7 @@
     ],
     "distractor": "276",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -7933,7 +7956,7 @@
     ],
     "distractor": "4001",
     "codes": [
-      "WRONG_NUMBER_PAIR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -8315,7 +8338,7 @@
     ],
     "distractor": "12",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -8533,7 +8556,7 @@
     ],
     "distractor": "19",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12001,7 +12024,7 @@
     ],
     "distractor": "136",
     "codes": [
-      "OFF_BY_ONE"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12053,7 +12076,7 @@
     ],
     "distractor": "387",
     "codes": [
-      "OFF_BY_ONE"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12092,7 +12115,7 @@
     ],
     "distractor": "392",
     "codes": [
-      "OFF_BY_ONE"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12131,7 +12154,7 @@
     ],
     "distractor": "206",
     "codes": [
-      "OFF_BY_ONE"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12170,7 +12193,7 @@
     ],
     "distractor": "421",
     "codes": [
-      "OFF_BY_ONE"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12209,7 +12232,7 @@
     ],
     "distractor": "512",
     "codes": [
-      "OFF_BY_ONE"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12235,7 +12258,7 @@
     ],
     "distractor": "4",
     "codes": [
-      "OFF_BY_ONE"
+      "PATTERN_WRONG_STEP"
     ]
   },
   {
@@ -12248,7 +12271,7 @@
     ],
     "distractor": "6",
     "codes": [
-      "OFF_BY_ONE"
+      "PATTERN_WRONG_STEP"
     ]
   },
   {
@@ -12260,7 +12283,9 @@
       "5"
     ],
     "distractor": "179",
-    "codes": []
+    "codes": [
+      "DIVIDED_NOT_MULTIPLIED"
+    ]
   },
   {
     "file": "incoming/Divide larger numbers - word problems.html",
@@ -12284,7 +12309,9 @@
       "5"
     ],
     "distractor": "384",
-    "codes": []
+    "codes": [
+      "DIVIDED_NOT_MULTIPLIED"
+    ]
   },
   {
     "file": "incoming/Divide larger numbers - word problems.html",
@@ -12425,7 +12452,9 @@
       "2,814"
     ],
     "distractor": "57",
-    "codes": []
+    "codes": [
+      "DIVIDED_NOT_MULTIPLIED"
+    ]
   },
   {
     "file": "incoming/Divide larger numbers - word problems.html",
@@ -12437,7 +12466,7 @@
     ],
     "distractor": "2,824",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12450,7 +12479,7 @@
     ],
     "distractor": "2,714",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12463,7 +12492,7 @@
     ],
     "distractor": "2,845",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12475,7 +12504,9 @@
       "2,835"
     ],
     "distractor": "35",
-    "codes": []
+    "codes": [
+      "DROP_LEADING_DIGIT"
+    ]
   },
   {
     "file": "incoming/Divide larger numbers - word problems.html",
@@ -12487,7 +12518,7 @@
     ],
     "distractor": "2,735",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12617,7 +12648,7 @@
     ],
     "distractor": "426",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12630,7 +12661,7 @@
     ],
     "distractor": "406",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12642,7 +12673,9 @@
       "416"
     ],
     "distractor": "46",
-    "codes": []
+    "codes": [
+      "DIGIT_INSERT_OR_SHIFT"
+    ]
   },
   {
     "file": "incoming/Divide larger numbers - word problems.html",
@@ -12654,7 +12687,7 @@
     ],
     "distractor": "375 with 4 left over",
     "codes": [
-      "OFF_BY_ONE"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12667,7 +12700,7 @@
     ],
     "distractor": "373 with 4 left over",
     "codes": [
-      "OFF_BY_ONE"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12693,7 +12726,7 @@
     ],
     "distractor": "613",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12705,7 +12738,9 @@
       "603"
     ],
     "distractor": "63",
-    "codes": []
+    "codes": [
+      "DROP_INTERIOR_ZERO"
+    ]
   },
   {
     "file": "incoming/Divide larger numbers - word problems.html",
@@ -12729,7 +12764,9 @@
       "616"
     ],
     "distractor": "716",
-    "codes": []
+    "codes": [
+      "DIGIT_INSERT_OR_SHIFT"
+    ]
   },
   {
     "file": "incoming/Divide larger numbers - word problems.html",
@@ -12741,7 +12778,7 @@
     ],
     "distractor": "626",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12754,7 +12791,7 @@
     ],
     "distractor": "606",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12767,7 +12804,7 @@
     ],
     "distractor": "1063",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12779,7 +12816,9 @@
       "1053"
     ],
     "distractor": "153",
-    "codes": []
+    "codes": [
+      "DROP_INTERIOR_ZERO"
+    ]
   },
   {
     "file": "incoming/Divide larger numbers - word problems.html",
@@ -12791,7 +12830,7 @@
     ],
     "distractor": "1043",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12817,7 +12856,7 @@
     ],
     "distractor": "816",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -12829,7 +12868,9 @@
       "806"
     ],
     "distractor": "86",
-    "codes": []
+    "codes": [
+      "DROP_INTERIOR_ZERO"
+    ]
   },
   {
     "file": "incoming/divide-larger-numbers.html",
@@ -12919,6 +12960,7 @@
     ],
     "distractor": "14",
     "codes": [
+      "DROP_INTERIOR_ZERO",
       "OPERAND_ECHO",
       "PARTIAL_COMPUTATION"
     ]
@@ -13750,7 +13792,9 @@
       "32"
     ],
     "distractor": "2",
-    "codes": []
+    "codes": [
+      "DROP_LEADING_DIGIT"
+    ]
   },
   {
     "file": "incoming/Division_facts_to_10.html",
@@ -14275,7 +14319,7 @@
     ],
     "distractor": "5:00 P.M.",
     "codes": [
-      "NEAR_MISS"
+      "TIME_UNIT_CONFUSION"
     ]
   },
   {
@@ -14378,7 +14422,9 @@
       "1 hour 30 mins"
     ],
     "distractor": "30 mins",
-    "codes": []
+    "codes": [
+      "TIME_UNIT_CONFUSION"
+    ]
   },
   {
     "file": "incoming/Elapsed_time_remix.html",
@@ -16987,7 +17033,9 @@
       "540"
     ],
     "distractor": "450",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/estimate-products_remix.html",
@@ -18885,7 +18933,7 @@
     ],
     "distractor": "3000",
     "codes": [
-      "ROUND_WRONG_DIRECTION_SINGLE"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -18898,7 +18946,7 @@
     ],
     "distractor": "7000",
     "codes": [
-      "ROUND_WRONG_DIRECTION_SINGLE"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -18911,7 +18959,7 @@
     ],
     "distractor": "8000",
     "codes": [
-      "ROUND_WRONG_DIRECTION_SINGLE"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -19004,7 +19052,7 @@
     ],
     "distractor": "500",
     "codes": [
-      "ROUND_WRONG_DIRECTION_SINGLE"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -19017,7 +19065,7 @@
     ],
     "distractor": "400",
     "codes": [
-      "ROUND_WRONG_DIRECTION_SINGLE"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -19030,7 +19078,7 @@
     ],
     "distractor": "800",
     "codes": [
-      "ROUND_WRONG_DIRECTION_SINGLE"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -19365,7 +19413,7 @@
     ],
     "distractor": "10000",
     "codes": [
-      "ROUND_WRONG_DIRECTION_SINGLE"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -19378,7 +19426,7 @@
     ],
     "distractor": "8000",
     "codes": [
-      "ROUND_WRONG_DIRECTION_SINGLE"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -19391,7 +19439,7 @@
     ],
     "distractor": "3000",
     "codes": [
-      "ROUND_WRONG_DIRECTION_SINGLE"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -21187,7 +21235,9 @@
       "27"
     ],
     "distractor": "12",
-    "codes": []
+    "codes": [
+      "PATTERN_WRONG_STEP"
+    ]
   },
   {
     "file": "incoming/even_odd_remix.html",
@@ -21199,7 +21249,7 @@
     ],
     "distractor": "20",
     "codes": [
-      "NEAR_MISS"
+      "PATTERN_WRONG_STEP"
     ]
   },
   {
@@ -21211,7 +21261,9 @@
       "27"
     ],
     "distractor": "46",
-    "codes": []
+    "codes": [
+      "PATTERN_WRONG_STEP"
+    ]
   },
   {
     "file": "incoming/even_odd_remix.html",
@@ -21671,7 +21723,7 @@
     ],
     "distractor": "3:00 P.M.",
     "codes": [
-      "NEAR_MISS"
+      "TIME_UNIT_CONFUSION"
     ]
   },
   {
@@ -21709,7 +21761,9 @@
       "12:40 P.M."
     ],
     "distractor": "1:00 P.M.",
-    "codes": []
+    "codes": [
+      "TIME_UNIT_CONFUSION"
+    ]
   },
   {
     "file": "incoming/find-start-and-end-times-remix.html",
@@ -21799,7 +21853,7 @@
     ],
     "distractor": "5:00 P.M.",
     "codes": [
-      "PARTIAL_COMPUTATION"
+      "TIME_UNIT_CONFUSION"
     ]
   },
   {
@@ -21811,7 +21865,9 @@
       "1074"
     ],
     "distractor": "1470",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/find-the-order-remix.html",
@@ -21822,7 +21878,9 @@
       "1074"
     ],
     "distractor": "1740",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/find-the-order-remix.html",
@@ -21833,7 +21891,9 @@
       "1074"
     ],
     "distractor": "1407",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/find-the-order-remix.html",
@@ -21845,7 +21905,7 @@
     ],
     "distractor": "672",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -21857,7 +21917,9 @@
       "726"
     ],
     "distractor": "267",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/find-the-order-remix.html",
@@ -21869,7 +21931,7 @@
     ],
     "distractor": "627",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -21882,7 +21944,7 @@
     ],
     "distractor": "7321",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -21895,7 +21957,7 @@
     ],
     "distractor": "7312",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -21908,7 +21970,7 @@
     ],
     "distractor": "7231",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -21921,7 +21983,7 @@
     ],
     "distractor": "1928",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -21933,7 +21995,9 @@
       "1982"
     ],
     "distractor": "1289",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/find-the-order-remix.html",
@@ -21944,7 +22008,9 @@
       "1982"
     ],
     "distractor": "1298",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/find-the-order-remix.html",
@@ -21955,7 +22021,9 @@
       "345"
     ],
     "distractor": "453",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/find-the-order-remix.html",
@@ -21966,7 +22034,9 @@
       "345"
     ],
     "distractor": "543",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/find-the-order-remix.html",
@@ -21977,7 +22047,9 @@
       "345"
     ],
     "distractor": "435",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/find-the-order-remix.html",
@@ -21989,7 +22061,7 @@
     ],
     "distractor": "2945",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -22002,7 +22074,7 @@
     ],
     "distractor": "2549",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -22015,7 +22087,7 @@
     ],
     "distractor": "2594",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -22027,7 +22099,9 @@
       "158"
     ],
     "distractor": "518",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/find-the-order-remix.html",
@@ -22038,7 +22112,9 @@
       "158"
     ],
     "distractor": "581",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/find-the-order-remix.html",
@@ -22049,7 +22125,9 @@
       "158"
     ],
     "distractor": "185",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/find-the-order-remix.html",
@@ -22106,7 +22184,7 @@
     ],
     "distractor": "7204",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -22119,7 +22197,7 @@
     ],
     "distractor": "7240",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -22132,7 +22210,7 @@
     ],
     "distractor": "7042",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -22145,7 +22223,7 @@
     ],
     "distractor": "1234",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -22158,7 +22236,7 @@
     ],
     "distractor": "1243",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -22171,7 +22249,7 @@
     ],
     "distractor": "1324",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -22680,6 +22758,7 @@
     ],
     "distractor": "22",
     "codes": [
+      "DIGIT_INSERT_OR_SHIFT",
       "PARTIAL_COMPUTATION"
     ]
   },
@@ -25228,7 +25307,7 @@
     ],
     "distractor": "29",
     "codes": [
-      "OFF_BY_ONE"
+      "PATTERN_WRONG_STEP"
     ]
   },
   {
@@ -25254,7 +25333,7 @@
     ],
     "distractor": "34",
     "codes": [
-      "OFF_BY_ONE"
+      "PATTERN_WRONG_STEP"
     ]
   },
   {
@@ -25384,7 +25463,7 @@
     ],
     "distractor": "37",
     "codes": [
-      "OFF_BY_ONE"
+      "PATTERN_WRONG_STEP"
     ]
   },
   {
@@ -25506,7 +25585,7 @@
     ],
     "distractor": "81",
     "codes": [
-      "OFF_BY_ONE"
+      "PATTERN_WRONG_STEP"
     ]
   },
   {
@@ -25571,7 +25650,7 @@
     ],
     "distractor": "32",
     "codes": [
-      "OFF_BY_ONE"
+      "PATTERN_WRONG_STEP"
     ]
   },
   {
@@ -25688,7 +25767,7 @@
     ],
     "distractor": "38",
     "codes": [
-      "OFF_BY_ONE"
+      "PATTERN_WRONG_STEP"
     ]
   },
   {
@@ -25727,7 +25806,7 @@
     ],
     "distractor": "83",
     "codes": [
-      "OFF_BY_ONE"
+      "PATTERN_WRONG_STEP"
     ]
   },
   {
@@ -27034,7 +27113,7 @@
     ],
     "distractor": "2050 cm",
     "codes": [
-      "WRONG_UNIT_CHOSEN"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -27311,7 +27390,7 @@
     ],
     "distractor": "20 cm",
     "codes": [
-      "WRONG_UNIT_CHOSEN"
+      "DROP_LEADING_DIGIT"
     ]
   },
   {
@@ -27391,7 +27470,7 @@
     ],
     "distractor": "885",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -27404,7 +27483,7 @@
     ],
     "distractor": "865",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -27440,7 +27519,9 @@
       "13.81"
     ],
     "distractor": "3.71",
-    "codes": []
+    "codes": [
+      "DROP_LEADING_DIGIT"
+    ]
   },
   {
     "file": "incoming/money_add_subtract_remix.html",
@@ -27465,7 +27546,7 @@
     ],
     "distractor": "639",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -27489,7 +27570,7 @@
     ],
     "distractor": "749",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -27513,7 +27594,7 @@
     ],
     "distractor": "181",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -27526,7 +27607,7 @@
     ],
     "distractor": "161",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -27539,7 +27620,7 @@
     ],
     "distractor": "1518",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -27615,7 +27696,7 @@
     ],
     "distractor": "1.36",
     "codes": [
-      "CARRY_DROPPED"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -27852,7 +27933,7 @@
     ],
     "distractor": "108116",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -27926,7 +28007,7 @@
     ],
     "distractor": "6297",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -27963,7 +28044,7 @@
     ],
     "distractor": "7434",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -27976,7 +28057,7 @@
     ],
     "distractor": "7414",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -28048,7 +28129,7 @@
     ],
     "distractor": "179",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -28083,7 +28164,7 @@
     ],
     "distractor": "32273",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -28096,7 +28177,7 @@
     ],
     "distractor": "32293",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -28109,7 +28190,7 @@
     ],
     "distractor": "19",
     "codes": [
-      "MULTI_STEP_ERROR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -28135,7 +28216,7 @@
     ],
     "distractor": "39",
     "codes": [
-      "MULTI_STEP_ERROR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -29457,17 +29538,6 @@
   },
   {
     "file": "incoming/multiplication-patterns-over-increasing-place-values.html",
-    "qIndex": 14,
-    "prompt": "Rohan says 40 × 50 = 200. He is wrong. What is the correct answer?",
-    "type": "single-select",
-    "answer": [
-      "2000"
-    ],
-    "distractor": "900",
-    "codes": []
-  },
-  {
-    "file": "incoming/multiplication-patterns-over-increasing-place-values.html",
     "qIndex": 15,
     "prompt": "50 × 40 = ? How many zeros are at the end of the answer?",
     "type": "single-select",
@@ -30242,7 +30312,9 @@
       "0"
     ],
     "distractor": "60",
-    "codes": []
+    "codes": [
+      "DIGIT_INSERT_OR_SHIFT"
+    ]
   },
   {
     "file": "incoming/Multiplication_facts_to_10_remix.html",
@@ -30348,7 +30420,9 @@
       "81"
     ],
     "distractor": "18",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/Multiplication_facts_to_10_remix.html",
@@ -30584,7 +30658,7 @@
     ],
     "distractor": "1317",
     "codes": [
-      "PARTIAL_PRODUCT_PLACE_ERROR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -30675,7 +30749,7 @@
     ],
     "distractor": "1439",
     "codes": [
-      "PARTIAL_PRODUCT_PLACE_ERROR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -30688,7 +30762,7 @@
     ],
     "distractor": "659",
     "codes": [
-      "PARTIAL_PRODUCT_PLACE_ERROR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -30792,7 +30866,7 @@
     ],
     "distractor": "1874",
     "codes": [
-      "PARTIAL_PRODUCT_PLACE_ERROR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -30831,7 +30905,7 @@
     ],
     "distractor": "1311",
     "codes": [
-      "PARTIAL_PRODUCT_PLACE_ERROR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -30896,7 +30970,7 @@
     ],
     "distractor": "1269",
     "codes": [
-      "PARTIAL_PRODUCT_PLACE_ERROR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -31015,7 +31089,7 @@
     ],
     "distractor": "5070",
     "codes": [
-      "PARTIAL_PRODUCT_PLACE_ERROR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -31094,7 +31168,7 @@
     ],
     "distractor": "3117",
     "codes": [
-      "PARTIAL_PRODUCT_PLACE_ERROR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -31427,7 +31501,7 @@
     ],
     "distractor": "11780",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -31982,7 +32056,7 @@
     ],
     "distractor": "150",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32190,7 +32264,7 @@
     ],
     "distractor": "155",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32268,7 +32342,7 @@
     ],
     "distractor": "316",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32307,7 +32381,7 @@
     ],
     "distractor": "310",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32333,7 +32407,7 @@
     ],
     "distractor": "150",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32346,7 +32420,7 @@
     ],
     "distractor": "170",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32385,7 +32459,7 @@
     ],
     "distractor": "548",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32424,7 +32498,7 @@
     ],
     "distractor": "950",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32475,7 +32549,9 @@
       "909"
     ],
     "distractor": "99",
-    "codes": []
+    "codes": [
+      "DROP_INTERIOR_ZERO"
+    ]
   },
   {
     "file": "incoming/Multiply_1x3-4digit_REMIX.html",
@@ -32487,7 +32563,7 @@
     ],
     "distractor": "919",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32512,7 +32588,9 @@
       "808"
     ],
     "distractor": "88",
-    "codes": []
+    "codes": [
+      "DROP_INTERIOR_ZERO"
+    ]
   },
   {
     "file": "incoming/Multiply_1x3-4digit_REMIX.html",
@@ -32550,7 +32628,7 @@
     ],
     "distractor": "1052",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32563,7 +32641,7 @@
     ],
     "distractor": "1142",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32576,7 +32654,7 @@
     ],
     "distractor": "1252",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32602,7 +32680,7 @@
     ],
     "distractor": "2410",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32654,7 +32732,7 @@
     ],
     "distractor": "25820",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32693,7 +32771,7 @@
     ],
     "distractor": "71929",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32706,7 +32784,7 @@
     ],
     "distractor": "61484",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32719,7 +32797,7 @@
     ],
     "distractor": "60584",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32745,7 +32823,7 @@
     ],
     "distractor": "17162",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32771,7 +32849,7 @@
     ],
     "distractor": "16172",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32784,7 +32862,7 @@
     ],
     "distractor": "42030",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -32823,7 +32901,7 @@
     ],
     "distractor": "35348",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -32901,7 +32979,7 @@
     ],
     "distractor": "871",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -33135,7 +33213,7 @@
     ],
     "distractor": "3,588",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -33148,7 +33226,7 @@
     ],
     "distractor": "2,885",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -33213,7 +33291,7 @@
     ],
     "distractor": "9,180",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -33291,7 +33369,7 @@
     ],
     "distractor": "3,009",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -33317,7 +33395,7 @@
     ],
     "distractor": "2,008",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -33369,7 +33447,7 @@
     ],
     "distractor": "428",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -33473,7 +33551,7 @@
     ],
     "distractor": "6,176",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -33564,7 +33642,7 @@
     ],
     "distractor": "1,041",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -33772,7 +33850,7 @@
     ],
     "distractor": "6,199",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -33785,7 +33863,7 @@
     ],
     "distractor": "6,990",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -33876,7 +33954,7 @@
     ],
     "distractor": "3,009",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -33902,7 +33980,7 @@
     ],
     "distractor": "2,008",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -34101,7 +34179,7 @@
     ],
     "distractor": "6,199",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -34114,7 +34192,7 @@
     ],
     "distractor": "6,990",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -34244,7 +34322,7 @@
     ],
     "distractor": "5,382",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -34257,7 +34335,7 @@
     ],
     "distractor": "5,823",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -34270,7 +34348,7 @@
     ],
     "distractor": "8,532",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -34350,7 +34428,7 @@
     ],
     "distractor": "3,060",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -34363,7 +34441,7 @@
     ],
     "distractor": "3,600",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -34376,7 +34454,7 @@
     ],
     "distractor": "306",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DROP_INTERIOR_ZERO"
     ]
   },
   {
@@ -34495,7 +34573,7 @@
     ],
     "distractor": "7,848",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -34521,7 +34599,7 @@
     ],
     "distractor": "4,788",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -34534,7 +34612,7 @@
     ],
     "distractor": "6,726",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -34560,7 +34638,7 @@
     ],
     "distractor": "2,676",
     "codes": [
-      "DIGIT_CONFUSION"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -35056,7 +35134,9 @@
       "400"
     ],
     "distractor": "310",
-    "codes": []
+    "codes": [
+      "PATTERN_WRONG_STEP"
+    ]
   },
   {
     "file": "incoming/number-patterns-mixed-review-remix.html",
@@ -35094,7 +35174,9 @@
       "500"
     ],
     "distractor": "200",
-    "codes": []
+    "codes": [
+      "PATTERN_WRONG_STEP"
+    ]
   },
   {
     "file": "incoming/number-patterns-mixed-review-remix.html",
@@ -35131,7 +35213,9 @@
       "250"
     ],
     "distractor": "205",
-    "codes": []
+    "codes": [
+      "DIGIT_REARRANGE"
+    ]
   },
   {
     "file": "incoming/number-patterns-mixed-review-remix.html",
@@ -35519,7 +35603,9 @@
       "4, 8, 12, 16"
     ],
     "distractor": "2, 4, 6, 8",
-    "codes": []
+    "codes": [
+      "PATTERN_WRONG_STEP"
+    ]
   },
   {
     "file": "incoming/number-patterns-word-problems-remix.html",
@@ -35530,7 +35616,9 @@
       "4, 8, 12, 16"
     ],
     "distractor": "4, 6, 8, 10",
-    "codes": []
+    "codes": [
+      "PATTERN_WRONG_STEP"
+    ]
   },
   {
     "file": "incoming/number-patterns-word-problems-remix.html",
@@ -35541,7 +35629,9 @@
       "4, 8, 12, 16"
     ],
     "distractor": "1, 4, 8, 12",
-    "codes": []
+    "codes": [
+      "PATTERN_WRONG_STEP"
+    ]
   },
   {
     "file": "incoming/number-patterns-word-problems-remix.html",
@@ -37219,7 +37309,9 @@
       "20 cm"
     ],
     "distractor": "48 cm",
-    "codes": []
+    "codes": [
+      "AREA_FOR_PERIMETER"
+    ]
   },
   {
     "file": "incoming/perimeter_remix.html",
@@ -37363,7 +37455,7 @@
     ],
     "distractor": "438",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -37376,7 +37468,7 @@
     ],
     "distractor": "843",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -37402,7 +37494,7 @@
     ],
     "distractor": "1308",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -37415,7 +37507,7 @@
     ],
     "distractor": "138",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DROP_INTERIOR_ZERO"
     ]
   },
   {
@@ -37428,7 +37520,7 @@
     ],
     "distractor": "1380",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -37441,7 +37533,7 @@
     ],
     "distractor": "435",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DROP_INTERIOR_ZERO"
     ]
   },
   {
@@ -37454,7 +37546,7 @@
     ],
     "distractor": "4350",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -37467,7 +37559,7 @@
     ],
     "distractor": "4305",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -37506,7 +37598,7 @@
     ],
     "distractor": "648",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -37532,7 +37624,7 @@
     ],
     "distractor": "6478",
     "codes": [
-      "VISUAL_DEPENDENT"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -37545,7 +37637,7 @@
     ],
     "distractor": "22016",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -37710,7 +37802,7 @@
     ],
     "distractor": "87298",
     "codes": [
-      "NEAR_MISS"
+      "DIGIT_REARRANGE"
     ]
   },
   {
@@ -37722,7 +37814,9 @@
       "87928"
     ],
     "distractor": "8798",
-    "codes": []
+    "codes": [
+      "DIGIT_INSERT_OR_SHIFT"
+    ]
   },
   {
     "file": "incoming/Place_values_remix.html",
@@ -37733,7 +37827,9 @@
       "87928"
     ],
     "distractor": "879208",
-    "codes": []
+    "codes": [
+      "DIGIT_INSERT_OR_SHIFT"
+    ]
   },
   {
     "file": "incoming/Place_values_remix.html",
@@ -38364,7 +38460,7 @@
     ],
     "distractor": "99",
     "codes": [
-      "WRONG_UNIT_CHOSEN"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -38826,7 +38922,7 @@
     ],
     "distractor": "66",
     "codes": [
-      "WRONG_UNIT_CHOSEN"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -39840,7 +39936,7 @@
     ],
     "distractor": "₹1",
     "codes": [
-      "OFF_BY_ONE"
+      "DIVIDED_NOT_MULTIPLIED"
     ]
   },
   {
@@ -40000,7 +40096,7 @@
     ],
     "distractor": "₹1",
     "codes": [
-      "OFF_BY_ONE"
+      "DIVIDED_NOT_MULTIPLIED"
     ]
   },
   {
@@ -42133,7 +42229,7 @@
     ],
     "distractor": "40",
     "codes": [
-      "NEAR_MISS"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -42146,7 +42242,7 @@
     ],
     "distractor": "70",
     "codes": [
-      "NEAR_MISS"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -42159,7 +42255,7 @@
     ],
     "distractor": "100",
     "codes": [
-      "NEAR_MISS"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -42212,7 +42308,9 @@
       "400"
     ],
     "distractor": "300",
-    "codes": []
+    "codes": [
+      "ROUND_WRONG_WAY"
+    ]
   },
   {
     "file": "incoming/rounding_remix.html",
@@ -42223,7 +42321,9 @@
       "300"
     ],
     "distractor": "200",
-    "codes": []
+    "codes": [
+      "ROUND_WRONG_WAY"
+    ]
   },
   {
     "file": "incoming/rounding_remix.html",
@@ -42235,7 +42335,7 @@
     ],
     "distractor": "600",
     "codes": [
-      "NEAR_MISS"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -42286,7 +42386,9 @@
       "5000"
     ],
     "distractor": "4000",
-    "codes": []
+    "codes": [
+      "ROUND_WRONG_WAY"
+    ]
   },
   {
     "file": "incoming/rounding_remix.html",
@@ -42298,7 +42400,7 @@
     ],
     "distractor": "2000",
     "codes": [
-      "DOUBLE_OR_HALF"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -42311,6 +42413,7 @@
     ],
     "distractor": "3000",
     "codes": [
+      "DIGIT_INSERT_OR_SHIFT",
       "OPERAND_ECHO"
     ]
   },
@@ -42324,7 +42427,7 @@
     ],
     "distractor": "40",
     "codes": [
-      "NEAR_MISS"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -42336,7 +42439,9 @@
       "600"
     ],
     "distractor": "700",
-    "codes": []
+    "codes": [
+      "ROUND_WRONG_WAY"
+    ]
   },
   {
     "file": "incoming/rounding_remix.html",
@@ -42361,6 +42466,7 @@
     ],
     "distractor": "6000",
     "codes": [
+      "DIGIT_INSERT_OR_SHIFT",
       "OPERAND_ECHO"
     ]
   },
@@ -42374,7 +42480,7 @@
     ],
     "distractor": "60000",
     "codes": [
-      "NEAR_MISS"
+      "ROUND_WRONG_WAY"
     ]
   },
   {
@@ -42386,7 +42492,9 @@
       "40000"
     ],
     "distractor": "50000",
-    "codes": []
+    "codes": [
+      "ROUND_WRONG_WAY"
+    ]
   },
   {
     "file": "incoming/rounding_remix.html",
@@ -47172,7 +47280,9 @@
       "60"
     ],
     "distractor": "45",
-    "codes": []
+    "codes": [
+      "TIME_UNIT_CONFUSION"
+    ]
   },
   {
     "file": "incoming/Time_patterns_1to1.html",
@@ -47183,7 +47293,9 @@
       "60"
     ],
     "distractor": "90",
-    "codes": []
+    "codes": [
+      "TIME_UNIT_CONFUSION"
+    ]
   },
   {
     "file": "incoming/Time_patterns_1to1.html",
@@ -47259,7 +47371,9 @@
       "30"
     ],
     "distractor": "45",
-    "codes": []
+    "codes": [
+      "TIME_UNIT_CONFUSION"
+    ]
   },
   {
     "file": "incoming/Time_patterns_1to1.html",
@@ -47387,7 +47501,9 @@
       "120"
     ],
     "distractor": "100",
-    "codes": []
+    "codes": [
+      "TIME_UNIT_CONFUSION"
+    ]
   },
   {
     "file": "incoming/Time_patterns_1to1.html",
@@ -47411,7 +47527,9 @@
       "120"
     ],
     "distractor": "150",
-    "codes": []
+    "codes": [
+      "TIME_UNIT_CONFUSION"
+    ]
   },
   {
     "file": "incoming/Time_patterns_1to1.html",
@@ -47554,7 +47672,7 @@
     ],
     "distractor": "3:00",
     "codes": [
-      "OFF_BY_ONE"
+      "TIME_UNIT_CONFUSION"
     ]
   },
   {
@@ -47741,7 +47859,7 @@
     ],
     "distractor": "1:00",
     "codes": [
-      "NEAR_MISS"
+      "TIME_UNIT_CONFUSION"
     ]
   },
   {
@@ -47885,7 +48003,7 @@
     ],
     "distractor": "8:00",
     "codes": [
-      "NEAR_MISS"
+      "TIME_UNIT_CONFUSION"
     ]
   },
   {
@@ -47949,7 +48067,9 @@
       "90"
     ],
     "distractor": "60",
-    "codes": []
+    "codes": [
+      "TIME_UNIT_CONFUSION"
+    ]
   },
   {
     "file": "incoming/Time_patterns_remix.html",
@@ -47960,7 +48080,9 @@
       "90"
     ],
     "distractor": "30",
-    "codes": []
+    "codes": [
+      "TIME_UNIT_CONFUSION"
+    ]
   },
   {
     "file": "incoming/Time_patterns_remix.html",
@@ -47971,7 +48093,9 @@
       "90"
     ],
     "distractor": "120",
-    "codes": []
+    "codes": [
+      "TIME_UNIT_CONFUSION"
+    ]
   },
   {
     "file": "incoming/Time_patterns_remix.html",
@@ -48009,7 +48133,7 @@
     ],
     "distractor": "5:00",
     "codes": [
-      "NEAR_MISS"
+      "TIME_UNIT_CONFUSION"
     ]
   },
   {
@@ -48132,7 +48256,9 @@
       "20"
     ],
     "distractor": "60",
-    "codes": []
+    "codes": [
+      "TIME_UNIT_CONFUSION"
+    ]
   },
   {
     "file": "incoming/Time_patterns_remix.html",
@@ -49945,7 +50071,9 @@
       "1 hour 45 minutes"
     ],
     "distractor": "45 minutes",
-    "codes": []
+    "codes": [
+      "TIME_UNIT_CONFUSION"
+    ]
   },
   {
     "file": "incoming/transportation_24h_more15.html",
@@ -51525,7 +51653,7 @@
     ],
     "distractor": "24.48",
     "codes": [
-      "WRONG_UNIT_CHOSEN"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -51842,7 +51970,7 @@
     ],
     "distractor": "118",
     "codes": [
-      "MULTI_STEP_ERROR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {
@@ -52401,7 +52529,7 @@
     ],
     "distractor": "134",
     "codes": [
-      "MULTI_STEP_ERROR"
+      "DIGIT_INSERT_OR_SHIFT"
     ]
   },
   {

@@ -197,6 +197,36 @@ function classify(q, d) {
     }
   }
 
+  // ── TIME_UNIT_CONFUSION — wrong conversion, fraction-of-hour, block count ──
+  if (file.match(/time|elapsed|transport|schedule|start.*end/i) ||
+      prompt.match(/minutes|hours|half.?hour|how long/i)) {
+    const cvT = parseNum(q.answer[0]);
+    const dvT = parseNum(d.value);
+    if (!isNaN(cvT) && !isNaN(dvT)) {
+      // Fraction-of-hour values substituted: 45 for 60, 90 for 60, 45 for 30, etc.
+      const fracHourPairs = [
+        [60, 45], [60, 90], [30, 45], [120, 100], [120, 150],
+        [90, 60], [90, 30], [90, 120], [20, 60],
+      ];
+      for (const [c, d2] of fracHourPairs) {
+        if (cvT === c && dvT === d2) { codes.push('TIME_UNIT_CONFUSION'); break; }
+      }
+    }
+    // Duration component dropped: "1 hour 45 minutes" answer, "45 minutes" distractor
+    if (ansStr.match(/\d+\s*hours?\s+\d+\s*min/i) && dStr.match(/^\d+\s*min/i) && !dStr.match(/hour/i)) {
+      codes.push('TIME_UNIT_CONFUSION');
+    }
+    // Clock time rounded to next hour: answer 12:40, distractor 1:00
+    if (!isNaN(parseTime(q.answer[0])) && !isNaN(parseTime(d.value))) {
+      const aMin = parseTime(q.answer[0]) % 60;
+      const dMin = parseTime(d.value) % 60;
+      if (aMin !== 0 && dMin === 0 && Math.abs(parseTime(d.value) - parseTime(q.answer[0])) <= 60) {
+        codes.push('TIME_UNIT_CONFUSION');
+      }
+    }
+    if (codes.length > 0) return [...new Set(codes)];
+  }
+
   // Unit comparison ("19 kilometres" vs "19 millimetres")
   if (/\b(kilomet|millimet|centimet|met)\w*/i.test(ansStr) &&
       /\b(kilomet|millimet|centimet|met)\w*/i.test(dStr)) {
@@ -327,13 +357,32 @@ function classify(q, d) {
         if (cv === perim || cv === 4 * l) {
           if (dv === area || dv === l * w) return ['AREA_FOR_PERIMETER'];
           if (dv === halfP || dv === 2 * l) return ['FORGOT_DOUBLE_PERIMETER'];
+          if (dv === 2 * area) return ['AREA_FOR_PERIMETER'];
         }
       }
-      // Missing side from perimeter
-      if (prompt.match(/perimeter.*\d+|width|missing/i)) {
-        // These are formula manipulation — near miss
+      // "area of X is A, length is L, what is width?" → cv = A/L, distractor = A−L
+      if (prompt.match(/width|missing/i) && dims.length >= 2) {
+        if (cv === dims[0] / dims[1] && dv === dims[0] - dims[1]) return ['FORMULA_ERROR'];
+        if (cv === dims[1] / dims[0] && dv === dims[1] - dims[0]) return ['FORMULA_ERROR'];
+        // perimeter-based: cv = (P/2)−L, distractor = P−L
+        if (dv === dims[0] - dims[1] && dv !== cv) return ['FORMULA_ERROR'];
       }
     }
+  }
+
+  // ── ROUND_WRONG_WAY — "Which P is N closest to?" ──
+  if (prompt.match(/closest to/i) && nums.length >= 1) {
+    for (const n of nums) {
+      if (n < 10) continue;
+      for (const place of [10, 100, 1000, 10000, 100000]) {
+        const lo = floorTo(n, place);
+        const hi = lo + place;
+        if (lo === n) continue; // exact multiple
+        if (cv === hi && dv === lo) { codes.push('ROUND_WRONG_WAY'); }
+        if (cv === lo && dv === hi) { codes.push('ROUND_WRONG_WAY'); }
+      }
+    }
+    if (codes.length > 0) return [...new Set(codes)];
   }
 
   // ── ESTIMATION / ROUNDING ──
@@ -465,11 +514,14 @@ function classify(q, d) {
     }
 
     // Division patterns — broader detection
-    if (b !== 0 && prompt.match(/divid|quotient|÷|how many|shared.*equal|split|each|hold|per\b|needed|shirts?|bracelets?|boxes?|bags?|groups?|rows?|teams?|buses?|packages?|buttons?|beads?|sweets?/i)) {
+    if (b !== 0 && prompt.match(/divid|quotient|÷|how many|shared.*equal|split|each|hold|per\b|needed|shirts?|bracelets?|boxes?|bags?|groups?|rows?|teams?|buses?|packages?|buttons?|beads?|sweets?|left\s*over|loose|keeps?|remain/i)) {
       if (dv === b && cv !== b) codes.push('DIVISOR_AS_ANSWER');
       if (dv === a && cv !== a) codes.push('OPERAND_ECHO');
       const rem = a % b;
+      const quot = Math.floor(a / b);
       if (rem !== 0 && dv === rem && cv !== rem) codes.push('REMAINDER_AS_ANSWER');
+      // Gave quotient when answer is remainder (or vice versa)
+      if (cv === rem && dv === quot) codes.push('DIVIDED_NOT_MULTIPLIED');
       if (cv === Math.ceil(a / b) && dv === Math.floor(a / b)) codes.push('QUOTIENT_OFF_BY_ONE');
       if (cv === Math.floor(a / b) && dv === Math.ceil(a / b)) codes.push('QUOTIENT_OFF_BY_ONE');
       // Digit swap in quotient (e.g., 104 vs 140)
@@ -487,6 +539,45 @@ function classify(q, d) {
         if (diff === -pow) codes.push('CARRY_DROPPED');
         if (diff === pow) codes.push('CARRY_EXTRA');
       }
+
+      // DROPPED_CARRY: column-by-column addition with carries omitted.
+      // Check: (1) single carry dropped, (2) all carries dropped (no-carry-at-all).
+      if (codes.length === 0 && !isNaN(a) && !isNaN(b) && cv === a + b) {
+        const aS = String(Math.round(a)).padStart(8, '0');
+        const bS = String(Math.round(b)).padStart(8, '0');
+        // No-carry-at-all: add each column independently
+        const noCarry = [];
+        for (let col = 7; col >= 0; col--) {
+          noCarry[col] = (parseInt(aS[col]) + parseInt(bS[col])) % 10;
+        }
+        if (parseInt(noCarry.join('')) === Math.round(dv) && Math.round(dv) !== Math.round(cv)) {
+          codes.push('DROPPED_CARRY');
+        }
+        // Single carry dropped
+        if (codes.length === 0) {
+          const digits = [];
+          let carry = 0;
+          for (let col = 7; col >= 0; col--) {
+            const sum = parseInt(aS[col]) + parseInt(bS[col]) + carry;
+            digits[col] = sum % 10;
+            carry = Math.floor(sum / 10);
+          }
+          for (let dropCol = 6; dropCol >= 0; dropCol--) {
+            const trial = [...digits];
+            let c2 = 0;
+            for (let col = dropCol; col >= 0; col--) {
+              const sum2 = parseInt(aS[col]) + parseInt(bS[col]) + c2;
+              trial[col] = sum2 % 10;
+              c2 = Math.floor(sum2 / 10);
+            }
+            const trialNum = parseInt(trial.join(''));
+            if (trialNum === Math.round(dv) && trialNum !== Math.round(cv)) {
+              codes.push('DROPPED_CARRY');
+              break;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -496,6 +587,97 @@ function classify(q, d) {
       const pow = Math.pow(10, k);
       if (Math.abs(dv - cv * pow) < 0.01) codes.push('PLACE_SHIFT_UP');
       if (Math.abs(dv * pow - cv) < 0.01) codes.push('PLACE_SHIFT_DOWN');
+    }
+  }
+
+  // ── DROP_INTERIOR_ZERO — correct has interior 0, distractor drops it ──
+  if (codes.length === 0 && !isNaN(cv) && !isNaN(dv) && cv !== dv) {
+    const cvS = String(Math.round(cv));
+    const dvS = String(Math.round(dv));
+    if (cvS.length === dvS.length + 1) {
+      for (let j = 1; j < cvS.length - 1; j++) {
+        if (cvS[j] === '0' && parseInt(cvS.slice(0, j) + cvS.slice(j + 1)) === Math.round(dv)) {
+          codes.push('DROP_INTERIOR_ZERO');
+          break;
+        }
+      }
+    }
+  }
+
+  // ── DROP_LEADING_DIGIT — distractor is correct with leading digit(s) removed ──
+  // Guard: skip time/clock files (time values like 12:55→2:55 are not digit-drops)
+  if (codes.length === 0 && !isNaN(cv) && !isNaN(dv) && cv !== dv &&
+      !file.match(/time|elapsed|transport|schedule|clock/i)) {
+    const cvS = String(Math.round(cv));
+    const dvS = String(Math.round(dv));
+    if (cvS.length > dvS.length && cvS.endsWith(dvS)) {
+      codes.push('DROP_LEADING_DIGIT');
+    }
+  }
+
+  // ── DIGIT_INSERT_OR_SHIFT — one digit inserted/deleted (len±1) or one digit changed ±1 ──
+  // Guard: skip time/clock files (clock values parsed as fake integers)
+  if (codes.length === 0 && !isNaN(cv) && !isNaN(dv) && cv !== dv &&
+      !file.match(/time|elapsed|transport|schedule|clock/i)) {
+    const cvS = String(Math.round(cv));
+    const dvS = String(Math.round(dv));
+    // Inserted digit: distractor is one digit longer
+    if (dvS.length === cvS.length + 1) {
+      let ci = 0;
+      for (let di = 0; di < dvS.length && ci < cvS.length; di++) {
+        if (dvS[di] === cvS[ci]) ci++;
+      }
+      if (ci === cvS.length) codes.push('DIGIT_INSERT_OR_SHIFT');
+    }
+    // Deleted digit: distractor is one digit shorter (correct is subsequence source)
+    if (cvS.length === dvS.length + 1) {
+      let di = 0;
+      for (let ci2 = 0; ci2 < cvS.length && di < dvS.length; ci2++) {
+        if (cvS[ci2] === dvS[di]) di++;
+      }
+      if (di === dvS.length) codes.push('DIGIT_INSERT_OR_SHIFT');
+    }
+    // Single digit changed by ±1
+    if (cvS.length === dvS.length && cvS.length >= 3) {
+      let diffCount = 0, diffPos = -1;
+      for (let j = 0; j < cvS.length; j++) {
+        if (cvS[j] !== dvS[j]) { diffCount++; diffPos = j; }
+      }
+      if (diffCount === 1 && Math.abs(parseInt(cvS[diffPos]) - parseInt(dvS[diffPos])) === 1) {
+        codes.push('DIGIT_INSERT_OR_SHIFT');
+      }
+    }
+  }
+
+  // ── DIGIT_REARRANGE — same digits, different order ──
+  // Guard: integers only (no decimals — those are comparison/money questions, not digit swaps)
+  if (codes.length === 0 && !isNaN(cv) && !isNaN(dv) && cv !== dv &&
+      isInteger(cv) && isInteger(dv)) {
+    const cvD = String(Math.round(cv)).split('').sort().join('');
+    const dvD = String(Math.round(dv)).split('').sort().join('');
+    if (cvD === dvD && cvD.length >= 2) {
+      codes.push('DIGIT_REARRANGE');
+    }
+  }
+
+  // ── DIVIDED_NOT_MULTIPLIED — distractor = a/b when correct = a*b ──
+  if (codes.length === 0 && !isNaN(a) && !isNaN(b) && b !== 0 && a !== 0) {
+    if (cv === a * b) {
+      if (dv === Math.floor(a / b) || dv === Math.floor(b / a)) {
+        codes.push('DIVIDED_NOT_MULTIPLIED');
+      }
+    }
+    // Also check all prompt number pairs
+    if (codes.length === 0) {
+      for (let i = 0; i < nums.length; i++) {
+        for (let j = 0; j < nums.length; j++) {
+          if (i === j || nums[j] === 0) continue;
+          if (cv === nums[i] * nums[j] && dv === Math.floor(nums[i] / nums[j])) {
+            codes.push('DIVIDED_NOT_MULTIPLIED');
+          }
+        }
+        if (codes.includes('DIVIDED_NOT_MULTIPLIED')) break;
+      }
     }
   }
 
@@ -617,6 +799,65 @@ function classify(q, d) {
   // ── CHOOSE-NUMBER (select number satisfying a condition) ──
   if (codes.length === 0 && file.match(/choose.?number|particular.?(quotient|difference|sum|product)/i)) {
     codes.push('WRONG_NUMBER_PAIR');
+  }
+
+  // ── PATTERN_WRONG_STEP — wrong increment/step in a pattern or parity question ──
+  // Guard: only fire on pattern/sequence files or prompts, NOT division/arithmetic files
+  if (codes.length === 0 && !file.match(/divid|division|add.*sub|multiply/i) &&
+      (file.match(/pattern|sequence/i) || prompt.match(/pattern|skip.?count|comes? next|missing/i))) {
+    // Wrong place-value increment: distractor = prev + small instead of prev + large
+    // e.g., 300+10=310 instead of 300+100=400; 200+5=205 instead of 200+50=250
+    if (nums.length >= 2) {
+      // Check if distractor could be produced by a smaller/larger step
+      const seqNums = nums.slice(); // sequence numbers from prompt
+      for (let i = 1; i < seqNums.length; i++) {
+        const actualStep = seqNums[i] - seqNums[i-1];
+        if (actualStep > 0) {
+          // Wrong step: /10 or *10 of actual step
+          const wrongSteps = [actualStep/10, actualStep*10, actualStep/5, actualStep*5, actualStep/2, actualStep*2];
+          const lastNum = seqNums[seqNums.length - 1];
+          for (const ws of wrongSteps) {
+            if (Math.abs(dv - (lastNum + ws)) < 0.5) { codes.push('PATTERN_WRONG_STEP'); break; }
+          }
+          if (codes.length > 0) break;
+        }
+      }
+    }
+    // Multiplicative vs additive: prev*5 vs prev+100
+    if (codes.length === 0 && prompt.match(/multipl|times/i) && nums.length >= 3) {
+      // Find the multiplicative ratio from two consecutive terms
+      for (let si = 2; si < nums.length; si++) {
+        if (nums[si-1] !== 0) {
+          const ratio = nums[si] / nums[si-1];
+          if (ratio > 1 && Number.isInteger(ratio)) {
+            // Try additive steps from any pair, applied to any plausible prev term
+            for (let pi = 0; pi < nums.length; pi++) {
+              const prevTerm = nums[pi];
+              // dv = prevTerm + someStep or dv = prevTerm * wrongRatio
+              if (dv === 2 * prevTerm) { codes.push('PATTERN_WRONG_STEP'); break; }
+              for (let si2 = 1; si2 < nums.length; si2++) {
+                const addStep = nums[si2] - nums[si2-1];
+                if (addStep > 0 && Math.abs(dv - (prevTerm + addStep)) < 0.5) {
+                  codes.push('PATTERN_WRONG_STEP'); break;
+                }
+              }
+              if (codes.length > 0) break;
+            }
+            if (codes.length > 0) break;
+          }
+        }
+      }
+    }
+    // Skip-count by wrong number: text-based distractors like "2, 4, 6, 8"
+    if (codes.length === 0 && typeof d.value === 'string' && d.value.match(/^\d+,\s*\d+/)) {
+      codes.push('PATTERN_WRONG_STEP');
+    }
+  }
+  // Wrong parity (even/odd) — catches remaining even_odd cases
+  if (codes.length === 0 && (prompt.match(/pair|left over|even|odd/i) || file.match(/even|odd/i))) {
+    if (!isNaN(cv) && !isNaN(dv) && cv % 2 !== dv % 2) {
+      codes.push('PATTERN_WRONG_STEP');
+    }
   }
 
   // ── GENERIC NEAR MISS (only if nothing else matched) ──

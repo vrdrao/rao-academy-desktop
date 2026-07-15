@@ -33,6 +33,11 @@ message         student-facing template. Describes the option, not the child.
 - **rule:** `distractor == correct − 10^k` for some k ∈ {1,2,3,4} AND question is addition/subtraction
 - **message:** "A carry was missed — check where digits add past 9."
 
+### DROPPED_CARRY
+- **concept:** multi-digit addition
+- **rule:** an addition problem (correct == a+b) where distractor == a+b computed with a carry omitted at exactly one place value — column-by-column addition matches except one column where carry-in was not added.
+- **message:** "This adds the columns but misses carrying into the next place."
+
 ### CARRY_EXTRA
 - **concept:** multi-digit addition, subtraction
 - **rule:** `distractor == correct + 10^k` for some k ∈ {1,2,3,4} AND question is addition/subtraction
@@ -63,9 +68,34 @@ message         student-facing template. Describes the option, not the child.
 - **rule:** `distractor == parseInt(String(a) + String(b))` where a, b are operands
 - **message:** "The digits were placed side by side instead of being computed."
 
+### DIVIDED_NOT_MULTIPLIED
+- **concept:** multiplication, word problems
+- **rule:** problem operation is multiplication (correct == a*b for problem operands a,b), but distractor == a/b or b/a (integer or rounded).
+- **message:** "This divides the numbers when the problem asks you to multiply."
+
 ---
 
 ## 2. Place value errors
+
+### DROP_INTERIOR_ZERO
+- **concept:** place value, division
+- **rule:** correct has a 0 in a non-leading, non-trailing position; distractor == correct with that interior 0 removed.
+- **message:** "This skips a zero that belongs in the middle of the number."
+
+### DROP_LEADING_DIGIT
+- **concept:** place value, division
+- **rule:** distractor == correct with one or more leading digits removed.
+- **message:** "This leaves off the digit at the front of the number."
+
+### DIGIT_INSERT_OR_SHIFT
+- **concept:** place value
+- **rule:** distractor differs from correct by one inserted extra digit (len+1, correct is a subsequence) OR exactly one digit changed by +/-1 in a single place.
+- **message:** "This has a digit in the wrong place, changing the number's size."
+
+### DIGIT_REARRANGE
+- **concept:** ordering, place value
+- **rule:** sorted(digits(distractor)) == sorted(digits(correct)) AND distractor != correct.
+- **message:** "These are the right digits, but not in the right order for this value."
 
 ### PLACE_SHIFT_UP
 - **concept:** place value, multiplication patterns
@@ -115,6 +145,11 @@ message         student-facing template. Describes the option, not the child.
 - **concept:** rounding
 - **rule:** prompt asks to round number N to place P; `distractor == floor(N,P)` when `correct == ceil(N,P)` or vice versa
 - **message:** "This rounds the wrong way — check the digit to the right."
+
+### ROUND_WRONG_WAY
+- **concept:** rounding
+- **rule:** "Which P is N closest to?" — distractor is the nearest rounding-unit multiple in the OPPOSITE direction from correct (correct rounds up → distractor is the lower multiple, and vice versa). E.g., 354: correct 400, distractor 300.
+- **message:** "This rounds to the wrong side — check which multiple is nearer."
 
 ---
 
@@ -216,6 +251,11 @@ message         student-facing template. Describes the option, not the child.
 - **rule:** distractor has correct hours but wrong minutes (or vice versa)
 - **message:** "The hours or minutes in the elapsed time are not quite right."
 
+### TIME_UNIT_CONFUSION
+- **concept:** time, duration
+- **rule:** a time/duration question where distractor uses a wrong unit conversion or count — any of: minutes-per-hour != 60; a fraction-of-hour value (15/30/45/90) substituted for the correct duration; wrong count of equal time-blocks; or a clock time rounded to the next whole hour.
+- **message:** "This uses the wrong amount of time for one of the units."
+
 ---
 
 ## 9. Comparison and ordering
@@ -270,6 +310,11 @@ message         student-facing template. Describes the option, not the child.
 - **concept:** number patterns, geometric sequences
 - **rule:** distractor applies a different (plausible) rule to the sequence
 - **message:** "Check the pattern rule — look at how each number changes."
+
+### PATTERN_WRONG_STEP
+- **concept:** number patterns, skip-counting, even/odd
+- **rule:** a sequence/pattern question where distractor is produced by applying a step other than the pattern's true rule — wrong place value in the increment (+10 not +100, +5 not +50), wrong skip-count (by 2 not 4), additive instead of multiplicative (+100 not ×5), or wrong parity selected (even for odd).
+- **message:** "This follows a different step than the pattern's rule."
 
 ---
 

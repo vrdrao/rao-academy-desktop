@@ -27088,17 +27088,13 @@
       {
         "value": "20000",
         "text": "20,000"
-      },
-      {
-        "value": "900",
-        "text": "900"
       }
     ],
     "hasWhyWrong": false,
     "hint": "Rohan got the 4 × 5 part right. Count how many zeros are in 40 and 50 altogether — did he keep them all?",
-    "optionCount": 4,
+    "optionCount": 3,
     "correctCount": 1,
-    "distractorCount": 3
+    "distractorCount": 2
   },
   {
     "file": "incoming/multiplication-patterns-over-increasing-place-values.html",
