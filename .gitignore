@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 ~$*
 lessons/_preview/
+.claude/settings.local.json
