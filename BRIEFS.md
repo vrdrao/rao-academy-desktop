@@ -490,3 +490,63 @@ All existing guards (KEY MATCH, TONE, CODE REGISTRY, hint-leak, coverage) must s
 
 Report back with the numbered reconciliation: tests added, sabotage FAIL outputs (actual output, not summaries), engine version bump, and anything in the demo you could not implement faithfully — disclosed inside the report structure, not as loose preamble.
 
+# BRIEF 7.6.1 — Frontmatter `explain:` engine fix (rao-master-17)
+
+Approved by Venkat 2026-07-17 (recorded in STATUS.md at 09cc647). Scope is exactly the
+bug you flagged in your 7.6 report §6.2 — nothing else rides along.
+
+## The bug (your own finding, restated as the contract)
+
+`build()` only reads `<p class="explain">` from question markup. The frontmatter
+`explain:` form documented in CLAUDE.md §13.6 parses and then vanishes — all 30
+`explain:` strings in the Brief 7.5 proof lesson are silently dropped.
+
+## Required behavior
+
+1. A frontmatter `explain:` string renders identically to the markup
+   `<p class="explain">` path: same element, same class, same DOM position, same
+   reveal timing and conditions. A child must not be able to tell which authoring
+   form produced it.
+2. Precedence: if a question has BOTH markup `<p class="explain">` and frontmatter
+   `explain:`, markup wins and frontmatter is ignored (existing lessons must not
+   change behavior). Report how many questions in the corpus have both, even if zero.
+3. All Calm Card interactions from 7.6 apply unchanged: the `cc-hastake` suppression
+   (takeaway panel or walkthrough carried the teaching → explain stays hidden) must
+   apply to frontmatter-sourced explains exactly as to markup-sourced ones. The BUG-4
+   style guard must still pass.
+4. All question types that honor markup explain honor frontmatter explain. If any
+   type honors neither today, leave it alone and list it in the report.
+
+## Engine rules
+
+- Bump engine to **rao-master-17**. Forward-only. Packed CSS string: if untouched,
+  say so; if touched, it stays packed single-line, zero newline escapes.
+- STOP-and-report if implementing this requires touching anything beyond
+  `engine/preview-engine.js` (and STATUS.md/version stamp). Do not widen the diff
+  yourself.
+
+## Proof requirements (all actual output, no summaries)
+
+- New or extended guard in npm test: for every corpus question with frontmatter
+  `explain:` and no markup explain, assert the explain element exists in the built
+  DOM and reveals on correct under legacy (non-takeaway) conditions.
+- Sabotage 1: revert the fix → guard must FAIL naming the proof lesson and a count
+  (expected all 30 from the 7.5 proof lesson). Show the actual FAIL line.
+- Sabotage 2: make frontmatter override markup (break precedence) → a guard must
+  FAIL. If no corpus question has both forms, add one to `lessons/_type-coverage.html`
+  so the precedence rule is actually testable, and disclose the corpus count change
+  that causes (expected 2,721 → 2,722; any other number gets explained).
+- Restore, full npm test green, report the final counts (lessons and questions —
+  every changed number reconciled).
+
+## Report requirements
+
+- md5 + bytes-on-disk for every shipped file.
+- Firewall: expected outcome is the normal SOURCE-DIFF pass (engine change with no
+  grading-file change, or the two-commit pattern if needed). FIREWALL_ALLOW_GRADING
+  must never be set; confirm explicitly.
+- Anything you couldn't implement faithfully goes in its own section; absence of
+  that section is itself an audit flag.
+- Commits stay LOCAL. No push, no handoff files, no commits beyond this brief's
+  scope. Venkat pushes only after the chat audit clears.
+
