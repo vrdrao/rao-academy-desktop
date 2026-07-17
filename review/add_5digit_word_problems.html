@@ -961,6 +961,31 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
   .rao-lesson .fig-wrap > svg,
   .rao-lesson .qbody > svg{height:150px;}
 }
+
+/* ── rao-master-16: solution blocks + bubble walkthrough (Brief 7.6) ──
+   The walkthrough is NEVER dumped: steps type in ONE AT A TIME as tutor
+   bubbles (see rao-card.css for the .cc-* chat skin) and ACCUMULATE at full
+   opacity — nothing dims, nothing disappears (help-accumulates law). There
+   is no retry inside it: one button per step, Next step → Got it. The
+   .sol-step card styles below stay for renderSolution (static block render,
+   e.g. the quiz review screen); .sol-goal/.sol-reason also dress the bubble
+   bodies. */
+.rao-lesson .sol-walk,.pv-solwrap .sol-walk{margin:12px 2px 0}
+.rao-lesson .sol-step,.pv-solwrap .sol-step{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:baseline;background:#fff;border:1px solid var(--line-soft,#e7ddf8);border-radius:10px;padding:10px 12px}
+.rao-lesson .sol-step-num,.pv-solwrap .sol-step-num{grid-row:span 3;width:26px;height:26px;border-radius:50%;background:var(--brand,#7b5cff);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.85rem}
+.rao-lesson .sol-goal,.pv-solwrap .sol-goal{font-weight:700;display:block}
+.rao-lesson .sol-working,.pv-solwrap .sol-working{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.15rem;font-weight:700}
+.rao-lesson .sol-reason,.pv-solwrap .sol-reason{font-size:.85rem;color:var(--sub,#8a86a3);display:block}
+.rao-lesson .sol-takeaway,.pv-solwrap .sol-takeaway{background:var(--brand,#7b5cff);color:#fff;border-radius:10px;padding:10px 14px;font-weight:700}
+.rao-lesson .sol-verification,.pv-solwrap .sol-verification{background:#eefbf2;border:1px solid #bfe8cd;color:#1e6b3a;border-radius:10px;padding:10px 14px;font-weight:600}
+.rao-lesson .sol-fallback,.pv-solwrap .sol-fallback{padding:8px 4px}
+.rao-lesson .sol-walk-foot,.pv-solwrap .sol-walk-foot{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:12px}
+.rao-lesson .sol-next,.pv-solwrap .sol-next{font-family:'Baloo 2',cursive;font-weight:700;color:#fff;background:var(--brand,#7b5cff);border:none;border-radius:14px;padding:10px 18px;cursor:pointer;font-size:.95rem}
+.rao-lesson .sol-next:disabled,.pv-solwrap .sol-next:disabled{opacity:.55;cursor:default}
+/* RAPID FIRE shows the one-line explain AFTER Check — nothing more (§13.8).
+   Overrides the unconditional hide above; is-checked is the same reveal hook
+   adaptive uses. */
+.rao-lesson [data-mode="rapid"].is-checked .explain{display:block}
 </style>
 <style>/* page furniture — the review page is standalone; your app supplies its own */
 
@@ -1035,7 +1060,65 @@ h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
  }
  .pv-ans{margin:0 6px 22px;font-size:.86rem;color:#0f9d6b;font-weight:600}.pv-ans b{color:#047857}
  .qbody .lp-slot.on{background:var(--brand,#4361ee);border-radius:3px}
- .qbody .md-ruler{cursor:grab}</style>
+ .qbody .md-ruler{cursor:grab}
+
+/* ── degraded-mode chrome (solution-renderer.js absent): whyWrong line + legacy
+   hint rungs. Created on demand by rao-card.js; absent from legacy markup. ── */
+.pv-why{margin:12px 2px 0;background:#fff2f5;border:1px solid #ffd3e0;border-radius:12px;padding:12px 14px;color:#8a3b57;font-weight:600;line-height:1.5;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.pv-why-msg{flex:1 1 200px}
+.pv-rung{margin:4px 0}
+.pv-rung+.pv-rung{margin-top:8px;border-top:1px dashed #ffe2a8;padding-top:8px}
+/* Touch floor: every interactive control in the card is at least 44x44px.
+   Verified with real CDP touch events by tools/verify-touch.js. */
+.pv-hint,.pv-check,.sol-next,.cc-btn-ghost,.cc-btn-solid{min-height:44px;min-width:44px}
+
+/* ════ rao-master-16: THE CALM CARD (Brief 7.6, signed off in calm-card-v36) ════
+   Values traced to the v36 demo's cc-style block; colour tokens repointed at the
+   card's own palette so all 8 themes re-tint. There is deliberately NO .cc-ava —
+   bubbles are faceless (the demo's avatar seat was dead CSS, removed here). */
+
+/* chrome quiets in feedback states — NEVER the prompt or the options (law 1) */
+.cc-dim{opacity:.45;filter:saturate(.35);transition:opacity .3s,filter .3s}
+
+/* wrong is a whisper (law 3): the ✕ is the ONLY change to the tried option.
+   v36 spec: glyph 0.8em, red, 7px right margin, bold. cc-tried itself paints
+   NOTHING — is-sel is removed on a wrong attempt, so the option is already back
+   to its resting look, byte-identical to its siblings. */
+.cc-x{font-size:.8em;color:#ef4444;margin-right:7px;font-weight:700}
+
+/* — tutor conversation: hints and steps speak in one voice (law 5) — */
+.cc-chat{margin-top:14px;background:#f4f1ff;border:1px solid #e6e0ff;border-radius:14px;padding:14px 14px 16px}
+.cc-chat+.cc-chat{margin-top:10px}
+.cc-chat-hd{font-family:'Quicksand',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brand,#7b5cff);margin:0 0 2px 2px}
+.cc-msg{display:flex;gap:10px;align-items:flex-end;margin-top:12px;animation:cc-line .3s ease}
+@keyframes cc-line{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.cc-bub{background:#fff;border:1px solid #e6e0ff;border-radius:16px 16px 16px 5px;padding:10px 14px;max-width:100%;box-shadow:0 1px 4px rgba(15,23,42,.06);min-width:0}
+.cc-schip{display:inline-block;font-family:'Quicksand',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand,#7b5cff);background:#f1edff;border-radius:999px;padding:2px 9px;margin-bottom:6px}
+.cc-btxt{font-family:'Quicksand',sans-serif;font-size:.95rem;color:#5a5673;line-height:1.55}
+.cc-eq{display:block;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.05rem;font-weight:700;color:#3b3654;background:#fff;border:1px solid #e6e0ff;border-radius:8px;padding:7px 12px;margin:8px 0 2px;width:fit-content;max-width:100%;overflow-x:auto}
+.cc-dots{display:flex;gap:4px;padding:5px 2px}
+.cc-dots i{width:6px;height:6px;border-radius:50%;background:#b9a8ff;animation:cc-dot 1s infinite}
+.cc-dots i:nth-child(2){animation-delay:.15s}.cc-dots i:nth-child(3){animation-delay:.3s}
+@keyframes cc-dot{0%,60%,100%{transform:none;opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+
+/* — feedback-state action rows: ghost = help, solid = forward — */
+.cc-actions{display:flex;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
+.cc-btn-ghost{font-family:'Baloo 2',cursive;font-weight:700;font-size:.95rem;padding:11px 18px;border:2px solid #e7ddf8;border-radius:14px;background:#fff;color:#6b5b9a;cursor:pointer}
+.cc-btn-ghost:hover{border-color:var(--brand,#7b5cff);color:var(--brand,#7b5cff)}
+.cc-btn-solid{font-family:'Baloo 2',cursive;font-weight:800;font-size:.95rem;padding:11px 24px;border:none;border-radius:14px;background:var(--brand,#7b5cff);color:#fff;cursor:pointer;margin-left:auto}
+
+/* — correct: the ONLY loud moment (law 7) — */
+.opt.cc-win,.opt-fig.cc-win,.hcell.cc-win{animation:cc-win .55s cubic-bezier(.3,1.4,.5,1)}
+@keyframes cc-win{0%{transform:none}35%{transform:scale(1.06)}100%{transform:none}}
+.cc-spark{position:absolute;left:50%;top:50%;width:7px;height:7px;border-radius:50%;pointer-events:none;animation:cc-spark .8s ease-out forwards}
+@keyframes cc-spark{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(calc(-50% + var(--sx)),calc(-50% + var(--sy))) scale(.3);opacity:0}}
+.cc-take{margin:16px 2px 0;padding:12px 16px;border-radius:0 12px 12px 0;background:#eefbf2;border:1px solid #bfe8cd;border-left:3px solid #10b981;animation:cc-line .3s ease}
+.cc-take p{margin:0;font-family:'Quicksand',sans-serif;color:#1e6b3a;font-weight:600;line-height:1.55}
+.cc-take .cc-tag{font-weight:800;color:#047857;margin-right:6px}
+
+/* when the takeaway panel (or the full walkthrough) has carried the teaching,
+   the .explain one-liner would be a duplicate — keep it sealed */
+.rao-lesson [data-mode="adaptive"].is-checked.cc-hastake .explain{display:none}</style>
 <style>/* review summary bar only — sits ABOVE the cards, never inside one */
 
 .rvbar{position:sticky;top:0;z-index:60;margin:-24px -24px 18px;background:#2c2150;color:#fff;
@@ -2158,23 +2241,122 @@ function optionButtons(opts, multi) {
 // Parse a `<!--@q … -->` body into an object. `answer` and any value that begins
 // with [ or { is parsed as JSON; everything else is a trimmed string.
 function parseFrontmatter(body) {
+  // Flat `key: value` lines parse exactly as they always have (values kept
+  // verbatim; inline [..]/{..} parsed as JSON). rao-master-15 adds BLOCKS:
+  // a key with an EMPTY value followed by MORE-INDENTED lines opens either
+  // a `- ` list (hint ladders, solution blocks) or a nested map (whyWrong).
+  // Malformed blocks are recorded on fm.__issues (non-enumerable) and are
+  // surfaced as build() issues — never silently dropped.
   const fm = {};
-  body.split(/\r?\n/).forEach((line) => {
-    const t = line.trim();
+  const issues = [];
+  const lines = [];
+  body.split(/\r?\n/).forEach((raw) => {
+    const t = raw.trim();
     if (!t || t.startsWith("#")) return;
+    lines.push({ indent: /^\s*/.exec(raw)[0].length, text: t });
+  });
+
+  const unquote = (s) => {
+    s = s.trim();
+    if (s.length >= 2 && ((s[0] === '"' && s[s.length - 1] === '"') || (s[0] === "'" && s[s.length - 1] === "'")))
+      return s.slice(1, -1);
+    return s;
+  };
+  // Split `key: value`, handling quoted keys that contain colons
+  // (whyWrong option text like "9:30 A.M." or "92,327 + 49,921").
+  const splitKV = (t) => {
+    if (t[0] === '"' || t[0] === "'") {
+      const q = t[0];
+      const close = t.indexOf(q, 1);
+      if (close > 0 && t[close + 1] === ":")
+        return { key: t.slice(1, close), val: t.slice(close + 2).trim() };
+      return null;
+    }
     const i = t.indexOf(":");
-    if (i < 0) return;
-    const key = t.slice(0, i).trim();
-    let val = t.slice(i + 1).trim();
+    if (i < 0) return null;
+    return { key: t.slice(0, i).trim(), val: t.slice(i + 1).trim() };
+  };
+  const scalar = (val) => {
     if (/^[[{]/.test(val)) {
-      try {
-        val = JSON.parse(val);
-      } catch (_) {
-        /* leave as string; validated later */
+      try { return JSON.parse(val); } catch (_) { /* leave as string; validated later */ }
+    }
+    return val;
+  };
+
+  let i = 0;
+  // `- ` list at a fixed indent; items are scalars (hint rungs) or maps (solution blocks)
+  function parseList(listIndent, key) {
+    const out = [];
+    while (i < lines.length && lines[i].indent === listIndent && lines[i].text.startsWith("- ")) {
+      const rest = lines[i].text.slice(2).trim();
+      i++;
+      const isMapItem = /^[A-Za-z_][\w-]*\s*:/.test(rest);
+      if (isMapItem) {
+        const kv = splitKV(rest);
+        const obj = {};
+        obj[kv.key] = scalar(unquote(kv.val));
+        while (i < lines.length && lines[i].indent > listIndent && !lines[i].text.startsWith("- ")) {
+          const fkv = splitKV(lines[i].text);
+          if (!fkv) { issues.push('"' + key + '": unparseable line "' + lines[i].text + '" inside a list item'); i++; continue; }
+          obj[fkv.key] = scalar(unquote(fkv.val));
+          i++;
+        }
+        out.push(obj);
+      } else {
+        out.push(unquote(rest));
+      }
+      // A DEEPER `- ` line is broken indentation, not a nested list.
+      if (i < lines.length && lines[i].indent > listIndent && lines[i].text.startsWith("- ")) {
+        issues.push('"' + key + '": list item "' + lines[i].text + '" is indented deeper than the first item — every item must start at the same column');
+        while (i < lines.length && lines[i].indent > listIndent) i++;
       }
     }
-    fm[key] = val;
-  });
+    return out;
+  }
+  // nested map (whyWrong): each key may be quoted option text; an empty value
+  // followed by a deeper block is that entry's field map ({code, message, …})
+  function parseMap(mapIndent, key) {
+    const out = {};
+    while (i < lines.length && lines[i].indent === mapIndent && !lines[i].text.startsWith("- ")) {
+      const kv = splitKV(lines[i].text);
+      if (!kv) { issues.push('"' + key + '": unparseable line "' + lines[i].text + '" inside a map'); i++; continue; }
+      i++;
+      if (kv.val !== "") { out[kv.key] = scalar(unquote(kv.val)); continue; }
+      if (i < lines.length && lines[i].indent > mapIndent) {
+        out[kv.key] = parseMap(lines[i].indent, key);
+      } else {
+        out[kv.key] = "";
+      }
+    }
+    return out;
+  }
+
+  while (i < lines.length) {
+    const line = lines[i];
+    const kv = splitKV(line.text);
+    if (!kv) {
+      // Old behavior: lines without a key are skipped. A stray `- ` item at
+      // top level means a broken block — say so instead of losing it.
+      if (line.text.startsWith("- "))
+        issues.push('stray list item "' + line.text + '" — the key above it must end with ":" and have nothing after it');
+      i++;
+      continue;
+    }
+    i++;
+    if (kv.val !== "") { fm[kv.key] = scalar(kv.val); continue; } // flat — legacy path, verbatim
+    if (i < lines.length && lines[i].indent > line.indent) {
+      if (lines[i].text.startsWith("- ")) {
+        fm[kv.key] = parseList(lines[i].indent, kv.key);
+      } else {
+        const m = parseMap(lines[i].indent, kv.key);
+        // an all-unparseable block degrades to the legacy "" (issues carry the loudness)
+        fm[kv.key] = Object.keys(m).length ? m : "";
+      }
+    } else {
+      fm[kv.key] = ""; // legacy: bare `key:` stays ""
+    }
+  }
+  if (issues.length) Object.defineProperty(fm, "__issues", { value: issues, enumerable: false });
   return fm;
 }
 
@@ -3008,7 +3190,28 @@ function parseQuestion(attrs, content, fm, index) {
   const _explainHtml = explain ? `<p class="explain">${explain}</p>` : "";
   const inner = `${_helperChip}<div class="prompt${_promptExtra}"${_plStyle}>${_promptHtmlOut}</div>${fig}${answerArea}${_explainHtml}`;
   const description = (fm.description ? String(fm.description) : stripTags(promptHtml)).replace(/[[\]]/g, "").trim();
-  const hint = fm.hint ? String(fm.hint) : null;
+  // Hint may be a legacy string (one-rung ladder, unchanged forever) or a
+  // rao-master-15 ladder (list of 1-3 rungs).
+  let hint = Array.isArray(fm.hint)
+    ? fm.hint.map(String).map((s) => s.trim()).filter(Boolean)
+    : (fm.hint ? String(fm.hint) : null);
+  if (Array.isArray(hint)) {
+    if (hint.length === 0) hint = null;
+    else if (hint.length > 3)
+      issues.push({ level: "warn", code: "HINT_LADDER_TOO_LONG",
+        message: `${qid}: hint ladder has ${hint.length} rungs — the spec allows 1-3` });
+  }
+  // whyWrong: map of option text -> { code, message[, diagnostic] }.
+  // solution: list of typed blocks. Both pass through UNTOUCHED by grading;
+  // display timing is the card's job, content shape is the guards' job.
+  const whyWrong = (fm.whyWrong && typeof fm.whyWrong === "object" && !Array.isArray(fm.whyWrong)) ? fm.whyWrong : null;
+  const solution = (Array.isArray(fm.solution) && fm.solution.length > 0) ? fm.solution : null;
+  if (fm.whyWrong != null && fm.whyWrong !== "" && whyWrong == null)
+    issues.push({ level: "error", code: "FRONTMATTER_MALFORMED",
+      message: `${qid}: whyWrong is not a map of option -> {code, message}` });
+  if (fm.solution != null && fm.solution !== "" && solution == null)
+    issues.push({ level: "error", code: "FRONTMATTER_MALFORMED",
+      message: `${qid}: solution is not a list of typed blocks` });
   // GUARD: an answer the child physically cannot type is unanswerable. Map each
   // blank input's maxlength to its answer slot and compare.
   {
@@ -3029,7 +3232,10 @@ function parseQuestion(attrs, content, fm, index) {
   }
   // surface parser warnings (e.g. unknown figure dropped) per-item instead of discarding them
   warnings.forEach((w) => issues.push({ level: "warn", code: "BUILD_WARNING", message: String(w) }));
-  return { behavior: type, qIdStr: qid, description, inner, answerArr, help, hint, explain, warnings, issues };
+  // frontmatter block problems (broken ladder indentation, unparseable whyWrong
+  // lines) are authoring errors a child would otherwise never see — fail loudly.
+  (fm.__issues || []).forEach((msg) => issues.push({ level: "error", code: "FRONTMATTER_MALFORMED", message: `${qid}: ${msg}` }));
+  return { behavior: type, qIdStr: qid, description, inner, answerArr, help, hint, explain, whyWrong, solution, warnings, issues };
 }
 
 // ---- whole-file parse -------------------------------------------------------
@@ -3093,7 +3299,7 @@ function parseAuthoringHtml(html) {
       item = {
         behavior: "fill-blanks", qIdStr: bad, description: "(question failed to build)",
         inner: `<div class="prompt"><span>⚠ ${bad} could not be built.</span></div>`,
-        answerArr: [], help: "", hint: null, explain: null, warnings: [],
+        answerArr: [], help: "", hint: null, explain: null, whyWrong: null, solution: null, warnings: [],
         issues: [{ level: "error", code: "BUILD_FAILED", message: String(e && e.message || e) }],
       };
     }
@@ -3746,12 +3952,15 @@ function check(behavior, user, correct) {
   if (user == null) return null;
   user = user.map(String); correct = (correct || []).map(String);
   if (behavior === "time") {
+    // Normalize ALL time variants to one canonical form on the way IN.
+    // P.M. / p.m. / PM / pm / Pm / P.m / p.M.  →  PM.  Same for AM.
+    // Strip dots first, then match — no regex heroics.
     const _tn = function (x) {
-      const v = String(x).trim();
-      const m = v.match(/^(\d{1,2}):(\d{2})\s*([AaPp])\.?\s*[Mm]?\.?$/);
-      if (!m) return v;
+      const v = String(x).replace(/\./g, "").replace(/\s+/g, " ").trim();
+      const m = v.match(/^(\d{1,2}):(\d{2})\s*([AaPp])[Mm]?$/);
+      if (!m) return String(x).trim();
       const h = parseInt(m[1], 10);
-      if (h < 1 || h > 12) return v;
+      if (h < 1 || h > 12) return String(x).trim();
       return h + ":" + m[2] + " " + m[3].toUpperCase() + "M";
     };
     user = user.map(_tn); correct = correct.map(_tn);
@@ -3772,12 +3981,20 @@ module.exports = { attach, serialize, check, BEHAVIORS };
   var DANGEROUS_TAGS = /<\s*\/?\s*(script|iframe|object|embed|link|meta|base|form)\b[^>]*>/gi;
   function sanitizeMarkup(html){
     if (typeof html !== "string" || !html) return html;
-    return html
-      .replace(DANGEROUS_TAGS, "")
-      .replace(/\son[a-z]+\s*=\s*"[^"]*"/gi, "")
-      .replace(/\son[a-z]+\s*=\s*'[^']*'/gi, "")
-      .replace(/\son[a-z]+\s*=\s*[^\s>]+/gi, "")
-      .replace(/((?:href|src|xlink:href)\s*=\s*)(["'])\s*(?:javascript:|data:text\/html)[^"']*\2/gi, '$1$2#$2');
+    // 1. Strip dangerous tags entirely
+    html = html.replace(DANGEROUS_TAGS, "");
+    // 2. Strip on* event handler ATTRIBUTES — only inside HTML tags, never in prose.
+    //    The old regex was global and ate "ones =" in text content (any word starting
+    //    with "on" followed by = looked like an event handler to it).
+    html = html.replace(/<[a-zA-Z][a-zA-Z0-9]*\s[^>]*>/g, function(tag) {
+      return tag
+        .replace(/\son[a-z]+\s*=\s*"[^"]*"/gi, "")
+        .replace(/\son[a-z]+\s*=\s*'[^']*'/gi, "")
+        .replace(/\son[a-z]+\s*=\s*[^\s>]+/gi, "");
+    });
+    // 3. Strip javascript: / data:text/html URIs
+    html = html.replace(/((?:href|src|xlink:href)\s*=\s*)(["'])\s*(?:javascript:|data:text\/html)[^"']*\2/gi, '$1$2#$2');
+    return html;
   }
   function build(sourceHtml){
     var styleFor = MODS.css.makeCssExtractor(MARKUP_STYLE_CSS);
@@ -3785,7 +4002,7 @@ module.exports = { attach, serialize, check, BEHAVIORS };
       var sb = styleFor(item.inner);
       var body = styleFor.applyVarDefaults ? styleFor.applyVarDefaults(item.inner) : item.inner;
       return { behavior:item.behavior, description:item.description, answer:item.answerArr, hint:item.hint||null,
-               explain:item.explain||null,
+               explain:item.explain||null, whyWrong:item.whyWrong||null, solution:item.solution||null,
                markup: sanitizeMarkup('<div class="qbody" style="min-height:var(--rz-card-floor,300px)" data-behavior="'+item.behavior+'">'+sb+body+'</div>'),
                issues:item.issues||[] };
     });
@@ -3805,9 +4022,378 @@ module.exports = { attach, serialize, check, BEHAVIORS };
     return { ok: errs === 0, errors: errs, warnings: warns, items: report };
   }
   var B = MODS["preview-behaviors"];
-  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-13"};
+  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-15"};
 })();
 
+</script>
+<script>/* engine/solution-renderer.js — walkthrough renderer (display-only), verbatim.
+   Loaded BEFORE the card renderer so window.RaoSolution exists when cards wire up. */
+/* ── Solution Renderer — pure display, no grading ──
+ *
+ * This module renders solution walkthroughs, hints, and whyWrong messages.
+ * It is a PURE CONSUMER of an immutable grading result.
+ *
+ * FIREWALL RULES (enforced by tools/verify-firewall.js):
+ *   - Must NOT import or reference the grading module (preview-engine.js)
+ *   - Must NOT call check()
+ *   - Must NOT mutate the stored answer or student response
+ *   - Must NOT modify grading files
+ *
+ * ONE PARSE POINT: normalizeExplain() is the single entry. Downstream code
+ * never sees the raw explain string or the raw solution array — only the
+ * normalized object. A legacy string explain normalizes to a single-block
+ * list so the renderer has no idea the old format ever existed.
+ */
+
+"use strict";
+
+// ════════════════════════════════════════════════════════════════
+// normalizeExplain — THE SINGLE PARSE POINT
+//
+// Input:  { explain, solution }  from the engine's build() output
+//   explain  — string (legacy one-liner) or null
+//   solution — array of block objects, or null/undefined
+//
+// Output: { legacy: bool, explain: string|null, blocks: [] }
+//   legacy  — true when the output came from a plain string explain
+//   explain — the original string (preserved for Rapid Fire / fallback)
+//   blocks  — normalized block list, always an array
+//
+// A legacy string becomes a single block of type "legacy-explain" so
+// the renderer can emit the exact same HTML the engine has always emitted.
+// ════════════════════════════════════════════════════════════════
+
+function normalizeExplain(opts) {
+  var explain = (opts && opts.explain) || null;
+  var solution = (opts && opts.solution) || null;
+
+  // Full solution path: solution blocks + explain as fallback/summary
+  if (Array.isArray(solution) && solution.length > 0) {
+    return {
+      legacy: false,
+      explain: explain,
+      blocks: solution.map(function (b) {
+        // Validate known types; unknown types get a text fallback
+        var type = String(b.type || "unknown");
+        return {
+          type: type,
+          goal: b.goal || null,
+          working: b.working || null,
+          reason: b.reason || null,
+          text: b.text || null,
+          html: b.html || null
+        };
+      })
+    };
+  }
+
+  // Legacy path: explain-only → single "legacy-explain" block
+  if (explain) {
+    return {
+      legacy: true,
+      explain: explain,
+      blocks: [{ type: "legacy-explain", text: explain }]
+    };
+  }
+
+  // Nothing
+  return { legacy: false, explain: null, blocks: [] };
+}
+
+// ════════════════════════════════════════════════════════════════
+// renderSolution — renders a normalized explain object to HTML
+//
+// Takes the OUTPUT of normalizeExplain() plus immutable grading context.
+// The grading context is passed through for future use (whyWrong display)
+// but is NEVER used to call check() or mutate anything.
+// ════════════════════════════════════════════════════════════════
+
+function renderSolution(opts) {
+  var normalized = normalizeExplain({
+    explain: opts && opts.explain,
+    solution: opts && opts.solution
+  });
+
+  if (normalized.blocks.length === 0) return "";
+
+  // Legacy path: emit the exact HTML the engine has always emitted.
+  // The engine does NOT escape the explain string — it passes raw HTML through.
+  // We must do the same for byte-identical output.
+  if (normalized.legacy) {
+    return '<p class="explain">' + normalized.explain + "</p>";
+  }
+
+  // Block list rendering
+  var parts = [];
+  var stepNum = 0;
+  for (var i = 0; i < normalized.blocks.length; i++) {
+    var block = normalized.blocks[i];
+    switch (block.type) {
+      case "step":
+        stepNum++;
+        parts.push(renderStep(block, stepNum));
+        break;
+      case "figure":
+        parts.push(renderFigure(block));
+        break;
+      case "takeaway":
+        parts.push(renderTakeaway(block));
+        break;
+      case "verification":
+        parts.push(renderVerification(block));
+        break;
+      default:
+        // Unknown block type — text fallback
+        parts.push(renderFallback(block));
+    }
+  }
+  return parts.join("\n");
+}
+
+// ════════════════════════════════════════════════════════════════
+// Block renderers — four types, each with a text fallback
+// ════════════════════════════════════════════════════════════════
+
+function renderStep(block, num) {
+  var html = '<div class="sol-step" data-fallback="' + escAttr(stepFallback(block, num)) + '">';
+  html += '<span class="sol-step-num">' + num + "</span>";
+  if (block.goal) html += '<span class="sol-goal">' + escapeHtml(block.goal) + "</span>";
+  if (block.working) html += '<span class="sol-working">' + escapeHtml(block.working) + "</span>";
+  if (block.reason) html += '<span class="sol-reason">' + escapeHtml(block.reason) + "</span>";
+  html += "</div>";
+  return html;
+}
+
+function stepFallback(block, num) {
+  var parts = [];
+  if (block.goal) parts.push(block.goal);
+  if (block.working) parts.push(block.working);
+  if (block.reason) parts.push("(" + block.reason + ")");
+  return "Step " + num + ": " + parts.join(" — ");
+}
+
+function renderFigure(block) {
+  // Figures are passed as pre-built HTML (SVG); fallback to text
+  var fallback = block.text || "[figure]";
+  var content = block.html || escapeHtml(fallback);
+  return '<div class="sol-figure" data-fallback="' + escAttr(fallback) + '">' + content + "</div>";
+}
+
+function renderTakeaway(block) {
+  var text = block.text || "";
+  return '<div class="sol-takeaway" data-fallback="' + escAttr(text) + '">' + escapeHtml(text) + "</div>";
+}
+
+function renderVerification(block) {
+  var text = block.text || "";
+  return '<div class="sol-verification" data-fallback="' + escAttr(text) + '">' + escapeHtml(text) + "</div>";
+}
+
+function renderFallback(block) {
+  var text = block.text || "";
+  return '<div class="sol-fallback">' + escapeHtml(text) + "</div>";
+}
+
+// ════════════════════════════════════════════════════════════════
+// Utilities — no grading references, no check(), no mutation
+// ════════════════════════════════════════════════════════════════
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function escAttr(s) {
+  return escapeHtml(s).replace(/'/g, "&#39;");
+}
+
+// ════════════════════════════════════════════════════════════════
+// Tutor bubbles — the ONE copy of the chat mechanics (Brief 7.6,
+// rao-master-16, behavior signed off in calm-card-v36.html).
+//
+// Append-only + type-then-fill: a bubble node is created ONCE showing
+// typing dots, and its content is filled ONCE (dots → chip + text) at
+// BUBBLE_FILL_MS. Earlier bubbles are never touched again (no-repaint
+// law). Bubbles are faceless — no avatar seat; there is deliberately
+// no .cc-ava anywhere in production.
+//
+// Exported (RaoSolution.bubbles) so the card controller renders hint
+// bubbles through the SAME primitives — hints and steps must speak in
+// one voice, and one copy cannot drift.
+// ════════════════════════════════════════════════════════════════
+
+var BUBBLE_FILL_MS = 650;   // v36 chatMsg timing — verify-calm asserts parity with the demo
+
+function chatWrap(header) {
+  var w = document.createElement("div");
+  w.className = "cc-chat";
+  if (header) {
+    var h = document.createElement("p");
+    h.className = "cc-chat-hd";
+    h.textContent = header;
+    w.appendChild(h);
+  }
+  return w;
+}
+
+function chatMsg(wrap, chip, bodyHtml, then) {
+  var m = document.createElement("div");
+  m.className = "cc-msg";
+  m.innerHTML = '<div class="cc-bub"><div class="cc-dots"><i></i><i></i><i></i></div></div>';
+  wrap.appendChild(m);
+  var bub = m.querySelector(".cc-bub");
+  setTimeout(function () {
+    bub.innerHTML =
+      (chip ? '<span class="cc-schip">' + escapeHtml(chip) + "</span>" : "") +
+      '<div class="cc-btxt">' + bodyHtml + "</div>";
+    if (then) then();
+  }, BUBBLE_FILL_MS);
+  return m;
+}
+
+// ════════════════════════════════════════════════════════════════
+// Walkthrough — Tier 2 (Brief 7.6). OPENING IT IS THE COMMIT POINT.
+//
+// The card controller locks the question and records solved-with-help
+// BEFORE calling this. There is NO retry inside the walkthrough — one
+// button per step: "Next step", then "Got it" on the final step. Steps
+// type in one at a time as tutor bubbles under the panel header and
+// ACCUMULATE (help-accumulates law — nothing dims, nothing disappears).
+//
+// The final step is the ONE sanctioned reveal: onReveal() fires when
+// the last bubble fills. What "reveal" means in the question DOM
+// (greening the correct option) is the CONTROLLER's business — this
+// module never touches the question, never grades, never mutates.
+// ════════════════════════════════════════════════════════════════
+
+// Venkat's keep/remove ruling on this header is pending — removal is this
+// one line (set to "").
+var WALK_HEADER = "Solution — step by step";
+
+function walkChip(block, stepNum, stepTotal) {
+  if (block.type === "step") return "Step " + stepNum + " of " + stepTotal;
+  if (block.type === "takeaway") return "The idea to keep";
+  if (block.type === "verification") return "Does it make sense?";
+  return null;   // figure / legacy-explain / fallback: no chip
+}
+
+function walkBody(block) {
+  if (block.type === "step") {
+    var parts = [];
+    if (block.goal) parts.push('<span class="sol-goal">' + escapeHtml(block.goal) + "</span>");
+    if (block.working) parts.push('<span class="cc-eq">' + escapeHtml(block.working) + "</span>");
+    if (block.reason) parts.push('<span class="sol-reason">' + escapeHtml(block.reason) + "</span>");
+    return parts.join("");
+  }
+  if (block.type === "figure") return block.html || escapeHtml(block.text || "[figure]");
+  // legacy explain strings pass through raw — same contract as renderSolution
+  if (block.type === "legacy-explain") return block.text || "";
+  return escapeHtml(block.text || "");
+}
+
+function renderWalkthrough(opts) {
+  var normalized = normalizeExplain({
+    explain: opts && opts.explain,
+    solution: opts && opts.solution
+  });
+  if (normalized.blocks.length === 0) return "";
+  // The steps chat and its footer live in ONE .sol-walk panel. A future
+  // "▶ Watch" tab row would sit as a SIBLING above the chat, inside this
+  // same panel — nothing here structurally precludes it (Brief 7.6 scope
+  // note: the video walkthrough is OUT for now, but must not be walled off).
+  return (
+    '<div class="sol-walk">' +
+      '<div class="sol-walk-steps cc-chat">' +
+        (WALK_HEADER ? '<p class="cc-chat-hd">' + escapeHtml(WALK_HEADER) + "</p>" : "") +
+      "</div>" +
+      '<div class="sol-walk-foot">' +
+        '<button type="button" class="sol-next">Next step</button>' +
+      "</div>" +
+    "</div>"
+  );
+}
+
+function wireWalkthrough(root, opts) {
+  if (!root) return function () {};
+  var normalized = normalizeExplain({
+    explain: opts && opts.explain,
+    solution: opts && opts.solution
+  });
+  var blocks = normalized.blocks;
+  var onReveal = (opts && opts.onReveal) || function () {};
+  var onDone = (opts && opts.onDone) || function () {};
+  var chat = root.querySelector(".sol-walk-steps");
+  var nextBtn = root.querySelector(".sol-next");
+  if (root.__solWalkCleanup) root.__solWalkCleanup(); // idempotent re-wire
+
+  var stepTotal = 0;
+  blocks.forEach(function (b) { if (b.type === "step") stepTotal++; });
+  var i = 0, stepNum = 0, typing = false;
+
+  function addBubble() {
+    if (typing || i >= blocks.length) return;
+    typing = true;
+    var block = blocks[i];
+    var last = i === blocks.length - 1;
+    if (block.type === "step") stepNum++;
+    i++;
+    if (nextBtn) nextBtn.disabled = true;
+    chatMsg(chat, walkChip(block, stepNum, stepTotal), walkBody(block), function () {
+      typing = false;
+      if (last) {
+        // The quiet reveal — the ONE moment the answer may appear (laws 2/6).
+        onReveal();
+        if (nextBtn) { nextBtn.disabled = false; nextBtn.textContent = "Got it"; }
+      } else if (nextBtn) {
+        nextBtn.disabled = false;
+      }
+    });
+  }
+
+  function onNext() {
+    if (typing) return;
+    if (i >= blocks.length) {           // "Got it" — the walkthrough is over
+      if (nextBtn) nextBtn.setAttribute("hidden", "");
+      onDone();
+      return;
+    }
+    addBubble();
+  }
+  if (nextBtn) nextBtn.addEventListener("click", onNext);
+  addBubble(); // opening types the FIRST step only — the child taps for the rest
+
+  root.__solWalkCleanup = function () {
+    if (nextBtn) nextBtn.removeEventListener("click", onNext);
+    root.__solWalkCleanup = null;
+  };
+  return root.__solWalkCleanup;
+}
+
+// ════════════════════════════════════════════════════════════════
+// Exports
+// ════════════════════════════════════════════════════════════════
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    normalizeExplain: normalizeExplain,
+    renderSolution: renderSolution,
+    renderWalkthrough: renderWalkthrough,
+    wireWalkthrough: wireWalkthrough,
+    bubbles: { wrap: chatWrap, msg: chatMsg, FILL_MS: BUBBLE_FILL_MS }
+  };
+}
+if (typeof window !== "undefined") {
+  window.RaoSolution = {
+    normalizeExplain: normalizeExplain,
+    renderSolution: renderSolution,
+    renderWalkthrough: renderWalkthrough,
+    wireWalkthrough: wireWalkthrough,
+    bubbles: { wrap: chatWrap, msg: chatMsg, FILL_MS: BUBBLE_FILL_MS }
+  };
+}
 </script>
 <script>/* card renderer — lifted VERBATIM from engine/rao-card.js */
 /* ============================================================================
@@ -3815,31 +4401,56 @@ module.exports = { attach, serialize, check, BEHAVIORS };
 
    Turns an engine-built question ({markup, behavior, answer, hint}) into a full
    student card: the gradient .pv-frame, the .pv-head progress ring, the question
-   body, the hint panel, and the [Hint] … [Check ✓] footer — then wires Hint/Check.
+   body, the hint panel, and the [Hint] … [Check] footer — then wires the CALM
+   CARD behavior (Brief 7.6, rao-master-16, signed off in calm-card-v36.html).
 
-   This used to be baked into every lesson file and SCRAPED out of a reference
-   lesson by make-review. Now the lessons are content-only (just their #source),
-   so the renderer lives here — one copy, shared by the app and by the review
-   builder. There is nothing left to drift from.
+   THE LAWS this file enforces (each has a guard in tools/verify-calm.js):
+     1. TASK IMMUTABILITY — prompt + options never dim, fade or recolor. Only
+        card chrome (.pv-tlabel, .pv-ring) quiets (.cc-dim) in feedback states.
+     2. NO ANSWER REVEAL while attempting is possible. No green, no correct
+        highlight, no reveal text. The reveal happens ONCE, at the walkthrough's
+        final step (or on a correct answer).
+     3. WRONG IS A WHISPER — the tried option gets a small red ✕ glyph before
+        its text (persists for the life of the question) and NOTHING else. No
+        is-wrong red flood, no shake, no "Not quite" pill in adaptive mode.
+     4. HELP ACCUMULATES — hint bubbles and walkthrough steps only ever stack;
+        nothing the card has told the child disappears while the question lives.
+     5. ONE HINT LADDER — the whyWrong message after a wrong attempt IS the next
+        hint rung ("Hint 1", "Hint 2", … — never "of N"). Presentation: typed
+        tutor bubbles (RaoSolution.bubbles — ONE copy, shared with the steps).
+     6. WALKTHROUGH commit — "Walk me through it" appears after the SECOND wrong
+        attempt OR when all hints are used, never before the first attempt.
+        Opening it LOCKS the question and records solved-with-help. No retry
+        inside. Final step reveals quietly — triumph ≠ rescue.
+     7. CORRECT is the only loud moment: green option + cc-win + sparks + chime,
+        takeaway panel ("The idea to keep"), then "Next question →".
+     8. MODES — adaptive: all of the above. rapid: verdict flash + one-line
+        explain + code log only. quiz: nothing during; review is the app's job.
 
-   The trailing IIFE mounts every question in #source into #preview; it is the
-   same standalone harness the lessons carried before. The app can load this file
-   and call card()/wireCard() itself, or keep its own mount.
+   The app can load this file and call card()/wireCard() itself, or keep its
+   own mount. The trailing IIFE mounts every question in #source into #preview.
    ========================================================================== */
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; });
 }
 function escAttr(s) { return esc(s).replace(/"/g, "&quot;"); }
-function card(inner, behavior, answer, hint, i, n) {
+function card(inner, behavior, answer, hint, i, n, extra) {
+  // hint may be a legacy string (unchanged) or a ladder (array of 1-3 rungs,
+  // JSON-encoded into the same attribute). extra carries whyWrong / solution
+  // when the question authors them; legacy questions emit NO new attrs.
+  var hintAttr = hint ? (Array.isArray(hint) ? JSON.stringify(hint) : String(hint)) : "";
   return (
     '<div class="pv-frame" data-behavior="' + escAttr(behavior) + '" data-answer="' + escAttr(JSON.stringify(answer)) + '"' +
-      (hint ? ' data-hint="' + escAttr(hint) + '"' : "") + '><div class="pv-card">' +
+      (hintAttr ? ' data-hint="' + escAttr(hintAttr) + '"' : "") +
+      (extra && extra.whyWrong ? ' data-why="' + escAttr(JSON.stringify(extra.whyWrong)) + '"' : "") +
+      (extra && extra.solution ? ' data-solution="' + escAttr(JSON.stringify(extra.solution)) + '"' : "") +
+      '><div class="pv-card">' +
       '<div class="pv-head"><span class="pv-tlabel">Problem</span>' +
         '<span class="pv-ring"><i>' + i + "/" + n + "</i></span></div>" +
       inner +
       '<div class="pv-hintbox" hidden></div>' +
       '<div class="pv-foot"><button class="pv-hint" type="button">Hint</button>' +
-        '<span class="pv-fb"></span><button class="pv-check" type="button">Check ✓</button></div>' +
+        '<span class="pv-fb"></span><button class="pv-check" type="button">Check</button></div>' +
     "</div></div>" +
     '<div class="pv-ans">✓ Answer: <b>' + esc(Array.isArray(answer) ? answer.join(", ") : answer) + "</b></div>"
   );
@@ -3849,55 +4460,431 @@ function wireCard(frame) {
   var behavior = frame.dataset.behavior;
   var answer; try { answer = JSON.parse(frame.dataset.answer || "null"); } catch (e) { answer = null; }
   if (qbody && window.RaoPreview && window.RaoPreview.attach) window.RaoPreview.attach(qbody, behavior);
-  // BUG 4 — arm the three-mode reveal. rao.css hides `.explain` by default and only
-  // un-hides it via `[data-mode="…"].is-checked .explain`, but nothing ever set those
-  // hooks, so every explanation was written, emitted, styled — and permanently invisible.
-  // The compound selector needs data-mode AND is-checked on the SAME element (an ancestor
-  // of `.explain`); `.qbody` is that element. Default to "adaptive" (answer → Check →
-  // teaching); the app may pre-set data-mode on the qbody to pick rapid/quiz instead.
+  // The compound reveal selector needs data-mode AND is-checked on the SAME
+  // element (an ancestor of `.explain`); `.qbody` is that element. Default to
+  // "adaptive"; the app may pre-set data-mode on the qbody to pick rapid/quiz.
   if (qbody && !qbody.hasAttribute("data-mode")) qbody.setAttribute("data-mode", "adaptive");
-  var hintBtn = frame.querySelector(".pv-hint"), hintBox = frame.querySelector(".pv-hintbox"), hint = frame.dataset.hint;
-  if (hintBtn) {
-    if (!hint) hintBtn.style.display = "none";
-    else hintBtn.addEventListener("click", function () {
-      if (hintBox.hasAttribute("hidden")) { hintBox.textContent = "💡 " + hint; hintBox.removeAttribute("hidden"); hintBtn.textContent = "Hide hint"; }
-      else { hintBox.setAttribute("hidden", ""); hintBtn.textContent = "Hint"; }
+  var mode = (qbody && qbody.getAttribute("data-mode")) || "adaptive";
+
+  // ── shared data (absent on legacy questions) ──
+  var hintBtn = frame.querySelector(".pv-hint"), hintBox = frame.querySelector(".pv-hintbox"), hintRaw = frame.dataset.hint;
+  var rungs = null;
+  if (hintRaw) {
+    if (hintRaw.charAt(0) === "[") {
+      try { var parsed = JSON.parse(hintRaw); if (Array.isArray(parsed) && parsed.length) rungs = parsed.map(String); } catch (e) { /* fall through: treat as string */ }
+    }
+    if (!rungs) rungs = [hintRaw];
+  }
+  var whyMap = null, solution = null, explain = null;
+  try { if (frame.dataset.why) whyMap = JSON.parse(frame.dataset.why); } catch (e) { whyMap = null; }
+  try { if (frame.dataset.solution) solution = JSON.parse(frame.dataset.solution); } catch (e) { solution = null; }
+  var explainEl = qbody ? qbody.querySelector(".explain") : null;
+  if (explainEl) explain = explainEl.innerHTML;
+
+  var checkBtn = frame.querySelector(".pv-check"), fb = frame.querySelector(".pv-fb"), foot = frame.querySelector(".pv-foot");
+  var isSelect = behavior === "single-select" || behavior === "multi-select";
+
+  // The calm presentation needs the shared bubble primitives. Without them
+  // (solution-renderer.js not loaded) the card degrades gracefully to the
+  // legacy hint box / message panel — still with ZERO answer leaks.
+  var bubbles = window.RaoSolution && window.RaoSolution.bubbles;
+  var calm = mode === "adaptive" && !!bubbles;
+
+  // ══════════ calm-card state (one closure per card) ══════════
+  var wrongCount = 0;     // wrong ATTEMPTS (the walkthrough trigger counts these)
+  var hintNum = 1;        // next "Hint n" chip number — whyWrong and forward rungs share it
+  var rungIdx = 0;        // next unshown forward rung
+  var locked = false;     // set on correct, or at the walkthrough commit point
+  var typing = false;     // a bubble is mid-fill; controls wait for it
+  var chat = null;        // the ONE hint conversation (bubbles accumulate here)
+  var shownWhys = {};     // whyWrong messages already spoken — never repeat a bubble
+
+  function setOutcome(o) {
+    try {
+      frame.dataset.raoOutcome = o;
+      (window.__raoOutcomes = window.__raoOutcomes || []).push({ outcome: o, behavior: behavior, ts: Date.now() });
+      if (qbody) qbody.dispatchEvent(new CustomEvent("rao:outcome", { bubbles: true, detail: { outcome: o } }));
+    } catch (e) { /* recording must never break the card */ }
+  }
+  function quietChrome(on) {
+    [".pv-tlabel", ".pv-ring"].forEach(function (s) {
+      var el = frame.querySelector(s);
+      if (el) el.classList.toggle("cc-dim", !!on);
     });
   }
-  var checkBtn = frame.querySelector(".pv-check"), fb = frame.querySelector(".pv-fb");
+  // Freeze the TASK, not its looks: pointer-events + focus go dead, computed
+  // colors/opacity stay byte-identical (task-immutability law, guard c).
+  function freezeTask(on) { if (qbody) { qbody.inert = !!on; qbody.classList.toggle("cc-locked", !!on); } }
+  function hideFoot(on) { if (foot) foot.style.display = on ? "none" : ""; }
+  function ensureChat() {
+    if (!chat) { chat = bubbles.wrap(null); qbody.after(chat); }
+    return chat;
+  }
+  function removeRow() {
+    var rows = frame.querySelectorAll(".cc-actions");
+    for (var i = 0; i < rows.length; i++) rows[i].remove();
+  }
+  function actionRow(defs) {   // defs: [{label, ghost, onTap}]
+    removeRow();
+    var row = document.createElement("div");
+    row.className = "cc-actions";
+    defs.forEach(function (d) {
+      if (!d) return;
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = d.ghost ? "cc-btn-ghost" : "cc-btn-solid";
+      b.textContent = d.label;
+      b.addEventListener("click", function () { if (!typing) d.onTap(); });
+      row.appendChild(b);
+    });
+    var cardEl = frame.querySelector(".pv-card");
+    cardEl.insertBefore(row, foot);
+    return row;
+  }
+  function allHintsUsed() { return !rungs || rungIdx >= rungs.length; }
+  function canWalk() { return !!(solution && window.RaoSolution && window.RaoSolution.renderWalkthrough); }
+  function walkOffered() { return canWalk() && (wrongCount >= 2 || (wrongCount >= 1 && allHintsUsed())); }
+  function syncHintBtn() {
+    if (!hintBtn) return;
+    if (!calm || !rungs) return;   // visibility for the non-calm cases is set below
+    if (locked || allHintsUsed()) { hintBtn.style.display = "none"; return; }
+    hintBtn.style.display = "";
+    hintBtn.textContent = hintNum === 1 ? "Hint" : "Give one more hint";
+  }
+  function giveHint(then) {
+    if (typing || allHintsUsed()) return;
+    typing = true;
+    var rung = rungs[rungIdx++];
+    bubbles.msg(ensureChat(), "Hint " + hintNum++, esc(rung), function () {
+      typing = false;
+      syncHintBtn();
+      if (then) then();
+    });
+  }
+
+  // ── the feedback-state action row. solidLabel: "Try again" right after a
+  //    wrong attempt, "I'll try now" after a hint was given (it closes the
+  //    ladder). The bubbles themselves NEVER close (help-accumulates law). ──
+  function feedbackRow(solidLabel) {
+    actionRow([
+      !allHintsUsed() && { label: "Give one more hint", ghost: true, onTap: function () {
+        removeRow();
+        giveHint(function () { feedbackRow("I’ll try now"); });
+      } },
+      walkOffered() && { label: "Walk me through it", ghost: true, onTap: openWalkthrough },
+      { label: solidLabel, ghost: false, onTap: resumeAnswering }
+    ].filter(Boolean));
+  }
+  function resumeAnswering() {
+    removeRow();
+    freezeTask(false);
+    hideFoot(false);
+    quietChrome(false);
+    clearFeedback(qbody);            // input verdict marks go; ✕ and bubbles STAY
+    fb.className = "pv-fb"; fb.textContent = ""; fb.style.color = "";
+    syncHintBtn();
+  }
+
+  // ── the whisper: mark the attempt with a small ✕, return options to their
+  //    resting look (is-sel comes off — the ✕ is the ONLY change, law 3). ──
+  function markTried() {
+    var sel = qbody.querySelectorAll(".opt.is-sel, .opt-fig.is-sel, .hcell.is-sel");
+    for (var i = 0; i < sel.length; i++) {
+      var el = sel[i];
+      el.classList.add("cc-tried");
+      el.classList.remove("is-sel");
+      if (!el.querySelector(".cc-x")) {
+        var x = document.createElement("span");
+        x.className = "cc-x";
+        x.textContent = "✕";
+        var txt = el.querySelector(".opt-text");
+        if (txt) txt.insertBefore(x, txt.firstChild);
+        else {
+          var ind = el.querySelector(".check-ind");
+          if (ind && ind.nextSibling) el.insertBefore(x, ind.nextSibling);
+          else el.insertBefore(x, el.firstChild);
+        }
+      }
+    }
+  }
+  // The quiet reveal (walkthrough final step): green the correct option(s),
+  // nothing else moves. Triumph and rescue must feel different.
+  function revealCorrect() {
+    if (!isSelect) return;   // non-select: the final step's text IS the reveal
+    qbody.querySelectorAll(".opt, .opt-fig, .hcell").forEach(function (o) {
+      var val = String(o.dataset.val != null ? o.dataset.val : (o.textContent || "").trim());
+      if ((answer || []).map(String).indexOf(val) !== -1) o.classList.add("is-correct");
+    });
+  }
+
+  // ── WALKTHROUGH — child-initiated, and THE COMMIT POINT (law 6). ──
+  function openWalkthrough() {
+    if (locked) return;
+    locked = true;
+    setOutcome("solved-with-help");     // recorded BEFORE anything renders
+    removeRow();
+    freezeTask(true);
+    hideFoot(true);                     // no Check, no retry — anywhere
+    quietChrome(true);
+    if (hintBtn) hintBtn.style.display = "none";
+    var cardEl = frame.querySelector(".pv-card");
+    var holder = frame.querySelector(".pv-solwrap");
+    if (!holder) {
+      holder = document.createElement("div");
+      holder.className = "pv-solwrap";
+      cardEl.insertBefore(holder, foot);
+    }
+    holder.innerHTML = window.RaoSolution.renderWalkthrough({ explain: explain, solution: solution });
+    holder.removeAttribute("hidden");
+    window.RaoSolution.wireWalkthrough(holder.querySelector(".sol-walk"), {
+      explain: explain, solution: solution,
+      onReveal: function () {
+        revealCorrect();
+        qbody.classList.add("is-checked");     // lets rao.css paint the green
+        qbody.classList.add("cc-hastake");     // the walkthrough already taught — no duplicate .explain
+      },
+      onDone: function () {
+        actionRow([{ label: "Next question →", ghost: false, onTap: nextQuestion }]);
+      }
+    });
+  }
+  function nextQuestion() {
+    removeRow();
+    try { qbody.dispatchEvent(new CustomEvent("rao:next", { bubbles: true })); } catch (e) {}
+    var frames = document.querySelectorAll(".pv-frame");
+    for (var i = 0; i < frames.length; i++) {
+      if (frames[i] === frame && frames[i + 1]) { frames[i + 1].scrollIntoView({ block: "center", behavior: "smooth" }); break; }
+    }
+  }
+
+  // ── CORRECT — the only loud moment (law 7). ──
+  function ding() {
+    try {
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      [[659.25, 0], [880, .13]].forEach(function (n) {
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = "sine"; o.frequency.value = n[0];
+        g.gain.setValueAtTime(.001, ctx.currentTime + n[1]);
+        g.gain.exponentialRampToValueAtTime(.07, ctx.currentTime + n[1] + .02);
+        g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + n[1] + .28);
+        o.connect(g).connect(ctx.destination);
+        o.start(ctx.currentTime + n[1]); o.stop(ctx.currentTime + n[1] + .3);
+      });
+    } catch (e) { /* sound is a garnish, never a dependency */ }
+  }
+  function sparks(el) {
+    var COL = ["#10b981", "#7b5cff", "#fbbf24", "#34d399", "#a78bfa", "#fbbf24"];
+    el.style.position = "relative";
+    for (var i = 0; i < 6; i++) {
+      var s = document.createElement("span");
+      s.className = "cc-spark";
+      var ang = (Math.PI * 2 / 6) * i - Math.PI / 2, r = 46 + Math.random() * 18;
+      s.style.setProperty("--sx", Math.round(Math.cos(ang) * r) + "px");
+      s.style.setProperty("--sy", Math.round(Math.sin(ang) * r) + "px");
+      s.style.background = COL[i];
+      el.appendChild(s);
+      setTimeout(function (n) { return function () { n.remove(); }; }(s), 900);
+    }
+  }
+  function takeawayText() {
+    if (!solution) return null;
+    for (var i = 0; i < solution.length; i++) {
+      if (solution[i] && solution[i].type === "takeaway" && solution[i].text) return String(solution[i].text);
+    }
+    return null;
+  }
+  function celebrate() {
+    locked = true;
+    setOutcome("correct");
+    freezeTask(true);
+    hideFoot(true);
+    quietChrome(true);
+    if (hintBtn) hintBtn.style.display = "none";
+    fb.className = "pv-fb"; fb.textContent = "";
+    var wins = qbody.querySelectorAll(".opt.is-correct, .opt-fig.is-correct, .hcell.is-correct");
+    for (var i = 0; i < wins.length; i++) {
+      // The selection paint (.is-sel, brand purple) out-specifies the green
+      // .is-correct rule and would silently beat it. The question is locked —
+      // the selection state has done its job; drop it so the green wins.
+      wins[i].classList.remove("is-sel");
+      wins[i].classList.add("cc-win");
+      sparks(wins[i]);
+    }
+    ding();
+    var take = takeawayText();
+    setTimeout(function () {
+      if (take) {
+        var cardEl = frame.querySelector(".pv-card");
+        var p = document.createElement("div");
+        p.className = "cc-take";
+        p.innerHTML = '<p><span class="cc-tag">The idea to keep</span>' + esc(take) + "</p>";
+        cardEl.insertBefore(p, foot);
+        qbody.classList.add("cc-hastake");   // the panel carries the teaching — hide the duplicate .explain
+      }
+      actionRow([{ label: "Next question →", ghost: false, onTap: nextQuestion }]);
+    }, 550);
+  }
+
+  // ── WRONG — the whisper (law 3), then the ladder speaks (law 5). ──
+  function calmWrong(user) {
+    wrongCount++;
+    var entry = whyMap ? lookupWhy(qbody, whyMap, answer) : null;
+    if (entry && entry.code) {
+      try {
+        (window.__raoWhyWrongLog = window.__raoWhyWrongLog || []).push({ code: entry.code, ts: Date.now() });
+        qbody.dispatchEvent(new CustomEvent("rao:whywrong", { bubbles: true, detail: { code: entry.code } }));
+      } catch (e) { /* logging must never break the card */ }
+    }
+    if (isSelect) markTried();
+    else markFeedback(qbody, behavior, user, answer, false, true);   // wrong marks only — NO green while attemptable
+    freezeTask(true);
+    hideFoot(true);
+    quietChrome(true);
+    fb.className = "pv-fb"; fb.textContent = "";   // no "Not quite" — the ✕ and the bubble carry it
+    var msg = entry && entry.message ? String(entry.message) : null;
+    if (msg && !shownWhys[msg]) {
+      shownWhys[msg] = true;
+      typing = true;
+      bubbles.msg(ensureChat(), "Hint " + hintNum++, esc(msg), function () {
+        typing = false;
+        feedbackRow("Try again");
+      });
+    } else {
+      feedbackRow("Try again");
+    }
+  }
+
+  // ══════════ hint button wiring ══════════
+  if (hintBtn) {
+    if (!rungs || mode !== "adaptive") hintBtn.style.display = "none";
+    else if (calm) {
+      syncHintBtn();
+      // A pre-attempt Hint press starts the ladder at the first forward hint;
+      // the child keeps answering — nothing disables, nothing is a verdict.
+      hintBtn.addEventListener("click", function () { if (!locked) giveHint(); });
+    } else if (rungs.length === 1) {
+      // legacy single hint (degraded mode, solution-renderer.js absent)
+      var hint = rungs[0];
+      hintBtn.addEventListener("click", function () {
+        if (hintBox.hasAttribute("hidden")) { hintBox.textContent = "💡 " + hint; hintBox.removeAttribute("hidden"); hintBtn.textContent = "Hide hint"; }
+        else { hintBox.setAttribute("hidden", ""); hintBtn.textContent = "Hint"; }
+      });
+    } else {
+      // legacy ladder (degraded mode)
+      var revealed = 0;
+      var addRung = function () {
+        var d = document.createElement("div");
+        d.className = "pv-rung";
+        d.textContent = "💡 " + rungs[revealed];
+        hintBox.appendChild(d);
+        revealed++;
+      };
+      var syncLabel = function () {
+        hintBtn.textContent = hintBox.hasAttribute("hidden")
+          ? (revealed === 0 ? "Hint" : "Show hints")
+          : (revealed < rungs.length ? "Another hint (" + revealed + "/" + rungs.length + ")" : "Hide hints");
+      };
+      hintBtn.addEventListener("click", function () {
+        if (hintBox.hasAttribute("hidden")) {
+          hintBox.removeAttribute("hidden");
+          if (revealed === 0) addRung();
+        } else if (revealed < rungs.length) {
+          addRung();
+        } else {
+          hintBox.setAttribute("hidden", "");
+        }
+        syncLabel();
+      });
+    }
+  }
+
+  // ══════════ Check ══════════
   if (checkBtn) checkBtn.addEventListener("click", function () {
+    if (locked) return;
+    if (isSelect && !qbody.querySelector(".is-sel")) {
+      fb.className = "pv-fb"; fb.textContent = "✋ Answer it first"; fb.style.color = "#b58900"; return;
+    }
     var user = window.RaoPreview.serialize(qbody, behavior);
     if (user == null) { fb.className = "pv-fb"; fb.textContent = "✋ Answer it first"; fb.style.color = "#b58900"; return; }
-    var ok = window.RaoPreview.check(behavior, user, answer);
-    // pill feedback: big emoji + coloured message on a soft good/bad pill.
-    // 🤔 (thinking face) for wrong — a celebratory/flexing gesture would contradict
-    // "Not quite". 🎉 for correct.
     fb.style.color = "";
+    var ok = window.RaoPreview.check(behavior, user, answer);
+
+    if (calm) {
+      if (ok) {
+        markFeedback(qbody, behavior, user, answer, true, false);
+        qbody.classList.add("is-checked");
+        celebrate();
+      } else {
+        calmWrong(user);   // never is-checked while attemptable — .explain stays sealed (law 2)
+      }
+      return;
+    }
+
+    // ── rapid / quiz / degraded-adaptive path ──
     fb.className = "pv-fb " + (ok ? "good" : "bad");
     fb.innerHTML = '<span class="pv-fb-ic">' + (ok ? "🎉" : "🤔") + "</span>" + (ok ? "Correct!" : "Not quite");
-    // Per-OPTION feedback — mark what the child chose, NOT the whole card. Colouring the
-    // whole card is wrong: the card wasn't wrong, the option was. (No cardEl.style.boxShadow.)
-    markFeedback(qbody, behavior, user, answer, ok);
-    // BUG 4 — flip the reveal hook. In adaptive mode this un-hides `.explain` (the
-    // teaching), and lets rao.css switch options from the pre-check neutral look to the
-    // green/red verdict. Same element as data-mode; set synchronously with markFeedback so
-    // there is never a painted frame with is-correct but not is-checked.
-    if (qbody) qbody.classList.add("is-checked");
+    markFeedback(qbody, behavior, user, answer, ok, !ok && mode === "adaptive");
+    // The reveal hook: rapid shows its one-liner after the (single) attempt;
+    // degraded-adaptive only reveals after a CORRECT answer — never while the
+    // child can still retry (law 2 holds even without the calm chrome).
+    if (qbody && (ok || mode === "rapid")) qbody.classList.add("is-checked");
+
+    if (ok) { hidePanels(frame); return; }
+    var entry = whyMap ? lookupWhy(qbody, whyMap, answer) : null;
+    if (entry && entry.code && mode !== "quiz") {
+      try {
+        (window.__raoWhyWrongLog = window.__raoWhyWrongLog || []).push({ code: entry.code, ts: Date.now() });
+        qbody.dispatchEvent(new CustomEvent("rao:whywrong", { bubbles: true, detail: { code: entry.code } }));
+      } catch (e) { /* logging must never break the card */ }
+    }
+    if (mode === "adaptive") showWhyPanel(frame, entry);
   });
 }
 
+/* ── degraded-mode panel (solution-renderer.js absent): the whyWrong line
+      still shows, but there is no walkthrough — the calm path owns that. ── */
+function lookupWhy(qbody, whyMap, answer) {
+  var ans = (answer || []).map(String);
+  var sel = qbody.querySelectorAll(".opt.is-sel, .opt-fig.is-sel, .hcell.is-sel");
+  for (var i = 0; i < sel.length; i++) {
+    var val = String(sel[i].dataset.val != null ? sel[i].dataset.val : (sel[i].textContent || "").trim());
+    if (ans.indexOf(val) === -1 && whyMap[val]) return whyMap[val];
+  }
+  return null;
+}
+function hidePanels(frame) {
+  var w = frame.querySelector(".pv-why"); if (w) w.setAttribute("hidden", "");
+  var s = frame.querySelector(".pv-solwrap"); if (s) s.setAttribute("hidden", "");
+}
+function showWhyPanel(frame, entry) {
+  if (!entry || !entry.message) return;
+  var cardEl = frame.querySelector(".pv-card"), foot = frame.querySelector(".pv-foot");
+  var panel = frame.querySelector(".pv-why");
+  if (!panel) {
+    panel = document.createElement("div");
+    panel.className = "pv-why";
+    cardEl.insertBefore(panel, foot);
+  }
+  panel.innerHTML = "";
+  panel.removeAttribute("hidden");
+  var m = document.createElement("div");
+  m.className = "pv-why-msg";
+  m.textContent = entry.message;
+  panel.appendChild(m);
+}
+
 /* Per-option feedback. The engine grades but never touches the DOM ("CSS decides — not the
-   engine"), so the wiring applies the state classes rao.css already styles. We mark the
-   OPTION the child chose and, when wrong, reveal the correct one — the card is left alone.
-   Types with NO per-option state in rao.css (categorize, line-plot, time, bar-graph) get
-   the pill + answer line only; we do not fabricate classes rao.css doesn't paint. */
+   engine"), so the wiring applies the state classes rao.css already styles. We mark what the
+   child entered — and NEVER paint the correct answer on a wrong attempt: while the question
+   is attemptable there is no green anywhere (Brief 7.6, law 2). `noGreen` suppresses the
+   per-input green marks on a wrong adaptive attempt for the same reason. */
 var FB_STATES = ["is-correct", "is-wrong", "correct", "incorrect"];
 function clearFeedback(qbody) {
   qbody.querySelectorAll(".is-correct, .is-wrong, .correct, .incorrect").forEach(function (el) {
     el.classList.remove.apply(el.classList, FB_STATES);
   });
 }
-function markFeedback(qbody, behavior, user, answer, ok) {
+function markFeedback(qbody, behavior, user, answer, ok, noGreen) {
   clearFeedback(qbody);                       // idempotent — a re-check re-marks cleanly
   var ans = (answer || []).map(String);
   var u = (user || []).map(String);
@@ -3908,26 +4895,35 @@ function markFeedback(qbody, behavior, user, answer, ok) {
       var val = String(o.dataset.val != null ? o.dataset.val : (o.textContent || "").trim());
       var chosen = o.classList.contains("is-sel");
       var right = ans.indexOf(val) !== -1;
-      if (chosen) o.classList.add(right ? "is-correct" : "is-wrong");
-      else if (!ok && right) o.classList.add("is-correct");   // reveal the right answer
+      if (chosen) {
+        if (right && !noGreen) o.classList.add("is-correct");
+        else if (!right) o.classList.add("is-wrong");
+      }
+      // NEVER mark an unchosen correct option — that was the answer leak.
     });
     return;
   }
   if (behavior === "fill-blanks") {
     qbody.querySelectorAll(".blank-input").forEach(function (inp, i) {
-      inp.classList.add(u[i] === ans[i] ? "correct" : "incorrect");
+      var right = u[i] === ans[i];
+      if (right && !noGreen) inp.classList.add("correct");
+      else if (!right) inp.classList.add("incorrect");
     });
     return;
   }
   if (behavior === "lattice") {
     qbody.querySelectorAll(".lat-in").forEach(function (inp, i) {
-      inp.classList.add(u[i] === ans[i] ? "correct" : "incorrect");
+      var right = u[i] === ans[i];
+      if (right && !noGreen) inp.classList.add("correct");
+      else if (!right) inp.classList.add("incorrect");
     });
     return;
   }
   if (behavior === "expression") {
     qbody.querySelectorAll(".ans-input").forEach(function (inp, i) {
-      inp.classList.add(norm(u[i]) === norm(ans[i] || "") ? "correct" : "incorrect");
+      var right = norm(u[i]) === norm(ans[i] || "");
+      if (right && !noGreen) inp.classList.add("correct");
+      else if (!right) inp.classList.add("incorrect");
     });
     return;
   }
@@ -3947,7 +4943,7 @@ function markFeedback(qbody, behavior, user, answer, ok) {
   if(!preview) return;
   if(!window.RaoPreview || !window.RaoPreview.build){ preview.innerHTML = '<p style="color:#c00">Preview engine not loaded — make sure preview-engine.js is in the project files and try again.</p>'; return; }
   var qs = window.RaoPreview.build(document.getElementById('source').innerHTML);
-  qs.forEach(function(q,i){ preview.insertAdjacentHTML('beforeend', card(q.markup, q.behavior, q.answer, q.hint, i+1, qs.length)); });
+  qs.forEach(function(q,i){ preview.insertAdjacentHTML('beforeend', card(q.markup, q.behavior, q.answer, q.hint, i+1, qs.length, { whyWrong: q.whyWrong, solution: q.solution })); });
   document.querySelectorAll('.pv-frame').forEach(wireCard);
 })();
 </script>

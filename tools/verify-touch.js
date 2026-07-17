@@ -1,22 +1,28 @@
 #!/usr/bin/env node
-/* ── verify-touch.js — the ladder under REAL TOUCH, at phone width ──
+/* ── verify-touch.js — the CALM CARD under REAL TOUCH, at phone width ──
  *
- * Playwright's mouse API gives FALSE PASSES for touch: a walkthrough that
- * "passes" under mouse can be completely dead on a phone. Every interaction
- * here is a raw CDP `Input.dispatchTouchEvent` (touchStart → touchEnd), the
- * same events a finger produces. Viewport is 380×800.
+ * Playwright's mouse API gives FALSE PASSES for touch: a flow that "passes"
+ * under mouse can be completely dead on a phone. Every interaction here is a
+ * raw CDP `Input.dispatchTouchEvent` (touchStart → touchEnd), the same events
+ * a finger produces. Viewport is 380×800.
  *
- * What it proves (Brief 7.3):
- *   1. Hint ladder — 3 rungs reveal one per TAP, stacking, never all at once.
- *   2. whyWrong — a wrong answer shows the option's message + logs its code.
- *   3. Walkthrough — opens on "Show me", reveals ONE step per tap, history
- *      dims, the "I've got it — let me try again" bail-out is present at
- *      EVERY step, and tapping it unlocks the card (keeping the selection).
- *   4. Firewall at runtime — check() is spied; opening/stepping/closing the
+ * What it proves (Brief 7.6, rao-master-16):
+ *   1. Hint bubbles — a pre-attempt Hint tap types ONE bubble; the ladder
+ *      accumulates one bubble per tap; options stay live while hinting.
+ *   2. Wrong is a whisper — the tried option gets ✕ + cc-tried, loses is-sel,
+ *      shows NO pill, NO red flood; the whyWrong message types as the next
+ *      "Hint n" bubble and its code is logged.
+ *   3. Walkthrough trigger + commit — "Walk me through it" appears only once
+ *      all hints are used (or after the 2nd wrong attempt); opening it locks
+ *      the card IMMEDIATELY, records solved-with-help, and offers NO retry
+ *      control anywhere. One button per step: Next step → Got it.
+ *   4. Firewall at runtime — check() is spied; opening/stepping/finishing the
  *      walkthrough adds ZERO calls.
- *   5. Idempotency — attach() is called a 2nd time mid-flow; a tap must still
- *      fire handlers exactly once (select toggles once, grading still works).
- *   6. Tap targets — every visible interactive control in the card ≥ 44×44px.
+ *   5. Retry path — on a fresh card: wrong → "Try again" unlocks → correct
+ *      answer celebrates (green + takeaway timing + "Next question →").
+ *   6. Idempotency — attach() called a 2nd time mid-flow; one tap still fires
+ *      handlers exactly once.
+ *   7. Tap targets — every visible interactive control in the card ≥ 44×44px.
  *
  * Exit 0 = all green. Exit 1 = at least one failure (with the reason).
  */
@@ -34,6 +40,9 @@ const C = { r: "\x1b[31m", g: "\x1b[32m", b: "\x1b[1m", x: "\x1b[0m" };
 let failures = 0;
 function pass(name, detail) { console.log(`  ${C.g}PASS${C.x}  ${name}${detail ? " — " + detail : ""}`); }
 function fail(name, detail) { failures++; console.log(`  ${C.r}FAIL${C.x}  ${name} — ${detail}`); }
+
+// Bubbles fill at RaoSolution.bubbles.FILL_MS (650ms) — wait comfortably past it.
+const FILL_WAIT = 800;
 
 function buildPage() {
   const lesson = read("lessons/_type-coverage.html");
@@ -55,7 +64,7 @@ ${source}
 }
 
 (async () => {
-  console.log(`\n${C.b}TOUCH VERIFICATION${C.x} — 380×800, CDP Input.dispatchTouchEvent\n`);
+  console.log(`\n${C.b}TOUCH VERIFICATION${C.x} — 380×800, CDP Input.dispatchTouchEvent, calm card (Brief 7.6)\n`);
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
@@ -87,6 +96,19 @@ ${source}
     await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
     await page.waitForTimeout(60);
   }
+  // tap the action-row / walkthrough button whose label matches `re`
+  async function tapButton(scopeSel, re) {
+    const idx = await page.evaluate(([sel, src]) => {
+      const rx = new RegExp(src);
+      const els = Array.from(document.querySelectorAll(sel)).filter((e) => {
+        const r = e.getBoundingClientRect();
+        return r.width > 0 && r.height > 0 && getComputedStyle(e).visibility !== "hidden";
+      });
+      return els.findIndex((b) => rx.test(b.textContent || ""));
+    }, [scopeSel, re.source]);
+    if (idx < 0) throw new Error(`no visible button matching ${re} in ${scopeSel}`);
+    await tap(scopeSel, idx);
+  }
 
   // The fixture ladder question is the LAST card on the page.
   const F = await page.evaluate(() => {
@@ -97,11 +119,9 @@ ${source}
     return frames.length;
   });
   console.log(`  fixture: card ${F} of ${F} (ladder question in _type-coverage.html)\n`);
-
-  // Scope every selector to the fixture card.
   const S = (sel) => `#fixture ${sel}`;
 
-  // ── 6. tap-target audit helper (≥44×44 for every visible control) ──
+  // ── 7. tap-target audit helper (≥44×44 for every visible control) ──
   async function auditTargets(stage) {
     const bad = await page.evaluate((sel) => {
       const out = [];
@@ -109,6 +129,7 @@ ${source}
         const r = el.getBoundingClientRect();
         const cs = getComputedStyle(el);
         if (r.width === 0 || r.height === 0 || cs.visibility === "hidden" || cs.display === "none") return;
+        if (el.closest("[inert]")) return;   // frozen task — not tappable, not audited
         if (r.width < 44 || r.height < 44) out.push(`${el.className}: ${Math.round(r.width)}x${Math.round(r.height)}px`);
       });
       return out;
@@ -119,17 +140,24 @@ ${source}
 
   await auditTargets("initial");
 
-  // ── 1. hint ladder: one rung per tap ──
+  // ── 1. pre-attempt hint: ONE bubble types in; the task stays live ──
   await tap(S(".pv-hint"));
-  let rungCount = await page.$$eval(S(".pv-rung"), (els) => els.length);
-  if (rungCount === 1) pass("hint tap 1 reveals rung 1 only", `rungs visible: ${rungCount}`);
-  else fail("hint tap 1", `expected 1 rung, saw ${rungCount}`);
-  await tap(S(".pv-hint"));
-  await tap(S(".pv-hint"));
-  rungCount = await page.$$eval(S(".pv-rung"), (els) => els.length);
-  const rungsStacked = await page.$eval(S(".pv-hintbox"), (el) => !el.hasAttribute("hidden"));
-  if (rungCount === 3 && rungsStacked) pass("hint taps 2+3 stack rungs 2 and 3", "all 3 visible, earlier rungs retained");
-  else fail("hint ladder stacking", `rungs=${rungCount} boxVisible=${rungsStacked}`);
+  await page.waitForTimeout(FILL_WAIT);
+  const h1 = await page.evaluate(() => {
+    const f = document.getElementById("fixture");
+    return {
+      bubbles: f.querySelectorAll(".cc-msg").length,
+      chips: [...f.querySelectorAll(".cc-schip")].map((c) => c.textContent),
+      optsLive: !f.querySelector(".qbody").inert,
+      hintLabel: f.querySelector(".pv-hint").textContent,
+    };
+  });
+  if (h1.bubbles === 1 && h1.chips[0] === "Hint 1") pass("pre-attempt Hint types ONE bubble", `chip "${h1.chips[0]}"`);
+  else fail("pre-attempt hint", JSON.stringify(h1));
+  if (h1.optsLive) pass("options stay live while hinting");
+  else fail("options during hint", "qbody is inert after a mere hint");
+  if (h1.hintLabel === "Give one more hint") pass('hint button relabels to "Give one more hint"');
+  else fail("hint button label", `"${h1.hintLabel}"`);
 
   // ── spy on check() BEFORE any grading ──
   await page.evaluate(() => {
@@ -138,145 +166,226 @@ ${source}
     window.RaoPreview.check = function () { window.__checkCalls++; return orig.apply(this, arguments); };
   });
 
-  // ── 2. wrong answer → whyWrong message + code log ──
-  await tap(S('.opt[data-val="130,000"], .opt'), undefined); // data-val may be absent: options key by text
-  // ensure we actually selected the wrong option "130,000"
-  const picked = await page.evaluate((sel) => {
-    // if the first tap selected the wrong element, force-tap by text
-    const opts = Array.from(document.querySelectorAll(sel));
-    const want = opts.find((o) => (o.textContent || "").trim() === "130,000");
-    const got = opts.find((o) => o.classList.contains("is-sel"));
-    return { want: !!want, gotText: got ? (got.textContent || "").trim() : null };
-  }, S(".opt"));
-  if (picked.gotText !== "130,000") {
-    // deterministic re-pick: clear then tap the right one by index
-    await page.evaluate((sel) => {
-      Array.from(document.querySelectorAll(sel)).forEach((o) => o.classList.remove("is-sel"));
-    }, S(".opt"));
-    const idx = await page.evaluate((sel) =>
-      Array.from(document.querySelectorAll(sel)).findIndex((o) => (o.textContent || "").trim() === "130,000"), S(".opt"));
-    await tap(S(".opt"), idx);
-  }
+  // ── 2. wrong answer → whisper + whyWrong bubble + code log ──
+  const idx130 = await page.evaluate((sel) =>
+    Array.from(document.querySelectorAll(sel)).findIndex((o) => (o.dataset.val || "").trim() === "130,000"), S(".opt"));
+  await tap(S(".opt"), idx130);
   await tap(S(".pv-check"));
-  const afterWrong = await page.evaluate(() => ({
-    fb: document.querySelector("#fixture .pv-fb").textContent,
-    why: (() => { const w = document.querySelector("#fixture .pv-why"); return w && !w.hasAttribute("hidden") ? w.textContent : null; })(),
-    log: (window.__raoWhyWrongLog || []).map((e) => e.code),
-    showme: !!document.querySelector("#fixture .pv-showme"),
-    checks: window.__checkCalls,
-  }));
-  if (/Not quite/.test(afterWrong.fb)) pass("wrong answer graded WRONG under touch", afterWrong.fb.trim());
-  else fail("wrong answer grading", `fb="${afterWrong.fb}"`);
-  if (afterWrong.why && /far larger/.test(afterWrong.why)) pass("whyWrong message shown", `"${afterWrong.why.replace(/Show me/, "").trim().slice(0, 60)}…"`);
-  else fail("whyWrong message", `panel="${afterWrong.why}"`);
-  if (afterWrong.log.includes("ESTIMATE_WRONG_VALUE")) pass("whyWrong code logged", JSON.stringify(afterWrong.log));
-  else fail("whyWrong code log", JSON.stringify(afterWrong.log));
-  if (afterWrong.showme) pass("Show me button present");
-  else fail("Show me button", "not found");
-  const checksAfterGrade = afterWrong.checks; // legitimate call from the Check button
-
-  // ── 3. walkthrough: one step per tap, dimmed history, bail-out everywhere ──
-  await tap(S(".pv-showme"));
-  const step1 = await page.evaluate(() => {
-    const items = Array.from(document.querySelectorAll("#fixture .sol-walk-item"));
+  await page.waitForTimeout(FILL_WAIT);
+  const afterWrong = await page.evaluate(() => {
+    const f = document.getElementById("fixture");
+    const tried = f.querySelector('.opt[data-val="130,000"]');
+    const rest = f.querySelector('.opt[data-val="60,000"]');
+    const cs = (el) => { const c = getComputedStyle(el); return c.borderColor + "|" + c.backgroundColor + "|" + c.color + "|" + c.opacity; };
     return {
-      total: items.length,
-      visible: items.filter((i) => !i.hasAttribute("hidden")).length,
-      retryVisible: (() => { const b = document.querySelector("#fixture .sol-retry"); return b && !b.hasAttribute("hidden") && b.getBoundingClientRect().height > 0; })(),
-    };
-  });
-  if (step1.total === 5 && step1.visible === 1) pass("walkthrough opens at step 1 of 5 — NOT dumped", `visible: ${step1.visible}/${step1.total}`);
-  else fail("walkthrough open", `visible ${step1.visible}/${step1.total}`);
-  if (step1.retryVisible) pass("bail-out present at step 1");
-  else fail("bail-out at step 1", "not visible");
-
-  await auditTargets("walkthrough open");
-
-  await tap(S(".sol-next"));
-  const step2 = await page.evaluate(() => {
-    const items = Array.from(document.querySelectorAll("#fixture .sol-walk-item"));
-    const first = items[0];
-    return {
-      visible: items.filter((i) => !i.hasAttribute("hidden")).length,
-      firstDimmed: first.classList.contains("sol-dim"),
-      firstOpacity: getComputedStyle(first).opacity,
-      retryVisible: !!document.querySelector("#fixture .sol-retry") && document.querySelector("#fixture .sol-retry").getBoundingClientRect().height > 0,
-    };
-  });
-  if (step2.visible === 2 && step2.firstDimmed && parseFloat(step2.firstOpacity) < 1)
-    pass("tap advances to step 2; step 1 stays visible, dimmed", `opacity(step1)=${step2.firstOpacity}`);
-  else fail("step 2 reveal/dim", JSON.stringify(step2));
-  if (step2.retryVisible) pass("bail-out present at step 2");
-  else fail("bail-out at step 2", "not visible");
-
-  // advance to the end
-  await tap(S(".sol-next"));
-  await tap(S(".sol-next"));
-  await tap(S(".sol-next"));
-  const stepEnd = await page.evaluate(() => {
-    const items = Array.from(document.querySelectorAll("#fixture .sol-walk-item"));
-    const next = document.querySelector("#fixture .sol-next");
-    const retry = document.querySelector("#fixture .sol-retry");
-    return {
-      visible: items.filter((i) => !i.hasAttribute("hidden")).length,
-      nextHidden: !next || next.hasAttribute("hidden"),
-      retryVisible: !!retry && !retry.hasAttribute("hidden") && retry.getBoundingClientRect().height > 0,
+      fb: f.querySelector(".pv-fb").textContent.trim(),
+      hasX: !!tried.querySelector(".cc-x"),
+      triedStyleEqualsRest: cs(tried) === cs(rest),
+      isSelGone: !tried.classList.contains("is-sel"),
+      isWrongGone: !tried.classList.contains("is-wrong"),
+      chips: [...f.querySelectorAll(".cc-schip")].map((c) => c.textContent),
+      lastBubble: [...f.querySelectorAll(".cc-btxt")].pop()?.textContent || "",
+      log: (window.__raoWhyWrongLog || []).map((e) => e.code),
+      rowBtns: [...f.querySelectorAll(".cc-actions button")].map((b) => b.textContent),
+      inert: f.querySelector(".qbody").inert,
       checks: window.__checkCalls,
     };
   });
-  if (stepEnd.visible === 5 && stepEnd.nextHidden) pass("all 5 steps revealed one-at-a-time; Next hides at the end");
-  else fail("walkthrough completion", JSON.stringify(stepEnd));
-  if (stepEnd.retryVisible) pass("bail-out present at final step");
-  else fail("bail-out at final step", "not visible");
+  if (afterWrong.fb === "") pass("no pill on wrong — the whisper carries it");
+  else fail("wrong-state pill", `pv-fb reads "${afterWrong.fb}" (must be empty)`);
+  if (afterWrong.hasX && afterWrong.isSelGone && afterWrong.isWrongGone) pass("tried option: ✕ glyph, no is-sel, no is-wrong");
+  else fail("whisper marking", JSON.stringify(afterWrong));
+  if (afterWrong.triedStyleEqualsRest) pass("tried option computed style == resting sibling", "border/bg/color/opacity identical");
+  else fail("tried option styling", "differs from a resting option");
+  if (afterWrong.chips[1] === "Hint 2" && /far larger/.test(afterWrong.lastBubble))
+    pass("whyWrong IS the next hint rung", `chip "Hint 2", message "${afterWrong.lastBubble.slice(0, 50)}…"`);
+  else fail("whyWrong bubble", JSON.stringify({ chips: afterWrong.chips, last: afterWrong.lastBubble.slice(0, 60) }));
+  if (afterWrong.log.includes("ESTIMATE_WRONG_VALUE")) pass("whyWrong code logged", JSON.stringify(afterWrong.log));
+  else fail("whyWrong code log", JSON.stringify(afterWrong.log));
+  if (afterWrong.rowBtns.join("|") === "Give one more hint|Try again")
+    pass("action row after wrong", afterWrong.rowBtns.join(" / "));
+  else fail("action row after wrong", JSON.stringify(afterWrong.rowBtns));
+  if (afterWrong.inert) pass("task frozen in feedback state");
+  else fail("feedback freeze", "qbody not inert");
+  const checksAfterGrade = afterWrong.checks;
+
+  await auditTargets("feedback row");
+
+  // ── ladder: two more rungs exhaust the hints; walkthrough is then offered ──
+  await tapButton(S(".cc-actions button"), /Give one more hint/);
+  await page.waitForTimeout(FILL_WAIT);
+  await tapButton(S(".cc-actions button"), /Give one more hint/);
+  await page.waitForTimeout(FILL_WAIT);
+  const ladder = await page.evaluate(() => {
+    const f = document.getElementById("fixture");
+    return {
+      chips: [...f.querySelectorAll(".cc-schip")].map((c) => c.textContent),
+      bubbles: f.querySelectorAll(".cc-msg").length,
+      rowBtns: [...f.querySelectorAll(".cc-actions button")].map((b) => b.textContent),
+    };
+  });
+  if (ladder.bubbles === 4 && ladder.chips.join("|") === "Hint 1|Hint 2|Hint 3|Hint 4")
+    pass("hint ladder accumulates — 4 bubbles, numbering adapts", ladder.chips.join(", "));
+  else fail("ladder accumulation", JSON.stringify(ladder));
+  if (ladder.rowBtns.join("|") === "Walk me through it|I’ll try now")
+    pass('all hints used → "Walk me through it" appears', ladder.rowBtns.join(" / "));
+  else fail("walkthrough trigger", JSON.stringify(ladder.rowBtns));
+
+  // ── 3. walkthrough: COMMIT on open, no retry anywhere, one button per step ──
+  await tapButton(S(".cc-actions button"), /Walk me through it/);
+  // assert the lock BEFORE the first bubble even fills — the commit is immediate
+  const atOpen = await page.evaluate(() => {
+    const f = document.getElementById("fixture");
+    const retryish = [...f.querySelectorAll("button")].filter((b) => {
+      const r = b.getBoundingClientRect();
+      return r.width > 0 && /try again|try now|i've got it|retry/i.test(b.textContent || "");
+    });
+    return {
+      outcome: f.dataset.raoOutcome,
+      inert: f.querySelector(".qbody").inert,
+      footHidden: getComputedStyle(f.querySelector(".pv-foot")).display === "none",
+      retryControls: retryish.map((b) => b.textContent),
+      recorded: (window.__raoOutcomes || []).map((o) => o.outcome),
+    };
+  });
+  if (atOpen.outcome === "solved-with-help" && atOpen.recorded.includes("solved-with-help") && !atOpen.recorded.includes("correct"))
+    pass("LOCK-ON-OPEN: recorded solved-with-help, not correct", `outcome=${atOpen.outcome}`);
+  else fail("walkthrough outcome", JSON.stringify(atOpen));
+  if (atOpen.inert && atOpen.footHidden) pass("question locks immediately on open");
+  else fail("lock on open", JSON.stringify(atOpen));
+  if (atOpen.retryControls.length === 0) pass("NO retry control exists in the walkthrough");
+  else fail("retry inside walkthrough", JSON.stringify(atOpen.retryControls));
+
+  await page.waitForTimeout(FILL_WAIT);
+  await auditTargets("walkthrough open");
+
+  // header + step chips, then advance through all 5 blocks (3 steps + takeaway + verification)
+  const step1 = await page.evaluate(() => {
+    const f = document.getElementById("fixture");
+    const hd = f.querySelector(".pv-solwrap .cc-chat-hd");
+    const chips = [...f.querySelectorAll(".pv-solwrap .cc-schip")].map((c) => c.textContent);
+    return { header: hd && hd.textContent, chips };
+  });
+  if (step1.header === "Solution — step by step" && step1.chips.join("|") === "Step 1 of 3")
+    pass("walkthrough opens at step 1 only — NOT dumped", `header "${step1.header}"`);
+  else fail("walkthrough open state", JSON.stringify(step1));
+
+  for (let k = 0; k < 4; k++) {
+    await tap(S(".sol-next"));
+    await page.waitForTimeout(FILL_WAIT);
+  }
+  const walkEnd = await page.evaluate(() => {
+    const f = document.getElementById("fixture");
+    const win = f.querySelector('.opt[data-val="70,000"]');
+    const chips = [...f.querySelectorAll(".pv-solwrap .cc-schip")].map((c) => c.textContent);
+    const msgs = [...f.querySelectorAll(".pv-solwrap .cc-msg")];
+    return {
+      chips,
+      allVisible: msgs.every((m) => m.getBoundingClientRect().height > 0 && parseFloat(getComputedStyle(m).opacity) > 0.99),
+      winGreen: getComputedStyle(win).borderColor,
+      winLoud: win.classList.contains("cc-win") || !!f.querySelector(".cc-spark"),
+      nextLabel: f.querySelector(".sol-next").textContent,
+      checks: window.__checkCalls,
+    };
+  });
+  if (walkEnd.chips.length === 5 && walkEnd.allVisible)
+    pass("all 5 blocks revealed one-per-tap, ALL still visible at full opacity", walkEnd.chips.join(", "));
+  else fail("walkthrough accumulation", JSON.stringify(walkEnd.chips));
+  if (walkEnd.winGreen === "rgb(16, 185, 129)" && !walkEnd.winLoud)
+    pass("final step reveals the answer QUIETLY — green, no cc-win, no sparks");
+  else fail("quiet reveal", JSON.stringify({ green: walkEnd.winGreen, loud: walkEnd.winLoud }));
+  if (walkEnd.nextLabel === "Got it") pass('final step button reads "Got it"');
+  else fail("final button label", `"${walkEnd.nextLabel}"`);
 
   // ── 4. firewall at runtime: walkthrough added ZERO check() calls ──
-  if (stepEnd.checks === checksAfterGrade)
-    pass("RUNTIME firewall — check() calls during open/step/close: 0", `total stayed ${stepEnd.checks}`);
-  else fail("RUNTIME firewall", `check() calls grew ${checksAfterGrade} → ${stepEnd.checks} during the walkthrough`);
+  if (walkEnd.checks === checksAfterGrade)
+    pass("RUNTIME firewall — check() calls during open/step/finish: 0", `total stayed ${walkEnd.checks}`);
+  else fail("RUNTIME firewall", `check() calls grew ${checksAfterGrade} → ${walkEnd.checks} during the walkthrough`);
 
-  // ── bail-out: unlocks the card, KEEPS the selection ──
-  await tap(S(".sol-retry"));
-  const afterBail = await page.evaluate(() => ({
-    walkHidden: (() => { const s = document.querySelector("#fixture .pv-solwrap"); return !s || s.hasAttribute("hidden"); })(),
-    whyHidden: (() => { const w = document.querySelector("#fixture .pv-why"); return !w || w.hasAttribute("hidden"); })(),
-    checked: document.querySelector("#fixture .qbody").classList.contains("is-checked"),
-    fb: document.querySelector("#fixture .pv-fb").textContent.trim(),
-    selKept: (() => { const s = document.querySelector("#fixture .opt.is-sel"); return s ? (s.textContent || "").trim() : null; })(),
-  }));
-  if (afterBail.walkHidden && afterBail.whyHidden && !afterBail.checked && afterBail.fb === "")
-    pass('"I\'ve got it — let me try again" unlocks the card', "panels hidden, is-checked removed, feedback cleared");
-  else fail("bail-out reset", JSON.stringify(afterBail));
-  if (afterBail.selKept === "130,000") pass("child's selection is KEPT after bail-out", `still selected: ${afterBail.selKept}`);
-  else fail("selection after bail-out", `selected=${afterBail.selKept}`);
+  await tap(S(".sol-next"));   // Got it
+  await page.waitForTimeout(200);
+  const afterGotIt = await page.evaluate(() => {
+    const f = document.getElementById("fixture");
+    return {
+      inert: f.querySelector(".qbody").inert,
+      row: [...f.querySelectorAll(".cc-actions button")].map((b) => b.textContent),
+      outcome: f.dataset.raoOutcome,
+    };
+  });
+  if (afterGotIt.inert && afterGotIt.outcome === "solved-with-help" && afterGotIt.row.join("|") === "Next question →")
+    pass('"Got it" ends the walkthrough — card stays locked, door opens', afterGotIt.row.join(""));
+  else fail("after Got it", JSON.stringify(afterGotIt));
 
-  // ── 5. idempotency under touch: 2nd attach mid-flow must not double-fire ──
+  // ── 5. retry path on a FRESH card: wrong → Try again → correct celebration ──
+  const fresh = await page.evaluate(() => {
+    const frames = [...document.querySelectorAll(".pv-frame")];
+    const f = frames.find((fr) => fr.dataset.behavior === "single-select" && fr.id !== "fixture");
+    f.id = "fresh";
+    f.scrollIntoView({ block: "center" });
+    const ans = JSON.parse(f.dataset.answer)[0];
+    const opts = [...f.querySelectorAll(".opt")].map((o) => o.dataset.val);
+    return { ans, wrong: opts.find((v) => v !== ans) };
+  });
+  const S2 = (sel) => `#fresh ${sel}`;
+  const wIdx = await page.evaluate(([sel, v]) =>
+    Array.from(document.querySelectorAll(sel)).findIndex((o) => o.dataset.val === v), [S2(".opt"), fresh.wrong]);
+  await tap(S2(".opt"), wIdx);
+  await tap(S2(".pv-check"));
+  await page.waitForTimeout(FILL_WAIT);
+  await tapButton(S2(".cc-actions button"), /Try again/);
+  await page.waitForTimeout(100);
+  const unlocked = await page.evaluate(() => {
+    const f = document.getElementById("fresh");
+    const tried = f.querySelector(".cc-tried");
+    return {
+      inert: f.querySelector(".qbody").inert,
+      footBack: getComputedStyle(f.querySelector(".pv-foot")).display !== "none",
+      xKept: !!(tried && tried.querySelector(".cc-x")),
+      bubblesKept: f.querySelectorAll(".cc-msg").length,
+    };
+  });
+  if (!unlocked.inert && unlocked.footBack) pass('"Try again" unlocks the card');
+  else fail("Try again unlock", JSON.stringify(unlocked));
+  if (unlocked.xKept) pass("✕ persists for the life of the question");
+  else fail("✕ persistence", "the tried marker vanished on retry");
+
+  // ── 6. idempotency under touch: 2nd attach mid-flow must not double-fire ──
   await page.evaluate(() => {
-    const qbody = document.querySelector("#fixture .qbody");
-    window.RaoPreview.attach(qbody, qbody.dataset.behavior); // React re-mount simulation
+    const qbody = document.querySelector("#fresh .qbody");
+    window.RaoPreview.attach(qbody, document.getElementById("fresh").dataset.behavior); // React re-mount simulation
   });
-  const correctIdx = await page.evaluate((sel) =>
-    Array.from(document.querySelectorAll(sel)).findIndex((o) => (o.textContent || "").trim() === "70,000"), S(".opt"));
-  await tap(S(".opt"), correctIdx);
-  const selState = await page.evaluate(() => {
-    const sel = Array.from(document.querySelectorAll("#fixture .opt.is-sel")).map((o) => (o.textContent || "").trim());
-    return sel;
-  });
-  // single-select + single tap after re-attach: exactly ONE selection, the tapped one.
-  // A double-bound handler would toggle twice and leave the old selection state.
-  if (selState.length === 1 && selState[0] === "70,000")
+  const cIdx = await page.evaluate(([sel, v]) =>
+    Array.from(document.querySelectorAll(sel)).findIndex((o) => o.dataset.val === v), [S2(".opt"), fresh.ans]);
+  await tap(S2(".opt"), cIdx);
+  const selState = await page.evaluate(() =>
+    [...document.querySelectorAll("#fresh .opt.is-sel")].map((o) => o.dataset.val));
+  if (selState.length === 1 && selState[0] === fresh.ans)
     pass("attach() idempotent under touch", `one tap after 2nd attach() = one selection (${selState[0]})`);
   else fail("attach() idempotency", `selection after tap: ${JSON.stringify(selState)}`);
 
-  await tap(S(".pv-check"));
-  const finalFb = await page.$eval(S(".pv-fb"), (el) => el.textContent.trim());
-  if (/Correct!/.test(finalFb)) pass("retry path: corrected answer grades CORRECT under touch", finalFb);
-  else fail("retry regrade", `fb="${finalFb}"`);
+  await tap(S2(".pv-check"));
+  await page.waitForTimeout(FILL_WAIT);   // celebration beat 3 lands at ~550ms
+  const party = await page.evaluate(([ans]) => {
+    const f = document.getElementById("fresh");
+    const win = f.querySelector(`.opt[data-val="${ans}"]`);
+    return {
+      outcome: f.dataset.raoOutcome,
+      green: getComputedStyle(win).borderColor,
+      othersUntouched: [...f.querySelectorAll(".opt")].filter((o) => o !== win)
+        .every((o) => parseFloat(getComputedStyle(o).opacity) === 1),
+      row: [...f.querySelectorAll(".cc-actions button")].map((b) => b.textContent),
+    };
+  }, [fresh.ans]);
+  if (party.outcome === "correct" && party.green === "rgb(16, 185, 129)" && party.othersUntouched &&
+      party.row.join("|") === "Next question →")
+    pass("retry path: corrected answer CELEBRATES under touch", `green + "${party.row[0]}"`);
+  else fail("celebration", JSON.stringify(party));
 
   if (errors.length) fail("zero page errors", errors.join(" | "));
   else pass("zero page errors");
 
   await browser.close();
 
-  console.log(`\n${failures === 0 ? C.g + "TOUCH: all interactions work with real touch events at 380px ✅" : C.r + failures + " touch check(s) FAILED"}${C.x}\n`);
+  console.log(`\n${failures === 0 ? C.g + "TOUCH: the calm card works with real touch events at 380px ✅" : C.r + failures + " touch check(s) FAILED"}${C.x}\n`);
   process.exit(failures ? 1 : 0);
 })().catch((e) => { console.error("verify-touch crashed:", e); process.exit(1); });

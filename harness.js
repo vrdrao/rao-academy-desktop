@@ -240,18 +240,28 @@ function wrongAnswer(el, behavior, answer) {
   return null;
 }`;
 
+let __tmpSeq = 0;
 async function runLesson(page, file, engine, css) {
   const name = path.basename(file);
   const source = sourceOf(read(file));
-  fs.writeFileSync(tmpFile("__rao_h.html"), harnessPage(source, engine, css));
+  // A UNIQUE temp file per lesson. Reusing one name for 104 write→navigate
+  // cycles raced (a partially-written/locked file loads with its script
+  // truncated, so window.__ready/__err never exist and the harness crashed
+  // with "Cannot read properties of undefined" instead of a real verdict).
+  const tmpName = `__rao_h_${process.pid}_${++__tmpSeq}.html`;
+  fs.writeFileSync(tmpFile(tmpName), harnessPage(source, engine, css));
   const errs = [];
   page.on("pageerror", (e) => errs.push(String(e)));
-  await page.goto(tmpUrl("__rao_h.html"));
+  await page.goto(tmpUrl(tmpName));
+  // Wait for the page script to have RUN (it sets __ready true or false),
+  // not a blind sleep — then give figures/layout a beat to settle.
+  await page.waitForFunction(() => window.__ready !== undefined, { timeout: 15000 })
+            .catch(() => {});
   await page.waitForTimeout(900);
 
   const res = await page.evaluate(`(() => {
     ${FILL}
-    const out = { ready: window.__ready, err: window.__err.slice(), n: 0, q: [] };
+    const out = { ready: window.__ready, err: (window.__err || ["page script never ran"]).slice(), n: 0, q: [] };
     if (!window.__ready) return out;
     out.n = window.__qs.length;
 
@@ -334,6 +344,7 @@ async function runLesson(page, file, engine, css) {
   }
   await page.evaluate(() => document.body.setAttribute("data-theme", "grape"));
 
+  try { fs.unlinkSync(tmpFile(tmpName)); } catch (e) { /* temp cleanup is best-effort */ }
   return { name, ...res, errs: errs.concat(res.err || []), themes: themeSeen.size };
 }
 

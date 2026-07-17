@@ -181,17 +181,88 @@ function escAttr(s) {
 }
 
 // ════════════════════════════════════════════════════════════════
-// Walkthrough — Tier 2 of the ladder (SOLUTION_SPEC §2, rao-master-15).
+// Tutor bubbles — the ONE copy of the chat mechanics (Brief 7.6,
+// rao-master-16, behavior signed off in calm-card-v36.html).
 //
-// NEVER dumped: blocks are revealed ONE AT A TIME. Previous steps stay
-// visible above, dimmed (.sol-dim). An "I've got it — let me try again"
-// bail-out button is present at every step. Nothing auto-advances.
+// Append-only + type-then-fill: a bubble node is created ONCE showing
+// typing dots, and its content is filled ONCE (dots → chip + text) at
+// BUBBLE_FILL_MS. Earlier bubbles are never touched again (no-repaint
+// law). Bubbles are faceless — no avatar seat; there is deliberately
+// no .cc-ava anywhere in production.
 //
-// Pure display. The retry action is a callback supplied by the card
-// controller — this module has no idea what it does, and must never
-// know: resetting the card is the controller's business, not the
-// renderer's.
+// Exported (RaoSolution.bubbles) so the card controller renders hint
+// bubbles through the SAME primitives — hints and steps must speak in
+// one voice, and one copy cannot drift.
 // ════════════════════════════════════════════════════════════════
+
+var BUBBLE_FILL_MS = 650;   // v36 chatMsg timing — verify-calm asserts parity with the demo
+
+function chatWrap(header) {
+  var w = document.createElement("div");
+  w.className = "cc-chat";
+  if (header) {
+    var h = document.createElement("p");
+    h.className = "cc-chat-hd";
+    h.textContent = header;
+    w.appendChild(h);
+  }
+  return w;
+}
+
+function chatMsg(wrap, chip, bodyHtml, then) {
+  var m = document.createElement("div");
+  m.className = "cc-msg";
+  m.innerHTML = '<div class="cc-bub"><div class="cc-dots"><i></i><i></i><i></i></div></div>';
+  wrap.appendChild(m);
+  var bub = m.querySelector(".cc-bub");
+  setTimeout(function () {
+    bub.innerHTML =
+      (chip ? '<span class="cc-schip">' + escapeHtml(chip) + "</span>" : "") +
+      '<div class="cc-btxt">' + bodyHtml + "</div>";
+    if (then) then();
+  }, BUBBLE_FILL_MS);
+  return m;
+}
+
+// ════════════════════════════════════════════════════════════════
+// Walkthrough — Tier 2 (Brief 7.6). OPENING IT IS THE COMMIT POINT.
+//
+// The card controller locks the question and records solved-with-help
+// BEFORE calling this. There is NO retry inside the walkthrough — one
+// button per step: "Next step", then "Got it" on the final step. Steps
+// type in one at a time as tutor bubbles under the panel header and
+// ACCUMULATE (help-accumulates law — nothing dims, nothing disappears).
+//
+// The final step is the ONE sanctioned reveal: onReveal() fires when
+// the last bubble fills. What "reveal" means in the question DOM
+// (greening the correct option) is the CONTROLLER's business — this
+// module never touches the question, never grades, never mutates.
+// ════════════════════════════════════════════════════════════════
+
+// Venkat's keep/remove ruling on this header is pending — removal is this
+// one line (set to "").
+var WALK_HEADER = "Solution — step by step";
+
+function walkChip(block, stepNum, stepTotal) {
+  if (block.type === "step") return "Step " + stepNum + " of " + stepTotal;
+  if (block.type === "takeaway") return "The idea to keep";
+  if (block.type === "verification") return "Does it make sense?";
+  return null;   // figure / legacy-explain / fallback: no chip
+}
+
+function walkBody(block) {
+  if (block.type === "step") {
+    var parts = [];
+    if (block.goal) parts.push('<span class="sol-goal">' + escapeHtml(block.goal) + "</span>");
+    if (block.working) parts.push('<span class="cc-eq">' + escapeHtml(block.working) + "</span>");
+    if (block.reason) parts.push('<span class="sol-reason">' + escapeHtml(block.reason) + "</span>");
+    return parts.join("");
+  }
+  if (block.type === "figure") return block.html || escapeHtml(block.text || "[figure]");
+  // legacy explain strings pass through raw — same contract as renderSolution
+  if (block.type === "legacy-explain") return block.text || "";
+  return escapeHtml(block.text || "");
+}
 
 function renderWalkthrough(opts) {
   var normalized = normalizeExplain({
@@ -199,27 +270,16 @@ function renderWalkthrough(opts) {
     solution: opts && opts.solution
   });
   if (normalized.blocks.length === 0) return "";
-
-  var items = [];
-  var stepNum = 0;
-  for (var i = 0; i < normalized.blocks.length; i++) {
-    var block = normalized.blocks[i];
-    var inner;
-    switch (block.type) {
-      case "step": stepNum++; inner = renderStep(block, stepNum); break;
-      case "figure": inner = renderFigure(block); break;
-      case "takeaway": inner = renderTakeaway(block); break;
-      case "verification": inner = renderVerification(block); break;
-      case "legacy-explain": inner = '<p class="explain">' + block.text + "</p>"; break;
-      default: inner = renderFallback(block);
-    }
-    items.push('<div class="sol-walk-item" hidden>' + inner + "</div>");
-  }
+  // The steps chat and its footer live in ONE .sol-walk panel. A future
+  // "▶ Watch" tab row would sit as a SIBLING above the chat, inside this
+  // same panel — nothing here structurally precludes it (Brief 7.6 scope
+  // note: the video walkthrough is OUT for now, but must not be walled off).
   return (
     '<div class="sol-walk">' +
-      '<div class="sol-walk-steps">' + items.join("") + "</div>" +
+      '<div class="sol-walk-steps cc-chat">' +
+        (WALK_HEADER ? '<p class="cc-chat-hd">' + escapeHtml(WALK_HEADER) + "</p>" : "") +
+      "</div>" +
       '<div class="sol-walk-foot">' +
-        '<button type="button" class="sol-retry">I\u2019ve got it \u2014 let me try again</button>' +
         '<button type="button" class="sol-next">Next step</button>' +
       "</div>" +
     "</div>"
@@ -228,29 +288,55 @@ function renderWalkthrough(opts) {
 
 function wireWalkthrough(root, opts) {
   if (!root) return function () {};
-  var onRetry = (opts && opts.onRetry) || function () {};
-  var items = Array.prototype.slice.call(root.querySelectorAll(".sol-walk-item"));
+  var normalized = normalizeExplain({
+    explain: opts && opts.explain,
+    solution: opts && opts.solution
+  });
+  var blocks = normalized.blocks;
+  var onReveal = (opts && opts.onReveal) || function () {};
+  var onDone = (opts && opts.onDone) || function () {};
+  var chat = root.querySelector(".sol-walk-steps");
   var nextBtn = root.querySelector(".sol-next");
-  var retryBtn = root.querySelector(".sol-retry");
   if (root.__solWalkCleanup) root.__solWalkCleanup(); // idempotent re-wire
 
-  var shown = 0;
-  function reveal() {
-    if (shown >= items.length) return;
-    if (shown > 0) items[shown - 1].classList.add("sol-dim"); // history stays visible, dimmed
-    items[shown].removeAttribute("hidden");
-    shown++;
-    if (shown >= items.length && nextBtn) nextBtn.setAttribute("hidden", "");
+  var stepTotal = 0;
+  blocks.forEach(function (b) { if (b.type === "step") stepTotal++; });
+  var i = 0, stepNum = 0, typing = false;
+
+  function addBubble() {
+    if (typing || i >= blocks.length) return;
+    typing = true;
+    var block = blocks[i];
+    var last = i === blocks.length - 1;
+    if (block.type === "step") stepNum++;
+    i++;
+    if (nextBtn) nextBtn.disabled = true;
+    chatMsg(chat, walkChip(block, stepNum, stepTotal), walkBody(block), function () {
+      typing = false;
+      if (last) {
+        // The quiet reveal — the ONE moment the answer may appear (laws 2/6).
+        onReveal();
+        if (nextBtn) { nextBtn.disabled = false; nextBtn.textContent = "Got it"; }
+      } else if (nextBtn) {
+        nextBtn.disabled = false;
+      }
+    });
   }
-  function onNext() { reveal(); }
-  function onBail() { onRetry(); }
+
+  function onNext() {
+    if (typing) return;
+    if (i >= blocks.length) {           // "Got it" — the walkthrough is over
+      if (nextBtn) nextBtn.setAttribute("hidden", "");
+      onDone();
+      return;
+    }
+    addBubble();
+  }
   if (nextBtn) nextBtn.addEventListener("click", onNext);
-  if (retryBtn) retryBtn.addEventListener("click", onBail);
-  reveal(); // opening shows the FIRST step only — the child taps for the rest
+  addBubble(); // opening types the FIRST step only — the child taps for the rest
 
   root.__solWalkCleanup = function () {
     if (nextBtn) nextBtn.removeEventListener("click", onNext);
-    if (retryBtn) retryBtn.removeEventListener("click", onBail);
     root.__solWalkCleanup = null;
   };
   return root.__solWalkCleanup;
@@ -265,7 +351,8 @@ if (typeof module !== "undefined" && module.exports) {
     normalizeExplain: normalizeExplain,
     renderSolution: renderSolution,
     renderWalkthrough: renderWalkthrough,
-    wireWalkthrough: wireWalkthrough
+    wireWalkthrough: wireWalkthrough,
+    bubbles: { wrap: chatWrap, msg: chatMsg, FILL_MS: BUBBLE_FILL_MS }
   };
 }
 if (typeof window !== "undefined") {
@@ -273,6 +360,7 @@ if (typeof window !== "undefined") {
     normalizeExplain: normalizeExplain,
     renderSolution: renderSolution,
     renderWalkthrough: renderWalkthrough,
-    wireWalkthrough: wireWalkthrough
+    wireWalkthrough: wireWalkthrough,
+    bubbles: { wrap: chatWrap, msg: chatMsg, FILL_MS: BUBBLE_FILL_MS }
   };
 }

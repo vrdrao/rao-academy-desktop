@@ -452,3 +452,41 @@ they glaze over at question four.
 Break the thing it protects. Run the guard. Show me the FAIL output —
 the actual output, not a summary. Then restore.
 ```
+
+BRIEF 7.6 — CALM CARD (engine rao-master-16). BLOCKER: no lesson reaches a real child until this is deployed.
+
+Read incoming/calm-card-v36.html first — verify md5 deb8d07a84a9f1fbc6847b7ff57a965f (1,791,115 bytes on disk) and STOP if it does not match. It is the signed-off behavioral spec (Venkat, 2026-07-17), reviewed state by state; its cc-script layer encodes the exact approved behavior for states 1 (Answering), 2 (Wrong), 3 (Hint), 4 (Walkthrough — Steps), 5 (Correct). Also read docs/CALM-CARD-MASTER-SPEC-v1.md §3 (presentation contract). Your job is to implement the same behavior in preview-engine.js as rao-master-16. Forward-only, no JSON rewrite, CSS stays packed single-line (no real newlines). The demo's dev chrome (state bar, drawers, tuner) does not ship. Demo state 6 (video walkthrough) and everything Robo are OUT OF SCOPE here — do not implement, but do not structurally preclude a later Watch tab beside the steps panel. Where this brief and the demo file disagree, STOP and report the disagreement; do not resolve it yourself.
+
+WHY THIS IS A BLOCKER, NOT POLISH: today, while a walkthrough is open and retry is still available, the correct option is highlighted green — a child can bail out, tap the green one, and get marked correct having learned nothing. That is a grading bug wearing a design costume.
+
+THE LAWS (each maps to a test below):
+
+1. TASK IMMUTABILITY. The prompt and all answer options keep their normal colors, opacity, and styling in every state. Nothing about the task ever dims, fades, or recolors. Only card chrome (problem label, counter) may quiet down.
+
+2. NO ANSWER REVEAL WHILE ATTEMPTING IS POSSIBLE. No green styling, no correct-answer highlight, no final-answer text anywhere on the card while the question is still attemptable. The reveal happens exactly once, at the walkthrough's final step.
+
+3. WRONG IS A WHISPER. A wrong attempt marks the tried option with a small red ✕ glyph before its text — that is the ONLY change to it. Same font color, same border, same background as every other option. The ✕ persists for the life of the question (v36 `cc-tried` + `.cc-x`: glyph 0.8em, red, 7px right margin, bold). No shake animation, no red flood, no is-wrong red treatment on the option.
+
+4. HELP ACCUMULATES, NEVER REPLACES. All shown hint rungs stay visible together; all shown walkthrough steps stay visible together in ONE "Solution — step by step" panel. Nothing the card has told the child ever disappears while the question is live.
+
+5. ONE HINT LADDER, TUTOR-BUBBLE PRESENTATION. The whyWrong message after a wrong attempt IS hint rung 1, chip-labeled exactly "Hint 1"; forward hints continue the count ("Hint 2", ...). Hint labels carry no total — never "of N". A pre-attempt "Hint" press starts the ladder at the first forward hint; numbering adapts. Presentation is the approved tutor-conversation pattern, identical to steps: append-only typed chat bubbles — the bubble node is created once showing typing dots and filled ONCE (dots → chip + text) at 650ms; earlier bubbles are never touched again; bubbles are faceless (no avatar seat — remove dead .cc-ava CSS in production). Content model unchanged: whyWrong entries keep their taxonomy codes; hint rungs stay move-naming, no arithmetic — the unification is presentation only.
+
+6. WALKTHROUGH: TRIGGER AND COMMIT. Child-initiated only, via a "Walk me through it" button that appears after the SECOND wrong attempt OR when all hints are used, never before the first attempt, never auto-opened. (This trigger button is intentionally absent from the demo, which drives states via its dev bar — this law governs.) OPENING THE WALKTHROUGH IS THE COMMIT POINT: the question locks immediately and is recorded as solved-with-help, NOT correct. There is NO retry inside the walkthrough — one button per step: "Next step", then "Got it" on the final step, exactly as v36 state 4 behaves (child-paced, steps type in as bubbles under the "Solution — step by step" header — header currently KEPT, subject to Venkat's pending one-word ruling; build so its removal is a one-line change). The final step reveals the answer and marks the correct option green, quietly — triumph and rescue must feel different. No chalkboard/blackboard solution surface anywhere.
+
+7. CORRECT IS THE ONLY LOUD MOMENT. On correct: the chosen option gets the green correct treatment, all other options unchanged (no dimming), a green-edged "The idea to keep" takeaway panel, then "Next question →". Green appears in exactly two situations in the whole system: this, and the walkthrough final step.
+
+8. MODES. Adaptive: full behavior above. Rapid Fire: no walkthrough mid-run; whyWrong flash only. Quiz: no help until submit; walkthrough available per-question in review. Same lesson file, data-mode decides.
+
+BUTTON LABELS (exact, reconciled to the signed-off demo): "Check" / "Try again" / "Hint" (pre-ladder) / "Give one more hint" (once rung 1 is visible) / "I'll try now" (closes the hint ladder) / "Walk me through it" / "Next step" / "Got it" / "Next question →".
+
+TESTS — extend the harness and touch tests, break-restore proof for each new guard:
+a. ANSWER-LEAK (UI): for every select-type question, simulate a wrong attempt; assert via getComputedStyle in real Chromium that no option carries green/correct styling and no reveal text exists while the question is attemptable. Sabotage: reintroduce early green; show me the FAIL output; restore.
+b. LOCK-ON-OPEN: open a walkthrough; assert the question locks immediately, no retry control exists anywhere in the walkthrough, and grading records solved-with-help not correct. Sabotage-proof it.
+c. TASK-IMMUTABILITY: snapshot computed color/opacity of prompt and all options in answering state; assert identical in wrong/hint/walkthrough states.
+d. ACCUMULATION: after advancing to walkthrough step 3, assert steps 1 and 2 are still visible; after hint rung 2, assert rung 1 still visible.
+e. BUBBLE PARITY: against incoming/calm-card-v36.html as reference, assert the production hint/step bubbles are append-only (node count only ever grows; a MutationObserver sees zero mutations to earlier bubbles after their single fill) and fill dots→content at 650ms ±50ms.
+f. HINT-LABEL BAN: assert no rendered hint chip ever matches /of\s+\d/.
+All existing guards (KEY MATCH, TONE, CODE REGISTRY, hint-leak, coverage) must stay green. npm test before any deploy — no exceptions. Verify all styling via getComputedStyle in a real browser, never markup inspection.
+
+Report back with the numbered reconciliation: tests added, sabotage FAIL outputs (actual output, not summaries), engine version bump, and anything in the demo you could not implement faithfully — disclosed inside the report structure, not as loose preamble.
+
