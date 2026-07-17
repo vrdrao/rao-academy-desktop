@@ -78,6 +78,132 @@ function collectLessons(dir) {
   return out;
 }
 
+/* Brief 7.7.2 guard fixtures — injected TEST-SIDE (never into the lesson file):
+   a fill-blanks card and a select card, each with a 2-rung forward ladder and
+   NO whyWrong and NO solution. They exercise the calm-wrong fallback path the
+   ladder fixture (which has whyWrong) never reaches. Kept identical to the
+   copies in verify-touch.js. */
+const FALLBACK_FIXTURES = `
+<!--@q
+type: fill-blanks
+answer: ["14"]
+hint:
+  - "Think about which doubles fact this is."
+  - "Start at the first number and count on the second."
+description: calm-wrong fallback fixture — fill-blanks + ladder, NO whyWrong (Brief 7.7.2)
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Add: 7 + 7 = []</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["9"]
+hint:
+  - "Count on from the bigger number."
+  - "Picture both groups joining into one group."
+description: calm-wrong fallback fixture — select + ladder, NO whyWrong (Brief 7.7.2)
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is 4 + 5?</p>
+  <ul class="options"><li>8</li><li>9</li><li>10</li></ul>
+</div>
+`;
+
+// ════════════════════════════════════════════════════════════════
+// 5f. Law 5 fallback (Brief 7.7.2): a wrong attempt with NO fresh whyWrong
+// (none authored — every non-select, and the 1,585 legacy selects) must still
+// deliver "Hint 1" by typing the next forward rung, accumulating per Law 4;
+// the ghost label must never promise a rung it has not given; when the ladder
+// is exhausted, a further wrong is row-only with Law 6 availability unchanged.
+// ════════════════════════════════════════════════════════════════
+async function fallbackLaws(browser) {
+  const page = await browser.newPage({ viewport: { width: 900, height: 1400 } });
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(String(e)));
+  const src = sourceOf(path.join(ROOT, "lessons", "_type-coverage.html"))
+    .replace('<div id="source">', '<div id="source">' + FALLBACK_FIXTURES);
+  await page.setContent(pageFor(src), { waitUntil: "load" });
+
+  const state = (i) => page.evaluate((k) => {
+    const f = document.querySelectorAll(".pv-frame")[k];
+    const msgs = [...f.querySelectorAll(".cc-msg")];
+    const row = [...f.querySelectorAll(".cc-actions button")]
+      .filter((b) => b.getBoundingClientRect().width > 0).map((b) => b.textContent);
+    return {
+      bubbles: msgs.length,
+      allVisible: msgs.every((m) => m.getBoundingClientRect().height > 0 && parseFloat(getComputedStyle(m).opacity) > 0.99),
+      chips: msgs.map((m) => (m.querySelector(".cc-schip") || {}).textContent || ""),
+      texts: msgs.map((m) => m.textContent),
+      row,
+      ghost: row.find((t) => /hint/i.test(t)) || null,
+      walk: row.some((t) => /walk me through/i.test(t)),
+    };
+  }, i);
+  const tryAgain = (i) => page.evaluate((k) => {
+    const f = document.querySelectorAll(".pv-frame")[k];
+    const b = [...f.querySelectorAll(".cc-actions button")].find((x) => /try again/i.test(x.textContent));
+    if (b) b.click();
+    return !!b;
+  }, i);
+
+  const CASES = [
+    { name: "fill-blanks (whyWrong impossible)", idx: 0,
+      rungs: ["Think about which doubles fact this is.", "Start at the first number and count on the second."],
+      goWrong: (i) => page.evaluate((k) => {
+        const f = document.querySelectorAll(".pv-frame")[k];
+        f.scrollIntoView({ block: "center" });
+        f.querySelectorAll(".blank-input").forEach((inp) => {
+          inp.value = "1"; inp.dispatchEvent(new Event("input", { bubbles: true }));
+        });
+        f.querySelector(".pv-check").click();
+      }, i) },
+    { name: "select with NO whyWrong", idx: 1,
+      rungs: ["Count on from the bigger number.", "Picture both groups joining into one group."],
+      goWrong: (i) => page.evaluate((k) => {
+        const f = document.querySelectorAll(".pv-frame")[k];
+        f.scrollIntoView({ block: "center" });
+        const o = [...f.querySelectorAll(".opt")].find((x) =>
+          String(x.dataset.val != null ? x.dataset.val : (x.textContent || "").trim()) === "8");
+        o.click();
+        f.querySelector(".pv-check").click();
+      }, i) },
+  ];
+
+  for (const cse of CASES) {
+    await cse.goWrong(cse.idx);
+    await page.waitForTimeout(FILL_WAIT);
+    let s = await state(cse.idx);
+    if (s.bubbles === 1 && s.allVisible && s.chips[0] === "Hint 1" && s.texts[0].includes(cse.rungs[0]))
+      pass(`5f. WRONG DELIVERS HINT 1 [${cse.name}]`, `typed, visible, first forward rung`);
+    else fail(`5f. WRONG DELIVERS HINT 1 [${cse.name}]`, `bubbles=${s.bubbles} chips=${JSON.stringify(s.chips)} — the wrong feedback delivered NOTHING`);
+    if (s.bubbles >= 1 && s.ghost === "Give one more hint")
+      pass(`5f. TRUTHFUL GHOST LABEL [${cse.name}]`, `${s.bubbles} rung shown → "Give one more hint"`);
+    else fail(`5f. TRUTHFUL GHOST LABEL [${cse.name}]`, `${s.bubbles} rung(s) delivered but ghost=${JSON.stringify(s.ghost)} — the label promises a rung it has not given`);
+
+    await tryAgain(cse.idx);
+    await page.waitForTimeout(150);
+    await cse.goWrong(cse.idx);
+    await page.waitForTimeout(FILL_WAIT);
+    s = await state(cse.idx);
+    if (s.bubbles === 2 && s.allVisible && s.chips[1] === "Hint 2" && s.texts[1].includes(cse.rungs[1]))
+      pass(`5f. SECOND WRONG ADVANCES [${cse.name}]`, `"Hint 2" typed, rung 1 still visible (Law 4)`);
+    else fail(`5f. SECOND WRONG ADVANCES [${cse.name}]`, JSON.stringify({ bubbles: s.bubbles, chips: s.chips }));
+
+    await tryAgain(cse.idx);
+    await page.waitForTimeout(150);
+    await cse.goWrong(cse.idx);
+    await page.waitForTimeout(FILL_WAIT);
+    s = await state(cse.idx);
+    if (s.bubbles === 2 && !s.ghost && !s.walk && s.row.some((t) => /try again/i.test(t)))
+      pass(`5f. EXHAUSTED = ROW ONLY [${cse.name}]`, `no new bubble, no ghost, no walkthrough (none authored — Law 6 unchanged)`);
+    else fail(`5f. EXHAUSTED = ROW ONLY [${cse.name}]`, JSON.stringify({ bubbles: s.bubbles, ghost: s.ghost, row: s.row }));
+  }
+  if (errors.length) fail("zero page errors (fallback drive)", errors.join(" | "));
+  else pass("zero page errors (fallback drive)");
+  await page.close();
+}
+
 // ════════════════════════════════════════════════════════════════
 // e (static half): the demo file IS the reference. Its chatMsg fills at a
 // constant the production renderer must match exactly.
@@ -576,6 +702,7 @@ async function fixtureLaws(browser) {
   checkStaticParity();
   const browser = await chromium.launch();
   await fixtureLaws(browser);
+  await fallbackLaws(browser);
   await explainLaws(browser);
   await sweepCorpus(browser);
   await browser.close();

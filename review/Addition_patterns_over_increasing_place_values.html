@@ -5319,7 +5319,10 @@ function wireCard(frame) {
   //    ladder). The bubbles themselves NEVER close (help-accumulates law). ──
   function feedbackRow(solidLabel) {
     actionRow([
-      !allHintsUsed() && { label: "Give one more hint", ghost: true, onTap: function () {
+      // Same label rule as syncHintBtn: "Hint" until a rung has actually been
+      // delivered, "Give one more hint" only after — the label can never
+      // promise a rung it has not given (Brief 7.7.2).
+      !allHintsUsed() && { label: hintNum === 1 ? "Hint" : "Give one more hint", ghost: true, onTap: function () {
         removeRow();
         giveHint(function () { feedbackRow("I’ll try now"); });
       } },
@@ -5504,7 +5507,15 @@ function wireCard(frame) {
         typing = false;
         feedbackRow("Try again");
       });
+    } else if (!allHintsUsed() && !typing) {
+      // No fresh whyWrong (none authored — every non-select and the legacy
+      // selects — or this option's message was already spoken): the wrong
+      // feedback still delivers Hint 1, by typing the NEXT FORWARD RUNG
+      // through the one existing hint path (Brief 7.7.2, Law 5). Same typing,
+      // same chip, numbering adapts exactly as the ladder already does.
+      giveHint(function () { feedbackRow("Try again"); });
     } else {
+      // ladder exhausted (or a bubble is mid-type): the row alone carries it
       feedbackRow("Try again");
     }
   }

@@ -44,11 +44,44 @@ function fail(name, detail) { failures++; console.log(`  ${C.r}FAIL${C.x}  ${nam
 // Bubbles fill at RaoSolution.bubbles.FILL_MS (650ms) — wait comfortably past it.
 const FILL_WAIT = 800;
 
+/* Brief 7.7.2 guard fixtures — injected TEST-SIDE (never into the lesson file):
+   a fill-blanks card and a select card, each with a 2-rung forward ladder and
+   NO whyWrong and NO solution. They exercise the calm-wrong fallback path that
+   the ladder fixture (which has whyWrong) never reaches. Injected at the TOP of
+   #source so the existing "last frame = ladder fixture" selection is untouched. */
+const FALLBACK_FIXTURES = `
+<!--@q
+type: fill-blanks
+answer: ["14"]
+hint:
+  - "Think about which doubles fact this is."
+  - "Start at the first number and count on the second."
+description: calm-wrong fallback fixture — fill-blanks + ladder, NO whyWrong (Brief 7.7.2)
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Add: 7 + 7 = []</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["9"]
+hint:
+  - "Count on from the bigger number."
+  - "Picture both groups joining into one group."
+description: calm-wrong fallback fixture — select + ladder, NO whyWrong (Brief 7.7.2)
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is 4 + 5?</p>
+  <ul class="options"><li>8</li><li>9</li><li>10</li></ul>
+</div>
+`;
+
 function buildPage() {
   const lesson = read("lessons/_type-coverage.html");
   const a = lesson.indexOf('<div id="source">');
   const b = lesson.indexOf('<div id="preview"');
-  const source = lesson.slice(a, b > a ? b : undefined);
+  const source = lesson.slice(a, b > a ? b : undefined)
+    .replace('<div id="source">', '<div id="source">' + FALLBACK_FIXTURES);
   const safe = (s) => s.replace(/<\/script>/gi, "<\\/script>");
   return `<!doctype html><html><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -115,6 +148,8 @@ ${source}
     const frames = document.querySelectorAll(".pv-frame");
     const f = frames[frames.length - 1];
     f.id = "fixture";
+    frames[0].id = "fb2a";   // injected fallback fixtures (Brief 7.7.2)
+    frames[1].id = "fb2b";
     f.scrollIntoView();
     return frames.length;
   });
@@ -319,7 +354,7 @@ ${source}
   // ── 5. retry path on a FRESH card: wrong → Try again → correct celebration ──
   const fresh = await page.evaluate(() => {
     const frames = [...document.querySelectorAll(".pv-frame")];
-    const f = frames.find((fr) => fr.dataset.behavior === "single-select" && fr.id !== "fixture");
+    const f = frames.find((fr) => fr.dataset.behavior === "single-select" && fr.id !== "fixture" && fr.id.indexOf("fb2") !== 0);
     f.id = "fresh";
     f.scrollIntoView({ block: "center" });
     const ans = JSON.parse(f.dataset.answer)[0];
@@ -380,6 +415,76 @@ ${source}
       party.row.join("|") === "Next question →")
     pass("retry path: corrected answer CELEBRATES under touch", `green + "${party.row[0]}"`);
   else fail("celebration", JSON.stringify(party));
+
+  // ── 7. Law 5 fallback (Brief 7.7.2): a wrong with NO fresh whyWrong must
+  //    still deliver "Hint 1" (the next forward rung); the ghost label must
+  //    never promise a rung it has not given; exhausted rungs → row only,
+  //    walkthrough availability (Law 6) unchanged. Real CDP touch throughout. ──
+  async function driveFallback(id, label, enterWrong, rungs) {
+    const S3 = (sel) => `#${id} ${sel}`;
+    const st = () => page.evaluate((fid) => {
+      const f = document.getElementById(fid);
+      const msgs = [...f.querySelectorAll(".cc-msg")];
+      const row = [...f.querySelectorAll(".cc-actions button")]
+        .filter((b) => b.getBoundingClientRect().width > 0).map((b) => b.textContent);
+      return {
+        bubbles: msgs.length,
+        allVisible: msgs.every((m) => m.getBoundingClientRect().height > 0 && parseFloat(getComputedStyle(m).opacity) > 0.99),
+        chips: msgs.map((m) => (m.querySelector(".cc-schip") || {}).textContent || ""),
+        texts: msgs.map((m) => m.textContent),
+        row,
+        ghost: row.find((t) => /hint/i.test(t)) || null,
+        walk: row.some((t) => /walk me through/i.test(t)),
+      };
+    }, id);
+
+    await enterWrong();
+    await tap(S3(".pv-check"));
+    await page.waitForTimeout(FILL_WAIT);
+    let s = await st();
+    if (s.bubbles === 1 && s.allVisible && s.chips[0] === "Hint 1" && s.texts[0].includes(rungs[0]))
+      pass(`fallback [${label}]: first wrong types a VISIBLE "Hint 1" (first forward rung)`, `"${s.texts[0].slice(6, 60)}"`);
+    else fail(`fallback [${label}]: first wrong types a VISIBLE "Hint 1" (first forward rung)`, `bubbles=${s.bubbles} chips=${JSON.stringify(s.chips)} — the wrong feedback delivered NOTHING`);
+    if (s.bubbles >= 1 && s.ghost === "Give one more hint")
+      pass(`fallback [${label}]: ghost label truthful — ${s.bubbles} rung shown → "Give one more hint"`);
+    else fail(`fallback [${label}]: ghost label truthful`, `${s.bubbles} rung(s) delivered but ghost=${JSON.stringify(s.ghost)} — the label promises a rung it has not given`);
+
+    await tapButton(S3(".cc-actions button"), /Try again/);
+    await page.waitForTimeout(120);
+    await enterWrong();
+    await tap(S3(".pv-check"));
+    await page.waitForTimeout(FILL_WAIT);
+    s = await st();
+    if (s.bubbles === 2 && s.allVisible && s.chips[1] === "Hint 2" && s.texts[1].includes(rungs[1]))
+      pass(`fallback [${label}]: second wrong advances to "Hint 2", rung 1 stays visible (Law 4)`);
+    else fail(`fallback [${label}]: second wrong advances to "Hint 2", rung 1 stays visible (Law 4)`, JSON.stringify({ bubbles: s.bubbles, chips: s.chips }));
+
+    await tapButton(S3(".cc-actions button"), /Try again/);
+    await page.waitForTimeout(120);
+    await enterWrong();
+    await tap(S3(".pv-check"));
+    await page.waitForTimeout(FILL_WAIT);
+    s = await st();
+    if (s.bubbles === 2 && !s.ghost && !s.walk && s.row.some((t) => /Try again/.test(t)))
+      pass(`fallback [${label}]: rungs exhausted → NO new bubble, row only, no walkthrough (none authored — Law 6 unchanged)`);
+    else fail(`fallback [${label}]: rungs exhausted → NO new bubble, row only, no walkthrough (none authored — Law 6 unchanged)`, JSON.stringify({ bubbles: s.bubbles, ghost: s.ghost, row: s.row }));
+  }
+  await driveFallback("fb2a", "fill-blanks", async () => {
+    await page.evaluate(() => {
+      document.getElementById("fb2a").scrollIntoView({ block: "center" });
+      document.querySelectorAll("#fb2a .blank-input").forEach((inp) => {
+        inp.value = "1"; inp.dispatchEvent(new Event("input", { bubbles: true }));
+      });
+    });
+  }, ["Think about which doubles fact this is.", "Start at the first number and count on the second."]);
+  await driveFallback("fb2b", "select, no whyWrong", async () => {
+    const wI = await page.evaluate(() => {
+      document.getElementById("fb2b").scrollIntoView({ block: "center" });
+      return [...document.querySelectorAll("#fb2b .opt")].findIndex((o) =>
+        String(o.dataset.val != null ? o.dataset.val : (o.textContent || "").trim()) === "8");
+    });
+    await tap("#fb2b .opt", wI);
+  }, ["Count on from the bigger number.", "Picture both groups joining into one group."]);
 
   if (errors.length) fail("zero page errors", errors.join(" | "));
   else pass("zero page errors");
