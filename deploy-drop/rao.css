@@ -1,0 +1,971 @@
+/* ============================================================
+   rao.css — THE SINGLE SOURCE OF TRUTH FOR RAO ACADEMY
+   ------------------------------------------------------------
+   Nothing here was designed. Every rule was LIFTED from files
+   you already made and already like.
+
+   LAYER 1  THE SHELL   — the gradient frame, white card, progress
+                          ring, Check button, Hint button.
+                          This is your LOOK. Taken verbatim from the
+                          shell that 84 of your 103 lessons share,
+                          byte for byte. Renamed .pv-* → .rao-* so
+                          it belongs to the system, not to one lesson.
+
+   LAYER 2  THE QUESTION— prompt, options, tiles, blanks, figures.
+                          The engine's own CSS, unchanged. This is
+                          what already renders inside your cards.
+
+   LAYER 3  ADDED       — the three reveal modes, dark mode, and the
+                          44px tap-target floor. New. Nothing else.
+
+   The app links this file. The preview links this file.
+   Lesson files carry NO CSS. A lesson with no CSS cannot fork.
+   ============================================================ */
+
+/* ═══════════ LAYER 1 — THE SHELL (your look) ═══════════ */
+
+/* the lesson surface — was `body` in each lesson, .rao-lesson now a real class */
+.rao-lesson{font-family:'Quicksand','DM Sans',system-ui,sans-serif;color:#2c2150;background:#f4f1fb;max-width:820px;margin:0 auto;padding:24px;box-sizing:content-box;}
+.rao-lesson .sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
+ .rao-lesson .rao-frame{background:linear-gradient(160deg,var(--brand,#7b5cff) 0%,#9b6bff 55%,#ff7eb6 130%);border-radius:18px;padding:6px;margin:20px 0 6px;box-shadow:0 10px 28px rgba(var(--brand-rgb,123,92,255),.22)}
+ .rao-lesson .rao-card{position:relative;background:#fff;border-radius:14px;padding:24px 24px 18px;box-shadow:0 4px 0 rgba(var(--brand-rgb,123,92,255),.08);transition:box-shadow .2s}
+ .rao-lesson .rao-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+ .rao-lesson .rao-tlabel{font-family:'Quicksand',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#a99ccf}
+ .rao-lesson .rao-ring{width:44px;height:44px;border-radius:50%;background:conic-gradient(var(--brand,#7b5cff) 75%,#f0e9fb 0);display:flex;align-items:center;justify-content:center}
+ .rao-lesson .rao-ring i{width:36px;height:36px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:700;font-size:.78rem;color:var(--brand,#7b5cff);font-family:'Baloo 2',cursive}
+ .rao-lesson .rao-hintbox{margin:12px 2px 0;background:#fff7e6;border:1px solid #ffe2a8;border-radius:12px;padding:11px 14px;color:#7a5b12;font-weight:600;line-height:1.5}
+ .rao-lesson .rao-foot{display:flex;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap}
+ .rao-lesson .rao-hint{font-family:'Baloo 2',cursive;font-weight:700;color:#6b5b9a;background:#fff;border:2px solid var(--line-soft,#e7ddf8);border-radius:14px;padding:11px 18px;cursor:pointer;font-size:1rem}
+ .rao-lesson .rao-hint:hover{border-color:var(--brand,#7b5cff);color:var(--brand,#7b5cff)}
+ .rao-lesson .rao-fb{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.05rem;margin-right:auto;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:12px}
+ .rao-lesson .rao-fb-ic{font-size:1.5rem;line-height:1}
+ .rao-lesson .rao-fb.good{color:#0b9468;background:linear-gradient(135deg,#dcffe9,#eafff2)}
+ .rao-lesson .rao-fb.bad{color:#b04a6a;background:linear-gradient(135deg,#fff0f3,#fff6f7)}
+ .rao-lesson .rao-check{font-family:'Baloo 2',cursive;font-weight:800;color:#fff;background:linear-gradient(90deg,#ff9d4d,#ff6b9d);border:0;border-radius:18px;padding:13px 28px;box-shadow:0 5px 0 #d4477a;cursor:pointer;font-size:1.02rem;margin-left:auto}
+ .rao-lesson .rao-check:active{transform:translateY(4px);box-shadow:0 1px 0 #d4477a}
+ 
+ .rao-lesson .qbody .lp-slot.on{background:var(--brand,#4361ee);border-radius:3px}
+ .rao-lesson .qbody .md-ruler{cursor:grab}
+
+/* ═══════════ LAYER 2 — THE QUESTION (engine CSS, .rao-lesson unchanged) ═══════════ */
+:root{--brand-rgb:123,92,255; --brand-hover:#6741e6; --ink-rgb:44,33,80;--rz-fw-prompt:700; --rz-fz-prompt:1.125rem; --rz-lh-prompt:1.5; --rz-ls-prompt:0.01em;--rz-gap-po:24px; --rz-gap-fig:12px; --rz-card-floor:300px; --rz-fz-chip:1.125rem; --rz-fz-tile:1.125rem;--rz-r-chip:12px; --rz-opt-cols:2;
+  --brand:#7b5cff; --blue:#5B8DEF; --green:#10b981; --amber:#f59e0b; --red:#ef4444;
+  --purple:#5A55E0; --pink:#5AC8FA;
+  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#f4f1fb; --card:#fff;
+  --fd:'Baloo 2',cursive; --fm:'Baloo 2',cursive; --fs:'Quicksand','DM Sans',sans-serif;
+}
+.rao-lesson *{margin:0;padding:0;box-sizing:border-box;}
+.rao-lesson{font-family:var(--fs);background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;}
+.rao-lesson .wrap{max-width:880px;margin:0 auto;padding:28px 22px 90px;}
+
+.rao-lesson /* ── Page header ── */
+.page-head{margin-bottom:8px;}
+.rao-lesson .page-head h1{font-family:var(--fd);font-weight:400;font-size:2rem;letter-spacing:-0.01em;line-height:1.15;}
+.rao-lesson .page-head p{color:var(--sub);font-size:0.98rem;margin-top:6px;}
+.rao-lesson .miles-pill{display:inline-flex;align-items:center;gap:7px;margin-top:14px;padding:8px 16px;border-radius:999px;
+  background:linear-gradient(135deg,rgba(var(--brand-rgb,123,92,255),.1),rgba(90,200,250,.12));border:1.5px solid rgba(var(--brand-rgb,123,92,255),.2);
+  font-weight:800;color:var(--brand);font-size:.95rem;}
+
+.rao-lesson /* ── Section label ── */
+.sec-label{display:flex;align-items:center;gap:14px;font-family:var(--fd);font-size:1.5rem;font-weight:400;
+  color:var(--ink);line-height:1.2;letter-spacing:-0.01em;margin:38px 0 6px;padding-bottom:16px;border-bottom:1px solid #e5e7eb;}
+.rao-lesson .sec-label-num{flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;
+  border-radius:9px;background:rgba(var(--brand-rgb,123,92,255),.12);color:var(--brand);font-family:var(--fs);font-weight:800;font-size:.92rem;}
+.rao-lesson .sec-tag{margin-left:auto;font-family:var(--fs);font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--brand);background:rgba(var(--brand-rgb,123,92,255),.1);padding:5px 11px;border-radius:6px;}
+.rao-lesson .sec-desc{color:var(--sub);font-size:.92rem;margin:0 0 6px;}
+
+.rao-lesson /* ── Quiz shell (mirrors prototype lnl/lr) ── */
+.quiz{position:relative;background:linear-gradient(135deg,#eeeafd 0%,#eae6fb 55%,#f1eeff 100%);
+  border-radius:20px;padding:22px;margin:14px -10px 0;border:1.5px solid rgba(var(--brand-rgb,123,92,255),.14);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);}
+@media(max-width:600px){.rao-lesson .quiz{padding:16px;margin:14px -4px 0;}}
+.rao-lesson .q{display:none;}
+.rao-lesson .q.active{display:block;animation:slide-in .32s cubic-bezier(.22,1,.36,1);background:#fff;border:0;border-radius:16px;
+  padding:26px 28px 20px;position:relative;
+  box-shadow:0 0 0 1.5px rgba(var(--brand-rgb,123,92,255),.18),0 4px 12px rgba(var(--brand-rgb,123,92,255),.10),0 22px 44px -10px rgba(var(--brand-rgb,123,92,255),.18);}
+@media(max-width:600px){.rao-lesson .q.active{padding:22px 16px 16px;}}
+@keyframes slide-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+.rao-lesson .q-counter{position:absolute;top:14px;right:18px;font-family:var(--fm);font-weight:700;font-size:.86rem;color:var(--sub);
+  background:rgba(0,0,0,.05);padding:4px 12px;border-radius:99px;z-index:2;}
+.rao-lesson .q-counter .sep{color:var(--mute);margin:0 1px;}
+.rao-lesson .q:not(.active) .q-counter{display:none;}
+.rao-lesson .tlabel{font-size:.78rem;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
+
+.rao-lesson /* prompt + audio icon */
+.prompt{display:flex;align-items:flex-start;gap:9px;font-size:var(--rz-fz-prompt,1.125rem);color:var(--ink);margin-bottom:10px;font-weight:500;}
+.rao-lesson /* a label (e.g. "Add:") on its own line, .rao-lesson left-aligned, .rao-lesson with the rest of the
+   prompt (the equation + blank) centered on the line below it */
+.prompt:has(.lbl){display:block;}
+.rao-lesson .prompt:has(.lbl) > span{display:block;text-align:center;}
+.rao-lesson .lbl{display:block;text-align:left;margin-bottom:4px;}
+.rao-lesson .aud{flex-shrink:0;width:24px;height:24px;margin-top:2px;border:0;background:transparent;cursor:pointer;color:var(--blue);
+  display:inline-flex;align-items:center;justify-content:center;border-radius:6px;transition:background .15s,transform .1s;}
+.rao-lesson .aud:hover{background:rgba(91,141,239,.12);}
+.rao-lesson .aud:active{transform:scale(.9);}
+.rao-lesson .aud svg{width:22px;height:22px;}
+
+.rao-lesson /* ── Equation row (horizontal / token template) ── */
+.eqn{display:flex;align-items:center;justify-content:center;gap:9px;font-family:var(--fm);font-size:1.65rem;
+  font-weight:600;color:var(--ink);margin:18px 0;flex-wrap:wrap;}
+.rao-lesson .eqn .op{color:var(--sub);font-weight:500;}
+.rao-lesson .eqn .eq{color:var(--pink);font-weight:700;}
+.rao-lesson .blank-input{width:64px;text-align:center;font-family:var(--fm);font-size:1.4rem;font-weight:700;
+  border:2px solid var(--brand);border-radius:12px;background:rgba(var(--brand-rgb,123,92,255),.09);color:var(--brand);
+  padding:6px 4px;outline:none;transition:all .15s;min-width:44px;min-height:44px;box-sizing:border-box;}
+.rao-lesson .blank-input:focus{border-style:solid;background:#fff;box-shadow:0 0 0 5px rgba(var(--brand-rgb,123,92,255),.12);}
+.rao-lesson .blank-input.correct{border-style:solid;border-color:var(--green);background:rgba(16,185,129,.08);color:#047857;}
+.rao-lesson .blank-input.incorrect{border-color:var(--red);background:rgba(239,68,68,.06);}
+.rao-lesson .blank-input.shake{animation:shake .38s;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+
+.rao-lesson /* ── Vertical column addition ── */
+.vcol{display:flex;flex-direction:column;align-items:flex-end;width:fit-content;margin:18px auto;
+  font-family:var(--fm);font-size:1.7rem;font-weight:600;color:var(--ink);line-height:1.35;}
+.rao-lesson .vcol .row{display:flex;align-items:center;gap:10px;}
+.rao-lesson .vcol .opsign{color:var(--sub);font-weight:500;margin-right:8px;}
+.rao-lesson .vcol .rule{border-top:2.5px solid var(--ink);width:100%;margin:4px 0;}
+.rao-lesson .vcol .row{gap:3px;line-height:1;}
+.rao-lesson .vcol .cm-cell{box-sizing:border-box;width:44px;height:44px;text-align:center;display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;}
+.rao-lesson .vcol .cm-sep{box-sizing:border-box;width:12px;text-align:center;color:var(--sub);display:inline-flex;align-items:center;justify-content:center;flex:0 0 12px;}
+.rao-lesson .vcol .blank-input{box-sizing:border-box;width:44px;height:44px;flex:0 0 44px;font-size:1.4rem;text-align:center;padding:0;}
+.rao-lesson /* place-value answer cells: one outer strip, .rao-lesson dashed dividers, .rao-lesson one digit per cell */
+.pv-strip{display:inline-flex;border:2.5px solid var(--brand);border-radius:10px;overflow:hidden;background:rgba(var(--brand-rgb,123,92,255),.06);}
+.rao-lesson .pv-strip .pv-cell{width:42px;border:0;border-radius:0;background:transparent;border-left:2px dashed rgba(var(--brand-rgb,123,92,255),.4);}
+.rao-lesson .pv-strip .pv-cell:first-child{border-left:0;}
+.rao-lesson .pv-strip .pv-cell:focus{box-shadow:none;background:#fff;}
+.rao-lesson .pv-strip .pv-cell.correct{background:rgba(16,185,129,.12);}
+.rao-lesson .pv-strip .pv-cell.incorrect{background:rgba(239,68,68,.10);}
+
+.rao-lesson /* ── Free-text expression / single answer row ── */
+.ans-row{display:flex;gap:10px;align-items:center;margin:14px 0 6px;flex-wrap:wrap;}
+.rao-lesson .ans-input{flex:1;min-width:180px;padding:11px 15px;border:2px solid #d1d5db;border-radius:9px;font-family:var(--fm);
+  font-size:1.1rem;color:var(--ink);background:#fff;transition:border-color .2s,background .2s;outline:none;}
+.rao-lesson .ans-input:focus{border-color:var(--brand);}
+.rao-lesson .ans-input.correct{border-color:var(--green);background:rgba(16,185,129,.08);}
+.rao-lesson .ans-input.incorrect{border-color:var(--red);background:rgba(239,68,68,.05);}
+.rao-lesson .ans-input.shake{animation:shake .38s;}
+.rao-lesson .unit-suffix{font-family:var(--fs);font-weight:600;color:var(--sub);font-size:1rem;}
+
+.rao-lesson /* ── MCQ / multi-select option buttons ── */
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:6px 0;}
+@media(max-width:600px){.rao-lesson .opts{grid-template-columns:repeat(var(--rz-opt-cols,2),1fr);}.rao-lesson .opts.opts-stack{grid-template-columns:1fr;}.rao-lesson .opts.opts-signs{grid-template-columns:repeat(3,1fr);}}
+.rao-lesson .opt{font-family:var(--fm);font-size:0.98rem;font-weight:700;color:var(--brand);background:#fff;border:2px solid #e0dbf4;
+  border-radius:var(--rz-r-chip,12px);padding:15px 12px;cursor:pointer;text-align:center;
+  transition:transform .12s,border-color .15s,background .15s,box-shadow .15s;}
+.rao-lesson .opt:hover:not(:disabled){border-color:var(--brand);background:rgba(var(--brand-rgb,123,92,255),.05);transform:translateY(-2px);box-shadow:0 4px 12px rgba(var(--brand-rgb,123,92,255),.15);}
+.rao-lesson .opt:active:not(:disabled){transform:translateY(0);}
+.rao-lesson .opt.is-correct{border-color:var(--green);background:rgba(16,185,129,.12);color:#047857;box-shadow:0 3px 10px rgba(16,185,129,.18);}
+.rao-lesson .opt.is-wrong{border-color:var(--red);background:rgba(239,68,68,.08);color:#b91c1c;animation:shake .4s;}
+.rao-lesson .opt.is-sel, .rao-lesson .opt.is-sel:not(:disabled){border-color:var(--brand);background:rgba(var(--brand-rgb,123,92,255),.12);box-shadow:0 3px 10px rgba(var(--brand-rgb,123,92,255),.18);}
+.rao-lesson .opt:disabled{cursor:default;}
+.rao-lesson .opt img, .rao-lesson .opt svg{display:inline-block;max-width:96px;max-height:96px;width:auto;height:auto;vertical-align:middle;pointer-events:none;}.rao-lesson .opts.opts-stack{display:flex;flex-direction:column;gap:12px;}.rao-lesson .opt.opt-wide{display:flex;align-items:center;justify-content:center;width:100%;padding:12px 14px;text-align:center;}.rao-lesson .opt.opt-wide .fig-wrap{margin:0;width:100%;justify-content:center;}.rao-lesson .opt.opt-wide svg, .rao-lesson .opt.opt-wide img{width:100%;max-width:440px;height:auto;max-height:none;}
+.rao-lesson .opt .check-ind{display:inline-block;width:18px;height:18px;border:2px solid #cdc7e8;border-radius:5px;margin-right:9px;
+  vertical-align:-3px;position:relative;background:#fff;transition:all .15s;}
+.rao-lesson .opt:focus-visible{outline:3px solid var(--brand,#7b5cff);outline-offset:2px;}.rao-lesson .opt.is-sel .check-ind{background:var(--brand);border-color:var(--brand);}
+.rao-lesson .opt.is-sel .check-ind:after{content:"";position:absolute;left:4px;top:0px;width:5px;height:10px;border:solid #fff;
+  border-width:0 2.5px 2.5px 0;transform:rotate(45deg);}
+.rao-lesson .opt-text{font-size:0.98rem;font-weight:700;}.rao-lesson .opt.opt-sign{font-size:2.1rem;font-weight:800;line-height:1;padding:18px 12px;}@media(max-width:600px){.rao-lesson .opt.opt-sign{font-size:1.8rem;}}
+/* Stacked fraction (emitted by the engine's fracHTML for any "n/d" option or tile): numerator
+   over a bar over denominator. Own font-size, so it never inherits the oversized opt-sign size.
+   The bar is currentColor, so it re-tints with the option/tile state (brand / is-correct green /
+   is-wrong red) and every theme automatically. align-items:stretch lets the bar span the wider
+   of numerator/denominator (e.g. 12/5). */
+.rao-lesson .frac{display:inline-flex;flex-direction:column;font-size:1.2rem;font-weight:800;line-height:1.05;vertical-align:middle;font-variant-numeric:tabular-nums;}
+.rao-lesson .frac-n,.rao-lesson .frac-d{text-align:center;padding:0 .45em;}
+.rao-lesson .frac-d{border-top:2px solid currentColor;padding-top:.06em;margin-top:.06em;}
+
+.rao-lesson /* figure-option MCQ */
+.opts-fig{display:grid;grid-template-columns:1fr;gap:12px;}
+.rao-lesson .opt-fig{display:flex;align-items:center;gap:14px;font-family:var(--fm);background:#fff;border:2px solid #e0dbf4;
+  border-radius:12px;padding:12px 16px;cursor:pointer;transition:transform .12s,border-color .15s,background .15s,box-shadow .15s;}
+.rao-lesson .opt-fig:hover:not(:disabled){border-color:var(--brand);background:rgba(var(--brand-rgb,123,92,255),.05);transform:translateY(-2px);box-shadow:0 4px 12px rgba(var(--brand-rgb,123,92,255),.15);}
+.rao-lesson .opt-fig.is-correct{border-color:var(--green);background:rgba(16,185,129,.1);box-shadow:0 0 0 3px rgba(16,185,129,.15);}
+.rao-lesson .opt-fig.is-wrong{border-color:var(--red);background:rgba(239,68,68,.08);animation:shake .4s;}
+.rao-lesson .opt-fig:disabled{cursor:default;}
+
+.rao-lesson /* ════ v2 RENDERERS ════ */
+
+/* ORDER_TILES — tap-to-place sequencing (drag enhancement on top) */
+.order-target-lbl{display:flex;justify-content:space-between;font-family:var(--fs);font-size:.78rem;font-weight:700;
+  color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin:6px 2px;}
+.rao-lesson .order-slots{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:10px;min-height:62px;padding:12px;margin:4px 0 14px;
+  background:rgba(var(--brand-rgb,123,92,255),.05);border:2px dashed rgba(var(--brand-rgb,123,92,255),.28);border-radius:14px;}
+.rao-lesson .order-slot{min-width:0;width:auto;height:auto;min-height:54px;font-family:var(--fm);font-size:1.3rem;border-radius:11px;border:2px dashed rgba(var(--brand-rgb,123,92,255),.35);background:rgba(255,255,255,.55);
+  display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s;}
+.rao-lesson .order-slot.over{border-color:var(--brand);background:rgba(var(--brand-rgb,123,92,255),.12);}.rao-lesson .order-slot.filled{border-color:transparent;background:transparent;}
+.rao-lesson .order-bank{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:10px;min-height:54px;margin:0 0 6px;align-items:stretch;}
+.rao-lesson .order-slot .tile, .rao-lesson .order-bank .tile{min-width:0;width:100%;height:auto;min-height:54px;padding:8px 10px;white-space:normal;text-align:center;line-height:1.15;}
+.rao-lesson .order-cap{display:none;}
+@media(max-width:600px){.rao-lesson .order-target-lbl{display:none;}.rao-lesson .order-slots{grid-template-columns:1fr;}.rao-lesson .order-bank{grid-template-columns:1fr;}.rao-lesson .order-cap{display:block;text-align:center;font-family:var(--fs);font-size:.72rem;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin:3px 0;}.rao-lesson .order-cap-top::after{content:' ↓';}}
+.rao-lesson .tile{touch-action:none;-webkit-user-select:none;user-select:none;min-width:max(54px,calc(var(--ow,0)*1ch + 42px));height:54px;padding:0 14px;border-radius:11px;border:2px solid var(--line,#d4cdf2);background:#fff;
+  font-family:var(--fm);font-size:1.3rem;font-weight:700;color:var(--brand);display:inline-flex;align-items:center;
+  justify-content:center;cursor:pointer;user-select:none;box-shadow:0 2px 6px rgba(var(--brand-rgb,123,92,255),.12);
+  transition:transform .12s,border-color .15s,box-shadow .15s,background .15s;}
+.rao-lesson .tile:hover:not(.locked){transform:translateY(-2px);border-color:var(--brand);box-shadow:0 5px 14px rgba(var(--brand-rgb,123,92,255),.22);}
+.rao-lesson .tile:active:not(.locked){transform:scale(.95);}
+.rao-lesson .tile.placed{cursor:pointer;}
+.rao-lesson .tile.dragging{opacity:.45;}
+.rao-lesson .tile.locked{cursor:default;}
+.rao-lesson .order-slots.correct .tile{border-color:var(--green);background:rgba(16,185,129,.1);color:#047857;}
+.rao-lesson .order-slots.incorrect{animation:shake .4s;}
+
+.rao-lesson /* DATA_TABLE — read-only lookup table */
+.data-wrap{display:flex;justify-content:center;margin:8px 0 14px;}
+.rao-lesson .data-table{border-collapse:collapse;font-family:var(--fm);min-width:260px;border-radius:10px;overflow:hidden;
+  box-shadow:0 2px 10px rgba(var(--brand-rgb,123,92,255),.1);}
+.rao-lesson .data-table caption{font-family:var(--fs);font-weight:700;font-size:.95rem;color:var(--ink);padding:0 0 8px;caption-side:top;
+  display:flex;align-items:center;gap:7px;justify-content:center;}
+.rao-lesson .data-table th{padding:9px 22px;font-size:.9rem;font-weight:700;color:#fff;background:var(--brand);}
+.rao-lesson .data-table td{padding:8px 22px;text-align:center;font-size:1.02rem;border:1.5px solid var(--line-soft,#e4e1f3);color:var(--ink);background:#fff;}
+.rao-lesson .data-table tr:nth-child(even) td{background:var(--tint,#f8f6fe);}
+.rao-lesson .data-table td:first-child{font-weight:600;}
+
+.rao-lesson /* HUNDRED_CHART — 10×10 tappable grid */
+.hchart-wrap{display:flex;justify-content:center;margin:8px 0 14px;}
+.rao-lesson .hchart{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;background:#e3e9f6;padding:6px;border-radius:12px;max-width:430px;width:100%;}
+.rao-lesson .hcell{aspect-ratio:1;border:0;background:#fff;border-radius:5px;font-family:var(--fm);font-size:.74rem;font-weight:600;
+  color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .1s,background .12s,color .12s,box-shadow .12s;}
+.rao-lesson .hcell:hover:not(:disabled){background:rgba(var(--brand-rgb,123,92,255),.14);transform:scale(1.08);z-index:2;}
+.rao-lesson .hcell.hi{background:rgba(245,158,11,.22);font-weight:800;color:#b45309;}
+.rao-lesson .hcell.is-correct{background:var(--green);color:#fff;box-shadow:0 0 0 2px rgba(16,185,129,.4);}
+.rao-lesson .hcell.is-wrong{background:var(--red);color:#fff;animation:shake .4s;}
+.rao-lesson .hcell:disabled{cursor:default;}
+@media(max-width:600px){.rao-lesson .hcell{font-size:.62rem;}}
+
+.rao-lesson /* TALLY_CHART — label rows + grouped tally strokes */
+.tally-wrap{display:flex;justify-content:center;margin:8px 0 14px;}
+.rao-lesson .tally{background:#fff;border:1px solid #e6ebf6;border-radius:14px;padding:14px 18px;box-shadow:0 2px 10px rgba(var(--brand-rgb,123,92,255),.08);min-width:280px;}
+.rao-lesson .tally-title{font-family:var(--fs);font-weight:700;font-size:.96rem;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.rao-lesson .tally-row{display:flex;align-items:center;gap:12px;padding:6px 0;border-bottom:1px dashed #f4f1fb;}
+.rao-lesson .tally-row:last-child{border-bottom:0;}
+.rao-lesson .tally-label{display:flex;align-items:center;gap:7px;width:118px;font-family:var(--fs);font-weight:600;color:var(--sub);font-size:.92rem;}
+.rao-lesson .tally-label svg{width:26px;height:26px;flex-shrink:0;}
+.rao-lesson .tally-marks{display:flex;gap:9px;align-items:flex-end;}
+.rao-lesson .tally-grp{position:relative;display:inline-flex;gap:3px;}
+.rao-lesson .tally-grp .stk{width:2.5px;height:22px;background:var(--ink);border-radius:2px;}
+.rao-lesson .tally-grp.five .slash{position:absolute;left:-3px;top:8px;width:30px;height:2.5px;background:var(--ink);border-radius:2px;
+  transform:rotate(-22deg);transform-origin:left center;}
+.rao-lesson .opt-fig .tally{box-shadow:none;border:0;min-width:0;padding:6px 4px;}
+
+.rao-lesson /* POLYGON_FIGURE — single parametric 2D shape */
+.poly-wrap{display:flex;justify-content:center;margin:8px 0 16px;}
+.rao-lesson .poly-svg{width:150px;height:150px;}
+.rao-lesson .poly-shape{fill:rgba(91,141,239,.22);stroke:var(--brand);stroke-width:3;stroke-linejoin:round;}
+.rao-lesson .opt-fig .poly-svg{width:84px;height:84px;}
+
+.rao-lesson /* TRANSFORM_DIAGRAM — before → after on a grid */
+.xf-wrap{display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0 16px;flex-wrap:wrap;}
+.rao-lesson .xf-cell{background:#fff;border:1px solid var(--line-soft,#e4e1f3);border-radius:12px;padding:10px;box-shadow:0 2px 8px rgba(var(--brand-rgb,123,92,255),.08);}
+.rao-lesson .xf-cell .cap{text-align:center;font-family:var(--fs);font-size:.72rem;font-weight:700;color:var(--mute);
+  text-transform:uppercase;letter-spacing:.06em;margin-top:6px;}
+.rao-lesson .xf-grid-svg{width:104px;height:104px;display:block;}
+.rao-lesson .xf-arrow{font-size:1.8rem;color:var(--brand);font-weight:800;}
+.rao-lesson .xf-glyph{font-family:var(--fd);font-size:54px;fill:var(--purple);}
+
+.rao-lesson /* MEASURE_SCALE — object laid against a ruler or a row of unit-objects */
+.ms-wrap{background:#edeafb;border:1px solid #dcd6f5;border-radius:14px;padding:16px 14px 12px;margin:8px 0 12px;}
+.rao-lesson .ms-stage{position:relative;width:100%;max-width:520px;margin:0 auto;}
+.rao-lesson .ms-object{display:flex;justify-content:flex-start;align-items:flex-end;min-height:54px;padding-left:6px;}
+.rao-lesson .ms-object svg{height:46px;width:auto;}
+.rao-lesson .ms-object .barobj{height:30px;border-radius:6px;}
+.rao-lesson .ms-ruler-svg{width:100%;height:auto;display:block;margin-top:4px;}
+.rao-lesson .ms-units{display:flex;gap:0;align-items:flex-end;margin-top:6px;padding-left:6px;}
+.rao-lesson .ms-units svg{width:34px;height:34px;}
+.rao-lesson .ms-sentence{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 2px 0;font-family:var(--fs);font-weight:500;color:var(--ink);}
+.rao-lesson .ms-sentence .blank-input{width:60px;}
+
+.rao-lesson /* CURRENCY_FIGURE — coins / notes as stimulus */
+.cur-wrap{display:flex;justify-content:center;margin:8px 0 14px;}
+.rao-lesson .cur-stage{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;background:#f8f6ff;
+  border:1px solid #e9e6f8;border-radius:14px;padding:18px 20px;min-height:80px;max-width:480px;}
+.rao-lesson .cur-stage.single{padding:22px 26px;}
+.rao-lesson .coin{border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:var(--fm);
+  font-weight:800;color:#5a4a1e;box-shadow:0 2px 5px rgba(0,0,0,.18),inset 0 0 0 2px rgba(255,255,255,.4);}
+.rao-lesson .coin.silver{background:radial-gradient(circle at 35% 30%,#e9edf2,#aab4c0);color:#3a4452;box-shadow:0 2px 5px rgba(0,0,0,.2),inset 0 0 0 2px rgba(255,255,255,.5);}
+.rao-lesson .coin.gold{background:radial-gradient(circle at 35% 30%,#f7d978,#caa23c);color:#6a4e12;}
+.rao-lesson .coin .cv{font-size:.62rem;line-height:1;text-align:center;}
+.rao-lesson .note{position:relative;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--fm);font-weight:800;font-size:.78rem;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.18);}
+.rao-lesson .note.n10{background:linear-gradient(135deg,#d98a6a,#c06848);}
+.rao-lesson .note.n20{background:linear-gradient(135deg,#e08a8a,#c85a5a);}
+.rao-lesson .cur-single-coin{transform:scale(1.7);transform-origin:center;}
+
+.rao-lesson /* ── Figures: array grid, .rao-lesson picture groups, .rao-lesson puzzle, .rao-lesson number line ── */
+.fig-wrap{display:flex;justify-content:center;margin:8px 0 16px;}
+.rao-lesson .array-grid{display:inline-flex;flex-direction:column;gap:8px;}
+.rao-lesson .array-grid .arow{display:flex;gap:8px;justify-content:center;}
+.rao-lesson .array-cell{width:48px;height:40px;border:1.5px solid #9aa3af;border-radius:4px;display:flex;align-items:center;justify-content:center;}
+.rao-lesson .array-cell svg{width:26px;height:26px;}
+
+.rao-lesson .pic-groups{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;}
+.rao-lesson .pic-box{border:1.5px solid #cbd5e1;border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.rao-lesson .pic-icons{display:flex;flex-wrap:wrap;gap:5px;max-width:200px;justify-content:center;}
+.rao-lesson .pic-icons svg{width:30px;height:30px;}
+.rao-lesson .pic-num{font-family:var(--fm);font-weight:700;font-size:1.2rem;color:var(--ink);}
+.rao-lesson .pic-op{font-family:var(--fm);font-size:1.6rem;color:var(--sub);}
+
+.rao-lesson .puzzle-grid{display:inline-grid;gap:0;justify-content:center;align-items:center;width:fit-content;margin:0 auto;}
+.rao-lesson .pz{width:34px;height:30px;border-radius:5px;margin:2px 1px;border:1.5px solid rgba(0,0,0,.18);}
+
+.rao-lesson .nl-wrap{width:100%;overflow-x:auto;margin:6px 0 14px;}
+.rao-lesson .nl-svg{width:100%;max-width:680px;height:auto;display:block;margin:0 auto;}
+.rao-lesson .nl-lbl{font-family:var(--fm);font-size:20px;font-weight:500;fill:var(--ink);}
+.rao-lesson .nl-box{fill:#fff;stroke:var(--brand);stroke-width:2.4;filter:drop-shadow(0 2px 5px rgba(var(--brand-rgb,123,92,255),.25));
+  animation:nl-pulse 1.8s ease-in-out infinite;}
+@keyframes nl-pulse{0%,100%{stroke:var(--brand);}50%{stroke:#937fe8;}}
+
+.rao-lesson /* ── IO table ── */
+.io-wrap{display:flex;justify-content:center;margin:8px 0 14px;}
+.rao-lesson .io-table{border-collapse:collapse;font-family:var(--fm);min-width:220px;}
+.rao-lesson .io-table th{padding:8px 26px;font-size:.95rem;font-weight:700;color:#fff;background:var(--brand);border:1.5px solid var(--brand);}
+.rao-lesson .io-table td{padding:7px 26px;text-align:center;font-size:1.05rem;border:1.5px solid #d7dde9;color:var(--ink);}
+.rao-lesson .io-table .io-blank{width:54px;}
+.rao-lesson .io-table .blank-input{width:48px;font-size:1.1rem;}
+.rao-lesson .io-rule-line{text-align:center;font-family:var(--fm);font-weight:700;font-size:1.05rem;color:var(--ink);margin:8px 0 4px;}
+
+.rao-lesson /* ── Feedback + actions ── */
+.feedback{min-height:1.3em;font-size:.95rem;font-weight:600;margin:10px 0;transition:color .2s;}
+.rao-lesson .feedback.ok{color:var(--green);}
+.rao-lesson .feedback.no{color:var(--red);}
+.rao-lesson .feedback.hint{color:var(--amber);}
+.rao-lesson .actions{display:flex;align-items:center;gap:12px;margin-top:16px;}
+.rao-lesson .reveal-btn{margin-right:auto;padding:8px 16px;border-radius:6px;border:1.5px solid #d1d5db;background:transparent;
+  color:var(--sub);font-family:var(--fs);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.rao-lesson .reveal-btn:hover{background:#f3f4f6;color:var(--ink);border-color:var(--sub);}
+.rao-lesson .check-btn{margin-left:auto;padding:11px 24px;border-radius:8px;border:0;background:var(--brand);color:#fff;
+  font-family:var(--fs);font-size:.94rem;font-weight:700;cursor:pointer;transition:background .2s,transform .1s;}
+.rao-lesson .check-btn:hover:not(:disabled){background:var(--brand-hover,#6741e6);}
+.rao-lesson .check-btn:active:not(:disabled){transform:scale(.97);}
+.rao-lesson .check-btn:disabled{background:var(--mute);cursor:not-allowed;}
+.rao-lesson .next-btn{display:none;margin-left:auto;align-items:center;gap:8px;padding:12px 26px;
+  background:linear-gradient(135deg,var(--brand),var(--blue));color:#fff;border:0;border-radius:999px;
+  font-family:var(--fs);font-weight:800;font-size:.98rem;cursor:pointer;box-shadow:0 4px 14px rgba(var(--brand-rgb,123,92,255),.4);
+  transition:transform .12s,box-shadow .2s;}
+.rao-lesson .next-btn.show{display:inline-flex;animation:pop .3s cubic-bezier(.22,1,.36,1);}
+.rao-lesson .next-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(var(--brand-rgb,123,92,255),.55);}
+@keyframes pop{from{transform:scale(.85);opacity:0;}to{transform:none;opacity:1;}}
+
+.rao-lesson .solution{display:none;margin-top:14px;padding-top:14px;border-top:1px solid #e5e7eb;}
+.rao-lesson .solution.show{display:block;}
+.rao-lesson .solution p{font-size:.94rem;color:var(--sub);}
+.rao-lesson .solution .ans{color:var(--green);font-weight:700;}
+.rao-lesson .hn{font-family:var(--fm);font-weight:500;color:var(--brand);background:rgba(var(--brand-rgb,123,92,255),.08);padding:1px 6px;border-radius:4px;}
+
+.rao-lesson /* ── Completion card ── */
+.complete{display:none;background:linear-gradient(135deg,#e1dbfb,#dfd8fb,#eae6fc);border-radius:20px;
+  padding:38px 26px 30px;text-align:center;box-shadow:0 4px 20px rgba(var(--brand-rgb,123,92,255),.18);border:2.5px solid rgba(var(--brand-rgb,123,92,255),.25);}
+.rao-lesson .complete.show{display:block;animation:slide-in .4s;}
+.rao-lesson .trophy{font-size:4rem;display:block;line-height:1;animation:bob 1.4s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-10px) rotate(2deg);}}
+.rao-lesson .complete h3{font-family:var(--fd);font-size:2rem;margin:10px 0 6px;
+  background:linear-gradient(135deg,var(--brand),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.rao-lesson .complete-stat{display:inline-flex;align-items:baseline;gap:6px;margin:12px 0 6px;padding:12px 26px;background:#fff;
+  border-radius:14px;border:2.5px solid var(--brand);font-family:var(--fm);box-shadow:0 4px 12px rgba(var(--brand-rgb,123,92,255),.15);}
+.rao-lesson .complete-stat .sf{font-size:2.5rem;font-weight:800;color:var(--brand);line-height:1;}
+.rao-lesson .complete-stat .st{font-size:1.15rem;color:var(--mute);font-weight:600;}
+.rao-lesson .complete .cmsg{color:var(--sub);margin:8px auto 20px;max-width:380px;}
+.rao-lesson .restart-btn{padding:12px 30px;background:#fff;color:var(--brand);border:2.5px solid var(--brand);border-radius:999px;
+  font-family:var(--fs);font-weight:800;font-size:1rem;cursor:pointer;transition:transform .12s,background .2s;}
+.rao-lesson .restart-btn:hover{transform:translateY(-2px);background:#f1eeff;}
+
+.rao-lesson /* miles toast */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);opacity:0;
+  background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-weight:700;font-size:.95rem;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .35s;z-index:50;}
+.rao-lesson .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+.rao-lesson .sound-toggle{position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1.5px solid #d1d5db;
+  background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--sub);z-index:40;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.rao-lesson .sound-toggle:hover{color:var(--brand);border-color:var(--brand);}
+
+.rao-lesson /* ── v4: CURRENCY_EQUATION ── */
+.cur-eqn{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0;
+  font-family:var(--fm);font-size:1.5rem;font-weight:600;}
+.rao-lesson .cur-eqn .eq{color:var(--pink);font-weight:700;}
+.rao-lesson .cur-eqn .op{color:var(--sub);font-weight:500;}
+.rao-lesson .cur-eqn .ce-mult{font-weight:700;color:var(--ink);}
+.rao-lesson .cur-eqn .ce-target{font-weight:700;color:var(--ink);min-width:60px;text-align:center;}
+.rao-lesson .cur-eqn.breakdown{font-size:1.3rem;gap:8px;}
+.rao-lesson .ce-term{display:inline-flex;align-items:center;gap:6px;}
+.rao-lesson .ce-times{color:var(--mute);font-size:1rem;}
+.rao-lesson .cur-eqn .coin{flex-shrink:0;}
+
+.rao-lesson /* ── v4: ORDINAL_SEQUENCE (icons) ── */
+.ord-anchor{text-align:center;margin:4px 0 2px;}
+.rao-lesson .ord-pos{display:inline-block;font-family:var(--fm);font-size:.78rem;font-weight:700;color:var(--brand);
+  background:rgba(var(--brand-rgb,123,92,255),.1);padding:3px 12px;border-radius:99px;}
+.rao-lesson .ord-strip{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;background:#f8fafc;border:1px solid #f4f1fb;
+  border-radius:14px;padding:14px;}
+.rao-lesson .ord-cell{width:46px;height:46px;display:inline-flex;align-items:center;justify-content:center;
+  background:#fff;border-radius:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.rao-lesson .ord-cell svg{width:34px;height:34px;}
+
+.rao-lesson /* ── v4: ORDINAL_SEQUENCE (passage) ── */
+.ord-passage{font-size:1.18rem;line-height:2;letter-spacing:.01em;color:var(--ink);background:#f8fafc;
+  border:1px solid #f4f1fb;border-radius:14px;padding:16px 18px;margin:14px 0 6px;}
+.rao-lesson .ord-passage .ol{padding:0 .2px;}
+.rao-lesson .ord-passage .ord-mark{color:#d97706;font-weight:800;background:rgba(245,158,11,.16);border-radius:3px;}
+.rao-lesson .ord-hint{font-size:.82rem;color:var(--sub);font-style:italic;margin-bottom:10px;}
+.rao-lesson .letter-box{width:54px;text-transform:lowercase;font-size:1.4rem;}
+
+.rao-lesson /* ── v4: PATTERN_SEQUENCE ── */
+.pat-strip, .rao-lesson .seq-ref{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;background:#f8fafc;
+  border:1px solid #f4f1fb;border-radius:14px;padding:14px;}
+.rao-lesson .seq-ref{background:rgba(var(--brand-rgb,123,92,255),.05);border-color:rgba(var(--brand-rgb,123,92,255),.16);margin-bottom:10px;}
+.rao-lesson .pat-cell{width:46px;height:46px;display:inline-flex;align-items:center;justify-content:center;
+  background:#fff;border-radius:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.rao-lesson .pat-cell svg{width:34px;height:34px;}
+.rao-lesson .pat-slot.pat-blank{width:46px;height:46px;border-radius:9px;border:2px dashed var(--brand);
+  background:rgba(var(--brand-rgb,123,92,255),.06);}
+
+.rao-lesson /* ── v4: SEQUENCE_BUILD (palette → slots) ── */
+.sb-slots{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:58px;padding:12px;
+  background:#f8fafc;border:1px solid #f4f1fb;border-radius:14px;}
+.rao-lesson .sb-slots.correct{border-color:var(--green);background:rgba(16,185,129,.07);}
+.rao-lesson .sb-slots.incorrect{animation:shake .4s;}
+.rao-lesson .sb-slot{width:50px;height:50px;border-radius:10px;border:2px dashed rgba(var(--brand-rgb,123,92,255),.35);
+  background:rgba(255,255,255,.6);display:inline-flex;align-items:center;justify-content:center;transition:all .15s;}
+.rao-lesson .sb-slot.over{border-color:var(--brand);background:rgba(var(--brand-rgb,123,92,255),.12);}
+.rao-lesson .sb-slot.filled{border-color:transparent;background:transparent;}
+.rao-lesson .sb-palette{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;}
+.rao-lesson .sb-tile{width:50px;height:50px;border-radius:10px;border:2px solid var(--line,#d4cdf2);background:#fff;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;padding:0;transition:transform .1s,box-shadow .15s;
+  box-shadow:0 2px 5px rgba(0,0,0,.07);}
+.rao-lesson .sb-palette .sb-tile:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(var(--brand-rgb,123,92,255),.18);border-color:var(--brand);}
+.rao-lesson .sb-palette .sb-tile:active{transform:scale(.92);}
+.rao-lesson .sb-tile.placed{cursor:pointer;}
+.rao-lesson .sb-tile svg{width:34px;height:34px;pointer-events:none;}
+
+.rao-lesson /* ── v4: GROWING_PATTERN_2D ── */
+.grow-stack{display:flex;flex-direction:column;gap:6px;align-items:flex-start;background:#f8fafc;
+  border:1px solid #f4f1fb;border-radius:14px;padding:14px;margin-bottom:12px;}
+.rao-lesson .grow-row{display:flex;gap:6px;}
+.rao-lesson .grow-row .pat-cell{width:38px;height:38px;}
+.rao-lesson .grow-row .pat-cell svg{width:28px;height:28px;}
+
+.rao-lesson /* ══════════ v5 ══════════ */
+/* ── v5: BASE_TEN_BLOCKS (rods = tens, .rao-lesson unit cubes = ones) ── */
+.btb-stage{display:flex;align-items:flex-end;justify-content:center;gap:18px;flex-wrap:wrap;
+  background:#f8fafc;border:1px solid #f4f1fb;border-radius:14px;padding:18px 16px;min-height:96px;}
+.rao-lesson .btb-tens, .rao-lesson .btb-ones{display:flex;align-items:flex-end;gap:6px;flex-wrap:wrap;max-width:340px;}
+.rao-lesson .btb-ones{align-content:flex-start;}
+.rao-lesson .btb svg{display:block;}
+.rao-lesson /* figure-option layout for "which model shows N?" */
+.btb-optstage{display:flex;align-items:flex-end;justify-content:center;gap:14px;flex-wrap:wrap;padding:6px;}
+
+.rao-lesson /* ── v5: SPINNER (proportional coloured sectors) ── */
+.spin-wrap{display:flex;justify-content:center;margin:8px 0 16px;}
+.rao-lesson .spin-stage{background:#f8fafc;border:1px solid #f4f1fb;border-radius:16px;padding:16px;}
+.rao-lesson .spin-svg{display:block;}
+.rao-lesson .spin-legend{display:flex;flex-wrap:wrap;gap:10px 16px;justify-content:center;margin-top:10px;}
+.rao-lesson .spin-leg{display:inline-flex;align-items:center;gap:6px;font-family:var(--fs);font-weight:600;font-size:.86rem;color:var(--sub);}
+.rao-lesson .spin-leg .sw{width:14px;height:14px;border-radius:4px;border:1px solid rgba(0,0,0,.15);}
+
+.rao-lesson /* ── v5: CALENDAR_MONTH (month grid, .rao-lesson weekday columns) ── */
+.cal-wrap{display:flex;justify-content:center;margin:8px 0 16px;}
+.rao-lesson .cal{border-collapse:collapse;font-family:var(--fm);border-radius:12px;overflow:hidden;
+  box-shadow:0 4px 14px rgba(var(--brand-rgb,123,92,255),.12);border:1px solid var(--line-soft,#e4e1f3);}
+.rao-lesson .cal caption{font-family:var(--fd);font-weight:400;font-size:1.15rem;color:#fff;padding:9px 0;caption-side:top;}
+.rao-lesson .cal caption .cap-inner{display:flex;align-items:center;justify-content:center;gap:8px;}
+.rao-lesson .cal caption .aud{color:#fff;}
+.rao-lesson .cal.m0 caption{background:#f59e0b;}.rao-lesson .cal.m1 caption{background:#5A55E0;}
+.rao-lesson .cal.m2 caption{background:#e0529e;}.rao-lesson .cal.m3 caption{background:#7c3aed;}
+.rao-lesson .cal.m4 caption{background:#5B8DEF;}.rao-lesson .cal.m5 caption{background:#10b981;}
+.rao-lesson .cal th{padding:6px 0;font-size:.74rem;font-weight:700;color:var(--sub);background:#f0eefb;width:38px;}
+.rao-lesson .cal td{padding:0;text-align:center;font-size:.92rem;color:var(--ink);background:#fff;width:38px;height:34px;
+  border:1px solid #f4f1fb;}
+.rao-lesson .cal td.empty{background:#fbfaff;}
+.rao-lesson .cal td.hi{background:rgba(var(--brand-rgb,123,92,255),.14);font-weight:700;color:var(--brand);border-radius:6px;}
+
+.rao-lesson /* ============================================================
+   AUTHORING MODE — categorize (venn + bins) & line-plot.
+   Hooks must match the frontend behaviours:
+     categorize: .vs-tray > .vs-tile[data-idx]; .vs-zone[data-region] (drop)
+     line-plot:  .lp-cols > .lp-col[data-x][data-count] > .lp-slot[data-row]
+   ============================================================ */
+/* ── Categorize: Venn (2-circle) layout ── */
+.venn-wrap{display:flex;justify-content:center;margin:6px 0 14px;}.rao-lesson .venn-box{position:relative;width:460px;max-width:100%;height:320px;border:1.5px solid #d5cfee; border-radius:12px;background:#fcfbff;}.rao-lesson .venn-circle{position:absolute;top:40px;width:260px;height:260px;border:2px solid #937fe6;border-radius:50%;}.rao-lesson .venn-left{left:35px;}.rao-lesson .venn-right{right:35px;}.rao-lesson .venn-label{position:absolute;top:24px;font-size:.84rem;font-weight:700;color:#4d3f86; background:#fff;border:1px solid #d6cff3;border-radius:6px;padding:2px 8px;z-index:3;}.rao-lesson .venn-label-left{left:96px;}.rao-lesson .venn-label-right{right:96px;}.rao-lesson .venn-shape{flex:0 0 auto;}@media(max-width:480px){.rao-lesson .venn-wrap{overflow:hidden;}.rao-lesson .venn-box{transform:scale(.76);transform-origin:top center;margin-bottom:-77px;}}@media(max-width:380px){.rao-lesson .venn-box{transform:scale(.66);margin-bottom:-109px;}}.rao-lesson .vs-tray{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:6px 0 12px; padding:10px;background:#f7f6fd;border:1.5px dashed #cbc3ee;border-radius:12px;min-height:54px;}.rao-lesson .vs-tile{display:inline-flex;cursor:pointer;padding:3px;border-radius:8px;transition:transform .1s,box-shadow .1s;}.rao-lesson .vs-tile:hover{transform:translateY(-2px);}.rao-lesson .vs-box .vs-zone{position:absolute;display:flex;flex-wrap:wrap;gap:2px;align-content:center;justify-content:center; border-radius:10px;transition:background .12s;}.rao-lesson .vs-zone.vs-a{left:35px;top:40px;width:175px;height:260px;justify-content:center;padding-left:14px;}.rao-lesson .vs-zone.vs-ab{left:180px;top:90px;width:100px;height:160px;}.rao-lesson .vs-zone.vs-b{right:35px;top:40px;width:175px;height:260px;justify-content:center;padding-right:14px;}.rao-lesson .vs-zone.vs-out{left:10px;top:6px;width:440px;height:30px;justify-content:flex-start;}.rao-lesson .vs-fixed{display:inline-flex;opacity:.92;}.rao-lesson .prompt{font-family:'Quicksand';font-weight:var(--rz-fw-prompt,700);color:var(--ink, #2c2150);font-size:var(--rz-fz-prompt,1.125rem);line-height:var(--rz-lh-prompt,1.5);letter-spacing:var(--rz-ls-prompt,0.01em);}
+
+.rao-lesson /* ── Categorize: bins layout (sort into labelled boxes) ── */
+.bins{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:8px 0 12px;}
+.rao-lesson .bin{flex:1 1 150px;min-width:130px;max-width:230px;border:1.5px solid #d5cfee;border-radius:12px;background:#fcfbff;overflow:hidden;display:flex;flex-direction:column;}
+.rao-lesson .bin .bin-head{padding:8px 10px;text-align:center;font-weight:700;font-size:.9rem;color:#fff;background:var(--brand);}
+/* The drop zone must FILL the bin, not just fit its tiles. In a flex row the bins
+   stretch to the tallest one; if .vs-zone/.bs-drop only grew to their content, the
+   empty lower part of a shorter bin was dead to elementFromPoint().closest('.vs-zone')
+   and drops there silently failed. flex:1 makes the whole bin body droppable. */
+.rao-lesson .bin .vs-zone{flex:1 1 auto;display:flex;}
+.rao-lesson .bin .bs-drop{flex:1 1 auto;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;justify-content:center;min-height:64px;padding:10px;transition:background .12s;}
+.rao-lesson .bins .vs-zone.over .bs-drop{background:rgba(var(--brand-rgb,123,92,255),.08);}
+
+.rao-lesson /* ── Line plot ── */
+.data-wrap{display:flex;justify-content:center;margin:8px 0 14px;}.rao-lesson .data-table{border-collapse:collapse;font-family:var(--fm, 'JetBrains Mono',monospace);min-width:260px;border-radius:10px;overflow:hidden; box-shadow:0 2px 10px rgba(var(--brand-rgb, 123,92,255),.1);}.rao-lesson .data-table caption{font-family:var(--fs, 'DM Sans',sans-serif);font-weight:700;font-size:.95rem;color:var(--ink, #2c2150);padding:0 0 8px;caption-side:top; display:flex;align-items:center;gap:7px;justify-content:center;}.rao-lesson .data-table th{padding:9px 22px;font-size:.9rem;font-weight:700;color:#fff;background:var(--brand,#7b5cff);}.rao-lesson .data-table td{padding:8px 22px;text-align:center;font-size:1.02rem;border:1.5px solid var(--line-soft,#e4e1f3);color:var(--ink, #2c2150);background:#fff;}.rao-lesson .data-table tr:nth-child(even) td{background:var(--tint,#f8f6fe);}.rao-lesson .data-table td:first-child{font-weight:600;}.rao-lesson .lp-row{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:28px;margin:8px 0 16px;}.rao-lesson .lp-srcwrap{flex:0 1 auto;display:flex;flex-direction:column;justify-content:flex-start;}.rao-lesson .lp-src{margin:0;}.rao-lesson .lp-src caption{caption-side:top;font-weight:700;color:var(--ink, #2c2150);padding-bottom:6px;font-size:.92rem;}.rao-lesson .lp-plot{flex:0 1 auto;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto; grid-template-areas:"ylabel plot" ". xlabel" ". key";align-items:end;gap:2px 10px;}.rao-lesson .lp-ylabel{grid-area:ylabel;align-self:center;}.rao-lesson .lp-ylabel span{display:inline-block;writing-mode:vertical-rl;transform:rotate(180deg); font-size:.8rem;font-weight:700;color:var(--sub, #4b5563);white-space:nowrap;letter-spacing:.02em;}.rao-lesson .lp-plotarea{grid-area:plot;position:relative;padding:0 4px;}.rao-lesson .lp-gridlines{position:absolute;left:4px;right:4px;bottom:30px;top:0;pointer-events:none;}.rao-lesson .lp-gridline{position:absolute;left:0;right:0;height:1px;background:rgba(44,33,80,.06);}.rao-lesson .lp-cols{display:flex;align-items:flex-end;gap:10px;position:relative;}.rao-lesson .lp-col{position:relative;width:34px;display:flex;flex-direction:column;justify-content:flex-end; border-radius:8px 8px 0 0;cursor:pointer;transition:background .12s;}.rao-lesson .lp-col:hover{background:rgba(91,141,239,.06);}.rao-lesson .lp-slot{flex:0 0 24px;height:24px;width:100%;border:0;background:transparent;padding:0;cursor:pointer; display:flex;align-items:center;justify-content:center;position:relative;}.rao-lesson .lp-slot::before{content:"✕";font-size:1.15rem;font-weight:800;line-height:1;color:transparent;transition:color .1s;}.rao-lesson .lp-col:hover .lp-slot:hover::before{color:rgba(91,141,239,.4);}.rao-lesson .lp-col:hover .lp-slot:hover ~ .lp-slot::before{color:rgba(91,141,239,.4);}.rao-lesson .lp-baseline{height:3px;background:#2c2150;border-radius:2px;margin-top:0;}.rao-lesson .lp-ticks{display:flex;gap:10px;margin-top:5px;padding:0;}.rao-lesson .lp-tick{width:34px;text-align:center;font-size:.86rem;font-weight:700;color:var(--ink, #2c2150);}.rao-lesson .lp-xlabel{grid-area:xlabel;text-align:center;font-size:.8rem;font-weight:700;color:var(--sub, #4b5563);margin-top:3px;}.rao-lesson .lp-key{grid-area:key;text-align:center;font-size:.78rem;color:var(--sub, #4b5563);margin-top:2px;}.rao-lesson .lp-key-x{color:#5B8DEF;font-weight:800;}.rao-lesson .prompt{font-family:'Quicksand';font-weight:var(--rz-fw-prompt,700);color:var(--ink, #2c2150);font-size:var(--rz-fz-prompt,1.125rem);line-height:var(--rz-lh-prompt,1.5);letter-spacing:var(--rz-ls-prompt,0.01em);}/* ROUND_SCAFFOLD */ .rao-lesson .rsf{display:flex;justify-content:center;margin:20px 0 8px;} .rao-lesson .rsf-grid{display:inline-grid;grid-template-columns:repeat(5,auto);align-items:center;justify-items:center;gap:6px 18px;} .rao-lesson .rsf-num{font-family:var(--fm);font-weight:700;font-size:1.7rem;color:var(--ink);} .rao-lesson .rsf-op{font-family:var(--fm);font-size:1.5rem;color:var(--sub);} .rao-lesson .rsf-eq{font-family:var(--fm);font-size:1.5rem;font-weight:700;color:var(--pink);} .rao-lesson .rsf-arrcell{display:flex;align-items:center;justify-content:center;} .rao-lesson .rsf-arr{color:var(--brand);animation:rsf-bob 1.8s ease-in-out infinite;} @keyframes rsf-bob{0%,100%{transform:translateY(-1px);}50%{transform:translateY(3px);}} .rao-lesson .rsf-blank{width:72px;} .rao-lesson .rsf-given{font-family:var(--fm, monospace);font-weight:700;font-size:1.5rem;color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.09);border-radius:10px;padding:2px 12px;white-space:nowrap;} @media(max-width:600px){.rao-lesson .rsf-num{font-size:1.4rem;}.rao-lesson .rsf-given{font-size:1.2rem;padding:2px 8px;}.rao-lesson .rsf-grid{gap:6px 10px;}.rao-lesson .rsf-blank{width:58px;}}/* CATEGORIZE_TILE_AFFORDANCE */ .rao-lesson .vs-tile{cursor:grab;border-radius:12px;transition:transform .12s,box-shadow .15s,border-color .15s;animation:vs-nudge 1s ease-in-out .25s 2;} .rao-lesson .vs-tile:active{cursor:grabbing;transform:scale(.96);} .rao-lesson .vs-text{display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border:2px solid var(--line,#d4cdf2);background:#fff;box-shadow:0 2px 7px rgba(var(--brand-rgb,123,92,255),.14);font-family:var(--fm, monospace);font-weight:600;font-size:1rem;color:var(--brand,#7b5cff);} .rao-lesson .vs-text:hover{transform:translateY(-2px);border-color:var(--brand,#7b5cff);box-shadow:0 6px 16px rgba(var(--brand-rgb,123,92,255),.24);} .rao-lesson .vs-grip{flex-shrink:0;fill:#b2aad4;} .rao-lesson .vs-text:hover .vs-grip{fill:var(--brand,#7b5cff);} .rao-lesson .vs-shape{display:inline-flex;align-items:center;justify-content:center;padding:5px;border:2px solid var(--line,#d4cdf2);background:#fff;border-radius:12px;box-shadow:0 2px 6px rgba(var(--brand-rgb,123,92,255),.12);} .rao-lesson .vs-shape:hover{transform:translateY(-2px);border-color:var(--brand,#7b5cff);box-shadow:0 5px 13px rgba(var(--brand-rgb,123,92,255),.22);} @keyframes vs-nudge{0%,100%{transform:none;}20%{transform:rotate(-3deg);}45%{transform:rotate(2.5deg);}70%{transform:rotate(-1.5deg);}} .rao-lesson .vs-fixed .vs-grip{display:none;}/* QPROMPT_SOLO */ .rao-lesson .prompt.qprompt-solo{display:flex;flex-direction:column;align-items:center;text-align:center;font-size:var(--rz-fz-prompt,1.125rem);gap:8px;line-height:var(--rz-lh-prompt,1.5);} .rao-lesson .prompt.qprompt-solo .blank-input{font-size:1.15em;} @media(max-width:600px){.rao-lesson .prompt.qprompt-solo{font-size:var(--rz-fz-prompt,1.125rem);}} .rao-lesson /* HELPER_FACT */ .helper-fact{display:flex;align-items:center;gap:9px;justify-content:center;margin:0 0 14px;flex-wrap:wrap;} .rao-lesson .hf-tag{background:var(--green, #10b981);color:#fff;font-family:var(--fs, sans-serif);font-weight:800;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:99px;} .rao-lesson .hf-val{font-family:var(--fm, monospace);font-weight:700;font-size:1.25rem;color:#047857;background:rgba(16,185,129,.12);padding:5px 13px;border-radius:9px;} .rao-lesson .prompt.qprompt-centered{display:flex;justify-content:center;text-align:center;font-size:clamp(1.05rem,calc(1.7rem - var(--pl,0)*0.011rem),1.5rem);line-height:1.4;} @media(max-width:600px){.rao-lesson .prompt.qprompt-centered{font-size:clamp(1rem,calc(1.5rem - var(--pl,0)*0.011rem),1.3rem);}} .rao-lesson /* QPROMPT_SPLIT */ .prompt.qprompt-split{display:flex;flex-direction:column;gap:12px;align-items:stretch;} .rao-lesson .prompt.qprompt-split .qp-lead{text-align:left;font-size:1.08rem;font-weight:700;color:var(--ink, #2c2150);line-height:1.4;} .rao-lesson .prompt.qprompt-split .qp-expr{text-align:center;font-family:var(--fm, 'JetBrains Mono',monospace);font-weight:600;font-size:1.75rem;color:var(--ink, #2c2150);letter-spacing:.01em;line-height:1.2;padding:4px 0 2px;} @media(max-width:600px){.rao-lesson .prompt.qprompt-split .qp-expr{font-size:1.5rem;}}.rao-lesson .prompt:has(.seq){display:block;}.rao-lesson .prompt:has(.seq) > span{display:block;}.rao-lesson .seq-lead{display:block;text-align:left;color:var(--sub, #4b5563);font-weight:600;font-size:1rem;margin-bottom:6px;}.rao-lesson .seq{display:block;text-align:center;font-family:var(--fm, 'JetBrains Mono',monospace);font-size:clamp(1.15rem, 5.4vw, 1.62rem);font-weight:600;color:#4d4a63;color:color-mix(in srgb, var(--ink, #2c2150) 76%, #ffffff);letter-spacing:.05em;line-height:1.5;background:linear-gradient(135deg,rgba(var(--brand-rgb,123,92,255),.06),rgba(90,200,250,.09));border:1.5px solid rgba(var(--brand-rgb,123,92,255),.15);border-radius:14px;padding:16px 18px;margin:2px 0 4px;}.rao-lesson .seq .sq{color:var(--brand,#7b5cff);font-weight:800;padding:0 3px;}.rao-lesson .seq .blank-input{width:clamp(42px, 12vw, 54px);font-size:clamp(1rem, 3.8vw, 1.3rem);vertical-align:middle;margin:0 3px;padding:6px 2px;}@media(max-width:600px){.rao-lesson .seq{padding:13px 12px;letter-spacing:.03em;}}.rao-lesson .sb-tile{font-family:var(--fm, 'JetBrains Mono',monospace);font-size:1.3rem;font-weight:700;color:var(--brand,#7b5cff);}
+.rao-lesson .vmul{display:flex;justify-content:center;margin:22px 0 6px;}.rao-lesson .vmul-grid{display:inline-flex;flex-direction:column;font-family:var(--fm);font-size:1.6rem;font-weight:600;color:var(--ink);align-items:stretch;}.rao-lesson .vm-row{display:flex;align-items:center;}.rao-lesson .vm-gut{width:26px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}.rao-lesson .vm-op{color:var(--sub);font-weight:500;}.rao-lesson .vm-d{width:40px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}.rao-lesson .vm-c{width:12px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}.rao-lesson .vm-comma{color:var(--ink);}.rao-lesson .vm-top{height:44px;}.rao-lesson .vm-mult{height:44px;}.rao-lesson .vm-rulerow{height:14px;}.rao-lesson .vm-ans{height:48px;}.rao-lesson .vm-rule{border-top:3px solid var(--ink);height:0;}.rao-lesson .vm-cell{width:34px;height:42px;padding:0;font-size:1.35rem;}.rao-lesson .dt-wrap{display:flex;justify-content:center;margin:10px 0 16px;}.rao-lesson .dt-table{border-collapse:collapse;font-family:var(--fm, 'JetBrains Mono',monospace);border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(var(--brand-rgb, 123,92,255),.14);}.rao-lesson .dt-table th{padding:9px 14px;font-size:.82rem;font-weight:700;color:#fff;background:var(--brand,#7b5cff);text-align:center;line-height:1.25;font-family:var(--fs, 'DM Sans',sans-serif);}.rao-lesson .dt-table td{padding:7px 14px;text-align:center;font-size:1.05rem;font-weight:600;border:1.5px solid var(--line-soft,#e4e1f3);color:var(--ink, #2c2150);background:#fff;}.rao-lesson .dt-table tr:nth-child(even) td{background:var(--tint,#f8f6fe);}.rao-lesson .dt-table td.dt-blank{padding:5px 8px;}.rao-lesson .dt-table .blank-input{width:56px;font-size:1.15rem;padding:5px 3px;}@media(max-width:600px){.rao-lesson .dt-table th{padding:8px 6px;font-size:.68rem;}.rao-lesson .dt-table td{padding:6px 6px;font-size:.92rem;}.rao-lesson .dt-table .blank-input{width:42px;font-size:.98rem;}}/* prompt alignment: LEFT by default; centered only for genuine expressions via .qprompt-solo (needs a math symbol) / .qprompt-split / .qprompt-centered. The word-count-only .p-center path was Bug 2 and is retired. */.rao-lesson .prompt{justify-content:flex-start;text-align:left;}.rao-lesson .prompt > span{text-align:inherit;}.rao-lesson .prompt.qprompt-solo{justify-content:center;text-align:center;}.rao-lesson .prompt:has(.lbl){display:block;}.rao-lesson .prompt:has(.lbl) > span{display:block;text-align:center;}.rao-lesson .lbl{display:block;text-align:left;margin-bottom:6px;}.rao-lesson .prompt:has(.lbl) .lbl{text-align:left;}.rao-lesson .eqn{justify-content:center;}.rao-lesson .time-row{display:flex;gap:14px;align-items:stretch;justify-content:center;margin:18px 0 6px;flex-wrap:wrap;} .rao-lesson .time-input{width:130px;padding:12px 14px;border:2px solid var(--line,#d4cdf2);border-radius:12px;font-family:var(--fm, 'JetBrains Mono',monospace);font-size:1.3rem;font-weight:700;text-align:center;color:var(--brand,#7b5cff);background:#fff;outline:none;transition:border-color .2s,box-shadow .2s;} .rao-lesson .time-input::placeholder{color:#b9c0cf;font-weight:600;opacity:1;} .rao-lesson .time-input::-webkit-input-placeholder{color:#b9c0cf;font-weight:600;} .rao-lesson .time-input:focus{border-color:var(--brand,#7b5cff);box-shadow:0 0 0 4px rgba(var(--brand-rgb,123,92,255),.14);} .rao-lesson .ampm-toggle{display:inline-flex;align-items:stretch;padding:4px;background:#eef1f8;border:2px solid #dbe1f0;border-radius:13px;gap:4px;} .rao-lesson .ampm-btn{min-width:66px;padding:0 20px;display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:9px;font-family:var(--fs, 'DM Sans',sans-serif);font-size:1.05rem;font-weight:800;letter-spacing:.04em;color:#8a93a8;background:transparent;cursor:pointer;user-select:none;transition:background .15s,color .15s,box-shadow .15s,transform .08s;} .rao-lesson .ampm-btn:hover{color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.08);} .rao-lesson .ampm-btn:active{transform:scale(.96);} .rao-lesson .ampm-btn.is-sel{background:var(--brand,#7b5cff);color:#fff;box-shadow:0 3px 8px rgba(var(--brand-rgb,123,92,255),.35);} .rao-lesson .ampm-btn.is-sel:hover{background:var(--brand,#7b5cff);color:#fff;}
+.rao-lesson .barobj{height:30px;border-radius:6px;}
+.rao-lesson .bg-row{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:26px;margin:10px 0 16px;}
+.rao-lesson .bg-srcwrap{flex:0 1 auto;}
+.rao-lesson .bg-wrap{flex:0 1 auto;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.rao-lesson .bg-legend{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;margin-bottom:2px;}
+.rao-lesson .bg-leg{display:inline-flex;align-items:center;gap:6px;font-family:var(--fs, sans-serif);font-weight:600;font-size:.84rem;color:var(--sub, #4b5563);}
+.rao-lesson .bg-sw{width:14px;height:14px;border-radius:4px;border:1px solid rgba(0,0,0,.12);}
+.rao-lesson .bg-plot{position:relative;display:flex;align-items:flex-end;padding:0 6px 0 46px;background:#fbfaff;border:1px solid #f4f1fb;border-radius:12px;}
+.rao-lesson .bg-grids{position:absolute;left:46px;right:6px;top:0;bottom:0;pointer-events:none;}
+.rao-lesson .bg-grid{position:absolute;left:0;right:0;height:1px;background:rgba(44,33,80,.08);}
+.rao-lesson .bg-grid .bg-tick{position:absolute;left:-44px;top:-9px;width:40px;text-align:right;font-family:var(--fm, monospace);font-size:.7rem;font-weight:600;color:var(--sub, #4b5563);}
+.rao-lesson .bg-clusters{position:relative;display:flex;align-items:flex-end;gap:22px;height:100%;padding:0 8px;z-index:1;}
+.rao-lesson .bg-cluster{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}
+.rao-lesson .bg-bars{display:flex;align-items:flex-end;gap:6px;height:100%;}
+.rao-lesson .bg-bar{width:34px;display:flex;align-items:flex-end;border-radius:5px 5px 0 0;position:relative;}
+.rao-lesson .bg-bar.bg-fixed{background:transparent;}
+.rao-lesson .bg-bar.bg-editable{background:rgba(var(--brand-rgb,123,92,255),.07);outline:2px dashed rgba(var(--brand-rgb,123,92,255),.4);outline-offset:-2px;cursor:pointer;transition:outline-color .15s;}
+.rao-lesson .bg-bar.bg-editable:hover{outline-color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.12);}
+.rao-lesson .bg-bar.bg-editable:focus{outline:2px solid var(--brand,#7b5cff);}
+.rao-lesson .bg-fill{width:100%;border-radius:5px 5px 0 0;transition:height .12s ease,width .12s ease;}
+.rao-lesson .bg-catlabel{margin-top:7px;font-family:var(--fs, sans-serif);font-weight:600;font-size:.8rem;color:var(--ink, #2c2150);text-align:center;max-width:80px;line-height:1.2;}
+.rao-lesson .bg-axislabel{font-family:var(--fs, sans-serif);font-weight:700;font-size:.78rem;color:var(--sub, #4b5563);text-transform:uppercase;letter-spacing:.04em;}
+.rao-lesson .bg-plot-h{align-items:flex-start;padding:8px 6px 26px 46px;}
+.rao-lesson .bg-plot-h .bg-clusters{flex-direction:column;align-items:flex-start;gap:14px;width:100%;}
+.rao-lesson .bg-plot-h .bg-cluster{flex-direction:row-reverse;align-items:center;justify-content:flex-end;width:100%;height:auto;gap:8px;}
+.rao-lesson .bg-plot-h .bg-bars{flex-direction:column;height:auto;width:100%;}
+.rao-lesson .bg-plot-h .bg-bar{width:auto;height:26px;align-items:center;border-radius:0 5px 5px 0;}
+.rao-lesson .bg-plot-h .bg-fill{height:100%;width:0;border-radius:0 5px 5px 0;}
+.rao-lesson .bg-plot-h .bg-grid-h{position:absolute;top:0;bottom:0;width:1px;height:auto;left:auto;background:rgba(44,33,80,.08);}
+.rao-lesson .bg-plot-h .bg-grid-h .bg-tick{position:absolute;top:auto;bottom:-20px;left:-10px;}
+.rao-lesson .bg-bar{width:26px;}
+.rao-lesson .bg-clusters{gap:14px;}
+.rao-lesson .lat-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;margin:12px 0 16px;}
+.rao-lesson .lat-caption{font-family:var(--fd, serif);font-size:1.3rem;color:var(--ink, #2c2150);}
+.rao-lesson .lat-svg{max-width:100%;height:auto;overflow:visible;}
+.rao-lesson .lat-box{fill:#fff;stroke:var(--brand,#7b5cff);stroke-width:2;}
+.rao-lesson .lat-diag{stroke:rgba(var(--brand-rgb,123,92,255),.45);stroke-width:1.5;}
+.rao-lesson .lat-flabel{font-family:var(--fm, monospace);font-weight:700;font-size:20px;fill:var(--ink, #2c2150);}
+.rao-lesson .lat-in{width:24px;height:24px;border:1.5px solid var(--line,#d4cdf2);border-radius:6px;background:rgba(var(--brand-rgb,123,92,255),.05);color:var(--brand,#7b5cff);font-family:var(--fm, monospace);font-weight:700;font-size:1rem;text-align:center;padding:0;outline:none;transition:all .12s;}
+.rao-lesson .lat-in:focus{border-style:solid;border-color:var(--brand,#7b5cff);background:#fff;box-shadow:0 0 0 3px rgba(var(--brand-rgb,123,92,255),.14);}
+.rao-lesson .lat-in.correct{border-color:var(--green, #10b981);background:rgba(16,185,129,.1);color:#047857;}
+.rao-lesson .lat-in.incorrect{border-color:var(--red, #ef4444);background:rgba(239,68,68,.07);}
+:root{--brand-rgb:123,92,255; --brand-hover:#6741e6; --ink-rgb:44,33,80;--rz-fw-prompt:700; --rz-fz-prompt:1.125rem; --rz-lh-prompt:1.5; --rz-ls-prompt:0.01em;--rz-gap-po:24px; --rz-gap-fig:12px; --rz-card-floor:300px; --rz-fz-chip:1.125rem; --rz-fz-tile:1.125rem;--rz-r-chip:12px; --rz-opt-cols:2;
+  --brand:#7b5cff; --blue:#5B8DEF; --green:#10b981; --amber:#f59e0b; --red:#ef4444;
+  --purple:#5A55E0; --pink:#5AC8FA;
+  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#f4f1fb; --card:#fff;
+  --fd:'Baloo 2',cursive; --fm:'Baloo 2',cursive; --fs:'Quicksand','DM Sans',sans-serif;
+}
+.rao-lesson .opt, .rao-lesson .opt-text{font-size:var(--rz-fz-chip);}
+.rao-lesson .tile{font-size:var(--rz-fz-tile);}
+@media(max-width:480px){.rao-lesson .prompt{font-size:1.0625rem;}.rao-lesson .opt,.rao-lesson .opt-text{font-size:1.125rem;}}.rao-lesson .tile.armed{border-color:var(--brand);background:rgba(var(--brand-rgb,123,92,255),.10);box-shadow:0 0 0 3px rgba(var(--brand-rgb,123,92,255),.28),0 8px 18px rgba(var(--brand-rgb,123,92,255),.28);transform:translateY(-3px) scale(1.03);}.rao-lesson .order-slot.target-hint{border-color:var(--brand);background:rgba(var(--brand-rgb,123,92,255),.10);animation:slot-pulse 1.1s ease-in-out infinite;}@keyframes slot-pulse{0%,100%{box-shadow:0 0 0 0 rgba(var(--brand-rgb,123,92,255),.28);}50%{box-shadow:0 0 0 6px rgba(var(--brand-rgb,123,92,255),0);}}/* ── VERTICAL RHYTHM — single source of truth ── */.rao-lesson .prompt{margin-bottom:10px;}.rao-lesson .fig-wrap, .rao-lesson .nl-wrap, .rao-lesson .data-wrap, .rao-lesson .spin-wrap, .rao-lesson .poly-wrap, .rao-lesson .cur-wrap, .rao-lesson .hchart-wrap, .rao-lesson .tally-wrap, .rao-lesson .xf-wrap, .rao-lesson .cal-wrap, .rao-lesson .btb-stage, .rao-lesson .seq-ref, .rao-lesson .pat-strip, .rao-lesson .grow-stack, .rao-lesson .ord-strip{margin-top:var(--rz-gap-fig,12px);margin-bottom:0;}.rao-lesson .opts, .rao-lesson .opts-fig, .rao-lesson .eqn, .rao-lesson .vcol, .rao-lesson .vmul, .rao-lesson .rsf, .rao-lesson .ans-row, .rao-lesson .order-wrap, .rao-lesson .sb-slots, .rao-lesson .vs-tray, .rao-lesson .time-row, .rao-lesson .lat-wrap, .rao-lesson .bg-row, .rao-lesson .lp-row, .rao-lesson .dt-wrap, .rao-lesson .rao-construct{margin-top:var(--rz-gap-po,24px);}
+
+.rao-lesson /* ═══════════ LAYER 3 — ADDED ═══════════ */
+
+/* ---- the explanation. The engine parsed it and threw it away for
+        every one of your 2, .rao-lesson 860 questions. rao-master-10 emits it. ---- */
+.explain{display:none;margin-top:16px;padding:13px 16px;border-radius:12px;
+  background:#fff7e6;border:1px solid #ffe2a8;color:#7a5b12;
+  font-family:'Quicksand',sans-serif;font-weight:600;line-height:1.55;font-size:.95rem;}
+
+.rao-lesson /* ---- THE THREE REVEAL MODES ----
+   The lesson never knows its mode. The app sets data-mode on the card.
+   Same lesson file → Rapid Fire, .rao-lesson Adaptive, .rao-lesson or Quiz. */
+
+/* RAPID FIRE — tap, .rao-lesson instant green/red, .rao-lesson next. No explanation, .rao-lesson no Check. */
+[data-mode="rapid"] .explain{display:none;}
+.rao-lesson [data-mode="rapid"] .rao-check{display:none;}
+
+.rao-lesson /* ADAPTIVE — answer, .rao-lesson press Check, .rao-lesson then the teaching. */
+[data-mode="adaptive"] .explain{display:none;}
+.rao-lesson [data-mode="adaptive"].is-checked .explain{display:block;animation:rao-reveal .3s ease-out;}
+.rao-lesson [data-mode="adaptive"]:not(.is-checked) .opt.is-correct, .rao-lesson [data-mode="adaptive"]:not(.is-checked) .opt.is-wrong{
+  border-color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.12);color:var(--brand,#7b5cff);
+  box-shadow:0 3px 10px rgba(var(--brand-rgb,123,92,255),.18);animation:none;}
+
+.rao-lesson /* QUIZ — selected looks SELECTED, .rao-lesson never right or wrong, .rao-lesson until submit. */
+[data-mode="quiz"] .opt.is-correct, .rao-lesson [data-mode="quiz"] .opt.is-wrong{
+  border-color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.12);color:var(--brand,#7b5cff);
+  box-shadow:0 3px 10px rgba(var(--brand-rgb,123,92,255),.18);animation:none;}
+.rao-lesson [data-mode="quiz"] .blank-input.correct, .rao-lesson [data-mode="quiz"] .blank-input.incorrect{
+  border-color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.06);color:var(--brand,#7b5cff);animation:none;}
+.rao-lesson [data-mode="quiz"] .explain, .rao-lesson [data-mode="quiz"] .rao-check, .rao-lesson [data-mode="quiz"] .rao-hint{display:none;}
+.rao-lesson [data-mode="quiz"].is-review .explain{display:block;}
+@keyframes rao-reveal{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
+
+.rao-lesson /* ---- tap-target floor: your own spec says >=44px ---- */
+.opt, .rao-lesson .tile, .rao-lesson .order-slot, .rao-lesson .vs-tile, .rao-lesson .bin, .rao-lesson .rao-hint, .rao-lesson .rao-check{min-height:44px;}
+.rao-lesson .tile, .rao-lesson .vs-tile, .rao-lesson .order-slot{touch-action:none;}   .rao-lesson /* or dragging scrolls the page on a phone */
+
+/* ---- DARK MODE — the engine has none. Repoint the tokens; every
+        rule above inherits automatically because they all use var(). ---- */
+html[data-theme="dark"] .rao-lesson{background:#0A0A0C;color:#ECECF1;}
+html[data-theme="dark"]{--ink:#ECECF1;--sub:#C8C8D2;--mute:#8F8F9B;--card:#141417;
+  --brand:#9B7CFF;--brand-hover:#8B6AEF;}
+html[data-theme="dark"] .rao-lesson .rao-card{background:#141417;box-shadow:0 4px 0 rgba(155,124,255,.10);}
+html[data-theme="dark"] .rao-lesson .rao-ring i{background:#141417;color:#9B7CFF;}
+html[data-theme="dark"] .rao-lesson .opt, html[data-theme="dark"] .rao-lesson .tile, html[data-theme="dark"] .rao-lesson .order-slot, html[data-theme="dark"] .rao-lesson .vs-tile, html[data-theme="dark"] .rao-lesson .blank-input, html[data-theme="dark"] .rao-lesson .sb-tile{
+  background:#1C1C22;border-color:#3A3A44;color:#9B7CFF;}
+html[data-theme="dark"] .rao-lesson .opt:hover:not(:disabled){background:rgba(155,124,255,.14);border-color:#9B7CFF;}
+html[data-theme="dark"] .rao-lesson .prompt{color:#ECECF1;}
+html[data-theme="dark"] .rao-lesson .rao-hint{background:#1C1C22;border-color:#3A3A44;color:#C8C8D2;}
+html[data-theme="dark"] .rao-lesson .data-table td, html[data-theme="dark"] .rao-lesson .dt-table td{
+  background:#1C1C22;border-color:#3A3A44;color:#ECECF1;}
+html[data-theme="dark"] .rao-lesson .data-table tr:nth-child(even) td, html[data-theme="dark"] .rao-lesson .dt-table tr:nth-child(even) td{background:#23232A;}
+html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);border-color:rgba(155,124,255,.22);color:#C8C8D2;}
+
+
+/* ═══════════ LAYER 4 — THE TOKENS THAT WIN ═══════════
+   These are the exact design tokens from your lessons. In your files
+   they appear LAST, .rao-lesson which is why they beat the engine's defaults —
+   and why your questions render in Baloo 2 / Quicksand rather than
+   JetBrains Mono / DM Sans.
+
+   This block is the whole reason the look is what it is. Declared
+   last here for the same reason. Change a value here and all 103
+   lessons change together.                                         */
+:root{--brand-rgb:123,92,255; --brand-hover:#6741e6; --ink-rgb:44,33,80;--rz-fw-prompt:700; --rz-fz-prompt:1.125rem; --rz-lh-prompt:1.5; --rz-ls-prompt:0.01em;--rz-gap-po:24px; --rz-card-floor:300px; --rz-fz-chip:1.125rem; --rz-fz-tile:1.125rem;--rz-r-chip:12px; --rz-opt-cols:2;
+  --brand:#7b5cff; --blue:#5B8DEF; --green:#10b981; --amber:#f59e0b; --red:#ef4444;
+  --purple:#5A55E0; --pink:#5AC8FA;
+  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#f4f1fb; --card:#fff;
+  --fd:'Baloo 2',cursive; --fm:'Baloo 2',cursive; --fs:'Quicksand','DM Sans',sans-serif;
+}
+
+
+/* ═══════════ THE TOKENS THAT DEFINE THE LOOK ═══════════
+   In your lessons these came last and beat the engine's defaults.
+   That single fact is why your questions are Baloo 2 / Quicksand
+   and not JetBrains Mono / DM Sans. Declared last here for the
+   same reason. Change one value → all 103 lessons change together. */
+:root{
+  --fm:'Baloo 2',cursive;                     /* numbers, options, tiles */
+  --fs:'Quicksand','DM Sans',sans-serif;      /* prompts, labels, UI     */
+  --fd:'Baloo 2',cursive;
+  --brand:#7b5cff; --brand-hover:#6741e6; --brand-rgb:123,92,255;
+  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af;
+  --bg:#f4f1fb; --card:#fff;
+  --blue:#5B8DEF; --green:#10b981; --amber:#f59e0b; --red:#ef4444; --pink:#5AC8FA;
+}
+
+/* The 300px card floor arrived in rao-master-9. Your 103 lessons predate it and
+   size to their content. Keep it at 0 so cards stay the height you're used to;
+   the app can raise it later if it wants uniform card heights. */
+:root{--rz-card-floor:0px;}
+.rao-lesson .qbody{min-height:0 !important;}
+
+/* Prompt sizing: rao-master-9 raised this to 18px/700. Your 103 lessons render
+   at 16px/400. Pinned to YOUR values so nothing shifts on re-import.
+   Change these two numbers to restyle every prompt in the library at once. */
+:root{--rz-fz-prompt:1.125rem;--rz-fw-prompt:700;}
+
+/* ═══════ PROMPT → ANSWER RHYTHM ═══════
+   rao-master-9 set the prompt→answer gap to 24px. The legacy 103 lessons
+   sat their options 6px below the prompt, so this block used to pin the gap
+   back to 6px on re-import. Those lessons have been retired, so the gap now
+   matches the engine default (24px) again. One number restyles every prompt
+   in the library at once. */
+:root{--rz-gap-po:24px;}
+.rao-lesson .prompt.qprompt-solo{
+  font-size:clamp(1.05rem,calc(1.7rem - var(--pl,0)*0.011rem),1.5rem) !important;
+  margin-bottom:10px !important;
+}
+.rao-lesson .opts{margin-top:24px !important;}
+
+
+/* ═══════════════ RAO THEMES — kid-picked colour schemes ═══════════════
+   <div class="rao-lesson" data-theme="mint"> … </div>
+   Flip data-theme; every button, .rao-lesson tile, .rao-lesson chip, .rao-lesson focus ring, .rao-lesson figure and
+   shadow re-tints. No JS, .rao-lesson no re-render, .rao-lesson no reload.
+   Each --brand is contrast-checked: white text on it clears 3:1.
+   ══════════════════════════════════════════════════════════════════ */
+[data-theme="grape"]{
+  --swatch:#7b5cff;
+  --brand:#7b5cff; --brand-rgb:123,92,255;
+  --brand-hover:#6c51e0; --brand-dark:#5942b8;
+  --blue:#9880ff; --pink:#ff7eb6;
+  --line:#dad1ff; --line-soft:#ede8ff; --tint:#f7f5ff;
+}
+[data-theme="bubblegum"]{
+  --swatch:#f7699a;
+  --brand:#eb6492; --brand-rgb:235,100,146;
+  --brand-hover:#cf5880; --brand-dark:#a94869;
+  --blue:#ef86aa; --pink:#7b5cff;
+  --line:#f9d4e0; --line-soft:#fce9f0; --tint:#fef6f8;
+}
+[data-theme="mint"]{
+  --swatch:#2bb489;
+  --brand:#28a67e; --brand-rgb:40,166,126;
+  --brand-hover:#23926f; --brand-dark:#1d785b;
+  --blue:#57ba9a; --pink:#4b9fe1;
+  --line:#c3e6db; --line-soft:#e1f3ed; --tint:#f2faf7;
+}
+[data-theme="sunshine"]{
+  --swatch:#f79646;
+  --brand:#cf7e3b; --brand-rgb:207,126,59;
+  --brand-hover:#b66f34; --brand-dark:#955b2a;
+  --blue:#da9a66; --pink:#f7699a;
+  --line:#f2dbc8; --line-soft:#f8ede4; --tint:#fcf7f3;
+}
+[data-theme="blueberry"]{
+  --swatch:#5b8def;
+  --brand:#5b8def; --brand-rgb:91,141,239;
+  --brand-hover:#507cd2; --brand-dark:#4266ac;
+  --blue:#7fa6f3; --pink:#8b6fe0;
+  --line:#d1dffb; --line-soft:#e8effd; --tint:#f5f8fe;
+}
+[data-theme="cottoncandy"]{
+  --swatch:#e3a7e8;
+  --brand:#b182b5; --brand-rgb:177,130,181;
+  --brand-hover:#9c729f; --brand-dark:#7f5e82;
+  --blue:#c29ec5; --pink:#6fc9e0;
+  --line:#e9dcea; --line-soft:#f4eef5; --tint:#faf8fb;
+}
+[data-theme="forest"]{
+  --swatch:#2f9e63;
+  --brand:#2f9e63; --brand-rgb:47,158,99;
+  --brand-hover:#298b57; --brand-dark:#227247;
+  --blue:#5db385; --pink:#f7a83c;
+  --line:#c5e4d3; --line-soft:#e2f1e9; --tint:#f3f9f6;
+}
+[data-theme="rainbow"]{
+  --swatch:#e8557f;
+  --brand:#e8557f; --brand-rgb:232,85,127;
+  --brand-hover:#cc4b70; --brand-dark:#a73d5b;
+  --blue:#ed7a9b; --pink:#7b5cff;
+  --line:#f9cfdb; --line-soft:#fce7ed; --tint:#fef5f7;
+}
+/* ══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE — CONTAINER QUERIES
+   ══════════════════════════════════════════════════════════════════════════
+   The problem with the @media rules above: they measure the WINDOW, not the
+   box the lesson is actually rendered into. A lesson in a 340px side panel on
+   a 1400px desktop gets DESKTOP styling — the media queries never fire — and
+   the Venn's .vs-out zone (hardcoded 440px) punches 111px out of the panel.
+
+   Container queries measure the CONTAINER. They fire correctly whether the
+   lesson is on a phone, in a panel, in a modal, or in an iframe.
+
+   Requires the app to render lessons inside .rao-lesson (it already does).
+   Chrome 105+ / Safari 16+ / Firefox 110+. The @media rules above remain as
+   a fallback for anything older, so nothing regresses.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.rao-lesson {
+  container-type: inline-size;
+  container-name: lesson;
+}
+
+/* ── Never let a lesson punch out of its own box, whatever happens ────────── */
+.rao-lesson .qbody {
+  max-width: 100%;
+  overflow-x: clip;          /* clip, not hidden: doesn't create a scroll container */
+}
+
+/* ── Soft work-panel behind the question ──────────────────────────────────────
+   A small figure/equation used to float in a sea of white card. This gives the
+   .qbody (the middle region, between the PROBLEM head and the Hint/Check foot)
+   a faint theme-tinted panel so the content sits in a defined work area.
+   Theme-aware: the tint is derived from --brand, so it re-tints across all 8
+   themes. Very low alpha so it never competes with option cards or figures. */
+.rao-lesson .qbody {
+  background: rgba(var(--brand-rgb,123,92,255), .045);
+  border: 1px solid rgba(var(--brand-rgb,123,92,255), .08);
+  border-radius: 16px;
+  padding: 20px 22px;
+  margin: 6px 0 2px;
+}
+@container lesson (max-width: 480px) {
+  .rao-lesson .qbody { padding: 14px 10px; }   /* tighter on a narrow panel */
+}
+@container lesson (max-width: 380px) {
+  .rao-lesson .qbody { padding: 10px 6px; }    /* phone: max content width */
+}
+
+/* ── Wide stimuli get their own scroll rail instead of breaking the layout ──
+   A table/plot that genuinely cannot shrink should scroll horizontally on its
+   own, rather than widening the whole question. */
+.rao-lesson .data-wrap,
+.rao-lesson .dt-wrap,
+.rao-lesson .lp-row,
+.rao-lesson .bg-row,
+.rao-lesson .lat-wrap,
+.rao-lesson .hchart-wrap,
+.rao-lesson .cal-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* SVG-based figures scale instead of scrolling */
+.rao-lesson .lat-svg,
+.rao-lesson .nl-svg,
+.rao-lesson .poly-svg,
+.rao-lesson .spin-svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── VENN ────────────────────────────────────────────────────────────────────
+   .venn-box is a fixed 460px with absolutely-positioned zones inside it
+   (.vs-out is 440px wide). It cannot reflow — so it must SCALE.
+   `transform: scale()` alone is not enough: the transformed element keeps its
+   original 460px layout box, so it still overflows. The wrapper must clip and
+   the negative margin must reclaim the vertical space the scale gives back. */
+@container lesson (max-width: 520px) {
+  .rao-lesson .venn-wrap { overflow: hidden; }
+  .rao-lesson .venn-box  { transform: scale(0.86); transform-origin: top center; margin-bottom: -45px; }
+}
+@container lesson (max-width: 460px) {
+  .rao-lesson .venn-box  { transform: scale(0.76); margin-bottom: -77px; }
+}
+@container lesson (max-width: 380px) {
+  .rao-lesson .venn-box  { transform: scale(0.66); margin-bottom: -109px; }
+}
+@container lesson (max-width: 330px) {
+  .rao-lesson .venn-box  { transform: scale(0.58); margin-bottom: -134px; }
+}
+
+/* ── Narrow container: everything else that assumed a wide window ─────────── */
+@container lesson (max-width: 600px) {
+  .rao-lesson .opts        { grid-template-columns: repeat(var(--rz-opt-cols, 2), 1fr); }
+  .rao-lesson .opts.opts-stack { grid-template-columns: 1fr; }
+  .rao-lesson .order-target-lbl { display: none; }
+  .rao-lesson .order-slots { grid-template-columns: 1fr; }
+  .rao-lesson .order-bank  { grid-template-columns: 1fr; }
+  .rao-lesson .order-cap   { display: block; text-align: center; font-family: var(--fs);
+                             font-size: .72rem; font-weight: 700; color: var(--sub);
+                             text-transform: uppercase; letter-spacing: .06em; margin: 3px 0; }
+  .rao-lesson .order-cap-top::after { content: ' ↓'; }
+
+  .rao-lesson .dt-table th { padding: 8px 6px; font-size: .68rem; }
+  .rao-lesson .dt-table td { padding: 6px 6px; font-size: .92rem; }
+  .rao-lesson .dt-table .blank-input { width: 42px; font-size: .98rem; }
+
+  .rao-lesson .rsf-num   { font-size: 1.4rem; }
+  .rao-lesson .rsf-given { font-size: 1.2rem; padding: 2px 8px; }
+  .rao-lesson .rsf-grid  { gap: 6px 10px; }
+  .rao-lesson .rsf-blank { width: 58px; }
+
+  .rao-lesson .seq { padding: 13px 12px; letter-spacing: .03em; }
+  .rao-lesson .prompt.qprompt-split .qp-expr { font-size: 1.5rem; }
+  .rao-lesson .bins { gap: 8px; }
+  .rao-lesson .bin  { flex: 1 1 120px; min-width: 110px; }
+}
+
+@container lesson (max-width: 480px) {
+  .rao-lesson .prompt        { font-size: 1.0625rem; }
+  .rao-lesson .opt,
+  .rao-lesson .opt-text      { font-size: 1.125rem; }
+  .rao-lesson .hcell         { font-size: .62rem; }
+  .rao-lesson .lp-col,
+  .rao-lesson .lp-tick       { width: 28px; }
+  .rao-lesson .lp-cols,
+  .rao-lesson .lp-ticks      { gap: 6px; }
+  .rao-lesson .bg-bar        { width: 22px; }
+  .rao-lesson .bg-clusters   { gap: 10px; }
+  .rao-lesson .time-row      { gap: 10px; }
+  .rao-lesson .time-input    { width: 110px; font-size: 1.15rem; }
+  .rao-lesson .ampm-btn      { min-width: 54px; padding: 0 12px; font-size: .95rem; }
+}
+
+/* Very tight: the last resort before things genuinely cannot fit */
+@container lesson (max-width: 360px) {
+  .rao-lesson .opts        { grid-template-columns: 1fr; }
+  .rao-lesson .lp-col,
+  .rao-lesson .lp-tick     { width: 24px; }
+  .rao-lesson .bg-bar      { width: 18px; }
+  .rao-lesson .vs-text     { font-size: .95rem; padding: 8px 11px; }
+}
+
+/* ── MOBILE FIX: column-arithmetic overflow ─────────────────────────────────
+   .vmul-grid uses fixed-width cells (vm-d 40px, vm-gut 26px, vm-c 12px).
+   A 5-digit multiplication is ~5×40 + 26 + 5×12 = 286px of cells, which clips
+   on a 380px phone after card + qbody padding eats both sides. Shrink the cells
+   so the grid fits. */
+@container lesson (max-width: 480px) {
+  .rao-lesson .vmul-grid   { font-size: 1.3rem; }
+  .rao-lesson .vm-d        { width: 32px; }
+  .rao-lesson .vm-gut      { width: 20px; }
+  .rao-lesson .vm-c        { width: 10px; }
+  .rao-lesson .vm-cell     { width: 28px; height: 36px; font-size: 1.1rem; }
+  .rao-lesson .vcol         { font-size: 1.4rem; }
+  .rao-lesson .vcol .cm-cell { width: 36px; height: 36px; flex: 0 0 36px; }
+  .rao-lesson .vcol .blank-input { width: 36px; height: 36px; flex: 0 0 36px; font-size: 1.15rem; }
+  .rao-lesson .vcol .cm-sep { width: 10px; flex: 0 0 10px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FIGURE SVG SIZING — the missing rule.
+
+   Authored figures carry ONLY a viewBox, no width/height:
+       <svg viewBox="0 0 140 140" preserveAspectRatio="xMidYMid meet">
+   An SVG with no width/height fills 100% of its container. The old
+   self-contained lesson files each shipped a <style> block that capped this.
+   When styling moved into rao.css that cap was never carried across, so a
+   140x140 circle rendered at 832x832 and swallowed the whole card.
+
+   Fix: give figures a sane intrinsic size (they are authored at ~140-180
+   viewBox units, i.e. roughly "180px on screen"), scale down on narrow
+   containers, never touch option/tile SVGs (they have their own rules).
+   ══════════════════════════════════════════════════════════════════════════ */
+.rao-lesson .fig-wrap{display:flex;justify-content:center;width:100%;}
+.rao-lesson .fig-wrap > svg,
+/* Figure dimension labels (text.dim-label) are counter-scaled by the engine to
+   render at THIS pixel size on every figure — regardless of the figure's aspect
+   ratio or how the box below scaled it. Tunable here; the engine reads the var.
+   Sized to sit with the body text (prompt ~16px), not to tower over it. */
+:root{--rz-dim-px:16px;}
+.rao-lesson .qbody > svg{
+  display:block;
+  width:auto;
+  height:190px;              /* the authored figures are ~140-180 units tall */
+  max-width:100%;
+}
+/* A figure authored with width/height attrs renders at that size. One authored with ONLY
+   a viewBox has NO intrinsic size, so it balloons to 100% of the card — ~760px. (This hit
+   every figure in identify_3d_figures and simple_fractions_shape.) Pin those to a stimulus
+   height in line with the figures that DO carry attrs (area_perimeter's run ~150px). Wide
+   stimuli are re-widened by the rule below, later in source, so it wins the tie. */
+.rao-lesson .fig-wrap > svg:not([width]){
+  display:block;
+  height:150px;
+  width:auto;
+  max-width:100%;
+}
+/* Wide stimuli — number lines, bar models, arrays, rulers — are authored with a
+   large viewBox width. Let them use the width instead of the height. */
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 3"],
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 4"],
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 5"],
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 6"],
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 7"]{
+  height:auto;
+  width:100%;
+  max-width:520px;
+}
+@container lesson (max-width: 420px){
+  .rao-lesson .fig-wrap > svg,
+  .rao-lesson .qbody > svg{height:150px;}
+}
+
+/* ── rao-master-16: solution blocks + bubble walkthrough (Brief 7.6) ──
+   The walkthrough is NEVER dumped: steps type in ONE AT A TIME as tutor
+   bubbles (see rao-card.css for the .cc-* chat skin) and ACCUMULATE at full
+   opacity — nothing dims, nothing disappears (help-accumulates law). There
+   is no retry inside it: one button per step, Next step → Got it. The
+   .sol-step card styles below stay for renderSolution (static block render,
+   e.g. the quiz review screen); .sol-goal/.sol-reason also dress the bubble
+   bodies. */
+.rao-lesson .sol-walk,.pv-solwrap .sol-walk{margin:12px 2px 0}
+.rao-lesson .sol-step,.pv-solwrap .sol-step{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:baseline;background:#fff;border:1px solid var(--line-soft,#e7ddf8);border-radius:10px;padding:10px 12px}
+.rao-lesson .sol-step-num,.pv-solwrap .sol-step-num{grid-row:span 3;width:26px;height:26px;border-radius:50%;background:var(--brand,#7b5cff);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.85rem}
+.rao-lesson .sol-goal,.pv-solwrap .sol-goal{font-weight:700;display:block}
+.rao-lesson .sol-working,.pv-solwrap .sol-working{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.15rem;font-weight:700}
+.rao-lesson .sol-reason,.pv-solwrap .sol-reason{font-size:.85rem;color:var(--sub,#8a86a3);display:block}
+.rao-lesson .sol-takeaway,.pv-solwrap .sol-takeaway{background:var(--brand,#7b5cff);color:#fff;border-radius:10px;padding:10px 14px;font-weight:700}
+.rao-lesson .sol-verification,.pv-solwrap .sol-verification{background:#eefbf2;border:1px solid #bfe8cd;color:#1e6b3a;border-radius:10px;padding:10px 14px;font-weight:600}
+.rao-lesson .sol-fallback,.pv-solwrap .sol-fallback{padding:8px 4px}
+.rao-lesson .sol-walk-foot,.pv-solwrap .sol-walk-foot{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:12px}
+.rao-lesson .sol-next,.pv-solwrap .sol-next{font-family:'Baloo 2',cursive;font-weight:700;color:#fff;background:var(--brand,#7b5cff);border:none;border-radius:14px;padding:10px 18px;cursor:pointer;font-size:.95rem}
+.rao-lesson .sol-next:disabled,.pv-solwrap .sol-next:disabled{opacity:.55;cursor:default}
+/* RAPID FIRE shows the one-line explain AFTER Check — nothing more (§13.8).
+   Overrides the unconditional hide above; is-checked is the same reveal hook
+   adaptive uses. */
+.rao-lesson [data-mode="rapid"].is-checked .explain{display:block}

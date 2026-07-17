@@ -1,0 +1,124 @@
+/* ============================================================================
+   rao-card.css — THE QUESTION CARD. The 4th shared file.
+
+   preview-engine.js  renders the question   (the inside of the card)
+   rao.css            styles the question    (the inside of the card)
+   rao-card.css       is the CARD ITSELF     (frame, ring, Hint, Check, feedback)
+   fonts.css          the typefaces
+
+   Ship all FOUR or the app will not match the preview. Engine + rao.css alone
+   gets you a correct question in a grey box with the wrong font.
+
+   REQUIRED MOUNT — the wrapper is load-bearing, not decoration:
+
+       <div class="rao-lesson" data-theme="grape">
+         <div class="pv-frame" data-behavior="..." data-answer='[...]'>
+           <div class="pv-card">
+             <div class="pv-head">
+               <span class="pv-tlabel">Problem</span>
+               <span class="pv-ring"><i>3/24</i></span>
+             </div>
+             <!-- RaoPreview.build() markup goes here -->
+             <div class="pv-hintbox" hidden></div>
+             <div class="pv-foot">
+               <button class="pv-hint" type="button">Hint</button>
+               <span class="pv-fb"></span>
+               <button class="pv-check" type="button">Check &#10003;</button>
+             </div>
+           </div>
+         </div>
+       </div>
+
+   Drop `.rao-lesson` and the engine's inline min-height:var(--rz-card-floor,300px)
+   is never cancelled: EVERY card inflates to a 300px floor and no theme applies.
+   Never put theme vars in an inline style= on the mount — that kills data-theme.
+   ========================================================================== */
+
+.pv-frame{background:linear-gradient(160deg,#7b5cff 0%,#9b6bff 55%,#ff7eb6 130%);border-radius:18px;padding:6px;margin:20px 0 6px;box-shadow:0 10px 28px rgba(123,92,255,.22)}
+ .pv-card{position:relative;background:#fff;border-radius:14px;padding:26px 28px 20px;box-shadow:0 4px 0 rgba(123,92,255,.08);transition:box-shadow .2s}
+ /* Mobile card padding — a @container query (not @media) so it fires on a narrow
+    LESSON, e.g. a 340px side-panel on a wide desktop, not just a narrow window.
+    Relies on `.rao-lesson`'s container-name:lesson (set in rao.css). */
+ @container lesson (max-width: 480px){ .pv-card{padding:18px 12px 14px} }
+ @container lesson (max-width: 380px){ .pv-card{padding:14px 8px 12px} }
+ .pv-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+ .pv-tlabel{font-family:'Quicksand',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#a99ccf}
+ .pv-ring{width:44px;height:44px;border-radius:50%;background:conic-gradient(#7b5cff 75%,#f0e9fb 0);display:flex;align-items:center;justify-content:center}
+ .pv-ring i{width:36px;height:36px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:700;font-size:.78rem;color:#7b5cff;font-family:'Baloo 2',cursive}
+ .pv-hintbox{margin:12px 2px 0;background:#fff7e6;border:1px solid #ffe2a8;border-radius:12px;padding:11px 14px;color:#7a5b12;font-weight:600;line-height:1.5}
+ .pv-foot{display:flex;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap}
+ .pv-hint{font-family:'Baloo 2',cursive;font-weight:700;color:#6b5b9a;background:#fff;border:2px solid #e7ddf8;border-radius:14px;padding:11px 18px;cursor:pointer;font-size:1rem}
+ .pv-hint:hover{border-color:#7b5cff;color:#7b5cff}
+ .pv-fb{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.05rem;margin-right:auto;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:12px}
+ .pv-fb-ic{font-size:1.5rem;line-height:1}
+ .pv-fb.good{color:#0b9468;background:linear-gradient(135deg,#dcffe9,#eafff2)}
+ .pv-fb.bad{color:#b04a6a;background:linear-gradient(135deg,#fff0f3,#fff6f7)}
+ .pv-check{font-family:'Baloo 2',cursive;font-weight:800;color:#fff;background:linear-gradient(90deg,#ff9d4d,#ff6b9d);border:0;border-radius:18px;padding:13px 28px;box-shadow:0 5px 0 #d4477a;cursor:pointer;font-size:1.02rem;margin-left:auto}
+ .pv-check:active{transform:translateY(4px);box-shadow:0 1px 0 #d4477a}
+ /* ── MOBILE: shrink Hint/Check buttons, keep 44px tap target ────────────── */
+ @container lesson (max-width: 480px){
+   .pv-hint{font-size:.88rem;padding:10px 14px;min-height:44px}
+   .pv-check{font-size:.9rem;padding:11px 20px;min-height:44px}
+   .pv-foot{gap:8px;margin-top:14px}
+ }
+ .pv-ans{margin:0 6px 22px;font-size:.86rem;color:#0f9d6b;font-weight:600}.pv-ans b{color:#047857}
+ .qbody .lp-slot.on{background:var(--brand,#4361ee);border-radius:3px}
+ .qbody .md-ruler{cursor:grab}
+
+/* ── degraded-mode chrome (solution-renderer.js absent): whyWrong line + legacy
+   hint rungs. Created on demand by rao-card.js; absent from legacy markup. ── */
+.pv-why{margin:12px 2px 0;background:#fff2f5;border:1px solid #ffd3e0;border-radius:12px;padding:12px 14px;color:#8a3b57;font-weight:600;line-height:1.5;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.pv-why-msg{flex:1 1 200px}
+.pv-rung{margin:4px 0}
+.pv-rung+.pv-rung{margin-top:8px;border-top:1px dashed #ffe2a8;padding-top:8px}
+/* Touch floor: every interactive control in the card is at least 44x44px.
+   Verified with real CDP touch events by tools/verify-touch.js. */
+.pv-hint,.pv-check,.sol-next,.cc-btn-ghost,.cc-btn-solid{min-height:44px;min-width:44px}
+
+/* ════ rao-master-16: THE CALM CARD (Brief 7.6, signed off in calm-card-v36) ════
+   Values traced to the v36 demo's cc-style block; colour tokens repointed at the
+   card's own palette so all 8 themes re-tint. There is deliberately NO .cc-ava —
+   bubbles are faceless (the demo's avatar seat was dead CSS, removed here). */
+
+/* chrome quiets in feedback states — NEVER the prompt or the options (law 1) */
+.cc-dim{opacity:.45;filter:saturate(.35);transition:opacity .3s,filter .3s}
+
+/* wrong is a whisper (law 3): the ✕ is the ONLY change to the tried option.
+   v36 spec: glyph 0.8em, red, 7px right margin, bold. cc-tried itself paints
+   NOTHING — is-sel is removed on a wrong attempt, so the option is already back
+   to its resting look, byte-identical to its siblings. */
+.cc-x{font-size:.8em;color:#ef4444;margin-right:7px;font-weight:700}
+
+/* — tutor conversation: hints and steps speak in one voice (law 5) — */
+.cc-chat{margin-top:14px;background:#f4f1ff;border:1px solid #e6e0ff;border-radius:14px;padding:14px 14px 16px}
+.cc-chat+.cc-chat{margin-top:10px}
+.cc-chat-hd{font-family:'Quicksand',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brand,#7b5cff);margin:0 0 2px 2px}
+.cc-msg{display:flex;gap:10px;align-items:flex-end;margin-top:12px;animation:cc-line .3s ease}
+@keyframes cc-line{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.cc-bub{background:#fff;border:1px solid #e6e0ff;border-radius:16px 16px 16px 5px;padding:10px 14px;max-width:100%;box-shadow:0 1px 4px rgba(15,23,42,.06);min-width:0}
+.cc-schip{display:inline-block;font-family:'Quicksand',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand,#7b5cff);background:#f1edff;border-radius:999px;padding:2px 9px;margin-bottom:6px}
+.cc-btxt{font-family:'Quicksand',sans-serif;font-size:.95rem;color:#5a5673;line-height:1.55}
+.cc-eq{display:block;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.05rem;font-weight:700;color:#3b3654;background:#fff;border:1px solid #e6e0ff;border-radius:8px;padding:7px 12px;margin:8px 0 2px;width:fit-content;max-width:100%;overflow-x:auto}
+.cc-dots{display:flex;gap:4px;padding:5px 2px}
+.cc-dots i{width:6px;height:6px;border-radius:50%;background:#b9a8ff;animation:cc-dot 1s infinite}
+.cc-dots i:nth-child(2){animation-delay:.15s}.cc-dots i:nth-child(3){animation-delay:.3s}
+@keyframes cc-dot{0%,60%,100%{transform:none;opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+
+/* — feedback-state action rows: ghost = help, solid = forward — */
+.cc-actions{display:flex;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
+.cc-btn-ghost{font-family:'Baloo 2',cursive;font-weight:700;font-size:.95rem;padding:11px 18px;border:2px solid #e7ddf8;border-radius:14px;background:#fff;color:#6b5b9a;cursor:pointer}
+.cc-btn-ghost:hover{border-color:var(--brand,#7b5cff);color:var(--brand,#7b5cff)}
+.cc-btn-solid{font-family:'Baloo 2',cursive;font-weight:800;font-size:.95rem;padding:11px 24px;border:none;border-radius:14px;background:var(--brand,#7b5cff);color:#fff;cursor:pointer;margin-left:auto}
+
+/* — correct: the ONLY loud moment (law 7) — */
+.opt.cc-win,.opt-fig.cc-win,.hcell.cc-win{animation:cc-win .55s cubic-bezier(.3,1.4,.5,1)}
+@keyframes cc-win{0%{transform:none}35%{transform:scale(1.06)}100%{transform:none}}
+.cc-spark{position:absolute;left:50%;top:50%;width:7px;height:7px;border-radius:50%;pointer-events:none;animation:cc-spark .8s ease-out forwards}
+@keyframes cc-spark{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(calc(-50% + var(--sx)),calc(-50% + var(--sy))) scale(.3);opacity:0}}
+.cc-take{margin:16px 2px 0;padding:12px 16px;border-radius:0 12px 12px 0;background:#eefbf2;border:1px solid #bfe8cd;border-left:3px solid #10b981;animation:cc-line .3s ease}
+.cc-take p{margin:0;font-family:'Quicksand',sans-serif;color:#1e6b3a;font-weight:600;line-height:1.55}
+.cc-take .cc-tag{font-weight:800;color:#047857;margin-right:6px}
+
+/* when the takeaway panel (or the full walkthrough) has carried the teaching,
+   the .explain one-liner would be a duplicate — keep it sealed */
+.rao-lesson [data-mode="adaptive"].is-checked.cc-hastake .explain{display:none}

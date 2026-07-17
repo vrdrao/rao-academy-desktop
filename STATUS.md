@@ -194,6 +194,19 @@ Pre-existing bugs FOUND during 7.6, not yet fixed (need decisions):
 | `Simple fractions - what fraction does the shape show.html` | 30 | **fixed** | 48 SVGs missing width/height |
 | `find-start-and-end-times-remix.html` | 30 | **fixed** | Time normalizer engine bug |
 
+## Deploy state — rao-master-17
+
+**Built and verified locally at `a0b372f` (2026-07-17). Deploy PENDING** —
+the app will live at https://www.tulipmath.com on AWS; the exact URL is still
+to be determined, so there is nothing to verify against yet. The complete
+engine drop (five engine files + fonts + a non-technical DEPLOY.md with the
+mount, load order, and md5/byte verification table) is in `deploy-drop/`.
+
+**STANDING GATE — live verification is DEFERRED, not skipped:** the moment a
+real URL exists, `node tools/check-app.js <url>` must run against a live page
+showing a question and come back green (engine version, rao.css, rao-card.css,
+mount, fonts) before the deploy is considered done. No go-live without it.
+
 ## What is next
 
 - ~~Header ruling~~ — RULED 2026-07-17: "Solution — step by step" header KEPT
