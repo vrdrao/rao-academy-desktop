@@ -1,12 +1,13 @@
 # Project Status — Rao Academy
 
-Last updated: 2026-07-14
+Last updated: 2026-07-17
 
 ---
 
 ## Corpus
 
-**108 lesson files. 2,808 questions. 0 failures.**
+**104 lesson files. 2,721 questions. 0 failures.** (was 108/2,808 on 2026-07-14;
+the delta predates Brief 7.6 — see dedup note under "What is next")
 
 All tested in a real Chromium browser: build, render, grade correct, reject wrong, 8 themes,
 CSS containment, container queries, double-attach idempotency, type coverage (12/12), zero
@@ -132,6 +133,38 @@ Two tool bugs found and fixed during 7.5:
    lessons were never checked. Now recursive; checks 4 pairs; proved to fail on
    a stale review (card-count mismatch).
 
+**7.6 — Calm Card: DONE (2026-07-17).** (rao-master-16) Reference:
+`incoming/calm-card-v36.html` (md5 `deb8d07a84a9f1fbc6847b7ff57a965f`, signed off
+2026-07-17) + `docs/CALM-CARD-MASTER-SPEC-v1.md`. Killed the blocker: the correct
+option is NEVER highlighted while a question is attemptable (the old wireCard
+revealed it green on every wrong attempt — a child could bail out and tap the
+green one). Wrong is now a whisper (✕ glyph only, option keeps its resting look);
+hints + whyWrong are ONE tutor-bubble ladder ("Hint n", never "of N", 650ms
+type-then-fill, append-only); the walkthrough is child-initiated (after 2nd wrong
+attempt or when hints run out), LOCKS the question at open, records
+`solved-with-help` (not correct), has no retry inside, and reveals the answer
+quietly at the final step; correct is the only loud moment (green + sparks +
+chime + "The idea to keep" takeaway + "Next question →"). New guard
+`tools/verify-calm.js` (in npm test): ANSWER-LEAK sweeps every select question in
+the corpus (1,593 across 104 lessons) plus LOCK-ON-OPEN, TASK-IMMUTABILITY,
+ACCUMULATION, BUBBLE-PARITY-vs-v36, HINT-LABEL-BAN — every guard proved to fail
+before being trusted. verify-touch.js rewritten to the calm flow (real CDP touch,
+380px). Landed as two commits so the SOURCE-DIFF firewall stayed honest
+(behavior first with grading untouched, then the version stamp alone —
+sequencing approved by Venkat in-session).
+
+Pre-existing bugs FOUND during 7.6, not yet fixed (need decisions):
+1. **Frontmatter `explain:` is silently ignored by the engine** — build() only
+   reads `<p class="explain">` from question markup. All 30 `explain:` strings
+   in `estimate-sums-faithful.html` (and 1 in `_type-coverage.html`) parse and
+   then vanish. CLAUDE.md §13.6 documents the frontmatter form. Fixing means an
+   engine change — deliberately left out of the 7.6 version-stamp commit.
+2. **`.opt.is-sel` out-specifies `.opt.is-correct`** in rao.css, so the green
+   correct treatment never actually painted on a selected option. The calm card
+   now sidesteps it (is-sel is dropped when the verdict paints); rapid mode
+   still has the stale paint (its wrong-flash shows the shake but keeps the
+   selection purple).
+
 ---
 
 ## Files individually reviewed
@@ -151,7 +184,11 @@ Two tool bugs found and fixed during 7.5:
 
 ## What is next
 
-- Brief 7.2: solution renderer + block types
+- Venkat's pending one-word ruling: keep or drop the "Solution — step by step"
+  header (removal is one line: `WALK_HEADER` in engine/solution-renderer.js)
+- Decide the frontmatter-`explain:` engine fix (bug 1 under 7.6 above)
+- Brief 7.7+: video walkthrough (Watch tab — structurally not precluded), Robo
 - Continue individual review of remaining ~95 files
 - Duplicates to watch: `bar_graphs_1to1.html` / `bar_graphs_1to1 (2).html` and similar
   `(2)` pairs — likely identical, need dedup
+- Content debt from 7.4: 3,989 distractors still lack whyWrong
