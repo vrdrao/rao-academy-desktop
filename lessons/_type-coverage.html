@@ -9,7 +9,8 @@
 <!--@q
 type: single-select
 answer: ["30"]
-description: single-select coverage
+explain: The 3 sits in the tens place, so it is worth 30.
+description: single-select coverage + frontmatter-explain reveal (fm-only, no takeaway — must reveal on correct; rao-master-17)
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">What is the value of 3 in 4,532?</p>
@@ -146,6 +147,18 @@ hint: Tap each dot on the grid.
 <div class="question" data-type="construct">
   <p class="prompt">Plot a triangle with corners at (2, 1), (6, 1), and (4, 5).</p>
   <div class="rao-construct" data-construct='{"kind":"geo-construct","cfg":{"board":{"min":0,"max":8},"shape":"polygon","targets":[[2,1],[6,1],[4,5]],"tolerance":0,"showTargets":true}}'></div>
+</div>
+
+<!--@q
+type: single-select
+answer: ["9"]
+explain: FRONTMATTER-LOSES. This string must never render; markup wins when both forms exist.
+description: explain precedence coverage — markup p.explain beats frontmatter explain (rao-master-17)
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is 4 + 5?</p>
+  <ul class="options"><li>8</li><li>9</li><li>10</li></ul>
+  <p class="explain">MARKUP-WINS: 4 + 5 = 9.</p>
 </div>
 
 <!--@q

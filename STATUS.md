@@ -6,8 +6,9 @@ Last updated: 2026-07-17
 
 ## Corpus
 
-**104 lesson files. 2,721 questions. 0 failures.** (was 108/2,808 on 2026-07-14;
-the delta predates Brief 7.6 — see dedup note under "What is next")
+**104 lesson files. 2,722 questions. 0 failures.** (was 108/2,808 on 2026-07-14;
+that delta predates Brief 7.6. 2,721 → 2,722 on 2026-07-17: one precedence-
+coverage question added to `_type-coverage.html` by Brief 7.6.1.)
 
 All tested in a real Chromium browser: build, render, grade correct, reject wrong, 8 themes,
 CSS containment, container queries, double-attach idempotency, type coverage (12/12), zero
@@ -153,12 +154,23 @@ before being trusted. verify-touch.js rewritten to the calm flow (real CDP touch
 (behavior first with grading untouched, then the version stamp alone —
 sequencing approved by Venkat in-session).
 
+**7.6.1 — Frontmatter `explain:` fix: DONE (2026-07-17).** (rao-master-17)
+`parseQuestion` now falls back to `fm.explain` when the markup carries no
+`<p class="explain">`; both forms flow through the same assembly and the same
+build()-time sanitizer, so they render identically. Markup wins when both
+exist. Corpus: 32 frontmatter-only explains (the 30 in the 7.5 proof lesson +
+2 in the fixture) now render; exactly 1 both-form question exists (added to
+`_type-coverage.html` so precedence is testable — corpus 2,721 → 2,722
+questions, files unchanged at 104). Three new guards in verify-calm.js
+(EXPLAIN PARITY / PRECEDENCE / REVEAL-live), each proved to fail: sabotage 1
+(drop frontmatter) named estimate-sums-faithful.html (30) + fixture (2);
+sabotage 2 (frontmatter overrides markup) named the fixture precedence
+question. Reveal verified live for all 32: hidden before Check, correct →
+visible when legacy, suppressed (cc-hastake + takeaway panel) when the
+solution carries a takeaway.
+
 Pre-existing bugs FOUND during 7.6, not yet fixed (need decisions):
-1. **Frontmatter `explain:` is silently ignored by the engine** — build() only
-   reads `<p class="explain">` from question markup. All 30 `explain:` strings
-   in `estimate-sums-faithful.html` (and 1 in `_type-coverage.html`) parse and
-   then vanish. CLAUDE.md §13.6 documents the frontmatter form. Fixing means an
-   engine change — deliberately left out of the 7.6 version-stamp commit.
+1. ~~Frontmatter `explain:` ignored~~ — FIXED as Brief 7.6.1 above.
 2. **`.opt.is-sel` out-specifies `.opt.is-correct`** in rao.css, so the green
    correct treatment never actually painted on a selected option. The calm card
    now sidesteps it (is-sel is dropped when the verdict paints); rapid mode
@@ -185,8 +197,8 @@ Pre-existing bugs FOUND during 7.6, not yet fixed (need decisions):
 ## What is next
 
 - ~~Header ruling~~ — RULED 2026-07-17: "Solution — step by step" header KEPT
-- **Brief 7.6.1 (approved 2026-07-17, NOT started):** the frontmatter-`explain:`
-  engine fix (bug 1 under 7.6 above)
+- ~~Brief 7.6.1~~ — DONE 2026-07-17 (see above); commits local, awaiting
+  Venkat's audit + push order
 - Brief 7.7+: video walkthrough (Watch tab — structurally not precluded), Robo
 - Continue individual review of remaining ~95 files
 - Duplicates to watch: `bar_graphs_1to1.html` / `bar_graphs_1to1 (2).html` and similar

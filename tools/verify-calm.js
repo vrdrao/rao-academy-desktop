@@ -181,6 +181,191 @@ async function sweepCorpus(browser) {
 }
 
 // ════════════════════════════════════════════════════════════════
+// g. EXPLAIN (Brief 7.6.1, rao-master-17) — the frontmatter `explain:`
+// form must render exactly like markup <p class="explain">, markup must
+// win when both exist, and the reveal-on-correct / cc-hastake suppression
+// must apply identically to both authoring forms.
+// ════════════════════════════════════════════════════════════════
+function loadEngineNode() {
+  global.window = {};
+  // eslint-disable-next-line no-eval
+  eval(read("engine/preview-engine.js"));
+  return global.window.RaoPreview;
+}
+const normWs = (s) => String(s).replace(/\s+/g, " ").trim();
+
+// Pair each <!--@q --> comment with its markup chunk so we know, per question,
+// which authoring form(s) carry the explanation.
+function scanExplainForms(source) {
+  const chunks = source.split(/(?=<!--@q)/).filter((c) => c.startsWith("<!--@q"));
+  return chunks.map((chunk) => {
+    const end = chunk.indexOf("-->");
+    const fmBody = chunk.slice(0, end);
+    const markup = chunk.slice(end + 3);
+    const fmMatch = /^\s*explain\s*:\s*(\S.*)$/m.exec(fmBody);
+    const mkMatch = /<p class="explain">([\s\S]*?)<\/p>/.exec(markup);
+    return {
+      fmText: fmMatch ? fmMatch[1].trim() : null,
+      mkText: mkMatch ? normWs(mkMatch[1]) : null,
+    };
+  });
+}
+
+async function explainLaws(browser) {
+  const engine = loadEngineNode();
+  const files = collectLessons(path.join(ROOT, "lessons"));
+  let fmOnly = 0, both = 0, markupOnly = 0;
+  const missing = [];      // fm-only questions whose built DOM lacks .explain
+  const precedence = [];   // both-form questions where markup did not win
+  const revealTargets = []; // {file, indexes[]} for the browser drive
+
+  for (const f of files) {
+    let src;
+    try { src = sourceOf(f); } catch (e) { continue; }
+    const forms = scanExplainForms(src);
+    let built;
+    try { built = engine.build(src); } catch (e) { fail("g. EXPLAIN (corpus scan)", `${path.basename(f)}: build threw ${e.message}`); continue; }
+    if (built.length !== forms.length) {
+      fail("g. EXPLAIN (corpus scan)", `${path.basename(f)}: ${forms.length} @q comments but ${built.length} built questions — cannot align, refusing to guess`);
+      continue;
+    }
+    const idxs = [];
+    forms.forEach((form, i) => {
+      const m = built[i].markup;
+      if (form.fmText && !form.mkText) {
+        fmOnly++;
+        idxs.push(i);
+        const snippet = normWs(form.fmText).slice(0, 30);
+        if (!m.includes('class="explain"') || !normWs(m).includes(snippet)) {
+          missing.push(`${path.basename(f)} q${i + 1}`);
+        }
+      } else if (form.fmText && form.mkText) {
+        both++;
+        const mkSnip = form.mkText.slice(0, 25);
+        const fmSnip = normWs(form.fmText).slice(0, 25);
+        if (!normWs(m).includes(mkSnip) || normWs(m).includes(fmSnip)) {
+          precedence.push(`${path.basename(f)} q${i + 1} (markup "${mkSnip}" must render; frontmatter "${fmSnip}" must not)`);
+        }
+      } else if (form.mkText) {
+        markupOnly++;
+      }
+    });
+    if (idxs.length) revealTargets.push({ file: f, idxs, src });
+  }
+
+  if (missing.length) {
+    const byFile = {};
+    missing.forEach((m) => { const k = m.split(" q")[0]; byFile[k] = (byFile[k] || 0) + 1; });
+    fail("g. EXPLAIN PARITY (built DOM)",
+      `${missing.length} frontmatter-explain question(s) missing/mismatched .explain in the built DOM: ` +
+      Object.entries(byFile).map(([k, n]) => `${k} (${n})`).join(", "));
+  } else {
+    pass("g. EXPLAIN PARITY (built DOM)", `${fmOnly} frontmatter-only explain(s) all emit <p class="explain"> (plus ${markupOnly} markup-only)`);
+  }
+  if (both === 0) {
+    fail("g. EXPLAIN PRECEDENCE", "no corpus question authors BOTH forms — the precedence rule is untestable (the fixture must carry one)");
+  } else if (precedence.length) {
+    fail("g. EXPLAIN PRECEDENCE", precedence.join(" · "));
+  } else {
+    pass("g. EXPLAIN PRECEDENCE (markup wins)", `${both} both-form question(s), markup text rendered, frontmatter text absent`);
+  }
+
+  // ── the reveal, live: correct answer → .explain visible (legacy) or
+  //    suppressed by cc-hastake when the takeaway carried the teaching ──
+  const page = await browser.newPage({ viewport: { width: 900, height: 1400 } });
+  let driven = 0, revealOk = 0;
+  const revealFails = [];
+  for (const t of revealTargets) {
+    await page.setContent(pageFor(t.src), { waitUntil: "load" });
+    const recs = await page.evaluate(async (targets) => {
+      const out = [];
+      const frames = [...document.querySelectorAll(".pv-frame")];
+      const fire = (n, ty) => n.dispatchEvent(new Event(ty, { bubbles: true }));
+      // answer entry — same technique as harness.js FILL, trimmed to the
+      // behaviors that carry explains in this corpus
+      function fill(el, behavior, A) {
+        if (behavior === "single-select" || behavior === "multi-select") {
+          const opts = [...el.querySelectorAll(".opt")];
+          opts.forEach((o) => { if (o.classList.contains("is-sel")) o.click(); });
+          let hit = 0;
+          A.forEach((v) => { const o = opts.find((x) => (x.dataset.val ?? x.textContent.trim()) === v); if (o) { o.click(); hit++; } });
+          return hit === A.length;
+        }
+        if (behavior === "fill-blanks" || behavior === "expression") {
+          const ins = [...el.querySelectorAll(".blank-input, input[type=text], .ans-input")];
+          if (!ins.length) return false;
+          ins.forEach((inp, i) => { inp.value = A[i] ?? ""; fire(inp, "input"); fire(inp, "change"); });
+          return true;
+        }
+        if (behavior === "order") {
+          const slots = [...el.querySelectorAll(".order-slot")], bank = [...el.querySelectorAll(".tile")];
+          if (!slots.length || !bank.length) return false;
+          A.forEach((v, i) => {
+            const tl = bank.find((x) => (x.dataset.val ?? x.textContent.trim()) === v && !x.dataset.__used);
+            if (tl && slots[i]) { tl.dataset.__used = "1"; slots[i].appendChild(tl); slots[i].classList.add("filled"); }
+          });
+          return true;
+        }
+        if (behavior === "sequence-build") {
+          const slots = [...el.querySelectorAll(".sb-slot")], palette = [...el.querySelectorAll(".sb-tile")];
+          if (!slots.length || !palette.length) return false;
+          A.forEach((v, i) => {
+            const srcT = palette.find((x) => (x.dataset.val ?? x.textContent.trim()) === v);
+            if (srcT && slots[i]) { const c = srcT.cloneNode(true); c.classList.add("placed"); slots[i].innerHTML = ""; slots[i].appendChild(c); slots[i].classList.add("filled"); }
+          });
+          return true;
+        }
+        if (behavior === "categorize") {
+          const tiles = [...el.querySelectorAll(".vs-tile, .tiles li, .tile")], zones = [...el.querySelectorAll("[data-region]")];
+          if (!tiles.length || !zones.length) return false;
+          A.forEach((region, i) => { const z = zones.find((x) => x.dataset.region === region); if (tiles[i] && z) z.appendChild(tiles[i]); });
+          return true;
+        }
+        return false;
+      }
+      for (const i of targets) {
+        const f = frames[i];
+        const behavior = f.dataset.behavior;
+        let answer; try { answer = JSON.parse(f.dataset.answer || "[]").map(String); } catch (e) { answer = []; }
+        let solution = null; try { solution = JSON.parse(f.dataset.solution || "null"); } catch (e) { solution = null; }
+        const hasTake = !!(solution || []).find((b) => b && b.type === "takeaway");
+        const qbody = f.querySelector(".qbody");
+        const ex = qbody && qbody.querySelector(".explain");
+        const rec = { i: i + 1, behavior, hasTake, exists: !!ex, before: null, after: null, filled: false, outcome: null, panel: false };
+        if (!ex) { out.push(rec); continue; }
+        rec.before = getComputedStyle(ex).display;
+        rec.filled = fill(qbody, behavior, answer) !== false;
+        const chk = f.querySelector(".pv-check");
+        if (chk) chk.click();
+        await new Promise((r) => setTimeout(r, 750));   // celebrate's 550ms takeaway beat
+        rec.after = getComputedStyle(ex).display;
+        rec.outcome = f.dataset.raoOutcome || null;
+        rec.panel = !!f.querySelector(".cc-take");
+        out.push(rec);
+      }
+      return out;
+    }, t.idxs);
+    for (const r of recs) {
+      driven++;
+      const wantAfter = r.hasTake ? "none" : "block";
+      const ok = r.exists && r.before === "none" && r.filled && r.outcome === "correct" &&
+                 r.after === wantAfter && (!r.hasTake || r.panel);
+      if (ok) revealOk++;
+      else revealFails.push(`${path.basename(t.file)} q${r.i} (${r.behavior}): ${JSON.stringify(r)}`);
+    }
+  }
+  await page.close();
+  if (revealFails.length) {
+    fail("g. EXPLAIN REVEAL (live)", `${revealFails.length}/${driven} failed`);
+    revealFails.slice(0, 6).forEach((l) => console.log(`        ${C.r}·${C.x} ${l}`));
+  } else {
+    pass("g. EXPLAIN REVEAL (live)",
+      `${revealOk}/${driven} frontmatter-explain questions: hidden before Check, correct answer → ` +
+      `visible when legacy, suppressed (cc-hastake + takeaway panel) when the solution carries a takeaway`);
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
 // b/c/d/e/f — driven on the _type-coverage ladder fixture.
 // ════════════════════════════════════════════════════════════════
 async function fixtureLaws(browser) {
@@ -391,6 +576,7 @@ async function fixtureLaws(browser) {
   checkStaticParity();
   const browser = await chromium.launch();
   await fixtureLaws(browser);
+  await explainLaws(browser);
   await sweepCorpus(browser);
   await browser.close();
   console.log(`\n${failures === 0 ? C.g + C.b + "CALM CARD: all laws hold ✅" : C.r + C.b + failures + " law(s) VIOLATED — DO NOT SHIP"}${C.x}\n`);

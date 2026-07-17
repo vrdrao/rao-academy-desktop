@@ -1406,7 +1406,15 @@ function parseQuestion(attrs, content, fm, index) {
   const warnings = [];
   const issues = [];   // per-item diagnostics surfaced through build()/validate()
   const promptHtml = block(content, "prompt") || "";
-  const explain = block(content, "explain") || "";
+  // rao-master-17 (Brief 7.6.1): the frontmatter `explain:` form (CLAUDE.md
+  // §13.6) renders through the SAME assembly as markup <p class="explain"> —
+  // same element, same position, same reveal hooks, and the same build()-time
+  // sanitizer pass (sanitizeMarkup runs on the assembled inner, so both forms
+  // are cleaned identically). Precedence: markup wins; frontmatter is ignored
+  // when both exist — existing lessons must not change behavior.
+  const explainMarkup = block(content, "explain") || "";
+  const explainFm = fm.explain != null && String(fm.explain).trim() !== "" ? String(fm.explain) : "";
+  const explain = explainMarkup || explainFm;
   const help = `<p>${explain}</p>`;
   // Page figures come ONLY from the stimulus — not from SVGs that live inside an
   // answer area (palette/tiles/options/order/sequence). Those belong to their tiles
@@ -2499,5 +2507,5 @@ module.exports = { attach, serialize, check, BEHAVIORS };
     return { ok: errs === 0, errors: errs, warnings: warns, items: report };
   }
   var B = MODS["preview-behaviors"];
-  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-16"};
+  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-17"};
 })();
