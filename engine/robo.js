@@ -221,8 +221,13 @@
 
     function flyTo(x, y, quietFly) {
       var cur = dock.getBoundingClientRect();
-      var nx = Math.max(8, Math.min(window.innerWidth - W - 8, x - W / 2));
-      var ny = Math.max(60, Math.min(window.innerHeight - H - 70, y - H / 2));
+      /* Brief 7.7.1: landing clamps ALIGNED with the drag clamps (4px margins),
+         so any destination nearestClear selects is one flyTo can land on. The
+         demo's tighter 8/60/70 insets clamped below-the-card yield spots back
+         onto the card footer on crowded mobile pages. Victory-lap exact-return
+         is WAAPI translate keyframes, not flyTo — unaffected. */
+      var nx = Math.max(4, Math.min(window.innerWidth - W - 4, x - W / 2));
+      var ny = Math.max(4, Math.min(window.innerHeight - H - 4, y - H / 2));
       dock.classList.toggle('fly-right', nx > cur.left);
       dock.classList.toggle('fly-left', nx <= cur.left);
       if (!quietFly) whoosh(0.55 * slowFactor());

@@ -48,6 +48,8 @@ const FONTS_DIR = path.join(ROOT, "engine", "fonts");
 const CARD_CSS = path.join(ROOT, "engine", "rao-card.css");
 const CARD_JS = path.join(ROOT, "engine", "rao-card.js");
 const SOLUTION_JS = path.join(ROOT, "engine", "solution-renderer.js");
+const ROBO_CSS = path.join(ROOT, "engine", "robo.css");
+const ROBO_JS = path.join(ROOT, "engine", "robo.js");
 const OUT_DIR = path.join(ROOT, "review");
 
 /* ---------- inputs: questions from the lesson, chrome from shared files --- */
@@ -234,6 +236,8 @@ ${css}</style>
 ${PAGE_CSS}</style>
 <style>/* engine/rao-card.css — THE CARD. the same file your app ships, verbatim */
 ${cardCss}</style>
+<style>/* engine/robo.css — ROBO the mascot (Brief 7.7), the same file your app ships, verbatim */
+${fs.readFileSync(ROBO_CSS, "utf8").trim()}</style>
 <style>/* review summary bar only — sits ABOVE the cards, never inside one */
 ${BAR_CSS}</style>
 </head>
@@ -252,6 +256,10 @@ ${safeForScript(fs.readFileSync(SOLUTION_JS, "utf8").trim())}
 </script>
 <script>/* card renderer — lifted VERBATIM from ${refName} */
 ${safeForScript(renderJs)}
+</script>
+<script>/* engine/robo.js — ROBO the mascot (Brief 7.7), verbatim. Loaded AFTER the
+   card renderer: he injects his own dock and listens for the card's rao:* events. */
+${safeForScript(fs.readFileSync(ROBO_JS, "utf8").trim())}
 </script>
 <script>${safeForScript(BAR_JS)}</script>
 </body>

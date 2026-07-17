@@ -540,11 +540,6 @@ const COMEBACK = ["You didn’t give up!", "You fixed it yourself!",
     else fail("roboPos persisted to sessionStorage AFTER the 700ms timer", String(saved));
 
     // drag ONTO the fixture card's options → yield rule flies him clear.
-    // (Deliberately the options area, not the bottom-corner Check button: the
-    // verbatim v36 flyTo clamps its landing band to innerHeight−H−70, which on
-    // a crowded 390px page can pull a below-the-card clear spot back onto the
-    // footer row. That rig-vs-brief edge is STOP-AND-REPORTED in Brief 7.7's
-    // report, not silently patched here.)
     const target = await page.evaluate(() => {
       const frames = document.querySelectorAll(".pv-frame");
       const f = frames[frames.length - 1];
@@ -569,6 +564,33 @@ const COMEBACK = ["You didn’t give up!", "You fixed it yourself!",
     });
     if (clear) pass("YIELD RULE — dropped on the card, Robo flew to the nearest clear spot");
     else fail("YIELD RULE — dropped on the card, Robo flew to the nearest clear spot", "dock still overlaps an interactive element");
+
+    // BOTTOM-DROP YIELD (Brief 7.7.1) — drop Robo directly ON the Check button
+    // at the viewport bottom. The yield fly's landing clamps must agree with
+    // the drag clamps, or nearestClear's below-the-card spot gets clamped back
+    // onto the footer row (the Brief 7.7 stop-and-reported conflict, ruled FIX).
+    const checkTarget = await page.evaluate(() => {
+      const frames = document.querySelectorAll(".pv-frame");
+      const f = frames[frames.length - 1];
+      f.scrollIntoView({ block: "center" });
+      const r = f.querySelector(".pv-check").getBoundingClientRect();
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    });
+    c = await wrapCenter();
+    await touchDrag(c.x, c.y, checkTarget.x, checkTarget.y, 10);
+    await page.waitForTimeout(900);   // fly-away (560ms) + settle
+    const bottomDrop = await page.evaluate(() => {
+      const frames = document.querySelectorAll(".pv-frame");
+      const f = frames[frames.length - 1];
+      const d = document.querySelector(".rao-dock").getBoundingClientRect();
+      const b = f.querySelector(".pv-check").getBoundingClientRect();
+      const overlaps = !(d.right < b.left || b.right < d.left || d.bottom < b.top || b.bottom < d.top);
+      return { overlaps, dock: `${Math.round(d.left)},${Math.round(d.top)}→${Math.round(d.right)},${Math.round(d.bottom)}`,
+               check: `${Math.round(b.left)},${Math.round(b.top)}→${Math.round(b.right)},${Math.round(b.bottom)}` };
+    });
+    if (!bottomDrop.overlaps)
+      pass("BOTTOM-DROP YIELD — dropped ON the Check button, dock lands clear of it", `dock ${bottomDrop.dock}, check ${bottomDrop.check}`);
+    else fail("BOTTOM-DROP YIELD — dropped ON the Check button, dock lands clear of it", `dock ${bottomDrop.dock} STILL OVERLAPS check ${bottomDrop.check}`);
 
     // drag hard right → clamp honours the LIVE 84px width: left must reach ≥298 on 390px
     c = await wrapCenter();

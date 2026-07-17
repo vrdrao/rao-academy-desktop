@@ -1119,6 +1119,794 @@ h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
 /* when the takeaway panel (or the full walkthrough) has carried the teaching,
    the .explain one-liner would be a duplicate — keep it sealed */
 .rao-lesson [data-mode="adaptive"].is-checked.cc-hastake .explain{display:none}</style>
+<style>/* engine/robo.css — ROBO the mascot (Brief 7.7), the same file your app ships, verbatim */
+/* ============================================================================
+   robo.css — ROBO, the mascot (Brief 7.7, engine rao-master-18).
+
+   PROVENANCE — every rule below is ported VERBATIM from the signed-off
+   reference files; do not re-tune values here:
+     · Core rig (dock, ambience, flight, motion pool, poke wobble, carry tilt,
+       touch law, prop hiding): incoming/calm-card-v36.html
+       (md5 deb8d07a84a9f1fbc6847b7ff57a965f), which embeds the
+       robo_motion_lab_v29 rig plus every approved fix since (v22 responsive
+       sizing, v21 touch law).
+     · The six mood-solve-* reactions: incoming/guided-solve-rebuilt-v1.html
+       (md5 362ca7c1940e1cb8bb09ab3403fdbc65) — the sanctioned, Venkat-approved
+       REBUILD (see docs/GUIDED-SOLVE-REBUILD-NOTE.md). Its rebuild-provenance
+       header is carried below, intact.
+
+   NOT PORTED (Brief 7.8 territory, per ROBO-ENGAGEMENT-FRAMEWORK-v4 §A-§D):
+   personality pack (poke ladder stages 2-4, idle mischief, carry flail,
+   dust-off, sneak-peek entrance), attention gaze, stage props, palette tint.
+   Also not ported: the FEED-ROBO block (mood-hungry / mood-chomp) — dead CSS
+   residue of the stage apple, which was removed by design in v21 ("the apple
+   TOSS motion in the celebration pool stays" — and it is here, mood-apple).
+   The mood-demo-* reaction stand-ins were NOT ported anywhere — the
+   mood-solve-* rebuild below is the only reaction ladder in production.
+   ========================================================================== */
+
+/* ═══ the dock (mirrors production) ═══ */
+.rao-dock{ position:fixed; left:70%; top:55%; z-index:8; }
+.rao-mascot-wrap{ width:120px; height:130px; filter:drop-shadow(0 8px 14px rgba(31,25,60,.18)); }
+/* v22: RESPONSIVE ROBO — 70% scale on phones so he stops crowding the card */
+@media(max-width:600px){ .rao-mascot-wrap{ width:84px; height:91px; } }
+/* the drop-shadow renders a blurry dark copy of the robot 8px below it — fine
+   at rest, but during motion it reads as a detached blob ("a leg"). Kill it
+   whenever ANY mood-motion is running; the SVG m-shadow carries the physics. */
+.rao-mascot-wrap:has(.rao-mascot[class*="mood-"]){ filter:none; }
+.rao-mascot{ width:100%; height:100%; overflow:visible; display:block; transition:transform .25s ease; }
+
+/* mood engine bits needed here */
+.m-body{ transform-box:fill-box; transform-origin:center bottom; }
+.m-arm{ transform-box:fill-box; }
+.m-arm-l{ transform-origin:right top; }
+.m-arm-r{ transform-origin:left top; }
+.m-lid{ transform-box:fill-box; transform-origin:center top; transform:scaleY(0); animation:raoBlink 4.2s ease-in-out infinite; }
+@keyframes raoBlink{ 0%,92%,100%{transform:scaleY(0)} 95%,97%{transform:scaleY(1)} }
+.rao-mascot .mouth-grin, .rao-mascot .mouth-o{ opacity:0; }
+
+/* ═══ v15 FLIGHT (verbatim system) ═══ */
+.m-thruster{ opacity:0; transform-box:fill-box; transform-origin:center top; }
+.rao-mascot .m-shadow{ transform-box:fill-box; transform-origin:center; }
+@keyframes raoFloat{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-7px) } }
+@keyframes raoShadowFloat{ 0%,100%{ transform:scale(1); opacity:1 } 50%{ transform:scale(.72); opacity:.55 } }
+.rao-mascot .m-body{ animation:raoFloat calc(3.4s * var(--slow,1)) ease-in-out infinite; }
+.rao-mascot .m-shadow{ animation:raoShadowFloat calc(3.4s * var(--slow,1)) ease-in-out infinite; }
+
+.rao-dock.rao-travelling{ transition:left calc(.5s * var(--slow,1)) cubic-bezier(.34,1.3,.4,1),
+  top calc(.5s * var(--slow,1)) cubic-bezier(.34,1.3,.4,1) !important; }
+.rao-dock.rao-travelling .rao-mascot .m-body{ animation:none; transform:translateY(-4px); }
+.rao-dock.rao-travelling .rao-mascot .m-shadow{ animation:none; opacity:.25; transform:scale(.55);
+  transition:opacity calc(.2s * var(--slow,1)) ease, transform calc(.2s * var(--slow,1)) ease; }
+.rao-dock.rao-travelling .m-thruster{ opacity:1; animation:raoThrust calc(.12s * var(--slow,1)) ease-in-out infinite alternate; }
+@keyframes raoThrust{ from{ transform:scaleY(.55) } to{ transform:scaleY(1.15) } }
+.rao-dock.rao-travelling.fly-right .rao-mascot{ transform:rotate(7deg); }
+.rao-dock.rao-travelling.fly-left  .rao-mascot{ transform:rotate(-7deg); }
+
+/* ═══ VICTORY LAP — orbit the page/card and land back on the same pixel ═══
+   Path = runtime rounded-rect via WAAPI translate keyframes ending at translate(0,0)
+   (exact return guaranteed). Bank = WAAPI rotate on the svg, 16° × horizontal velocity
+   (same sign as .fly-right). Reuses .rao-travelling for thruster/shadow/float-pause.
+   MOUTH RULE 1: grin swap is a hard class cut, one mouth visible at all times. */
+.rao-mascot.mood-lap .mouth-smile{ opacity:0; }
+.rao-mascot.mood-lap .mouth-grin{ opacity:1; }
+.lap-spark{ position:fixed; width:10px; height:10px; border-radius:50%;
+  pointer-events:none; z-index:4;
+  animation:lapSpark calc(.62s * var(--slow,1)) ease-out forwards; }
+.lap-spark.star{ border-radius:0;
+  clip-path:polygon(50% 0,63% 36%,100% 38%,70% 60%,82% 100%,50% 74%,18% 100%,30% 60%,0 38%,37% 36%); }
+@keyframes lapSpark{
+  0%{ transform:scale(1) translateY(0) rotate(0deg); opacity:.95; }
+  100%{ transform:scale(.15) translateY(16px) rotate(140deg); opacity:0; } }
+
+/* ═══ CLAP — front paws meet with impact spark; arms tuck for the trick ═══ */
+.m-paw, .m-clap-spark{ opacity:0; transform-box:fill-box; transform-origin:center; }
+.rao-mascot.mood-clap .m-arm{ opacity:0; transition:opacity .12s; }
+.rao-mascot.mood-clap .m-paw{ opacity:1; }
+.rao-mascot.mood-clap .mouth-smile{ opacity:0; }
+.rao-mascot.mood-clap .mouth-grin{ opacity:1; }
+.rao-mascot.mood-clap .m-paw-l{ animation:clapL calc(.32s * var(--slow,1)) ease-in 3; }
+.rao-mascot.mood-clap .m-paw-r{ animation:clapR calc(.32s * var(--slow,1)) ease-in 3; }
+@keyframes clapL{ 0%,100%{ transform:translateX(0) rotate(0) } 45%,55%{ transform:translateX(16px) rotate(-8deg) } }
+@keyframes clapR{ 0%,100%{ transform:translateX(0) rotate(0) } 45%,55%{ transform:translateX(-16px) rotate(8deg) } }
+.rao-mascot.mood-clap .m-clap-spark{ animation:clapSpark calc(.32s * var(--slow,1)) linear 3; }
+@keyframes clapSpark{ 0%,38%{ opacity:0; transform:scale(.35) } 50%{ opacity:1; transform:scale(1.15) } 68%,100%{ opacity:0; transform:scale(.55) } }
+.rao-mascot.mood-clap .m-body{ animation:clapBob calc(.32s * var(--slow,1)) ease-in-out 3; }
+@keyframes clapBob{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-3px) } }
+
+/* ═══ TUMBLING PASS — three aerial flips travelling across the screen ═══ */
+.m-flip{ transform-box:fill-box; transform-origin:center 55%; }
+.m-dust{ opacity:0; transform-box:fill-box; transform-origin:center; }
+.rao-mascot .mouth-o{ opacity:0; }
+.rao-mascot.mood-tumble{ transition:none; }
+.rao-mascot.mood-tumble.tumble-left{ transform:scaleX(-1); }  /* mirror so rotation rolls the right way */
+.rao-mascot.mood-tumble .m-body{ animation:none; }
+.rao-mascot.mood-tumble .mouth-smile{ opacity:0; }
+.rao-mascot.mood-tumble .mouth-o{ opacity:1; }
+.rao-mascot.mood-tumble .m-flip{ animation:tumbleFlip calc(2.2s * var(--slow,1)) linear 1; }
+@keyframes tumbleFlip{
+  0%   { transform:translateY(0) rotate(0deg) scale(1,1); }
+  4%   { transform:translateY(4px) rotate(0deg) scale(1.08,.82); }     /* crouch */
+  /* hop 1 */
+  9%   { transform:translateY(-30px) rotate(95deg) scale(.96,.96); }
+  18%  { transform:translateY(-48px) rotate(200deg) scale(.9,.9); }
+  28%  { transform:translateY(-6px) rotate(345deg) scale(.97,.97); }
+  31%  { transform:translateY(3px) rotate(360deg) scale(1.1,.85); }    /* touch */
+  /* hop 2 */
+  37%  { transform:translateY(-32px) rotate(470deg) scale(.95,.95); }
+  46%  { transform:translateY(-50px) rotate(560deg) scale(.9,.9); }
+  56%  { transform:translateY(-6px) rotate(705deg) scale(.97,.97); }
+  59%  { transform:translateY(3px) rotate(720deg) scale(1.1,.85); }    /* touch */
+  /* hop 3 */
+  65%  { transform:translateY(-34px) rotate(830deg) scale(.95,.95); }
+  74%  { transform:translateY(-52px) rotate(925deg) scale(.9,.9); }
+  84%  { transform:translateY(-6px) rotate(1065deg) scale(.97,.97); }
+  87%  { transform:translateY(3px) rotate(1080deg) scale(1.14,.78); }  /* final land */
+  93%  { transform:translateY(-5px) rotate(1080deg) scale(.97,1.05); } /* rebound */
+  100% { transform:translateY(0) rotate(1080deg) scale(1,1); }
+}
+.rao-mascot.mood-tumble .m-shadow{ animation:tumbleShadow calc(2.2s * var(--slow,1)) linear 1 !important; }
+@keyframes tumbleShadow{
+  0%{ transform:scale(1); opacity:1 } 4%{ transform:scale(1.08); opacity:1 }
+  18%{ transform:scale(.45); opacity:.25 } 31%{ transform:scale(1.08); opacity:1 }
+  46%{ transform:scale(.45); opacity:.25 } 59%{ transform:scale(1.08); opacity:1 }
+  74%{ transform:scale(.45); opacity:.25 } 87%{ transform:scale(1.16); opacity:1 }
+  100%{ transform:scale(1); opacity:1 }
+}
+.rao-mascot.mood-tumble .m-dust{ animation:tumbleDust calc(2.2s * var(--slow,1)) linear 1; }
+@keyframes tumbleDust{
+  0%,28%{ opacity:0; transform:scale(.5) } 31%{ opacity:.9; transform:scale(1.15) } 35%{ opacity:0; transform:scale(1.5) }
+  56%{ opacity:0; transform:scale(.5) } 59%{ opacity:.9; transform:scale(1.15) } 63%{ opacity:0; transform:scale(1.5) }
+  84%{ opacity:0; transform:scale(.5) } 88%{ opacity:1; transform:scale(1.25) } 100%{ opacity:0; transform:scale(1.7) }
+}
+
+/* ═══ ANGRY — steam-kettle comedy: pressure builds, flames blow, steam, phew ═══
+   NEVER wire this to a kid's wrong answer. Villain problems / authored comedy only. */
+.m-brow, .mouth-grit, .m-flush, .m-anger-flames, .m-steam{ opacity:0; }
+.m-brow, .m-star, .rao-mascot .m-pupil{ transform-box:fill-box; transform-origin:center; }
+.m-anger-flames{ transform-box:fill-box; transform-origin:center bottom; }
+.m-steam{ transform-box:fill-box; transform-origin:center; }
+.rao-mascot.mood-angry .m-body{ animation:none; }
+.rao-mascot.mood-angry .mouth-smile{ opacity:0; }
+.rao-mascot.mood-angry .mouth-grit{ opacity:1; }
+.rao-mascot.mood-angry .m-brow{ opacity:1; }
+.rao-mascot.mood-angry .m-brow-l{ transform:translateY(1px) rotate(10deg); }
+.rao-mascot.mood-angry .m-brow-r{ transform:translateY(1px) rotate(-10deg); }
+.rao-mascot.mood-angry .m-pupil{ transform:scale(.8); }
+.rao-mascot.mood-angry .m-star{ fill:#ef4444; animation:angerSpin .35s linear infinite; }
+@keyframes angerSpin{ from{ transform:rotate(0) } to{ transform:rotate(360deg) } }
+.rao-mascot.mood-angry .m-flip{ animation:angerShake calc(2.4s * var(--slow,1)) linear 1; }
+@keyframes angerShake{
+  0%,8%{ transform:translateX(0) }
+  14%{ transform:translateX(-1px) } 20%{ transform:translateX(1px) }
+  26%{ transform:translateX(-2px) } 32%{ transform:translateX(2px) }
+  38%{ transform:translateX(-3px) } 44%{ transform:translateX(3px) }
+  50%{ transform:translateX(-4px) } 54%{ transform:translateX(4px) }
+  58%{ transform:translateY(-7px) scale(1.07) }          /* the blow */
+  64%{ transform:translateY(0) scale(1) }
+  70%,100%{ transform:translateX(0) }
+}
+.rao-mascot.mood-angry .m-flush{ animation:angerFlush calc(2.4s * var(--slow,1)) linear 1; }
+@keyframes angerFlush{
+  0%{ opacity:0 } 20%{ opacity:.2 } 55%{ opacity:.55 } 70%{ opacity:.5 } 88%,100%{ opacity:0 }
+}
+.rao-mascot.mood-angry .m-anger-flames{ animation:angerFlames calc(2.4s * var(--slow,1)) linear 1; }
+@keyframes angerFlames{
+  0%,40%{ opacity:0; transform:scale(.3) }
+  46%{ opacity:.5; transform:scale(.5) }
+  51%{ opacity:.3; transform:scale(.45) }
+  56%{ opacity:.8; transform:scale(.75) }
+  60%{ opacity:1; transform:scale(1.3) }                 /* eruption */
+  68%{ opacity:1; transform:scale(1.05) }
+  76%,100%{ opacity:0; transform:scale(.5) }
+}
+.rao-mascot.mood-angry .m-anger-flames path{ animation:angerFlick .11s ease-in-out infinite alternate; transform-box:fill-box; transform-origin:center bottom; }
+.rao-mascot.mood-angry .m-anger-flames path:nth-child(2){ animation-delay:.04s; }
+.rao-mascot.mood-angry .m-anger-flames path:nth-child(3){ animation-delay:.08s; }
+@keyframes angerFlick{ from{ transform:scaleY(.85) } to{ transform:scaleY(1.15) } }
+.rao-mascot.mood-angry .m-steam{ animation:angerSteam calc(2.4s * var(--slow,1)) linear 1; }
+@keyframes angerSteam{
+  0%,70%{ opacity:0; transform:translateY(0) scale(.7) }
+  76%{ opacity:.85; transform:translateY(-5px) scale(1) }
+  100%{ opacity:0; transform:translateY(-20px) scale(1.2) }
+}
+
+/* ═══ DANCE — 8-beat routine: side-step, twist, disco points, spin + ta-da ═══ */
+.rao-mascot.mood-dance .m-body{ animation:none; }
+.rao-mascot.mood-dance .mouth-smile{ opacity:0; }
+.rao-mascot.mood-dance .mouth-grin{ opacity:1; }
+.rao-mascot.mood-dance .m-flip{ animation:danceBody calc(3.2s * var(--slow,1)) ease-in-out 1; }
+@keyframes danceBody{
+  0%  { transform:translate(0,0) rotate(0) scale(1,1); }
+  /* side-step groove */
+  6%  { transform:translate(-9px,-5px) rotate(-5deg); }
+  12% { transform:translate(-9px,0) rotate(-3deg) scale(1.03,.95); }
+  19% { transform:translate(9px,-5px) rotate(5deg); }
+  25% { transform:translate(9px,0) rotate(3deg) scale(1.03,.95); }
+  /* the twist */
+  31% { transform:translate(0,3px) rotate(-16deg) scale(1.05,.9); }
+  37% { transform:translate(0,-2px) rotate(14deg); }
+  44% { transform:translate(0,3px) rotate(-16deg) scale(1.05,.9); }
+  50% { transform:translate(0,-2px) rotate(12deg); }
+  /* disco points */
+  56% { transform:translate(-5px,-4px) rotate(-8deg); }
+  62% { transform:translate(5px,0) rotate(8deg); }
+  69% { transform:translate(-5px,-4px) rotate(-8deg); }
+  75% { transform:translate(0,0) rotate(0); }
+  /* spin + ta-da */
+  87% { transform:translate(0,-9px) rotate(360deg); }
+  92% { transform:translate(0,2px) rotate(360deg) scale(1.07,.9); }
+  100%{ transform:translate(0,0) rotate(360deg) scale(1,1); }
+}
+.rao-mascot.mood-dance .m-arm-l{ animation:danceArmL calc(3.2s * var(--slow,1)) ease-in-out 1; }
+.rao-mascot.mood-dance .m-arm-r{ animation:danceArmR calc(3.2s * var(--slow,1)) ease-in-out 1; }
+@keyframes danceArmL{
+  0%,12%{ transform:rotate(0) } 6%{ transform:rotate(48deg) }
+  19%,31%{ transform:rotate(0) } 25%{ transform:rotate(48deg) }
+  37%{ transform:rotate(20deg) } 44%{ transform:rotate(0) } 50%{ transform:rotate(20deg) }
+  56%{ transform:rotate(64deg) } 62%,64%{ transform:rotate(0) }
+  69%{ transform:rotate(64deg) } 75%{ transform:rotate(0) }
+  87%{ transform:rotate(25deg) } 92%,100%{ transform:rotate(54deg) }
+}
+@keyframes danceArmR{
+  0%,6%{ transform:rotate(0) } 12%{ transform:rotate(-48deg) }
+  19%{ transform:rotate(-48deg) } 25%,31%{ transform:rotate(0) }
+  37%{ transform:rotate(-20deg) } 44%{ transform:rotate(0) } 50%{ transform:rotate(-20deg) }
+  56%,58%{ transform:rotate(0) } 62%{ transform:rotate(-64deg) }
+  69%{ transform:rotate(0) } 75%{ transform:rotate(-64deg) }
+  87%{ transform:rotate(-25deg) } 92%,100%{ transform:rotate(-54deg) }
+}
+.rao-mascot.mood-dance .m-star{ animation:danceStar calc(3.2s * var(--slow,1)) ease-in-out 1; }
+@keyframes danceStar{
+  0%{ transform:rotate(0) } 12%{ transform:rotate(-22deg) } 25%{ transform:rotate(22deg) }
+  37%{ transform:rotate(-22deg) } 50%{ transform:rotate(22deg) }
+  62%{ transform:rotate(-22deg) } 75%{ transform:rotate(0) }
+  100%{ transform:rotate(360deg) }
+}
+.rao-mascot.mood-dance .m-shadow{ animation:danceShadow calc(3.2s * var(--slow,1)) ease-in-out 1 !important; }
+@keyframes danceShadow{
+  0%,12%,25%,37%,50%,62%,75%{ transform:scale(1); opacity:1 }
+  6%,19%,31%,44%,56%,69%{ transform:scale(.88); opacity:.75 }
+  87%{ transform:scale(.6); opacity:.4 }
+  92%{ transform:scale(1.12); opacity:1 }
+  100%{ transform:scale(1); opacity:1 }
+}
+.rao-mascot.mood-dance .m-clap-spark{ animation:danceSpark calc(3.2s * var(--slow,1)) linear 1; }
+@keyframes danceSpark{
+  0%,88%{ opacity:0; transform:scale(.4) translateY(-34px) }
+  93%{ opacity:1; transform:scale(1.35) translateY(-34px) }
+  100%{ opacity:0; transform:scale(.7) translateY(-34px) }
+}
+
+/* ═══ SUSPICIOUS — squint, side-eye darts, slow lean, one raised brow, "?" ═══ */
+.mouth-hmm, .m-susq{ opacity:0; }
+.m-susq{ transform-box:fill-box; transform-origin:center; }
+.rao-mascot.mood-sus .m-body{ animation:none; }
+.rao-mascot.mood-sus .mouth-smile{ opacity:0; }
+.rao-mascot.mood-sus .mouth-hmm{ opacity:1; }
+.rao-mascot.mood-sus .m-brow{ opacity:1; }
+.rao-mascot.mood-sus .m-brow-l{ transform:translateY(-4px) rotate(-8deg); }   /* arched: the tell */
+.rao-mascot.mood-sus .m-brow-r{ transform:translateY(1px) rotate(-3deg); }
+.rao-mascot.mood-sus .m-flip{ animation:susLean calc(2.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes susLean{
+  0%{ transform:rotate(0) } 18%{ transform:rotate(-4deg) } 42%{ transform:rotate(-4deg) }
+  58%{ transform:rotate(4deg) } 80%{ transform:rotate(4deg) } 100%{ transform:rotate(0) }
+}
+.rao-mascot.mood-sus .m-pupil{ animation:susPupils calc(2.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes susPupils{
+  0%,8%{ transform:translateX(0) } 14%{ transform:translateX(-3.5px) } 46%{ transform:translateX(-3.5px) }
+  54%{ transform:translateX(3.5px) } 82%{ transform:translateX(3.5px) } 90%,100%{ transform:translateX(0) }
+}
+.rao-mascot.mood-sus .m-lid{ animation:susLids calc(2.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes susLids{
+  0%{ transform:scaleY(0) } 10%{ transform:scaleY(.45) } 48%{ transform:scaleY(.45) }
+  56%{ transform:scaleY(.62) } 80%{ transform:scaleY(.62) } 92%,100%{ transform:scaleY(0) }
+}
+.rao-mascot.mood-sus .m-susq{ animation:susQ calc(2.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes susQ{
+  0%,50%{ opacity:0; transform:translateY(4px) rotate(8deg) }
+  60%{ opacity:1; transform:translateY(0) rotate(-4deg) }
+  85%{ opacity:1; transform:translateY(-1px) rotate(2deg) }
+  100%{ opacity:0; transform:translateY(-6px) }
+}
+
+/* ═══ POKE — friendly wobble (bubble styles below are shared by other motions) ═══ */
+.rao-bubble{ position:absolute; bottom:102%; left:50%; z-index:3;
+  transform:translateX(-50%) scale(.6) rotate(-2deg); opacity:0;
+  background:#fff; border:2.5px solid #1f193c; border-radius:14px;
+  padding:6px 13px; font:800 15px 'DM Sans',sans-serif; color:#1f193c;
+  white-space:nowrap; pointer-events:none;
+  transition:opacity .15s ease, transform .18s cubic-bezier(.3,1.6,.5,1); }
+.rao-bubble:after{ content:''; position:absolute; left:50%; bottom:-9px;
+  width:12px; height:12px; background:#fff; border-right:2.5px solid #1f193c;
+  border-bottom:2.5px solid #1f193c; transform:translateX(-50%) rotate(45deg); }
+.rao-bubble.show{ opacity:1; transform:translateX(-50%) scale(1) rotate(-2deg); }
+
+.mouth-pout{ opacity:0; }
+.mouth-chew{ opacity:0; transform-box:fill-box; transform-origin:center; }
+/* MOUTH RULE (do not break): exactly ONE mouth is fully visible at every
+   instant of every motion. Swaps are HARD CUTS on shared keyframe
+   boundaries (x% / x.01%) — never crossfades. Crossfaded mouths hit
+   half-opacity in the overlap and read as a missing mouth. */
+/* MOUTH RULE 2: every .m-mouth transforms in its OWN box. Without this,
+   SVG scale() pivots on the view-box corner and MOVES the mouth off the
+   face (the "purple circle at his feet" bug). */
+.m-mouth{ transform-box:fill-box; transform-origin:center; }
+.rao-mascot.mood-poked .m-flip{ animation:pokeWob calc(.5s * var(--slow,1)) ease-in-out 1; }
+@keyframes pokeWob{
+  0%{ transform:translateX(0) } 25%{ transform:translateX(-3px) rotate(-2deg) }
+  50%{ transform:translateX(3px) rotate(2deg) } 75%{ transform:translateX(-2px) } 100%{ transform:translateX(0) }
+}
+
+
+/* ═══ MACARENA — the arm routine everyone knows, set to an ORIGINAL latin groove
+   (the real song is copyrighted; not one note of it is used here) ═══ */
+.rao-mascot.mood-mac .m-arm{ opacity:0; transition:opacity .12s; }
+.rao-mascot.mood-mac .m-paw{ opacity:1; }
+.rao-mascot.mood-mac .mouth-smile{ opacity:0; }
+.rao-mascot.mood-mac .mouth-grin{ opacity:1; }
+.rao-mascot.mood-mac .m-body{ animation:macBob calc(.42s * var(--slow,1)) ease-in-out 12; }
+@keyframes macBob{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-3px) } }
+.rao-mascot.mood-mac .m-paw-r{ animation:macPawR calc(5.04s * var(--slow,1)) ease-in-out 1; }
+@keyframes macPawR{
+  0%,4%    { transform:translate(0,0) rotate(0); }
+  8.3%,22% { transform:translate(-4px,-12px) rotate(0); }        /* out, palm down */
+  25%,39%  { transform:translate(-4px,-12px) rotate(180deg); }   /* palm up */
+  41.7%,55%{ transform:translate(-34px,-26px) rotate(180deg); }  /* opposite shoulder */
+  58.3%,72%{ transform:translate(-10px,-50px) rotate(180deg); }  /* behind head */
+  75%,90%  { transform:translate(6px,9px) rotate(0); }           /* hip */
+  100%     { transform:translate(0,0) rotate(0); }
+}
+.rao-mascot.mood-mac .m-paw-l{ animation:macPawL calc(5.04s * var(--slow,1)) ease-in-out 1; }
+@keyframes macPawL{
+  0%,12%   { transform:translate(0,0) rotate(0); }
+  16.7%,30%{ transform:translate(4px,-12px) rotate(0); }
+  33.3%,47%{ transform:translate(4px,-12px) rotate(180deg); }
+  50%,63%  { transform:translate(34px,-26px) rotate(180deg); }
+  66.7%,80%{ transform:translate(10px,-50px) rotate(180deg); }
+  83.3%,90%{ transform:translate(-6px,9px) rotate(0); }
+  100%     { transform:translate(0,0) rotate(0); }
+}
+.rao-mascot.mood-mac .m-flip{ animation:macBody calc(5.04s * var(--slow,1)) ease-in-out 1; }
+@keyframes macBody{
+  0%,80%{ transform:rotate(0) translateY(0); }
+  84%{ transform:rotate(-9deg) translateY(1px); }     /* sway */
+  88%{ transform:rotate(9deg); }
+  91%{ transform:rotate(0) translateY(0); }
+  95%{ transform:rotate(180deg) translateY(-15px); }  /* jump-turn */
+  100%{ transform:rotate(360deg) translateY(0); }
+}
+.rao-mascot.mood-mac .m-shadow{ animation:macShadow calc(5.04s * var(--slow,1)) ease-in-out 1 !important; }
+@keyframes macShadow{
+  0%,80%,91%{ transform:scale(1); opacity:1 }
+  95%{ transform:scale(.55); opacity:.35 }
+  98%{ transform:scale(1.12); opacity:1 }
+  100%{ transform:scale(1); opacity:1 }
+}
+.rao-mascot.mood-mac .m-star{ animation:macStar calc(.84s * var(--slow,1)) ease-in-out 6; }
+@keyframes macStar{ 0%,100%{ transform:rotate(-15deg) } 50%{ transform:rotate(15deg) } }
+
+/* ═══ APPLE TOSS — throw it up, track it, CHOMP, chew, gulp, mmm ═══ */
+.m-apple{ opacity:0; transform-box:fill-box; transform-origin:center; }
+.rao-mascot.mood-apple .m-body{ animation:none; }
+.rao-mascot.mood-apple .m-apple{ animation:appleFly calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes appleFly{
+  0%{ opacity:0; transform:translate(0,0) rotate(0); }
+  5%,12%{ opacity:1; transform:translate(-6px,-14px) rotate(0); }          /* in the raised paw */
+  30%{ opacity:1; transform:translate(-20px,-96px) rotate(200deg); }       /* apex */
+  52%{ opacity:1; transform:translate(-24px,-4px) rotate(360deg); }        /* falling to mouth */
+  56%{ opacity:1; transform:translate(-24px,2px) rotate(370deg) scale(.55); } /* in it goes */
+  57%,100%{ opacity:0; transform:translate(-24px,2px) scale(.4); }
+}
+.rao-mascot.mood-apple .m-paw-r{ opacity:1; animation:applePaw calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes applePaw{
+  0%{ transform:translate(0,0); }
+  5%,12%{ transform:translate(-6px,-14px); }   /* holds the apple up */
+  16%{ transform:translate(-8px,-22px); }      /* the flick */
+  26%,100%{ transform:translate(0,0); }
+}
+.rao-mascot.mood-apple .m-arm-r{ opacity:0; transition:opacity .12s; }
+.rao-mascot.mood-apple .m-pupil{ animation:appleEyes calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes appleEyes{
+  0%,12%{ transform:translateY(0); }
+  22%,36%{ transform:translateY(-3px); }       /* watching it up there */
+  50%{ transform:translateY(-1px); }
+  56%,100%{ transform:translateY(0); }
+}
+.rao-mascot.mood-apple .mouth-smile{ animation:appleSmile calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes appleSmile{ 0%,36.99%{ opacity:1 } 37%,89.99%{ opacity:0 } 90%,100%{ opacity:1 } }
+.rao-mascot.mood-apple .mouth-o{ animation:appleMouth calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes appleMouth{
+  0%,36.99%{ opacity:0; transform:scale(1.65); }
+  37%,57.49%{ opacity:1; transform:scale(1.65); }  /* wide open for the catch */
+  57.5%,100%{ opacity:0; transform:scale(1.65); }
+}
+.rao-mascot.mood-apple .mouth-chew{ animation:appleChew calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes appleChew{
+  0%,57.49%{ opacity:0; transform:scaleY(.75); }
+  57.5%{ opacity:1; transform:scaleY(.75); }
+  62%{ opacity:1; transform:scaleY(1.2); }    /* munch */
+  66%{ opacity:1; transform:scaleY(.75); }
+  70%{ opacity:1; transform:scaleY(1.15); }
+  74%{ opacity:1; transform:scaleY(.75); }
+  78%{ opacity:1; transform:scaleY(1.15); }
+  82%{ opacity:1; transform:scaleY(.85); }
+  89.99%{ opacity:1; transform:scaleY(1); }
+  90%,100%{ opacity:0; transform:scaleY(1); }
+}
+.rao-mascot.mood-apple .m-cheek-l{ animation:chewL calc(3.6s * var(--slow,1)) ease-in-out 1; transform-box:fill-box; transform-origin:center; }
+.rao-mascot.mood-apple .m-cheek-r{ animation:chewR calc(3.6s * var(--slow,1)) ease-in-out 1; transform-box:fill-box; transform-origin:center; }
+@keyframes chewL{ 0%,58%,66%,74%,82%,100%{ transform:scale(1) } 62%,78%{ transform:scale(1.45) } }
+@keyframes chewR{ 0%,62%,70%,78%,86%,100%{ transform:scale(1) } 66%,82%{ transform:scale(1.45) } }
+.rao-mascot.mood-apple .m-flip{ animation:appleBody calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes appleBody{
+  0%,56%{ transform:translateY(0); }
+  60%,68%,76%{ transform:translateY(2px) scale(1.02,.97); }   /* chomp bobs */
+  64%,72%,80%{ transform:translateY(0) scale(1,1); }
+  88%{ transform:translateY(3px) scale(1.03,.95); }           /* gulp */
+  92%,100%{ transform:translateY(0) scale(1,1); }
+}
+.rao-mascot.mood-apple .m-clap-spark{ animation:appleSpark calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes appleSpark{
+  0%,90%{ opacity:0; transform:scale(.4) translateY(-30px); }
+  94%{ opacity:1; transform:scale(1.2) translateY(-30px); }
+  100%{ opacity:0; transform:scale(.6) translateY(-30px); }
+}
+
+/* (FEED ROBO block not ported — stage apple removed by design; the general
+   .m-flip transition rule that lived inside it is preserved below.) */
+.rao-mascot .m-flip{ transition:transform .22s ease; }
+
+/* ═══ LEAN-IN — zoom to the glass, side-glance, then ask the kid directly ═══ */
+.rao-mascot.mood-lean{ transform-origin:center 85%;
+  animation:leanZoom calc(3.6s * var(--slow,1)) cubic-bezier(.3,.1,.25,1) 1; }
+@keyframes leanZoom{
+  0%{ transform:scale(1) rotate(0); }
+  8%{ transform:scale(.96) translateY(2px); }                    /* anticipation dip */
+  26%{ transform:scale(2.35) translateY(8px) rotate(-5deg); }    /* pressed to the glass */
+  55%{ transform:scale(2.42) translateY(8px) rotate(-4deg); }    /* breathing, this close */
+  84%{ transform:scale(2.35) translateY(8px) rotate(-5deg); }
+  100%{ transform:scale(1) rotate(0); }
+}
+.rao-mascot.mood-lean .m-body{ animation:none; }
+.rao-mascot.mood-lean .m-pupil{ animation:leanEyes calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes leanEyes{
+  0%,26%{ transform:translateX(0); }
+  32%,52%{ transform:translateX(-3.5px); }   /* the side-glance */
+  58%,100%{ transform:translateX(0); }        /* now looking AT you */
+}
+.rao-mascot.mood-lean .m-lid{ animation:leanLids calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes leanLids{
+  0%,26%{ transform:scaleY(0); }
+  32%,52%{ transform:scaleY(.45); }           /* squint on the glance */
+  58%,88%{ transform:scaleY(.12); }           /* wide, attentive stare */
+  95%,100%{ transform:scaleY(0); }
+}
+.rao-mascot.mood-lean .m-brow-l{ animation:leanBrow calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes leanBrow{
+  0%,54%{ opacity:0; transform:translateY(0); }
+  60%,86%{ opacity:1; transform:translateY(-4px) rotate(-9deg); }   /* the arched brow */
+  100%{ opacity:0; transform:translateY(0); }
+}
+.rao-mascot.mood-lean .mouth-smile{ animation:leanSmile calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes leanSmile{ 0%,29.99%{ opacity:1 } 30%,89.99%{ opacity:0 } 90%,100%{ opacity:1 } }
+.rao-mascot.mood-lean .mouth-hmm{ animation:leanMouth calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes leanMouth{ 0%,29.99%{ opacity:0 } 30%,89.99%{ opacity:1 } 90%,100%{ opacity:0 } }
+/* while he's huge, lift the bubble clear of his face */
+.rao-dock.rao-leaning .rao-bubble{ bottom:calc(102% + 92px); font-size:17px; }
+
+/* ═══ BOOTY SHAKE — quarter-turn to PROFILE; the booty is silhouette, not sticker ═══ */
+.m-shake-l, .m-shake-r{ opacity:0; }
+.m-booty{ opacity:0; transform-box:fill-box; transform-origin:center left; }
+.rao-mascot.mood-booty .mouth-smile{ opacity:0; }
+.rao-mascot.mood-booty .mouth-grin{ opacity:1; }
+.rao-mascot.mood-booty .m-flip{ animation:bootyTurn calc(3s * var(--slow,1)) ease-in-out 1; }
+@keyframes bootyTurn{
+  0%{ transform:scaleX(1) rotate(0); }
+  10%,84%{ transform:scaleX(.62) rotate(-12deg); }   /* profile + bent-over lean */
+  94%,100%{ transform:scaleX(1) rotate(0); }
+}
+/* profile face: far side fades, near side slides to the leading edge */
+.rao-mascot.mood-booty .m-eye-r, .rao-mascot.mood-booty .m-cheek-r{ animation:bootyFarSide calc(3s * var(--slow,1)) linear 1; }
+@keyframes bootyFarSide{ 0%,4%{ opacity:1 } 9%,88%{ opacity:0 } 95%,100%{ opacity:1 } }
+.rao-mascot.mood-booty .m-eye-l{ transform-box:fill-box; animation:bootyNearEye calc(3s * var(--slow,1)) ease-in-out 1; }
+@keyframes bootyNearEye{ 0%,4%{ transform:translateX(0) } 10%,86%{ transform:translateX(-9px) } 94%,100%{ transform:translateX(0) } }
+.rao-mascot.mood-booty .m-cheek-l{ transform-box:fill-box; transform-origin:center; animation:bootyNearCheek calc(3s * var(--slow,1)) ease-in-out 1; }
+@keyframes bootyNearCheek{ 0%,4%{ transform:translateX(0) } 10%,86%{ transform:translateX(-6px) } 94%,100%{ transform:translateX(0) } }
+.rao-mascot.mood-booty .mouth-grin{ transform-box:fill-box; animation:bootyNearMouth calc(3s * var(--slow,1)) ease-in-out 1; }
+@keyframes bootyNearMouth{ 0%,4%{ transform:translateX(0) } 10%,86%{ transform:translateX(-12px) } 94%,100%{ transform:translateX(0) } }
+/* the booty: appears with the profile, bounces with follow-through lag */
+.rao-mascot.mood-booty .m-booty{
+  animation:bootyDef calc(3s * var(--slow,1)) linear 1,
+            bootyJiggle calc(.24s * var(--slow,1)) ease-in-out calc(.55s * var(--slow,1)) 9 alternate;
+}
+@keyframes bootyDef{ 0%,6%{ opacity:0 } 11%,86%{ opacity:1 } 92%,100%{ opacity:0 } }
+@keyframes bootyJiggle{
+  from{ transform:translate(-1px,-3px) scaleY(.88); }
+  to{ transform:translate(1px,3px) scaleY(1.18); }
+}
+/* body counter-bounce (booty lags it by 50ms = jiggle physics) */
+.rao-mascot.mood-booty .m-body{ animation:bootyBounce calc(.24s * var(--slow,1)) ease-in-out calc(.5s * var(--slow,1)) 9 alternate; }
+@keyframes bootyBounce{ from{ transform:translateY(0) } to{ transform:translateY(-3px) } }
+.rao-mascot.mood-booty .m-star{ animation:bootyStar calc(.24s * var(--slow,1)) ease-in-out calc(.5s * var(--slow,1)) 9 alternate; }
+@keyframes bootyStar{ from{ transform:rotate(12deg) } to{ transform:rotate(-12deg) } }
+.rao-mascot.mood-booty .m-shadow{ animation:bootyShadow calc(.24s * var(--slow,1)) ease-in-out calc(.5s * var(--slow,1)) 9 alternate !important; }
+@keyframes bootyShadow{ from{ transform:scale(.95) } to{ transform:scale(1.06) } }
+.rao-mascot.mood-booty .m-shake-r{ animation:bootyLine calc(.48s * var(--slow,1)) linear calc(.6s * var(--slow,1)) 4; }
+@keyframes bootyLine{ 0%,55%{ opacity:0 } 20%,40%{ opacity:.9 } 100%{ opacity:0 } }
+.rao-mascot.mood-booty .m-eye-l .m-lid{ animation:bootyWink calc(3s * var(--slow,1)) linear 1; }
+@keyframes bootyWink{ 0%,92%{ transform:scaleY(0) } 94%,97%{ transform:scaleY(1) } 100%{ transform:scaleY(0) } }
+
+/* ═══ NOODLE ARMS — LONG boneless tube-man arms, S-curve rippling overhead ═══
+   8 chained joints per arm; delays span >1 full cycle so a whole wave is
+   visible on the arm at once. Base joint does its own big flail sweep. */
+.m-noodle{ opacity:0; }
+.ns{ transform-box:fill-box; transform-origin:center top; }
+.rao-mascot.mood-noodle .m-arm{ opacity:0; transition:opacity .15s; }
+.rao-mascot.mood-noodle .m-noodle{ opacity:1; transition:opacity .15s; }
+.rao-mascot.mood-noodle .mouth-smile{ opacity:0; }
+.rao-mascot.mood-noodle .mouth-grin{ opacity:1; }
+.rao-mascot.mood-noodle .m-lid{ animation:none; transform:scaleY(.55); }
+/* ripple travelling down the chain (joints 2-8) */
+.rao-mascot.mood-noodle .ns{ animation:noodleWave calc(.6s * var(--slow,1)) ease-in-out infinite; }
+.rao-mascot.mood-noodle .ns2{ animation-delay:calc(-0.09s * var(--slow,1)); }
+.rao-mascot.mood-noodle .ns3{ animation-delay:calc(-0.18s * var(--slow,1)); }
+.rao-mascot.mood-noodle .ns4{ animation-delay:calc(-0.27s * var(--slow,1)); }
+.rao-mascot.mood-noodle .ns5{ animation-delay:calc(-0.36s * var(--slow,1)); }
+.rao-mascot.mood-noodle .ns6{ animation-delay:calc(-0.45s * var(--slow,1)); }
+.rao-mascot.mood-noodle .ns7{ animation-delay:calc(-0.54s * var(--slow,1)); }
+.rao-mascot.mood-noodle .ns8{ animation-delay:calc(-0.63s * var(--slow,1)); }
+/* base joint: the big flail the ripple rides on */
+.rao-mascot.mood-noodle .ns1{ animation:noodleBase calc(1.2s * var(--slow,1)) ease-in-out infinite; }
+.rao-mascot.mood-noodle .m-noodle-r .ns{ animation-name:noodleWaveR; }
+.rao-mascot.mood-noodle .m-noodle-r .ns1{ animation-name:noodleBaseR; }
+@keyframes noodleWave{ 0%,100%{ transform:rotate(-16deg) } 50%{ transform:rotate(16deg) } }
+@keyframes noodleWaveR{ 0%,100%{ transform:rotate(16deg) } 50%{ transform:rotate(-16deg) } }
+@keyframes noodleBase{ 0%,100%{ transform:rotate(-30deg) } 50%{ transform:rotate(32deg) } }
+@keyframes noodleBaseR{ 0%,100%{ transform:rotate(30deg) } 50%{ transform:rotate(-32deg) } }
+/* the groove under it */
+.rao-mascot.mood-noodle .m-body{ animation:noodleSway calc(1.2s * var(--slow,1)) ease-in-out infinite; }
+@keyframes noodleSway{ 0%,100%{ transform:rotate(-6deg) translateY(0) } 25%,75%{ transform:rotate(0) translateY(-4px) } 50%{ transform:rotate(6deg) translateY(0) } }
+.rao-mascot.mood-noodle .m-star{ animation:noodleStar calc(1.2s * var(--slow,1)) ease-in-out infinite; }
+@keyframes noodleStar{ 0%,100%{ transform:rotate(-16deg) } 50%{ transform:rotate(16deg) } }
+.rao-mascot.mood-noodle .m-shadow{ animation:noodleShadow calc(1.2s * var(--slow,1)) ease-in-out infinite !important; }
+@keyframes noodleShadow{ 0%,100%{ transform:translateX(-4px) } 50%{ transform:translateX(4px) } }
+
+/* ═══ BASS DROP — ball physics: accelerating falls, decaying bounces ═══
+   Rules encoded: squash only on contact (brief, ∝ impact speed); stretch
+   along motion while fast, normal at apexes; bounce heights decay ~45%;
+   falls ease-in (gravity), rises ease-out. */
+.rao-mascot.mood-squash .m-body{ animation:none; }
+.rao-mascot.mood-squash .m-flip{ animation:squashFlip calc(3.6s * var(--slow,1)) linear 1; transform-origin:center bottom; }
+@keyframes squashFlip{
+  0%{ transform:translateY(0) scale(1,1); animation-timing-function:cubic-bezier(.2,.7,.4,1); }
+  8%{ transform:translateY(-54px) scale(.95,1.07); animation-timing-function:ease-out; }   /* jump on the riser */
+  10%,13%{ transform:translateY(-57px) scale(1,1); animation-timing-function:cubic-bezier(.55,0,.9,.5); } /* hang: the silence */
+  18.5%{ transform:translateY(-2px) scale(.9,1.16); animation-timing-function:linear; }    /* accelerating fall, stretched */
+  20%{ transform:translateY(0) scale(1.85,.12); }                                          /* IMPACT: pancake */
+  22%{ transform:translateY(0) scale(1.82,.14); }
+  24%{ transform:translateY(0) scale(1.85,.12); animation-timing-function:ease-in; }       /* quiver */
+  26%{ transform:translateY(0) scale(1.95,.07); animation-timing-function:cubic-bezier(.1,.8,.3,1); } /* load deeper... */
+  29%{ transform:translateY(-34px) scale(.68,1.5); }                                       /* ...RELEASE, max stretch */
+  33%{ transform:translateY(-92px) scale(.85,1.2); }
+  38%,40%{ transform:translateY(-118px) scale(1,1); animation-timing-function:cubic-bezier(.55,0,.9,.5); } /* apex 1 */
+  47.5%{ transform:translateY(-3px) scale(.9,1.14); animation-timing-function:linear; }    /* fall, stretching */
+  49%{ transform:translateY(0) scale(1.45,.6); animation-timing-function:cubic-bezier(.2,.8,.4,1); }  /* contact 2 */
+  53%{ transform:translateY(-38px) scale(.92,1.1); }
+  56%{ transform:translateY(-53px) scale(1,1); animation-timing-function:cubic-bezier(.55,0,.9,.5); } /* apex 2 (~45%) */
+  62%{ transform:translateY(-2px) scale(.94,1.08); animation-timing-function:linear; }
+  63.5%{ transform:translateY(0) scale(1.25,.78); animation-timing-function:cubic-bezier(.25,.8,.45,1); } /* contact 3 */
+  68%{ transform:translateY(-23px) scale(1,1); animation-timing-function:cubic-bezier(.55,0,.9,.5); } /* apex 3 */
+  73%{ transform:translateY(0) scale(1.12,.9); animation-timing-function:cubic-bezier(.3,.8,.5,1); }  /* contact 4 */
+  77%{ transform:translateY(-9px) scale(1,1); animation-timing-function:cubic-bezier(.55,0,.9,.5); }  /* apex 4 */
+  81%{ transform:translateY(0) scale(1.05,.96); animation-timing-function:ease-out; }      /* last kiss */
+  85%{ transform:translateY(-3px) scale(1,1); }
+  88%{ transform:translateY(0) scale(1.02,.99); }
+  100%{ transform:translateY(0) scale(1,1); }
+}
+.rao-mascot.mood-squash .m-shadow{ animation:squashShadow calc(3.6s * var(--slow,1)) linear 1 !important; }
+@keyframes squashShadow{
+  0%{ transform:scale(1); opacity:1 }
+  10%,13%{ transform:scale(.55); opacity:.4 }
+  20%,26%{ transform:scale(1.7); opacity:1 }
+  38%,40%{ transform:scale(.3); opacity:.2 }
+  49%{ transform:scale(1.42); opacity:1 }
+  56%{ transform:scale(.55); opacity:.4 }
+  63.5%{ transform:scale(1.24); opacity:1 }
+  68%{ transform:scale(.75); opacity:.6 }
+  73%{ transform:scale(1.12); opacity:1 }
+  77%{ transform:scale(.9); opacity:.85 }
+  81%,100%{ transform:scale(1); opacity:1 }
+}
+.rao-mascot.mood-squash .mouth-smile{ animation:squashSmile calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes squashSmile{ 0%,27.99%{ opacity:1 } 28%,79.99%{ opacity:0 } 80%,100%{ opacity:1 } }
+.rao-mascot.mood-squash .mouth-o{ animation:squashMouth calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes squashMouth{ 0%,27.99%{ opacity:0; transform:scale(1.3) } 28%,79.99%{ opacity:1; transform:scale(1.3) } 80%,100%{ opacity:0; transform:scale(1.3) } }
+
+/* ═══ HERO FLIGHT — caped, tilted, fist out; speed lines do the flying ═══ */
+.m-cape, .m-speedlines{ opacity:0; }
+.m-cape{ transform-box:fill-box; transform-origin:80% 10%; }
+.m-cape-cloth{ transform-box:fill-box; transform-origin:80% 10%; }
+.sl{ stroke:#94a3b8; stroke-width:3.4; stroke-linecap:round; }
+.rao-mascot.mood-hero .mouth-smile{ opacity:0; }
+.rao-mascot.mood-hero .mouth-grin{ opacity:1; }
+.rao-mascot.mood-hero .m-lid{ animation:none; transform:scaleY(.28); }   /* determined squint */
+.rao-mascot.mood-hero .m-brow{ opacity:1; }
+.rao-mascot.mood-hero .m-brow-l{ transform:translateY(-1px) rotate(4deg); }
+.rao-mascot.mood-hero .m-brow-r{ transform:translateY(-1px) rotate(-4deg); }
+.rao-mascot.mood-hero .m-body{ animation:none; }
+.rao-mascot.mood-hero .m-flip{ animation:heroPose calc(4.2s * var(--slow,1)) ease-in-out 1; }
+@keyframes heroPose{
+  0%{ transform:scaleX(1) rotate(0) translateY(0); }
+  7%{ transform:scaleX(.08) rotate(0) translateY(-5px); }     /* transformation spin */
+  12%{ transform:scaleX(1) rotate(0) translateY(-3px); }
+  16%{ transform:scaleX(1) rotate(38deg) translateY(-8px); }  /* flight lean */
+  32%{ transform:rotate(38deg) translateY(-13px); }           /* hover bob */
+  48%{ transform:rotate(37deg) translateY(-7px); }
+  64%{ transform:rotate(38deg) translateY(-13px); }
+  80%{ transform:rotate(37deg) translateY(-8px); }
+  88%{ transform:rotate(38deg) translateY(-10px); }
+  93%{ transform:scaleX(1) rotate(0) translateY(2px) scale(1.05,.95); }  /* land */
+  100%{ transform:rotate(0) translateY(0) scale(1,1); }
+}
+.rao-mascot.mood-hero .m-cape{ animation:heroShow calc(4.2s * var(--slow,1)) linear 1; }
+.rao-mascot.mood-hero .m-speedlines{ animation:heroShow calc(4.2s * var(--slow,1)) linear 1; }
+@keyframes heroShow{ 0%,13.99%{ opacity:0 } 14%,87.99%{ opacity:1 } 88%,100%{ opacity:0 } }
+.rao-mascot.mood-hero .m-cape-cloth{ animation:heroFlutter calc(.38s * var(--slow,1)) ease-in-out infinite alternate; }
+@keyframes heroFlutter{ from{ transform:rotate(-4deg) scaleY(.96) } to{ transform:rotate(6deg) scaleY(1.05) } }
+.rao-mascot.mood-hero .m-arm-r{ animation:heroArmR calc(4.2s * var(--slow,1)) ease-in-out 1; }
+@keyframes heroArmR{ 0%,13%{ transform:rotate(0) } 17%,88%{ transform:rotate(-148deg) } 94%,100%{ transform:rotate(0) } }
+.rao-mascot.mood-hero .m-arm-l{ animation:heroArmL calc(4.2s * var(--slow,1)) ease-in-out 1; }
+@keyframes heroArmL{ 0%,13%{ transform:rotate(0) } 17%,88%{ transform:rotate(26deg) } 94%,100%{ transform:rotate(0) } }
+.rao-mascot.mood-hero .m-thruster{ animation:heroShow calc(4.2s * var(--slow,1)) linear 1, raoThrust calc(.12s * var(--slow,1)) ease-in-out infinite alternate; }
+.rao-mascot.mood-hero .m-shadow{ animation:heroShadow calc(4.2s * var(--slow,1)) linear 1 !important; }
+@keyframes heroShadow{ 0%,13.99%{ transform:scale(1); opacity:1 } 14%,87.99%{ transform:scale(.55); opacity:.4 } 88%,100%{ transform:scale(1); opacity:1 } }
+/* the streaks: right-to-left at staggered speeds = HE is flying right */
+.rao-mascot.mood-hero .sl{ animation:slZip calc(.6s * var(--slow,1)) linear infinite; }
+.rao-mascot.mood-hero .sl1{ animation-duration:calc(.5s * var(--slow,1)); animation-delay:calc(-.1s * var(--slow,1)); }
+.rao-mascot.mood-hero .sl2{ animation-duration:calc(.72s * var(--slow,1)); animation-delay:calc(-.4s * var(--slow,1)); }
+.rao-mascot.mood-hero .sl3{ animation-duration:calc(.56s * var(--slow,1)); animation-delay:calc(-.25s * var(--slow,1)); }
+.rao-mascot.mood-hero .sl4{ animation-duration:calc(.8s * var(--slow,1)); animation-delay:calc(-.6s * var(--slow,1)); }
+.rao-mascot.mood-hero .sl5{ animation-duration:calc(.64s * var(--slow,1)); animation-delay:calc(-.32s * var(--slow,1)); }
+@keyframes slZip{
+  0%{ transform:translateX(120px); opacity:0; }
+  12%{ opacity:.85; }
+  82%{ opacity:.85; }
+  100%{ transform:translateX(-130px); opacity:0; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .rao-mascot *{ animation:none !important; }
+  .rao-dock.rao-travelling .m-thruster{ opacity:.5; }
+}
+
+/* carried (drag) — slight heel by direction, shadow off the wrap while in hand */
+.rao-dock.robo-carried .rao-mascot-wrap{filter:none}
+.rao-dock.robo-carried .rao-mascot{transition:transform .18s ease}
+.rao-dock.robo-carried.carry-r .rao-mascot{transform:rotate(6deg)}
+.rao-dock.robo-carried.carry-l .rao-mascot{transform:rotate(-6deg)}
+.rao-dock.robo-carried .rao-mascot .m-shadow{opacity:.22;transform:scale(.55)}
+
+/* v21: let a real finger own Robo — stop the browser stealing the gesture for scroll */
+.rao-dock .rao-mascot-wrap{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
+
+/* props hidden at rest */
+.m-tongue,.m-spanner,.m-jb,.m-mag{opacity:0}
+.m-tongue{transform-box:fill-box;transform-origin:center top}
+.m-spanner,.m-mag,.m-jb{transform-box:fill-box;transform-origin:center}
+
+/* ═══ REACTION LADDER — REBUILT 2026-07-17 (sanctioned fallback) ═══
+   The original guided-solve file was lost; per the recorded fallback rule the
+   ladder below is a REBUILD, built live with Venkat and canonical only upon
+   his per-reaction approval. Prefix mood-solve-* (GHOST rule [class*="mood-"]
+   still matches). MOUTH RULE 1 held: one mouth per mood, static hard swap.
+   TONE RULES held: no pout, concern aims at the problem, never at the child. */
+
+/* encourage — wrong answer. Acknowledge (soft dip, thoughtful), then a
+   determined rise with a double fist-pump: "we're not done". Never sad. */
+.rao-mascot.mood-solve-encourage .mouth-smile{opacity:0}
+.rao-mascot.mood-solve-encourage .mouth-hmm{opacity:1}
+.rao-mascot.mood-solve-encourage .m-brow{opacity:1}
+.rao-mascot.mood-solve-encourage .m-flip{transform-box:fill-box;transform-origin:center bottom;
+  animation:gsE calc(2.1s*var(--slow,1)) ease-in-out 1}
+@keyframes gsE{0%{transform:rotate(0) translateY(0)}
+  16%,30%{transform:rotate(-5deg) translateY(2px)}
+  46%{transform:rotate(2deg) translateY(-3px)}
+  58%,74%{transform:rotate(0) translateY(-1px)}100%{transform:rotate(0) translateY(0)}}
+.rao-mascot.mood-solve-encourage .m-arm-r{animation:gsEp calc(2.1s*var(--slow,1)) ease-in-out 1}
+@keyframes gsEp{0%,34%{transform:rotate(0)}46%,56%{transform:rotate(-108deg)}
+  62%{transform:rotate(-70deg)}70%,80%{transform:rotate(-108deg)}100%{transform:rotate(0)}}
+.rao-mascot.mood-solve-encourage .m-pupil{animation:gsEe calc(2.1s*var(--slow,1)) ease-in-out 1}
+@keyframes gsEe{0%,30%{transform:translateY(1.6px)}50%,100%{transform:translateY(0)}}
+
+/* happy — correct (1st try). Three decaying hops with squash-and-stretch,
+   grin, cheek flare, a delighted double-blink on landing. */
+.rao-mascot.mood-solve-happy .mouth-smile{opacity:0}
+.rao-mascot.mood-solve-happy .mouth-grin{opacity:1}
+.rao-mascot.mood-solve-happy .m-flip{transform-box:fill-box;transform-origin:center bottom;
+  animation:gsH calc(1.6s*var(--slow,1)) ease-out 1}
+@keyframes gsH{0%{transform:translateY(0) scaleY(1)}
+  10%{transform:translateY(1px) scaleY(.955)}22%{transform:translateY(-10px) scaleY(1.03)}
+  34%{transform:translateY(0) scaleY(.96)}46%{transform:translateY(-6px) scaleY(1.02)}
+  58%{transform:translateY(0) scaleY(.97)}70%{transform:translateY(-3px)}
+  82%,100%{transform:translateY(0) scaleY(1)}}
+.rao-mascot.mood-solve-happy .m-cheek{animation:gsHc calc(1.6s*var(--slow,1)) ease-in-out 1}
+@keyframes gsHc{0%{opacity:.85}30%,70%{opacity:1;transform:scale(1.3)}100%{opacity:.85}}
+.rao-mascot.mood-solve-happy .m-lid{animation:gsHb calc(1.6s*var(--slow,1)) linear 1}
+@keyframes gsHb{0%,60%,68%,74%,82%,100%{transform:scaleY(0)}64%,78%{transform:scaleY(1)}}
+
+/* celebrate — 3-streak. Arms shoot up and HOLD with two victory waves,
+   two jumps with squash, star glint, blush, dust puff on the first landing. */
+.rao-mascot.mood-solve-celebrate .mouth-smile{opacity:0}
+.rao-mascot.mood-solve-celebrate .mouth-grin{opacity:1}
+.rao-mascot.mood-solve-celebrate .m-flush{opacity:1}
+.rao-mascot.mood-solve-celebrate .m-arm-l{animation:gsCl calc(2.2s*var(--slow,1)) ease-in-out 1}
+.rao-mascot.mood-solve-celebrate .m-arm-r{animation:gsCr calc(2.2s*var(--slow,1)) ease-in-out 1}
+@keyframes gsCl{0%{transform:rotate(0)}14%,30%{transform:rotate(126deg)}38%{transform:rotate(112deg)}
+  46%,62%{transform:rotate(126deg)}70%{transform:rotate(112deg)}78%,86%{transform:rotate(126deg)}100%{transform:rotate(0)}}
+@keyframes gsCr{0%{transform:rotate(0)}14%,30%{transform:rotate(-126deg)}38%{transform:rotate(-112deg)}
+  46%,62%{transform:rotate(-126deg)}70%{transform:rotate(-112deg)}78%,86%{transform:rotate(-126deg)}100%{transform:rotate(0)}}
+.rao-mascot.mood-solve-celebrate .m-flip{transform-box:fill-box;transform-origin:center bottom;
+  animation:gsCb calc(2.2s*var(--slow,1)) ease-in-out 1}
+@keyframes gsCb{0%{transform:translateY(0) scaleY(1)}10%{transform:translateY(1px) scaleY(.95)}
+  20%{transform:translateY(-9px)}32%{transform:translateY(0) scaleY(.96)}
+  44%{transform:translateY(-6px)}56%{transform:translateY(0) scaleY(.975)}
+  66%,100%{transform:translateY(0) scaleY(1)}}
+.rao-mascot.mood-solve-celebrate .m-star{transform-box:fill-box;transform-origin:center;
+  animation:gsCs calc(2.2s*var(--slow,1)) ease-in-out 1}
+@keyframes gsCs{0%,100%{transform:scale(1)}24%{transform:scale(1.45) rotate(18deg)}
+  40%{transform:scale(1.1)}58%{transform:scale(1.45) rotate(-14deg)}76%{transform:scale(1)}}
+.rao-mascot.mood-solve-celebrate .m-dust{animation:gsCd calc(2.2s*var(--slow,1)) ease-out 1}
+@keyframes gsCd{0%,28%{opacity:0;transform:scale(.5)}36%{opacity:.8;transform:scale(1.1)}
+  52%{opacity:0;transform:scale(1.35)}100%{opacity:0}}
+
+/* hyped — 5-streak. Anticipation crouch, explosive 360° with overshoot
+   settle, arms out through the spin, star flash ×2, cape flutter. */
+.rao-mascot.mood-solve-hyped .mouth-smile{opacity:0}
+.rao-mascot.mood-solve-hyped .mouth-grin{opacity:1}
+.rao-mascot.mood-solve-hyped .m-flip{transform-box:fill-box;transform-origin:center;
+  animation:gsY calc(2s*var(--slow,1)) cubic-bezier(.3,.05,.25,1) 1}
+@keyframes gsY{0%{transform:rotate(0) scale(1)}12%{transform:rotate(-8deg) scale(.94) translateY(3px)}
+  62%{transform:rotate(352deg) scale(1.02)}74%{transform:rotate(366deg)}
+  84%{transform:rotate(357deg)}100%{transform:rotate(360deg) scale(1)}}
+.rao-mascot.mood-solve-hyped .m-arm-l{animation:gsYa calc(2s*var(--slow,1)) ease-in-out 1}
+.rao-mascot.mood-solve-hyped .m-arm-r{animation:gsYb calc(2s*var(--slow,1)) ease-in-out 1}
+@keyframes gsYa{0%,10%{transform:rotate(0)}20%,70%{transform:rotate(58deg)}100%{transform:rotate(0)}}
+@keyframes gsYb{0%,10%{transform:rotate(0)}20%,70%{transform:rotate(-58deg)}100%{transform:rotate(0)}}
+.rao-mascot.mood-solve-hyped .m-star{transform-box:fill-box;transform-origin:center;
+  animation:gsYs calc(2s*var(--slow,1)) ease-in-out 1}
+@keyframes gsYs{0%,100%{transform:scale(1);opacity:1}
+  26%{transform:scale(2) rotate(45deg)}38%{transform:scale(1.2)}
+  56%{transform:scale(1.9) rotate(-30deg)}70%{transform:scale(1)}}
+.rao-mascot.mood-solve-hyped .m-cape-cloth{transform-box:fill-box;transform-origin:center top;
+  animation:gsYc calc(2s*var(--slow,1)) ease-in-out 1}
+@keyframes gsYc{0%,100%{transform:skewX(0)}25%{transform:skewX(-9deg)}50%{transform:skewX(7deg)}75%{transform:skewX(-5deg)}}
+
+/* shook — comeback (correct after wrong). Sharp delighted recoil, eyes WIDE
+   (blink suspended), pupils up; settles with two tiny happy shivers and a
+   late cheek flare. O mouth throughout — surprise resolving into delight. */
+.rao-mascot.mood-solve-shook .mouth-smile{opacity:0}
+.rao-mascot.mood-solve-shook .mouth-o{opacity:1}
+.rao-mascot.mood-solve-shook .m-lid{animation:none;transform:scaleY(0)}
+.rao-mascot.mood-solve-shook .m-pupil{animation:gsSp calc(1.9s*var(--slow,1)) ease-out 1}
+@keyframes gsSp{0%,40%{transform:translateY(-1.8px)}70%,100%{transform:translateY(0)}}
+.rao-mascot.mood-solve-shook .m-flip{transform-box:fill-box;transform-origin:center bottom;
+  animation:gsS calc(1.9s*var(--slow,1)) ease-out 1}
+@keyframes gsS{0%{transform:rotate(0)}9%{transform:rotate(7deg) translateX(3px) translateY(-2px)}
+  22%{transform:rotate(5.5deg) translateX(2px)}34%{transform:rotate(6.5deg) translateX(2.5px)}
+  52%{transform:rotate(2.5deg)}62%{transform:rotate(3.5deg)}
+  74%{transform:rotate(1deg)}84%{transform:rotate(1.8deg)}100%{transform:rotate(0)}}
+.rao-mascot.mood-solve-shook .m-cheek{animation:gsSc calc(1.9s*var(--slow,1)) ease-in 1}
+@keyframes gsSc{0%,55%{opacity:.85}75%,100%{opacity:1;transform:scale(1.3)}}
+
+/* sleepy — held state: lids low, slow sway + gentle breathing rise.
+   Ends on wake(), not a timer. */
+.rao-mascot.mood-solve-sleepy .m-lid{animation:none;transform:scaleY(.92)}
+.rao-mascot.mood-solve-sleepy .m-flip{transform-box:fill-box;transform-origin:center bottom;
+  animation:gsZ calc(3.6s*var(--slow,1)) ease-in-out infinite}
+@keyframes gsZ{0%,100%{transform:rotate(-2deg) translateY(0)}
+  25%{transform:rotate(-.5deg) translateY(-1.2px)}50%{transform:rotate(2deg) translateY(0)}
+  75%{transform:rotate(.5deg) translateY(-1.2px)}}</style>
 <style>/* review summary bar only — sits ABOVE the cards, never inside one */
 
 .rvbar{position:sticky;top:0;z-index:60;margin:-24px -24px 18px;background:#2c2150;color:#fff;
@@ -3681,7 +4469,15 @@ function parseQuestion(attrs, content, fm, index) {
   const warnings = [];
   const issues = [];   // per-item diagnostics surfaced through build()/validate()
   const promptHtml = block(content, "prompt") || "";
-  const explain = block(content, "explain") || "";
+  // rao-master-17 (Brief 7.6.1): the frontmatter `explain:` form (CLAUDE.md
+  // §13.6) renders through the SAME assembly as markup <p class="explain"> —
+  // same element, same position, same reveal hooks, and the same build()-time
+  // sanitizer pass (sanitizeMarkup runs on the assembled inner, so both forms
+  // are cleaned identically). Precedence: markup wins; frontmatter is ignored
+  // when both exist — existing lessons must not change behavior.
+  const explainMarkup = block(content, "explain") || "";
+  const explainFm = fm.explain != null && String(fm.explain).trim() !== "" ? String(fm.explain) : "";
+  const explain = explainMarkup || explainFm;
   const help = `<p>${explain}</p>`;
   // Page figures come ONLY from the stimulus — not from SVGs that live inside an
   // answer area (palette/tiles/options/order/sequence). Those belong to their tiles
@@ -4774,7 +5570,7 @@ module.exports = { attach, serialize, check, BEHAVIORS };
     return { ok: errs === 0, errors: errs, warnings: warns, items: report };
   }
   var B = MODS["preview-behaviors"];
-  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-16"};
+  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-18"};
 })();
 
 </script>
@@ -5021,8 +5817,8 @@ function chatMsg(wrap, chip, bodyHtml, then) {
 // module never touches the question, never grades, never mutates.
 // ════════════════════════════════════════════════════════════════
 
-// Venkat's keep/remove ruling on this header is pending — removal is this
-// one line (set to "").
+// Ruled KEPT (Venkat, 2026-07-17). If ever re-ruled, removal is this one
+// line (set to "").
 var WALK_HEADER = "Solution — step by step";
 
 function walkChip(block, stepNum, stepTotal) {
@@ -5480,6 +6276,9 @@ function wireCard(frame) {
   // ── WRONG — the whisper (law 3), then the ladder speaks (law 5). ──
   function calmWrong(user) {
     wrongCount++;
+    // Every wrong ATTEMPT gets a signal (rao:whywrong below only fires when the
+    // option has an authored whyWrong entry). Robo's Layer 1 listens for this.
+    try { qbody.dispatchEvent(new CustomEvent("rao:wrong", { bubbles: true })); } catch (e) { /* signal only */ }
     var entry = whyMap ? lookupWhy(qbody, whyMap, answer) : null;
     if (entry && entry.code) {
       try {
@@ -5697,6 +6496,868 @@ function markFeedback(qbody, behavior, user, answer, ok, noGreen) {
   var qs = window.RaoPreview.build(document.getElementById('source').innerHTML);
   qs.forEach(function(q,i){ preview.insertAdjacentHTML('beforeend', card(q.markup, q.behavior, q.answer, q.hint, i+1, qs.length, { whyWrong: q.whyWrong, solution: q.solution })); });
   document.querySelectorAll('.pv-frame').forEach(wireCard);
+})();
+</script>
+<script>/* engine/robo.js — ROBO the mascot (Brief 7.7), verbatim. Loaded AFTER the
+   card renderer: he injects his own dock and listens for the card's rao:* events. */
+/* ============================================================================
+   robo.js — ROBO, the mascot (Brief 7.7, engine rao-master-18).
+
+   PROVENANCE — ported VERBATIM from the signed-off reference files:
+     · Core (dock injection, W/H live sync, synth audio, flyTo, bubble, poke
+       wobble, motion pool, victory lap, facade, resize clamps):
+       incoming/calm-card-v36.html (md5 deb8d07a84a9f1fbc6847b7ff57a965f),
+       which embeds the robo_motion_lab_v29 rig plus every approved fix since.
+     · Engagement (mood engine, six mood-solve-* reactions with hold timings
+       2100/1600/2200/2000/1900/held, praise + effort pools, name
+       personalization, drag/yield/roboPos persistence, eye-tracking, 45 s
+       doze, stuck-child lean-in): incoming/guided-solve-rebuilt-v1.html
+       (md5 362ca7c1940e1cb8bb09ab3403fdbc65) — the sanctioned rebuild.
+
+   PRODUCTION ADAPTATIONS (each disclosed in the Brief 7.7 report):
+     · The dock + SVG are INJECTED into document.body on load (the demo carried
+       them as static HTML). Load robo.css alongside this file.
+     · Robo.play(name) calls motion functions directly (the demo clicked its
+       dev-drawer buttons, which are not ported).
+     · Audio gate: the demo's #sound checkbox becomes `Robo.muted` (default
+       false). Synth-only, respects mute — the app sets Robo.muted = true.
+     · Slow factor: reads the --slow CSS var (default 1); the demo's #slow
+       checkbox is dev-drawer chrome and is not ported.
+     · Card events, not the demo ccBar: listens for the bubbling card events
+       `rao:wrong` (wrong attempt), `rao:outcome` ("correct" → the reaction
+       ladder; "solved-with-help" → walkthrough silence ON), `rao:next`
+       (silence OFF). Emitted by engine/rao-card.js.
+     · Walkthrough silence also hides any showing speech bubble immediately
+       (law 6: no bubble, no mood, no motion from open through the reveal).
+     · Child's name: read from window.RaoAccount.firstName (the app's
+       account/session layer). Missing → the nameless line, silently.
+     · The active question card (victory-lap orbit, lean-in direction) is the
+       card that last fired a rao:* event, else the .pv-card nearest the
+       viewport centre (the demo hardcoded its single card's id).
+
+   NOT PORTED (Brief 7.8 territory, per ROBO-ENGAGEMENT-FRAMEWORK-v4 §A-§D):
+   sneak-peek entrance · poke ladder stages 2-4 + cooldown (tap = ONE friendly
+   wobble here) · idle mischief + stage bolt · attention gaze · palette tint ·
+   carry flail + dust-off. The stage apple stays removed by design; the apple
+   TOSS motion in the pool stays.
+   ========================================================================== */
+(function () {
+  if (window.Robo) return;   /* idempotent load */
+
+  /* The rig SVG — verbatim from calm-card-v36 (dock HTML 22443-22514). */
+  var ROBO_SVG = [
+    '<svg class="rao-mascot" id="raoMascot" viewBox="0 0 120 132" xmlns="http://www.w3.org/2000/svg">',
+    '  <defs>',
+    '    <linearGradient id="raoGrad" x1="0" y1="0" x2="0" y2="1">',
+    '      <stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#6366f1"/>',
+    '    </linearGradient>',
+    '  </defs>',
+    '  <ellipse class="m-shadow" cx="60" cy="123" rx="29" ry="6" fill="rgba(31,25,60,0.14)"/>',
+    '  <g class="m-dust"><ellipse cx="34" cy="122" rx="8" ry="4" fill="rgba(148,163,184,.65)"/><ellipse cx="86" cy="122" rx="8" ry="4" fill="rgba(148,163,184,.65)"/></g>',
+    '  <g class="m-speedlines"><line x1="0" y1="26" x2="26" y2="26" class="sl sl1"/><line x1="0" y1="48" x2="18" y2="48" class="sl sl2"/><line x1="0" y1="70" x2="30" y2="70" class="sl sl3"/><line x1="0" y1="92" x2="16" y2="92" class="sl sl4"/><line x1="0" y1="110" x2="24" y2="110" class="sl sl5"/></g>',
+    '  <g class="m-thruster"><path d="M50 114 C50 123 55 130 60 133 C65 130 70 123 70 114 Z" fill="#f59e0b"/><path d="M55 114 C55 121 57 126 60 128 C63 126 65 121 65 114 Z" fill="#fde047"/></g>',
+    '  <g class="m-flip">',
+    '  <g class="m-cape"><path class="m-cape-cloth" d="M44 56 Q18 74 6 110 Q18 102 26 108 Q34 98 42 107 Q50 99 57 104 Q64 96 70 100 L80 58 Q62 66 44 56 Z" fill="#ef4444"/>',
+    '    <path d="M46 58 Q28 74 18 100" stroke="rgba(153,27,27,.5)" stroke-width="3" fill="none"/></g>',
+    '  <g class="m-antenna">',
+    '    <line x1="60" y1="30" x2="60" y2="15" stroke="#a78bfa" stroke-width="3" stroke-linecap="round"/>',
+    '    <polygon class="m-star" points="60,3 62.4,9.6 69.4,9.6 63.8,13.8 66,20.6 60,16.4 54,20.6 56.2,13.8 50.6,9.6 57.6,9.6" fill="#f59e0b"/>',
+    '  </g>',
+    '  <g class="m-noodle m-noodle-l" transform="translate(22,74) rotate(150)"><g class="ns ns1"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#7c3aed"/><g transform="translate(0,11)"><g class="ns ns2"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#7c3aed"/><g transform="translate(0,11)"><g class="ns ns3"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#7c3aed"/><g transform="translate(0,11)"><g class="ns ns4"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#7c3aed"/><g transform="translate(0,11)"><g class="ns ns5"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#8b5cf6"/><g transform="translate(0,11)"><g class="ns ns6"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#8b5cf6"/><g transform="translate(0,11)"><g class="ns ns7"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#c4b5fd"/><g transform="translate(0,11)"><g class="ns ns8"><rect x="-5" y="0" width="10" height="13" rx="5" fill="#c4b5fd"/></g></g></g></g></g></g></g></g></g></g></g></g></g></g></g></g>',
+    '  <g class="m-noodle m-noodle-r" transform="translate(98,74) rotate(-150)"><g class="ns ns1"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#7c3aed"/><g transform="translate(0,11)"><g class="ns ns2"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#7c3aed"/><g transform="translate(0,11)"><g class="ns ns3"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#7c3aed"/><g transform="translate(0,11)"><g class="ns ns4"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#7c3aed"/><g transform="translate(0,11)"><g class="ns ns5"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#8b5cf6"/><g transform="translate(0,11)"><g class="ns ns6"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#8b5cf6"/><g transform="translate(0,11)"><g class="ns ns7"><rect x="-5" y="0" width="10" height="14" rx="5" fill="#c4b5fd"/><g transform="translate(0,11)"><g class="ns ns8"><rect x="-5" y="0" width="10" height="13" rx="5" fill="#c4b5fd"/></g></g></g></g></g></g></g></g></g></g></g></g></g></g></g></g>',
+    '  <rect class="m-arm m-arm-l" x="16" y="70" width="12" height="30" rx="6" fill="#7c3aed"/>',
+    '  <rect class="m-arm m-arm-r" x="92" y="70" width="12" height="30" rx="6" fill="#7c3aed"/>',
+    '  <g class="m-body">',
+    '    <path class="m-torso" d="M60 30 C88 30 100 52 100 80 C100 108 82 120 60 120 C38 120 20 108 20 80 C20 52 32 30 60 30 Z" fill="url(#raoGrad)"/>',
+    '    <ellipse class="m-belly" cx="60" cy="88" rx="26" ry="24" fill="rgba(255,255,255,0.16)"/>',
+    '    <g class="m-booty"><ellipse cx="96" cy="99" rx="18" ry="16" fill="url(#raoGrad)"/><path d="M104 88 Q112 99 103 111" stroke="rgba(76,29,149,.0)" fill="none"/><path d="M89 89 Q97 99 89 110" stroke="rgba(76,29,149,.45)" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M87 112 Q97 117 106 108" stroke="rgba(59,31,120,.28)" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="101" cy="91" rx="5" ry="3.4" fill="rgba(255,255,255,.2)"/></g>',
+    '    <ellipse class="m-flush" cx="60" cy="70" rx="29" ry="16" fill="#ef4444"/>',
+    '    <path class="m-brow m-brow-l" d="M38 58 L54 62" stroke="#3b1f78" stroke-width="3.2" stroke-linecap="round"/>',
+    '    <path class="m-brow m-brow-r" d="M82 58 L66 62" stroke="#3b1f78" stroke-width="3.2" stroke-linecap="round"/>',
+    '    <g class="m-eye-l">',
+    '      <ellipse class="m-eye-white" cx="47" cy="72" rx="9" ry="11" fill="#fff"/>',
+    '      <circle class="m-pupil" cx="48" cy="74" r="4.4" fill="#221a3a"/>',
+    '      <circle cx="49.6" cy="72" r="1.5" fill="#fff"/>',
+    '      <rect class="m-lid" x="37" y="60" width="20" height="13" rx="4" fill="url(#raoGrad)"/>',
+    '    </g>',
+    '    <g class="m-eye-r">',
+    '      <ellipse class="m-eye-white" cx="73" cy="72" rx="9" ry="11" fill="#fff"/>',
+    '      <circle class="m-pupil" cx="72" cy="74" r="4.4" fill="#221a3a"/>',
+    '      <circle cx="73.6" cy="72" r="1.5" fill="#fff"/>',
+    '      <rect class="m-lid" x="63" y="60" width="20" height="13" rx="4" fill="url(#raoGrad)"/>',
+    '    </g>',
+    '    <circle class="m-cheek m-cheek-l" cx="38" cy="86" r="5.5" fill="#f9a8d4" opacity="0.85"/>',
+    '    <circle class="m-cheek m-cheek-r" cx="82" cy="86" r="5.5" fill="#f9a8d4" opacity="0.85"/>',
+    '    <path class="m-mouth mouth-smile" d="M50 92 Q60 100 70 92" stroke="#3b1f78" stroke-width="3" fill="none" stroke-linecap="round"/>',
+    '    <path class="m-mouth mouth-grin" d="M48 90 Q60 106 72 90 Q60 96 48 90 Z" fill="#3b1f78"/>',
+    '    <ellipse class="m-mouth mouth-o" cx="60" cy="95" rx="5" ry="6.5" fill="#3b1f78"/>',
+    '    <path class="m-mouth mouth-pout" d="M53 97 Q60 92 67 97" stroke="#3b1f78" stroke-width="3" fill="none" stroke-linecap="round"/>',
+    '    <path class="m-mouth mouth-hmm" d="M52 96 Q60 98 68 91" stroke="#3b1f78" stroke-width="2.8" fill="none" stroke-linecap="round"/>',
+    '    <path class="m-mouth mouth-chew" d="M53 94.5 Q60 97.5 67 94.5" stroke="#3b1f78" stroke-width="3" fill="none" stroke-linecap="round"/>',
+    '    <g class="m-mouth mouth-grit"><rect x="50" y="90" width="20" height="8" rx="3" fill="#3b1f78"/><path d="M55 90 L55 98 M60 90 L60 98 M65 90 L65 98" stroke="#fff" stroke-width="1.4"/></g>',
+    '    <g class="m-tongue"><ellipse cx="60" cy="99.5" rx="4.6" ry="5.8" fill="#ec4899"/><line x1="60" y1="96" x2="60" y2="103" stroke="#be185d" stroke-width="1.2" stroke-linecap="round"/></g>',
+    '    <!-- clap rig: front paws + impact spark, only visible during mood-clap -->',
+    '    <g class="m-paw m-paw-l"><rect x="33" y="88" width="14" height="17" rx="7" fill="#7c3aed"/><ellipse cx="40" cy="96" rx="4" ry="5.5" fill="#a78bfa"/></g>',
+    '    <g class="m-paw m-paw-r"><rect x="73" y="88" width="14" height="17" rx="7" fill="#7c3aed"/><ellipse cx="80" cy="96" rx="4" ry="5.5" fill="#a78bfa"/></g>',
+    '    <polygon class="m-clap-spark" points="60,84 62.5,91 69,93 62.5,95 60,102 57.5,95 51,93 57.5,91" fill="#fbbf24"/>',
+    '  </g>',
+    '  <g class="m-anger-flames"><path d="M46 30 C44 20 47 12 52 8 C52 15 55 20 56 26 Z" fill="#f97316"/><path d="M56 26 C55 14 59 5 64 2 C63 11 67 17 68 24 Z" fill="#ef4444"/><path d="M66 28 C66 19 70 12 75 10 C73 17 75 22 74 27 Z" fill="#fbbf24"/></g>',
+    '  <g class="m-steam"><circle cx="52" cy="22" r="5" fill="rgba(203,213,225,.8)"/><circle cx="61" cy="16" r="6.5" fill="rgba(226,232,240,.8)"/><circle cx="70" cy="21" r="4.5" fill="rgba(203,213,225,.8)"/></g>',
+    '  <text class="m-susq" x="94" y="46" font-family="Georgia, serif" font-size="24" font-weight="bold" fill="#8b5cf6">?</text>',
+    '  <g class="m-apple"><circle cx="84" cy="88" r="11" fill="#ef4444"/><circle cx="80" cy="84" r="3.2" fill="rgba(255,255,255,.45)"/><line x1="84" y1="77" x2="85.5" y2="71.5" stroke="#78350f" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="89.5" cy="73" rx="4.4" ry="2.3" fill="#22c55e" transform="rotate(-25 89.5 73)"/></g>',
+    '  <path class="m-shake-l" d="M16 96 Q9 105 16 114" stroke="#8b5cf6" stroke-width="3" fill="none" stroke-linecap="round"/>',
+    '  <path class="m-shake-r" d="M104 96 Q111 105 104 114" stroke="#8b5cf6" stroke-width="3" fill="none" stroke-linecap="round"/>',
+    '  <!-- v25 mischief props: live INSIDE the rig (stage-prop law untouched) -->',
+    '  <g class="m-spanner" transform="translate(74,30)"><rect x="-2.2" y="2" width="4.4" height="18" rx="2.2" fill="#94a3b8"/><path d="M-6 0 A6.5 6.5 0 1 1 6 0 L3 0 A3.4 3.4 0 1 0 -3 0 Z" fill="#94a3b8"/></g>',
+    '  <g class="m-jugg"><g class="m-jb m-jb1"><circle cx="44" cy="22" r="4.6" fill="#94a3b8"/><circle cx="44" cy="22" r="1.9" fill="#64748b"/></g><g class="m-jb m-jb2"><circle cx="60" cy="14" r="4.6" fill="#94a3b8"/><circle cx="60" cy="14" r="1.9" fill="#64748b"/></g><g class="m-jb m-jb3"><circle cx="76" cy="22" r="4.6" fill="#94a3b8"/><circle cx="76" cy="22" r="1.9" fill="#64748b"/></g></g>',
+    '  <g class="m-mag" transform="translate(86,78)"><circle cx="0" cy="0" r="9.5" fill="rgba(191,219,254,.45)" stroke="#475569" stroke-width="3"/><line x1="6.8" y1="6.8" x2="15" y2="15" stroke="#475569" stroke-width="4.2" stroke-linecap="round"/></g>',
+    '  </g><!-- /m-flip -->',
+    '</svg>'
+  ].join('\n');
+
+  function init() {
+    if (document.querySelector('.rao-dock')) return;   /* one Robo per page */
+
+    /* ── the dock (the demo carried this as static HTML; production injects) ── */
+    var dock = document.createElement('div');
+    dock.className = 'rao-dock';
+    dock.innerHTML = '<div class="rao-bubble"></div><div class="rao-mascot-wrap">' + ROBO_SVG + '</div>';
+    document.body.appendChild(dock);
+    var wrap = dock.querySelector('.rao-mascot-wrap');
+    var bubbleEl = dock.querySelector('.rao-bubble');
+    var svg = dock.querySelector('.rao-mascot');
+
+    var W = 120, H = 130;
+    /* v22: W/H track the RENDERED wrap size (responsive @600px), so clamps,
+       fly-home and stage bounds stay honest at every viewport. offsetWidth is
+       transform-immune, so mood/carry animations can't corrupt the numbers. */
+    function _syncWH(){ if (wrap && wrap.offsetWidth) { W = wrap.offsetWidth; H = wrap.offsetHeight; } }
+    _syncWH(); window.addEventListener('resize', _syncWH);
+    var travelTimer = null;
+    var muted = false;   /* the app's mute switch — Robo.muted (demo: #sound checkbox) */
+
+    /* whoosh — same synth as the demo */
+    var actx = null;
+    function getCtx() {
+      if (!actx) { var AC = window.AudioContext || window.webkitAudioContext; if (AC) actx = new AC(); }
+      if (actx && actx.state === 'suspended') { try { actx.resume(); } catch (e) {} }
+      return actx;
+    }
+    function whoosh(dur) {
+      if (muted) return;
+      var ctx = getCtx(); if (!ctx) return;
+      dur = dur || 0.55;
+      var buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * dur), ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      var src = ctx.createBufferSource(); src.buffer = buf;
+      var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.2;
+      var t = ctx.currentTime;
+      bp.frequency.setValueAtTime(500, t);
+      bp.frequency.exponentialRampToValueAtTime(1600, t + dur * 0.6);
+      bp.frequency.exponentialRampToValueAtTime(400, t + dur);
+      var g = ctx.createGain();
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.05, t + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      src.connect(bp); bp.connect(g); g.connect(ctx.destination);
+      src.start(t); src.stop(t + dur);
+    }
+    /* clap hit: sharp filtered-noise burst; slight pitch jitter per clap */
+    function clapSfx(k) {
+      if (muted) return;
+      var ctx = getCtx(); if (!ctx) return;
+      var dur = 0.09;
+      var buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * dur), ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for (var i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+      var src = ctx.createBufferSource(); src.buffer = buf;
+      var bp = ctx.createBiquadFilter(); bp.type = 'bandpass';
+      bp.frequency.value = 1300 + (k || 0) * 180; bp.Q.value = 1.8;
+      var t = ctx.currentTime;
+      var g = ctx.createGain();
+      g.gain.setValueAtTime(0.14, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      src.connect(bp); bp.connect(g); g.connect(ctx.destination);
+      src.start(t); src.stop(t + dur);
+    }
+    /* small chirp helper for motion SFX */
+    function chirp(f0, f1, at, dur, type, vol) {
+      if (muted) return;
+      var ctx = getCtx(); if (!ctx) return;
+      var t = ctx.currentTime + (at || 0);
+      var osc = ctx.createOscillator(), g = ctx.createGain();
+      osc.type = type || 'square';
+      osc.frequency.setValueAtTime(f0, t);
+      osc.frequency.exponentialRampToValueAtTime(f1, t + dur);
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(vol || 0.07, t + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(t); osc.stop(t + dur + 0.02);
+    }
+    /* generic filtered-noise sweep (burst, hiss) */
+    function noiseSweep(f0, f1, at, dur, vol, q) {
+      if (muted) return;
+      var ctx = getCtx(); if (!ctx) return;
+      var buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * dur), ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      var src = ctx.createBufferSource(); src.buffer = buf;
+      var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = q || 1.2;
+      var t = ctx.currentTime + (at || 0);
+      bp.frequency.setValueAtTime(f0, t);
+      bp.frequency.exponentialRampToValueAtTime(f1, t + dur);
+      var g = ctx.createGain();
+      g.gain.setValueAtTime(vol || 0.08, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      src.connect(bp); bp.connect(g); g.connect(ctx.destination);
+      src.start(t); src.stop(t + dur);
+    }
+
+    /* production: no #slow toggle — honour a host-set --slow, default 1 */
+    function slowFactor() {
+      var v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--slow'));
+      return (v && v > 0) ? v : 1;
+    }
+
+    function flyTo(x, y, quietFly) {
+      var cur = dock.getBoundingClientRect();
+      /* Brief 7.7.1: landing clamps ALIGNED with the drag clamps (4px margins),
+         so any destination nearestClear selects is one flyTo can land on. The
+         demo's tighter 8/60/70 insets clamped below-the-card yield spots back
+         onto the card footer on crowded mobile pages. Victory-lap exact-return
+         is WAAPI translate keyframes, not flyTo — unaffected. */
+      var nx = Math.max(4, Math.min(window.innerWidth - W - 4, x - W / 2));
+      var ny = Math.max(4, Math.min(window.innerHeight - H - 4, y - H / 2));
+      dock.classList.toggle('fly-right', nx > cur.left);
+      dock.classList.toggle('fly-left', nx <= cur.left);
+      if (!quietFly) whoosh(0.55 * slowFactor());
+      dock.classList.add('rao-travelling');
+      dock.style.left = nx + 'px'; dock.style.top = ny + 'px';
+      if (travelTimer) clearTimeout(travelTimer);
+      travelTimer = setTimeout(function () {
+        dock.classList.remove('rao-travelling');
+        dock.classList.remove('fly-right'); dock.classList.remove('fly-left');
+      }, 560 * slowFactor());
+    }
+
+    /* speech bubble */
+    var bubbleTimer = null;
+    function showBubble(text, ms) {
+      bubbleEl.textContent = text;
+      bubbleEl.classList.add('show');
+      if (bubbleTimer) clearTimeout(bubbleTimer);
+      bubbleTimer = setTimeout(function () { bubbleEl.classList.remove('show'); }, ms || 1300);
+    }
+    function hideBubble() {
+      bubbleEl.classList.remove('show');
+      if (bubbleTimer) { clearTimeout(bubbleTimer); bubbleTimer = null; }
+    }
+
+    /* tap = poke: ONE friendly wobble + blip. The poke LADDER (stages 2-4,
+       cooldown) is Brief 7.8 scope and is deliberately not here. */
+    function pokeStage(cls, ms, sfx) {
+      var s = slowFactor();
+      clapBusy = true;
+      svg.classList.add(cls);
+      if (sfx) sfx(s);
+      setTimeout(function () { svg.classList.remove(cls); clapBusy = false; }, ms * s + 40);
+    }
+    function poke() {
+      if (clapBusy) return;
+      pokeStage('mood-poked', 500, function (s) { chirp(1200, 1550, 0, 0.06, 'square', 0.05); });
+    }
+
+    /* ── the motion pool (verbatim WAAPI/SFX bodies; demo buttons → functions) ── */
+    var clapBusy = false;
+    function playClap() {
+      if (clapBusy) return;
+      clapBusy = true;
+      var s = slowFactor();
+      svg.classList.add('mood-clap');
+      [0.16, 0.48, 0.80].forEach(function (t, k) {   // contacts = 50% of each .32s cycle
+        setTimeout(function () { clapSfx(k); }, t * 1000 * s);
+      });
+      setTimeout(function () { svg.classList.remove('mood-clap'); clapBusy = false; }, 1000 * s);
+    }
+    function playTumble() {
+      if (clapBusy) return;
+      clapBusy = true;
+      var s = slowFactor();
+      var D = 2.2 * s;                                   // seconds, matches CSS
+      var cur = dock.getBoundingClientRect();
+      var margin = 16;
+      var maxLeft = window.innerWidth - W - margin;
+      var roomR = maxLeft - cur.left, roomL = cur.left - margin;
+      var goRight = roomR >= roomL;
+      var dist = Math.min(window.innerWidth * 0.55, goRight ? roomR : roomL);
+      var nx = cur.left + (goRight ? dist : -dist);
+      svg.classList.toggle('tumble-left', !goRight);     // mirror for leftward rolls
+      svg.classList.add('mood-tumble');
+      dock.style.transition = 'left ' + D + 's linear';  // constant tumbling velocity
+      dock.style.left = nx + 'px';
+      /* SFX: launch boing -> thump+tick on each of the three touchdowns -> ta-da */
+      chirp(200, 900, 0.04 * D, 0.09 * D);
+      [0.31, 0.59, 0.87].forEach(function (f, k) {
+        setTimeout(function () { chirp(140, 60, 0, 0.1, 'sine', 0.12); clapSfx(k); }, f * D * 1000);
+      });
+      chirp(900, 1500, 0.9 * D, 0.05 * D);
+      chirp(1100, 1900, 0.95 * D, 0.06 * D);
+      setTimeout(function () {
+        svg.classList.remove('mood-tumble'); svg.classList.remove('tumble-left');
+        dock.style.transition = '';
+        clapBusy = false;
+      }, D * 1000 + 80);
+    }
+    function playAngry() {
+      if (clapBusy) return;
+      clapBusy = true;
+      var s = slowFactor();
+      var D = 2.4 * s;
+      svg.classList.add('mood-angry');
+      /* SFX arc: rumble builds -> kettle whistle -> flame burst + crackle -> steam hiss -> phew */
+      chirp(75, 155, 0.05 * D, 0.5 * D, 'sine', 0.10);
+      chirp(500, 2000, 0.35 * D, 0.32 * D, 'sine', 0.045);
+      setTimeout(function () {
+        noiseSweep(300, 900, 0, 0.22, 0.16, 1);
+        setTimeout(function () { clapSfx(2); }, 55);
+        setTimeout(function () { clapSfx(3); }, 125);
+      }, 0.57 * D * 1000);
+      setTimeout(function () { noiseSweep(2600, 700, 0, 0.5, 0.05, 2); }, 0.72 * D * 1000);
+      chirp(700, 450, 0.88 * D, 0.12 * D, 'sine', 0.06);
+      chirp(450, 850, 0.92 * D, 0.14 * D, 'sine', 0.05);
+      setTimeout(function () { svg.classList.remove('mood-angry'); clapBusy = false; }, D * 1000 + 60);
+    }
+    function playDance() {
+      if (clapBusy) return;
+      clapBusy = true;
+      var s = slowFactor();
+      var D = 3.2 * s;                       // 8 beats x 0.4s
+      var beat = 0.4 * s;
+      svg.classList.add('mood-dance');
+      /* THE GROOVE — all synthesized:
+         kick on every beat, hats on off-beats, square bassline, riff into the finale */
+      var bass = [130.81, 130.81, 164.81, 98.00, 130.81, 164.81, 196.00, 261.63]; // C E G walk
+      for (var k = 0; k < 8; k++) {
+        chirp(150, 52, k * beat, 0.12, 'sine', 0.13);                 // kick
+        noiseSweep(6000, 2800, k * beat + beat / 2, 0.05, 0.03, 3);   // hat
+        chirp(bass[k], bass[k] * 1.001, k * beat + 0.02, 0.2, 'square', 0.045); // bass
+      }
+      chirp(523.25, 659.25, 4.5 * beat, 0.14, 'square', 0.05);        // riff climbing in
+      chirp(659.25, 783.99, 5.5 * beat, 0.14, 'square', 0.05);
+      chirp(783.99, 1046.5, 6.5 * beat, 0.16, 'square', 0.05);
+      chirp(900, 1500, 7.4 * beat, 0.1);                              // ta-da!
+      chirp(1100, 1900, 7.65 * beat, 0.14);
+      setTimeout(function () { svg.classList.remove('mood-dance'); clapBusy = false; }, D * 1000 + 60);
+    }
+    function playSus() {
+      if (clapBusy) return;
+      clapBusy = true;
+      var s = slowFactor();
+      var D = 2.6 * s;
+      svg.classList.add('mood-sus');
+      /* detective plucks on each eye-dart, then a rising "hmmmm" */
+      chirp(165, 160, 0.12 * D, 0.2, 'triangle', 0.09);
+      chirp(147, 142, 0.52 * D, 0.2, 'triangle', 0.09);
+      chirp(170, 265, 0.82 * D, 0.4 * s, 'sine', 0.06);
+      setTimeout(function () { svg.classList.remove('mood-sus'); clapBusy = false; }, D * 1000 + 60);
+    }
+    function playMac() {
+      if (clapBusy) return;
+      clapBusy = true;
+      var s = slowFactor();
+      var beat = 0.42 * s;
+      var D = 12 * beat;
+      svg.classList.add('mood-mac');
+      /* ORIGINAL latin groove — Am vamp, clave woodblock, shaker, marimba riff.
+         Deliberately NOT the Macarena melody (copyright). */
+      var bass = [110,110,164.81,110, 98,98,146.83,98, 110,164.81,110,220];
+      for (var k = 0; k < 12; k++) {
+        chirp(bass[k], bass[k]*1.001, k*beat+0.01, 0.22, 'square', 0.045);   // bass
+        if (k % 2 === 0) chirp(150, 52, k*beat, 0.1, 'sine', 0.11);          // kick 1 & 3
+        noiseSweep(7000, 3500, k*beat + beat/2, 0.04, 0.025, 3);             // shaker off-beats
+      }
+      [0, 1.5, 3, 5, 6, 8, 9.5, 11].forEach(function (b) {                   // 3-2 clave woodblock
+        noiseSweep(2100, 1900, b*beat, 0.05, 0.09, 8);
+      });
+      /* original marimba riff (triangle) — sparse, minor-mode noodle */
+      [[659.25,2.2],[587.33,3.2],[523.25,6.2],[493.88,7.2],[440,10.1],[523.25,10.5],[659.25,10.9]]
+        .forEach(function (n) { chirp(n[0], n[0]*1.001, n[1]*beat, 0.18, 'triangle', 0.055); });
+      /* the jump-turn: whoosh + "¡HEY!" */
+      setTimeout(function () { whoosh(0.35 * s); }, 11.2 * beat * 1000);
+      setTimeout(function () { showBubble('¡HEY!', 900 * s); chirp(900, 1600, 0, 0.12); }, 11.6 * beat * 1000);
+      setTimeout(function () { svg.classList.remove('mood-mac'); clapBusy = false; }, D * 1000 + 80);
+    }
+    function playApple() {
+      if (clapBusy) return;
+      clapBusy = true;
+      var s = slowFactor();
+      var D = 3.6 * s;
+      svg.classList.add('mood-apple');
+      /* toss swish -> falling whistle -> CRUNCH x3 -> gulp -> mmm */
+      chirp(400, 950, 0.13 * D, 0.16 * s, 'sine', 0.06);
+      chirp(950, 500, 0.34 * D, 0.28 * s, 'sine', 0.05);
+      [0.58, 0.68, 0.78].forEach(function (f, k) {
+        setTimeout(function () { noiseSweep(900 - k * 120, 240, 0, 0.09, 0.14, 1); }, f * D * 1000);
+      });
+      setTimeout(function () { chirp(300, 115, 0, 0.18, 'sine', 0.09); }, 0.87 * D * 1000);   // gulp
+      setTimeout(function () {
+        chirp(523.25, 659.25, 0, 0.12, 'sine', 0.06); chirp(659.25, 784, 0.13 * s, 0.16, 'sine', 0.05);
+        showBubble('Mmm! 😋', 1100 * s);
+      }, 0.93 * D * 1000);
+      setTimeout(function () { svg.classList.remove('mood-apple'); clapBusy = false; }, D * 1000 + 80);
+    }
+    function playLean() {
+      if (clapBusy) return;
+      clapBusy = true;
+      var s = slowFactor();
+      var D = 3.6 * s;
+      svg.classList.add('mood-lean');
+      dock.classList.add('rao-leaning');
+      /* zoom whoosh-in -> glance pluck -> rising question intonation -> whoosh-out */
+      noiseSweep(400, 1300, 0.08 * D, 0.28 * s, 0.06, 1.5);
+      chirp(180, 320, 0.1 * D, 0.24 * s, 'sine', 0.08);
+      chirp(160, 152, 0.33 * D, 0.18, 'triangle', 0.08);            // glance pluck
+      chirp(430, 455, 0.6 * D, 0.14 * s, 'square', 0.05);           // "hm-"
+      chirp(520, 560, 0.66 * D, 0.14 * s, 'square', 0.05);          // "hm-"
+      chirp(620, 1080, 0.72 * D, 0.3 * s, 'square', 0.055);         // "hmMM?" — the rise
+      noiseSweep(1100, 380, 0.86 * D, 0.26 * s, 0.045, 1.5);
+      setTimeout(function () { showBubble('Diiid you understaaand? 🤨', 2400 * s); }, 0.32 * D * 1000);
+      setTimeout(function () {
+        svg.classList.remove('mood-lean');
+        dock.classList.remove('rao-leaning');
+        clapBusy = false;
+      }, D * 1000 + 80);
+    }
+    function playBooty() {
+      if (clapBusy) return;
+      clapBusy = true;
+      var s = slowFactor();
+      var D = 3.0 * s;
+      svg.classList.add('mood-booty');
+      /* whip-around whoosh -> bongo on every wiggle -> whip-back -> wink */
+      noiseSweep(500, 1400, 0.02 * D, 0.2 * s, 0.06, 1.5);
+      chirp(300, 500, 0.03 * D, 0.14 * s, 'sine', 0.07);
+      for (var k = 0; k < 9; k++) {                           // 4Hz — one bongo per bounce
+        chirp(k % 2 ? 180 : 235, k % 2 ? 165 : 215, (0.55 + k * 0.24) * s, 0.08, 'sine', 0.1);
+      }
+      [2, 5, 8].forEach(function (k) {                        // rubber-band boings
+        chirp(190, 400, (0.55 + k * 0.24) * s, 0.15 * s, 'triangle', 0.08);
+      });
+      noiseSweep(1400, 500, 0.84 * D, 0.2 * s, 0.05, 1.5);
+      chirp(900, 1500, 0.94 * D, 0.09 * s);                   // wink!
+      chirp(1200, 1800, 0.965 * D, 0.1 * s);
+      setTimeout(function () { showBubble('hehe 😜', 1000 * s); }, 0.92 * D * 1000);
+      setTimeout(function () { svg.classList.remove('mood-booty'); clapBusy = false; }, D * 1000 + 80);
+    }
+    function playNoodle() {
+      if (clapBusy) return;
+      clapBusy = true;
+      var s = slowFactor();
+      var beat = 0.6 * s;                                   // beat = one arm-wave cycle
+      var D = 8 * beat;
+      svg.classList.add('mood-noodle');
+      chirp(900, 240, 0.05 * s, 0.32 * s, 'sine', 0.07);    // bones leave
+      for (var k = 0; k < 8; k++) {
+        var t = k * beat;
+        /* rubbery wobble bass: bends UP on even beats, DOWN on odd — noodle music */
+        if (k % 2 === 0) chirp(85, 140, t + 0.02, 0.42 * s, 'square', 0.05);
+        else chirp(140, 82, t + 0.02, 0.42 * s, 'square', 0.05);
+        chirp(150, 52, t, 0.1, 'sine', 0.12);                              // kick on every crest
+        if (k % 2 === 1) noiseSweep(1800, 900, t + beat / 2, 0.07, 0.06, 2); // backbeat snare
+        chirp(300, 700, t + 0.04 * s, 0.16 * s, 'sawtooth', 0.03);          // wah on the crest...
+        chirp(700, 320, t + 0.21 * s, 0.15 * s, 'sawtooth', 0.03);          // ...wah
+        noiseSweep(6500, 3200, t + beat / 2, 0.04, 0.02, 3);                // hat
+      }
+      chirp(240, 880, D - 0.35 * s, 0.3 * s, 'sine', 0.07); // bones return
+      setTimeout(function () { svg.classList.remove('mood-noodle'); clapBusy = false; }, D * 1000 + 80);
+    }
+    function playSquash() {
+      if (clapBusy) return;
+      clapBusy = true;
+      var s = slowFactor();
+      var D = 3.6 * s;
+      svg.classList.add('mood-squash');
+      chirp(180, 950, 0.01 * D, 0.28 * s, 'sine', 0.05);                    // riser with the jump
+      chirp(900, 420, 0.135 * D, 0.2 * s, 'sine', 0.045);                   // falling whistle
+      setTimeout(function () {                                              // THE DROP (20%)
+        noiseSweep(500, 110, 0, 0.22, 0.18, 1);
+        chirp(110, 36, 0, 0.5 * s, 'sine', 0.17);
+        chirp(48, 42, 0.06 * s, 0.4 * s, 'sine', 0.08);
+      }, 0.195 * D * 1000);
+      setTimeout(function () { chirp(58, 52, 0, 0.06, 'sine', 0.05); }, 0.23 * D * 1000);
+      setTimeout(function () { chirp(90, 820, 0, 0.28 * s, 'triangle', 0.1); }, 0.26 * D * 1000); // SPRING
+      setTimeout(function () { chirp(1250, 1550, 0, 0.06, 'square', 0.04); }, 0.385 * D * 1000);  // apex glint
+      /* decaying bounce contacts: pitch and volume fall with impact speed */
+      [[0.49, 140, 0.12], [0.635, 118, 0.085], [0.73, 100, 0.055], [0.81, 86, 0.035]].forEach(function (c) {
+        setTimeout(function () { chirp(c[1], 48, 0, 0.11, 'sine', c[2]); }, c[0] * D * 1000);
+      });
+      setTimeout(function () { clapSfx(1); }, 0.49 * D * 1000);             // grit on the big second contact
+      setTimeout(function () { svg.classList.remove('mood-squash'); clapBusy = false; }, D * 1000 + 80);
+    }
+    function playHero() {
+      if (clapBusy) return;
+      clapBusy = true;
+      var s = slowFactor();
+      var D = 4.2 * s;
+      svg.classList.add('mood-hero');
+      /* transformation sparkle -> fanfare -> wind gusts + zip ticks -> landing */
+      chirp(500, 900, 0.02 * D, 0.09 * s); chirp(700, 1250, 0.05 * D, 0.09 * s);
+      chirp(950, 1700, 0.08 * D, 0.12 * s);
+      noiseSweep(400, 1400, 0.1 * D, 0.25 * s, 0.06, 1.5);
+      setTimeout(function () { showBubble('Super Robo! 🌟', 1300 * s); }, 0.15 * D * 1000);
+      [523.25, 783.99, 1046.5].forEach(function (f, k) {                    // original 3-note fanfare
+        chirp(f, f * 1.002, (0.17 + k * 0.07) * D, 0.16 * s, 'triangle', 0.06);
+      });
+      [0.28, 0.46, 0.64, 0.8].forEach(function (f) {                        // wind gusts
+        setTimeout(function () { noiseSweep(900, 2200, 0, 0.4 * s, 0.035, 1.2); }, f * D * 1000);
+      });
+      [0.36, 0.58, 0.74].forEach(function (f) {                             // speed-line zips
+        setTimeout(function () { chirp(2200, 1400, 0, 0.06, 'square', 0.025); }, f * D * 1000);
+      });
+      setTimeout(function () { noiseSweep(1400, 450, 0, 0.28 * s, 0.05, 1.5); }, 0.88 * D * 1000);
+      setTimeout(function () { chirp(150, 55, 0, 0.11, 'sine', 0.1); }, 0.93 * D * 1000);   // touchdown
+      chirp(900, 1500, 0.955 * D, 0.09 * s); chirp(1200, 1900, 0.975 * D, 0.11 * s);        // ta-da
+      setTimeout(function () { svg.classList.remove('mood-hero'); clapBusy = false; }, D * 1000 + 80);
+    }
+
+    /* ══ VICTORY LAP — orbit the active question card, exact-return ══ */
+    var lapActive = false;
+    function playLap(rect) {
+      if (clapBusy) return;
+      clapBusy = true; lapActive = true;
+      var s = slowFactor();
+      var T = 3.3 * s;                                   // seconds total
+      /* orbit rect in dock top-left coords (default: page, inset from edges/controls) */
+      var minX = rect ? rect.minX : 16,
+          maxX = rect ? rect.maxX : window.innerWidth - W - 16,
+          minY = rect ? rect.minY : 74,
+          maxY = rect ? rect.maxY : window.innerHeight - H - 84;
+      var r = Math.min(90, (maxX - minX) / 2 - 1, (maxY - minY) / 2 - 1);
+      if (r < 8) { clapBusy = false; lapActive = false; return; }      // no room, bail
+      /* parametric clockwise rounded-rect: 4 straights + 4 corner arcs */
+      var sw = (maxX - minX) - 2 * r, sh = (maxY - minY) - 2 * r, arc = Math.PI * r / 2;
+      var per = 2 * sw + 2 * sh + 4 * arc;
+      var segs = [
+        { L: sw,  f: function (d) { return { x: minX + r + d, y: minY, a: 0 }; } },
+        { L: arc, f: function (d) { var a = -Math.PI / 2 + d / r;
+            return { x: maxX - r + r * Math.cos(a), y: minY + r + r * Math.sin(a), a: a + Math.PI / 2 }; } },
+        { L: sh,  f: function (d) { return { x: maxX, y: minY + r + d, a: Math.PI / 2 }; } },
+        { L: arc, f: function (d) { var a = d / r;
+            return { x: maxX - r + r * Math.cos(a), y: maxY - r + r * Math.sin(a), a: a + Math.PI / 2 }; } },
+        { L: sw,  f: function (d) { return { x: maxX - r - d, y: maxY, a: Math.PI }; } },
+        { L: arc, f: function (d) { var a = Math.PI / 2 + d / r;
+            return { x: minX + r + r * Math.cos(a), y: maxY - r + r * Math.sin(a), a: a + Math.PI / 2 }; } },
+        { L: sh,  f: function (d) { return { x: minX, y: maxY - r - d, a: -Math.PI / 2 }; } },
+        { L: arc, f: function (d) { var a = Math.PI + d / r;
+            return { x: minX + r + r * Math.cos(a), y: minY + r + r * Math.sin(a), a: a + Math.PI / 2 }; } }
+      ];
+      function pt(t) {                                    // t in [0,1) clockwise from top-left arc end
+        var d = ((t % 1) + 1) % 1 * per;
+        for (var i = 0; i < segs.length; i++) {
+          if (d <= segs[i].L || i === segs.length - 1) return segs[i].f(Math.min(d, segs[i].L));
+          d -= segs[i].L;
+        }
+      }
+      var ox = dock.offsetLeft, oy = dock.offsetTop;
+      /* nearest point on the orbit = entry */
+      var t0 = 0, best = 1e9;
+      for (var i = 0; i < 160; i++) {
+        var p = pt(i / 160), dd = (p.x - ox) * (p.x - ox) + (p.y - oy) * (p.y - oy);
+        if (dd < best) { best = dd; t0 = i / 160; }
+      }
+      /* keyframes: 0→0.10 swoop in · 0.10→0.90 full lap · 0.90→1 swoop home */
+      var N = 44, move = [], bank = [];
+      function bankDeg(ux) { return Math.max(-16, Math.min(16, 16 * ux)); }
+      move.push({ offset: 0, transform: 'translate(0px,0px)', easing: 'ease-in' });
+      bank.push({ offset: 0, transform: 'rotate(0deg)', easing: 'ease-in' });
+      for (var k = 0; k <= N; k++) {
+        var t = t0 + k / N, q = pt(t), off = 0.10 + 0.80 * (k / N);
+        move.push({ offset: off, transform: 'translate(' + (q.x - ox).toFixed(1) + 'px,' + (q.y - oy).toFixed(1) + 'px)' });
+        bank.push({ offset: off, transform: 'rotate(' + bankDeg(Math.cos(q.a)).toFixed(1) + 'deg)' });
+      }
+      move.push({ offset: 1, transform: 'translate(0px,0px)', easing: 'ease-out' });
+      bank.push({ offset: 1, transform: 'rotate(0deg)', easing: 'ease-out' });
+      move[move.length - 2].easing = 'ease-out'; bank[bank.length - 2].easing = 'ease-out';
+      dock.classList.add('rao-travelling');               // thruster + shadow drop + float pause
+      svg.classList.add('mood-lap');
+      var aMove = dock.animate(move, { duration: T * 1000, fill: 'both' });
+      var aBank = svg.animate(bank, { duration: T * 1000, fill: 'both' });
+      showBubble('Wheee! 🎉', 1300 * s);
+      /* sparkle comet trail at his live position */
+      var sparkT = setInterval(function () {
+        var rct = dock.getBoundingClientRect();
+        var sp = document.createElement('div');
+        sp.className = 'lap-spark' + (Math.random() < 0.4 ? ' star' : '');
+        sp.style.background = ['#f59e0b', '#8b5cf6', '#c4b5fd'][Math.floor(Math.random() * 3)];
+        sp.style.left = (rct.left + rct.width / 2 - 5 + (Math.random() * 18 - 9)) + 'px';
+        sp.style.top = (rct.top + rct.height * 0.62 + (Math.random() * 14 - 7)) + 'px';
+        document.body.appendChild(sp);
+        setTimeout(function () { sp.remove(); }, 680 * s);
+      }, 85 * s);
+      /* SFX — launch riser, C-E-G-C corner arpeggio, two air whooshes, thump + ta-da.
+         Deterministic counts for QA: 8 oscillators, 2 buffer sources. */
+      chirp(320, 1250, 0.02 * T, 0.16 * T, 'square', 0.06);            // riser
+      var corners = [sw + arc / 2, sw + arc + sh + arc / 2, sw + arc + sh + arc + sw + arc / 2,
+                     sw + arc + sh + arc + sw + arc + sh + arc / 2].map(function (d) { return d / per; });
+      [523.25, 659.25, 783.99, 1046.5].forEach(function (f, k) {
+        var tc = 0.10 + 0.80 * (((corners[k] - t0) % 1 + 1) % 1);
+        chirp(f, f * 1.02, tc * T, 0.09, 'sine', 0.06);                // corner blip
+      });
+      noiseSweep(1400, 500, 0.16 * T, 0.30 * T, 0.05, 1);              // air whooshes
+      noiseSweep(1500, 450, 0.52 * T, 0.30 * T, 0.05, 1);
+      chirp(150, 60, 0.925 * T, 0.10, 'sine', 0.10);                   // landing thump
+      chirp(900, 1500, 0.955 * T, 0.06);                               // ta-da
+      chirp(1100, 1900, 0.975 * T, 0.07);
+      setTimeout(function () {
+        clearInterval(sparkT);
+        aMove.cancel(); aBank.cancel();
+        dock.classList.remove('rao-travelling');
+        svg.classList.remove('mood-lap');
+        clapBusy = false; lapActive = false;
+      }, T * 1000 + 80);
+    }
+    /* the active question card: the one that last spoke, else nearest to centre */
+    var lastCard = null;
+    function activeCardEl() {
+      if (lastCard && document.contains(lastCard)) return lastCard;
+      var cards = document.querySelectorAll('.pv-card'), bestEl = null, bestD = 1e9;
+      var cy = window.innerHeight / 2;
+      for (var i = 0; i < cards.length; i++) {
+        var r = cards[i].getBoundingClientRect();
+        if (!r.width && !r.height) continue;
+        var d = Math.abs((r.top + r.bottom) / 2 - cy);
+        if (d < bestD) { bestD = d; bestEl = cards[i]; }
+      }
+      return bestEl;
+    }
+    function cardOrbitRect() {
+      var c = activeCardEl();
+      if (!c) return null;
+      var r = c.getBoundingClientRect();                      /* computed at trigger time, never cached */
+      return { minX: Math.max(4, r.left - W * 0.5),
+               maxX: Math.min(window.innerWidth  - W - 4, r.right  - W * 0.5),
+               minY: Math.max(4, r.top  - H * 0.5),
+               maxY: Math.min(window.innerHeight - H - 4, r.bottom - H * 0.5) };
+    }
+
+    /* ══ window.Robo facade (Guide §5). DROP policy: play() returns false while busy. ══ */
+    var MOTIONS = { clap: playClap, tumble: playTumble, angry: playAngry, dance: playDance,
+      sus: playSus, mac: playMac, apple: playApple, lean: playLean, booty: playBooty,
+      noodle: playNoodle, squash: playSquash, hero: playHero,
+      lap: function () { playLap(cardOrbitRect() || undefined); } };
+    window.Robo = {
+      play: function (name) {
+        if (clapBusy || lapActive) return false;               /* DROP, never queue */
+        var f = MOTIONS[name]; if (!f) return false;
+        f(); return true;
+      },
+      flyTo: function (x, y) { if (!lapActive) flyTo(x, y); },
+      bubble: showBubble,
+      poke: poke,
+      busy: function () { return clapBusy || lapActive; }
+    };
+    Object.defineProperty(window.Robo, 'muted', {
+      get: function () { return muted; },
+      set: function (v) { muted = !!v; }
+    });
+    /* start position: bottom-right; left/top-driven like the demo */
+    dock.style.left = (window.innerWidth - W - 26) + 'px';
+    dock.style.top = (window.innerHeight - H - 118) + 'px';
+    window.addEventListener('resize', function () {
+      if (lapActive || clapBusy) return;
+      var l = Math.max(4, Math.min(window.innerWidth - W - 4, dock.offsetLeft));
+      var t = Math.max(4, Math.min(window.innerHeight - H - 4, dock.offsetTop));
+      dock.style.left = l + 'px'; dock.style.top = t + 'px';
+    });
+
+    /* ═══ ENGAGEMENT — the reaction ladder (guided-solve-rebuilt-v1, canonical),
+       wired to REAL card events, plus L3 physical play and L4 ambience. ═══ */
+    var MOODS = ['mood-solve-encourage','mood-solve-happy','mood-solve-celebrate',
+                 'mood-solve-hyped','mood-solve-shook','mood-solve-sleepy'];
+    var moodTimer = null, quiet = false, streak = 0, hadWrong = false;
+
+    function clearMood(){ MOODS.forEach(function(c){ svg.classList.remove(c); });
+      if (moodTimer) { clearTimeout(moodTimer); moodTimer = null; } }
+    function mood(name, holdMs){
+      if (quiet) return false;                       /* walkthrough silence rule */
+      if (window.Robo.busy()) return false;          /* DROP, never queue */
+      clearMood();
+      svg.classList.add('mood-solve-' + name);
+      if (holdMs !== 0) moodTimer = setTimeout(clearMood, (holdMs || 1800) * slowFactor());
+      return true;
+    }
+    function wake(){ if (svg.classList.contains('mood-solve-sleepy')) clearMood(); idleReset(); }
+
+    /* ── L1-L2: ladder wiring to REAL card events ── */
+    var leanDone = false; /* v23: stuck-child rule — one lean-in per stuck period */
+    function onWrong(){ streak = 0; hadWrong = true; leanDone = false; mood('encourage', 2100); }
+    var PRAISE = ['Nailed it!','That’s it!','Perfect estimate!','You got it!']; /* exact spec strings */
+    /* v23: Framework v3 — comeback draws from its OWN effort pool, never the outcome pool */
+    var COMEBACK = ['You didn’t give up!','You fixed it yourself!',
+                    'That’s how it’s done — keep trying!','You worked it out!'];
+    /* the child's first name, from the app's account/session layer; '' degrades
+       silently to the nameless line */
+    function childName(){
+      try {
+        var a = window.RaoAccount;
+        var n = a && a.firstName;
+        return n ? String(n).trim() : '';
+      } catch (e) { return ''; }
+    }
+    function onCorrect(){
+      var comeback = hadWrong; hadWrong = false; leanDone = false; streak++;
+      var played;
+      if (streak >= 5)      played = mood('hyped', 2000);
+      else if (streak >= 3) played = mood('celebrate', 2200);
+      else if (comeback)    played = mood('shook', 1900);
+      else                  played = mood('happy', 1600);
+      if (played) setTimeout(function () {                     /* beat 2: Robo cheers himself */
+        var pool = comeback ? COMEBACK : PRAISE;
+        var line = pool[Math.floor(Math.random() * pool.length)];
+        /* name — streak>=3 milestones only, never on comeback (v3 law) */
+        var nm = childName();
+        if (nm && !comeback && streak >= 3) line = line.replace(/!$/, ', ' + nm + '!');
+        window.Robo.bubble(
+          line + (streak >= 2 ? ' ⚡ ' + streak + ' in a row!' : ''), 1900 * slowFactor());
+      }, 150);
+    }
+    function setQuiet(q){
+      quiet = q;
+      if (q) { clearMood(); hideBubble(); }   /* law 6: no bubble, no mood, no motion */
+    }
+    function trackCard(e){
+      if (e && e.target && e.target.closest) {
+        var c = e.target.closest('.pv-card');
+        if (c) lastCard = c;
+      }
+    }
+    document.addEventListener('rao:wrong', function (e) { trackCard(e); onWrong(); });
+    document.addEventListener('rao:outcome', function (e) {
+      trackCard(e);
+      var o = e.detail && e.detail.outcome;
+      if (o === 'correct') onCorrect();
+      else if (o === 'solved-with-help') setQuiet(true);   /* walkthrough open = the commit point */
+    });
+    document.addEventListener('rao:next', function () { setQuiet(false); });
+
+    /* ── L3: drag him anywhere · tap = poke · yield rule · session persistence ── */
+    var drag = null;
+    function clampL(x){ return Math.max(4, Math.min(window.innerWidth - W - 4, x)); }
+    function clampT(y){ return Math.max(4, Math.min(window.innerHeight - H - 4, y)); }
+    function dockBlocks(l, t){
+      var r = { left: l, top: t, right: l + W, bottom: t + H }, hit = false;
+      document.querySelectorAll('.opt,.check-btn,.next-btn,.reveal-btn,button,input,a,.hint-box').forEach(function (el) {
+        if (hit) return;
+        var b = el.getBoundingClientRect();
+        if (b.width === 0 || b.height === 0) return;
+        if (getComputedStyle(el).visibility === 'hidden') return;
+        if (!(r.right < b.left || b.right < r.left || r.bottom < b.top || b.bottom < r.top)) hit = true;
+      });
+      return hit;
+    }
+    function nearestClear(l, t){
+      if (!dockBlocks(l, t)) return { l: l, t: t };
+      for (var rad = 40; rad <= 480; rad += 40)
+        for (var a = 0; a < 12; a++){
+          var th = a / 12 * Math.PI * 2;
+          var cl = clampL(l + Math.cos(th) * rad), ct = clampT(t + Math.sin(th) * rad);
+          if (!dockBlocks(cl, ct)) return { l: cl, t: ct };
+        }
+      return { l: clampL(window.innerWidth - W - 26), t: clampT(window.innerHeight - H - 118) };
+    }
+    function savePos(){ try { sessionStorage.setItem('roboPos',
+      JSON.stringify({ l: dock.offsetLeft, t: dock.offsetTop })); } catch (e) {} }
+    try { var sp = JSON.parse(sessionStorage.getItem('roboPos') || 'null');
+      if (sp) { dock.style.left = clampL(sp.l) + 'px'; dock.style.top = clampT(sp.t) + 'px'; } } catch (e) {}
+
+    wrap.addEventListener('pointerdown', function (e) {
+      wake();
+      if (window.Robo.busy()) return;                /* not grabbable mid-motion (exact-return) */
+      e.preventDefault();
+      drag = { id: e.pointerId, x0: e.clientX, y0: e.clientY,
+               ol: dock.offsetLeft, ot: dock.offsetTop, moved: false, t0: Date.now(), px: e.clientX };
+      wrap.setPointerCapture(e.pointerId);
+    });
+    wrap.addEventListener('pointermove', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var dx = e.clientX - drag.x0, dy = e.clientY - drag.y0;
+      if (!drag.moved && Math.hypot(dx, dy) < 6) return;      /* tap-vs-drag threshold */
+      drag.moved = true;
+      dock.classList.add('robo-carried');
+      dock.classList.toggle('carry-r', e.clientX > drag.px + 1);
+      dock.classList.toggle('carry-l', e.clientX < drag.px - 1);
+      drag.px = e.clientX;
+      dock.style.left = clampL(drag.ol + dx) + 'px';
+      dock.style.top = clampT(drag.ot + dy) + 'px';
+    });
+    wrap.addEventListener('pointerup', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var wasTap = !drag.moved && (Date.now() - drag.t0) < 500;
+      dock.classList.remove('robo-carried', 'carry-r', 'carry-l');
+      drag = null;
+      if (wasTap) { window.Robo.poke(); return; }
+      var spot = nearestClear(dock.offsetLeft, dock.offsetTop);       /* yield rule */
+      if (spot.l !== dock.offsetLeft || spot.t !== dock.offsetTop)
+        window.Robo.flyTo(spot.l + W / 2, spot.t + H / 2);
+      setTimeout(savePos, 700);
+    });
+    wrap.addEventListener('pointercancel', function () {
+      dock.classList.remove('robo-carried', 'carry-r', 'carry-l'); drag = null; });
+
+    /* ── L4: pointer eye-tracking + 45s doze + the stuck-child lean-in ── */
+    var eyeRaf = null;
+    document.addEventListener('pointermove', function (e) {
+      if (drag || window.Robo.busy()) return;
+      if (eyeRaf) return;
+      eyeRaf = requestAnimationFrame(function () {
+        eyeRaf = null;
+        var r = dock.getBoundingClientRect();
+        var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        var d = Math.hypot(e.clientX - cx, e.clientY - cy);
+        svg.querySelectorAll('.m-pupil').forEach(function (p) {
+          p.style.transform = d < 260
+            ? 'translate(' + (Math.max(-1, Math.min(1, (e.clientX - cx) / 260)) * 3.2) + 'px,'
+                           + (Math.max(-1, Math.min(1, (e.clientY - cy) / 260)) * 2.6) + 'px)'
+            : '';
+        });
+      });
+    }, { passive: true });
+
+    /* v23: the one sanctioned brush with never-interrupt — a single silent lean
+       toward the card. No bubble, no sound, no mood class, no repeat until the
+       child answers again. */
+    function leanIn(){
+      if (leanDone) return; leanDone = true;
+      svg.dataset.leans = (parseInt(svg.dataset.leans || '0', 10) + 1);
+      var card = activeCardEl();
+      var dir = 1;
+      if (card) { var c = card.getBoundingClientRect(), d = dock.getBoundingClientRect();
+        dir = (c.left + c.width / 2) < (d.left + d.width / 2) ? -1 : 1; }
+      svg.animate([
+        { transform: 'rotate(0deg) translateX(0px)' },
+        { transform: 'rotate(' + (7 * dir) + 'deg) translateX(' + (6 * dir) + 'px)', offset: .35 },
+        { transform: 'rotate(' + (5 * dir) + 'deg) translateX(' + (4 * dir) + 'px)', offset: .7 },
+        { transform: 'rotate(0deg) translateX(0px)' }
+      ], { duration: 1400, easing: 'ease-in-out' });
+    }
+    var idleTimer = null;
+    function idleReset(){
+      if (idleTimer) clearTimeout(idleTimer);
+      idleTimer = setTimeout(function () {
+        if (quiet || window.Robo.busy()) return;   /* walkthrough silence outranks everything */
+        if (hadWrong) { leanIn(); return; }        /* v23: never doze on a stuck child */
+        if (mood('sleepy', 0)) window.Robo.bubble('Zzz…', 2600);
+      }, 45000);
+    }
+    ['pointerdown', 'keydown'].forEach(function (ev) {
+      document.addEventListener(ev, wake, { capture: true, passive: true }); });
+    idleReset();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
 </script>
 <script>
