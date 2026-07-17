@@ -1,0 +1,787 @@
+/* ============================================================================
+   robo.css — ROBO, the mascot (Brief 7.7, engine rao-master-18).
+
+   PROVENANCE — every rule below is ported VERBATIM from the signed-off
+   reference files; do not re-tune values here:
+     · Core rig (dock, ambience, flight, motion pool, poke wobble, carry tilt,
+       touch law, prop hiding): incoming/calm-card-v36.html
+       (md5 deb8d07a84a9f1fbc6847b7ff57a965f), which embeds the
+       robo_motion_lab_v29 rig plus every approved fix since (v22 responsive
+       sizing, v21 touch law).
+     · The six mood-solve-* reactions: incoming/guided-solve-rebuilt-v1.html
+       (md5 362ca7c1940e1cb8bb09ab3403fdbc65) — the sanctioned, Venkat-approved
+       REBUILD (see docs/GUIDED-SOLVE-REBUILD-NOTE.md). Its rebuild-provenance
+       header is carried below, intact.
+
+   NOT PORTED (Brief 7.8 territory, per ROBO-ENGAGEMENT-FRAMEWORK-v4 §A-§D):
+   personality pack (poke ladder stages 2-4, idle mischief, carry flail,
+   dust-off, sneak-peek entrance), attention gaze, stage props, palette tint.
+   Also not ported: the FEED-ROBO block (mood-hungry / mood-chomp) — dead CSS
+   residue of the stage apple, which was removed by design in v21 ("the apple
+   TOSS motion in the celebration pool stays" — and it is here, mood-apple).
+   The mood-demo-* reaction stand-ins were NOT ported anywhere — the
+   mood-solve-* rebuild below is the only reaction ladder in production.
+   ========================================================================== */
+
+/* ═══ the dock (mirrors production) ═══ */
+.rao-dock{ position:fixed; left:70%; top:55%; z-index:8; }
+.rao-mascot-wrap{ width:120px; height:130px; filter:drop-shadow(0 8px 14px rgba(31,25,60,.18)); }
+/* v22: RESPONSIVE ROBO — 70% scale on phones so he stops crowding the card */
+@media(max-width:600px){ .rao-mascot-wrap{ width:84px; height:91px; } }
+/* the drop-shadow renders a blurry dark copy of the robot 8px below it — fine
+   at rest, but during motion it reads as a detached blob ("a leg"). Kill it
+   whenever ANY mood-motion is running; the SVG m-shadow carries the physics. */
+.rao-mascot-wrap:has(.rao-mascot[class*="mood-"]){ filter:none; }
+.rao-mascot{ width:100%; height:100%; overflow:visible; display:block; transition:transform .25s ease; }
+
+/* mood engine bits needed here */
+.m-body{ transform-box:fill-box; transform-origin:center bottom; }
+.m-arm{ transform-box:fill-box; }
+.m-arm-l{ transform-origin:right top; }
+.m-arm-r{ transform-origin:left top; }
+.m-lid{ transform-box:fill-box; transform-origin:center top; transform:scaleY(0); animation:raoBlink 4.2s ease-in-out infinite; }
+@keyframes raoBlink{ 0%,92%,100%{transform:scaleY(0)} 95%,97%{transform:scaleY(1)} }
+.rao-mascot .mouth-grin, .rao-mascot .mouth-o{ opacity:0; }
+
+/* ═══ v15 FLIGHT (verbatim system) ═══ */
+.m-thruster{ opacity:0; transform-box:fill-box; transform-origin:center top; }
+.rao-mascot .m-shadow{ transform-box:fill-box; transform-origin:center; }
+@keyframes raoFloat{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-7px) } }
+@keyframes raoShadowFloat{ 0%,100%{ transform:scale(1); opacity:1 } 50%{ transform:scale(.72); opacity:.55 } }
+.rao-mascot .m-body{ animation:raoFloat calc(3.4s * var(--slow,1)) ease-in-out infinite; }
+.rao-mascot .m-shadow{ animation:raoShadowFloat calc(3.4s * var(--slow,1)) ease-in-out infinite; }
+
+.rao-dock.rao-travelling{ transition:left calc(.5s * var(--slow,1)) cubic-bezier(.34,1.3,.4,1),
+  top calc(.5s * var(--slow,1)) cubic-bezier(.34,1.3,.4,1) !important; }
+.rao-dock.rao-travelling .rao-mascot .m-body{ animation:none; transform:translateY(-4px); }
+.rao-dock.rao-travelling .rao-mascot .m-shadow{ animation:none; opacity:.25; transform:scale(.55);
+  transition:opacity calc(.2s * var(--slow,1)) ease, transform calc(.2s * var(--slow,1)) ease; }
+.rao-dock.rao-travelling .m-thruster{ opacity:1; animation:raoThrust calc(.12s * var(--slow,1)) ease-in-out infinite alternate; }
+@keyframes raoThrust{ from{ transform:scaleY(.55) } to{ transform:scaleY(1.15) } }
+.rao-dock.rao-travelling.fly-right .rao-mascot{ transform:rotate(7deg); }
+.rao-dock.rao-travelling.fly-left  .rao-mascot{ transform:rotate(-7deg); }
+
+/* ═══ VICTORY LAP — orbit the page/card and land back on the same pixel ═══
+   Path = runtime rounded-rect via WAAPI translate keyframes ending at translate(0,0)
+   (exact return guaranteed). Bank = WAAPI rotate on the svg, 16° × horizontal velocity
+   (same sign as .fly-right). Reuses .rao-travelling for thruster/shadow/float-pause.
+   MOUTH RULE 1: grin swap is a hard class cut, one mouth visible at all times. */
+.rao-mascot.mood-lap .mouth-smile{ opacity:0; }
+.rao-mascot.mood-lap .mouth-grin{ opacity:1; }
+.lap-spark{ position:fixed; width:10px; height:10px; border-radius:50%;
+  pointer-events:none; z-index:4;
+  animation:lapSpark calc(.62s * var(--slow,1)) ease-out forwards; }
+.lap-spark.star{ border-radius:0;
+  clip-path:polygon(50% 0,63% 36%,100% 38%,70% 60%,82% 100%,50% 74%,18% 100%,30% 60%,0 38%,37% 36%); }
+@keyframes lapSpark{
+  0%{ transform:scale(1) translateY(0) rotate(0deg); opacity:.95; }
+  100%{ transform:scale(.15) translateY(16px) rotate(140deg); opacity:0; } }
+
+/* ═══ CLAP — front paws meet with impact spark; arms tuck for the trick ═══ */
+.m-paw, .m-clap-spark{ opacity:0; transform-box:fill-box; transform-origin:center; }
+.rao-mascot.mood-clap .m-arm{ opacity:0; transition:opacity .12s; }
+.rao-mascot.mood-clap .m-paw{ opacity:1; }
+.rao-mascot.mood-clap .mouth-smile{ opacity:0; }
+.rao-mascot.mood-clap .mouth-grin{ opacity:1; }
+.rao-mascot.mood-clap .m-paw-l{ animation:clapL calc(.32s * var(--slow,1)) ease-in 3; }
+.rao-mascot.mood-clap .m-paw-r{ animation:clapR calc(.32s * var(--slow,1)) ease-in 3; }
+@keyframes clapL{ 0%,100%{ transform:translateX(0) rotate(0) } 45%,55%{ transform:translateX(16px) rotate(-8deg) } }
+@keyframes clapR{ 0%,100%{ transform:translateX(0) rotate(0) } 45%,55%{ transform:translateX(-16px) rotate(8deg) } }
+.rao-mascot.mood-clap .m-clap-spark{ animation:clapSpark calc(.32s * var(--slow,1)) linear 3; }
+@keyframes clapSpark{ 0%,38%{ opacity:0; transform:scale(.35) } 50%{ opacity:1; transform:scale(1.15) } 68%,100%{ opacity:0; transform:scale(.55) } }
+.rao-mascot.mood-clap .m-body{ animation:clapBob calc(.32s * var(--slow,1)) ease-in-out 3; }
+@keyframes clapBob{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-3px) } }
+
+/* ═══ TUMBLING PASS — three aerial flips travelling across the screen ═══ */
+.m-flip{ transform-box:fill-box; transform-origin:center 55%; }
+.m-dust{ opacity:0; transform-box:fill-box; transform-origin:center; }
+.rao-mascot .mouth-o{ opacity:0; }
+.rao-mascot.mood-tumble{ transition:none; }
+.rao-mascot.mood-tumble.tumble-left{ transform:scaleX(-1); }  /* mirror so rotation rolls the right way */
+.rao-mascot.mood-tumble .m-body{ animation:none; }
+.rao-mascot.mood-tumble .mouth-smile{ opacity:0; }
+.rao-mascot.mood-tumble .mouth-o{ opacity:1; }
+.rao-mascot.mood-tumble .m-flip{ animation:tumbleFlip calc(2.2s * var(--slow,1)) linear 1; }
+@keyframes tumbleFlip{
+  0%   { transform:translateY(0) rotate(0deg) scale(1,1); }
+  4%   { transform:translateY(4px) rotate(0deg) scale(1.08,.82); }     /* crouch */
+  /* hop 1 */
+  9%   { transform:translateY(-30px) rotate(95deg) scale(.96,.96); }
+  18%  { transform:translateY(-48px) rotate(200deg) scale(.9,.9); }
+  28%  { transform:translateY(-6px) rotate(345deg) scale(.97,.97); }
+  31%  { transform:translateY(3px) rotate(360deg) scale(1.1,.85); }    /* touch */
+  /* hop 2 */
+  37%  { transform:translateY(-32px) rotate(470deg) scale(.95,.95); }
+  46%  { transform:translateY(-50px) rotate(560deg) scale(.9,.9); }
+  56%  { transform:translateY(-6px) rotate(705deg) scale(.97,.97); }
+  59%  { transform:translateY(3px) rotate(720deg) scale(1.1,.85); }    /* touch */
+  /* hop 3 */
+  65%  { transform:translateY(-34px) rotate(830deg) scale(.95,.95); }
+  74%  { transform:translateY(-52px) rotate(925deg) scale(.9,.9); }
+  84%  { transform:translateY(-6px) rotate(1065deg) scale(.97,.97); }
+  87%  { transform:translateY(3px) rotate(1080deg) scale(1.14,.78); }  /* final land */
+  93%  { transform:translateY(-5px) rotate(1080deg) scale(.97,1.05); } /* rebound */
+  100% { transform:translateY(0) rotate(1080deg) scale(1,1); }
+}
+.rao-mascot.mood-tumble .m-shadow{ animation:tumbleShadow calc(2.2s * var(--slow,1)) linear 1 !important; }
+@keyframes tumbleShadow{
+  0%{ transform:scale(1); opacity:1 } 4%{ transform:scale(1.08); opacity:1 }
+  18%{ transform:scale(.45); opacity:.25 } 31%{ transform:scale(1.08); opacity:1 }
+  46%{ transform:scale(.45); opacity:.25 } 59%{ transform:scale(1.08); opacity:1 }
+  74%{ transform:scale(.45); opacity:.25 } 87%{ transform:scale(1.16); opacity:1 }
+  100%{ transform:scale(1); opacity:1 }
+}
+.rao-mascot.mood-tumble .m-dust{ animation:tumbleDust calc(2.2s * var(--slow,1)) linear 1; }
+@keyframes tumbleDust{
+  0%,28%{ opacity:0; transform:scale(.5) } 31%{ opacity:.9; transform:scale(1.15) } 35%{ opacity:0; transform:scale(1.5) }
+  56%{ opacity:0; transform:scale(.5) } 59%{ opacity:.9; transform:scale(1.15) } 63%{ opacity:0; transform:scale(1.5) }
+  84%{ opacity:0; transform:scale(.5) } 88%{ opacity:1; transform:scale(1.25) } 100%{ opacity:0; transform:scale(1.7) }
+}
+
+/* ═══ ANGRY — steam-kettle comedy: pressure builds, flames blow, steam, phew ═══
+   NEVER wire this to a kid's wrong answer. Villain problems / authored comedy only. */
+.m-brow, .mouth-grit, .m-flush, .m-anger-flames, .m-steam{ opacity:0; }
+.m-brow, .m-star, .rao-mascot .m-pupil{ transform-box:fill-box; transform-origin:center; }
+.m-anger-flames{ transform-box:fill-box; transform-origin:center bottom; }
+.m-steam{ transform-box:fill-box; transform-origin:center; }
+.rao-mascot.mood-angry .m-body{ animation:none; }
+.rao-mascot.mood-angry .mouth-smile{ opacity:0; }
+.rao-mascot.mood-angry .mouth-grit{ opacity:1; }
+.rao-mascot.mood-angry .m-brow{ opacity:1; }
+.rao-mascot.mood-angry .m-brow-l{ transform:translateY(1px) rotate(10deg); }
+.rao-mascot.mood-angry .m-brow-r{ transform:translateY(1px) rotate(-10deg); }
+.rao-mascot.mood-angry .m-pupil{ transform:scale(.8); }
+.rao-mascot.mood-angry .m-star{ fill:#ef4444; animation:angerSpin .35s linear infinite; }
+@keyframes angerSpin{ from{ transform:rotate(0) } to{ transform:rotate(360deg) } }
+.rao-mascot.mood-angry .m-flip{ animation:angerShake calc(2.4s * var(--slow,1)) linear 1; }
+@keyframes angerShake{
+  0%,8%{ transform:translateX(0) }
+  14%{ transform:translateX(-1px) } 20%{ transform:translateX(1px) }
+  26%{ transform:translateX(-2px) } 32%{ transform:translateX(2px) }
+  38%{ transform:translateX(-3px) } 44%{ transform:translateX(3px) }
+  50%{ transform:translateX(-4px) } 54%{ transform:translateX(4px) }
+  58%{ transform:translateY(-7px) scale(1.07) }          /* the blow */
+  64%{ transform:translateY(0) scale(1) }
+  70%,100%{ transform:translateX(0) }
+}
+.rao-mascot.mood-angry .m-flush{ animation:angerFlush calc(2.4s * var(--slow,1)) linear 1; }
+@keyframes angerFlush{
+  0%{ opacity:0 } 20%{ opacity:.2 } 55%{ opacity:.55 } 70%{ opacity:.5 } 88%,100%{ opacity:0 }
+}
+.rao-mascot.mood-angry .m-anger-flames{ animation:angerFlames calc(2.4s * var(--slow,1)) linear 1; }
+@keyframes angerFlames{
+  0%,40%{ opacity:0; transform:scale(.3) }
+  46%{ opacity:.5; transform:scale(.5) }
+  51%{ opacity:.3; transform:scale(.45) }
+  56%{ opacity:.8; transform:scale(.75) }
+  60%{ opacity:1; transform:scale(1.3) }                 /* eruption */
+  68%{ opacity:1; transform:scale(1.05) }
+  76%,100%{ opacity:0; transform:scale(.5) }
+}
+.rao-mascot.mood-angry .m-anger-flames path{ animation:angerFlick .11s ease-in-out infinite alternate; transform-box:fill-box; transform-origin:center bottom; }
+.rao-mascot.mood-angry .m-anger-flames path:nth-child(2){ animation-delay:.04s; }
+.rao-mascot.mood-angry .m-anger-flames path:nth-child(3){ animation-delay:.08s; }
+@keyframes angerFlick{ from{ transform:scaleY(.85) } to{ transform:scaleY(1.15) } }
+.rao-mascot.mood-angry .m-steam{ animation:angerSteam calc(2.4s * var(--slow,1)) linear 1; }
+@keyframes angerSteam{
+  0%,70%{ opacity:0; transform:translateY(0) scale(.7) }
+  76%{ opacity:.85; transform:translateY(-5px) scale(1) }
+  100%{ opacity:0; transform:translateY(-20px) scale(1.2) }
+}
+
+/* ═══ DANCE — 8-beat routine: side-step, twist, disco points, spin + ta-da ═══ */
+.rao-mascot.mood-dance .m-body{ animation:none; }
+.rao-mascot.mood-dance .mouth-smile{ opacity:0; }
+.rao-mascot.mood-dance .mouth-grin{ opacity:1; }
+.rao-mascot.mood-dance .m-flip{ animation:danceBody calc(3.2s * var(--slow,1)) ease-in-out 1; }
+@keyframes danceBody{
+  0%  { transform:translate(0,0) rotate(0) scale(1,1); }
+  /* side-step groove */
+  6%  { transform:translate(-9px,-5px) rotate(-5deg); }
+  12% { transform:translate(-9px,0) rotate(-3deg) scale(1.03,.95); }
+  19% { transform:translate(9px,-5px) rotate(5deg); }
+  25% { transform:translate(9px,0) rotate(3deg) scale(1.03,.95); }
+  /* the twist */
+  31% { transform:translate(0,3px) rotate(-16deg) scale(1.05,.9); }
+  37% { transform:translate(0,-2px) rotate(14deg); }
+  44% { transform:translate(0,3px) rotate(-16deg) scale(1.05,.9); }
+  50% { transform:translate(0,-2px) rotate(12deg); }
+  /* disco points */
+  56% { transform:translate(-5px,-4px) rotate(-8deg); }
+  62% { transform:translate(5px,0) rotate(8deg); }
+  69% { transform:translate(-5px,-4px) rotate(-8deg); }
+  75% { transform:translate(0,0) rotate(0); }
+  /* spin + ta-da */
+  87% { transform:translate(0,-9px) rotate(360deg); }
+  92% { transform:translate(0,2px) rotate(360deg) scale(1.07,.9); }
+  100%{ transform:translate(0,0) rotate(360deg) scale(1,1); }
+}
+.rao-mascot.mood-dance .m-arm-l{ animation:danceArmL calc(3.2s * var(--slow,1)) ease-in-out 1; }
+.rao-mascot.mood-dance .m-arm-r{ animation:danceArmR calc(3.2s * var(--slow,1)) ease-in-out 1; }
+@keyframes danceArmL{
+  0%,12%{ transform:rotate(0) } 6%{ transform:rotate(48deg) }
+  19%,31%{ transform:rotate(0) } 25%{ transform:rotate(48deg) }
+  37%{ transform:rotate(20deg) } 44%{ transform:rotate(0) } 50%{ transform:rotate(20deg) }
+  56%{ transform:rotate(64deg) } 62%,64%{ transform:rotate(0) }
+  69%{ transform:rotate(64deg) } 75%{ transform:rotate(0) }
+  87%{ transform:rotate(25deg) } 92%,100%{ transform:rotate(54deg) }
+}
+@keyframes danceArmR{
+  0%,6%{ transform:rotate(0) } 12%{ transform:rotate(-48deg) }
+  19%{ transform:rotate(-48deg) } 25%,31%{ transform:rotate(0) }
+  37%{ transform:rotate(-20deg) } 44%{ transform:rotate(0) } 50%{ transform:rotate(-20deg) }
+  56%,58%{ transform:rotate(0) } 62%{ transform:rotate(-64deg) }
+  69%{ transform:rotate(0) } 75%{ transform:rotate(-64deg) }
+  87%{ transform:rotate(-25deg) } 92%,100%{ transform:rotate(-54deg) }
+}
+.rao-mascot.mood-dance .m-star{ animation:danceStar calc(3.2s * var(--slow,1)) ease-in-out 1; }
+@keyframes danceStar{
+  0%{ transform:rotate(0) } 12%{ transform:rotate(-22deg) } 25%{ transform:rotate(22deg) }
+  37%{ transform:rotate(-22deg) } 50%{ transform:rotate(22deg) }
+  62%{ transform:rotate(-22deg) } 75%{ transform:rotate(0) }
+  100%{ transform:rotate(360deg) }
+}
+.rao-mascot.mood-dance .m-shadow{ animation:danceShadow calc(3.2s * var(--slow,1)) ease-in-out 1 !important; }
+@keyframes danceShadow{
+  0%,12%,25%,37%,50%,62%,75%{ transform:scale(1); opacity:1 }
+  6%,19%,31%,44%,56%,69%{ transform:scale(.88); opacity:.75 }
+  87%{ transform:scale(.6); opacity:.4 }
+  92%{ transform:scale(1.12); opacity:1 }
+  100%{ transform:scale(1); opacity:1 }
+}
+.rao-mascot.mood-dance .m-clap-spark{ animation:danceSpark calc(3.2s * var(--slow,1)) linear 1; }
+@keyframes danceSpark{
+  0%,88%{ opacity:0; transform:scale(.4) translateY(-34px) }
+  93%{ opacity:1; transform:scale(1.35) translateY(-34px) }
+  100%{ opacity:0; transform:scale(.7) translateY(-34px) }
+}
+
+/* ═══ SUSPICIOUS — squint, side-eye darts, slow lean, one raised brow, "?" ═══ */
+.mouth-hmm, .m-susq{ opacity:0; }
+.m-susq{ transform-box:fill-box; transform-origin:center; }
+.rao-mascot.mood-sus .m-body{ animation:none; }
+.rao-mascot.mood-sus .mouth-smile{ opacity:0; }
+.rao-mascot.mood-sus .mouth-hmm{ opacity:1; }
+.rao-mascot.mood-sus .m-brow{ opacity:1; }
+.rao-mascot.mood-sus .m-brow-l{ transform:translateY(-4px) rotate(-8deg); }   /* arched: the tell */
+.rao-mascot.mood-sus .m-brow-r{ transform:translateY(1px) rotate(-3deg); }
+.rao-mascot.mood-sus .m-flip{ animation:susLean calc(2.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes susLean{
+  0%{ transform:rotate(0) } 18%{ transform:rotate(-4deg) } 42%{ transform:rotate(-4deg) }
+  58%{ transform:rotate(4deg) } 80%{ transform:rotate(4deg) } 100%{ transform:rotate(0) }
+}
+.rao-mascot.mood-sus .m-pupil{ animation:susPupils calc(2.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes susPupils{
+  0%,8%{ transform:translateX(0) } 14%{ transform:translateX(-3.5px) } 46%{ transform:translateX(-3.5px) }
+  54%{ transform:translateX(3.5px) } 82%{ transform:translateX(3.5px) } 90%,100%{ transform:translateX(0) }
+}
+.rao-mascot.mood-sus .m-lid{ animation:susLids calc(2.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes susLids{
+  0%{ transform:scaleY(0) } 10%{ transform:scaleY(.45) } 48%{ transform:scaleY(.45) }
+  56%{ transform:scaleY(.62) } 80%{ transform:scaleY(.62) } 92%,100%{ transform:scaleY(0) }
+}
+.rao-mascot.mood-sus .m-susq{ animation:susQ calc(2.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes susQ{
+  0%,50%{ opacity:0; transform:translateY(4px) rotate(8deg) }
+  60%{ opacity:1; transform:translateY(0) rotate(-4deg) }
+  85%{ opacity:1; transform:translateY(-1px) rotate(2deg) }
+  100%{ opacity:0; transform:translateY(-6px) }
+}
+
+/* ═══ POKE — friendly wobble (bubble styles below are shared by other motions) ═══ */
+.rao-bubble{ position:absolute; bottom:102%; left:50%; z-index:3;
+  transform:translateX(-50%) scale(.6) rotate(-2deg); opacity:0;
+  background:#fff; border:2.5px solid #1f193c; border-radius:14px;
+  padding:6px 13px; font:800 15px 'DM Sans',sans-serif; color:#1f193c;
+  white-space:nowrap; pointer-events:none;
+  transition:opacity .15s ease, transform .18s cubic-bezier(.3,1.6,.5,1); }
+.rao-bubble:after{ content:''; position:absolute; left:50%; bottom:-9px;
+  width:12px; height:12px; background:#fff; border-right:2.5px solid #1f193c;
+  border-bottom:2.5px solid #1f193c; transform:translateX(-50%) rotate(45deg); }
+.rao-bubble.show{ opacity:1; transform:translateX(-50%) scale(1) rotate(-2deg); }
+
+.mouth-pout{ opacity:0; }
+.mouth-chew{ opacity:0; transform-box:fill-box; transform-origin:center; }
+/* MOUTH RULE (do not break): exactly ONE mouth is fully visible at every
+   instant of every motion. Swaps are HARD CUTS on shared keyframe
+   boundaries (x% / x.01%) — never crossfades. Crossfaded mouths hit
+   half-opacity in the overlap and read as a missing mouth. */
+/* MOUTH RULE 2: every .m-mouth transforms in its OWN box. Without this,
+   SVG scale() pivots on the view-box corner and MOVES the mouth off the
+   face (the "purple circle at his feet" bug). */
+.m-mouth{ transform-box:fill-box; transform-origin:center; }
+.rao-mascot.mood-poked .m-flip{ animation:pokeWob calc(.5s * var(--slow,1)) ease-in-out 1; }
+@keyframes pokeWob{
+  0%{ transform:translateX(0) } 25%{ transform:translateX(-3px) rotate(-2deg) }
+  50%{ transform:translateX(3px) rotate(2deg) } 75%{ transform:translateX(-2px) } 100%{ transform:translateX(0) }
+}
+
+
+/* ═══ MACARENA — the arm routine everyone knows, set to an ORIGINAL latin groove
+   (the real song is copyrighted; not one note of it is used here) ═══ */
+.rao-mascot.mood-mac .m-arm{ opacity:0; transition:opacity .12s; }
+.rao-mascot.mood-mac .m-paw{ opacity:1; }
+.rao-mascot.mood-mac .mouth-smile{ opacity:0; }
+.rao-mascot.mood-mac .mouth-grin{ opacity:1; }
+.rao-mascot.mood-mac .m-body{ animation:macBob calc(.42s * var(--slow,1)) ease-in-out 12; }
+@keyframes macBob{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-3px) } }
+.rao-mascot.mood-mac .m-paw-r{ animation:macPawR calc(5.04s * var(--slow,1)) ease-in-out 1; }
+@keyframes macPawR{
+  0%,4%    { transform:translate(0,0) rotate(0); }
+  8.3%,22% { transform:translate(-4px,-12px) rotate(0); }        /* out, palm down */
+  25%,39%  { transform:translate(-4px,-12px) rotate(180deg); }   /* palm up */
+  41.7%,55%{ transform:translate(-34px,-26px) rotate(180deg); }  /* opposite shoulder */
+  58.3%,72%{ transform:translate(-10px,-50px) rotate(180deg); }  /* behind head */
+  75%,90%  { transform:translate(6px,9px) rotate(0); }           /* hip */
+  100%     { transform:translate(0,0) rotate(0); }
+}
+.rao-mascot.mood-mac .m-paw-l{ animation:macPawL calc(5.04s * var(--slow,1)) ease-in-out 1; }
+@keyframes macPawL{
+  0%,12%   { transform:translate(0,0) rotate(0); }
+  16.7%,30%{ transform:translate(4px,-12px) rotate(0); }
+  33.3%,47%{ transform:translate(4px,-12px) rotate(180deg); }
+  50%,63%  { transform:translate(34px,-26px) rotate(180deg); }
+  66.7%,80%{ transform:translate(10px,-50px) rotate(180deg); }
+  83.3%,90%{ transform:translate(-6px,9px) rotate(0); }
+  100%     { transform:translate(0,0) rotate(0); }
+}
+.rao-mascot.mood-mac .m-flip{ animation:macBody calc(5.04s * var(--slow,1)) ease-in-out 1; }
+@keyframes macBody{
+  0%,80%{ transform:rotate(0) translateY(0); }
+  84%{ transform:rotate(-9deg) translateY(1px); }     /* sway */
+  88%{ transform:rotate(9deg); }
+  91%{ transform:rotate(0) translateY(0); }
+  95%{ transform:rotate(180deg) translateY(-15px); }  /* jump-turn */
+  100%{ transform:rotate(360deg) translateY(0); }
+}
+.rao-mascot.mood-mac .m-shadow{ animation:macShadow calc(5.04s * var(--slow,1)) ease-in-out 1 !important; }
+@keyframes macShadow{
+  0%,80%,91%{ transform:scale(1); opacity:1 }
+  95%{ transform:scale(.55); opacity:.35 }
+  98%{ transform:scale(1.12); opacity:1 }
+  100%{ transform:scale(1); opacity:1 }
+}
+.rao-mascot.mood-mac .m-star{ animation:macStar calc(.84s * var(--slow,1)) ease-in-out 6; }
+@keyframes macStar{ 0%,100%{ transform:rotate(-15deg) } 50%{ transform:rotate(15deg) } }
+
+/* ═══ APPLE TOSS — throw it up, track it, CHOMP, chew, gulp, mmm ═══ */
+.m-apple{ opacity:0; transform-box:fill-box; transform-origin:center; }
+.rao-mascot.mood-apple .m-body{ animation:none; }
+.rao-mascot.mood-apple .m-apple{ animation:appleFly calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes appleFly{
+  0%{ opacity:0; transform:translate(0,0) rotate(0); }
+  5%,12%{ opacity:1; transform:translate(-6px,-14px) rotate(0); }          /* in the raised paw */
+  30%{ opacity:1; transform:translate(-20px,-96px) rotate(200deg); }       /* apex */
+  52%{ opacity:1; transform:translate(-24px,-4px) rotate(360deg); }        /* falling to mouth */
+  56%{ opacity:1; transform:translate(-24px,2px) rotate(370deg) scale(.55); } /* in it goes */
+  57%,100%{ opacity:0; transform:translate(-24px,2px) scale(.4); }
+}
+.rao-mascot.mood-apple .m-paw-r{ opacity:1; animation:applePaw calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes applePaw{
+  0%{ transform:translate(0,0); }
+  5%,12%{ transform:translate(-6px,-14px); }   /* holds the apple up */
+  16%{ transform:translate(-8px,-22px); }      /* the flick */
+  26%,100%{ transform:translate(0,0); }
+}
+.rao-mascot.mood-apple .m-arm-r{ opacity:0; transition:opacity .12s; }
+.rao-mascot.mood-apple .m-pupil{ animation:appleEyes calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes appleEyes{
+  0%,12%{ transform:translateY(0); }
+  22%,36%{ transform:translateY(-3px); }       /* watching it up there */
+  50%{ transform:translateY(-1px); }
+  56%,100%{ transform:translateY(0); }
+}
+.rao-mascot.mood-apple .mouth-smile{ animation:appleSmile calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes appleSmile{ 0%,36.99%{ opacity:1 } 37%,89.99%{ opacity:0 } 90%,100%{ opacity:1 } }
+.rao-mascot.mood-apple .mouth-o{ animation:appleMouth calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes appleMouth{
+  0%,36.99%{ opacity:0; transform:scale(1.65); }
+  37%,57.49%{ opacity:1; transform:scale(1.65); }  /* wide open for the catch */
+  57.5%,100%{ opacity:0; transform:scale(1.65); }
+}
+.rao-mascot.mood-apple .mouth-chew{ animation:appleChew calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes appleChew{
+  0%,57.49%{ opacity:0; transform:scaleY(.75); }
+  57.5%{ opacity:1; transform:scaleY(.75); }
+  62%{ opacity:1; transform:scaleY(1.2); }    /* munch */
+  66%{ opacity:1; transform:scaleY(.75); }
+  70%{ opacity:1; transform:scaleY(1.15); }
+  74%{ opacity:1; transform:scaleY(.75); }
+  78%{ opacity:1; transform:scaleY(1.15); }
+  82%{ opacity:1; transform:scaleY(.85); }
+  89.99%{ opacity:1; transform:scaleY(1); }
+  90%,100%{ opacity:0; transform:scaleY(1); }
+}
+.rao-mascot.mood-apple .m-cheek-l{ animation:chewL calc(3.6s * var(--slow,1)) ease-in-out 1; transform-box:fill-box; transform-origin:center; }
+.rao-mascot.mood-apple .m-cheek-r{ animation:chewR calc(3.6s * var(--slow,1)) ease-in-out 1; transform-box:fill-box; transform-origin:center; }
+@keyframes chewL{ 0%,58%,66%,74%,82%,100%{ transform:scale(1) } 62%,78%{ transform:scale(1.45) } }
+@keyframes chewR{ 0%,62%,70%,78%,86%,100%{ transform:scale(1) } 66%,82%{ transform:scale(1.45) } }
+.rao-mascot.mood-apple .m-flip{ animation:appleBody calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes appleBody{
+  0%,56%{ transform:translateY(0); }
+  60%,68%,76%{ transform:translateY(2px) scale(1.02,.97); }   /* chomp bobs */
+  64%,72%,80%{ transform:translateY(0) scale(1,1); }
+  88%{ transform:translateY(3px) scale(1.03,.95); }           /* gulp */
+  92%,100%{ transform:translateY(0) scale(1,1); }
+}
+.rao-mascot.mood-apple .m-clap-spark{ animation:appleSpark calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes appleSpark{
+  0%,90%{ opacity:0; transform:scale(.4) translateY(-30px); }
+  94%{ opacity:1; transform:scale(1.2) translateY(-30px); }
+  100%{ opacity:0; transform:scale(.6) translateY(-30px); }
+}
+
+/* (FEED ROBO block not ported — stage apple removed by design; the general
+   .m-flip transition rule that lived inside it is preserved below.) */
+.rao-mascot .m-flip{ transition:transform .22s ease; }
+
+/* ═══ LEAN-IN — zoom to the glass, side-glance, then ask the kid directly ═══ */
+.rao-mascot.mood-lean{ transform-origin:center 85%;
+  animation:leanZoom calc(3.6s * var(--slow,1)) cubic-bezier(.3,.1,.25,1) 1; }
+@keyframes leanZoom{
+  0%{ transform:scale(1) rotate(0); }
+  8%{ transform:scale(.96) translateY(2px); }                    /* anticipation dip */
+  26%{ transform:scale(2.35) translateY(8px) rotate(-5deg); }    /* pressed to the glass */
+  55%{ transform:scale(2.42) translateY(8px) rotate(-4deg); }    /* breathing, this close */
+  84%{ transform:scale(2.35) translateY(8px) rotate(-5deg); }
+  100%{ transform:scale(1) rotate(0); }
+}
+.rao-mascot.mood-lean .m-body{ animation:none; }
+.rao-mascot.mood-lean .m-pupil{ animation:leanEyes calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes leanEyes{
+  0%,26%{ transform:translateX(0); }
+  32%,52%{ transform:translateX(-3.5px); }   /* the side-glance */
+  58%,100%{ transform:translateX(0); }        /* now looking AT you */
+}
+.rao-mascot.mood-lean .m-lid{ animation:leanLids calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes leanLids{
+  0%,26%{ transform:scaleY(0); }
+  32%,52%{ transform:scaleY(.45); }           /* squint on the glance */
+  58%,88%{ transform:scaleY(.12); }           /* wide, attentive stare */
+  95%,100%{ transform:scaleY(0); }
+}
+.rao-mascot.mood-lean .m-brow-l{ animation:leanBrow calc(3.6s * var(--slow,1)) ease-in-out 1; }
+@keyframes leanBrow{
+  0%,54%{ opacity:0; transform:translateY(0); }
+  60%,86%{ opacity:1; transform:translateY(-4px) rotate(-9deg); }   /* the arched brow */
+  100%{ opacity:0; transform:translateY(0); }
+}
+.rao-mascot.mood-lean .mouth-smile{ animation:leanSmile calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes leanSmile{ 0%,29.99%{ opacity:1 } 30%,89.99%{ opacity:0 } 90%,100%{ opacity:1 } }
+.rao-mascot.mood-lean .mouth-hmm{ animation:leanMouth calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes leanMouth{ 0%,29.99%{ opacity:0 } 30%,89.99%{ opacity:1 } 90%,100%{ opacity:0 } }
+/* while he's huge, lift the bubble clear of his face */
+.rao-dock.rao-leaning .rao-bubble{ bottom:calc(102% + 92px); font-size:17px; }
+
+/* ═══ BOOTY SHAKE — quarter-turn to PROFILE; the booty is silhouette, not sticker ═══ */
+.m-shake-l, .m-shake-r{ opacity:0; }
+.m-booty{ opacity:0; transform-box:fill-box; transform-origin:center left; }
+.rao-mascot.mood-booty .mouth-smile{ opacity:0; }
+.rao-mascot.mood-booty .mouth-grin{ opacity:1; }
+.rao-mascot.mood-booty .m-flip{ animation:bootyTurn calc(3s * var(--slow,1)) ease-in-out 1; }
+@keyframes bootyTurn{
+  0%{ transform:scaleX(1) rotate(0); }
+  10%,84%{ transform:scaleX(.62) rotate(-12deg); }   /* profile + bent-over lean */
+  94%,100%{ transform:scaleX(1) rotate(0); }
+}
+/* profile face: far side fades, near side slides to the leading edge */
+.rao-mascot.mood-booty .m-eye-r, .rao-mascot.mood-booty .m-cheek-r{ animation:bootyFarSide calc(3s * var(--slow,1)) linear 1; }
+@keyframes bootyFarSide{ 0%,4%{ opacity:1 } 9%,88%{ opacity:0 } 95%,100%{ opacity:1 } }
+.rao-mascot.mood-booty .m-eye-l{ transform-box:fill-box; animation:bootyNearEye calc(3s * var(--slow,1)) ease-in-out 1; }
+@keyframes bootyNearEye{ 0%,4%{ transform:translateX(0) } 10%,86%{ transform:translateX(-9px) } 94%,100%{ transform:translateX(0) } }
+.rao-mascot.mood-booty .m-cheek-l{ transform-box:fill-box; transform-origin:center; animation:bootyNearCheek calc(3s * var(--slow,1)) ease-in-out 1; }
+@keyframes bootyNearCheek{ 0%,4%{ transform:translateX(0) } 10%,86%{ transform:translateX(-6px) } 94%,100%{ transform:translateX(0) } }
+.rao-mascot.mood-booty .mouth-grin{ transform-box:fill-box; animation:bootyNearMouth calc(3s * var(--slow,1)) ease-in-out 1; }
+@keyframes bootyNearMouth{ 0%,4%{ transform:translateX(0) } 10%,86%{ transform:translateX(-12px) } 94%,100%{ transform:translateX(0) } }
+/* the booty: appears with the profile, bounces with follow-through lag */
+.rao-mascot.mood-booty .m-booty{
+  animation:bootyDef calc(3s * var(--slow,1)) linear 1,
+            bootyJiggle calc(.24s * var(--slow,1)) ease-in-out calc(.55s * var(--slow,1)) 9 alternate;
+}
+@keyframes bootyDef{ 0%,6%{ opacity:0 } 11%,86%{ opacity:1 } 92%,100%{ opacity:0 } }
+@keyframes bootyJiggle{
+  from{ transform:translate(-1px,-3px) scaleY(.88); }
+  to{ transform:translate(1px,3px) scaleY(1.18); }
+}
+/* body counter-bounce (booty lags it by 50ms = jiggle physics) */
+.rao-mascot.mood-booty .m-body{ animation:bootyBounce calc(.24s * var(--slow,1)) ease-in-out calc(.5s * var(--slow,1)) 9 alternate; }
+@keyframes bootyBounce{ from{ transform:translateY(0) } to{ transform:translateY(-3px) } }
+.rao-mascot.mood-booty .m-star{ animation:bootyStar calc(.24s * var(--slow,1)) ease-in-out calc(.5s * var(--slow,1)) 9 alternate; }
+@keyframes bootyStar{ from{ transform:rotate(12deg) } to{ transform:rotate(-12deg) } }
+.rao-mascot.mood-booty .m-shadow{ animation:bootyShadow calc(.24s * var(--slow,1)) ease-in-out calc(.5s * var(--slow,1)) 9 alternate !important; }
+@keyframes bootyShadow{ from{ transform:scale(.95) } to{ transform:scale(1.06) } }
+.rao-mascot.mood-booty .m-shake-r{ animation:bootyLine calc(.48s * var(--slow,1)) linear calc(.6s * var(--slow,1)) 4; }
+@keyframes bootyLine{ 0%,55%{ opacity:0 } 20%,40%{ opacity:.9 } 100%{ opacity:0 } }
+.rao-mascot.mood-booty .m-eye-l .m-lid{ animation:bootyWink calc(3s * var(--slow,1)) linear 1; }
+@keyframes bootyWink{ 0%,92%{ transform:scaleY(0) } 94%,97%{ transform:scaleY(1) } 100%{ transform:scaleY(0) } }
+
+/* ═══ NOODLE ARMS — LONG boneless tube-man arms, S-curve rippling overhead ═══
+   8 chained joints per arm; delays span >1 full cycle so a whole wave is
+   visible on the arm at once. Base joint does its own big flail sweep. */
+.m-noodle{ opacity:0; }
+.ns{ transform-box:fill-box; transform-origin:center top; }
+.rao-mascot.mood-noodle .m-arm{ opacity:0; transition:opacity .15s; }
+.rao-mascot.mood-noodle .m-noodle{ opacity:1; transition:opacity .15s; }
+.rao-mascot.mood-noodle .mouth-smile{ opacity:0; }
+.rao-mascot.mood-noodle .mouth-grin{ opacity:1; }
+.rao-mascot.mood-noodle .m-lid{ animation:none; transform:scaleY(.55); }
+/* ripple travelling down the chain (joints 2-8) */
+.rao-mascot.mood-noodle .ns{ animation:noodleWave calc(.6s * var(--slow,1)) ease-in-out infinite; }
+.rao-mascot.mood-noodle .ns2{ animation-delay:calc(-0.09s * var(--slow,1)); }
+.rao-mascot.mood-noodle .ns3{ animation-delay:calc(-0.18s * var(--slow,1)); }
+.rao-mascot.mood-noodle .ns4{ animation-delay:calc(-0.27s * var(--slow,1)); }
+.rao-mascot.mood-noodle .ns5{ animation-delay:calc(-0.36s * var(--slow,1)); }
+.rao-mascot.mood-noodle .ns6{ animation-delay:calc(-0.45s * var(--slow,1)); }
+.rao-mascot.mood-noodle .ns7{ animation-delay:calc(-0.54s * var(--slow,1)); }
+.rao-mascot.mood-noodle .ns8{ animation-delay:calc(-0.63s * var(--slow,1)); }
+/* base joint: the big flail the ripple rides on */
+.rao-mascot.mood-noodle .ns1{ animation:noodleBase calc(1.2s * var(--slow,1)) ease-in-out infinite; }
+.rao-mascot.mood-noodle .m-noodle-r .ns{ animation-name:noodleWaveR; }
+.rao-mascot.mood-noodle .m-noodle-r .ns1{ animation-name:noodleBaseR; }
+@keyframes noodleWave{ 0%,100%{ transform:rotate(-16deg) } 50%{ transform:rotate(16deg) } }
+@keyframes noodleWaveR{ 0%,100%{ transform:rotate(16deg) } 50%{ transform:rotate(-16deg) } }
+@keyframes noodleBase{ 0%,100%{ transform:rotate(-30deg) } 50%{ transform:rotate(32deg) } }
+@keyframes noodleBaseR{ 0%,100%{ transform:rotate(30deg) } 50%{ transform:rotate(-32deg) } }
+/* the groove under it */
+.rao-mascot.mood-noodle .m-body{ animation:noodleSway calc(1.2s * var(--slow,1)) ease-in-out infinite; }
+@keyframes noodleSway{ 0%,100%{ transform:rotate(-6deg) translateY(0) } 25%,75%{ transform:rotate(0) translateY(-4px) } 50%{ transform:rotate(6deg) translateY(0) } }
+.rao-mascot.mood-noodle .m-star{ animation:noodleStar calc(1.2s * var(--slow,1)) ease-in-out infinite; }
+@keyframes noodleStar{ 0%,100%{ transform:rotate(-16deg) } 50%{ transform:rotate(16deg) } }
+.rao-mascot.mood-noodle .m-shadow{ animation:noodleShadow calc(1.2s * var(--slow,1)) ease-in-out infinite !important; }
+@keyframes noodleShadow{ 0%,100%{ transform:translateX(-4px) } 50%{ transform:translateX(4px) } }
+
+/* ═══ BASS DROP — ball physics: accelerating falls, decaying bounces ═══
+   Rules encoded: squash only on contact (brief, ∝ impact speed); stretch
+   along motion while fast, normal at apexes; bounce heights decay ~45%;
+   falls ease-in (gravity), rises ease-out. */
+.rao-mascot.mood-squash .m-body{ animation:none; }
+.rao-mascot.mood-squash .m-flip{ animation:squashFlip calc(3.6s * var(--slow,1)) linear 1; transform-origin:center bottom; }
+@keyframes squashFlip{
+  0%{ transform:translateY(0) scale(1,1); animation-timing-function:cubic-bezier(.2,.7,.4,1); }
+  8%{ transform:translateY(-54px) scale(.95,1.07); animation-timing-function:ease-out; }   /* jump on the riser */
+  10%,13%{ transform:translateY(-57px) scale(1,1); animation-timing-function:cubic-bezier(.55,0,.9,.5); } /* hang: the silence */
+  18.5%{ transform:translateY(-2px) scale(.9,1.16); animation-timing-function:linear; }    /* accelerating fall, stretched */
+  20%{ transform:translateY(0) scale(1.85,.12); }                                          /* IMPACT: pancake */
+  22%{ transform:translateY(0) scale(1.82,.14); }
+  24%{ transform:translateY(0) scale(1.85,.12); animation-timing-function:ease-in; }       /* quiver */
+  26%{ transform:translateY(0) scale(1.95,.07); animation-timing-function:cubic-bezier(.1,.8,.3,1); } /* load deeper... */
+  29%{ transform:translateY(-34px) scale(.68,1.5); }                                       /* ...RELEASE, max stretch */
+  33%{ transform:translateY(-92px) scale(.85,1.2); }
+  38%,40%{ transform:translateY(-118px) scale(1,1); animation-timing-function:cubic-bezier(.55,0,.9,.5); } /* apex 1 */
+  47.5%{ transform:translateY(-3px) scale(.9,1.14); animation-timing-function:linear; }    /* fall, stretching */
+  49%{ transform:translateY(0) scale(1.45,.6); animation-timing-function:cubic-bezier(.2,.8,.4,1); }  /* contact 2 */
+  53%{ transform:translateY(-38px) scale(.92,1.1); }
+  56%{ transform:translateY(-53px) scale(1,1); animation-timing-function:cubic-bezier(.55,0,.9,.5); } /* apex 2 (~45%) */
+  62%{ transform:translateY(-2px) scale(.94,1.08); animation-timing-function:linear; }
+  63.5%{ transform:translateY(0) scale(1.25,.78); animation-timing-function:cubic-bezier(.25,.8,.45,1); } /* contact 3 */
+  68%{ transform:translateY(-23px) scale(1,1); animation-timing-function:cubic-bezier(.55,0,.9,.5); } /* apex 3 */
+  73%{ transform:translateY(0) scale(1.12,.9); animation-timing-function:cubic-bezier(.3,.8,.5,1); }  /* contact 4 */
+  77%{ transform:translateY(-9px) scale(1,1); animation-timing-function:cubic-bezier(.55,0,.9,.5); }  /* apex 4 */
+  81%{ transform:translateY(0) scale(1.05,.96); animation-timing-function:ease-out; }      /* last kiss */
+  85%{ transform:translateY(-3px) scale(1,1); }
+  88%{ transform:translateY(0) scale(1.02,.99); }
+  100%{ transform:translateY(0) scale(1,1); }
+}
+.rao-mascot.mood-squash .m-shadow{ animation:squashShadow calc(3.6s * var(--slow,1)) linear 1 !important; }
+@keyframes squashShadow{
+  0%{ transform:scale(1); opacity:1 }
+  10%,13%{ transform:scale(.55); opacity:.4 }
+  20%,26%{ transform:scale(1.7); opacity:1 }
+  38%,40%{ transform:scale(.3); opacity:.2 }
+  49%{ transform:scale(1.42); opacity:1 }
+  56%{ transform:scale(.55); opacity:.4 }
+  63.5%{ transform:scale(1.24); opacity:1 }
+  68%{ transform:scale(.75); opacity:.6 }
+  73%{ transform:scale(1.12); opacity:1 }
+  77%{ transform:scale(.9); opacity:.85 }
+  81%,100%{ transform:scale(1); opacity:1 }
+}
+.rao-mascot.mood-squash .mouth-smile{ animation:squashSmile calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes squashSmile{ 0%,27.99%{ opacity:1 } 28%,79.99%{ opacity:0 } 80%,100%{ opacity:1 } }
+.rao-mascot.mood-squash .mouth-o{ animation:squashMouth calc(3.6s * var(--slow,1)) linear 1; }
+@keyframes squashMouth{ 0%,27.99%{ opacity:0; transform:scale(1.3) } 28%,79.99%{ opacity:1; transform:scale(1.3) } 80%,100%{ opacity:0; transform:scale(1.3) } }
+
+/* ═══ HERO FLIGHT — caped, tilted, fist out; speed lines do the flying ═══ */
+.m-cape, .m-speedlines{ opacity:0; }
+.m-cape{ transform-box:fill-box; transform-origin:80% 10%; }
+.m-cape-cloth{ transform-box:fill-box; transform-origin:80% 10%; }
+.sl{ stroke:#94a3b8; stroke-width:3.4; stroke-linecap:round; }
+.rao-mascot.mood-hero .mouth-smile{ opacity:0; }
+.rao-mascot.mood-hero .mouth-grin{ opacity:1; }
+.rao-mascot.mood-hero .m-lid{ animation:none; transform:scaleY(.28); }   /* determined squint */
+.rao-mascot.mood-hero .m-brow{ opacity:1; }
+.rao-mascot.mood-hero .m-brow-l{ transform:translateY(-1px) rotate(4deg); }
+.rao-mascot.mood-hero .m-brow-r{ transform:translateY(-1px) rotate(-4deg); }
+.rao-mascot.mood-hero .m-body{ animation:none; }
+.rao-mascot.mood-hero .m-flip{ animation:heroPose calc(4.2s * var(--slow,1)) ease-in-out 1; }
+@keyframes heroPose{
+  0%{ transform:scaleX(1) rotate(0) translateY(0); }
+  7%{ transform:scaleX(.08) rotate(0) translateY(-5px); }     /* transformation spin */
+  12%{ transform:scaleX(1) rotate(0) translateY(-3px); }
+  16%{ transform:scaleX(1) rotate(38deg) translateY(-8px); }  /* flight lean */
+  32%{ transform:rotate(38deg) translateY(-13px); }           /* hover bob */
+  48%{ transform:rotate(37deg) translateY(-7px); }
+  64%{ transform:rotate(38deg) translateY(-13px); }
+  80%{ transform:rotate(37deg) translateY(-8px); }
+  88%{ transform:rotate(38deg) translateY(-10px); }
+  93%{ transform:scaleX(1) rotate(0) translateY(2px) scale(1.05,.95); }  /* land */
+  100%{ transform:rotate(0) translateY(0) scale(1,1); }
+}
+.rao-mascot.mood-hero .m-cape{ animation:heroShow calc(4.2s * var(--slow,1)) linear 1; }
+.rao-mascot.mood-hero .m-speedlines{ animation:heroShow calc(4.2s * var(--slow,1)) linear 1; }
+@keyframes heroShow{ 0%,13.99%{ opacity:0 } 14%,87.99%{ opacity:1 } 88%,100%{ opacity:0 } }
+.rao-mascot.mood-hero .m-cape-cloth{ animation:heroFlutter calc(.38s * var(--slow,1)) ease-in-out infinite alternate; }
+@keyframes heroFlutter{ from{ transform:rotate(-4deg) scaleY(.96) } to{ transform:rotate(6deg) scaleY(1.05) } }
+.rao-mascot.mood-hero .m-arm-r{ animation:heroArmR calc(4.2s * var(--slow,1)) ease-in-out 1; }
+@keyframes heroArmR{ 0%,13%{ transform:rotate(0) } 17%,88%{ transform:rotate(-148deg) } 94%,100%{ transform:rotate(0) } }
+.rao-mascot.mood-hero .m-arm-l{ animation:heroArmL calc(4.2s * var(--slow,1)) ease-in-out 1; }
+@keyframes heroArmL{ 0%,13%{ transform:rotate(0) } 17%,88%{ transform:rotate(26deg) } 94%,100%{ transform:rotate(0) } }
+.rao-mascot.mood-hero .m-thruster{ animation:heroShow calc(4.2s * var(--slow,1)) linear 1, raoThrust calc(.12s * var(--slow,1)) ease-in-out infinite alternate; }
+.rao-mascot.mood-hero .m-shadow{ animation:heroShadow calc(4.2s * var(--slow,1)) linear 1 !important; }
+@keyframes heroShadow{ 0%,13.99%{ transform:scale(1); opacity:1 } 14%,87.99%{ transform:scale(.55); opacity:.4 } 88%,100%{ transform:scale(1); opacity:1 } }
+/* the streaks: right-to-left at staggered speeds = HE is flying right */
+.rao-mascot.mood-hero .sl{ animation:slZip calc(.6s * var(--slow,1)) linear infinite; }
+.rao-mascot.mood-hero .sl1{ animation-duration:calc(.5s * var(--slow,1)); animation-delay:calc(-.1s * var(--slow,1)); }
+.rao-mascot.mood-hero .sl2{ animation-duration:calc(.72s * var(--slow,1)); animation-delay:calc(-.4s * var(--slow,1)); }
+.rao-mascot.mood-hero .sl3{ animation-duration:calc(.56s * var(--slow,1)); animation-delay:calc(-.25s * var(--slow,1)); }
+.rao-mascot.mood-hero .sl4{ animation-duration:calc(.8s * var(--slow,1)); animation-delay:calc(-.6s * var(--slow,1)); }
+.rao-mascot.mood-hero .sl5{ animation-duration:calc(.64s * var(--slow,1)); animation-delay:calc(-.32s * var(--slow,1)); }
+@keyframes slZip{
+  0%{ transform:translateX(120px); opacity:0; }
+  12%{ opacity:.85; }
+  82%{ opacity:.85; }
+  100%{ transform:translateX(-130px); opacity:0; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .rao-mascot *{ animation:none !important; }
+  .rao-dock.rao-travelling .m-thruster{ opacity:.5; }
+}
+
+/* carried (drag) — slight heel by direction, shadow off the wrap while in hand */
+.rao-dock.robo-carried .rao-mascot-wrap{filter:none}
+.rao-dock.robo-carried .rao-mascot{transition:transform .18s ease}
+.rao-dock.robo-carried.carry-r .rao-mascot{transform:rotate(6deg)}
+.rao-dock.robo-carried.carry-l .rao-mascot{transform:rotate(-6deg)}
+.rao-dock.robo-carried .rao-mascot .m-shadow{opacity:.22;transform:scale(.55)}
+
+/* v21: let a real finger own Robo — stop the browser stealing the gesture for scroll */
+.rao-dock .rao-mascot-wrap{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
+
+/* props hidden at rest */
+.m-tongue,.m-spanner,.m-jb,.m-mag{opacity:0}
+.m-tongue{transform-box:fill-box;transform-origin:center top}
+.m-spanner,.m-mag,.m-jb{transform-box:fill-box;transform-origin:center}
+
+/* ═══ REACTION LADDER — REBUILT 2026-07-17 (sanctioned fallback) ═══
+   The original guided-solve file was lost; per the recorded fallback rule the
+   ladder below is a REBUILD, built live with Venkat and canonical only upon
+   his per-reaction approval. Prefix mood-solve-* (GHOST rule [class*="mood-"]
+   still matches). MOUTH RULE 1 held: one mouth per mood, static hard swap.
+   TONE RULES held: no pout, concern aims at the problem, never at the child. */
+
+/* encourage — wrong answer. Acknowledge (soft dip, thoughtful), then a
+   determined rise with a double fist-pump: "we're not done". Never sad. */
+.rao-mascot.mood-solve-encourage .mouth-smile{opacity:0}
+.rao-mascot.mood-solve-encourage .mouth-hmm{opacity:1}
+.rao-mascot.mood-solve-encourage .m-brow{opacity:1}
+.rao-mascot.mood-solve-encourage .m-flip{transform-box:fill-box;transform-origin:center bottom;
+  animation:gsE calc(2.1s*var(--slow,1)) ease-in-out 1}
+@keyframes gsE{0%{transform:rotate(0) translateY(0)}
+  16%,30%{transform:rotate(-5deg) translateY(2px)}
+  46%{transform:rotate(2deg) translateY(-3px)}
+  58%,74%{transform:rotate(0) translateY(-1px)}100%{transform:rotate(0) translateY(0)}}
+.rao-mascot.mood-solve-encourage .m-arm-r{animation:gsEp calc(2.1s*var(--slow,1)) ease-in-out 1}
+@keyframes gsEp{0%,34%{transform:rotate(0)}46%,56%{transform:rotate(-108deg)}
+  62%{transform:rotate(-70deg)}70%,80%{transform:rotate(-108deg)}100%{transform:rotate(0)}}
+.rao-mascot.mood-solve-encourage .m-pupil{animation:gsEe calc(2.1s*var(--slow,1)) ease-in-out 1}
+@keyframes gsEe{0%,30%{transform:translateY(1.6px)}50%,100%{transform:translateY(0)}}
+
+/* happy — correct (1st try). Three decaying hops with squash-and-stretch,
+   grin, cheek flare, a delighted double-blink on landing. */
+.rao-mascot.mood-solve-happy .mouth-smile{opacity:0}
+.rao-mascot.mood-solve-happy .mouth-grin{opacity:1}
+.rao-mascot.mood-solve-happy .m-flip{transform-box:fill-box;transform-origin:center bottom;
+  animation:gsH calc(1.6s*var(--slow,1)) ease-out 1}
+@keyframes gsH{0%{transform:translateY(0) scaleY(1)}
+  10%{transform:translateY(1px) scaleY(.955)}22%{transform:translateY(-10px) scaleY(1.03)}
+  34%{transform:translateY(0) scaleY(.96)}46%{transform:translateY(-6px) scaleY(1.02)}
+  58%{transform:translateY(0) scaleY(.97)}70%{transform:translateY(-3px)}
+  82%,100%{transform:translateY(0) scaleY(1)}}
+.rao-mascot.mood-solve-happy .m-cheek{animation:gsHc calc(1.6s*var(--slow,1)) ease-in-out 1}
+@keyframes gsHc{0%{opacity:.85}30%,70%{opacity:1;transform:scale(1.3)}100%{opacity:.85}}
+.rao-mascot.mood-solve-happy .m-lid{animation:gsHb calc(1.6s*var(--slow,1)) linear 1}
+@keyframes gsHb{0%,60%,68%,74%,82%,100%{transform:scaleY(0)}64%,78%{transform:scaleY(1)}}
+
+/* celebrate — 3-streak. Arms shoot up and HOLD with two victory waves,
+   two jumps with squash, star glint, blush, dust puff on the first landing. */
+.rao-mascot.mood-solve-celebrate .mouth-smile{opacity:0}
+.rao-mascot.mood-solve-celebrate .mouth-grin{opacity:1}
+.rao-mascot.mood-solve-celebrate .m-flush{opacity:1}
+.rao-mascot.mood-solve-celebrate .m-arm-l{animation:gsCl calc(2.2s*var(--slow,1)) ease-in-out 1}
+.rao-mascot.mood-solve-celebrate .m-arm-r{animation:gsCr calc(2.2s*var(--slow,1)) ease-in-out 1}
+@keyframes gsCl{0%{transform:rotate(0)}14%,30%{transform:rotate(126deg)}38%{transform:rotate(112deg)}
+  46%,62%{transform:rotate(126deg)}70%{transform:rotate(112deg)}78%,86%{transform:rotate(126deg)}100%{transform:rotate(0)}}
+@keyframes gsCr{0%{transform:rotate(0)}14%,30%{transform:rotate(-126deg)}38%{transform:rotate(-112deg)}
+  46%,62%{transform:rotate(-126deg)}70%{transform:rotate(-112deg)}78%,86%{transform:rotate(-126deg)}100%{transform:rotate(0)}}
+.rao-mascot.mood-solve-celebrate .m-flip{transform-box:fill-box;transform-origin:center bottom;
+  animation:gsCb calc(2.2s*var(--slow,1)) ease-in-out 1}
+@keyframes gsCb{0%{transform:translateY(0) scaleY(1)}10%{transform:translateY(1px) scaleY(.95)}
+  20%{transform:translateY(-9px)}32%{transform:translateY(0) scaleY(.96)}
+  44%{transform:translateY(-6px)}56%{transform:translateY(0) scaleY(.975)}
+  66%,100%{transform:translateY(0) scaleY(1)}}
+.rao-mascot.mood-solve-celebrate .m-star{transform-box:fill-box;transform-origin:center;
+  animation:gsCs calc(2.2s*var(--slow,1)) ease-in-out 1}
+@keyframes gsCs{0%,100%{transform:scale(1)}24%{transform:scale(1.45) rotate(18deg)}
+  40%{transform:scale(1.1)}58%{transform:scale(1.45) rotate(-14deg)}76%{transform:scale(1)}}
+.rao-mascot.mood-solve-celebrate .m-dust{animation:gsCd calc(2.2s*var(--slow,1)) ease-out 1}
+@keyframes gsCd{0%,28%{opacity:0;transform:scale(.5)}36%{opacity:.8;transform:scale(1.1)}
+  52%{opacity:0;transform:scale(1.35)}100%{opacity:0}}
+
+/* hyped — 5-streak. Anticipation crouch, explosive 360° with overshoot
+   settle, arms out through the spin, star flash ×2, cape flutter. */
+.rao-mascot.mood-solve-hyped .mouth-smile{opacity:0}
+.rao-mascot.mood-solve-hyped .mouth-grin{opacity:1}
+.rao-mascot.mood-solve-hyped .m-flip{transform-box:fill-box;transform-origin:center;
+  animation:gsY calc(2s*var(--slow,1)) cubic-bezier(.3,.05,.25,1) 1}
+@keyframes gsY{0%{transform:rotate(0) scale(1)}12%{transform:rotate(-8deg) scale(.94) translateY(3px)}
+  62%{transform:rotate(352deg) scale(1.02)}74%{transform:rotate(366deg)}
+  84%{transform:rotate(357deg)}100%{transform:rotate(360deg) scale(1)}}
+.rao-mascot.mood-solve-hyped .m-arm-l{animation:gsYa calc(2s*var(--slow,1)) ease-in-out 1}
+.rao-mascot.mood-solve-hyped .m-arm-r{animation:gsYb calc(2s*var(--slow,1)) ease-in-out 1}
+@keyframes gsYa{0%,10%{transform:rotate(0)}20%,70%{transform:rotate(58deg)}100%{transform:rotate(0)}}
+@keyframes gsYb{0%,10%{transform:rotate(0)}20%,70%{transform:rotate(-58deg)}100%{transform:rotate(0)}}
+.rao-mascot.mood-solve-hyped .m-star{transform-box:fill-box;transform-origin:center;
+  animation:gsYs calc(2s*var(--slow,1)) ease-in-out 1}
+@keyframes gsYs{0%,100%{transform:scale(1);opacity:1}
+  26%{transform:scale(2) rotate(45deg)}38%{transform:scale(1.2)}
+  56%{transform:scale(1.9) rotate(-30deg)}70%{transform:scale(1)}}
+.rao-mascot.mood-solve-hyped .m-cape-cloth{transform-box:fill-box;transform-origin:center top;
+  animation:gsYc calc(2s*var(--slow,1)) ease-in-out 1}
+@keyframes gsYc{0%,100%{transform:skewX(0)}25%{transform:skewX(-9deg)}50%{transform:skewX(7deg)}75%{transform:skewX(-5deg)}}
+
+/* shook — comeback (correct after wrong). Sharp delighted recoil, eyes WIDE
+   (blink suspended), pupils up; settles with two tiny happy shivers and a
+   late cheek flare. O mouth throughout — surprise resolving into delight. */
+.rao-mascot.mood-solve-shook .mouth-smile{opacity:0}
+.rao-mascot.mood-solve-shook .mouth-o{opacity:1}
+.rao-mascot.mood-solve-shook .m-lid{animation:none;transform:scaleY(0)}
+.rao-mascot.mood-solve-shook .m-pupil{animation:gsSp calc(1.9s*var(--slow,1)) ease-out 1}
+@keyframes gsSp{0%,40%{transform:translateY(-1.8px)}70%,100%{transform:translateY(0)}}
+.rao-mascot.mood-solve-shook .m-flip{transform-box:fill-box;transform-origin:center bottom;
+  animation:gsS calc(1.9s*var(--slow,1)) ease-out 1}
+@keyframes gsS{0%{transform:rotate(0)}9%{transform:rotate(7deg) translateX(3px) translateY(-2px)}
+  22%{transform:rotate(5.5deg) translateX(2px)}34%{transform:rotate(6.5deg) translateX(2.5px)}
+  52%{transform:rotate(2.5deg)}62%{transform:rotate(3.5deg)}
+  74%{transform:rotate(1deg)}84%{transform:rotate(1.8deg)}100%{transform:rotate(0)}}
+.rao-mascot.mood-solve-shook .m-cheek{animation:gsSc calc(1.9s*var(--slow,1)) ease-in 1}
+@keyframes gsSc{0%,55%{opacity:.85}75%,100%{opacity:1;transform:scale(1.3)}}
+
+/* sleepy — held state: lids low, slow sway + gentle breathing rise.
+   Ends on wake(), not a timer. */
+.rao-mascot.mood-solve-sleepy .m-lid{animation:none;transform:scaleY(.92)}
+.rao-mascot.mood-solve-sleepy .m-flip{transform-box:fill-box;transform-origin:center bottom;
+  animation:gsZ calc(3.6s*var(--slow,1)) ease-in-out infinite}
+@keyframes gsZ{0%,100%{transform:rotate(-2deg) translateY(0)}
+  25%{transform:rotate(-.5deg) translateY(-1.2px)}50%{transform:rotate(2deg) translateY(0)}
+  75%{transform:rotate(.5deg) translateY(-1.2px)}}

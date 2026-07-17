@@ -330,6 +330,9 @@ function wireCard(frame) {
   // ── WRONG — the whisper (law 3), then the ladder speaks (law 5). ──
   function calmWrong(user) {
     wrongCount++;
+    // Every wrong ATTEMPT gets a signal (rao:whywrong below only fires when the
+    // option has an authored whyWrong entry). Robo's Layer 1 listens for this.
+    try { qbody.dispatchEvent(new CustomEvent("rao:wrong", { bubbles: true })); } catch (e) { /* signal only */ }
     var entry = whyMap ? lookupWhy(qbody, whyMap, answer) : null;
     if (entry && entry.code) {
       try {

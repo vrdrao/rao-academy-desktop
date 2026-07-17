@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test": "node tools/verify-line-endings.js && node tools/verify-tracked.js && node tools/verify-unique-lessons.js && node tools/verify-content-only.js && python tools/scope-css.test.py && node tools/verify-structural.js && node tools/verify-firewall.js && node tools/verify-content-guards.js --hint-leak-only && node tools/verify-hint-coverage.js && node harness.js && node tools/verify-format.js && node tools/verify-styles.js && node tools/verify-touch.js && node tools/verify-calm.js",
+    "test": "node tools/verify-line-endings.js && node tools/verify-tracked.js && node tools/verify-unique-lessons.js && node tools/verify-content-only.js && python tools/scope-css.test.py && node tools/verify-structural.js && node tools/verify-firewall.js && node tools/verify-content-guards.js --hint-leak-only && node tools/verify-hint-coverage.js && node harness.js && node tools/verify-format.js && node tools/verify-styles.js && node tools/verify-touch.js && node tools/verify-calm.js && node tools/verify-robo.js",
     "test:calm": "node tools/verify-calm.js",
+    "test:robo": "node tools/verify-robo.js",
     "test:firewall": "node tools/verify-firewall.js",
     "test:touch": "node tools/verify-touch.js",
     "test:engine": "node harness.js",
