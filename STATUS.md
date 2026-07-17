@@ -184,9 +184,9 @@ Pre-existing bugs FOUND during 7.6, not yet fixed (need decisions):
 
 ## What is next
 
-- Venkat's pending one-word ruling: keep or drop the "Solution — step by step"
-  header (removal is one line: `WALK_HEADER` in engine/solution-renderer.js)
-- Decide the frontmatter-`explain:` engine fix (bug 1 under 7.6 above)
+- ~~Header ruling~~ — RULED 2026-07-17: "Solution — step by step" header KEPT
+- **Brief 7.6.1 (approved 2026-07-17, NOT started):** the frontmatter-`explain:`
+  engine fix (bug 1 under 7.6 above)
 - Brief 7.7+: video walkthrough (Watch tab — structurally not precluded), Robo
 - Continue individual review of remaining ~95 files
 - Duplicates to watch: `bar_graphs_1to1.html` / `bar_graphs_1to1 (2).html` and similar

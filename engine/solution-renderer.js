@@ -239,8 +239,8 @@ function chatMsg(wrap, chip, bodyHtml, then) {
 // module never touches the question, never grades, never mutates.
 // ════════════════════════════════════════════════════════════════
 
-// Venkat's keep/remove ruling on this header is pending — removal is this
-// one line (set to "").
+// Ruled KEPT (Venkat, 2026-07-17). If ever re-ruled, removal is this one
+// line (set to "").
 var WALK_HEADER = "Solution — step by step";
 
 function walkChip(block, stepNum, stepTotal) {
