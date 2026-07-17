@@ -550,3 +550,48 @@ bug you flagged in your 7.6 report §6.2 — nothing else rides along.
 - Commits stay LOCAL. No push, no handoff files, no commits beyond this brief's
   scope. Venkat pushes only after the chat audit clears.
 
+BRIEF 7.7 — ROBO PRODUCTION INTEGRATION (engine rao-master-18).
+
+PRE-CHECK (do this first, report before proceeding): read the current engine version string from engine/preview-engine.js. It must be exactly rao-master-17. If it is anything else, STOP and report — do not begin. Then verify these reference files and STOP on any mismatch: incoming/calm-card-v36.html (md5 deb8d07a84a9f1fbc6847b7ff57a965f, 1,791,115 bytes) · incoming/guided-solve-rebuilt-v1.html (md5 362ca7c1940e1cb8bb09ab3403fdbc65, 1,795,641 bytes) · robo_motion_lab_v29.html (md5 07165667e4adb3ee2ecf4535e3dc27b4) · docs/ROBO-ENGAGEMENT-FRAMEWORK-v4.md present.
+
+## Objective
+
+Integrate Robo (the mascot) into the production Calm Card, implementing ROBO-ENGAGEMENT-FRAMEWORK-v4.md's core layers exactly (v4 carries v3 unchanged; v4's §A personality pack, §B stage props, §C gaze, and §D palette tint are OUT OF SCOPE here — they are Brief 7.8). Reference demo: incoming/calm-card-v36.html — the visual/behavioral target; implement against the real engine files, never by copying demo scaffolding. The reaction ladder's canonical source is incoming/guided-solve-rebuilt-v1.html (the sanctioned, Venkat-approved rebuild — see docs/GUIDED-SOLVE-REBUILD-NOTE.md for provenance; its header comment stays intact in any file you touch it from). Where this brief, the framework, and the reference files disagree, STOP and report; do not resolve it yourself.
+
+## Scope
+
+1. **Port the Robo rig verbatim** from robo_motion_lab_v29.html: inline SVG in a fixed dock (.rao-dock, z-index 8), CSS + WAAPI, no external assets. Strip lab-only chrome (page tokens, controls, target ping, Auto tour, Home corner, stage tap-to-fly). Do NOT port the stage apple (removed by design; the apple TOSS motion inside the rig stays).
+2. **Facade:** window.Robo = { play, flyTo, bubble, busy } with DROP-not-queue. Victory lap orbits the active question card with exact-return.
+3. **Port the reaction ladder from incoming/guided-solve-rebuilt-v1.html** — the six mood-solve-* reactions (encourage, happy, celebrate, hyped, shook, sleepy) with their exact keyframes and hold timings (2100/1600/2200/2000/1900/held ×slow-factor equivalents). Do not reconstruct from memory and do not substitute the old mood-demo-* stand-ins anywhere.
+4. **Wire Layers 1–2 to real card events** (not the demo ccBar): wrong → encourage, correct → happy + praise bubble, streak 3 → celebrate, streak 5 → hyped, comeback → shook, 45 s idle → doze. Praise pool single-sourced: `Nailed it!` / `That's it!` / `Perfect estimate!` / `You got it!` + `⚡ N in a row!` at streak ≥ 2, ~150 ms after correct, ≈ 1900 ms duration. Comeback events draw ONLY from the effort pool (`You didn't give up!` / `You fixed it yourself!` / `That's how it's done — keep trying!` / `You worked it out!`), never the outcome pool; both pools single-sourced side by side. Name personalization at streak ≥ 3 milestones only (celebrate, hyped): append the logged-in child's first name (`Nailed it, Priya! ⚡ 3 in a row!`); never on ordinary corrects, never on comeback, never in walkthrough; read the name from the account/session layer, degrade silently to the nameless line if unavailable.
+5. **Remove the existing card cheer row and any in-card mascot/avatar renders**, including the cc-ava seat in chat-bubble creation. Card keeps green option, sparks, chime, takeaway, Next. Hint/step/walkthrough bubbles are faceless (dots → text). Remove dead .cc-ava CSS in production.
+6. **Walkthrough silence:** Robo fully quiet (no bubble, no mood, no motion) from walkthrough open through the quiet reveal.
+7. **Layer 3 physical play:** tap = poke (6 px / 500 ms threshold; single friendly wobble — the poke LADDER is 7.8 scope), drag with pointer capture, viewport clamps (4 px), yield rule on drop (nearestClear → flyTo), sessionStorage['roboPos'] via savePos on a 700 ms post-drop timer, restore + clamp on load, not grabbable while busy.
+8. **Layer 4 ambience:** float, blink, eye-tracking ≤ 260 px (off while dragging/busy), 45 s doze, resize clamps. Stuck-child rule: doze is suppressed when the most recent answer event was wrong; at the 45 s mark, ONE silent lean-in toward the card (no bubble, no sound, no mood, no repeat until the next answer event). Correct re-arms normal doze; a new wrong re-arms exactly one lean-in. Walkthrough silence overrides everything: no lean-in, no doze.
+9. **Mobile touch law (hard):** .rao-dock .rao-mascot-wrap{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
+10. **Responsive size:** wrap 120×130 above 600 px, 84×91 at ≤ 600 px; every positional computation (clamps, yield, fly-home, stage bounds) reads offsetWidth/offsetHeight live (re-synced on resize), never a hardcoded constant.
+
+## Laws in force
+
+Calm Card: task immutable · help accumulates · no-repaint · green exactly twice · triumph ≠ rescue. Robo Guide standing rules: MOUTH RULE 1 & 2, CHAIN RULE, GHOST RULE, TONE RULES; anger = authored villain beats only; audio synth-only, respects mute. Engine is forward-only. Anti-laundering applies to every claim in your report.
+
+PUSH DISCIPLINE (hard clause): commit only what your final report enumerates, one line per commit. Do NOT push. Push happens only after Venkat replies with an enumerated authorization naming each commit. Creating or pushing anything not enumerated — including handoff or summary files — is a violation of this brief.
+
+## QA protocol (Guide §8 + additions — show actual output, prove guards fail first)
+
+- Assert-guarded edits only; node --check every touched script.
+- Playwright real Chromium at 1280×800 AND 390×844.
+- 30 ms mouth-continuity scans on any motion touched.
+- Mobile: real synthesized touch via CDP Input.dispatchTouchEvent — touch tap → poke; multi-step touch drag → dock moves; yield on drop; roboPos persisted (assert AFTER the 700 ms timer). Mouse events do not count as mobile QA.
+- Timing-aware asserts: takeaway after beat 3 (550 ms); praise bubble expiry before walkthrough-silence reads.
+- Zero JS errors, zero horizontal overflow, both viewports.
+- Break one guard deliberately, show FAIL, restore, show PASS — at minimum the walkthrough-silence guard and the stuck-child doze suppression.
+- Ladder asserts: each of the six events fires its mood-solve-* class with the ported keyframe running (getComputedStyle animationName); comeback praise never emits an outcome-pool string; name appears at streak 3/5 only and never elsewhere; with a wrong answer pending, 45 s idle produces the lean-in (once) and NO doze class; at 390 px the drag clamp honours the 84 px width (dock can reach left ≥ 298 on a 390 px viewport — the old 120 px constant caps it at 266, which is the FAIL you must be able to demonstrate).
+- Report md5 + byte count (bytes on disk, not len()) of every shipped file.
+
+## Out of scope
+
+Tutor voice / "Rao sir" identity · new motions · Brief 7.8 territory (poke ladder, entrance, mischief, stage props, gaze, palette theming) · video hosting · any change to question content or grading.
+
+Report back with the numbered reconciliation: pre-check results, tests added, sabotage FAIL outputs (actual output, not summaries), engine version bump to rao-master-18, enumerated commit list (unpushed), and anything you could not implement faithfully — disclosed inside the report structure, not as loose preamble.
+
