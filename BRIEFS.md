@@ -552,7 +552,7 @@ bug you flagged in your 7.6 report §6.2 — nothing else rides along.
 
 BRIEF 7.7 — ROBO PRODUCTION INTEGRATION (engine rao-master-18).
 
-PRE-CHECK (do this first, report before proceeding): read the current engine version string from engine/preview-engine.js. It must be exactly rao-master-17. If it is anything else, STOP and report — do not begin. Then verify these reference files and STOP on any mismatch: incoming/calm-card-v36.html (md5 deb8d07a84a9f1fbc6847b7ff57a965f, 1,791,115 bytes) · incoming/guided-solve-rebuilt-v1.html (md5 362ca7c1940e1cb8bb09ab3403fdbc65, 1,795,641 bytes) · docs/ROBO-ENGAGEMENT-FRAMEWORK-v4.md present.
+PRE-CHECK (do this first, report before proceeding): read the current engine version string from engine/preview-engine.js. It must be exactly rao-master-17. If it is anything else, STOP and report — do not begin. Then verify these reference files and STOP on any mismatch: incoming/calm-card-v36.html (md5 deb8d07a84a9f1fbc6847b7ff57a965f, 1,791,115 bytes) · incoming/guided-solve-rebuilt-v1.html (md5 362ca7c1940e1cb8bb09ab3403fdbc65, 1,795,641 bytes) · robo_motion_lab_v29.html (md5 07165667e4adb3ee2ecf4535e3dc27b4) · docs/ROBO-ENGAGEMENT-FRAMEWORK-v4.md present.
 
 ## Objective
 
@@ -560,7 +560,7 @@ Integrate Robo (the mascot) into the production Calm Card, implementing ROBO-ENG
 
 ## Scope
 
-1. **Port the Robo rig verbatim** from incoming/calm-card-v36.html, which embeds the motion-lab rig (the standalone robo_motion_lab_v29.html is unavailable — searched repo, Desktop and Downloads, 2026-07-17; the lab-only chrome — page tokens, controls, target ping, Auto tour, Home corner, stage tap-to-fly — is already absent from v36): inline SVG in a fixed dock (.rao-dock, z-index 8), CSS + WAAPI, no external assets. Strip demo-only dev chrome (state bar, drawers, tuner). Do NOT port the stage apple (removed by design; the apple TOSS motion inside the rig stays).
+1. **Port the Robo rig verbatim** from robo_motion_lab_v29.html: inline SVG in a fixed dock (.rao-dock, z-index 8), CSS + WAAPI, no external assets. Strip lab-only chrome (page tokens, controls, target ping, Auto tour, Home corner, stage tap-to-fly). Do NOT port the stage apple (removed by design; the apple TOSS motion inside the rig stays).
 2. **Facade:** window.Robo = { play, flyTo, bubble, busy } with DROP-not-queue. Victory lap orbits the active question card with exact-return.
 3. **Port the reaction ladder from incoming/guided-solve-rebuilt-v1.html** — the six mood-solve-* reactions (encourage, happy, celebrate, hyped, shook, sleepy) with their exact keyframes and hold timings (2100/1600/2200/2000/1900/held ×slow-factor equivalents). Do not reconstruct from memory and do not substitute the old mood-demo-* stand-ins anywhere.
 4. **Wire Layers 1–2 to real card events** (not the demo ccBar): wrong → encourage, correct → happy + praise bubble, streak 3 → celebrate, streak 5 → hyped, comeback → shook, 45 s idle → doze. Praise pool single-sourced: `Nailed it!` / `That's it!` / `Perfect estimate!` / `You got it!` + `⚡ N in a row!` at streak ≥ 2, ~150 ms after correct, ≈ 1900 ms duration. Comeback events draw ONLY from the effort pool (`You didn't give up!` / `You fixed it yourself!` / `That's how it's done — keep trying!` / `You worked it out!`), never the outcome pool; both pools single-sourced side by side. Name personalization at streak ≥ 3 milestones only (celebrate, hyped): append the logged-in child's first name (`Nailed it, Priya! ⚡ 3 in a row!`); never on ordinary corrects, never on comeback, never in walkthrough; read the name from the account/session layer, degrade silently to the nameless line if unavailable.
@@ -594,4 +594,25 @@ PUSH DISCIPLINE (hard clause): commit only what your final report enumerates, on
 Tutor voice / "Rao sir" identity · new motions · Brief 7.8 territory (poke ladder, entrance, mischief, stage props, gaze, palette theming) · video hosting · any change to question content or grading.
 
 Report back with the numbered reconciliation: pre-check results, tests added, sabotage FAIL outputs (actual output, not summaries), engine version bump to rao-master-18, enumerated commit list (unpushed), and anything you could not implement faithfully — disclosed inside the report structure, not as loose preamble.
+
+### BRIEF 7.7 — AMENDMENT 1 (rig source; supersedes conflicting lines above)
+
+robo_motion_lab_v29.html is confirmed absent from this machine and is out of
+this brief. Changes:
+
+1. PRE-CHECK: drop the robo_motion_lab_v29.html check entirely. All other
+   pre-checks stand unchanged.
+2. Scope item 1 rig source is now incoming/calm-card-v36.html. Rationale:
+   v36 contains the v29 rig ported verbatim plus every approved fix since,
+   including the live-read responsive sizing scope item 10 requires; porting
+   from v29 would silently lose approved work. Port the rig (inline SVG, core
+   motion CSS/WAAPI, dock) and the window.Robo facade from v36. Strip all
+   demo-only chrome: dev drawer / robot pill, tuner, demo state bar,
+   slow/sound toggles. Do NOT port the v25-v36 personality-pack, gaze,
+   stage-prop, or palette-theming layers - Brief 7.8 scope, per the fence
+   above. The stage apple remains excluded; the apple TOSS motion inside the
+   rig stays.
+3. Everywhere else this brief says robo_motion_lab_v29.html, read
+   incoming/calm-card-v36.html. If the rig in v36 conflicts with any
+   requirement in this brief, STOP and report; do not resolve it yourself.
 
