@@ -205,6 +205,66 @@ async function fallbackLaws(browser) {
 }
 
 // ════════════════════════════════════════════════════════════════
+// 7.7.3 KEYPAD: TOUCH-ONLY. On a fine-primary-pointer device (mouse — every
+// desktop) the on-screen digit pad under fill-blanks inputs must be
+// display:none with its space fully collapsed. Mechanism is pointer
+// capability, never viewport width. (The coarse-pointer half — pad visible
+// and functional under real touch — lives in verify-touch.js.)
+// ════════════════════════════════════════════════════════════════
+async function keypadLaws(browser) {
+  const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(String(e)));
+  const src = sourceOf(path.join(ROOT, "lessons", "_type-coverage.html"))
+    .replace('<div id="source">', '<div id="source">' + FALLBACK_FIXTURES);
+  await page.setContent(pageFor(src), { waitUntil: "load" });
+
+  const finePointer = await page.evaluate(() => matchMedia("(pointer: fine)").matches);
+  if (finePointer) pass("7.7.3 keypad: context sanity — (pointer: fine) matches at 1280×800");
+  else { fail("7.7.3 keypad: context sanity", "(pointer: fine) does not match — the desktop-hide claim cannot be tested"); await page.close(); return; }
+
+  // gap between the task block and the next visible block, BEFORE any focus
+  const gapBefore = await page.evaluate(() => {
+    const f = document.querySelectorAll(".pv-frame")[0];   // injected fill-blanks fixture
+    f.scrollIntoView({ block: "center" });
+    const q = f.querySelector(".qbody").getBoundingClientRect();
+    const foot = f.querySelector(".pv-foot").getBoundingClientRect();
+    return foot.top - q.bottom;
+  });
+  await page.click('.pv-frame .blank-input');   // focus → ensureDigitPad show()
+  await page.waitForTimeout(250);
+  const st = await page.evaluate(() => {
+    const f = document.querySelectorAll(".pv-frame")[0];
+    const pad = document.querySelector(".rao-digitpad");
+    const q = f.querySelector(".qbody").getBoundingClientRect();
+    const foot = f.querySelector(".pv-foot").getBoundingClientRect();
+    return {
+      inDom: !!pad,
+      display: pad ? getComputedStyle(pad).display : "(absent)",
+      height: pad ? pad.getBoundingClientRect().height : 0,
+      gapAfter: foot.top - q.bottom,
+      focusedIsBlank: document.activeElement && document.activeElement.classList.contains("blank-input"),
+    };
+  });
+  if (st.display === "none" && st.height === 0)
+    pass("7.7.3 keypad: HIDDEN on fine pointer", `computed display=${st.display}, rect height=${st.height}`);
+  else fail("7.7.3 keypad: HIDDEN on fine pointer", `computed display=${st.display}, rect height=${st.height} — the pad paints on a mouse device`);
+  if (Math.abs(st.gapAfter - gapBefore) <= 1)
+    pass("7.7.3 keypad: space fully collapsed", `task→foot gap ${Math.round(gapBefore)}px before focus, ${Math.round(st.gapAfter)}px after`);
+  else fail("7.7.3 keypad: space fully collapsed", `task→foot gap grew ${Math.round(gapBefore)}px → ${Math.round(st.gapAfter)}px — a hidden pad is reserving space`);
+  // physical-keyboard typing must keep working with the pad hidden
+  await page.keyboard.type("14");
+  const typed = await page.evaluate(() =>
+    document.querySelectorAll(".pv-frame")[0].querySelector(".blank-input").value);
+  if (st.focusedIsBlank && typed === "14") pass("7.7.3 keypad: physical-keyboard typing unaffected", `typed "14" into the focused blank`);
+  else fail("7.7.3 keypad: physical-keyboard typing unaffected", `focused=${st.focusedIsBlank} value="${typed}"`);
+
+  if (errors.length) fail("zero page errors (keypad drive)", errors.join(" | "));
+  else pass("zero page errors (keypad drive)");
+  await page.close();
+}
+
+// ════════════════════════════════════════════════════════════════
 // e (static half): the demo file IS the reference. Its chatMsg fills at a
 // constant the production renderer must match exactly.
 // ════════════════════════════════════════════════════════════════
@@ -703,6 +763,7 @@ async function fixtureLaws(browser) {
   const browser = await chromium.launch();
   await fixtureLaws(browser);
   await fallbackLaws(browser);
+  await keypadLaws(browser);
   await explainLaws(browser);
   await sweepCorpus(browser);
   await browser.close();

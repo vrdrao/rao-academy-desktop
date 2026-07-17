@@ -986,6 +986,18 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
    Overrides the unconditional hide above; is-checked is the same reveal hook
    adaptive uses. */
 .rao-lesson [data-mode="rapid"].is-checked .explain{display:block}
+
+/* ── 7.7.3: the on-screen digit pad is TOUCH-ONLY. Devices whose PRIMARY
+   pointer is fine (mouse/trackpad) have a physical keyboard — the pad is
+   dead space there. Pointer capability, NOT viewport width: a large tablet
+   keeps the pad, a small laptop does not. display:none collapses its space
+   entirely. !important is required: the pad's base styles are injected at
+   runtime by ensureDigitPad() (preview-engine.js) into a <style> that lands
+   AFTER this sheet, so document order alone would let its
+   `.rao-digitpad.show{display:flex}` win. Coarse-pointer behavior unchanged. */
+@media (pointer: fine){
+.rao-lesson .rao-digitpad{display:none !important}
+}
 </style>
 <style>/* page furniture — the review page is standalone; your app supplies its own */
 

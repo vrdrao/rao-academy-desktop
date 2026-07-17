@@ -416,6 +416,40 @@ ${source}
     pass("retry path: corrected answer CELEBRATES under touch", `green + "${party.row[0]}"`);
   else fail("celebration", JSON.stringify(party));
 
+  // ── 7.7.3 KEYPAD on coarse pointer: visible AND functional under REAL
+  //    touch — tap a digit, the focused blank receives it; tap backspace, it
+  //    is removed. (The fine-pointer hide half lives in verify-calm.js.)
+  //    Runs BEFORE the fallback drives so fb2a is still fresh. ──
+  {
+    const coarse = await page.evaluate(() => matchMedia("(pointer: coarse)").matches);
+    if (coarse) pass("7.7.3 keypad: context sanity — (pointer: coarse) matches in the touch context");
+    else fail("7.7.3 keypad: context sanity", "(pointer: coarse) does not match — touch emulation is not driving pointer media");
+    await tap("#fb2a .blank-input");
+    await page.waitForTimeout(300);
+    const padUp = await page.evaluate(() => {
+      const pad = document.querySelector(".rao-digitpad");
+      return pad ? { display: getComputedStyle(pad).display, h: pad.getBoundingClientRect().height } : null;
+    });
+    if (padUp && padUp.display === "flex" && padUp.h > 0)
+      pass("7.7.3 keypad: VISIBLE on coarse pointer", `display=${padUp.display}, height=${Math.round(padUp.h)}px`);
+    else fail("7.7.3 keypad: VISIBLE on coarse pointer", JSON.stringify(padUp));
+    const dIdx = await page.evaluate(() =>
+      [...document.querySelectorAll(".rao-digitpad .rdp-key")].findIndex((k) => k.dataset.d === "5"));
+    await tap(".rao-digitpad .rdp-key", dIdx);
+    const afterDigit = await page.evaluate(() => document.querySelector("#fb2a .blank-input").value);
+    if (afterDigit === "5") pass("7.7.3 keypad: tapping a digit fills the focused blank", `value="${afterDigit}"`);
+    else fail("7.7.3 keypad: tapping a digit fills the focused blank", `value="${afterDigit}"`);
+    const bIdx = await page.evaluate(() =>
+      [...document.querySelectorAll(".rao-digitpad .rdp-key")].findIndex((k) => k.hasAttribute("data-back")));
+    await tap(".rao-digitpad .rdp-key", bIdx);
+    const afterBack = await page.evaluate(() => document.querySelector("#fb2a .blank-input").value);
+    if (afterBack === "") pass("7.7.3 keypad: backspace removes the digit", `value=""`);
+    else fail("7.7.3 keypad: backspace removes the digit", `value="${afterBack}"`);
+    // blur so the pad withdraws before the fallback drives below
+    await page.evaluate(() => { document.activeElement && document.activeElement.blur(); });
+    await page.waitForTimeout(200);
+  }
+
   // ── 7. Law 5 fallback (Brief 7.7.2): a wrong with NO fresh whyWrong must
   //    still deliver "Hint 1" (the next forward rung); the ghost label must
   //    never promise a rung it has not given; exhausted rungs → row only,
