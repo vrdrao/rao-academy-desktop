@@ -1,0 +1,709 @@
+<div id="source">
+<!--@q
+type: fill-blanks
+layout: column
+op: -
+operands: ["6647","4313"]
+answer: ["2", "3", "3", "4"]
+description: Column subtraction 6,647 − 4,313 (no regrouping — a warm-up)
+hint:
+  - "Start at the ones column, on the right."
+  - "Compare the digits in each column — none needs borrowing here."
+  - "Work leftwards one column at a time — every column gets its turn."
+explain: "6,647 − 4,313 = 2,334, working right to left column by column."
+solution:
+  - type: step
+    goal: Line up the place values.
+    working: "ones under ones, tens under tens"
+  - type: step
+    goal: Subtract column by column from the right.
+    working: "6,647 − 4,313 = 2,334"
+    reason: No column comes up short, so no borrowing is needed.
+  - type: takeaway
+    text: Check each column before subtracting — an easy problem is a gift, take it.
+  - type: verification
+    text: "Add back to check: 2,334 + 4,313 = 6,647 ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Subtract.</p>
+  
+  <p class="explain">6,647 &minus; 4,313 = 2,334.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3535"]
+description: 5,272 − 1,737 with regrouping
+hint:
+  - "Work column by column from the right."
+  - "Watch for columns where the top digit is smaller than the bottom."
+  - "Those columns must borrow from their left neighbour — and the neighbour shrinks by 1."
+explain: "5,272 − 1,737 = 3,535 — the ones and hundreds both borrow."
+whyWrong:
+  "4545":
+    code: BORROW_ERROR
+    message: "This subtracts the smaller digit from the bigger in every column, whichever is on top — real borrowing gives 3,535."
+  "3645":
+    code: BORROW_ERROR
+    message: "The hundreds forgot they lent a 1 to the tens — this answer is 110 too high."
+  "4535":
+    code: BORROW_ERROR
+    message: "The thousands never paid for the hundreds' borrow — 5 − 1 became 4 instead of 3... check the borrow chain."
+solution:
+  - type: step
+    goal: Ones and tens.
+    working: "12 − 7 = 5 · 6 − 3 = 3"
+    reason: The ones borrow a ten, so the tens digit 7 becomes 6.
+  - type: step
+    goal: Hundreds and thousands.
+    working: "12 − 7 = 5 · 4 − 1 = 3 → 3,535"
+    reason: The hundreds borrow a thousand, so 5 thousands become 4.
+  - type: takeaway
+    text: A borrow changes TWO columns — the taker grows by ten, the lender shrinks by one.
+  - type: verification
+    text: "3,535 + 1,737 = 5,272 — adding back rebuilds the start."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">5,272 &minus; 1,737 = ?</p>
+  <ul class="options"><li data-val="3535">3,535</li><li data-val="4545">4,545</li><li data-val="3645">3,645</li><li data-val="4535">4,535</li></ul>
+  <p class="explain">5,272 &minus; 1,737 = 3,535. In the ones column you need 12 &minus; 7, not 7 &minus; 2.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: column
+op: -
+operands: ["4696","3573"]
+answer: ["1", "1", "2", "3"]
+description: Column subtraction 4,696 − 3,573 (no regrouping)
+hint:
+  - "Start at the ones column, on the right."
+  - "Compare the digits in each column — none needs borrowing here."
+  - "Work leftwards one column at a time — every column gets its turn."
+explain: "4,696 − 3,573 = 1,123, working right to left column by column."
+solution:
+  - type: step
+    goal: Line up the place values.
+    working: "ones under ones, tens under tens"
+  - type: step
+    goal: Subtract column by column from the right.
+    working: "4,696 − 3,573 = 1,123"
+    reason: No column comes up short, so no borrowing is needed.
+  - type: takeaway
+    text: Check each column before subtracting — an easy problem is a gift, take it.
+  - type: verification
+    text: "Add back to check: 1,123 + 3,573 = 4,696 ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Subtract.</p>
+  
+  <p class="explain">4,696 &minus; 3,573 = 1,123.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: column
+op: -
+operands: ["7014","758"]
+answer: ["6", "2", "5", "6"]
+description: Column subtraction 7,014 − 758 (regrouping across a zero, shorter bottom number)
+hint:
+  - "Start at the ones column, on the right."
+  - "When a top digit is too small, borrow 1 from the column to its left."
+  - "Work leftwards one column at a time — every column gets its turn."
+explain: "7,014 − 758 = 6,256, working right to left column by column."
+solution:
+  - type: step
+    goal: Line up the place values.
+    working: "ones under ones, tens under tens"
+  - type: step
+    goal: Subtract column by column from the right.
+    working: "7,014 − 758 = 6,256"
+    reason: Borrows travel leftwards — each column that lends a 1 must remember it.
+  - type: takeaway
+    text: Regrouping is honest borrowing — the neighbour column always pays it back.
+  - type: verification
+    text: "Add back to check: 6,256 + 758 = 7,014 ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Subtract.</p>
+  
+  <p class="explain">7,014 &minus; 758 = 6,256.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: column
+op: -
+operands: ["7068","405"]
+answer: ["6", "6", "6", "3"]
+description: Column subtraction 7,068 − 405 (regrouping across a zero)
+hint:
+  - "Start at the ones column, on the right."
+  - "When a top digit is too small, borrow 1 from the column to its left."
+  - "Work leftwards one column at a time — every column gets its turn."
+explain: "7,068 − 405 = 6,663, working right to left column by column."
+solution:
+  - type: step
+    goal: Line up the place values.
+    working: "ones under ones, tens under tens"
+  - type: step
+    goal: Subtract column by column from the right.
+    working: "7,068 − 405 = 6,663"
+    reason: Borrows travel leftwards — each column that lends a 1 must remember it.
+  - type: takeaway
+    text: Regrouping is honest borrowing — the neighbour column always pays it back.
+  - type: verification
+    text: "Add back to check: 6,663 + 405 = 7,068 ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Subtract.</p>
+  
+  <p class="explain">7,068 &minus; 405 = 6,663.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"no","label":"No regrouping"},{"id":"yes","label":"Needs regrouping"}]
+answer: ["no", "yes", "no", "yes"]
+description: Which subtractions need regrouping?
+hint:
+  - "You do not need to finish the subtractions."
+  - "Compare the two digits in each column, starting from the ones."
+  - "If any top digit is smaller than the one below it, that problem must regroup."
+explain: "7,993−7,661 and 2,862−302 subtract cleanly; 5,577−4,208 (ones 7<8) and 4,403−3,862 (tens 0<6) must borrow."
+solution:
+  - type: step
+    goal: Scan each ones column.
+    working: "3−1 ✓ · 7−8 ✗ borrow · 2−2 ✓ · 3−2 ✓"
+  - type: step
+    goal: Keep scanning the doubtful ones.
+    working: "4,403 − 3,862: tens 0 < 6 → borrow"
+    reason: A problem regroups if ANY column comes up short, not just the ones.
+  - type: takeaway
+    text: Scan columns for a smaller-on-top digit — that is the whole regrouping test.
+  - type: verification
+    text: "Two problems in each box, and each 'yes' can point at its short column."
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each problem into the right box.</p>
+  <ul class="tiles"><li>7,993 &minus; 7,661</li><li>5,577 &minus; 4,208</li><li>2,862 &minus; 302</li><li>4,403 &minus; 3,862</li></ul>
+  <p class="explain">Regroup when a top digit is smaller than the digit beneath it.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["311"]
+description: 9,977 − 9,666 — the thousands cancel
+hint:
+  - "Subtract each column from the right."
+  - "The thousands are identical — they cancel to nothing."
+  - "Focus on the three lower columns."
+explain: "9−6, 7−6, 7−6: 9,977 − 9,666 = 311, with the thousands cancelling."
+whyWrong:
+  "411":
+    code: BORROW_ERROR
+    message: "The hundreds show 4 — but 9 − 6 = 3, and nothing here borrows."
+  "301":
+    code: CARRY_DROPPED
+    message: "The tens lost their 1 — 7 − 6 leaves 1, not 0."
+  "321":
+    code: CARRY_EXTRA
+    message: "The tens show 2 — but 7 − 6 = 1, plain and simple."
+solution:
+  - type: step
+    goal: Cancel the thousands.
+    working: "9 − 9 = 0"
+  - type: step
+    goal: Subtract the rest.
+    working: "9−6 = 3 · 7−6 = 1 · 7−6 = 1 → 311"
+  - type: takeaway
+    text: Matching leading digits vanish — what remains is a smaller, friendlier problem.
+  - type: verification
+    text: "311 + 9,666 = 9,977 ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">9,977 &minus; 9,666 = ?</p>
+  <ul class="options"><li data-val="311">311</li><li data-val="411">411</li><li data-val="301">301</li><li data-val="321">321</li></ul>
+  <p class="explain">9,977 &minus; 9,666 = 311.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["0"]
+description: Find the missing digit in 4,4_3 − 3,862 = 541
+hint:
+  - "Subtracting can be undone by adding."
+  - "Add the answer 541 to 3,862."
+  - "Compare what you get with 4,4_3 to spot the hidden digit."
+explain: "541 + 3,862 = 4,403, so the missing digit is 0."
+solution:
+  - type: step
+    goal: Undo the subtraction.
+    working: "541 + 3,862 = 4,403"
+    reason: Difference plus subtrahend rebuilds the starting number.
+  - type: step
+    goal: Read off the digit.
+    working: "4,4_3 → 4,403 → the blank is 0"
+  - type: takeaway
+    text: Missing digits in a subtraction surrender to addition — rebuild the top number.
+  - type: verification
+    text: "Forwards again: 4,403 − 3,862 = 541 ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">4,4[]3 &minus; 3,862 = 541</p>
+  <p class="explain">The missing digit is 0, because 4,403 &minus; 3,862 = 541.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: column
+op: -
+operands: ["4450","2429"]
+answer: ["2", "0", "2", "1"]
+description: Column subtraction 4,450 − 2,429 (regrouping in the ones)
+hint:
+  - "Start at the ones column, on the right."
+  - "When a top digit is too small, borrow 1 from the column to its left."
+  - "Work leftwards one column at a time — every column gets its turn."
+explain: "4,450 − 2,429 = 2,021, working right to left column by column."
+solution:
+  - type: step
+    goal: Line up the place values.
+    working: "ones under ones, tens under tens"
+  - type: step
+    goal: Subtract column by column from the right.
+    working: "4,450 − 2,429 = 2,021"
+    reason: Borrows travel leftwards — each column that lends a 1 must remember it.
+  - type: takeaway
+    text: Regrouping is honest borrowing — the neighbour column always pays it back.
+  - type: verification
+    text: "Add back to check: 2,021 + 2,429 = 4,450 ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Subtract.</p>
+  
+  <p class="explain">4,450 &minus; 2,429 = 2,021.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["816"]
+description: 1,722 − 906 — line up the places
+hint:
+  - "906 is shorter — line its 6 under the 2 of 1,722."
+  - "Subtract column by column from the right."
+  - "The tens will need to borrow."
+explain: "1,722 − 906 = 816 — the tens borrow from the hundreds."
+whyWrong:
+  "826":
+    code: BORROW_ERROR
+    message: "The hundreds forgot they lent to the tens — this is ten too many."
+  "716":
+    code: BORROW_ERROR
+    message: "A hundred went missing — after lending, 7 hundreds minus 9... check the borrow into the hundreds."
+  "884":
+    code: DIGIT_INSERT_OR_SHIFT
+    message: "This lines 906 up one place to the left — its 6 must sit under the ones, not the tens."
+solution:
+  - type: step
+    goal: Align the numbers.
+    working: "1,722 over 906 — right edges together"
+  - type: step
+    goal: Subtract with a borrow.
+    working: "12 − 6 = 6 · 11 − 0 = 1 (borrowed) · 6 − 9 borrows → 8 → 816"
+  - type: takeaway
+    text: Different-length numbers meet at the RIGHT edge — never the left.
+  - type: verification
+    text: "816 + 906 = 1,722 ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">1,722 &minus; 906 = ?</p>
+  <ul class="options"><li data-val="816">816</li><li data-val="826">826</li><li data-val="716">716</li><li data-val="884">884</li></ul>
+  <p class="explain">1,722 &minus; 906 = 816.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: column
+op: -
+operands: ["82659","6405"]
+answer: ["7", "6", "2", "5", "4"]
+description: Column subtraction 82,659 − 6,405 (5-digit top, 4-digit bottom)
+hint:
+  - "Start at the ones column, on the right."
+  - "When a top digit is too small, borrow 1 from the column to its left."
+  - "Work leftwards one column at a time — every column gets its turn."
+explain: "82,659 − 6,405 = 76,254, working right to left column by column."
+solution:
+  - type: step
+    goal: Line up the place values.
+    working: "ones under ones, tens under tens"
+  - type: step
+    goal: Subtract column by column from the right.
+    working: "82,659 − 6,405 = 76,254"
+    reason: Borrows travel leftwards — each column that lends a 1 must remember it.
+  - type: takeaway
+    text: Regrouping is honest borrowing — the neighbour column always pays it back.
+  - type: verification
+    text: "Add back to check: 76,254 + 6,405 = 82,659 ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Subtract.</p>
+  
+  <p class="explain">82,659 &minus; 6,405 = 76,254.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["36873"]
+description: 46,983 − 10,110 place by place
+hint:
+  - "Subtract each place value separately, from the right."
+  - "No column needs borrowing here."
+  - "Five clean little subtractions make the answer."
+explain: "46,983 − 10,110 = 36,873 — every column subtracts cleanly."
+whyWrong:
+  "36973":
+    code: CARRY_EXTRA
+    message: "The hundreds show 9 — but 9 − 1 = 8; nothing borrowed here."
+  "36763":
+    code: BORROW_ERROR
+    message: "The hundreds and tens both slipped — 9−1 = 8 and 8−1 = 7, no borrowing anywhere."
+  "56873":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "The ten-thousands ADDED (4+1=5) — subtracting gives 4−1 = 3."
+solution:
+  - type: step
+    goal: Subtract each place.
+    working: "3−0 = 3 · 8−1 = 7 · 9−1 = 8 · 6−0 = 6 · 4−1 = 3"
+  - type: step
+    goal: Read the answer.
+    working: "36,873"
+  - type: takeaway
+    text: When no column comes up short, big subtractions are just five small ones.
+  - type: verification
+    text: "36,873 + 10,110 = 46,983 ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">46,983 &minus; 10,110 = ?</p>
+  <ul class="options"><li data-val="36873">36,873</li><li data-val="36973">36,973</li><li data-val="36763">36,763</li><li data-val="56873">56,873</li></ul>
+  <p class="explain">46,983 &minus; 10,110 = 36,873.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: column
+op: -
+operands: ["64149","48968"]
+answer: ["1", "5", "1", "8", "1"]
+description: Column subtraction 64,149 − 48,968 (heavy regrouping)
+hint:
+  - "Start at the ones column, on the right."
+  - "When a top digit is too small, borrow 1 from the column to its left."
+  - "Work leftwards one column at a time — every column gets its turn."
+explain: "64,149 − 48,968 = 15,181, working right to left column by column."
+solution:
+  - type: step
+    goal: Line up the place values.
+    working: "ones under ones, tens under tens"
+  - type: step
+    goal: Subtract column by column from the right.
+    working: "64,149 − 48,968 = 15,181"
+    reason: Borrows travel leftwards — each column that lends a 1 must remember it.
+  - type: takeaway
+    text: Regrouping is honest borrowing — the neighbour column always pays it back.
+  - type: verification
+    text: "Add back to check: 15,181 + 48,968 = 64,149 ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Subtract.</p>
+  
+  <p class="explain">64,149 &minus; 48,968 = 15,181.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["7,014 - 758", "7,068 - 405", "4,450 - 2,429"]
+description: Which subtractions regroup at a zero in the top number?
+hint:
+  - "Try starting each subtraction and watch where borrowing happens."
+  - "Look for a 0 in the top number standing right where a borrow is needed."
+  - "A zero cannot lend — and a zero that must borrow passes the request leftwards."
+explain: "7,014 (borrow crosses the 0 tens... the 1), 7,068 (hundreds 0 must lend), and 4,450 (ones 0 must borrow) all regroup at a zero; 6,333−5,010 never borrows and 9,977−9,666 subtracts cleanly."
+whyWrong:
+  "6,333 - 5,010":
+    code: DATA_READING_ERROR
+    message: "Every column of 6,333 − 5,010 subtracts cleanly — no borrowing anywhere, zero or not."
+  "9,977 - 9,666":
+    code: DATA_READING_ERROR
+    message: "9,977 − 9,666 has no zeros in the top number and never needs to borrow."
+solution:
+  - type: step
+    goal: Test each ones column.
+    working: "4−8 borrow · 3−0 fine · 8−5 fine · 0−9 borrow · 7−6 fine"
+  - type: step
+    goal: Watch where zeros meet borrows.
+    working: "7,014 and 4,450 borrow at/through a 0 · 7,068's 0 hundreds must lend to nobody — it must BE lent to for 0−4"
+    reason: A 0 that must lend or borrow forces the regrouping to hop an extra column.
+  - type: takeaway
+    text: Zeros make borrowing hop columns — that is what 'regrouping across a zero' means.
+  - type: verification
+    text: "The two rejected problems finish without a single borrow — try their columns and see."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select every problem where you must regroup across a zero in the top number.</p>
+  <ul class="options"><li data-val="7,014 - 758">7,014 &minus; 758</li><li data-val="6,333 - 5,010">6,333 &minus; 5,010</li><li data-val="7,068 - 405">7,068 &minus; 405</li><li data-val="4,450 - 2,429">4,450 &minus; 2,429</li><li data-val="9,977 - 9,666">9,977 &minus; 9,666</li></ul>
+  <p class="explain">A zero on top can't give without first borrowing from the digit to its left.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["9"]
+description: Find the missing digit in 91,701 − 82,4_0 = 9,211
+hint:
+  - "Undo the subtraction: add the answer to the bottom number — or subtract it from the top."
+  - "91,701 minus 9,211 rebuilds the whole bottom number."
+  - "Compare that with 82,4_0 to see the hidden digit."
+explain: "91,701 − 9,211 = 82,490, so the missing digit is 9."
+solution:
+  - type: step
+    goal: Rebuild the bottom number.
+    working: "91,701 − 9,211 = 82,490"
+    reason: Top minus difference gives back the subtrahend.
+  - type: step
+    goal: Read off the digit.
+    working: "82,4_0 → 82,490 → the blank is 9"
+  - type: takeaway
+    text: The three numbers of a subtraction form a family — any two rebuild the third.
+  - type: verification
+    text: "Check: 91,701 − 82,490 = 9,211 ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">91,701 &minus; 82,4[]0 = 9,211</p>
+  <p class="explain">The missing digit is 9, because 91,701 &minus; 82,490 = 9,211.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: column
+op: -
+operands: ["47446","578"]
+answer: ["4", "6", "8", "6", "8"]
+description: Column subtraction 47,446 − 578 (5-digit top, 3-digit bottom)
+hint:
+  - "Start at the ones column, on the right."
+  - "When a top digit is too small, borrow 1 from the column to its left."
+  - "Work leftwards one column at a time — every column gets its turn."
+explain: "47,446 − 578 = 46,868, working right to left column by column."
+solution:
+  - type: step
+    goal: Line up the place values.
+    working: "ones under ones, tens under tens"
+  - type: step
+    goal: Subtract column by column from the right.
+    working: "47,446 − 578 = 46,868"
+    reason: Borrows travel leftwards — each column that lends a 1 must remember it.
+  - type: takeaway
+    text: Regrouping is honest borrowing — the neighbour column always pays it back.
+  - type: verification
+    text: "Add back to check: 46,868 + 578 = 47,446 ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Subtract.</p>
+  
+  <p class="explain">47,446 &minus; 578 = 46,868.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: column
+op: -
+operands: ["32450","18675"]
+answer: ["1", "3", "7", "7", "5"]
+description: Column subtraction 32,450 − 18,675 (money word problem)
+hint:
+  - "Start at the ones column, on the right."
+  - "When a top digit is too small, borrow 1 from the column to its left."
+  - "Work leftwards one column at a time — every column gets its turn."
+explain: "32,450 − 18,675 = 13,775, working right to left column by column."
+solution:
+  - type: step
+    goal: Choose the operation.
+    working: "money left = raised − spent"
+    reason: "'How much is left' means the spending comes off the total."
+  - type: step
+    goal: Line up the place values.
+    working: "ones under ones, tens under tens"
+  - type: step
+    goal: Subtract column by column from the right.
+    working: "32,450 − 18,675 = 13,775"
+    reason: Borrows travel leftwards — each column that lends a 1 must remember it.
+  - type: takeaway
+    text: Regrouping is honest borrowing — the neighbour column always pays it back.
+  - type: verification
+    text: "Add back to check: 13,775 + 18,675 = 32,450 ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Meena's school raised &#8377;32,450. They spent &#8377;18,675 on books. How much is left?</p>
+  
+  <p class="explain">&#8377;32,450 &minus; &#8377;18,675 = &#8377;13,775 left.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["6000", "3600"]
+description: Count back by 1,200
+hint:
+  - "Each number is 1,200 less than the one before it."
+  - "Use the number just before each gap."
+  - "Subtracting 1,200 is minus 1,000 then minus 200."
+explain: "7,200 − 1,200 = 6,000 and 4,800 − 1,200 = 3,600."
+solution:
+  - type: step
+    goal: Fill the first gap.
+    working: "7,200 − 1,200 = 6,000"
+  - type: step
+    goal: Fill the second gap.
+    working: "4,800 − 1,200 = 3,600"
+    reason: The chain keeps stepping down by the same 1,200.
+  - type: takeaway
+    text: In a count-back chain, every neighbour is one identical step apart.
+  - type: verification
+    text: "Check the whole chain: 9,600, 8,400, 7,200, 6,000, 4,800, 3,600 — each drop is exactly 1,200."
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt"><span class="lbl">Count back by 1,200.</span><span>Fill in the two missing numbers.</span></p>
+  <p class="sequence">9,600, 8,400, 7,200, [], 4,800, []</p>
+  <p class="explain">Subtract 1,200 each time: 9,600 &rarr; 8,400 &rarr; 7,200 &rarr; 6,000 &rarr; 4,800 &rarr; 3,600.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["skipped"]
+description: Diagnose Arjun's 8,562 − 2,339 = 6,237
+hint:
+  - "Redo the subtraction yourself, column by column."
+  - "Compare your ones digit with Arjun's."
+  - "Ask what a child does when the top digit is smaller — and what Arjun did instead."
+explain: "In the ones, 2 − 9 needs a borrow (12 − 9 = 3), but Arjun flipped it to 9 − 2 = 7 — no borrow, wrong ones AND wrong tens."
+whyWrong:
+  "added":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "Adding would give 10,901 — Arjun's 6,237 is close to the true difference, so he did subtract."
+  "lined":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "Both numbers are 4 digits — alignment was never the danger here."
+  "tens":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "He did subtract the tens — his tens digit is wrong only because the ones never borrowed from it."
+solution:
+  - type: step
+    goal: Redo the ones properly.
+    working: "2 − 9 → borrow → 12 − 9 = 3"
+  - type: step
+    goal: Follow the borrow into the tens.
+    working: "5 (after lending) − 3 = 2 → ...23, not ...37"
+    reason: Arjun's flip (9 − 2 = 7) skipped the borrow and corrupted two columns at once.
+  - type: takeaway
+    text: Flipping a column to dodge a borrow poisons its neighbour too — one slip, two wrong digits.
+  - type: verification
+    text: "Correct: 8,562 − 2,339 = 6,223, and 6,223 + 2,339 = 8,562 ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Arjun worked out 8,562 &minus; 2,339 and wrote 6,237. The correct answer is 6,223. What did Arjun do wrong?</p>
+  <ul class="options">
+    <li data-val="skipped">In the ones column he did 9 &minus; 2 instead of regrouping to make 12 &minus; 9</li>
+    <li data-val="added">He added instead of subtracting</li>
+    <li data-val="lined">He lined the numbers up wrongly</li>
+    <li data-val="tens">He forgot to subtract the tens column</li>
+  </ul>
+  <p class="explain">The ones column needs 2 &minus; 9, and 2 is too small. Arjun flipped it to 9 &minus; 2 = 7. Instead he should regroup: take 1 ten from the 6 tens, making 12 &minus; 9 = 3. The correct answer is 6,223.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3423+2419"]
+description: Which addition checks 5,842 − 2,419 = 3,423?
+hint:
+  - "Adding undoes subtracting."
+  - "The check must rebuild the number Diya started with."
+  - "Which two numbers, added, should climb back to 5,842?"
+explain: "Difference + subtrahend = start: 3,423 + 2,419 should give 5,842 — and it does."
+whyWrong:
+  "5842+2419":
+    code: WRONG_OP_IN_EXPRESSION
+    message: "This adds the start to what was taken away — it climbs to 8,261, checking nothing."
+  "5842+3423":
+    code: WRONG_OP_IN_EXPRESSION
+    message: "The start plus the answer proves nothing — the check must rebuild 5,842, not leave from it."
+  "3423+3423":
+    code: WRONG_OP_IN_EXPRESSION
+    message: "Doubling the answer only checks that 3,423 equals itself — the 2,419 must join instead."
+solution:
+  - type: step
+    goal: Recall the fact family.
+    working: "start − taken = left → left + taken = start"
+  - type: step
+    goal: Pick the members.
+    working: "3,423 + 2,419 → should equal 5,842"
+  - type: takeaway
+    text: "The checking addition uses the answer and the subtracted number — never the start."
+  - type: verification
+    text: "3,423 + 2,419 = 5,842 — Diya's subtraction survives its own check."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Diya worked out 5,842 &minus; 2,419 = 3,423. To check her answer she should add two of these numbers and get back 5,842. Which addition should she do?</p>
+  <ul class="options">
+    <li data-val="3423+2419">3,423 + 2,419</li>
+    <li data-val="5842+2419">5,842 + 2,419</li>
+    <li data-val="5842+3423">5,842 + 3,423</li>
+    <li data-val="3423+3423">3,423 + 3,423</li>
+  </ul>
+  <p class="explain">Add the answer back to the number that was taken away: 3,423 + 2,419 = 5,842. That is the number she started with, so her subtraction is right.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["31000"]
+description: Estimate 61,208 − 29,875 to the nearest thousand
+hint:
+  - "Round each number to the nearest thousand first."
+  - "The hundreds digit decides — 5 or more rounds up."
+  - "Subtract the two rounded numbers."
+explain: "61,208 → 61,000 and 29,875 → 30,000; 61,000 − 30,000 = 31,000."
+whyWrong:
+  "41000":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 29,875 down to 20,000 — but it is only 125 away from 30,000."
+  "21000":
+    code: ROUND_ONE_WRONG
+    message: "This pushes 29,875 up to 40,000 — ten thousand past its nearest thousand."
+  "91000":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "91,000 adds the rounded numbers — the minus sign asks for their gap."
+solution:
+  - type: step
+    goal: Round each number.
+    working: "61,208 → 61,000 · 29,875 → 30,000"
+  - type: step
+    goal: Subtract the rounded pair.
+    working: "61,000 − 30,000 = 31,000"
+  - type: takeaway
+    text: Nearest-thousand rounding turns huge subtractions into single-breath mental maths.
+  - type: verification
+    text: "The exact difference is 31,333 — the estimate lands right beside it."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the best estimate for 61,208 &minus; 29,875. Round each number to the nearest thousand, then subtract.</p>
+  <ul class="options">
+    <li data-val="31000">about 31,000</li>
+    <li data-val="41000">about 41,000</li>
+    <li data-val="21000">about 21,000</li>
+    <li data-val="91000">about 91,000</li>
+  </ul>
+  <p class="explain">61,208 rounds to 61,000 and 29,875 rounds to 30,000. 61,000 &minus; 30,000 = 31,000. (The exact answer, 31,333, is very close.)</p>
+</div>
+
+</div>
