@@ -6,21 +6,24 @@ Last updated: 2026-07-18
 
 ## Corpus
 
-**104 lesson files. 2,727 questions. 0 failures.** (was 108/2,808 on 2026-07-14;
+**102 lesson files. 2,687 questions. 0 failures.** (was 108/2,808 on 2026-07-14;
 that delta predates Brief 7.6. 2,721 → 2,722 on 2026-07-17: one precedence-
 coverage question added to `_type-coverage.html` by Brief 7.6.1. 2,722 → 2,727 on
 2026-07-18: BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`
-— equal-groups figure, sequence figure, and one option-set per ladder tier.)
+— equal-groups figure, sequence figure, and one option-set per ladder tier.
+104 / 2,727 → 102 / 2,687 per BRIEF-DUPLICATE-CULL, Venkat's ruling 2026-07-18:
+both hyphen-named estimate-products duplicates deleted, 26 + 14 = 40 questions;
+the underscore-named survivors untouched, md5-verified identical.)
 
 All tested in a real Chromium browser: build, render, grade correct, reject wrong, 8 themes,
 CSS containment, container queries, double-attach idempotency, type coverage (12/12), zero
 blank figures.
 
 The corpus lives in `lessons/` (2 authored lessons + `_type-coverage.html` fixture) and
-`lessons/incoming/` (101 files, imported from the Class 4 Word doc bank). `lessons/_preview/`
+`lessons/incoming/` (99 files, imported from the Class 4 Word doc bank). `lessons/_preview/`
 is gitignored scratch. **Every lesson has a matching `review/<name>.html`** (complete set
 generated 2026-07-18, commit `5eb6297`), plus `review/index.html` (plain alphabetical index)
-and `LESSONS-MANIFEST.md` at the root (one row per lesson, totals reconciled 104 / 2,727).
+and `LESSONS-MANIFEST.md` at the root (one row per lesson, totals reconciled 102 / 2,687).
 
 ---
 

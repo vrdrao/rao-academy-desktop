@@ -40,9 +40,7 @@ is `—` throughout.
 | Elapsed time remix | 30 | `lessons/incoming/Elapsed_time_remix.html` | `review/Elapsed_time_remix.html` | — |
 | Equal parts | 35 | `lessons/incoming/equal-parts.html` | `review/equal-parts.html` | — |
 | Estimate differences all | 42 | `lessons/incoming/estimate_differences_all.html` | `review/estimate_differences_all.html` | — |
-| Estimate products 1to1 | 26 | `lessons/incoming/estimate-products-1to1.html` | `review/estimate-products-1to1.html` | — |
 | Estimate products 1to1 | 24 | `lessons/incoming/estimate-products_1to1.html` | `review/estimate-products_1to1.html` | — |
-| Estimate products remix | 14 | `lessons/incoming/estimate-products-remix.html` | `review/estimate-products-remix.html` | — |
 | Estimate products remix | 20 | `lessons/incoming/estimate-products_remix.html` | `review/estimate-products_remix.html` | — |
 | Estimate quotients word problems | 21 | `lessons/incoming/Estimate quotients - word problems.html` | `review/Estimate quotients - word problems.html` | — |
 | Estimate sums differences products and quotients word problems 1to1 | 25 | `lessons/incoming/estimate-sums-differences-products-and-quotients-word-problems-1to1.html` | `review/estimate-sums-differences-products-and-quotients-word-problems-1to1.html` | — |
@@ -115,10 +113,13 @@ is `—` throughout.
 | Unit prices remix | 27 | `lessons/incoming/Unit_prices_remix.html` | `review/Unit_prices_remix.html` | — |
 | Word problems with extra or missing information | 24 | `lessons/incoming/Word problems with extra or missing information.html` | `review/Word problems with extra or missing information.html` | — |
 
-**Totals: 104 lessons, 2,727 questions.**
-Matches the recorded 104 / 2,727 exactly (2,722 → 2,727 on 2026-07-18:
-BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html` —
-equal-groups figure, sequence figure, and one option-set per ladder tier).
+**Totals: 102 lessons, 2,687 questions.**
+Matches the recorded 102 / 2,687 exactly (2,722 → 2,727 on 2026-07-18:
+BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`;
+104 / 2,727 → 102 / 2,687 per BRIEF-DUPLICATE-CULL, Venkat's ruling
+2026-07-18: the hyphen-named `estimate-products-1to1.html` (26 q) and
+`estimate-products-remix.html` (14 q) deleted; the underscore-named
+files survive untouched).
 
 Note: the recorded totals include `_type-coverage.html`, the harness fixture
 that keeps every question type under test (20 questions). It is listed above

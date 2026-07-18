@@ -50,7 +50,7 @@ CORRECT), answers every question wrong (must grade WRONG), checks every figure a
 rendered, and checks all 8 themes re-tint. It takes ~12–15 minutes.
 
 **Where it runs (since 2026-07-18, BRIEF-PRECOMMIT-SPEED):** the pre-commit hook runs a
-fast ~1–2 min subset (`npm run test:fast` — Node-only grading of all 2,727 questions +
+fast ~1–2 min subset (`npm run test:fast` — Node-only grading of all 2,687 questions +
 format/authoring guards); the **pre-push hook runs the FULL `npm test` and blocks the
 push on any failure**. Same invariant, moved in time: nothing reaches origin without the
 full suite green on that exact tree. Engine changes still warrant a full local `npm test`
