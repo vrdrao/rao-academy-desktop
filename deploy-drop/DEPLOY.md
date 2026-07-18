@@ -1,13 +1,19 @@
-# Deploying the Rao Academy engine (rao-master-18) to tulipmath.com
+﻿# Deploying the Rao Academy engine (rao-master-19) to tulipmath.com
 
 This folder is the complete engine drop for the app. It was built and verified
-at repo commit `d5818b1` — every file here passed the full test suite (104
-lessons, 2,722 questions, all guards green, including the Robo suite). **Copy
+at repo commit `46d9189` â€” every file here passed the full test suite (104
+lessons, 2,727 questions, all guards green, including the Robo suite). **Copy
 the files exactly as they are. Never edit them by hand.**
 
-New in this drop: **Robo, the mascot** (`robo.js` + `robo.css`, Brief 7.7).
-He injects his own dock — no page markup is needed for him beyond loading the
-two files in the order below.
+New in this drop (rao-master-19, BRIEF-ENGINE-19):
+- **Two new figure types** â€” `equal-groups` (items sorted into rings) and
+  `sequence` (a boxed number chain with arrows). Seven existing questions that
+  previously showed a blank where their visual belonged now render it.
+- **Option-layout ladder** â€” long answer options (full equations) now get a
+  2Ã—2 grid or one full-width row each instead of squeezing into the 4-across
+  grid. Chosen automatically when the lesson is built; font size never changes.
+- **Unknown figure types now fail the lesson build loudly** instead of
+  silently rendering nothing.
 
 ---
 
@@ -15,12 +21,12 @@ two files in the order below.
 
 Always put the new engine files on the site BEFORE importing any lesson.
 Never the other way around, and never go back to an older engine. An old
-engine cannot run new lessons — and it fails silently: the child just sees a
+engine cannot run new lessons â€” and it fails silently: the child just sees a
 blank space where a question should be. No error appears anywhere.
 
 ---
 
-## Step 1 — copy these files to the app's assets folder
+## Step 1 â€” copy these files to the app's assets folder
 
 Everything in this folder, keeping the `fonts/` subfolder together with
 `fonts.css`:
@@ -37,16 +43,16 @@ fonts.css
 fonts/            (all 8 .woff2 files)
 ```
 
-## Step 2 — verify the copies (do not skip this)
+## Step 2 â€” verify the copies (do not skip this)
 
 After copying, check each file's fingerprint and size ON THE SERVER. If even
-one does not match, the copy is corrupted or stale — recopy before going on.
+one does not match, the copy is corrupted or stale â€” recopy before going on.
 
 | File | md5 fingerprint | size (bytes) |
 |---|---|---:|
-| `preview-engine.js` | `4b6f84dd5eaee2bb316ad0b3a8ccf424` | 196,698 |
-| `rao.css` | `31a3ab64ac26098bcecf296863e27cad` | 89,837 |
-| `rao-card.css` | `7b7ef624505cfd99aac26bb5459b38ac` | 9,748 |
+| `preview-engine.js` | `574bcb7c47713ce4e7f8b432003001ed` | 206,179 |
+| `rao.css` | `c601b365bef55156ad9a7773d98d438e` | 90,858 |
+| `rao-card.css` | `2d88ece7e09af144644fe4ff028f9742` | 10,169 |
 | `rao-card.js` | `8af4da4bcc4f972dd702265fe29ed09a` | 27,472 |
 | `solution-renderer.js` | `0a17636d35a482cf82ebeaf65e65fa1c` | 15,207 |
 | `robo.js` | `f137b5ff4f2774abfef1fe3ab4d96aba` | 51,393 |
@@ -55,10 +61,10 @@ one does not match, the copy is corrupted or stale — recopy before going on.
 
 (On most servers: `md5sum <file>` prints the fingerprint, `ls -l` the size.)
 
-## Step 3 — the page must load ALL of them, in this order, with this mount
+## Step 3 â€” the page must load ALL of them, in this order, with this mount
 
 This exact block goes on every page that shows a question. The order matters,
-and the `rao-lesson` wrapper is LOAD-BEARING — without it every question card
+and the `rao-lesson` wrapper is LOAD-BEARING â€” without it every question card
 inflates to a 300px minimum height and the colour themes stop working:
 
 ```html
@@ -77,26 +83,27 @@ inflates to a 300px minimum height and the colour themes stop working:
 ```
 
 Three easy mistakes this prevents:
-- Skipping `solution-renderer.js` — the page still "works", but the hint
+- Skipping `solution-renderer.js` â€” the page still "works", but the hint
   bubbles and the step-by-step walkthrough silently disappear. It must load
   BEFORE `rao-card.js`.
-- Loading `robo.js` before `rao-card.js` — Robo listens for the card's
+- Loading `robo.js` before `rao-card.js` â€” Robo listens for the card's
   `rao:*` events; he must load AFTER the card renderer. His CSS loads after
   `rao-card.css`.
-- Putting theme colours in a `style=` attribute on the wrapper — that kills
+- Putting theme colours in a `style=` attribute on the wrapper â€” that kills
   the theme picker. The wrapper carries only `class="rao-lesson"` and
   `data-theme="grape"`.
 
 **Robo and the child's name:** the app must set
 `window.RaoAccount = { firstName: "<the child's first name>" }` at login.
-If it does not, nothing breaks — but Robo's milestone praise (streak 3 and 5)
-is silently nameless ("Nailed it! ⚡ 3 in a row!" instead of
-"Nailed it, Priya! ⚡ 3 in a row!").
+If it does not, nothing breaks â€” but Robo's milestone praise (streak 3 and 5)
+is silently nameless ("Nailed it! âš¡ 3 in a row!" instead of
+"Nailed it, Priya! âš¡ 3 in a row!").
 
-## Step 4 — only now import lessons
+## Step 4 â€” only now import lessons
 
-Lessons using the calm card need engine rao-master-18 or newer. The live
-engine version is visible in the browser console as `RaoPreview.__version`.
+Lessons using the new figure types or the option ladder need engine
+rao-master-19 or newer. The live engine version is visible in the browser
+console as `RaoPreview.__version`.
 
 ---
 
@@ -110,11 +117,11 @@ node tools/check-app.js https://www.tulipmath.com/<any-page-showing-a-question>
 ```
 
 (Run from the rao-academy repo folder. Replace the address with the actual
-page once it exists — the exact URL is still to be determined.)
+page once it exists â€” the exact URL is still to be determined.)
 
-It checks the five things that must ALL be true — engine loaded and version
+It checks the five things that must ALL be true â€” engine loaded and version
 matching, rao.css live, rao-card.css live, the load-bearing mount present,
 and the real fonts resolving. Green means what Venkat approved in review/
 is what a child will see. Anything else means DO NOT go live; it prints
-the reason. (It does not yet probe Robo — after wiring, confirm the dock
+the reason. (It does not yet probe Robo â€” after wiring, confirm the dock
 appears and reacts on the live page by answering one question.)
