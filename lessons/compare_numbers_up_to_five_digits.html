@@ -1,0 +1,1190 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["lt"]
+description: Compare 5,834 and 6,834
+hint:
+  - "Line the numbers up and compare their lengths first."
+  - "Same length? Compare place by place from the LEFT."
+  - "Stop at the first place where the digits differ — it decides everything."
+explain: "5,834 < 6,834 — the thousands differ: 5 is less than 6."
+whyWrong:
+  "gt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — the thousands differ: 5 is less than 6."
+  "eq":
+    code: COMPARISON_EQUAL_WRONG
+    message: "These two are not twins — check every place, right to the end."
+solution:
+  - type: step
+    goal: Compare the numbers.
+    working: "5,834 < 6,834"
+    reason: the thousands differ: 5 is less than 6.
+  - type: takeaway
+    text: Left to right, first difference wins — later digits cannot overturn it.
+  - type: verification
+    text: "Both have 4 digits, and 5 thousands cannot beat 6 thousands."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">5,834 ? 6,834 — tap the sign that makes it true.</p>
+  
+  <ul class="options">
+    <li data-val="gt">&gt;</li>
+    <li data-val="lt">&lt;</li>
+    <li data-val="eq">=</li>
+  </ul>
+  <p class="explain">5 thousands is less than 6 thousands, so 5,834 &lt; 6,834.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["lt"]
+description: Compare 9,999 and 10,001
+hint:
+  - "Line the numbers up and compare their lengths first."
+  - "Same length? Compare place by place from the LEFT."
+  - "Stop at the first place where the digits differ — it decides everything."
+explain: "9,999 < 10,001 — 9,999 has only 4 digits and 10,001 has 5 — the longer number wins."
+whyWrong:
+  "gt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — 9,999 has only 4 digits and 10,001 has 5 — the longer number wins."
+  "eq":
+    code: COMPARISON_EQUAL_WRONG
+    message: "These two are not twins — check every place, right to the end."
+solution:
+  - type: step
+    goal: Compare the numbers.
+    working: "9,999 < 10,001"
+    reason: 9,999 has only 4 digits and 10,001 has 5 — the longer number wins.
+  - type: takeaway
+    text: Left to right, first difference wins — later digits cannot overturn it.
+  - type: verification
+    text: "However large its digits look, a 4-digit number always sits below every 5-digit number."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">9,999 ? 10,001 — tap the sign that makes it true.</p>
+  
+  <ul class="options">
+    <li data-val="gt">&gt;</li>
+    <li data-val="lt">&lt;</li>
+    <li data-val="eq">=</li>
+  </ul>
+  <p class="explain">9,999 has 4 digits and 10,001 has 5. A 5-digit number is always bigger, even though 9,999 is full of 9s.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["6,001","7,240","8,150"]
+description: Every number greater than 6,000
+hint:
+  - "Test each number against 6,000, one at a time."
+  - "Watch the digit counts — a 3-digit number cannot pass."
+  - "And 6,000 itself is equal, not greater."
+explain: "6,001, 7,240 and 8,150 are past 6,000; 5,900 and 600 fall short, and 6,000 is only equal."
+whyWrong:
+  "5,900":
+    code: WRONG_NUMBER_PAIR
+    message: "5,900 sits a hundred below 6,000."
+  "600":
+    code: WRONG_NUMBER_PAIR
+    message: "600 has only 3 digits — ten times too small to pass 6,000."
+  "6,000":
+    code: COMPARISON_EQUAL_WRONG
+    message: "6,000 equals the line exactly — 'greater than' means past it."
+solution:
+  - type: step
+    goal: Test every card.
+    working: "5,900 ✗ · 6,001 ✓ · 7,240 ✓ · 600 ✗ · 6,000 ✗ (equal) · 8,150 ✓"
+  - type: step
+    goal: Mind the boundary.
+    working: "6,000 is not greater than itself"
+  - type: takeaway
+    text: "'Greater than' draws a strict line — equal is not enough to cross it."
+  - type: verification
+    text: Each keeper beats 6,000 by at least 1; each reject is 6,000 or below.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every number that is greater than 6,000. Be careful: 6,000 itself is not greater than 6,000.</p>
+  <ul class="options">
+    <li data-val="5,900">5,900</li>
+    <li data-val="6,001">6,001</li>
+    <li data-val="7,240">7,240</li>
+    <li data-val="600">600</li>
+    <li data-val="6,000">6,000</li>
+    <li data-val="8,150">8,150</li>
+  </ul>
+  <p class="explain">6,001, 7,240 and 8,150 are above 6,000. 6,000 is equal to 6,000, not greater.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3,624"]
+description: Which of the rearranged digits is greatest?
+hint:
+  - "All four use the same digits — the arrangement is the whole game."
+  - "Compare the leftmost digits first; where they tie, step one place right."
+  - "Keep stepping right until a digit wins."
+explain: "All start with 3; the hundreds decide: 6 beats 4 and 2, so 3,624 is the greatest."
+whyWrong:
+  "3,462":
+    code: DIGIT_REARRANGE
+    message: "Same digits, but its hundreds digit is 4 — the arrangement 3,624 puts a 6 there."
+  "3,246":
+    code: DIGIT_REARRANGE
+    message: "This puts the small 2 in the hundreds seat — the big digits belong on the left."
+  "3,264":
+    code: DIGIT_REARRANGE
+    message: "Its hundreds digit is 2 — beaten the moment another arrangement shows a 6 there."
+solution:
+  - type: step
+    goal: Compare the thousands.
+    working: "all four start with 3 — tie"
+  - type: step
+    goal: Compare the hundreds.
+    working: "6, 4, 2, 2 → the 6 wins → 3,624"
+  - type: takeaway
+    text: With identical digits, whoever puts the bigger digit further left wins.
+  - type: verification
+    text: "No arrangement here starts 36 except 3,624 — and 36 hundreds tops 34 and 32."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which number is the greatest?</p>
+  <ul class="options">
+    <li data-val="3,624">3,624</li>
+    <li data-val="3,462">3,462</li>
+    <li data-val="3,246">3,246</li>
+    <li data-val="3,264">3,264</li>
+  </ul>
+  <p class="explain">All start with 3, so compare the hundreds: 6 is the biggest. 3,624 wins.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["46,000"]
+description: Read the arrow's number off the number line
+hint:
+  - "Find the two labelled ticks the arrow sits between."
+  - "Work out what one step between ticks is worth."
+  - "Count steps from a labelled neighbour to the arrow."
+explain: "The ticks climb by 2,000; the arrow sits one tick past 44,000 — at 46,000."
+whyWrong:
+  "41,500":
+    code: DATA_READING_ERROR
+    message: "41,500 would sit between 40,000 and 42,000 — far left of the arrow, and not even on a tick."
+  "44,000":
+    code: DATA_READING_ERROR
+    message: "44,000 is the labelled tick BEFORE the arrow — the arrow stands one full step past it."
+  "49,500":
+    code: DATA_READING_ERROR
+    message: "49,500 lies between the last two ticks — the arrow is much further left, and ticks land on whole steps."
+solution:
+  - type: step
+    goal: Find the step size.
+    working: "40,000 to 42,000 → each step is 2,000"
+  - type: step
+    goal: Walk to the arrow.
+    working: "44,000 + one step = 46,000"
+    reason: The arrow stands on the unlabelled tick right after 44,000.
+  - type: takeaway
+    text: Number lines are read by steps — find the step size before naming any tick.
+  - type: verification
+    text: "From the other side: 48,000 − 2,000 = 46,000 — both neighbours agree."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which number is the arrow pointing to?</p>
+  <svg viewBox="0 0 620 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="number line from 40,000 to 50,000 with an arrow"><line x1="40" y1="70" x2="580" y2="70" stroke="#5a3ec8" stroke-width="3" stroke-linecap="round"/><line x1="40.0" y1="62" x2="40.0" y2="78" stroke="#5a3ec8" stroke-width="2.5"/><text x="40.0" y="98" font-size="15" font-weight="700" text-anchor="middle" fill="#2c2150" font-family="monospace">40,000</text><line x1="148.0" y1="62" x2="148.0" y2="78" stroke="#5a3ec8" stroke-width="2.5"/><text x="148.0" y="98" font-size="15" font-weight="700" text-anchor="middle" fill="#2c2150" font-family="monospace">42,000</text><line x1="256.0" y1="62" x2="256.0" y2="78" stroke="#5a3ec8" stroke-width="2.5"/><text x="256.0" y="98" font-size="15" font-weight="700" text-anchor="middle" fill="#2c2150" font-family="monospace">44,000</text><line x1="364.0" y1="62" x2="364.0" y2="78" stroke="#5a3ec8" stroke-width="2.5"/><line x1="472.0" y1="62" x2="472.0" y2="78" stroke="#5a3ec8" stroke-width="2.5"/><text x="472.0" y="98" font-size="15" font-weight="700" text-anchor="middle" fill="#2c2150" font-family="monospace">48,000</text><line x1="580.0" y1="62" x2="580.0" y2="78" stroke="#5a3ec8" stroke-width="2.5"/><text x="580.0" y="98" font-size="15" font-weight="700" text-anchor="middle" fill="#2c2150" font-family="monospace">50,000</text><polygon points="364.0,56 355.0,36 373.0,36" fill="#ff6b9d"/><line x1="364.0" y1="36" x2="364.0" y2="14" stroke="#ff6b9d" stroke-width="4" stroke-linecap="round"/><text x="364.0" y="12" font-size="15" font-weight="800" text-anchor="middle" fill="#ff6b9d">?</text></svg>
+  <ul class="options">
+    <li data-val="41,500">41,500</li>
+    <li data-val="44,000">44,000</li>
+    <li data-val="46,000">46,000</li>
+    <li data-val="49,500">49,500</li>
+  </ul>
+  <p class="explain">The arrow sits on the tick just past the middle, at 46,000.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"over","label":"Over 50,000"},{"id":"under","label":"Under 50,000"}]
+answer: ["under","over","under","over","over","under"]
+description: Sort numbers against 50,000
+hint:
+  - "Count digits first — a 4-digit number cannot reach 50,000."
+  - "For the 5-digit ones, compare the ten-thousands digit with 5."
+  - "If that digit ties at 5, look one place further."
+explain: "62,150, 71,004 and 50,900 top 50,000; 48,300, 9,999 and 38,720 fall below."
+solution:
+  - type: step
+    goal: Clear the short number.
+    working: "9,999 → 4 digits → under"
+  - type: step
+    goal: Compare front digits with 5.
+    working: "62,150 ✓ · 71,004 ✓ · 48,300 ✗ · 38,720 ✗"
+  - type: step
+    goal: Handle the tie.
+    working: "50,900 → starts 5-0, then 9 hundreds push it past 50,000 → over"
+  - type: takeaway
+    text: Front digit first — and when it ties the benchmark, the next place casts the deciding vote.
+  - type: verification
+    text: "Three landed in each box, and 50,900 − 50,000 = 900 confirms the tricky one."
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each number into "Over 50,000" or "Under 50,000".</p>
+  <ul class="tiles">
+    <li>48,300</li>
+    <li>62,150</li>
+    <li>9,999</li>
+    <li>71,004</li>
+    <li>50,900</li>
+    <li>38,720</li>
+  </ul>
+  <p class="explain">62,150, 71,004 and 50,900 are over 50,000. 9,999 only has 4 digits, so it is far under.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["lt"]
+description: Compare 4,092 and 4,902
+hint:
+  - "Line the numbers up and compare their lengths first."
+  - "Same length? Compare place by place from the LEFT."
+  - "Stop at the first place where the digits differ — it decides everything."
+explain: "4,092 < 4,902 — the thousands tie at 4, and the hundreds decide: 0 is less than 9."
+whyWrong:
+  "gt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — the thousands tie at 4, and the hundreds decide: 0 is less than 9."
+  "eq":
+    code: COMPARISON_EQUAL_WRONG
+    message: "These two are not twins — check every place, right to the end."
+solution:
+  - type: step
+    goal: Compare the numbers.
+    working: "4,092 < 4,902"
+    reason: the thousands tie at 4, and the hundreds decide: 0 is less than 9.
+  - type: takeaway
+    text: Left to right, first difference wins — later digits cannot overturn it.
+  - type: verification
+    text: "Only the hundreds differ in kind: 0 against 9 — nothing after them can rescue 4,092."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">4,092 ? 4,902 — tap the sign that makes it true.</p>
+  
+  <ul class="options">
+    <li data-val="gt">&gt;</li>
+    <li data-val="lt">&lt;</li>
+    <li data-val="eq">=</li>
+  </ul>
+  <p class="explain">Both have 4 thousands. Compare hundreds: 0 is less than 9, so 4,092 &lt; 4,902.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["15,234","15,243","15,324","15,423"]
+low: smallest
+high: largest
+description: Order near-identical numbers
+hint:
+  - "All four begin 15 — skip to where the digits stop matching."
+  - "Compare the hundreds first: 2, 2, 3, 4."
+  - "The two that tie at 2 hundreds are split by their tens."
+explain: "By hundreds then tens: 15,234 < 15,243 < 15,324 < 15,423."
+solution:
+  - type: step
+    goal: Compare the hundreds.
+    working: "2, 2, 3, 4 → the 3xx and 4xx take the top spots"
+  - type: step
+    goal: Split the tie.
+    working: "15,234 vs 15,243 → tens 3 < 4"
+  - type: step
+    goal: Read the line.
+    working: "15,234 < 15,243 < 15,324 < 15,423"
+  - type: takeaway
+    text: Shared leading digits are noise — the first differing place carries the whole decision.
+  - type: verification
+    text: Every neighbouring pair differs where it should — 9 apart, 81 apart, 99 apart.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Order these numbers from smallest to largest.</p>
+  <ol class="order">
+    <li>15,324</li>
+    <li>15,234</li>
+    <li>15,423</li>
+    <li>15,243</li>
+  </ol>
+  <p class="explain">All are 15,___ so compare the hundreds digit: 2, 2, 3, 4. Then split the two 2s using the tens.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["eq"]
+description: Compare 7,000 + 300 + 50 + 8 and 7,358
+hint:
+  - "Line the numbers up and compare their lengths first."
+  - "Same length? Compare place by place from the LEFT."
+  - "Stop at the first place where the digits differ — it decides everything."
+explain: "7,000 + 300 + 50 + 8 = 7,358 — the expanded parts add to exactly 7,358."
+whyWrong:
+  "gt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — the expanded parts add to exactly 7,358."
+  "lt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — the expanded parts add to exactly 7,358."
+solution:
+  - type: step
+    goal: Compare the numbers.
+    working: "7,000 + 300 + 50 + 8 = 7,358"
+    reason: the expanded parts add to exactly 7,358.
+  - type: takeaway
+    text: Left to right, first difference wins — later digits cannot overturn it.
+  - type: verification
+    text: "Add the parts: 7,000 + 300 + 50 + 8 = 7,358 — the two sides are the same number in different clothes."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">7,000 + 300 + 50 + 8 ? 7,358 — tap the sign that makes it true.</p>
+  
+  <ul class="options">
+    <li data-val="gt">&gt;</li>
+    <li data-val="lt">&lt;</li>
+    <li data-val="eq">=</li>
+  </ul>
+  <p class="explain">7,000 + 300 + 50 + 8 adds up to 7,358. Both sides are the same number.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["64,701"]
+description: Which of the rearranged numbers is greatest?
+hint:
+  - "Compare the leftmost digits across all four."
+  - "Two start 60 and two start 64 — which pair survives?"
+  - "Split the surviving pair at the next differing place."
+explain: "64,701 and 64,071 beat the 60,xxx pair; then 7 hundreds beats 0 hundreds: 64,701."
+whyWrong:
+  "60,471":
+    code: DIGIT_REARRANGE
+    message: "Its second digit is 0 — the 64,xxx pair passes it immediately."
+  "64,071":
+    code: DIGIT_REARRANGE
+    message: "So close — but its hundreds digit is 0, and 64,701 carries a 7 there."
+  "60,741":
+    code: DIGIT_REARRANGE
+    message: "Starting 60 loses to starting 64 before the later digits even speak."
+solution:
+  - type: step
+    goal: Compare ten-thousands and thousands.
+    working: "60, 64, 60, 64 → the two 64s survive"
+  - type: step
+    goal: Compare the survivors' hundreds.
+    working: "64,701 has 7 · 64,071 has 0 → 64,701 wins"
+  - type: takeaway
+    text: Tournaments run left to right — each place eliminates before the next is consulted.
+  - type: verification
+    text: "64,701 − 64,071 = 630 — the runner-up really is smaller."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which number is the greatest?</p>
+  <ul class="options">
+    <li data-val="60,471">60,471</li>
+    <li data-val="64,071">64,071</li>
+    <li data-val="60,741">60,741</li>
+    <li data-val="64,701">64,701</li>
+  </ul>
+  <p class="explain">Two numbers have 4 thousands: 64,071 and 64,701. Compare their hundreds: 7 beats 0, so 64,701 is greatest.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["8,607","8,670","8,706","8,760"]
+low: smallest
+high: largest
+description: Order numbers sharing their thousands digit
+hint:
+  - "All start with 8 — no help there."
+  - "Compare the hundreds: two have 6, two have 7."
+  - "Inside each pair, the tens decide."
+explain: "By hundreds then tens: 8,607 < 8,670 < 8,706 < 8,760."
+solution:
+  - type: step
+    goal: Group by hundreds.
+    working: "6xx pair: 8,607 & 8,670 · 7xx pair: 8,706 & 8,760"
+  - type: step
+    goal: Order inside each pair by tens.
+    working: "07 < 70 · 06 < 60"
+  - type: step
+    goal: Read the line.
+    working: "8,607 < 8,670 < 8,706 < 8,760"
+  - type: takeaway
+    text: Sort by the first differing place, then recurse into the ties.
+  - type: verification
+    text: "Neighbours climb by 63, 36 and 54 — always upward."
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Order these numbers from smallest to largest.</p>
+  <ol class="order">
+    <li>8,706</li>
+    <li>8,760</li>
+    <li>8,670</li>
+    <li>8,607</li>
+  </ol>
+  <p class="explain">Compare hundreds first: 6, 6, 7, 7. Then use the tens to split each pair.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["gt"]
+description: Compare 92,000 and 29,000
+hint:
+  - "Line the numbers up and compare their lengths first."
+  - "Same length? Compare place by place from the LEFT."
+  - "Stop at the first place where the digits differ — it decides everything."
+explain: "92,000 > 29,000 — both have 5 digits, and 9 ten-thousands beats 2 ten-thousands."
+whyWrong:
+  "lt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — both have 5 digits, and 9 ten-thousands beats 2 ten-thousands."
+  "eq":
+    code: COMPARISON_EQUAL_WRONG
+    message: "These two are not twins — check every place, right to the end."
+solution:
+  - type: step
+    goal: Compare the numbers.
+    working: "92,000 > 29,000"
+    reason: both have 5 digits, and 9 ten-thousands beats 2 ten-thousands.
+  - type: takeaway
+    text: Left to right, first difference wins — later digits cannot overturn it.
+  - type: verification
+    text: "The same two digits lead both numbers — but 92 puts the 9 first, and the leftmost place is worth the most."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">92,000 ? 29,000 — tap the sign that makes it true.</p>
+  
+  <ul class="options">
+    <li data-val="gt">&gt;</li>
+    <li data-val="lt">&lt;</li>
+    <li data-val="eq">=</li>
+  </ul>
+  <p class="explain">The first digit decides it: 9 ten-thousands beats 2 ten-thousands.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Priya"]
+description: Who saved more — ₹12,500 or ₹12,050?
+hint:
+  - "Both amounts start ₹12 — keep moving right."
+  - "Compare the hundreds place of the two amounts."
+  - "5 hundreds against 0 hundreds settles it."
+explain: "₹12,500 vs ₹12,050: the hundreds differ — 5 beats 0, so Priya saved more."
+whyWrong:
+  "Arjun":
+    code: COMPARISON_REVERSED
+    message: "Arjun's ₹12,050 has a 0 in the hundreds place — ₹450 behind Priya's ₹12,500."
+  "They saved the same":
+    code: COMPARISON_EQUAL_WRONG
+    message: "The amounts share their thousands but not their hundreds — 500 against 050 is no tie."
+solution:
+  - type: step
+    goal: Line up the amounts.
+    working: "₹12,500 vs ₹12,050"
+  - type: step
+    goal: Find the first difference.
+    working: "hundreds: 5 vs 0 → ₹12,500 is bigger"
+    reason: The digits after the hundreds cannot close a 450-rupee gap.
+  - type: takeaway
+    text: Money compares like any number — place by place from the left.
+  - type: verification
+    text: "₹12,500 − ₹12,050 = ₹450 — a real gap in Priya's favour."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya saved ₹12,500. Arjun saved ₹12,050. Who saved more money?</p>
+  <ul class="options">
+    <li data-val="Priya">Priya</li>
+    <li data-val="Arjun">Arjun</li>
+    <li data-val="They saved the same">They saved the same</li>
+  </ul>
+  <p class="explain">Both have 12 thousands. Compare hundreds: 5 beats 0, so ₹12,500 &gt; ₹12,050. Priya saved more.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["19,999","8,742","13,600"]
+description: Every number less than 20,000
+hint:
+  - "Test each number against 20,000."
+  - "Digit count clears one immediately — 4 digits is always under."
+  - "20,000 itself is equal, not less."
+explain: "19,999, 8,742 and 13,600 sit below 20,000; 21,050 and 20,001 are above, and 20,000 is only equal."
+whyWrong:
+  "20,000":
+    code: COMPARISON_EQUAL_WRONG
+    message: "20,000 IS the line — 'less than' means strictly below it."
+  "21,050":
+    code: WRONG_NUMBER_PAIR
+    message: "21,050 starts with 21 thousands — above the 20-thousand line."
+  "20,001":
+    code: WRONG_NUMBER_PAIR
+    message: "Just one past the line — but past is past; 20,001 is not less than 20,000."
+solution:
+  - type: step
+    goal: Test every card.
+    working: "19,999 ✓ · 20,000 ✗ (equal) · 8,742 ✓ · 21,050 ✗ · 20,001 ✗ · 13,600 ✓"
+  - type: takeaway
+    text: Boundaries are strict — one above fails, and equal fails too.
+  - type: verification
+    text: "19,999 is the largest keeper, exactly 1 below the line — the boundary held."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every number that is less than 20,000. Be careful: 20,000 itself is not less than 20,000.</p>
+  <ul class="options">
+    <li data-val="19,999">19,999</li>
+    <li data-val="20,000">20,000</li>
+    <li data-val="8,742">8,742</li>
+    <li data-val="21,050">21,050</li>
+    <li data-val="20,001">20,001</li>
+    <li data-val="13,600">13,600</li>
+  </ul>
+  <p class="explain">19,999 is just 1 below. 8,742 has only 4 digits. 13,600 is clearly below. 20,000 is equal, not less.</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["9","7","4","3","1"]
+palette: ["4","7","1","9","3"]
+description: Build the greatest number from 4, 7, 1, 9, 3
+hint:
+  - "The leftmost place is worth the most."
+  - "So it deserves the biggest digit you own."
+  - "Keep placing the biggest remaining digit as you move right."
+explain: "Biggest to smallest, left to right: 97,431."
+solution:
+  - type: step
+    goal: Spend the biggest digit first.
+    working: "9 takes the ten-thousands seat"
+  - type: step
+    goal: Keep descending.
+    working: "7, then 4, then 3, then 1 → 97,431"
+    reason: Any swap would move a bigger digit into a cheaper seat and shrink the number.
+  - type: takeaway
+    text: "Greatest number = digits sorted downhill from the left."
+  - type: verification
+    text: "Swap any two neighbours and the number drops — 97,431 cannot be beaten with these digits."
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Use each digit once to build the greatest possible number.</p>
+  <ul class="palette">
+    <li data-val="4">4</li>
+    <li data-val="7">7</li>
+    <li data-val="1">1</li>
+    <li data-val="9">9</li>
+    <li data-val="3">3</li>
+  </ul>
+  <ol class="sequence">
+    <li>9</li>
+    <li>7</li>
+    <li>4</li>
+    <li>3</li>
+    <li>1</li>
+  </ol>
+  <p class="explain">Put the biggest digit in the ten-thousands place, then work down: 97,431.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["lt"]
+description: Compare 9,075 and 9,750
+hint:
+  - "Line the numbers up and compare their lengths first."
+  - "Same length? Compare place by place from the LEFT."
+  - "Stop at the first place where the digits differ — it decides everything."
+explain: "9,075 < 9,750 — the thousands tie at 9, and the hundreds decide: 0 is less than 7."
+whyWrong:
+  "gt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — the thousands tie at 9, and the hundreds decide: 0 is less than 7."
+  "eq":
+    code: COMPARISON_EQUAL_WRONG
+    message: "These two are not twins — check every place, right to the end."
+solution:
+  - type: step
+    goal: Compare the numbers.
+    working: "9,075 < 9,750"
+    reason: the thousands tie at 9, and the hundreds decide: 0 is less than 7.
+  - type: takeaway
+    text: Left to right, first difference wins — later digits cannot overturn it.
+  - type: verification
+    text: "After the tied 9s, 075 races 750 — and 0 hundreds never catches 7 hundreds."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">9,075 ? 9,750 — tap the sign that makes it true.</p>
+  
+  <ul class="options">
+    <li data-val="gt">&gt;</li>
+    <li data-val="lt">&lt;</li>
+    <li data-val="eq">=</li>
+  </ul>
+  <p class="explain">Both have 9 thousands. Compare hundreds: 0 is less than 7, so 9,075 &lt; 9,750.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["70,542","70,524","70,452","70,425"]
+low: largest
+high: smallest
+description: Order from LARGEST to smallest
+hint:
+  - "Sort them as usual first — then check which direction the question wants."
+  - "All start 70 — compare from the hundreds."
+  - "This line runs downhill: biggest first."
+explain: "Downhill: 70,542 > 70,524 > 70,452 > 70,425."
+solution:
+  - type: step
+    goal: Compare hundreds.
+    working: "5, 5, 4, 4 → the 5-hundreds pair leads"
+  - type: step
+    goal: Split each pair by tens.
+    working: "70,542 > 70,524 · 70,452 > 70,425"
+  - type: step
+    goal: Read the line downhill.
+    working: "70,542, 70,524, 70,452, 70,425"
+    reason: The question asks largest first — the same sort, reversed.
+  - type: takeaway
+    text: Read the direction before you drag — a perfect sort the wrong way round scores zero.
+  - type: verification
+    text: "Each neighbour drops: −18, −72, −27 — strictly downhill."
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Order these numbers from largest to smallest.</p>
+  <ol class="order">
+    <li>70,425</li>
+    <li>70,542</li>
+    <li>70,452</li>
+    <li>70,524</li>
+  </ol>
+  <p class="explain">All are 70,___ so compare hundreds: 5, 5, 4, 4. The two 5s go first, split by their tens.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["5","6"]
+description: Which digits make 4_,318 greater than 45,000?
+hint:
+  - "Try each digit in the empty place and read the number it makes."
+  - "Compare each try against 45,000."
+  - "Careful with the digit that makes the thousands tie — the hundreds then decide."
+explain: "45,318 > 45,000 (the 318 pushes it past) and 46,318 > 45,000; 43,318 and 44,318 fall short."
+whyWrong:
+  "3":
+    code: WRONG_NUMBER_PAIR
+    message: "43,318 sits below 45,000 — 3 thousands is too small."
+  "4":
+    code: WRONG_NUMBER_PAIR
+    message: "44,318 is still under 45,000 — the 4 leaves it a thousand short."
+solution:
+  - type: step
+    goal: Try each digit.
+    working: "3 → 43,318 · 4 → 44,318 · 5 → 45,318 · 6 → 46,318"
+  - type: step
+    goal: Compare each with 45,000.
+    working: "43,318 ✗ · 44,318 ✗ · 45,318 ✓ · 46,318 ✓"
+    reason: With 5 in the gap the thousands tie — and then 318 beats 000.
+  - type: takeaway
+    text: A missing digit is an invitation to test — and ties pass the decision one place right.
+  - type: verification
+    text: "The boundary case: 45,318 − 45,000 = 318 — genuinely greater, not equal."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">A digit is missing. Tap every digit that makes this statement true.</p>
+  
+  <ul class="options">
+    <li data-val="3">3</li>
+    <li data-val="4">4</li>
+    <li data-val="5">5</li>
+    <li data-val="6">6</li>
+  </ul>
+  <p class="explain">5 gives 45,318, which is just above 45,000. 6 gives 46,318, also above. 3 and 4 give 43,318 and 44,318 — both too small.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"over","label":"Over 25,000"},{"id":"under","label":"Under 25,000"}]
+answer: ["under","over","over","under","under","over"]
+description: Sort numbers against 25,000
+hint:
+  - "Digit count first — 4 digits can never reach 25,000."
+  - "Then compare the ten-thousands digit with 2."
+  - "Numbers starting 2 need their thousands checked against 5."
+explain: "25,001, 31,470 and 27,300 top 25,000; 24,900, 9,860 and 18,250 fall below."
+solution:
+  - type: step
+    goal: Clear the short one.
+    working: "9,860 → 4 digits → under"
+  - type: step
+    goal: Front digits against 2.
+    working: "31,470 over · 18,250 under"
+  - type: step
+    goal: The 2x,xxx numbers.
+    working: "24,900 under · 27,300 over · 25,001 over (the 001 tips it)"
+  - type: takeaway
+    text: Benchmarks with two working digits need two checks — ten-thousands, then thousands.
+  - type: verification
+    text: "The closest calls: 24,900 is 100 under, 25,001 is 1 over — both sorted by their thousands duel."
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each number into "Over 25,000" or "Under 25,000".</p>
+  <ul class="tiles">
+    <li>24,900</li>
+    <li>25,001</li>
+    <li>31,470</li>
+    <li>9,860</li>
+    <li>18,250</li>
+    <li>27,300</li>
+  </ul>
+  <p class="explain">24,900 is close but still under. 25,001 is only 1 over — but over is over.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["eq"]
+description: Compare 45,600 and 45,600
+hint:
+  - "Line the numbers up and compare their lengths first."
+  - "Same length? Compare place by place from the LEFT."
+  - "Stop at the first place where the digits differ — it decides everything."
+explain: "45,600 = 45,600 — every single place matches."
+whyWrong:
+  "gt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — every single place matches."
+  "lt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — every single place matches."
+solution:
+  - type: step
+    goal: Compare the numbers.
+    working: "45,600 = 45,600"
+    reason: every single place matches.
+  - type: takeaway
+    text: Left to right, first difference wins — later digits cannot overturn it.
+  - type: verification
+    text: "Five places, five ties — when nothing differs, the numbers are one and the same."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">45,600 ? 45,600 — tap the sign that makes it true.</p>
+  
+  <ul class="options">
+    <li data-val="gt">&gt;</li>
+    <li data-val="lt">&lt;</li>
+    <li data-val="eq">=</li>
+  </ul>
+  <p class="explain">Every digit matches all the way across, so the two numbers are equal.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["30,500","35,218","39,999"]
+description: Numbers between 30,000 and 40,000
+hint:
+  - "Every card faces TWO tests — above 30,000 AND below 40,000."
+  - "Passing one test is not enough."
+  - "Watch the numbers sitting exactly on a boundary."
+explain: "30,500, 35,218 and 39,999 pass both tests; 29,999 fails the low bar, 40,000 and 41,003 fail the high one."
+whyWrong:
+  "29,999":
+    code: WRONG_NUMBER_PAIR
+    message: "One short of 30,000 — it never enters the range."
+  "40,000":
+    code: COMPARISON_EQUAL_WRONG
+    message: "40,000 sits exactly ON the top boundary — 'less than 40,000' keeps it out."
+  "41,003":
+    code: WRONG_NUMBER_PAIR
+    message: "41,003 clears 30,000 easily but blows past 40,000 — one test passed is not enough."
+solution:
+  - type: step
+    goal: Run the low test.
+    working: "above 30,000: all except 29,999"
+  - type: step
+    goal: Run the high test.
+    working: "below 40,000: knocks out 40,000 and 41,003"
+  - type: step
+    goal: Keep the double-passers.
+    working: "30,500 · 35,218 · 39,999"
+  - type: takeaway
+    text: "'Between' is two fences — a number must clear both to graze inside."
+  - type: verification
+    text: "The keepers span 30,500 to 39,999 — all comfortably inside the fences."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every number that is greater than 30,000 but less than 40,000.</p>
+  <ul class="options">
+    <li data-val="29,999">29,999</li>
+    <li data-val="30,500">30,500</li>
+    <li data-val="40,000">40,000</li>
+    <li data-val="35,218">35,218</li>
+    <li data-val="39,999">39,999</li>
+    <li data-val="41,003">41,003</li>
+  </ul>
+  <p class="explain">Every number in this range starts with 3 in the ten-thousands place. 29,999 is just below and 40,000 is not less than 40,000.</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["2","0","5","6","8"]
+palette: ["6","0","8","2","5"]
+description: Build the smallest 5-digit number — zero cannot lead
+hint:
+  - "Small digits belong on the left — but there is a catch."
+  - "A number starting with 0 stops being 5 digits long."
+  - "Give the front seat to the smallest NON-zero digit, then slot the zero."
+explain: "0 cannot lead, so 2 starts; the 0 takes the next seat: 20,568."
+solution:
+  - type: step
+    goal: Choose the leader.
+    working: "smallest non-zero digit → 2"
+    reason: Leading 0 would collapse the number to 4 digits.
+  - type: step
+    goal: Place the zero next.
+    working: "0 into the thousands — the cheapest remaining seat"
+  - type: step
+    goal: Fill the rest uphill.
+    working: "5, 6, 8 → 20,568"
+  - type: takeaway
+    text: Smallest number: smallest non-zero digit first, THEN the zero, then uphill.
+  - type: verification
+    text: "Try the naive 02,568 — it reads as 2,568, a 4-digit number, which breaks the rules."
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Use each digit once to build the smallest possible 5-digit number.</p>
+  <ul class="palette">
+    <li data-val="6">6</li>
+    <li data-val="0">0</li>
+    <li data-val="8">8</li>
+    <li data-val="2">2</li>
+    <li data-val="5">5</li>
+  </ul>
+  <ol class="sequence">
+    <li>2</li>
+    <li>0</li>
+    <li>5</li>
+    <li>6</li>
+    <li>8</li>
+  </ol>
+  <p class="explain">0 cannot go first, so the next smallest digit (2) leads. Then 0 takes the thousands place: 20,568.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["lt"]
+description: Compare 8,009 and 8,090
+hint:
+  - "Line the numbers up and compare their lengths first."
+  - "Same length? Compare place by place from the LEFT."
+  - "Stop at the first place where the digits differ — it decides everything."
+explain: "8,009 < 8,090 — thousands and hundreds tie; the tens decide, and 0 is less than 9."
+whyWrong:
+  "gt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — thousands and hundreds tie; the tens decide, and 0 is less than 9."
+  "eq":
+    code: COMPARISON_EQUAL_WRONG
+    message: "These two are not twins — check every place, right to the end."
+solution:
+  - type: step
+    goal: Compare the numbers.
+    working: "8,009 < 8,090"
+    reason: thousands and hundreds tie; the tens decide, and 0 is less than 9.
+  - type: takeaway
+    text: Left to right, first difference wins — later digits cannot overturn it.
+  - type: verification
+    text: "The difference is only 81 — but a difference in the tens place is still a difference."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">8,009 ? 8,090 — tap the sign that makes it true.</p>
+  
+  <ul class="options">
+    <li data-val="gt">&gt;</li>
+    <li data-val="lt">&lt;</li>
+    <li data-val="eq">=</li>
+  </ul>
+  <p class="explain">Thousands match, hundreds match (both 0). Compare tens: 0 is less than 9, so 8,009 &lt; 8,090.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["9,087","9,870","10,870","18,700"]
+low: smallest
+high: largest
+description: Order numbers of different lengths
+hint:
+  - "Count the digits of each number before anything else."
+  - "Shorter numbers go first, whatever their digits look like."
+  - "Sort inside each length group as usual."
+explain: "4-digit pair first (9,087 < 9,870), then the 5-digit pair (10,870 < 18,700)."
+solution:
+  - type: step
+    goal: Group by length.
+    working: "4 digits: 9,087 & 9,870 · 5 digits: 10,870 & 18,700"
+  - type: step
+    goal: Sort each group.
+    working: "9,087 < 9,870 (hundreds 0 < 8) · 10,870 < 18,700 (thousands 0 < 8)"
+  - type: step
+    goal: Join the groups.
+    working: "9,087 < 9,870 < 10,870 < 18,700"
+  - type: takeaway
+    text: Digit count outranks every digit — group by length before comparing anything.
+  - type: verification
+    text: "The same digits 8-7-0 appear in three of them — yet length and place order them cleanly."
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Order these numbers from smallest to largest.</p>
+  <ol class="order">
+    <li>18,700</li>
+    <li>9,087</li>
+    <li>10,870</li>
+    <li>9,870</li>
+  </ol>
+  <p class="explain">The two 4-digit numbers go first. Then compare the 5-digit ones: 10,870 before 18,700.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Ravi's Stall"]
+description: Which shop sold the fewest bats?
+hint:
+  - "All four counts start with 7 — the thousands tie."
+  - "Compare the hundreds of all four next."
+  - "One count falls behind at the hundreds — find it."
+explain: "7,516, 7,561, 7,158, 7,615: only 7,158 has a 1 in the hundreds — Ravi's Stall sold the fewest."
+whyWrong:
+  "Nita's Shop":
+    code: DATA_READING_ERROR
+    message: "Nita's 7,516 has 5 hundreds — Ravi's 7,158 sits three hundred below it."
+  "Kabir's Store":
+    code: DATA_READING_ERROR
+    message: "Kabir's 7,561 is among the biggest here, not the smallest."
+  "Meera's Mall":
+    code: DATA_READING_ERROR
+    message: "Meera's 7,615 has the most hundreds of all four — the very opposite of fewest."
+solution:
+  - type: step
+    goal: Compare the thousands.
+    working: "all four start 7 — tie"
+  - type: step
+    goal: Compare the hundreds.
+    working: "5, 5, 1, 6 → the 1 loses → 7,158"
+  - type: step
+    goal: Name the shop.
+    working: "7,158 → Ravi's Stall"
+  - type: takeaway
+    text: Close-together data is sorted the same way as any numbers — first differing place.
+  - type: verification
+    text: "7,158 is over 350 below every other count — clearly the fewest."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Four shops sold cricket bats. Nita's Shop sold 7,516. Kabir's Store sold 7,561. Ravi's Stall sold 7,158. Meera's Mall sold 7,615. Which shop sold the fewest?</p>
+  <ul class="options">
+    <li data-val="Nita's Shop">Nita's Shop</li>
+    <li data-val="Kabir's Store">Kabir's Store</li>
+    <li data-val="Ravi's Stall">Ravi's Stall</li>
+    <li data-val="Meera's Mall">Meera's Mall</li>
+  </ul>
+  <p class="explain">All have 7 thousands. Compare the hundreds digit: 5, 5, 1, 6. Ravi's Stall has only 1 hundred, so it sold the fewest.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["82,300","82,410"]
+description: Every number greater than 82,150
+hint:
+  - "All the cards start 82 — skip straight to the hundreds."
+  - "Compare each card's tail with 150."
+  - "One card is exactly 82,150 — is equal enough?"
+explain: "82,300 and 82,410 top 82,150; 82,105 and 82,015 fall below it, and 82,150 itself is only equal."
+whyWrong:
+  "82,105":
+    code: WRONG_NUMBER_PAIR
+    message: "82,105's tail is 105 — forty-five below the 150 it must beat."
+  "82,015":
+    code: WRONG_NUMBER_PAIR
+    message: "82,015 has 0 hundreds — well under 82,150."
+  "82,150":
+    code: COMPARISON_EQUAL_WRONG
+    message: "82,150 IS the benchmark — equal never counts as greater."
+solution:
+  - type: step
+    goal: Skip the shared front.
+    working: "every card starts 82 — compare tails against 150"
+  - type: step
+    goal: Test each tail.
+    working: "105 ✗ · 300 ✓ · 015 ✗ · 410 ✓ · 150 ✗ (equal)"
+  - type: takeaway
+    text: Shared prefixes vanish from the contest — the first differing place does the judging.
+  - type: verification
+    text: "Both keepers beat the mark by 150+ — and the equal card was rightly left behind."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every number that is greater than 82,150.</p>
+  <ul class="options">
+    <li data-val="82,105">82,105</li>
+    <li data-val="82,300">82,300</li>
+    <li data-val="82,015">82,015</li>
+    <li data-val="82,410">82,410</li>
+    <li data-val="82,150">82,150</li>
+  </ul>
+  <p class="explain">All start 82,___. Compare hundreds: only 82,300 and 82,410 have more than 1 hundred.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["gt"]
+description: Compare 50,000 and 5,000
+hint:
+  - "Line the numbers up and compare their lengths first."
+  - "Same length? Compare place by place from the LEFT."
+  - "Stop at the first place where the digits differ — it decides everything."
+explain: "50,000 > 5,000 — 50,000 has 5 digits and 5,000 only 4 — ten times apart."
+whyWrong:
+  "lt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — 50,000 has 5 digits and 5,000 only 4 — ten times apart."
+  "eq":
+    code: COMPARISON_EQUAL_WRONG
+    message: "These two are not twins — check every place, right to the end."
+solution:
+  - type: step
+    goal: Compare the numbers.
+    working: "50,000 > 5,000"
+    reason: 50,000 has 5 digits and 5,000 only 4 — ten times apart.
+  - type: takeaway
+    text: Left to right, first difference wins — later digits cannot overturn it.
+  - type: verification
+    text: "Same leading 5, but one number is a whole place longer — length wins before digits are even read."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">50,000 ? 5,000 — tap the sign that makes it true.</p>
+  
+  <ul class="options">
+    <li data-val="gt">&gt;</li>
+    <li data-val="lt">&lt;</li>
+    <li data-val="eq">=</li>
+  </ul>
+  <p class="explain">50,000 has 5 digits and 5,000 has 4. More digits means a bigger number.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"over","label":"Over 40,000"},{"id":"under","label":"Under 40,000"}]
+answer: ["under","over","under","over","under","over"]
+description: Sort against 40,000 — with a 4-digit trap
+hint:
+  - "A number starting with 4 has not automatically beaten 40,000."
+  - "Count each number's digits before trusting its first digit."
+  - "For true 5-digit numbers, compare against 4 ten-thousands."
+explain: "40,001, 44,500 and 40,100 top 40,000; 39,999 and 38,000 fall short, and 4,000 is ten times too small despite its 4."
+solution:
+  - type: step
+    goal: Spring the trap.
+    working: "4,000 → only 4 digits → far under"
+    reason: Its leading 4 is worth 4 thousands, not 4 ten-thousands.
+  - type: step
+    goal: Sort the rest.
+    working: "39,999 under · 40,001 over · 44,500 over · 38,000 under · 40,100 over"
+  - type: takeaway
+    text: A digit's value depends on its seat — the same 4 can mean 4,000 or 40,000.
+  - type: verification
+    text: "The two nearest misses straddle the line by 1 each: 39,999 and 40,001."
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each number into "Over 40,000" or "Under 40,000".</p>
+  <ul class="tiles">
+    <li>39,999</li>
+    <li>40,001</li>
+    <li>4,000</li>
+    <li>44,500</li>
+    <li>38,000</li>
+    <li>40,100</li>
+  </ul>
+  <p class="explain">Watch out for 4,000 — it starts with a 4, but it only has 4 digits, so it is far under 40,000.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["48,567","48,657","48,675","48,756"]
+low: smallest
+high: largest
+description: Order numbers sharing two leading digits
+hint:
+  - "The first two digits all match — start at the hundreds."
+  - "Compare hundreds: 5, 6, 6, 7."
+  - "The tied pair is split by its tens."
+explain: "By hundreds then tens: 48,567 < 48,657 < 48,675 < 48,756."
+solution:
+  - type: step
+    goal: Compare the hundreds.
+    working: "5 < 6 = 6 < 7 → first and last are settled"
+  - type: step
+    goal: Split the middle pair.
+    working: "48,657 vs 48,675 → tens 5 < 7"
+  - type: step
+    goal: Read the line.
+    working: "48,567 < 48,657 < 48,675 < 48,756"
+  - type: takeaway
+    text: Ties cascade rightward — every tie hands the decision to the next place along.
+  - type: verification
+    text: "Climbs of 90, 18 and 81 between neighbours — all positive, order confirmed."
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Order these numbers from smallest to largest.</p>
+  <ol class="order">
+    <li>48,756</li>
+    <li>48,567</li>
+    <li>48,675</li>
+    <li>48,657</li>
+  </ol>
+  <p class="explain">Compare hundreds: 5, 6, 6, 7. Then split the two 6s using the tens digit.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"gt","label":"Greater than 5,555"},{"id":"lt","label":"Less than 5,555"}]
+answer: ["lt","gt","gt","lt","gt","lt"]
+description: Sort against 5,555 — every place matters
+hint:
+  - "Compare each number with 5,555 place by place."
+  - "Some cards differ from it only in one quiet place."
+  - "Check right to the ones digit before deciding."
+explain: "5,565, 5,600 and 6,000 top 5,555; 5,545, 5,455 and 5,554 sit below — the last by a single one."
+solution:
+  - type: step
+    goal: The easy calls.
+    working: "6,000 over · 5,455 under (4 hundreds) · 5,600 over (6 hundreds)"
+  - type: step
+    goal: The tens duels.
+    working: "5,545 → tens 4 < 5 → under · 5,565 → tens 6 > 5 → over"
+  - type: step
+    goal: The ones duel.
+    working: "5,554 → everything ties until the ones: 4 < 5 → under"
+  - type: takeaway
+    text: A comparison is never finished early — ties push the decision all the way to the ones.
+  - type: verification
+    text: "5,554 misses by exactly 1 — the smallest possible margin, caught only at the last digit."
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each number into "Greater than 5,555" or "Less than 5,555".</p>
+  <ul class="tiles">
+    <li>5,545</li>
+    <li>5,565</li>
+    <li>5,600</li>
+    <li>5,455</li>
+    <li>6,000</li>
+    <li>5,554</li>
+  </ul>
+  <p class="explain">5,554 differs from 5,555 only in the last digit — and 4 is less than 5, so it is smaller.</p>
+</div>
+
+</div>

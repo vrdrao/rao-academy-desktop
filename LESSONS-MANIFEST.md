@@ -29,6 +29,7 @@ lesson's row links its document.
 | Choose the appropriate metric unit of measure | 22 | `lessons/incoming/choose-the-appropriate-metric-unit-of-measure.html` | `review/choose-the-appropriate-metric-unit-of-measure.html` | — |
 | Compare money amounts | 24 | `lessons/incoming/Compare-money-amounts.html` | `review/Compare-money-amounts.html` | — |
 | Compare money amounts 1to1 | 24 | `lessons/incoming/Compare-money-amounts-1to1.html` | `review/Compare-money-amounts-1to1.html` | — |
+| Compare numbers up to five digits | 30 | `lessons/compare_numbers_up_to_five_digits.html` | `review/compare_numbers_up_to_five_digits.html` | `sources/LDM- Number Sense-Compare numbers up to five digits(D).html` |
 | Compare numbers using multiplication remix | 30 | `lessons/incoming/Compare_numbers_using_multiplication_remix.html` | `review/Compare_numbers_using_multiplication_remix.html` | — |
 | Complete the division table | 30 | `lessons/incoming/Complete_the_division_table.html` | `review/Complete_the_division_table.html` | — |
 | Count vertices edges and faces | 22 | `lessons/incoming/Count_vertices__edges_and_faces.html` | `review/Count_vertices__edges_and_faces.html` | — |
@@ -123,7 +124,7 @@ lesson's row links its document.
 | Use perimeter to determine cost | 20 | `lessons/use_perimeter_to_determine_cost.html` | `review/use_perimeter_to_determine_cost.html` | `sources/Geometric Measurements-Use perimeter to determine cost(D).html` |
 | Word problems with extra or missing information | 24 | `lessons/incoming/Word problems with extra or missing information.html` | `review/Word problems with extra or missing information.html` | — |
 
-**Totals: 111 lessons, 2,899 questions.**
+**Totals: 112 lessons, 2,929 questions.**
 Matches the recorded 102 / 2,687 exactly (2,722 → 2,727 on 2026-07-18:
 BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`;
 104 / 2,727 → 102 / 2,687 per BRIEF-DUPLICATE-CULL, Venkat's ruling
