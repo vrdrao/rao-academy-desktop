@@ -1,0 +1,915 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["3"]
+description: Which measurement does a fencing job need?
+hint:
+  - "Picture the fence being built — where exactly does it stand?"
+  - "A fence runs along the edge of the garden, not across the ground inside it."
+  - "Priya needs to know how far it is to travel right around the garden's boundary."
+explain: A fence follows the boundary, so Priya needs the distance all the way around — the perimeter.
+whyWrong:
+  "1":
+    code: AREA_FOR_PERIMETER
+    message: "The space inside is the area — useful for laying a lawn, but a fence never enters the garden."
+  "2":
+    code: WRONG_MEASUREMENT_FOR_JOB
+    message: "Height tells you how tall the fence stands — not how much of it to buy."
+  "4":
+    code: WRONG_MEASUREMENT_FOR_JOB
+    message: "One side is only part of the journey — the fence must travel along every side."
+solution:
+  - type: step
+    goal: Picture the job.
+    working: "a fence stands along the garden's edge"
+    reason: Whatever the fence needs must be measured along that edge.
+  - type: step
+    goal: Name that measurement.
+    working: "distance all the way around = perimeter"
+  - type: takeaway
+    text: Jobs that run along the edge — fences, ribbons, frames — always need the perimeter.
+  - type: verification
+    text: The inside space never touches a fence, so the area options cannot be the ones a fencing job needs.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya wants to put a fence around her garden. Which measurement does she need?</p>
+  <ul class="options">
+    <li data-val="1">The space inside the garden</li>
+    <li data-val="2">How tall the fence is</li>
+    <li data-val="3">The distance all the way around the garden</li>
+    <li data-val="4">The length of the longest side</li>
+  </ul>
+  <p class="explain">A fence runs along the edge, all the way around. That distance is the <b>perimeter</b>.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"per","label":"Go AROUND (perimeter)"},{"id":"area","label":"Cover the INSIDE (area)"}]
+answer: ["per","area","per","area","per","per"]
+description: Sort jobs into perimeter jobs and area jobs
+hint:
+  - "Take each job and picture the material being put in place."
+  - "Ask of each one: does the material run along the edge, or spread across the surface?"
+  - "Fences, ribbons, trims and ropes travel; paint and carpet spread."
+explain: Fencing, ribbon, trim and rope run along edges (perimeter); paint and carpet cover surfaces (area).
+solution:
+  - type: step
+    goal: Spot the edge-runners.
+    working: "fencing a field · ribbon around a gift · trim around a ceiling · rope around a court"
+    reason: Each of these materials travels along a boundary line.
+  - type: step
+    goal: Spot the surface-coverers.
+    working: "painting a wall · carpet for a room"
+    reason: Paint and carpet spread out to fill a whole surface.
+  - type: takeaway
+    text: "The word 'around' signals perimeter; covering signals area."
+  - type: verification
+    text: Four jobs went around and two covered — and every around-job's material could be laid out as one long strip.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each job into the right box.</p>
+  <ul class="tiles">
+    <li>Fencing a field</li>
+    <li>Painting a wall</li>
+    <li>Ribbon around a gift</li>
+    <li>Carpet for a room</li>
+    <li>Trim around a ceiling</li>
+    <li>Rope around a court</li>
+  </ul>
+  <p class="explain">Fencing, ribbon, trim and rope all travel along the edge → perimeter. Paint and carpet fill the inside → area.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1"]
+description: Perimeter of a 12 m by 7 m notice board
+hint:
+  - "The rope travels along every side of the board."
+  - "A rectangle has four sides — two long ones and two short ones."
+  - "Add all four side lengths to find how far the rope goes."
+explain: "The rope covers all four sides: 12 + 12 + 7 + 7 = 38 m."
+whyWrong:
+  "2":
+    code: FORGOT_DOUBLE_PERIMETER
+    message: "19 m is just 12 + 7 — one long side and one short side. The rope still has the other two to travel."
+  "3":
+    code: AREA_FOR_PERIMETER
+    message: "84 is 12 × 7 — the space inside the board. A rope around the edge never measures that."
+  "4":
+    code: FORMULA_ERROR
+    message: "24 m would be two 12 m sides alone — the two 7 m sides are missing from the journey."
+solution:
+  - type: step
+    goal: List every side.
+    working: "12 m, 12 m, 7 m, 7 m"
+    reason: Opposite sides of a rectangle are equal, so each length appears twice.
+  - type: step
+    goal: Add them all.
+    working: "12 + 12 + 7 + 7 = 38 m"
+  - type: takeaway
+    text: Perimeter is a full lap — every side gets added, none skipped.
+  - type: verification
+    text: "A shortcut agrees: 2 × (12 + 7) = 2 × 19 = 38."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Arjun is putting a rope around this notice board. What is the perimeter?</p>
+  <svg viewBox="0 0 277 140" width="100%" style="max-width:320px">
+  <rect x="54" y="28" width="170" height="80" rx="3" fill="#dbeafe" stroke="#4361EE" stroke-width="3"/>
+  <text x="138" y="19" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">12 m</text>
+  <text x="138" y="128" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">12 m</text>
+  <text x="40" y="74" text-anchor="end" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">7 m</text>
+  <text x="238" y="74" text-anchor="start" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">7 m</text>
+</svg>
+  <ul class="options">
+    <li data-val="1">38 m</li>
+    <li data-val="2">19 m</li>
+    <li data-val="3">84 m</li>
+    <li data-val="4">24 m</li>
+  </ul>
+  <p class="explain">12 + 7 + 12 + 7 = 38 m. (19 m is only two sides. 84 m is the area. 24 m forgets the short sides.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3"]
+description: Perimeter of a square garden with 15 m sides
+hint:
+  - "How many sides does a square have?"
+  - "Every side of a square is the same length."
+  - "Add 15 m for each of the four sides — or use a multiplication shortcut."
+explain: "A square has four equal sides: 4 × 15 = 60 m."
+whyWrong:
+  "1":
+    code: FORMULA_ERROR
+    message: "30 m is only 2 sides' worth — a square's lap goes along all four."
+  "2":
+    code: FORMULA_ERROR
+    message: "45 m pays for three sides — the fourth side of the square is left open."
+  "4":
+    code: AREA_FOR_PERIMETER
+    message: "225 is 15 × 15, the space inside the garden — not the distance around it."
+solution:
+  - type: step
+    goal: Count the sides.
+    working: "a square has 4 equal sides of 15 m"
+  - type: step
+    goal: Multiply.
+    working: "4 × 15 = 60 m"
+    reason: Four equal sides make multiplication quicker than adding.
+  - type: takeaway
+    text: "For a square, perimeter is always 4 × side."
+  - type: verification
+    text: "Adding the long way agrees: 15 + 15 + 15 + 15 = 60."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Diya's square kitchen garden has sides of 15 m. What is the perimeter?</p>
+  <svg viewBox="0 0 228 160" width="100%" style="max-width:280px">
+  <rect x="64" y="28" width="100" height="100" rx="3" fill="#dcfce7" stroke="#10b981" stroke-width="3"/>
+  <text x="114" y="19" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">15 m</text>
+  <text x="114" y="148" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">15 m</text>
+  <text x="50" y="84" text-anchor="end" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">15 m</text>
+  <text x="178" y="84" text-anchor="start" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">15 m</text>
+</svg>
+  <ul class="options">
+    <li data-val="1">30 m</li>
+    <li data-val="2">45 m</li>
+    <li data-val="3">60 m</li>
+    <li data-val="4">225 m</li>
+  </ul>
+  <p class="explain">4 &times; 15 = 60 m. (225 is the area &mdash; that's 15 &times; 15.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["46"]
+description: Perimeter when only two sides are labelled
+hint:
+  - "Two sides show a '?' — but the shape is a rectangle."
+  - "In a rectangle, each '?' must match the side directly opposite it."
+  - "Fill in the two missing sides first, then add all four."
+explain: "The missing sides are 14 m and 9 m (opposites are equal): 14 + 9 + 14 + 9 = 46 m."
+whyWrong:
+  "23":
+    code: FORGOT_DOUBLE_PERIMETER
+    message: "23 m adds just 14 + 9 — the two '?' sides are still waiting to be counted."
+  "126":
+    code: AREA_FOR_PERIMETER
+    message: "126 is 14 × 9, the space inside — the question walks the edge instead."
+  "32":
+    code: FORMULA_ERROR
+    message: "32 m counts the 9 m side twice but one 14 m side never got added."
+solution:
+  - type: step
+    goal: Fill in the missing sides.
+    working: "? opposite 14 m → 14 m · ? opposite 9 m → 9 m"
+    reason: Opposite sides of a rectangle are always equal.
+  - type: step
+    goal: Add all four.
+    working: "14 + 9 + 14 + 9 = 46 m"
+  - type: takeaway
+    text: A rectangle never hides its sides for long — opposites match.
+  - type: verification
+    text: "2 × (14 + 9) = 2 × 23 = 46 — the shortcut lands in the same place."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Only two sides are labelled. In a rectangle, opposite sides are equal. What is the perimeter?</p>
+  <svg viewBox="0 0 260 150" width="100%" style="max-width:300px">
+    <rect x="45" y="35" width="170" height="80" rx="3" fill="#fef3c7" stroke="#f59e0b" stroke-width="3"/>
+    <text x="130" y="26" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">14 m</text>
+    <text x="130" y="132" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#9ca3af">?</text>
+    <text x="34" y="80" text-anchor="end" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">9 m</text>
+    <text x="226" y="80" text-anchor="start" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#9ca3af">?</text>
+  </svg>
+  <ul class="options">
+    <li data-val="46">46 m</li>
+    <li data-val="23">23 m</li>
+    <li data-val="126">126 m</li>
+    <li data-val="32">32 m</li>
+  </ul>
+  <p class="explain">The missing sides are 14 m and 9 m. Perimeter = 14 + 9 + 14 + 9 = 46 m. (23 m is only two sides; 126 m is the area.)</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["30","300"]
+description: Two-step working — perimeter first, then cost
+hint:
+  - "The first blank is a length in metres, not money."
+  - "Add all four sides of the pen for the first blank."
+  - "Then every one of those metres costs ₹10 — multiply for the second blank."
+explain: "Perimeter: 9 + 9 + 6 + 6 = 30 m. Cost: 30 × ₹10 = ₹300."
+solution:
+  - type: step
+    goal: Find the perimeter.
+    working: "9 + 9 + 6 + 6 = 30 m"
+    reason: The fence must travel along every side of the pen.
+  - type: step
+    goal: Turn metres into rupees.
+    working: "30 × ₹10 = ₹300"
+    reason: Each metre of fencing costs ₹10, and there are 30 of them.
+  - type: takeaway
+    text: "Cost problems are two steps: metres first, money second."
+  - type: verification
+    text: "₹300 buys exactly 30 one-metre pieces at ₹10 each — just enough to go around."
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Rohan is fencing this pen. Fencing costs &#8377;10 per metre. First the perimeter: [] m. Now the total cost: &#8377; [].</p>
+  <svg viewBox="0 0 277 140" width="100%" style="max-width:320px">
+  <rect x="54" y="28" width="170" height="80" rx="3" fill="#fce7f3" stroke="#e0529e" stroke-width="3"/>
+  <text x="138" y="19" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">9 m</text>
+  <text x="138" y="128" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">9 m</text>
+  <text x="40" y="74" text-anchor="end" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">6 m</text>
+  <text x="238" y="74" text-anchor="start" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">6 m</text>
+</svg>
+  <p class="explain">Perimeter = 9 + 6 + 9 + 6 = 30 m. Cost = 30 &times; &#8377;10 = &#8377;300.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["Add the 4 sides", "Get the perimeter", "× cost per metre", "Total cost"]
+low: first
+high: last
+description: Order the steps for finding a fencing cost
+hint:
+  - "Think about what you physically need to know before you can pay."
+  - "You cannot multiply by the rate until you know how many metres you are buying."
+  - "Sides make the perimeter; the perimeter meets the price; the price makes the total."
+explain: "Add the sides → that gives the perimeter → multiply by the cost per metre → total cost."
+solution:
+  - type: step
+    goal: Start with the shape.
+    working: "Add the 4 sides"
+    reason: The sides are the only thing the shape gives you directly.
+  - type: step
+    goal: Name what the adding produced.
+    working: "Get the perimeter"
+  - type: step
+    goal: Bring in the money.
+    working: "× cost per metre → Total cost"
+    reason: Only now do rupees enter — length always comes before price.
+  - type: takeaway
+    text: "Shape → length → money: the order never changes in a cost problem."
+  - type: verification
+    text: "Try it on the last pen: sides gave 30 m, and 30 × ₹10 gave ₹300 — same order."
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Put the steps in order to find the total cost of fencing.</p>
+  <ol class="order">
+    <li>× cost per metre</li>
+    <li>Total cost</li>
+    <li>Add the 4 sides</li>
+    <li>Get the perimeter</li>
+  </ol>
+  <p class="explain">Add the four sides &rarr; that gives the perimeter &rarr; multiply by the cost of one metre &rarr; that is the total cost.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2"]
+description: Lace around an 8 m by 5 m tablecloth at ₹20 per metre
+hint:
+  - "First find how many metres of lace go around the tablecloth."
+  - "The perimeter of the 8 by 5 rectangle is the lace length."
+  - "Then multiply that length by the ₹20 that each metre costs."
+explain: "Perimeter: 2 × (8 + 5) = 26 m. Cost: 26 × ₹20 = ₹520."
+whyWrong:
+  "1":
+    code: FORGOT_DOUBLE_PERIMETER
+    message: "₹260 pays for only 13 m — that is 8 + 5, half the lap around the cloth."
+  "3":
+    code: AREA_FOR_PERIMETER
+    message: "₹800 comes from 8 × 5 = 40 — the cloth's inside space — priced by the metre. Lace only runs along the edge."
+  "4":
+    code: WRONG_OP_ADD_FOR_MULT
+    message: "₹46 adds the 26 m to the ₹20 rate — but each of the 26 metres costs ₹20, so they multiply."
+solution:
+  - type: step
+    goal: Find the lace length.
+    working: "2 × (8 + 5) = 26 m"
+    reason: Lace follows the edge, so its length is the perimeter.
+  - type: step
+    goal: Price it.
+    working: "26 × ₹20 = ₹520"
+  - type: takeaway
+    text: Metres times rupees-per-metre gives rupees — the units even cancel like magic.
+  - type: verification
+    text: "Rough check: 26 m at about ₹20 is around 25 × 20 = ₹500 — ₹520 sits right there."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Meera is putting lace around this tablecloth. Lace costs &#8377;20 per metre. What is the total cost?</p>
+  <svg viewBox="0 0 277 140" width="100%" style="max-width:320px">
+  <rect x="54" y="28" width="170" height="80" rx="3" fill="#ede9fe" stroke="#7c3aed" stroke-width="3"/>
+  <text x="138" y="19" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">8 m</text>
+  <text x="138" y="128" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">8 m</text>
+  <text x="40" y="74" text-anchor="end" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">5 m</text>
+  <text x="238" y="74" text-anchor="start" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">5 m</text>
+</svg>
+  <ul class="options">
+    <li data-val="1">&#8377;260</li>
+    <li data-val="2">&#8377;520</li>
+    <li data-val="3">&#8377;800</li>
+    <li data-val="4">&#8377;46</li>
+  </ul>
+  <p class="explain">Perimeter = 26 m. Cost = 26 &times; &#8377;20 = &#8377;520. (&#8377;260 uses only half the sides; &#8377;800 is the area &times; 20.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1400"]
+description: Railing around a square 7 m terrace at ₹50 per metre
+hint:
+  - "Work out the total length of railing first."
+  - "A square terrace has four sides of 7 m each."
+  - "Multiply the railing length by ₹50 for each metre."
+explain: "Perimeter: 4 × 7 = 28 m. Cost: 28 × ₹50 = ₹1,400."
+whyWrong:
+  "350":
+    code: FORMULA_ERROR
+    message: "₹350 pays for one 7 m side only — the railing must wrap all four."
+  "2450":
+    code: AREA_FOR_PERIMETER
+    message: "₹2,450 prices 7 × 7 = 49 — the terrace floor — but railing runs along the edge, not across the floor."
+  "700":
+    code: FORMULA_ERROR
+    message: "₹700 covers 14 m — two sides — leaving half the terrace unrailed."
+solution:
+  - type: step
+    goal: Find the railing length.
+    working: "4 × 7 = 28 m"
+  - type: step
+    goal: Price it.
+    working: "28 × ₹50 = ₹1,400"
+    reason: Every metre costs ₹50, and there are 28 metres.
+  - type: takeaway
+    text: "Square jobs shortcut: 4 × side, then × rate."
+  - type: verification
+    text: "₹50 for each of 28 metres: 28 × 50 = half of 28 × 100 = ₹1,400 ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Kabir's square terrace has sides of 7 m. Railing costs &#8377;50 per metre. What is the total cost?</p>
+  <svg viewBox="0 0 207 160" width="100%" style="max-width:280px">
+  <rect x="54" y="28" width="100" height="100" rx="3" fill="#cffafe" stroke="#0891b2" stroke-width="3"/>
+  <text x="104" y="19" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">7 m</text>
+  <text x="104" y="148" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">7 m</text>
+  <text x="40" y="84" text-anchor="end" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">7 m</text>
+  <text x="168" y="84" text-anchor="start" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">7 m</text>
+</svg>
+  <ul class="options">
+    <li data-val="1400">&#8377;1,400</li>
+    <li data-val="350">&#8377;350</li>
+    <li data-val="2450">&#8377;2,450</li>
+    <li data-val="700">&#8377;700</li>
+  </ul>
+  <p class="explain">Perimeter = 4 &times; 7 = 28 m. Cost = 28 &times; &#8377;50 = &#8377;1,400. (&#8377;350 uses only one side; &#8377;2,450 uses the area.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2"]
+description: Find the mistake in a fencing-cost working
+hint:
+  - "Follow Ananya's working one step at a time."
+  - "Her multiplication step is fine — look harder at the adding step."
+  - "How many sides does a 12 m by 5 m plot have, and how many did she add?"
+explain: "She added only 12 + 5 — two sides. The plot has four: 2 × (12 + 5) = 34 m, so the fence costs ₹340."
+whyWrong:
+  "1":
+    code: AREA_FOR_PERIMETER
+    message: "12 × 5 would give the area — fencing needs the distance around, so adding sides was right; she just missed two of them."
+  "3":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "The price was used correctly — ₹10 per metre multiplied by the metres. The slip is earlier, in the metres."
+  "4":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "Her total only fences half the plot — a 12 by 5 rectangle needs 34 m of fence, not 17."
+solution:
+  - type: step
+    goal: Recompute the perimeter properly.
+    working: "2 × (12 + 5) = 34 m"
+    reason: A rectangle has four sides — each length appears twice.
+  - type: step
+    goal: Recompute the cost.
+    working: "34 × ₹10 = ₹340"
+  - type: step
+    goal: Name the slip.
+    working: "17 m only walks two of the four sides"
+  - type: takeaway
+    text: In cost workings, check the metres before checking the money.
+  - type: verification
+    text: "₹340 is exactly double Ananya's ₹170 — because she found exactly half the sides."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Ananya worked out the cost of fencing a 12 m by 5 m plot at &#8377;10 per metre. She wrote: &ldquo;12 + 5 = 17, so 17 &times; 10 = &#8377;170.&rdquo; What did she do wrong?</p>
+  <ul class="options">
+    <li data-val="1">She should have multiplied 12 &times; 5</li>
+    <li data-val="2">She only added two sides &mdash; a rectangle has four</li>
+    <li data-val="3">She used the wrong price</li>
+    <li data-val="4">Nothing &mdash; she is correct</li>
+  </ul>
+  <p class="explain">The perimeter is 12 + 5 + 12 + 5 = 34 m, so the real cost is 34 &times; &#8377;10 = &#8377;340. Ananya forgot the opposite sides.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["24"]
+description: Work backwards from ₹240 to the perimeter
+hint:
+  - "This one runs backwards — the money is known, the metres are not."
+  - "Every metre of fence swallowed ₹10 of the ₹240."
+  - "Ask how many tens fit into 240."
+explain: "Each metre costs ₹10, so ₹240 buys 240 ÷ 10 = 24 m — the garden's perimeter."
+whyWrong:
+  "240":
+    code: OPERAND_ECHO
+    message: "240 is the number of rupees, straight from the question — the metres are hiding inside it, ten rupees at a time."
+  "2400":
+    code: MULTIPLIED_NOT_DIVIDED
+    message: "This multiplies 240 by 10 — but the ₹240 must be shared into ₹10 pieces, one per metre."
+  "6":
+    code: MULTI_STEP_ERROR
+    message: "6 m would be one side of a 24 m square — the question stops at the whole perimeter."
+solution:
+  - type: step
+    goal: See the problem backwards.
+    working: "total ₹240 · each metre ₹10 · metres = ?"
+  - type: step
+    goal: Divide.
+    working: "240 ÷ 10 = 24 m"
+    reason: Sharing the total into ₹10 pieces counts the metres.
+  - type: takeaway
+    text: "Cost forwards is a multiply, so cost backwards is a divide."
+  - type: verification
+    text: "Forwards again: 24 m × ₹10 = ₹240 — the money matches."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya paid &#8377;240 to fence her garden. Fencing costs &#8377;10 per metre. What is the perimeter of her garden?</p>
+  <ul class="options">
+    <li data-val="24">24 m</li>
+    <li data-val="240">240 m</li>
+    <li data-val="2400">2,400 m</li>
+    <li data-val="6">6 m</li>
+  </ul>
+  <p class="explain">&#8377;240 &divide; &#8377;10 per metre = 24 metres of fencing. So the perimeter is 24 m. (6 m would be one side of a square, not the perimeter.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2"]
+description: From ₹400 total back to ONE side of a square plot
+hint:
+  - "Two backward steps this time — money to metres, then metres to one side."
+  - "First: how many metres did ₹400 buy at ₹20 each?"
+  - "Then remember those metres wrap around four equal sides."
+explain: "₹400 ÷ ₹20 = 20 m of fence; a square shares that as 20 ÷ 4 = 5 m per side."
+whyWrong:
+  "1":
+    code: DOUBLE_OR_HALF
+    message: "10 m splits the 20 m of fencing into two — but a square has four sides to share it."
+  "3":
+    code: PARTIAL_COMPUTATION
+    message: "20 m is the whole perimeter — the question keeps going, down to a single side."
+  "4":
+    code: MULTI_STEP_ERROR
+    message: "80 comes from multiplying 20 × 4 — but one side is the perimeter shared out, not stacked up."
+solution:
+  - type: step
+    goal: Money to metres.
+    working: "400 ÷ 20 = 20 m"
+    reason: Each ₹20 note pays for one metre.
+  - type: step
+    goal: Metres to one side.
+    working: "20 ÷ 4 = 5 m"
+    reason: A square's four sides share the perimeter equally.
+  - type: takeaway
+    text: Backwards problems undo one step at a time — money, then perimeter, then side.
+  - type: verification
+    text: "Forwards: 4 sides × 5 m = 20 m, and 20 × ₹20 = ₹400 ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Arjun spent &#8377;400 putting a fence around his square plot. Fencing costs &#8377;20 per metre. How long is ONE side of his plot?</p>
+  <ul class="options">
+    <li data-val="1">10 m</li>
+    <li data-val="2">5 m</li>
+    <li data-val="3">20 m</li>
+    <li data-val="4">80 m</li>
+  </ul>
+  <p class="explain">&#8377;400 &divide; &#8377;20 = 20 m of fencing (the perimeter). A square has 4 equal sides, so each side = 20 &divide; 4 = 5 m.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2"]
+description: Is ₹500 enough to fence a 16 m by 11 m patch?
+hint:
+  - "Find how many metres of fence the patch needs."
+  - "Price those metres at ₹10 each."
+  - "Compare what it costs with the ₹500 in Rohan's pocket."
+explain: "Perimeter: 2 × (16 + 11) = 54 m. Cost: 54 × ₹10 = ₹540 — that is ₹40 more than he has."
+whyWrong:
+  "1":
+    code: MULTI_STEP_ERROR
+    message: "₹100 left would mean the job costs ₹400 — only 40 m of fence. Walking this patch takes 54 m."
+  "3":
+    code: MULTI_STEP_ERROR
+    message: "Exactly ₹500 would mean exactly 50 m — but the patch's lap is 54 m, four metres longer."
+  "4":
+    code: MULTI_STEP_ERROR
+    message: "Needing ₹300 more would make the job ₹800 — that is 80 m of fencing, far more than this patch uses."
+solution:
+  - type: step
+    goal: Find the metres.
+    working: "2 × (16 + 11) = 54 m"
+  - type: step
+    goal: Find the cost.
+    working: "54 × ₹10 = ₹540"
+  - type: step
+    goal: Compare with the budget.
+    working: "₹540 − ₹500 = ₹40 short"
+  - type: takeaway
+    text: "Budget questions end with a comparison — cost against money in hand."
+  - type: verification
+    text: "₹500 buys exactly 50 m; the patch needs 54 m — 4 m × ₹10 = ₹40 more, matching the answer."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Rohan has &#8377;500. He wants to fence this vegetable patch at &#8377;10 per metre. Does he have enough?</p>
+  <svg viewBox="0 0 298 140" width="100%" style="max-width:320px">
+  <rect x="64" y="28" width="170" height="80" rx="3" fill="#dcfce7" stroke="#10b981" stroke-width="3"/>
+  <text x="149" y="19" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">16 m</text>
+  <text x="149" y="128" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">16 m</text>
+  <text x="50" y="74" text-anchor="end" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">11 m</text>
+  <text x="248" y="74" text-anchor="start" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">11 m</text>
+</svg>
+  <ul class="options">
+    <li data-val="1">Yes &mdash; and he will have &#8377;100 left</li>
+    <li data-val="2">No &mdash; he needs &#8377;40 more</li>
+    <li data-val="3">Yes &mdash; it costs exactly &#8377;500</li>
+    <li data-val="4">No &mdash; he needs &#8377;300 more</li>
+  </ul>
+  <p class="explain">Perimeter = 16 + 11 + 16 + 11 = 54 m. Cost = 54 &times; &#8377;10 = &#8377;540. He is &#8377;40 short.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1"]
+description: How much does the cheaper shop save on trim?
+hint:
+  - "The room is the same whichever shop she picks — so first find the trim length."
+  - "Work out what that length costs at each shop."
+  - "The saving is the gap between the two totals."
+explain: "Trim needed: 2 × (9 + 6) = 30 m. Shop A: ₹600, Shop B: ₹750 — choosing A saves ₹150."
+whyWrong:
+  "2":
+    code: PARTIAL_COMPUTATION
+    message: "₹5 is the gap between the two RATES — but Meera buys 30 metres, and every one of them saves ₹5."
+  "3":
+    code: PARTIAL_COMPUTATION
+    message: "₹600 is Shop A's whole bill, not the amount saved by choosing it."
+  "4":
+    code: PARTIAL_COMPUTATION
+    message: "₹750 is Shop B's whole bill — the question asks how much smaller A's bill is."
+solution:
+  - type: step
+    goal: Find the trim length.
+    working: "2 × (9 + 6) = 30 m"
+    reason: The room decides the metres; the shops only decide the price.
+  - type: step
+    goal: Price both shops.
+    working: "A: 30 × ₹20 = ₹600 · B: 30 × ₹25 = ₹750"
+  - type: step
+    goal: Find the saving.
+    working: "750 − 600 = ₹150"
+    reason: "Shortcut: ₹5 saved per metre × 30 m = ₹150."
+  - type: takeaway
+    text: A per-metre saving multiplies by every metre you buy.
+  - type: verification
+    text: "Both paths agree: subtracting totals gives ₹150, and 30 × ₹5 gives ₹150."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Meera needs trim for a 9 m by 6 m room. Shop A charges &#8377;20 per metre. Shop B charges &#8377;25 per metre. How much does she SAVE by choosing the cheaper shop?</p>
+  <ul class="options">
+    <li data-val="1">&#8377;150</li>
+    <li data-val="2">&#8377;5</li>
+    <li data-val="3">&#8377;600</li>
+    <li data-val="4">&#8377;750</li>
+  </ul>
+  <p class="explain">Perimeter = 30 m. Shop A: 30 &times; &#8377;20 = &#8377;600. Shop B: 30 &times; &#8377;25 = &#8377;750. She saves &#8377;750 &minus; &#8377;600 = &#8377;150.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["sq10","r12x8"]
+description: Select every plot that 50 m of fencing can afford
+hint:
+  - "₹500 at ₹10 per metre buys exactly 50 m — that is the fence you have."
+  - "Find each plot's perimeter, one at a time."
+  - "A plot fits the budget when its perimeter is 50 m or less."
+explain: "Square 10 m: 40 m ✓ · Square 14 m: 56 m ✗ · 12 by 8 rectangle: 40 m ✓ — two plots fit inside 50 m."
+whyWrong:
+  "sq14":
+    code: WRONG_NUMBER_PAIR
+    message: "A 14 m square needs 4 × 14 = 56 m of fencing — more than the 50 m his money buys."
+solution:
+  - type: step
+    goal: Fix the budget in metres.
+    working: "₹500 ÷ ₹10 = 50 m of fencing"
+  - type: step
+    goal: Find each perimeter.
+    working: "10 m square → 40 m · 14 m square → 56 m · 12 × 8 → 40 m"
+  - type: step
+    goal: Compare with 50 m.
+    working: "40 ✓ · 56 ✗ · 40 ✓"
+  - type: takeaway
+    text: Turning the money into metres first lets every plot be tested with one simple comparison.
+  - type: verification
+    text: "The two winners each leave 10 m of fencing spare; the 14 m square runs 6 m over."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Fencing costs &#8377;10 per metre. Kabir has &#8377;500, which buys 50 m of fencing. Select EVERY plot he can afford to fence.</p>
+  <ul class="options">
+    <li data-val="sq10">A square plot with 10 m sides</li>
+    <li data-val="sq14">A square plot with 14 m sides</li>
+    <li data-val="r12x8">A 12 m by 8 m rectangle</li>
+  </ul>
+  <p class="explain">Square 10 m: perimeter 40 m &#10003;. Square 14 m: perimeter 56 m &mdash; too big &#10007;. 12&times;8: perimeter 40 m &#10003;. He can afford the first and the third.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3"]
+description: Equal areas, different fencing costs
+hint:
+  - "The fence follows the edge, not the ground inside."
+  - "Find the distance around each garden separately."
+  - "Equal insides do not promise equal edges — compare the two laps."
+explain: "Garden A: 4 × 6 = 24 m. Garden B: 2 × (12 + 3) = 30 m. B's lap is longer, so B costs more to fence."
+whyWrong:
+  "1":
+    code: COMPARISON_REVERSED
+    message: "Garden A's lap is 24 m — shorter than B's 30 m, so A is the cheaper one to fence."
+  "2":
+    code: AREA_FOR_PERIMETER
+    message: "Equal areas only match the insides — the fences run around the edges, and those laps are 24 m and 30 m."
+  "4":
+    code: DATA_READING_ERROR
+    message: "You can tell — both gardens' sides are given, so both perimeters can be worked out and compared."
+solution:
+  - type: step
+    goal: Find each perimeter.
+    working: "A: 4 × 6 = 24 m · B: 2 × (12 + 3) = 30 m"
+    reason: Both cover 36 square metres inside, but their edges differ.
+  - type: step
+    goal: Compare the laps.
+    working: "30 m > 24 m → B needs more fence"
+  - type: takeaway
+    text: Long thin shapes spend more on fencing than square ones with the same area.
+  - type: verification
+    text: "At ₹10 per metre that is ₹300 versus ₹240 — a real ₹60 difference from the same-sized gardens."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Two gardens both cover 36 square metres. Garden A is 6 m by 6 m. Garden B is 12 m by 3 m. Fencing costs &#8377;10 per metre. Which costs MORE to fence?</p>
+  <ul class="options">
+    <li data-val="1">Garden A</li>
+    <li data-val="2">They cost the same &mdash; the areas are equal</li>
+    <li data-val="3">Garden B</li>
+    <li data-val="4">You cannot tell</li>
+  </ul>
+  <p class="explain">Garden A perimeter = 24 m &rarr; &#8377;240. Garden B perimeter = 30 m &rarr; &#8377;300. Same area, different perimeter! The long thin one costs more.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["8100"]
+description: Fence a 9 m by 16 m patch at ₹162 per metre
+hint:
+  - "Find the distance around the patch first."
+  - "The patch is a 9 by 16 rectangle — double the side-pair sum."
+  - "Then multiply the metres by the ₹162 each one costs."
+explain: "Perimeter: 2 × (9 + 16) = 50 m. Cost: 50 × ₹162 = ₹8,100."
+whyWrong:
+  "4050":
+    code: FORGOT_DOUBLE_PERIMETER
+    message: "₹4,050 pays for 25 m — that is 9 + 16, only half the lap around the patch."
+  "23328":
+    code: AREA_FOR_PERIMETER
+    message: "₹23,328 prices 9 × 16 = 144 — the patch's inside area — but fencing follows the boundary."
+  "4536":
+    code: FORMULA_ERROR
+    message: "₹4,536 pays for 28 m of fence — this patch's full lap is 50 m."
+solution:
+  - type: step
+    goal: Find the metres.
+    working: "2 × (9 + 16) = 2 × 25 = 50 m"
+  - type: step
+    goal: Price them.
+    working: "50 × ₹162 = ₹8,100"
+    reason: Multiplying by 50 is halving after multiplying by 100 — 162 × 100 = 16,200, halved is 8,100.
+  - type: takeaway
+    text: Big rates change nothing about the method — metres first, then money.
+  - type: verification
+    text: "Estimate: 50 × ₹160 ≈ ₹8,000 — the exact ₹8,100 sits right beside it."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Savannah's vegetable patch is 9 m wide and 16 m long. Fencing material costs &#8377;162 per metre. What is the total cost?</p>
+  <svg viewBox="0 0 277 140" width="100%" style="max-width:320px">
+  <rect x="54" y="28" width="170" height="80" rx="3" fill="#dbeafe" stroke="#4361EE" stroke-width="3"/>
+  <text x="138" y="19" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">16 m</text>
+  <text x="138" y="128" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">16 m</text>
+  <text x="40" y="74" text-anchor="end" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">9 m</text>
+  <text x="238" y="74" text-anchor="start" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">9 m</text>
+</svg>
+  <ul class="options">
+    <li data-val="8100">&#8377;8,100</li>
+    <li data-val="4050">&#8377;4,050</li>
+    <li data-val="23328">&#8377;23,328</li>
+    <li data-val="4536">&#8377;4,536</li>
+  </ul>
+  <p class="explain">Perimeter = 50 m. Cost = 50 &times; &#8377;162 = &#8377;8,100. (&#8377;4,050 uses only half the perimeter; &#8377;23,328 uses the area.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["7784"]
+description: Gold frame around a 1 m square portrait at ₹1,946 per metre
+hint:
+  - "The frame is dear, but how many metres of it does this portrait need?"
+  - "The portrait is a 1 m square — add up its four sides."
+  - "Then multiply that length by ₹1,946."
+explain: "Perimeter: 4 × 1 = 4 m. Cost: 4 × ₹1,946 = ₹7,784."
+whyWrong:
+  "1946":
+    code: FORMULA_ERROR
+    message: "₹1,946 frames a single 1 m side — the other three sides of the portrait are left bare."
+  "3892":
+    code: FORGOT_DOUBLE_PERIMETER
+    message: "₹3,892 covers 2 m of frame — the top and one side, say — but a square border needs all 4 m."
+  "5838":
+    code: FORMULA_ERROR
+    message: "₹5,838 is three sides' worth of frame — one edge of the portrait would still be missing."
+solution:
+  - type: step
+    goal: Find the frame length.
+    working: "4 × 1 = 4 m"
+    reason: Even a tiny square needs its whole boundary framed.
+  - type: step
+    goal: Price it.
+    working: "4 × ₹1,946 = ₹7,784"
+  - type: takeaway
+    text: An expensive rate makes careful metre-counting matter more, not less.
+  - type: verification
+    text: "Estimate: 4 × ₹2,000 = ₹8,000 — a little above the exact ₹7,784, as it should be."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A square portrait is 1 m wide and 1 m high. A gold frame costs &#8377;1,946 per metre. What is the total cost?</p>
+  <svg viewBox="0 0 207 160" width="100%" style="max-width:280px">
+  <rect x="54" y="28" width="100" height="100" rx="3" fill="#fef3c7" stroke="#f59e0b" stroke-width="3"/>
+  <text x="104" y="19" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">1 m</text>
+  <text x="104" y="148" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">1 m</text>
+  <text x="40" y="84" text-anchor="end" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">1 m</text>
+  <text x="168" y="84" text-anchor="start" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">1 m</text>
+</svg>
+  <ul class="options">
+    <li data-val="7784">&#8377;7,784</li>
+    <li data-val="1946">&#8377;1,946</li>
+    <li data-val="3892">&#8377;3,892</li>
+    <li data-val="5838">&#8377;5,838</li>
+  </ul>
+  <p class="explain">Perimeter = 4 &times; 1 = 4 m. Cost = 4 &times; &#8377;1,946 = &#8377;7,784. A small shape can still cost a lot! (Each wrong answer forgets one or more of the four sides.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2"]
+description: Double every side — what happens to the fencing cost?
+hint:
+  - "Find the perimeter of each pen before deciding anything."
+  - "Small pen: 6 by 4. Big pen: 12 by 8. Work out both laps."
+  - "Compare the two costs — how many times bigger is the big one?"
+explain: "Small pen: 2 × (6 + 4) = 20 m → ₹200. Big pen: 2 × (12 + 8) = 40 m → ₹400 — exactly twice as much."
+whyWrong:
+  "1":
+    code: FORMULA_ERROR
+    message: "The laps are 20 m and 40 m — doubling every side genuinely stretches the journey around."
+  "3":
+    code: AREA_FOR_PERIMETER
+    message: "Four times is what happens to the AREA (24 → 96 square metres) — the edge only doubles."
+  "4":
+    code: NEAR_MISS
+    message: "Three times would be 60 m of fence — the big pen's lap is 40 m, exactly double the 20."
+solution:
+  - type: step
+    goal: Find both perimeters.
+    working: "small: 2 × (6 + 4) = 20 m · big: 2 × (12 + 8) = 40 m"
+  - type: step
+    goal: Compare the costs.
+    working: "₹200 versus ₹400 — twice as much"
+    reason: Every side doubled, so the total journey around doubled too.
+  - type: takeaway
+    text: Doubling the sides doubles the perimeter — but quadruples the area. Edges and insides grow differently.
+  - type: verification
+    text: "40 ÷ 20 = 2 — the ratio of the laps really is 2, not 4."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Rohan's pen is 6 m by 4 m. He builds a second pen with every side DOUBLED: 12 m by 8 m. Fencing costs &#8377;10 per metre. The big pen costs...</p>
+  <ul class="options">
+    <li data-val="1">the same as the small pen</li>
+    <li data-val="2">exactly twice as much</li>
+    <li data-val="3">exactly four times as much</li>
+    <li data-val="4">exactly three times as much</li>
+  </ul>
+  <p class="explain">Small pen: 6 + 4 + 6 + 4 = 20 m &rarr; &#8377;200. Big pen: 12 + 8 + 12 + 8 = 40 m &rarr; &#8377;400. Double the sides, double the perimeter, double the cost. (It is the AREA that would go up four times &mdash; not the perimeter.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1"]
+description: Cost of fencing an L-shaped garden
+hint:
+  - "Put your finger on one corner and trace the whole edge back to the start."
+  - "Add every side your finger travels — the L-shape has six of them."
+  - "Then multiply the total metres by ₹10."
+explain: "All six sides: 10 + 5 + 4 + 3 + 6 + 8 = 36 m. Cost: 36 × ₹10 = ₹360."
+whyWrong:
+  "2":
+    code: FORMULA_ERROR
+    message: "₹300 pays for 30 m — one of the six sides slipped out of the addition."
+  "3":
+    code: FORMULA_ERROR
+    message: "₹260 covers only 26 m of the boundary — the 10 m side went missing from the lap."
+  "4":
+    code: FORMULA_ERROR
+    message: "₹680 pays for 68 m — nearly two laps. Some sides were counted twice."
+solution:
+  - type: step
+    goal: Trace the boundary.
+    working: "10 + 5 + 4 + 3 + 6 + 8 = 36 m"
+    reason: An L-shape has six sides, and a full lap touches each exactly once.
+  - type: step
+    goal: Price it.
+    working: "36 × ₹10 = ₹360"
+  - type: takeaway
+    text: Odd shapes change nothing — perimeter is still one full trip around, every side once.
+  - type: verification
+    text: "The long sides check out: 4 + 6 = 10 across and 5 + 3 = 8 up — the L closes properly, so 36 m is a true lap."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Meera's garden is L-shaped. She wants a fence all the way around it. Fencing costs &#8377;10 per metre. What is the total cost?</p>
+  <svg viewBox="0 0 260 210" width="100%" style="max-width:330px">
+    <polygon points="55,170 205,170 205,95 145,95 145,40 55,40" fill="#ede9fe" stroke="#7c3aed" stroke-width="3" stroke-linejoin="round"/>
+    <text x="130" y="194" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">10 m</text>
+    <text x="216" y="139" text-anchor="start" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">5 m</text>
+    <text x="175" y="116" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">4 m</text>
+    <text x="134" y="72" text-anchor="end" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">3 m</text>
+    <text x="100" y="30" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">6 m</text>
+    <text x="44" y="110" text-anchor="end" font-family="var(--fs, sans-serif)" font-size="18" font-weight="700" fill="#14213d">8 m</text>
+  </svg>
+  <ul class="options">
+    <li data-val="1">&#8377;360</li>
+    <li data-val="2">&#8377;300</li>
+    <li data-val="3">&#8377;260</li>
+    <li data-val="4">&#8377;680</li>
+  </ul>
+  <p class="explain">Walk right around the edge: 10 + 5 + 4 + 3 + 6 + 8 = 36 m. Cost = 36 &times; &#8377;10 = &#8377;360. (&#8377;300 forgets the two sides of the notch. &#8377;680 uses the area, not the perimeter.)</p>
+</div>
+
+</div>

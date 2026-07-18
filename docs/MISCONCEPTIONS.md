@@ -176,6 +176,21 @@ message         student-facing template. Describes the option, not the child.
 - **rule:** prompt asks area; `distractor == l + w` where `correct == l × w`
 - **message:** "This adds the sides — but area is about filling the inside, not walking the edge."
 
+### WRONG_MEASUREMENT_FOR_JOB
+- **concept:** perimeter/area applications (fencing, framing, carpeting)
+- **rule:** prompt asks which measurement a real-world job needs; distractor names a different measurement of the same shape (area for an edge job, height, a single side) than the one required.
+- **message:** "This measures something else about the shape — not the thing the job actually needs."
+
+### WRONG_ERROR_DIAGNOSIS
+- **concept:** error-analysis questions ("what did she do wrong?")
+- **rule:** prompt shows worked steps containing exactly one known error; distractor names an error the working does not contain, or claims the working is correct.
+- **message:** "That is not what went wrong here — compare each step of the working with what the problem really needs."
+
+### MULTIPLIED_NOT_DIVIDED
+- **concept:** division word problems, unit rates
+- **rule:** problem operation is division (correct == a ÷ b for problem operands a, b), but distractor == a × b.
+- **message:** "This multiplies the numbers when the problem asks you to divide."
+
 ### SIDE_SQUARED_FOR_RECT
 - **concept:** area, perimeter of squares
 - **rule:** prompt about square with side s; distractor uses wrong formula (e.g., area=4s instead of s², or perimeter=s² instead of 4s)

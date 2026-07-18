@@ -113,9 +113,10 @@ lesson's row links its document.
 | Type coverage (harness fixture) | 20 | `lessons/_type-coverage.html` | `review/_type-coverage.html` | — |
 | Understanding probability remix | 30 | `lessons/incoming/Understanding_probability_remix.html` | `review/Understanding_probability_remix.html` | — |
 | Unit prices remix | 27 | `lessons/incoming/Unit_prices_remix.html` | `review/Unit_prices_remix.html` | — |
+| Use perimeter to determine cost | 20 | `lessons/use_perimeter_to_determine_cost.html` | `review/use_perimeter_to_determine_cost.html` | `sources/Geometric Measurements-Use perimeter to determine cost(D).html` |
 | Word problems with extra or missing information | 24 | `lessons/incoming/Word problems with extra or missing information.html` | `review/Word problems with extra or missing information.html` | — |
 
-**Totals: 103 lessons, 2,708 questions.**
+**Totals: 104 lessons, 2,728 questions.**
 Matches the recorded 102 / 2,687 exactly (2,722 → 2,727 on 2026-07-18:
 BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`;
 104 / 2,727 → 102 / 2,687 per BRIEF-DUPLICATE-CULL, Venkat's ruling
