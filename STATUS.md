@@ -1,6 +1,6 @@
 # Project Status — Rao Academy
 
-Last updated: 2026-07-17
+Last updated: 2026-07-18
 
 ---
 
@@ -14,9 +14,11 @@ All tested in a real Chromium browser: build, render, grade correct, reject wron
 CSS containment, container queries, double-attach idempotency, type coverage (12/12), zero
 blank figures.
 
-The corpus lives in `lessons/` (4 authored lessons + `_type-coverage.html` fixture) and
-`lessons/incoming/` (105 imported from the Class 4 Word doc bank). `lessons/_preview/` is
-gitignored scratch.
+The corpus lives in `lessons/` (2 authored lessons + `_type-coverage.html` fixture) and
+`lessons/incoming/` (101 files, imported from the Class 4 Word doc bank). `lessons/_preview/`
+is gitignored scratch. **Every lesson has a matching `review/<name>.html`** (complete set
+generated 2026-07-18, commit `5eb6297`), plus `review/index.html` (plain alphabetical index)
+and `LESSONS-MANIFEST.md` at the root (one row per lesson, totals reconciled 104 / 2,722).
 
 ---
 
@@ -169,6 +171,13 @@ question. Reveal verified live for all 32: hidden before Check, correct →
 visible when legacy, suppressed (cc-hastake + takeaway panel) when the
 solution carries a takeaway.
 
+**7.7 — Robo production integration: DONE (2026-07-18).** (rao-master-18) Four
+pushed commits `4c8cbcd` (Brief 7.7: rig + facade + reaction ladder + layers 1–4 +
+verify-robo), `f7b372c` (7.7.1: yield landing clamps; Robo in review pages),
+`27cc376` (7.7.2: corpus-wide wrong-feedback fallback to forward hint rungs —
+2,707 silent-wrong questions healed with zero content edits), `d5818b1` (7.7.3:
+keypad touch-only). Full record: `docs/handoffs/HANDOFF-9.md`.
+
 Pre-existing bugs FOUND during 7.6, not yet fixed (need decisions):
 1. ~~Frontmatter `explain:` ignored~~ — FIXED as Brief 7.6.1 above.
 2. **`.opt.is-sel` out-specifies `.opt.is-correct`** in rao.css, so the green
@@ -194,26 +203,63 @@ Pre-existing bugs FOUND during 7.6, not yet fixed (need decisions):
 | `Simple fractions - what fraction does the shape show.html` | 30 | **fixed** | 48 SVGs missing width/height |
 | `find-start-and-end-times-remix.html` | 30 | **fixed** | Time normalizer engine bug |
 
-## Deploy state — rao-master-17
+## Deploy state — rao-master-18
 
-**Built and verified locally at `a0b372f` (2026-07-17). Deploy PENDING** —
-the app will live at https://www.tulipmath.com on AWS; the exact URL is still
-to be determined, so there is nothing to verify against yet. The complete
-engine drop (five engine files + fonts + a non-technical DEPLOY.md with the
-mount, load order, and md5/byte verification table) is in `deploy-drop/`.
+**Built and verified locally. Deploy PENDING** — the app will live at
+https://www.tulipmath.com on AWS; the exact URL is still to be determined, so
+there is nothing to verify against yet. The complete engine drop (eight engine
+files incl. `robo.js`/`robo.css` + fonts + a non-technical DEPLOY.md with the
+mount, load order, and md5/byte verification table) is in `deploy-drop/`,
+regenerated for rao-master-18 at `5b26bec` and re-verified md5-per-file
+(16/16 MATCH) in the 2026-07-18 health audit.
 
 **STANDING GATE — live verification is DEFERRED, not skipped:** the moment a
 real URL exists, `node tools/check-app.js <url>` must run against a live page
 showing a question and come back green (engine version, rao.css, rao-card.css,
 mount, fonts) before the deploy is considered done. No go-live without it.
 
+## Health audit — 2026-07-18
+
+Full read-only audit at `5eb6297`, archived verbatim in
+`docs/audits/AUDIT-2026-07-18.md`. **Verdict: healthy** — clean tree, engine
+rao-master-18, full suite green, totals re-derived through `build()` match
+104 / 2,722 exactly, deploy drop 16/16 md5-faithful. The two commits the audit
+flagged UNTRACED (`2515a4f` deploy-drop creation, `fb22f81` settings gitignore)
+were both ruled AUTHORIZED retroactively by Venkat, 2026-07-18 (recorded in the
+audit file). Executed briefs are now archived in `docs/briefs/` (see CLAUDE.md
+Working style) so future audits don't hit the deleted-brief wall.
+
+## KNOWN DEFECT — 7 missing figures (warn-level, awaiting an engine brief)
+
+Surfaced by the 2026-07-18 audit: 7 questions request a named figure via a
+`data-show` value the engine doesn't recognize, so the intended visual is
+silently absent (the questions still grade correctly):
+
+- `equal-groups` ×2 — `lessons/incoming/Division_facts_to_10.html` q1, q2
+- `sequence` ×5 — `lessons/incoming/number-patterns-word-problems-remix.html`
+  q2, q7, q12, q19, q24
+
+Awaiting an engine brief that will (a) implement both figure types and
+(b) promote unknown `data-show` from a warn to a build-failing error, so this
+class of silent gap cannot ship again.
+
 ## What is next
 
 - ~~Header ruling~~ — RULED 2026-07-17: "Solution — step by step" header KEPT
-- ~~Brief 7.6.1~~ — DONE 2026-07-17 (see above); commits local, awaiting
-  Venkat's audit + push order
-- Brief 7.7+: video walkthrough (Watch tab — structurally not precluded), Robo
+- ~~Brief 7.6.1~~ — DONE 2026-07-17, pushed
+- ~~Brief 7.7 (Robo)~~ — DONE 2026-07-18 (rao-master-18), pushed; see HANDOFF-9
+- ~~Review set~~ — DONE 2026-07-18: all 104 lessons have review pages + index +
+  manifest (`5eb6297`), pushed
+- ~~`(2)` duplicate files~~ — resolved earlier: the three duplicates were
+  deleted in the corpus cleanup (see HANDOFF-6; corpus 108 → 104 predates 7.6)
+- Brief 7.8: Robo personality pack, gaze, stage props, palette tint, poke
+  ladder, entrance (fenced out of 7.7 by design)
+- The 7 missing figures above — needs the engine brief
+- Rapid-mode stale green + no-lock (HANDOFF-8/9 open item; rapid has no
+  signed-off brief yet)
+- App wiring: load the drop per DEPLOY.md, set `RaoAccount.firstName`, then
+  the standing go-live gate (`check-app.js` against the real URL)
 - Continue individual review of remaining ~95 files
-- Duplicates to watch: `bar_graphs_1to1.html` / `bar_graphs_1to1 (2).html` and similar
-  `(2)` pairs — likely identical, need dedup
-- Content debt from 7.4: 3,989 distractors still lack whyWrong
+- Content debt from 7.4: 1,585 select questions (3,989 distractors) still lack
+  whyWrong; since 7.7.2 the child gets forward-rung feedback instead of
+  silence, but the authored misconception messages remain unwritten

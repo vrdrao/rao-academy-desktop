@@ -348,6 +348,8 @@ what ships.
 
 ## Working style
 
+- **Every executed brief file is committed to `docs/briefs/` as part of its own work's
+  commit. Briefs are archived, never deleted — the paper trail outranks a tidy tree.**
 - **Do NOT prefix Bash commands with `cd "/c/Users/…" &&`.** The shell is already in the
   working directory. The `cd && …` pattern triggers a security prompt every time and is
   unnecessary. Use bare commands: `git status`, `npm test`, etc.
