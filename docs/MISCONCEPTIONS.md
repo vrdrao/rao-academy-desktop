@@ -186,6 +186,11 @@ message         student-facing template. Describes the option, not the child.
 - **rule:** prompt shows worked steps containing exactly one known error; distractor names an error the working does not contain, or claims the working is correct.
 - **message:** "That is not what went wrong here — compare each step of the working with what the problem really needs."
 
+### WRONG_OPERATION_CHOSEN
+- **concept:** one-step word problems (choose the operation)
+- **rule:** for problem operands a, b with correct == a∘b, distractor == a∘'b for a different operation ∘' ∈ {+, −, ×, ÷} (or the distractor is that wrong operation itself in pick-the-operation questions).
+- **message:** "This answer uses a different operation than the story asks for — picture what is happening to the amounts."
+
 ### MULTIPLIED_NOT_DIVIDED
 - **concept:** division word problems, unit rates
 - **rule:** problem operation is division (correct == a ÷ b for problem operands a, b), but distractor == a × b.

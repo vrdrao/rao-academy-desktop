@@ -1,0 +1,1129 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["4 × 7 = 28"]
+description: Read the array as a number sentence
+hint:
+  - "Count the rows first."
+  - "Now count the dots in just one row."
+  - "Rows times dots-per-row names the array."
+explain: "The array shows 4 rows of 7 dots: 4 × 7 = 28."
+whyWrong:
+  "4 + 7 = 11":
+    code: WRONG_OP_ADD_FOR_MULT
+    message: "4 + 7 counts one row and one column — the array holds 4 whole rows of 7."
+  "4 × 4 = 16":
+    code: DATA_READING_ERROR
+    message: "This uses the row count twice — each row holds 7 dots, not 4."
+  "7 × 7 = 49":
+    code: DATA_READING_ERROR
+    message: "This uses the row length twice — there are only 4 rows."
+solution:
+  - type: step
+    goal: Count the rows.
+    working: "4"
+  - type: step
+    goal: Count one row's dots.
+    working: "7"
+  - type: step
+    goal: Multiply.
+    working: "4 × 7 = 28"
+  - type: takeaway
+    text: An array is multiplication drawn out — rows times row-size.
+  - type: verification
+    text: Count the dots one by one if you like — all 28 are there.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which number sentence matches this array of dots?</p>
+  <svg viewBox="0 0 260 150" width="260" height="150" preserveAspectRatio="xMidYMid meet" role="img" aria-label="An array of dots arranged in 4 rows with 7 dots in each row." xmlns="http://www.w3.org/2000/svg">
+    <g fill="#7b5cff">
+      <circle cx="30" cy="25" r="11"/><circle cx="65" cy="25" r="11"/><circle cx="100" cy="25" r="11"/><circle cx="135" cy="25" r="11"/><circle cx="170" cy="25" r="11"/><circle cx="205" cy="25" r="11"/><circle cx="240" cy="25" r="11"/>
+      <circle cx="30" cy="60" r="11"/><circle cx="65" cy="60" r="11"/><circle cx="100" cy="60" r="11"/><circle cx="135" cy="60" r="11"/><circle cx="170" cy="60" r="11"/><circle cx="205" cy="60" r="11"/><circle cx="240" cy="60" r="11"/>
+      <circle cx="30" cy="95" r="11"/><circle cx="65" cy="95" r="11"/><circle cx="100" cy="95" r="11"/><circle cx="135" cy="95" r="11"/><circle cx="170" cy="95" r="11"/><circle cx="205" cy="95" r="11"/><circle cx="240" cy="95" r="11"/>
+      <circle cx="30" cy="130" r="11"/><circle cx="65" cy="130" r="11"/><circle cx="100" cy="130" r="11"/><circle cx="135" cy="130" r="11"/><circle cx="170" cy="130" r="11"/><circle cx="205" cy="130" r="11"/><circle cx="240" cy="130" r="11"/>
+    </g>
+  </svg>
+  <ul class="options">
+    <li data-val="4 + 7 = 11">4 + 7 = 11</li>
+    <li data-val="4 × 4 = 16">4 × 4 = 16</li>
+    <li data-val="4 × 7 = 28">4 × 7 = 28</li>
+    <li data-val="7 × 7 = 49">7 × 7 = 49</li>
+  </ul>
+  <p class="explain">There are 4 rows with 7 dots in each row. Equal rows means multiply: 4 × 7 = 28 dots.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["×"]
+description: Pick the operation — equal groups
+hint:
+  - "Picture the wheel: 8 gondolas, 6 people in each."
+  - "Equal groups repeated is a signal."
+  - "Which operation totals equal groups?"
+explain: "8 equal gondolas of 6 people — equal groups total by multiplying: 8 × 6."
+whyWrong:
+  "+":
+    code: WRONG_OPERATION_CHOSEN
+    message: "8 + 6 counts one gondola and its riders once — the 6 riders repeat 8 times."
+  "−":
+    code: WRONG_OPERATION_CHOSEN
+    message: "Nothing is being taken away — the gondolas all fill up together."
+  "÷":
+    code: WRONG_OPERATION_CHOSEN
+    message: "Nothing is being shared out — the equal groups pile up, so they multiply."
+solution:
+  - type: step
+    goal: Spot the structure.
+    working: "8 equal groups of 6"
+  - type: step
+    goal: Choose the operation.
+    working: "equal groups → multiply"
+  - type: takeaway
+    text: 'Each' plus a count of groups is multiplication's calling card.
+  - type: verification
+    text: 8 × 6 = 48 riders — a sensible full wheel.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A Ferris wheel has 8 gondolas. Each gondola holds 6 people. Which operation finds how many people ride at once?</p>
+  <ul class="options">
+    <li data-val="+">8 + 6</li>
+    <li data-val="−">8 − 6</li>
+    <li data-val="×">8 × 6</li>
+    <li data-val="÷">8 ÷ 6</li>
+  </ul>
+  <p class="explain">8 equal groups of 6 → multiply. 8 × 6 = 48 people.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["12"]
+description: Share 96 cupcakes into 8 boxes
+hint:
+  - "The 96 breaks into 8 equal piles."
+  - "Each pile must be much smaller than 96."
+  - "How many 8s make 96?"
+explain: "96 ÷ 8 = 12 cupcakes per box."
+whyWrong:
+  "8":
+    code: DIVISOR_AS_ANSWER
+    message: "8 is the number of boxes — the question wants how many cupcakes land in each."
+  "88":
+    code: WRONG_OPERATION_CHOSEN
+    message: "88 subtracts the boxes from the cupcakes — packing equally is a division."
+  "104":
+    code: WRONG_OPERATION_CHOSEN
+    message: "104 adds boxes to cupcakes — sharing splits the total, it never grows it."
+solution:
+  - type: step
+    goal: Choose the operation.
+    working: "equal packing → divide"
+  - type: step
+    goal: Divide.
+    working: "96 ÷ 8 = 12"
+  - type: takeaway
+    text: 'Packed equally' is division's signal phrase.
+  - type: verification
+    text: 8 boxes × 12 cupcakes = 96 — the batch fits exactly.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A bakery makes 96 cupcakes and packs them equally into 8 boxes. How many cupcakes are in each box?</p>
+  <ul class="options">
+    <li data-val="8">8</li>
+    <li data-val="12">12</li>
+    <li data-val="88">88</li>
+    <li data-val="104">104</li>
+  </ul>
+  <p class="explain">96 ÷ 8 = 12. (88 subtracts instead of dividing; 104 adds.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["623"]
+description: Total books in the library
+hint:
+  - "'In all' joins the two shelves of numbers."
+  - "Line the numbers up by place value."
+  - "Watch the ones column — 8 + 5 spills past 9."
+explain: "348 + 275 = 623 — the ones and tens both carry."
+whyWrong:
+  "73":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "73 is the difference between the collections — 'in all' joins them instead."
+  "513":
+    code: CARRY_DROPPED
+    message: "A carry went missing on the way — 348 + 275 climbs to 623."
+  "613":
+    code: CARRY_DROPPED
+    message: "Ten short — the ones column's carry (8 + 5 = 13) must reach the tens."
+solution:
+  - type: step
+    goal: Choose the operation.
+    working: "'how many in all' → add"
+  - type: step
+    goal: Add with carries.
+    working: "348 + 275 = 623"
+    reason: 8+5=13 and 4+7+1=12 — two carries travel left.
+  - type: takeaway
+    text: 'In all' and 'altogether' are addition's signal words.
+  - type: verification
+    text: Estimate: 350 + 275 = 625 — the exact 623 sits right there.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A library has 348 fiction books and 275 non-fiction books. How many books are there in all?</p>
+  <ul class="options">
+    <li data-val="73">73</li>
+    <li data-val="513">513</li>
+    <li data-val="613">613</li>
+    <li data-val="623">623</li>
+  </ul>
+  <p class="explain">348 + 275 = 623. (513 forgets both carries; 613 forgets the carry from the tens; 73 subtracts.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["215"]
+description: Read the bar model — missing part
+hint:
+  - "The bar's two parts must fill the 500 exactly."
+  - "One part (285) is known."
+  - "Whole minus the known part gives the missing part."
+explain: "500 − 285 = 215 unripe mangoes."
+whyWrong:
+  "185":
+    code: BORROW_ERROR
+    message: "A borrow slipped — 500 − 285 leaves 215, not 185."
+  "225":
+    code: BORROW_ERROR
+    message: "Ten too many — check the tens column's borrow."
+  "785":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "785 adds the part to the whole — a part can never outgrow its bar."
+solution:
+  - type: step
+    goal: Read the bar.
+    working: "whole 500 · known part 285"
+  - type: step
+    goal: Subtract.
+    working: "500 − 285 = 215"
+  - type: takeaway
+    text: A bar model turns stories into whole-and-parts pictures — missing part = whole − known part.
+  - type: verification
+    text: 215 + 285 = 500 — the two parts rebuild the bar.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">The bar shows 500 mangoes in total. 285 of them are ripe. How many mangoes are unripe?</p>
+  <svg viewBox="0 0 320 200" width="320" height="200" preserveAspectRatio="xMidYMid meet" role="img" aria-label="A bar showing 500 mangoes in total, split into a ripe part of 285 and an unknown unripe part." xmlns="http://www.w3.org/2000/svg">
+    <text x="160" y="24" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="21" font-weight="700" fill="#2c2150">500 mangoes in total</text>
+    <line x1="14" y1="38" x2="14" y2="52" stroke="#8a7bbd" stroke-width="2.5"/>
+    <line x1="306" y1="38" x2="306" y2="52" stroke="#8a7bbd" stroke-width="2.5"/>
+    <line x1="14" y1="45" x2="306" y2="45" stroke="#8a7bbd" stroke-width="2.5"/>
+    <rect x="14" y="66" width="167" height="70" rx="8" fill="#7b5cff"/>
+    <rect x="181" y="66" width="125" height="70" rx="8" fill="#f2ecfd" stroke="#7b5cff" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <text x="97" y="110" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="27" font-weight="700" fill="#ffffff">285</text>
+    <text x="243" y="112" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="32" font-weight="700" fill="#7b5cff">?</text>
+    <text x="97" y="164" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="19" font-weight="600" fill="#6b5b9a">ripe</text>
+    <text x="243" y="164" text-anchor="middle" font-family="var(--fs, sans-serif)" font-size="19" font-weight="600" fill="#6b5b9a">unripe</text>
+  </svg>
+  <ul class="options">
+    <li data-val="185">185</li>
+    <li data-val="215">215</li>
+    <li data-val="225">225</li>
+    <li data-val="785">785</li>
+  </ul>
+  <p class="explain">The whole minus the part you know: 500 − 285 = 215 unripe mangoes. (785 adds the part to the whole; 225 takes the smaller digit from the bigger one in each column.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["264"]
+description: Empty seats in the theater
+hint:
+  - "Every seat is filled or empty — no third kind."
+  - "Total seats and filled seats are both given."
+  - "The empty ones are what remains."
+explain: "420 − 156 = 264 empty seats."
+whyWrong:
+  "336":
+    code: BORROW_ERROR
+    message: "This subtracts each column smaller-from-bigger — honest borrowing gives 264."
+  "374":
+    code: NEAR_MISS
+    message: "Check each column again — 420 − 156 lands on 264."
+  "576":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "576 adds the filled seats — they must come OUT of the total."
+solution:
+  - type: step
+    goal: Choose the operation.
+    working: "empty = total − filled"
+  - type: step
+    goal: Subtract.
+    working: "420 − 156 = 264"
+    reason: The ones borrow: 10 − 6 = 4, then 11 − 5 = 6.
+  - type: takeaway
+    text: Complement stories — filled/empty, sold/left — are subtractions.
+  - type: verification
+    text: 264 empty + 156 filled = 420 seats ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A theater has 420 seats. During a show, 156 seats are filled. How many seats are empty?</p>
+  <ul class="options">
+    <li data-val="264">264</li>
+    <li data-val="336">336</li>
+    <li data-val="374">374</li>
+    <li data-val="576">576</li>
+  </ul>
+  <p class="explain">420 − 156 = 264. (336 takes the smaller digit from the bigger one in each column instead of regrouping; 576 adds.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["×"]
+description: Pick the operation — rows of plants
+hint:
+  - "12 rows, each with the same 15 plants."
+  - "Equal rows repeated — what totals them?"
+  - "Would 12 + 15 even come close to every plant?"
+explain: "12 equal rows of 15 multiply: 12 × 15."
+whyWrong:
+  "+":
+    code: WRONG_OPERATION_CHOSEN
+    message: "12 + 15 = 27 — barely two rows' worth; the 15 repeats 12 times."
+  "−":
+    code: WRONG_OPERATION_CHOSEN
+    message: "Nothing is removed from the garden — the rows stack up."
+  "÷":
+    code: WRONG_OPERATION_CHOSEN
+    message: "Nothing is being split — the rows are being totalled, so they multiply."
+solution:
+  - type: step
+    goal: Spot the structure.
+    working: "12 equal groups of 15"
+  - type: step
+    goal: Choose.
+    working: "equal groups → ×"
+  - type: takeaway
+    text: Rows-of stories are arrays in the soil — multiplication.
+  - type: verification
+    text: 12 × 15 = 180 plants — 27 could never cover a whole garden.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A garden has 12 rows of plants with 15 plants in each row. Which operation finds the total number of plants?</p>
+  <ul class="options">
+    <li data-val="+">12 + 15</li>
+    <li data-val="−">15 − 12</li>
+    <li data-val="×">12 × 15</li>
+    <li data-val="÷">15 ÷ 12</li>
+  </ul>
+  <p class="explain">12 equal rows of 15 → multiply. 12 × 15 = 180 plants.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["24"]
+description: Share candy among 6 friends
+hint:
+  - "144 pieces deal out into 6 equal shares."
+  - "Each share is far smaller than 144."
+  - "How many 6s make 144?"
+explain: "144 ÷ 6 = 24 pieces each."
+whyWrong:
+  "138":
+    code: WRONG_OPERATION_CHOSEN
+    message: "138 subtracts the friends from the candy — sharing divides."
+  "150":
+    code: WRONG_OPERATION_CHOSEN
+    message: "150 adds friends to candy — a share must be smaller than the pile."
+  "864":
+    code: MULTIPLIED_NOT_DIVIDED
+    message: "864 multiplies — six friends sharing cannot each get MORE than the whole bag."
+solution:
+  - type: step
+    goal: Choose the operation.
+    working: "'shared equally' → divide"
+  - type: step
+    goal: Divide.
+    working: "144 ÷ 6 = 24"
+    reason: 6 × 24 = 144 — the times-table read backwards.
+  - type: takeaway
+    text: A share is always smaller than the pile — if it grew, the operation is wrong.
+  - type: verification
+    text: 6 friends × 24 pieces = 144 — every piece accounted for.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">There are 144 pieces of candy shared equally among 6 friends. How many pieces does each friend get?</p>
+  <ul class="options">
+    <li data-val="24">24</li>
+    <li data-val="138">138</li>
+    <li data-val="150">150</li>
+    <li data-val="864">864</li>
+  </ul>
+  <p class="explain">144 ÷ 6 = 24. (138 subtracts; 150 adds; 864 multiplies.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["312"]
+description: Three kinds of animals in total
+hint:
+  - "Three kinds of animal — so three numbers join the sum."
+  - "Do not stop after adding two."
+  - "Add carefully, carrying where columns pass 9."
+explain: "156 + 89 + 67 = 312 animals."
+whyWrong:
+  "192":
+    code: NEAR_MISS
+    message: "Some animals went uncounted — all three numbers belong in the sum, totalling 312."
+  "223":
+    code: PARTIAL_COMPUTATION
+    message: "223 is birds + reptiles only — the 89 mammals are missing."
+  "245":
+    code: PARTIAL_COMPUTATION
+    message: "245 is birds + mammals only — the 67 reptiles are missing."
+solution:
+  - type: step
+    goal: Gather all three counts.
+    working: "156, 89, 67"
+  - type: step
+    goal: Add them all.
+    working: "156 + 89 = 245 · 245 + 67 = 312"
+  - type: takeaway
+    text: Count the quantities in the story before adding — every kind gets a seat in the sum.
+  - type: verification
+    text: Estimate: 160 + 90 + 70 = 320 — the exact 312 sits just under.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A zoo has 156 birds, 89 mammals, and 67 reptiles. How many animals are there in total?</p>
+  <ul class="options">
+    <li data-val="192">192</li>
+    <li data-val="223">223</li>
+    <li data-val="245">245</li>
+    <li data-val="312">312</li>
+  </ul>
+  <p class="explain">156 + 89 + 67 = 312. (245 leaves out the reptiles; 223 leaves out the mammals; 192 forgets to carry.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["265"]
+description: Marbles left — subtracting across zeros
+hint:
+  - "Giving away makes the pile shrink."
+  - "The ones column reads 0 − 5 — impossible as it stands."
+  - "The 500 must be regrouped before the columns work."
+explain: "500 − 235 = 265 marbles left."
+whyWrong:
+  "275":
+    code: BORROW_ERROR
+    message: "Ten too many — after the zeros are rebuilt, the tens read 9 − 3 = 6."
+  "335":
+    code: BORROW_ERROR
+    message: "This flips columns to dodge the zeros — real regrouping of 500 gives 265."
+  "735":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "735 adds the gift back on — given marbles leave the pile."
+solution:
+  - type: step
+    goal: Regroup the 500.
+    working: "5 hundreds → 4 hundreds, 9 tens, 10 ones"
+  - type: step
+    goal: Subtract.
+    working: "10−5 = 5 · 9−3 = 6 · 4−2 = 2 → 265"
+  - type: takeaway
+    text: Zeros borrow in a chain — the hundreds lend to the tens so the tens can lend to the ones.
+  - type: verification
+    text: 265 + 235 = 500 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Sam has 500 marbles. He gives 235 marbles to his friend. How many marbles does Sam have left?</p>
+  <ul class="options">
+    <li data-val="265">265</li>
+    <li data-val="275">275</li>
+    <li data-val="335">335</li>
+    <li data-val="735">735</li>
+  </ul>
+  <p class="explain">500 − 235 = 265. (335 takes the smaller digit from the bigger one in each column instead of regrouping; 735 adds.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["216"]
+description: Books on 9 shelves of 24
+hint:
+  - "9 equal shelves of 24 books — multiply."
+  - "Split 24 into 20 and 4."
+  - "9 × 20 and 9 × 4, then join the pieces."
+explain: "9 × 24 = 180 + 36 = 216 books."
+whyWrong:
+  "33":
+    code: WRONG_OP_ADD_FOR_MULT
+    message: "33 is 9 + 24 — nine whole shelves hold far more."
+  "180":
+    code: PARTIAL_COMPUTATION
+    message: "180 is 9 × 20 — the 9 × 4 piece (36) is still on the shelf."
+  "186":
+    code: NEAR_MISS
+    message: "Close — but 9 × 24 = 180 + 36, and 186 only added 6 of the 36."
+solution:
+  - type: step
+    goal: Split the 24.
+    working: "20 and 4"
+  - type: step
+    goal: Multiply and join.
+    working: "9×20 = 180 · 9×4 = 36 · 180 + 36 = 216"
+  - type: takeaway
+    text: Break-apart makes big products from friendly pieces.
+  - type: verification
+    text: Estimate: 9 × 25 = 225 — a shade above the exact 216, as dropping the 1 predicts.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A bookshelf has 9 shelves. Each shelf holds 24 books. How many books can the bookshelf hold?</p>
+  <ul class="options">
+    <li data-val="33">33</li>
+    <li data-val="180">180</li>
+    <li data-val="186">186</li>
+    <li data-val="216">216</li>
+  </ul>
+  <p class="explain">9 × 24 = 216. (33 adds; 180 is only 9 × 20 and forgets the 4 ones; 186 forgets to carry the 3.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["67"]
+description: Passengers still on the bus
+hint:
+  - "Getting off shrinks the load — subtract."
+  - "Ones: 5 − 8 will not go; tens: 4 − 7 will not go."
+  - "Both columns must borrow."
+explain: "245 − 178 = 67 passengers still aboard."
+whyWrong:
+  "77":
+    code: BORROW_ERROR
+    message: "Ten over — after the ones borrow, the tens read 13 − 7 = 6, not 7."
+  "133":
+    code: BORROW_ERROR
+    message: "This takes smaller-from-bigger in every column — honest borrowing leaves 67."
+  "423":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "423 adds the leavers back on — passengers who got off are gone."
+solution:
+  - type: step
+    goal: Set up the subtraction.
+    working: "245 − 178"
+  - type: step
+    goal: Borrow twice.
+    working: "15−8 = 7 · 13−7 = 6 · 1−1 = 0 → 67"
+  - type: takeaway
+    text: Two shortfall columns mean two borrows — each one honest.
+  - type: verification
+    text: 67 + 178 = 245 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A bus has 245 passengers. At a stop, 178 passengers get off. How many passengers are still on the bus?</p>
+  <ul class="options">
+    <li data-val="67">67</li>
+    <li data-val="77">77</li>
+    <li data-val="133">133</li>
+    <li data-val="423">423</li>
+  </ul>
+  <p class="explain">245 − 178 = 67. (133 takes the smaller digit from the bigger one in each column; 423 adds.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2140"]
+description: Tickets over two days
+hint:
+  - "Two days' sales join into one total."
+  - "Line up the place values."
+  - "Carry whenever a column passes 9."
+explain: "1,250 + 890 = 2,140 tickets."
+whyWrong:
+  "360":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "360 is the difference between the days — 'in all' joins them."
+  "1040":
+    code: DROP_LEADING_DIGIT
+    message: "This adds 890 to just 150 — the 1,000 at the front of 1,250 was dropped."
+  "2040":
+    code: CARRY_DROPPED
+    message: "A hundred went missing — 250 + 890 carries into the thousands."
+solution:
+  - type: step
+    goal: Choose the operation.
+    working: "two days 'in all' → add"
+  - type: step
+    goal: Add with carries.
+    working: "1,250 + 890 = 2,140"
+  - type: takeaway
+    text: Keep every digit of the bigger number — leading digits carry the most value.
+  - type: verification
+    text: Estimate: 1,250 + 900 = 2,150 — the exact 2,140 is right beside it.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A concert sold 1250 tickets on the first day and 890 tickets on the second day. How many tickets were sold in all?</p>
+  <ul class="options">
+    <li data-val="360">360</li>
+    <li data-val="1040">1040</li>
+    <li data-val="2040">2040</li>
+    <li data-val="2140">2140</li>
+  </ul>
+  <p class="explain">1250 + 890 = 2140. (2040 drops the carry from the tens; 1040 drops every carry; 360 subtracts.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["900"]
+description: Items made in a day
+hint:
+  - "25 boxes, 36 items in each — equal groups."
+  - "Split 36 into 30 and 6."
+  - "25 × 30 and 25 × 6, then add — the tens piece is the big one."
+explain: "25 × 36 = 750 + 150 = 900 items."
+whyWrong:
+  "61":
+    code: WRONG_OP_ADD_FOR_MULT
+    message: "61 is 25 + 36 — twenty-five whole boxes hold far more."
+  "150":
+    code: PARTIAL_COMPUTATION
+    message: "150 is 25 × 6 — the 25 × 30 piece (750) is missing."
+  "225":
+    code: PLACE_SHIFT_IN_EXPRESSION
+    message: "225 is 25 × 9 — the 3 and 6 of 36 were added into 9 instead of keeping their places."
+solution:
+  - type: step
+    goal: Split the 36.
+    working: "30 and 6"
+  - type: step
+    goal: Multiply and join.
+    working: "25×30 = 750 · 25×6 = 150 · 750 + 150 = 900"
+  - type: takeaway
+    text: In a split, each digit keeps its place value — the 3 of 36 is thirty.
+  - type: verification
+    text: Estimate: 25 × 36 ≈ 25 × 40 = 1,000 — 900 sits sensibly below.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A factory makes 25 boxes each day. Each box has 36 items. How many items does the factory make in a day?</p>
+  <ul class="options">
+    <li data-val="61">61</li>
+    <li data-val="150">150</li>
+    <li data-val="225">225</li>
+    <li data-val="900">900</li>
+  </ul>
+  <p class="explain">25 × 36 = 900. (150 is only 25 × 6; 225 forgets to shift the second row before adding; 61 adds.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["8"]
+description: Missing factor — how many gondolas?
+hint:
+  - "The total and the group size are known; the group COUNT is missing."
+  - "☐ × 6 = 48."
+  - "Count up in sixes to 48."
+explain: "48 ÷ 6 = 8 gondolas."
+whyWrong:
+  "42":
+    code: WRONG_OPERATION_CHOSEN
+    message: "42 subtracts — the story asks how many 6s build the 48."
+  "54":
+    code: WRONG_OPERATION_CHOSEN
+    message: "54 adds — the gondola count comes from splitting 48 into 6s."
+  "288":
+    code: MULTIPLIED_NOT_DIVIDED
+    message: "288 multiplies 48 by 6 — but 48 is already the finished total."
+solution:
+  - type: step
+    goal: Write the missing-factor sentence.
+    working: "☐ × 6 = 48"
+  - type: step
+    goal: Divide to find it.
+    working: "48 ÷ 6 = 8"
+  - type: takeaway
+    text: When the total is known and a factor is missing, division finds it.
+  - type: verification
+    text: 8 gondolas × 6 people = 48 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A Ferris wheel carries 48 people when every gondola is full. Each gondola holds 6 people. How many gondolas does it have?</p>
+  <ul class="options">
+    <li data-val="8">8</li>
+    <li data-val="42">42</li>
+    <li data-val="54">54</li>
+    <li data-val="288">288</li>
+  </ul>
+  <p class="explain">☐ × 6 = 48, and 48 ÷ 6 = 8 gondolas. (42 subtracts; 54 adds; 288 multiplies.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["63"]
+description: Working backwards from equal shares
+hint:
+  - "The marbles were split into 7 shares of 9."
+  - "Collecting shares back up is multiplying."
+  - "The starting pile must dwarf a single share."
+explain: "7 × 9 = 63 marbles to start with."
+whyWrong:
+  "16":
+    code: WRONG_OPERATION_CHOSEN
+    message: "16 adds 7 + 9 — seven full shares of nine make far more."
+  "54":
+    code: ADJACENT_TABLE_FACT
+    message: "54 is 6 × 9 — one friend's share short."
+  "72":
+    code: ADJACENT_TABLE_FACT
+    message: "72 is 8 × 9 — one share too many."
+solution:
+  - type: step
+    goal: See the story backwards.
+    working: "7 shares × 9 each"
+  - type: step
+    goal: Multiply.
+    working: "7 × 9 = 63"
+  - type: takeaway
+    text: Sharing forwards divides — rebuilding the pile multiplies.
+  - type: verification
+    text: 63 ÷ 7 = 9 with none left — exactly the story told.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Rohan shared his marbles equally among 7 friends. Each friend got 9 marbles, and none were left over. How many marbles did Rohan start with?</p>
+  <ul class="options">
+    <li data-val="16">16</li>
+    <li data-val="54">54</li>
+    <li data-val="63">63</li>
+    <li data-val="72">72</li>
+  </ul>
+  <p class="explain">7 groups of 9 → 7 × 9 = 63 marbles. (16 adds 7 + 9; 54 is 6 × 9 and 72 is 8 × 9 — both count the wrong number of friends.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["23"]
+description: Use the given fact to divide
+hint:
+  - "The fact 23 × 8 = 184 is handed to you."
+  - "Division undoes multiplication."
+  - "184 ÷ 8 asks which number times 8 makes 184 — read the fact."
+explain: "Since 23 × 8 = 184, dividing back gives 184 ÷ 8 = 23."
+whyWrong:
+  "8":
+    code: DIVISOR_AS_ANSWER
+    message: "8 is the divisor — the fact says it is the OTHER factor, 23, that pairs with it."
+  "176":
+    code: WRONG_OP_SUB_FOR_DIV
+    message: "176 subtracts 8 — division asks how many 8s live inside 184."
+  "192":
+    code: WRONG_OPERATION_CHOSEN
+    message: "192 adds 8 — the given fact already contains the division's answer."
+solution:
+  - type: step
+    goal: Read the fact.
+    working: "23 × 8 = 184"
+  - type: step
+    goal: Turn it around.
+    working: "184 ÷ 8 = 23"
+    reason: Multiplication facts run backwards for free.
+  - type: takeaway
+    text: Every multiplication fact hides two division facts — no new work needed.
+  - type: verification
+    text: The fact family: 23 × 8 = 184, 8 × 23 = 184, 184 ÷ 8 = 23, 184 ÷ 23 = 8.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Arjun knows that 23 × 8 = 184. Use this fact to find 184 ÷ 8.</p>
+  <ul class="options">
+    <li data-val="8">8</li>
+    <li data-val="23">23</li>
+    <li data-val="176">176</li>
+    <li data-val="192">192</li>
+  </ul>
+  <p class="explain">Multiplying and dividing undo each other. Since 23 × 8 = 184, it must be true that 184 ÷ 8 = 23. (176 subtracts 8; 192 adds 8.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["8 times as many"]
+description: How many times as many?
+hint:
+  - "'Times as many' compares by fitting one amount into the other."
+  - "How many 6s fit inside 48?"
+  - "Divide to count them."
+explain: "48 ÷ 6 = 8 — Kabir has 8 times as many stickers."
+whyWrong:
+  "6 times as many":
+    code: OPERAND_ECHO
+    message: "6 is Diya's sticker count echoed back — the comparison is 48 ÷ 6 = 8."
+  "42 times as many":
+    code: WRONG_OP_SUB_FOR_DIV
+    message: "42 is the difference (48 − 6) — 'times as many' divides instead."
+  "288 times as many":
+    code: MULTIPLIED_NOT_DIVIDED
+    message: "288 multiplies the two counts — the question asks how many 6s fill 48."
+solution:
+  - type: step
+    goal: Set up the comparison.
+    working: "48 ÷ 6"
+  - type: step
+    goal: Divide.
+    working: "8 times as many"
+    reason: Six fits into forty-eight exactly eight times.
+  - type: takeaway
+    text: 'Times as many' is a division in comparison clothing.
+  - type: verification
+    text: 8 × 6 = 48 — eight of Diya's piles build Kabir's exactly.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Kabir has 48 stickers. Diya has 6 stickers. How many times as many stickers does Kabir have as Diya?</p>
+  <ul class="options">
+    <li data-val="6 times as many">6 times as many</li>
+    <li data-val="8 times as many">8 times as many</li>
+    <li data-val="42 times as many">42 times as many</li>
+    <li data-val="288 times as many">288 times as many</li>
+  </ul>
+  <p class="explain">48 ÷ 6 = 8, so Kabir has 8 times as many. (42 is how many <em>more</em> he has, not how many <em>times</em> — that is the difference, not the comparison.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["4"]
+description: What is left after filling boxes of 10
+hint:
+  - "Fill whole boxes of ten first."
+  - "74 fills seven boxes — that uses 70 pencils."
+  - "What stays in Meera's hand?"
+explain: "74 ÷ 10 = 7 boxes with remainder 4 — four pencils left over."
+whyWrong:
+  "0":
+    code: NEAR_MISS
+    message: "74 is not a multiple of 10 — four pencils escape the boxes."
+  "7":
+    code: PARTIAL_COMPUTATION
+    message: "7 is the number of FULL boxes — the question asks what is left outside them."
+  "10":
+    code: OPERAND_ECHO
+    message: "10 is the box size from the story — the left-over is smaller than a full box."
+solution:
+  - type: step
+    goal: Fill whole boxes.
+    working: "7 × 10 = 70"
+  - type: step
+    goal: Find the left-over.
+    working: "74 − 70 = 4"
+  - type: takeaway
+    text: Quotient and remainder answer different questions — read which one is asked.
+  - type: verification
+    text: 7 boxes + 4 loose = 74 pencils ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Meera has 74 pencils. She fills boxes that hold 10 pencils each. After filling as many full boxes as she can, how many pencils are left over?</p>
+  <ul class="options">
+    <li data-val="0">0</li>
+    <li data-val="4">4</li>
+    <li data-val="7">7</li>
+    <li data-val="10">10</li>
+  </ul>
+  <p class="explain">74 ÷ 10 gives 7 full boxes with 4 pencils left over. The question asks for the leftover, so the answer is 4. (7 is the number of boxes.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["7"]
+description: Vans needed — the remainder rounds UP
+hint:
+  - "Fill vans of 8 and see how far 48 seats get you."
+  - "6 vans seat 48 — but 50 children are going."
+  - "The last 2 children still need a van."
+explain: "50 ÷ 8 = 6 remainder 2 — six full vans plus one more for the last 2 children: 7 vans."
+whyWrong:
+  "2":
+    code: REMAINDER_AS_ANSWER
+    message: "2 is the left-over children — they still need a van, not a headline."
+  "6":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "6 vans seat only 48 — two children would wave from the kerb."
+  "8":
+    code: OPERAND_ECHO
+    message: "8 is the seats per van — the vans themselves number 7."
+solution:
+  - type: step
+    goal: Divide.
+    working: "50 ÷ 8 = 6 r 2"
+  - type: step
+    goal: Round UP for people.
+    working: "6 full vans + 1 part-filled = 7"
+    reason: A left-over child cannot be left over.
+  - type: takeaway
+    text: When the remainder is people, the answer rounds up — everyone rides.
+  - type: verification
+    text: 7 vans × 8 seats = 56 seats — enough for all 50, with room to spare.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">50 children are going on a trip. Each van seats 8 children. How many vans are needed so that every child gets a seat?</p>
+  <ul class="options">
+    <li data-val="2">2</li>
+    <li data-val="6">6</li>
+    <li data-val="7">7</li>
+    <li data-val="8">8</li>
+  </ul>
+  <p class="explain">50 ÷ 8 gives 6 full vans with 2 children left over. Those 2 children still need seats, so you need 1 more van: 7 vans. (6 leaves them behind; 2 is the leftover, not the number of vans.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["21"]
+description: Greatest notebooks for ₹175 — round DOWN
+hint:
+  - "₹175 will not split into ₹8 exactly."
+  - "Count how many whole ₹8s fit inside ₹175."
+  - "A part-notebook cannot be bought."
+explain: "175 ÷ 8 = 21 remainder 7 — she can buy 21 notebooks, with ₹7 left."
+whyWrong:
+  "7":
+    code: REMAINDER_AS_ANSWER
+    message: "₹7 is the change left in her pocket — the notebooks number 21."
+  "22":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "22 notebooks would cost ₹176 — one rupee more than she has."
+  "167":
+    code: WRONG_OP_SUB_FOR_DIV
+    message: "167 subtracts one notebook's price — the question asks how many times ₹8 fits."
+solution:
+  - type: step
+    goal: Divide.
+    working: "175 ÷ 8 = 21 r 7"
+  - type: step
+    goal: Round DOWN for purchases.
+    working: "21 whole notebooks"
+    reason: The ₹7 left cannot buy a 22nd.
+  - type: takeaway
+    text: Money remainders round down — you buy only what you can fully pay for.
+  - type: verification
+    text: 21 × ₹8 = ₹168, leaving ₹7 — too little for another notebook.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Ananya has ₹175. Each notebook costs ₹8. What is the greatest number of notebooks she can buy?</p>
+  <ul class="options">
+    <li data-val="7">7</li>
+    <li data-val="21">21</li>
+    <li data-val="22">22</li>
+    <li data-val="167">167</li>
+  </ul>
+  <p class="explain">175 ÷ 8 gives 21 notebooks costing ₹168, with ₹7 left over. She cannot afford a 22nd notebook, which would cost ₹176. (7 is the leftover money, not the number of notebooks.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["9"]
+description: Two steps — total the pens, then share
+hint:
+  - "First find how many pens exist altogether."
+  - "6 packs of 12 pens make the pile."
+  - "Then share that pile among 8 classmates."
+explain: "6 × 12 = 72 pens; 72 ÷ 8 = 9 pens each."
+whyWrong:
+  "18":
+    code: MULTI_STEP_ERROR
+    message: "18 mixes the steps — the full pile of 72 shares into 8 nines."
+  "64":
+    code: MULTI_STEP_ERROR
+    message: "64 subtracts the classmates from the pens — the second step is a share, not a removal."
+  "72":
+    code: PARTIAL_COMPUTATION
+    message: "72 is the whole pile — the sharing step still has to happen."
+solution:
+  - type: step
+    goal: Total the pens.
+    working: "6 × 12 = 72"
+  - type: step
+    goal: Share them.
+    working: "72 ÷ 8 = 9"
+  - type: takeaway
+    text: Two-step stories hide the second step behind the first — total first, then share.
+  - type: verification
+    text: 8 classmates × 9 pens = 72 = 6 packs of 12 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya buys 6 packs of pens. Each pack has 12 pens. She shares all the pens equally among 8 classmates. How many pens does each classmate get?</p>
+  <ul class="options">
+    <li data-val="9">9</li>
+    <li data-val="18">18</li>
+    <li data-val="64">64</li>
+    <li data-val="72">72</li>
+  </ul>
+  <p class="explain">Step 1: 6 × 12 = 72 pens altogether. Step 2: 72 ÷ 8 = 9 pens each. (72 stops after step 1 and forgets to share.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["185"]
+description: Two steps — multiply, then subtract
+hint:
+  - "Before finding what is left, find how many there were."
+  - "9 trays of 25 laddus set the starting pile."
+  - "Then the 40 eaten come off."
+explain: "9 × 25 = 225 laddus made; 225 − 40 = 185 left."
+whyWrong:
+  "145":
+    code: MULTI_STEP_ERROR
+    message: "This subtracts the 40 twice — only one family feast happened."
+  "225":
+    code: PARTIAL_COMPUTATION
+    message: "225 is the laddus MADE — the 40 eaten must still come off."
+  "265":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "265 adds the eaten laddus back — eaten means gone."
+solution:
+  - type: step
+    goal: Total the laddus.
+    working: "9 × 25 = 225"
+  - type: step
+    goal: Subtract the eaten.
+    working: "225 − 40 = 185"
+  - type: takeaway
+    text: Multiply-then-subtract: build the pile before taking from it.
+  - type: verification
+    text: 185 + 40 = 225 = 9 × 25 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Kabir's mother made 9 trays of laddus with 25 laddus on each tray. The family ate 40 of them. How many laddus are left?</p>
+  <ul class="options">
+    <li data-val="145">145</li>
+    <li data-val="185">185</li>
+    <li data-val="225">225</li>
+    <li data-val="265">265</li>
+  </ul>
+  <p class="explain">Step 1: 9 × 25 = 225 laddus. Step 2: 225 − 40 = 185 left. (225 stops after step 1; 265 adds the eaten ones instead of subtracting.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["40"]
+description: Two steps — combine, then share
+hint:
+  - "The albums take stamps from the COMBINED pile."
+  - "Join 145 and 95 first."
+  - "Then split the total into 6 equal albums."
+explain: "145 + 95 = 240 stamps; 240 ÷ 6 = 40 per album."
+whyWrong:
+  "24":
+    code: MULTI_STEP_ERROR
+    message: "This shares only Arjun's 145 — Meera's 95 stamps belong in the pile too."
+  "50":
+    code: NEAR_MISS
+    message: "50 per album would need 300 stamps — the joined pile holds 240."
+  "240":
+    code: PARTIAL_COMPUTATION
+    message: "240 is the combined pile — the sorting into 6 albums still remains."
+solution:
+  - type: step
+    goal: Combine the stamps.
+    working: "145 + 95 = 240"
+  - type: step
+    goal: Share into albums.
+    working: "240 ÷ 6 = 40"
+  - type: takeaway
+    text: Read WHOSE pile gets shared — combined stories join before they split.
+  - type: verification
+    text: 6 albums × 40 stamps = 240 = 145 + 95 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Arjun has 145 stamps and Meera has 95 stamps. They put all their stamps together and sort them equally into 6 albums. How many stamps go in each album?</p>
+  <ul class="options">
+    <li data-val="24">24</li>
+    <li data-val="40">40</li>
+    <li data-val="50">50</li>
+    <li data-val="240">240</li>
+  </ul>
+  <p class="explain">Step 1: 145 + 95 = 240 stamps. Step 2: 240 ÷ 6 = 40 per album. (240 stops after step 1; 24 shares only Arjun's stamps.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["about 900"]
+description: Estimate 28 × 31 by rounding
+hint:
+  - "Round each number to its nearest ten."
+  - "28 climbs and 31 slips back."
+  - "The rounded product is a friendly times-table fact with zeros."
+explain: "28 → 30 and 31 → 30; 30 × 30 = 900."
+whyWrong:
+  "about 600":
+    code: ROUND_ONE_WRONG
+    message: "600 needs a 20 — but 28 sits much nearer 30."
+  "about 800":
+    code: ESTIMATE_WRONG_VALUE
+    message: "800 is no product of the rounded tens — 30 × 30 lands on 900."
+  "about 1200":
+    code: ROUND_ONE_WRONG
+    message: "1,200 pushes 31 up to 40 — it has barely left 30."
+solution:
+  - type: step
+    goal: Round both numbers.
+    working: "28 → 30 · 31 → 30"
+  - type: step
+    goal: Multiply the friendly pair.
+    working: "30 × 30 = 900"
+  - type: takeaway
+    text: Round both factors to tens and a hard product becomes 3 × 3 with zeros.
+  - type: verification
+    text: Exact: 28 × 31 = 868 — the 900 estimate lands close by.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Diya wants a quick estimate of 28 × 31 before working it out exactly. She rounds each number to the nearest ten. Which estimate does she get?</p>
+  <ul class="options">
+    <li data-val="about 600">about 600</li>
+    <li data-val="about 800">about 800</li>
+    <li data-val="about 900">about 900</li>
+    <li data-val="about 1200">about 1200</li>
+  </ul>
+  <p class="explain">28 rounds to 30 and 31 rounds to 30, so the estimate is 30 × 30 = 900. (600 rounds 28 down to 20 by mistake; 1200 rounds 31 up to 40 by mistake.) The exact answer, 868, is indeed close to 900.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["She never regrouped — in each column she just took the smaller digit from the bigger one."]
+description: Diagnose the subtraction mistake
+hint:
+  - "Work 403 − 158 out properly yourself first."
+  - "Compare your columns with Ananya's 355, one at a time."
+  - "Ask what she did wherever the top digit was smaller."
+explain: "Her 355 comes from flipping every short column (3−8 became 8−3) — no regrouping anywhere. Proper borrowing gives 245."
+whyWrong:
+  "She added the two numbers instead of subtracting.":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "Adding would give 561 — her 355 is too close to the true difference for that story."
+  "She subtracted 158 from 400 and forgot the 3.":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "400 − 158 = 242 — but she wrote 355, which that slip cannot produce."
+  "She lined up the digits in the wrong columns.":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "Both numbers are 3 digits — misalignment would produce a very different wreck than 355."
+solution:
+  - type: step
+    goal: Do it properly.
+    working: "403 − 158 = 245"
+    reason: The ones and tens both borrow through the 0.
+  - type: step
+    goal: Reconstruct her method.
+    working: "|4−1| |0−5| |3−8| → 3 5 5"
+    reason: Every column subtracted small-from-big, top or not.
+  - type: step
+    goal: Match the evidence.
+    working: "her 355 = the flip method exactly"
+  - type: takeaway
+    text: A wrong answer carries fingerprints — rebuild it to identify the method that made it.
+  - type: verification
+    text: The flip error and the true answer differ by 110 — exactly the two flipped columns' damage.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Ananya worked out 403 − 158 and got 355. The correct answer is 245. What did she do wrong?</p>
+  <ul class="options">
+    <li data-val="She added the two numbers instead of subtracting.">She added the two numbers instead of subtracting.</li>
+    <li data-val="She never regrouped — in each column she just took the smaller digit from the bigger one.">She never regrouped — in each column she just took the smaller digit from the bigger one.</li>
+    <li data-val="She subtracted 158 from 400 and forgot the 3.">She subtracted 158 from 400 and forgot the 3.</li>
+    <li data-val="She lined up the digits in the wrong columns.">She lined up the digits in the wrong columns.</li>
+  </ul>
+  <p class="explain">In the tens column she needed 0 − 5, which is impossible, so she flipped it to 5 − 0 = 5. She should have regrouped instead, which gives 9 − 5 = 4. That single 5 in place of a 4 is why she got 355 instead of 245.</p>
+</div>
+
+</div>
