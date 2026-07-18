@@ -56,6 +56,7 @@ lesson's row links its document.
 | Even odd remix | 30 | `lessons/incoming/even_odd_remix.html` | `review/even_odd_remix.html` | — |
 | Find start and end times remix | 30 | `lessons/incoming/find-start-and-end-times-remix.html` | `review/find-start-and-end-times-remix.html` | — |
 | Find the order remix | 30 | `lessons/incoming/find-the-order-remix.html` | `review/find-the-order-remix.html` | — |
+| Find the probability | 30 | `lessons/find_the_probability.html` | `review/find_the_probability.html` | `sources/LDM- Probability-Find the probability(D) - Find_the_probability.html` |
 | Find two numbers based on sum difference product and quotient | 23 | `lessons/incoming/find-two-numbers-based-on-sum-difference-product-and-quotient.html` | `review/find-two-numbers-based-on-sum-difference-product-and-quotient.html` | — |
 | Frequency tables | 21 | `lessons/frequency_tables.html` | `review/frequency_tables.html` | `sources/Data and graphs-Frequency tables(D).html` |
 | Geometric patterns remix | 30 | `lessons/incoming/geometric_patterns_remix.html` | `review/geometric_patterns_remix.html` | — |
@@ -124,7 +125,7 @@ lesson's row links its document.
 | Use perimeter to determine cost | 20 | `lessons/use_perimeter_to_determine_cost.html` | `review/use_perimeter_to_determine_cost.html` | `sources/Geometric Measurements-Use perimeter to determine cost(D).html` |
 | Word problems with extra or missing information | 24 | `lessons/incoming/Word problems with extra or missing information.html` | `review/Word problems with extra or missing information.html` | — |
 
-**Totals: 112 lessons, 2,929 questions.**
+**Totals: 113 lessons, 2,959 questions.**
 Matches the recorded 102 / 2,687 exactly (2,722 → 2,727 on 2026-07-18:
 BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`;
 104 / 2,727 → 102 / 2,687 per BRIEF-DUPLICATE-CULL, Venkat's ruling

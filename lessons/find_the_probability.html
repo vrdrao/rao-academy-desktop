@@ -1,0 +1,1104 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["1/2"]
+description: Probability a coin lands on heads
+hint:
+  - "Probability compares the winning outcomes with all the outcomes."
+  - "Count the coin's sides, then count how many of them are heads."
+  - "Write winning outcomes over total outcomes."
+explain: "One side out of two is heads: P(heads) = 1/2."
+whyWrong:
+  "2":
+    code: OPERAND_ECHO
+    message: "2 is the number of sides — probability puts the winning side OVER the total: 1 over 2."
+  "1/6":
+    code: NEAR_MISS
+    message: "1/6 belongs to a six-sided die — a coin has only two faces."
+  "1":
+    code: PROBABILITY_WRONG_LEVEL
+    message: "A probability of 1 means certain — but tails is always waiting on the other side."
+solution:
+  - type: step
+    goal: Count the outcomes.
+    working: "a coin has 2 faces"
+  - type: step
+    goal: Count the winners.
+    working: "heads is 1 of them"
+  - type: step
+    goal: Write the fraction.
+    working: "P(heads) = 1/2"
+  - type: takeaway
+    text: Probability is winners over total — always a fraction of the whole.
+  - type: verification
+    text: 1/2 sits exactly between impossible (0) and certain (1) — a fair flip.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability that a coin lands on heads.</p>
+  <ul class="options"><li data-val="1/2"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text></svg></li><li data-val="2"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="27" text-anchor="middle" font-family="Baloo 2,cursive" font-size="20" font-weight="800" fill="#2c2150">2</text></svg></li><li data-val="1/6"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">6</text></svg></li><li data-val="1"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="27" text-anchor="middle" font-family="Baloo 2,cursive" font-size="20" font-weight="800" fill="#2c2150">1</text></svg></li></ul>
+  <p class="explain">A coin has 2 sides. 1 is heads → 1/2.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1/6"]
+description: Probability of rolling a six
+hint:
+  - "Probability compares winning faces with all faces."
+  - "Count every face of the die, then count the sixes."
+  - "Winners on top, total underneath."
+explain: "One face out of six shows a six: P(six) = 1/6."
+whyWrong:
+  "6/1":
+    code: NEAR_MISS
+    message: "6/1 is the fraction upside down — winners go on TOP, and there is only one six."
+  "1/2":
+    code: NEAR_MISS
+    message: "1/2 would need three winning faces — only one face shows a six."
+  "6":
+    code: OPERAND_ECHO
+    message: "6 counts the faces — the probability puts the single six over all 6 faces."
+solution:
+  - type: step
+    goal: Count all faces.
+    working: "6"
+  - type: step
+    goal: Count the sixes.
+    working: "1"
+  - type: step
+    goal: Write the fraction.
+    working: "P(six) = 1/6"
+  - type: takeaway
+    text: A fair die gives every face the same 1-out-of-6 chance.
+  - type: verification
+    text: Six different faces each at 1/6 together make 6/6 = 1 — the whole certainty shared out.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability of rolling a six on a 6-sided die.</p>
+  <ul class="options"><li data-val="1/6"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">6</text></svg></li><li data-val="6/1"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">6</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text></svg></li><li data-val="1/2"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text></svg></li><li data-val="6"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="27" text-anchor="middle" font-family="Baloo 2,cursive" font-size="20" font-weight="800" fill="#2c2150">6</text></svg></li></ul>
+  <p class="explain">6 faces, 1 is a six → 1/6.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1/4"]
+description: Spinner probability — one blue part of four
+hint:
+  - "Count the equal parts of the spinner first."
+  - "Then count how many of those parts are blue."
+  - "Blue parts over total parts is the probability."
+explain: "The spinner has 4 equal parts and 1 is blue: P(blue) = 1/4."
+whyWrong:
+  "3/4":
+    code: NEAR_MISS
+    message: "3/4 counts the parts that are NOT blue — the question asks for blue itself."
+  "1/2":
+    code: NEAR_MISS
+    message: "1/2 would need two blue parts — this spinner has one."
+  "4/1":
+    code: NEAR_MISS
+    message: "4/1 is upside down — the single blue part goes on top of the 4."
+solution:
+  - type: step
+    goal: Count the parts.
+    working: "4 equal parts"
+  - type: step
+    goal: Count the blue.
+    working: "1 part"
+  - type: step
+    goal: Write the fraction.
+    working: "P(blue) = 1/4"
+  - type: takeaway
+    text: Spinner probability = colour's parts over all parts, when parts are equal.
+  - type: verification
+    text: The four colours' probabilities — four quarters — add back up to the whole spinner.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability the spinner lands on blue.</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 144.0,75.0 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L144.0,75.0 A69.0,69.0 0 0 1 75.0,144.0 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L75.0,144.0 A69.0,69.0 0 0 1 6.0,75.0 Z" fill="#facc15" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L6.0,75.0 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#ec4899" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="49.1" y2="100.9" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="39.9,110.1 44.1,96.0 54.0,105.9" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <ul class="options"><li data-val="3/4"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text></svg></li><li data-val="1/4"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text></svg></li><li data-val="1/2"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text></svg></li><li data-val="4/1"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text></svg></li></ul>
+  <p class="explain">4 equal parts, 1 is blue → 1/4.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1/4"]
+description: Marble probability — one green of four
+hint:
+  - "Count every marble in the bag first."
+  - "Then count just the green ones."
+  - "Green over total gives the probability."
+explain: "1 green marble out of 4: P(green) = 1/4."
+whyWrong:
+  "4/1":
+    code: NEAR_MISS
+    message: "4/1 is the fraction inverted — one green goes over the four marbles."
+  "3/4":
+    code: NEAR_MISS
+    message: "3/4 is the chance of NOT green — three of the four marbles."
+  "1":
+    code: PROBABILITY_WRONG_LEVEL
+    message: "1 would mean green is certain — three other marbles say otherwise."
+solution:
+  - type: step
+    goal: Count the marbles.
+    working: "4 in the bag"
+  - type: step
+    goal: Count the greens.
+    working: "1"
+  - type: step
+    goal: Write the fraction.
+    working: "P(green) = 1/4"
+  - type: takeaway
+    text: Bags work like spinners — winners over total.
+  - type: verification
+    text: P(green) + P(not green) = 1/4 + 3/4 = 1 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability of picking a green marble.</p>
+  <svg viewBox="0 0 180 124" width="180" height="124" role="img" aria-label="4 marbles"><circle cx="34.0" cy="28" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="27.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="28" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="83.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="28" r="22" fill="#ec4899" stroke="#a8306b" stroke-width="2"/><circle cx="139.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="84" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="83.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/></svg>
+  <ul class="options"><li data-val="4/1"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text></svg></li><li data-val="3/4"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text></svg></li><li data-val="1"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="27" text-anchor="middle" font-family="Baloo 2,cursive" font-size="20" font-weight="800" fill="#2c2150">1</text></svg></li><li data-val="1/4"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text></svg></li></ul>
+  <p class="explain">4 marbles, 1 is green → 1/4.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1/2"]
+description: Spinner probability that simplifies
+hint:
+  - "Count blue parts and total parts."
+  - "Write the fraction — then look at it again."
+  - "Can the top and bottom both be divided by the same number?"
+explain: "4 blue parts out of 8 is 4/8, which simplifies to 1/2."
+whyWrong:
+  "4/8":
+    code: NEAR_MISS
+    message: "4/8 is correct but not finished — top and bottom both divide by 4, giving 1/2."
+  "8/4":
+    code: NEAR_MISS
+    message: "8/4 is upside down and unsimplified — blue's 4 parts go over the 8."
+  "1/4":
+    code: NEAR_MISS
+    message: "1/4 would be 2 blue parts of 8 — this spinner has 4."
+solution:
+  - type: step
+    goal: Count.
+    working: "4 blue of 8 parts → 4/8"
+  - type: step
+    goal: Simplify.
+    working: "4/8 = 1/2"
+    reason: Both numbers divide by 4 — the simplest form names the same chance.
+  - type: takeaway
+    text: Simplify probability fractions — 4/8 and 1/2 are the same chance in different clothes.
+  - type: verification
+    text: Half the spinner is blue by eye — and 1/2 says exactly that.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability the spinner lands on blue.</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 123.8,26.2 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L123.8,26.2 A69.0,69.0 0 0 1 144.0,75.0 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L144.0,75.0 A69.0,69.0 0 0 1 123.8,123.8 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L123.8,123.8 A69.0,69.0 0 0 1 75.0,144.0 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L75.0,144.0 A69.0,69.0 0 0 1 26.2,123.8 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L26.2,123.8 A69.0,69.0 0 0 1 6.0,75.0 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L6.0,75.0 A69.0,69.0 0 0 1 26.2,26.2 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L26.2,26.2 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="41.1" y2="89.0" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="29.1,94.0 38.4,82.6 43.8,95.5" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <ul class="options"><li data-val="4/8"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">8</text></svg></li><li data-val="1/2"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text></svg></li><li data-val="8/4"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">8</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text></svg></li><li data-val="1/4"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text></svg></li></ul>
+  <p class="explain">Half the equal parts are blue → 1/2.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3/4"]
+description: Spinner probability — pink parts
+hint:
+  - "Count the pink parts of the spinner."
+  - "Count all the parts."
+  - "Pink over total is the probability."
+explain: "3 of the 4 equal parts are pink: P(pink) = 3/4."
+whyWrong:
+  "1/2":
+    code: NEAR_MISS
+    message: "1/2 would need two pink parts of four — there are three."
+  "1/4":
+    code: NEAR_MISS
+    message: "1/4 is the single green part's chance — pink owns the other three."
+  "4/3":
+    code: NEAR_MISS
+    message: "4/3 is upside down — a probability can never be bigger than 1."
+solution:
+  - type: step
+    goal: Count the pink parts.
+    working: "3"
+  - type: step
+    goal: Count all parts.
+    working: "4"
+  - type: step
+    goal: Write the fraction.
+    working: "P(pink) = 3/4"
+  - type: takeaway
+    text: A probability over 1 is impossible — winners can never outnumber the total.
+  - type: verification
+    text: P(pink) + P(green) = 3/4 + 1/4 = 1 — the whole spinner accounted for.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability the spinner lands on pink.</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 144.0,75.0 Z" fill="#ec4899" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L144.0,75.0 A69.0,69.0 0 0 1 75.0,144.0 Z" fill="#ec4899" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L75.0,144.0 A69.0,69.0 0 0 1 6.0,75.0 Z" fill="#ec4899" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L6.0,75.0 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="49.1" y2="49.1" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="39.9,39.9 54.0,44.1 44.1,54.0" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <ul class="options"><li data-val="1/2"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text></svg></li><li data-val="1/4"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text></svg></li><li data-val="3/4"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text></svg></li><li data-val="4/3"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text></svg></li></ul>
+  <p class="explain">3 of 4 parts are pink (none blue) → 3/4.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["4/9"]
+description: Marbles — green OR pink
+hint:
+  - "'Or' means both colours count as winners."
+  - "Count the greens and the pinks together."
+  - "Put that combined count over all the marbles."
+explain: "3 green + 1 pink = 4 winners out of 9 marbles: P(green or pink) = 4/9."
+whyWrong:
+  "3/9":
+    code: NEAR_MISS
+    message: "3/9 counts only the greens — the pink marble is a winner too."
+  "5/9":
+    code: NEAR_MISS
+    message: "5/9 is the orange marbles' chance — the wrong team entirely."
+  "4/5":
+    code: NEAR_MISS
+    message: "4/5 divides by the oranges instead of by ALL nine marbles."
+solution:
+  - type: step
+    goal: Count the winners.
+    working: "3 green + 1 pink = 4"
+  - type: step
+    goal: Count everything.
+    working: "9 marbles"
+  - type: step
+    goal: Write the fraction.
+    working: "P(green or pink) = 4/9"
+  - type: takeaway
+    text: 'Or' joins the winning teams — add their counts before dividing.
+  - type: verification
+    text: Winners (4) plus oranges (5) rebuild the whole bag of 9 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability of picking a green or pink marble.</p>
+  <svg viewBox="0 0 236 180" width="236" height="180" role="img" aria-label="9 marbles"><circle cx="34.0" cy="28" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="27.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="28" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="83.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="28" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="139.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="202.0" cy="28" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="195.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="34.0" cy="84" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="27.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="84" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="83.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="84" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="139.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="202.0" cy="84" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="195.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="118.0" cy="140" r="22" fill="#ec4899" stroke="#a8306b" stroke-width="2"/><circle cx="111.4" cy="133.0" r="4.4" fill="#ffffff" opacity="0.55"/></svg>
+  <ul class="options"><li data-val="4/9"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">9</text></svg></li><li data-val="3/9"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">9</text></svg></li><li data-val="5/9"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">5</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">9</text></svg></li><li data-val="4/5"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">5</text></svg></li></ul>
+  <p class="explain">9 marbles: 3 green + 1 pink = 4 → 4/9.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1/8"]
+description: Marbles — NOT orange (when most ARE orange)
+hint:
+  - "'NOT orange' makes every other colour a winner."
+  - "Count the marbles that are not orange — look carefully."
+  - "That count goes over the total."
+explain: "Only 1 of the 8 marbles is not orange: P(not orange) = 1/8."
+whyWrong:
+  "8/1":
+    code: NEAR_MISS
+    message: "8/1 is inverted — and a probability never exceeds 1."
+  "1/7":
+    code: NEAR_MISS
+    message: "1/7 divides by the oranges only — the bottom of the fraction is ALL 8 marbles."
+  "7/8":
+    code: NEAR_MISS
+    message: "7/8 is the chance of picking orange — the question asks for the opposite."
+solution:
+  - type: step
+    goal: Count the not-orange marbles.
+    working: "just 1 (the blue)"
+  - type: step
+    goal: Count the bag.
+    working: "8 marbles"
+  - type: step
+    goal: Write the fraction.
+    working: "P(not orange) = 1/8"
+  - type: takeaway
+    text: 'NOT' flips the winners — count what is left, not what is named.
+  - type: verification
+    text: P(orange) = 7/8 and 7/8 + 1/8 = 1 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability of picking a marble that is NOT orange.</p>
+  <svg viewBox="0 0 236 124" width="236" height="124" role="img" aria-label="8 marbles"><circle cx="34.0" cy="28" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="27.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="28" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="83.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="28" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="139.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="202.0" cy="28" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="195.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="34.0" cy="84" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="27.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="84" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="83.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="84" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="139.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="202.0" cy="84" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="195.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/></svg>
+  <ul class="options"><li data-val="8/1"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">8</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text></svg></li><li data-val="1/8"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">8</text></svg></li><li data-val="1/7"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">7</text></svg></li><li data-val="7/8"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">7</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">8</text></svg></li></ul>
+  <p class="explain">8 marbles, 7 orange, so 1 is not orange → 1/8.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1/5"]
+description: Spinner — NOT green (when most parts ARE green)
+hint:
+  - "'NOT green' means every part that is any other colour."
+  - "Count the non-green parts carefully — there may be few."
+  - "Divide by all the parts."
+explain: "4 of the 5 parts are green, so NOT green is just 1 part: P = 1/5."
+whyWrong:
+  "5/1":
+    code: NEAR_MISS
+    message: "5/1 is inverted — and no probability is bigger than 1."
+  "4/5":
+    code: NEAR_MISS
+    message: "4/5 is the chance of green — the question wants its opposite."
+  "1/4":
+    code: NEAR_MISS
+    message: "1/4 divides by the green parts — the bottom must count ALL 5 parts."
+solution:
+  - type: step
+    goal: Count the non-green parts.
+    working: "1 (the blue part)"
+  - type: step
+    goal: Count all parts.
+    working: "5"
+  - type: step
+    goal: Write the fraction.
+    working: "P(not green) = 1/5"
+  - type: takeaway
+    text: NOT-questions are counted from what remains.
+  - type: verification
+    text: P(green) + P(not green) = 4/5 + 1/5 = 1 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability the spinner does NOT land on green.</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 140.6,53.7 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L140.6,53.7 A69.0,69.0 0 0 1 115.6,130.8 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L115.6,130.8 A69.0,69.0 0 0 1 34.4,130.8 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L34.4,130.8 A69.0,69.0 0 0 1 9.4,53.7 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L9.4,53.7 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="53.4" y2="45.3" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="45.8,34.8 59.1,41.2 47.8,49.4" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <ul class="options"><li data-val="5/1"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">5</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text></svg></li><li data-val="4/5"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">5</text></svg></li><li data-val="1/5"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">5</text></svg></li><li data-val="1/4"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text></svg></li></ul>
+  <p class="explain">5 equal parts, only 1 is not green (blue) → 1/5.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["0"]
+description: Probability of a colour that is not there
+hint:
+  - "Look for blue anywhere on the spinner."
+  - "Count the blue parts — count honestly."
+  - "What chance has a colour with no parts at all?"
+explain: "The spinner has no blue part at all, so P(blue) = 0 — impossible."
+whyWrong:
+  "1/3":
+    code: NEAR_MISS
+    message: "1/3 would need one blue part of the three — but no part is blue."
+  "1":
+    code: PROBABILITY_WRONG_LEVEL
+    message: "1 means certain — the exact opposite of a colour that is missing."
+  "2/3":
+    code: NEAR_MISS
+    message: "2/3 is the yellow parts' chance — blue owns nothing here."
+solution:
+  - type: step
+    goal: Hunt for blue.
+    working: "0 parts are blue"
+  - type: step
+    goal: Write the probability.
+    working: "P(blue) = 0"
+    reason: No winning parts means no chance at all — the event is impossible.
+  - type: takeaway
+    text: Zero is a real probability — it is what impossible looks like as a number.
+  - type: verification
+    text: The colours that DO exist (green 1/3, yellow 2/3) already fill the whole spinner: 1/3 + 2/3 = 1.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability the spinner lands on blue.</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 134.8,109.5 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L134.8,109.5 A69.0,69.0 0 0 1 15.2,109.5 Z" fill="#facc15" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L15.2,109.5 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#facc15" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="75.0" y2="111.7" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="75.0,124.7 68.0,111.7 82.0,111.7" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <ul class="options"><li data-val="1/3"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text></svg></li><li data-val="0"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="27" text-anchor="middle" font-family="Baloo 2,cursive" font-size="20" font-weight="800" fill="#2c2150">0</text></svg></li><li data-val="1"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="27" text-anchor="middle" font-family="Baloo 2,cursive" font-size="20" font-weight="800" fill="#2c2150">1</text></svg></li><li data-val="2/3"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text></svg></li></ul>
+  <p class="explain">There is no blue, so it can never happen → 0.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1"]
+description: Probability of avoiding a colour that is not there
+hint:
+  - "Check the spinner for yellow first."
+  - "If no part is yellow, what happens every single spin?"
+  - "An event that always happens has a special probability."
+explain: "There is no yellow anywhere, so the spinner ALWAYS lands on not-yellow: P = 1."
+whyWrong:
+  "1/2":
+    code: NEAR_MISS
+    message: "1/2 means an even chance — but avoiding yellow here is not chancy at all."
+  "3/4":
+    code: NEAR_MISS
+    message: "3/4 would leave a quarter of yellow risk — there is none."
+  "0":
+    code: PROBABILITY_WRONG_LEVEL
+    message: "0 means impossible — but every part is already not-yellow, the very opposite."
+solution:
+  - type: step
+    goal: Hunt for yellow.
+    working: "0 parts"
+  - type: step
+    goal: Reason it out.
+    working: "every spin lands on some other colour → P(not yellow) = 1"
+  - type: takeaway
+    text: Probability 1 is certainty — the event happens on every possible outcome.
+  - type: verification
+    text: P(yellow) = 0 and P(not yellow) = 1 — the pair always adds to 1.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability the spinner does NOT land on yellow.</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 140.6,53.7 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L140.6,53.7 A69.0,69.0 0 0 1 115.6,130.8 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L115.6,130.8 A69.0,69.0 0 0 1 34.4,130.8 Z" fill="#ec4899" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L34.4,130.8 A69.0,69.0 0 0 1 9.4,53.7 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L9.4,53.7 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#ec4899" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="75.0" y2="111.7" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="75.0,124.7 68.0,111.7 82.0,111.7" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <ul class="options"><li data-val="1"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="27" text-anchor="middle" font-family="Baloo 2,cursive" font-size="20" font-weight="800" fill="#2c2150">1</text></svg></li><li data-val="1/2"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text></svg></li><li data-val="3/4"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text></svg></li><li data-val="0"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="27" text-anchor="middle" font-family="Baloo 2,cursive" font-size="20" font-weight="800" fill="#2c2150">0</text></svg></li></ul>
+  <p class="explain">There is no yellow, so NOT yellow always happens → 1.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"impossible","label":"Impossible (0)"},{"id":"unlikely","label":"Unlikely"},{"id":"likely","label":"Likely"},{"id":"certain","label":"Certain (1)"}]
+answer: ["impossible","unlikely","likely","certain"]
+description: Sort dice events by likelihood
+hint:
+  - "For each event, ask how many of the 6 faces make it true."
+  - "0 faces and 6 faces are the two special boxes."
+  - "1 face of 6 is a small chance; 5 faces of 6 is a big one."
+explain: "Roll a 7: 0 faces (impossible) · Roll a 1: 1 face (unlikely) · Higher than 1: 5 faces (likely) · Less than 7: all 6 faces (certain)."
+solution:
+  - type: step
+    goal: Count winning faces for each event.
+    working: "a 7 → 0 · a 1 → 1 · higher than 1 → 5 · less than 7 → 6"
+  - type: step
+    goal: Match counts to boxes.
+    working: "0 → impossible · 1 of 6 → unlikely · 5 of 6 → likely · 6 of 6 → certain"
+  - type: takeaway
+    text: Likelihood words are face-counts in disguise — 0 and all are the two ends of the scale.
+  - type: verification
+    text: "No die shows a 7, and every die face is below 7 — the two extreme boxes are safely filled."
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each dice event into the box that shows how likely it is.</p>
+  <ul class="tiles"><li>Roll a 7</li><li>Roll a 1</li><li>Roll higher than 1</li><li>Roll less than 7</li></ul>
+  <p class="explain">Roll a 7 = impossible (0). Roll a 1 = 1/6 (unlikely). Higher than 1 = 5/6 (likely). Less than 7 = certain (1).</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1/3"]
+description: Spinner probability that simplifies (red)
+hint:
+  - "Count the red parts and the total parts."
+  - "Write the fraction of red."
+  - "Check whether top and bottom share a divisor."
+explain: "2 red parts out of 6 is 2/6, which simplifies to 1/3."
+whyWrong:
+  "3/1":
+    code: NEAR_MISS
+    message: "3/1 is upside down and impossible — probabilities never pass 1."
+  "1/6":
+    code: NEAR_MISS
+    message: "1/6 is one part's chance — red covers two parts."
+  "2/3":
+    code: NEAR_MISS
+    message: "2/3 would be four parts of six — red has only two."
+solution:
+  - type: step
+    goal: Count.
+    working: "2 red of 6 parts → 2/6"
+  - type: step
+    goal: Simplify.
+    working: "2/6 = 1/3"
+    reason: Top and bottom divide by 2.
+  - type: takeaway
+    text: Always offer a probability in simplest form — same chance, cleaner name.
+  - type: verification
+    text: Three thirds — red, blue, and green-plus-yellow — rebuild the whole spinner.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability the spinner lands on red.</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 134.8,40.5 Z" fill="#ef4444" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L134.8,40.5 A69.0,69.0 0 0 1 134.8,109.5 Z" fill="#ef4444" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L134.8,109.5 A69.0,69.0 0 0 1 75.0,144.0 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L75.0,144.0 A69.0,69.0 0 0 1 15.2,109.5 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L15.2,109.5 A69.0,69.0 0 0 1 15.2,40.5 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L15.2,40.5 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#facc15" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="38.3" y2="75.0" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="25.3,75.0 38.3,68.0 38.3,82.0" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <ul class="options"><li data-val="3/1"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text></svg></li><li data-val="1/6"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">6</text></svg></li><li data-val="2/3"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text></svg></li><li data-val="1/3"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text></svg></li></ul>
+  <p class="explain">2 of the 6 equal parts are red → 2/6 = 1/3.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["green", "yellow"]
+description: Colours with probability exactly 1/6
+hint:
+  - "1/6 on this spinner means covering exactly one of the six parts."
+  - "Count each colour's parts separately."
+  - "Keep only the colours with a single part."
+explain: "Green and yellow cover one part each (1/6); red and blue cover two parts each (2/6 = 1/3)."
+whyWrong:
+  "red":
+    code: DATA_READING_ERROR
+    message: "Red covers two of the six parts — its chance is 2/6, not 1/6."
+  "blue":
+    code: DATA_READING_ERROR
+    message: "Blue also owns two parts — 2/6, double the chance asked for."
+solution:
+  - type: step
+    goal: Count parts per colour.
+    working: "red 2 · blue 2 · green 1 · yellow 1"
+  - type: step
+    goal: Keep the single-part colours.
+    working: "green ✓ · yellow ✓"
+  - type: takeaway
+    text: On an equal-parts spinner, a colour's probability is just its part count over the total.
+  - type: verification
+    text: "2/6 + 2/6 + 1/6 + 1/6 = 6/6 = 1 — the four colours tile the spinner exactly."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">This spinner has 6 equal parts. Select EVERY colour that has a probability of 1/6.</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 134.8,40.5 Z" fill="#ef4444" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L134.8,40.5 A69.0,69.0 0 0 1 134.8,109.5 Z" fill="#ef4444" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L134.8,109.5 A69.0,69.0 0 0 1 75.0,144.0 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L75.0,144.0 A69.0,69.0 0 0 1 15.2,109.5 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L15.2,109.5 A69.0,69.0 0 0 1 15.2,40.5 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L15.2,40.5 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#facc15" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="93.3" y2="106.8" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="99.8,118.0 87.3,110.3 99.4,103.3" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <ul class="options"><li>red</li><li>blue</li><li>green</li><li>yellow</li></ul>
+  <p class="explain">A probability of 1/6 means the colour covers exactly 1 of the 6 equal parts. Green and yellow each cover 1 part. Red and blue cover 2 parts each, so they are 2/6.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["3", "8"]
+description: Write P(purple) as a fraction
+hint:
+  - "The top of the fraction counts the winning parts."
+  - "The bottom counts every part."
+  - "Purple parts first, all parts second."
+explain: "3 purple parts out of 8: P(purple) = 3/8."
+solution:
+  - type: step
+    goal: Count the purple parts.
+    working: "3"
+  - type: step
+    goal: Count all the parts.
+    working: "8"
+  - type: step
+    goal: Assemble the fraction.
+    working: "P(purple) = 3/8"
+  - type: takeaway
+    text: "Winners on top, total on the bottom — every probability fraction is built this way."
+  - type: verification
+    text: "The other five parts give P(not purple) = 5/8, and 3/8 + 5/8 = 1 ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">This spinner has 8 equal parts and 3 of them are purple. P(purple) = [] / []</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 123.8,26.2 Z" fill="#a855f7" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L123.8,26.2 A69.0,69.0 0 0 1 144.0,75.0 Z" fill="#a855f7" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L144.0,75.0 A69.0,69.0 0 0 1 123.8,123.8 Z" fill="#a855f7" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L123.8,123.8 A69.0,69.0 0 0 1 75.0,144.0 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L75.0,144.0 A69.0,69.0 0 0 1 26.2,123.8 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L26.2,123.8 A69.0,69.0 0 0 1 6.0,75.0 Z" fill="#facc15" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L6.0,75.0 A69.0,69.0 0 0 1 26.2,26.2 Z" fill="#f97316" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L26.2,26.2 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#ef4444" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="41.1" y2="89.0" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="29.1,94.0 38.4,82.6 43.8,95.5" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <p class="explain">3 purple parts out of 8 total → 3/8.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["pink", "blue", "green"]
+low: least likely
+high: most likely
+description: Order spinner colours by likelihood
+hint:
+  - "Count how many parts each colour covers."
+  - "Fewer parts means less likely."
+  - "Line the colours up by their counts, smallest first."
+explain: "Pink covers 1 part, blue 2, green 3 — least to most likely: pink, blue, green."
+solution:
+  - type: step
+    goal: Count parts per colour.
+    working: "pink 1 · blue 2 · green 3"
+  - type: step
+    goal: Order by count.
+    working: "1 < 2 < 3 → pink, blue, green"
+  - type: takeaway
+    text: More parts, more chance — likelihood follows the part count exactly.
+  - type: verification
+    text: "1 + 2 + 3 = 6 parts — the whole spinner, no part unaccounted."
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Order these spinner colours from least likely to most likely.</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 134.8,40.5 Z" fill="#ec4899" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L134.8,40.5 A69.0,69.0 0 0 1 134.8,109.5 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L134.8,109.5 A69.0,69.0 0 0 1 75.0,144.0 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L75.0,144.0 A69.0,69.0 0 0 1 15.2,109.5 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L15.2,109.5 A69.0,69.0 0 0 1 15.2,40.5 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L15.2,40.5 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#22c55e" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="56.7" y2="106.8" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="50.2,118.0 50.6,103.3 62.7,110.3" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <ol class="order"><li>green</li><li>pink</li><li>blue</li></ol>
+  <p class="explain">pink = 1 part, blue = 2 parts, green = 3 parts.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2/5"]
+description: Marbles in words — P(red), simplified
+hint:
+  - "No picture needed — the story gives the counts."
+  - "Write red marbles over total marbles."
+  - "Then simplify the fraction if you can."
+explain: "4 red of 10 marbles is 4/10, which simplifies to 2/5."
+whyWrong:
+  "5/2":
+    code: NEAR_MISS
+    message: "5/2 is upside down — and bigger than 1, which no probability can be."
+  "2/6":
+    code: NEAR_MISS
+    message: "2/6 divides red by the blues — the bottom must be all 10 marbles."
+  "3/5":
+    code: NEAR_MISS
+    message: "3/5 is the BLUE chance (6/10 simplified) — red owns 4 of the 10."
+solution:
+  - type: step
+    goal: Write the raw fraction.
+    working: "4 red / 10 marbles = 4/10"
+  - type: step
+    goal: Simplify.
+    working: "4/10 = 2/5"
+    reason: Top and bottom divide by 2.
+  - type: takeaway
+    text: Word problems hide the same fraction — winners over total, then simplify.
+  - type: verification
+    text: P(red) + P(blue) = 2/5 + 3/5 = 1 — the bag holds nothing else.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya&#x27;s bag has 10 marbles: 4 are red and 6 are blue. She picks one without looking. Tap P(red).</p>
+  <svg viewBox="0 0 236 180" width="236" height="180" role="img" aria-label="10 marbles"><circle cx="34.0" cy="28" r="22" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/><circle cx="27.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="28" r="22" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/><circle cx="83.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="28" r="22" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/><circle cx="139.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="202.0" cy="28" r="22" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/><circle cx="195.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="34.0" cy="84" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="27.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="84" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="83.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="84" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="139.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="202.0" cy="84" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="195.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="140" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="83.4" cy="133.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="140" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="139.4" cy="133.0" r="4.4" fill="#ffffff" opacity="0.55"/></svg>
+  <ul class="options"><li data-val="5/2"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">5</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text></svg></li><li data-val="2/6"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">6</text></svg></li><li data-val="2/5"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">5</text></svg></li><li data-val="3/5"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">5</text></svg></li></ul>
+  <p class="explain">4 red out of 10 → 4/10 = 2/5.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1/2"]
+description: Gumballs — equal counts make an even chance
+hint:
+  - "Count the green gumballs and the total gumballs."
+  - "Write green over total."
+  - "Simplify — equal teams make a familiar fraction."
+explain: "5 green of 10 gumballs is 5/10 = 1/2 — an even chance."
+whyWrong:
+  "1/5":
+    code: NEAR_MISS
+    message: "1/5 would leave green just two gumballs of ten — it has five."
+  "2/1":
+    code: NEAR_MISS
+    message: "2/1 is upside down and impossible — no probability tops 1."
+  "5/5":
+    code: NEAR_MISS
+    message: "5/5 compares green with the yellows — the bottom must count ALL ten gumballs."
+solution:
+  - type: step
+    goal: Count.
+    working: "5 green of 10 → 5/10"
+  - type: step
+    goal: Simplify.
+    working: "5/10 = 1/2"
+  - type: takeaway
+    text: Two equal teams always share an even 1/2 chance.
+  - type: verification
+    text: Green and yellow at 1/2 each: 1/2 + 1/2 = 1 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Rohan&#x27;s machine has 5 green and 5 yellow gumballs. Tap the probability he gets green.</p>
+  <svg viewBox="0 0 236 180" width="236" height="180" role="img" aria-label="10 marbles"><circle cx="34.0" cy="28" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="27.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="28" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="83.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="28" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="139.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="202.0" cy="28" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="195.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="34.0" cy="84" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="27.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="84" r="22" fill="#facc15" stroke="#a16207" stroke-width="2"/><circle cx="83.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="84" r="22" fill="#facc15" stroke="#a16207" stroke-width="2"/><circle cx="139.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="202.0" cy="84" r="22" fill="#facc15" stroke="#a16207" stroke-width="2"/><circle cx="195.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="140" r="22" fill="#facc15" stroke="#a16207" stroke-width="2"/><circle cx="83.4" cy="133.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="140" r="22" fill="#facc15" stroke="#a16207" stroke-width="2"/><circle cx="139.4" cy="133.0" r="4.4" fill="#ffffff" opacity="0.55"/></svg>
+  <ul class="options"><li data-val="1/5"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">5</text></svg></li><li data-val="1/2"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text></svg></li><li data-val="2/1"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text></svg></li><li data-val="5/5"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">5</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">5</text></svg></li></ul>
+  <p class="explain">5 green out of 10 → 5/10 = 1/2.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["red", "blue"]
+description: Colours less likely than green
+hint:
+  - "Green has 5 marbles — that is the bar to beat."
+  - "Compare each other colour's count with 5."
+  - "Fewer marbles means less likely."
+explain: "Red (2) and blue (3) both have fewer marbles than green (5) — both are less likely draws."
+whyWrong:
+  "green":
+    code: DATA_READING_ERROR
+    message: "Green cannot be less likely than itself — it IS the benchmark."
+solution:
+  - type: step
+    goal: Note the benchmark.
+    working: "green → 5 marbles"
+  - type: step
+    goal: Compare the others.
+    working: "red 2 < 5 ✓ · blue 3 < 5 ✓"
+  - type: takeaway
+    text: Comparing likelihoods with the same bag is just comparing counts.
+  - type: verification
+    text: "2 + 3 + 5 = 10 marbles — and green really is the biggest single team."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">A bag has 2 red, 3 blue and 5 green marbles. Select every colour you are LESS likely to draw than green.</p>
+  <svg viewBox="0 0 236 180" width="236" height="180" role="img" aria-label="10 marbles"><circle cx="34.0" cy="28" r="22" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/><circle cx="27.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="28" r="22" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/><circle cx="83.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="28" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="139.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="202.0" cy="28" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="195.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="34.0" cy="84" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="27.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="84" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="83.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="84" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="139.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="202.0" cy="84" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="195.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="140" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="83.4" cy="133.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="140" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="139.4" cy="133.0" r="4.4" fill="#ffffff" opacity="0.55"/></svg>
+  <ul class="options"><li>red</li><li>blue</li><li>green</li></ul>
+  <p class="explain">Green has 5 marbles. Red (2) and blue (3) both have fewer.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["3", "6"]
+description: Write P(even) for a die as a fraction
+hint:
+  - "List the even faces the question names."
+  - "Count them for the top of the fraction."
+  - "The bottom is every face of the die."
+explain: "The even faces are 2, 4 and 6 — three of the six: P(even) = 3/6."
+solution:
+  - type: step
+    goal: Count the even faces.
+    working: "2, 4, 6 → 3 faces"
+  - type: step
+    goal: Count all faces.
+    working: "6"
+  - type: step
+    goal: Assemble the fraction.
+    working: "P(even) = 3/6"
+  - type: takeaway
+    text: Half the faces are even — 3/6 is the even-chance fraction wearing die's clothing.
+  - type: verification
+    text: "The odd faces 1, 3, 5 take the other 3/6 — together the whole die."
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Diya rolls a 6-sided die. The even numbers are 2, 4 and 6. P(even) = [] / []</p>
+  <p class="explain">3 even numbers out of 6 faces → 3/6.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1/3"]
+description: Die — greater than 4, simplified
+hint:
+  - "Which faces count as greater than 4? List them."
+  - "Put that count over all six faces."
+  - "Simplify the fraction to finish."
+explain: "Faces 5 and 6 win: 2/6, which simplifies to 1/3."
+whyWrong:
+  "4/6":
+    code: NEAR_MISS
+    message: "4/6 counts the faces 4 and below — the wrong side of the line, and 4 itself is not greater than 4."
+  "1/6":
+    code: NEAR_MISS
+    message: "1/6 is a single face's chance — two faces beat 4."
+  "2/3":
+    code: NEAR_MISS
+    message: "2/3 is the chance of NOT beating 4 (faces 1–4) — the opposite event."
+solution:
+  - type: step
+    goal: List the winners.
+    working: "5 and 6 → 2 faces"
+  - type: step
+    goal: Write and simplify.
+    working: "2/6 = 1/3"
+  - type: takeaway
+    text: 'Greater than' excludes the boundary — 4 does not beat 4.
+  - type: verification
+    text: P(>4) + P(≤4) = 1/3 + 2/3 = 1 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability of rolling a number greater than 4 on a 6-sided die.</p>
+  <ul class="options"><li data-val="4/6"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">6</text></svg></li><li data-val="1/6"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">6</text></svg></li><li data-val="2/3"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text></svg></li><li data-val="1/3"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text></svg></li></ul>
+  <p class="explain">Only 5 and 6 are greater than 4 → 2/6 = 1/3.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"impossible","label":"Impossible (0)"},{"id":"even","label":"Even chance (1/2)"},{"id":"certain","label":"Certain (1)"}]
+answer: ["impossible","even","certain"]
+description: Sort events on a half-red half-blue spinner
+hint:
+  - "Work out each event's chance from the spinner."
+  - "Half the spinner is red and half is blue — no other colour exists."
+  - "Match each chance to its box: 0, 1/2 or 1."
+explain: "Green has no parts (impossible) · red covers half (even chance) · red-or-blue covers everything (certain)."
+solution:
+  - type: step
+    goal: Chance of green.
+    working: "0 parts → P = 0 → impossible"
+  - type: step
+    goal: Chance of red.
+    working: "half the spinner → P = 1/2 → even chance"
+  - type: step
+    goal: Chance of red or blue.
+    working: "the whole spinner → P = 1 → certain"
+  - type: takeaway
+    text: "0, 1/2 and 1 are the three landmarks of chance — impossible, coin-flip, certain."
+  - type: verification
+    text: Red and blue tile the spinner completely, which is exactly why their union is certain.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">This spinner is half red and half blue. Drag each event into the right box.</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 134.8,40.5 Z" fill="#ef4444" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L134.8,40.5 A69.0,69.0 0 0 1 134.8,109.5 Z" fill="#ef4444" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L134.8,109.5 A69.0,69.0 0 0 1 75.0,144.0 Z" fill="#ef4444" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L75.0,144.0 A69.0,69.0 0 0 1 15.2,109.5 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L15.2,109.5 A69.0,69.0 0 0 1 15.2,40.5 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L15.2,40.5 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="56.7" y2="106.8" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="50.2,118.0 50.6,103.3 62.7,110.3" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <ul class="tiles"><li>Lands on green</li><li>Lands on red</li><li>Lands on red or blue</li></ul>
+  <p class="explain">No green → impossible. Red is half → even chance. Red or blue covers all → certain.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["Roll a 7 on a die", "Flip heads on a coin", "Roll a number below 7 on a die"]
+low: least likely
+high: most likely
+description: Order three events by their chances
+hint:
+  - "Work out each event's own probability first."
+  - "One is impossible, one is certain — find them."
+  - "The remaining event sits between them."
+explain: "A 7 cannot be rolled (0) · heads is 1/2 · every face is below 7 (1) — least to most likely."
+solution:
+  - type: step
+    goal: Evaluate each event.
+    working: "roll a 7 → 0 · heads → 1/2 · below 7 → 1"
+  - type: step
+    goal: Order the probabilities.
+    working: "0 < 1/2 < 1"
+  - type: takeaway
+    text: Events from different games still compare — their probabilities share one 0-to-1 scale.
+  - type: verification
+    text: "No die face shows 7, and all six faces are below 7 — the two extremes are genuine."
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Order these events from least likely to most likely.</p>
+  <ol class="order"><li>Flip heads on a coin</li><li>Roll a number below 7 on a die</li><li>Roll a 7 on a die</li></ol>
+  <p class="explain">Roll a 7 = impossible (0). Flip heads = 1/2. Roll below 7 = certain (1).</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1/2"]
+description: Unequal parts — area decides, not the count of parts
+hint:
+  - "Careful — these parts are NOT all the same size."
+  - "Imagine slicing the circle into equal quarters."
+  - "How many of those quarters would the red region fill?"
+explain: "Red fills half the circle; blue and yellow fill a quarter each: P(red) = 1/2."
+whyWrong:
+  "1/3":
+    code: DATA_READING_ERROR
+    message: "1/3 counts three parts as equal — but red's part is twice the size of the others."
+  "2/3":
+    code: DATA_READING_ERROR
+    message: "2/3 would need red to fill two of three equal parts — red fills two of four QUARTERS."
+  "1/4":
+    code: DATA_READING_ERROR
+    message: "1/4 is blue's share (or yellow's) — red covers double that."
+solution:
+  - type: step
+    goal: Recut the circle into equal pieces.
+    working: "quarters — the size of the smallest part"
+  - type: step
+    goal: Count red's share.
+    working: "red fills 2 quarters of 4 → 2/4 = 1/2"
+    reason: Probability follows AREA — a bigger part catches the pointer more often.
+  - type: takeaway
+    text: Count equal-sized pieces, not drawn borders — area is what the pointer obeys.
+  - type: verification
+    text: "1/2 + 1/4 + 1/4 = 1 — the three regions tile the circle exactly."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Careful — the parts are NOT all the same size! Tap the probability the spinner lands on red.</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 75.0,144.0 Z" fill="#ef4444" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L75.0,144.0 A69.0,69.0 0 0 1 6.0,75.0 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L6.0,75.0 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#facc15" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="49.1" y2="49.1" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="39.9,39.9 54.0,44.1 44.1,54.0" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <ul class="options"><li data-val="1/3"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text></svg></li><li data-val="1/2"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text></svg></li><li data-val="2/3"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text></svg></li><li data-val="1/4"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text></svg></li></ul>
+  <p class="explain">Red covers half the circle, so P(red) = 1/2. There are 3 colours, but they are not equal parts — 1/3 would be wrong.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Bag A"]
+description: Same winners, different bags — which chance is better?
+hint:
+  - "Both bags hold exactly one green marble."
+  - "Compare how many marbles the green must compete with in each bag."
+  - "Fewer rivals means a better chance."
+explain: "Bag A gives green a 1-in-4 chance; Bag B a 1-in-8 — 1/4 beats 1/8, so Bag A."
+whyWrong:
+  "They are the same":
+    code: COMPARISON_EQUAL_WRONG
+    message: "The winners match but the bags don't — 1 in 4 is twice the chance of 1 in 8."
+  "You cannot tell":
+    code: DATA_READING_ERROR
+    message: "Both bags' counts are given — 1 of 4 against 1 of 8 can be compared directly."
+  "Bag B":
+    code: COMPARISON_REVERSED
+    message: "Bag B buries its green among 8 marbles — twice the competition of Bag A."
+solution:
+  - type: step
+    goal: Write each bag's chance.
+    working: "Bag A → 1/4 · Bag B → 1/8"
+  - type: step
+    goal: Compare the fractions.
+    working: "1/4 = 2/8 > 1/8 → Bag A"
+    reason: Same top, smaller bottom — the smaller bag spreads the chance less thin.
+  - type: takeaway
+    text: With equal winners, the smaller total gives the better chance.
+  - type: verification
+    text: "Imagine 8 draws from each: Bag A expects 2 greens, Bag B expects 1 — Bag A really is better."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Bag A has 1 green marble out of 4. Bag B has 1 green marble out of 8. Which bag gives Meera a better chance of picking green?</p>
+  <div style="display:flex;gap:26px;justify-content:center;align-items:flex-start;flex-wrap:wrap;margin:6px 0 2px"><div style="text-align:center"><div style="font-family:Quicksand,sans-serif;font-weight:700;font-size:.95rem;color:#2c2150;margin-bottom:4px">Bag A</div><svg viewBox="0 0 150 104" width="150" height="104" role="img" aria-label="4 marbles"><circle cx="29.0" cy="23" r="17" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="23.9" cy="17.6" r="3.4" fill="#ffffff" opacity="0.55"/><circle cx="75.0" cy="23" r="17" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="69.9" cy="17.6" r="3.4" fill="#ffffff" opacity="0.55"/><circle cx="121.0" cy="23" r="17" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="115.9" cy="17.6" r="3.4" fill="#ffffff" opacity="0.55"/><circle cx="75.0" cy="69" r="17" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="69.9" cy="63.6" r="3.4" fill="#ffffff" opacity="0.55"/></svg></div><div style="text-align:center"><div style="font-family:Quicksand,sans-serif;font-weight:700;font-size:.95rem;color:#2c2150;margin-bottom:4px">Bag B</div><svg viewBox="0 0 196 104" width="196" height="104" role="img" aria-label="8 marbles"><circle cx="29.0" cy="23" r="17" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="23.9" cy="17.6" r="3.4" fill="#ffffff" opacity="0.55"/><circle cx="75.0" cy="23" r="17" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="69.9" cy="17.6" r="3.4" fill="#ffffff" opacity="0.55"/><circle cx="121.0" cy="23" r="17" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="115.9" cy="17.6" r="3.4" fill="#ffffff" opacity="0.55"/><circle cx="167.0" cy="23" r="17" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="161.9" cy="17.6" r="3.4" fill="#ffffff" opacity="0.55"/><circle cx="29.0" cy="69" r="17" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="23.9" cy="63.6" r="3.4" fill="#ffffff" opacity="0.55"/><circle cx="75.0" cy="69" r="17" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="69.9" cy="63.6" r="3.4" fill="#ffffff" opacity="0.55"/><circle cx="121.0" cy="69" r="17" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="115.9" cy="63.6" r="3.4" fill="#ffffff" opacity="0.55"/><circle cx="167.0" cy="69" r="17" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="161.9" cy="63.6" r="3.4" fill="#ffffff" opacity="0.55"/></svg></div></div>
+  <ul class="options"><li data-val="They are the same">text</li><li data-val="You cannot tell">text</li><li data-val="Bag A">text</li><li data-val="Bag B">text</li></ul>
+  <p class="explain">Bag A gives 1/4 and Bag B gives 1/8. Both bags have just 1 green, but in Bag A it competes with fewer marbles — so 1/4 is the bigger chance.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["7/10"]
+description: Marbles in words — NOT blue
+hint:
+  - "First find how many marbles are NOT blue."
+  - "The bag holds 10; blue takes 3 of them."
+  - "Not-blue over total is the answer."
+explain: "10 − 3 = 7 marbles are not blue: P(not blue) = 7/10."
+whyWrong:
+  "3/10":
+    code: NEAR_MISS
+    message: "3/10 is the chance of picking blue — the question asks for the opposite."
+  "10/7":
+    code: NEAR_MISS
+    message: "10/7 is inverted — and bigger than 1, which no chance can be."
+  "1/10":
+    code: NEAR_MISS
+    message: "1/10 would leave only one non-blue marble — there are seven."
+solution:
+  - type: step
+    goal: Count the not-blues.
+    working: "10 − 3 = 7"
+  - type: step
+    goal: Write the fraction.
+    working: "P(not blue) = 7/10"
+  - type: takeaway
+    text: NOT-chances come from subtracting: total minus the named ones.
+  - type: verification
+    text: P(blue) + P(not blue) = 3/10 + 7/10 = 1 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Arjun&#x27;s bag has 10 marbles. 3 of them are blue. Tap the probability of picking a marble that is NOT blue.</p>
+  <svg viewBox="0 0 236 180" width="236" height="180" role="img" aria-label="10 marbles"><circle cx="34.0" cy="28" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="27.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="28" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="83.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="28" r="22" fill="#2f9fe8" stroke="#1668a8" stroke-width="2"/><circle cx="139.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="202.0" cy="28" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="195.4" cy="21.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="34.0" cy="84" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="27.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="84" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="83.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="84" r="22" fill="#f97316" stroke="#c2410c" stroke-width="2"/><circle cx="139.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="202.0" cy="84" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="195.4" cy="77.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="90.0" cy="140" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="83.4" cy="133.0" r="4.4" fill="#ffffff" opacity="0.55"/><circle cx="146.0" cy="140" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="139.4" cy="133.0" r="4.4" fill="#ffffff" opacity="0.55"/></svg>
+  <ul class="options"><li data-val="3/10"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">10</text></svg></li><li data-val="10/7"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">10</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">7</text></svg></li><li data-val="1/10"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">10</text></svg></li><li data-val="7/10"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">7</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">10</text></svg></li></ul>
+  <p class="explain">10 marbles in all, 3 are blue, so 10 − 3 = 7 are not blue → 7/10.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Yes — both have the same chance"]
+description: Is the red-vs-blue spinner game fair?
+hint:
+  - "Fairness is about the two players' chances."
+  - "Count red's parts and blue's parts."
+  - "Equal parts means equal chances."
+explain: "Red and blue each cover 2 of the 4 parts — 1/2 each, so the game is fair."
+whyWrong:
+  "No — Arjun has a better chance":
+    code: DATA_READING_ERROR
+    message: "Blue covers 2 parts, exactly as many as red — no edge for Arjun."
+  "You cannot tell":
+    code: DATA_READING_ERROR
+    message: "The spinner shows everything needed — 2 red parts, 2 blue parts, chances equal."
+  "No — Priya has a better chance":
+    code: DATA_READING_ERROR
+    message: "Red's 2 parts are matched exactly by blue's 2 — Priya holds no advantage."
+solution:
+  - type: step
+    goal: Count each player's parts.
+    working: "red 2 · blue 2 (of 4)"
+  - type: step
+    goal: Compare the chances.
+    working: "1/2 = 1/2 → fair"
+    reason: A game is fair when every player's winning chance is equal.
+  - type: takeaway
+    text: "Fairness has a maths test: equal probabilities for every player."
+  - type: verification
+    text: "Played many times, each player should win about half — nobody's colour is favoured."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya wins if the spinner lands on red. Arjun wins if it lands on blue. Is this game fair?</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 144.0,75.0 Z" fill="#ef4444" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L144.0,75.0 A69.0,69.0 0 0 1 75.0,144.0 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L75.0,144.0 A69.0,69.0 0 0 1 6.0,75.0 Z" fill="#ef4444" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L6.0,75.0 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="49.1" y2="100.9" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="39.9,110.1 44.1,96.0 54.0,105.9" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <ul class="options"><li data-val="Yes — both have the same chance">text</li><li data-val="No — Arjun has a better chance">text</li><li data-val="You cannot tell">text</li><li data-val="No — Priya has a better chance">text</li></ul>
+  <p class="explain">Red covers 2 of the 4 equal parts and blue covers 2 of the 4. Both are 1/2, so the game is fair.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1"]
+description: A spinner that is entirely blue
+hint:
+  - "Look at every part of this spinner."
+  - "How many parts are NOT blue?"
+  - "What must happen on every single spin?"
+explain: "Every one of the 6 parts is blue — landing on blue is certain: P = 1."
+whyWrong:
+  "0":
+    code: PROBABILITY_WRONG_LEVEL
+    message: "0 means impossible — but blue is everywhere on this spinner."
+  "1/4":
+    code: NEAR_MISS
+    message: "1/4 would leave three-quarters un-blue — every part here is blue."
+  "1/2":
+    code: NEAR_MISS
+    message: "1/2 means an even chance — there is nothing else for the pointer to land on."
+solution:
+  - type: step
+    goal: Count the blue parts.
+    working: "all 6 of 6"
+  - type: step
+    goal: Write the probability.
+    working: "6/6 = 1"
+    reason: An event covering every outcome is certain.
+  - type: takeaway
+    text: When winners equal the total, the fraction collapses to 1 — certainty.
+  - type: verification
+    text: P(not blue) = 0/6 = 0, and 1 + 0 = 1 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability this spinner lands on blue.</p>
+  <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="spinner"><path d="M75.0,75.0 L75.0,6.0 A69.0,69.0 0 0 1 134.8,40.5 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L134.8,40.5 A69.0,69.0 0 0 1 134.8,109.5 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L134.8,109.5 A69.0,69.0 0 0 1 75.0,144.0 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L75.0,144.0 A69.0,69.0 0 0 1 15.2,109.5 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L15.2,109.5 A69.0,69.0 0 0 1 15.2,40.5 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><path d="M75.0,75.0 L15.2,40.5 A69.0,69.0 0 0 1 75.0,6.0 Z" fill="#2f9fe8" stroke="#6b6b6b" stroke-width="1.4"/><circle cx="75.0" cy="75.0" r="69.0" fill="none" stroke="#6b6b6b" stroke-width="2"/><line x1="75.0" y1="75.0" x2="56.7" y2="106.8" stroke="#444" stroke-width="4" stroke-linecap="round"/><polygon points="50.2,118.0 50.6,103.3 62.7,110.3" fill="#444"/><circle cx="75.0" cy="75.0" r="5" fill="#444"/></svg>
+  <ul class="options"><li data-val="0"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="27" text-anchor="middle" font-family="Baloo 2,cursive" font-size="20" font-weight="800" fill="#2c2150">0</text></svg></li><li data-val="1"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="27" text-anchor="middle" font-family="Baloo 2,cursive" font-size="20" font-weight="800" fill="#2c2150">1</text></svg></li><li data-val="1/4"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">4</text></svg></li><li data-val="1/2"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">2</text></svg></li></ul>
+  <p class="explain">Every part is blue, so it is certain → 1.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["4", "12"]
+description: Write P(green) for the crayon box
+hint:
+  - "The story lists every colour's count."
+  - "Green crayons go on top of the fraction."
+  - "ALL the crayons go underneath."
+explain: "4 green crayons out of 5 + 4 + 3 = 12: P(green) = 4/12."
+solution:
+  - type: step
+    goal: Count the greens.
+    working: "4"
+  - type: step
+    goal: Count the whole box.
+    working: "5 + 4 + 3 = 12"
+  - type: step
+    goal: Assemble the fraction.
+    working: "P(green) = 4/12"
+  - type: takeaway
+    text: The bottom of the fraction is the WHOLE box — every colour, not just the named one.
+  - type: verification
+    text: "5/12 + 4/12 + 3/12 = 12/12 = 1 — all three colours together fill the box."
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Ananya's box has 12 crayons: 5 red, 4 green and 3 blue. She picks one without looking. P(green) = [] / []</p>
+  <p class="explain">4 green crayons out of 12 → 4/12.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["5/6"]
+description: Die — NOT rolling a 3
+hint:
+  - "Count the faces that are not a 3."
+  - "Five faces dodge the 3; one shows it."
+  - "Winners over the six faces."
+explain: "Faces 1, 2, 4, 5, 6 avoid the 3: P(not 3) = 5/6."
+whyWrong:
+  "1/3":
+    code: NEAR_MISS
+    message: "1/3 is two faces' worth — five faces dodge the 3."
+  "1/6":
+    code: NEAR_MISS
+    message: "1/6 is the chance of ROLLING the 3 — the question wants its opposite."
+  "6/5":
+    code: NEAR_MISS
+    message: "6/5 is upside down — no probability is bigger than 1."
+solution:
+  - type: step
+    goal: Count the winners.
+    working: "6 − 1 = 5 faces"
+  - type: step
+    goal: Write the fraction.
+    working: "P(not 3) = 5/6"
+  - type: takeaway
+    text: NOT-chances on a die: total faces minus the named face, over six.
+  - type: verification
+    text: P(3) + P(not 3) = 1/6 + 5/6 = 1 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Tap the probability of NOT rolling a 3 on a 6-sided die.</p>
+  <ul class="options"><li data-val="5/6"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">5</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">6</text></svg></li><li data-val="1/3"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">3</text></svg></li><li data-val="1/6"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">1</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">6</text></svg></li><li data-val="6/5"><svg viewBox="0 0 56 40" width="56" height="40"><text x="28.0" y="15" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">6</text><line x1="10" y1="20" x2="46" y2="20" stroke="#2c2150" stroke-width="2"/><text x="28.0" y="35" text-anchor="middle" font-family="Baloo 2,cursive" font-size="16" font-weight="800" fill="#2c2150">5</text></svg></li></ul>
+  <p class="explain">5 of the 6 faces are not a 3 → 5/6.</p>
+</div>
+
+</div>
