@@ -77,6 +77,25 @@ const cases = [
     src: good("Q1?", ["a", "b"], "a") +
          `\n<!--@q\ntype: single-select\nanswer: ["z"]\n-->`,
     mustHave: ["ORPHAN_FRONTMATTER"], expectDetected: 1 },
+
+  // rao-master-19 Part C: an unknown figure type is a BUILD-FAILING error, not a
+  // warning. It used to warn and render nothing — a child saw a blank. The corpus
+  // carries no unknown figures, so without this fixture a demotion back to a
+  // warning would never be caught.
+  { name: "unknown figure data-show is a build-failing error",
+    src: `<!--@q\ntype: single-select\nanswer: ["a"]\n-->\n` +
+         `<div class="question"><p class="prompt">X?</p>` +
+         `<figure data-show="no-such-figure"></figure>` +
+         `<ul class="options"><li data-val="a">a</li><li data-val="b">b</li></ul></div>`,
+    mustHave: ["UNKNOWN_FIGURE"], expectDetected: 1 },
+
+  { name: "known figure types (equal-groups, sequence) build clean",
+    src: `<!--@q\ntype: single-select\nanswer: ["a"]\n-->\n` +
+         `<div class="question"><p class="prompt">X?</p>` +
+         `<figure data-show="equal-groups" data-groups="3" data-per="4"></figure>` +
+         `<figure data-show="sequence" data-values="2,4,?"></figure>` +
+         `<ul class="options"><li data-val="a">a</li><li data-val="b">b</li></ul></div>`,
+    mustHave: [], mustLack: ["UNKNOWN_FIGURE"], expectDetected: 1 },
 ];
 
 let failed = 0;
@@ -139,6 +158,27 @@ for (const c of cases) {
 
   if (sanitizerFailed) {
     console.log(`\n${C.r}SANITIZER: ${sanitizerFailed} case(s) failed.${C.x}`);
+  }
+}
+
+/* ── UNKNOWN-FIGURE LEVEL GUARD (rao-master-19 Part C) ──────────────────────
+   The UNKNOWN_FIGURE issue must stay ERROR-level: the build gate
+   (verify-grading-node) only fails on level "error", so a silent demotion to
+   "warn" would reopen the blank-figure hole while every code-based check
+   still saw the code present. */
+{
+  const src = `<!--@q\ntype: single-select\nanswer: ["a"]\n-->\n` +
+    `<div class="question"><p class="prompt">X?</p>` +
+    `<figure data-show="no-such-figure"></figure>` +
+    `<ul class="options"><li data-val="a">a</li><li data-val="b">b</li></ul></div>`;
+  const v = RP.validate(src);
+  const iss = (v.items || []).flatMap((it) => (it.issues || []))
+    .filter((i) => i.code === "UNKNOWN_FIGURE");
+  if (iss.length && iss.every((i) => (i.level || "error") === "error")) {
+    console.log(`${C.g}✓${C.x} UNKNOWN_FIGURE is error-level (build-failing)`);
+  } else {
+    failed++;
+    console.log(`${C.r}✗ UNKNOWN_FIGURE is ${iss.length ? "level \"" + iss[0].level + "\"" : "missing"} — must be an error-level, build-failing issue${C.x}`);
   }
 }
 

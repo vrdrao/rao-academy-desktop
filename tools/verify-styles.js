@@ -507,7 +507,246 @@ async function checkCardLook(browser) {
   return problems;
 }
 
+/* ---- FIGURES (rao-master-19 Parts A+B) — equal-groups + sequence must PAINT ----
+   The 7 defect questions (Division_facts_to_10 q1-q2, number-patterns-word-problems-
+   remix q2/q7/q12/q19/q24) once requested these figure types and rendered NOTHING —
+   and every grading run stayed green. This check renders both figures on real fixture
+   cards at a desktop and a phone viewport and asserts on computed paint: the figure
+   exists, has non-zero rendered size, fits the card, and draws in the spec colours
+   (brand-purple #7b5cff structures, ink #2c2150 numerals, dashed blank box). */
+async function checkFigures(browser) {
+  const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8");
+  const html =
+    `<!doctype html><html><head><meta charset="utf-8">` +
+    `<meta name="viewport" content="width=device-width">` +
+    `<style>${read("engine/rao.css")}</style>` +
+    `<style>${read("engine/rao-card.css")}</style></head><body style="margin:0;padding:0">` +
+    `<div id="source">` +
+    `<!--@q\ntype: single-select\nanswer: ["4"]\n-->` +
+    `<div class="question" data-type="single-select">` +
+    `<p class="prompt">How many dots are in each ring?</p>` +
+    `<figure data-show="equal-groups" data-groups="3" data-per="4"></figure>` +
+    `<ul class="options"><li>3</li><li>4</li><li>12</li></ul>` +
+    `</div>` +
+    `<!--@q\ntype: single-select\nanswer: ["16"]\n-->` +
+    `<div class="question" data-type="single-select">` +
+    `<p class="prompt">What number belongs in the empty box?</p>` +
+    `<figure data-show="sequence" data-values="4,8,12,?"></figure>` +
+    `<ul class="options"><li>14</li><li>16</li><li>20</li></ul>` +
+    `</div>` +
+    `</div>` +
+    `<div id="preview" class="rao-lesson" data-theme="grape"></div>` +
+    `<script>${read("engine/preview-engine.js").replace(/<\/script/gi, "<\\/script")}</script>` +
+    `<script>${read("engine/rao-card.js").replace(/<\/script/gi, "<\\/script")}</script>` +
+    `</body></html>`;
+  const tmp = path.join(ROOT, "review", "__figures_fixture.html");
+  fs.writeFileSync(tmp, html);
+  const problems = [];
+  try {
+    for (const vp of [{ width: 1280, height: 800 }, { width: 390, height: 844 }]) {
+      const page = await browser.newPage({ viewport: vp });
+      try {
+        await page.goto("file://" + tmp);
+        await page.waitForFunction(() => document.querySelectorAll(".pv-frame").length >= 2, { timeout: 15000 })
+                  .catch(() => {});
+        await page.waitForTimeout(300);
+        const at = `${vp.width}px`;
+        const res = await page.evaluate(() => {
+          const out = { eq: null, seq: null };
+          const frames = [...document.querySelectorAll(".pv-frame")];
+          // equal-groups card
+          {
+            const svg = frames[0] && frames[0].querySelector(".fig-wrap svg");
+            if (svg) {
+              const r = svg.getBoundingClientRect();
+              const qb = frames[0].querySelector(".qbody").getBoundingClientRect();
+              const ring = svg.querySelector("rect");
+              const dot = svg.querySelector("circle, svg");
+              out.eq = {
+                w: r.width, h: r.height, fits: r.width <= qb.width + 1,
+                rings: svg.querySelectorAll("rect").length,
+                dots: svg.querySelectorAll("circle").length,
+                ringStroke: ring ? getComputedStyle(ring).stroke : null,
+                ringFill: ring ? getComputedStyle(ring).fill : null,
+                dotFill: dot && dot.tagName === "circle" ? getComputedStyle(dot).fill : null,
+                labels: svg.querySelectorAll("text").length,
+              };
+            }
+          }
+          // sequence card
+          {
+            const svg = frames[1] && frames[1].querySelector(".fig-wrap svg");
+            if (svg) {
+              const r = svg.getBoundingClientRect();
+              const qb = frames[1].querySelector(".qbody").getBoundingClientRect();
+              const rects = [...svg.querySelectorAll("rect")];
+              const solid = rects.filter((b) => getComputedStyle(b).strokeDasharray === "none");
+              const dashed = rects.filter((b) => getComputedStyle(b).strokeDasharray !== "none");
+              const texts = [...svg.querySelectorAll("text")];
+              out.seq = {
+                w: r.width, h: r.height, fits: r.width <= qb.width + 1,
+                boxes: rects.length, solid: solid.length, dashed: dashed.length,
+                boxStroke: solid[0] ? getComputedStyle(solid[0]).stroke : null,
+                textFill: texts[0] ? getComputedStyle(texts[0]).fill : null,
+                texts: texts.map((t) => t.textContent.trim()),
+                arrows: svg.querySelectorAll("polygon").length,
+              };
+            }
+          }
+          return out;
+        });
+        const BRAND = "rgb(123, 92, 255)", INK = "rgb(44, 33, 80)";
+        if (!res.eq) problems.push(`${at}: EQUAL-GROUPS figure did not render at all (no .fig-wrap svg on the card)`);
+        else {
+          if (!(res.eq.w >= 2 && res.eq.h >= 2)) problems.push(`${at}: EQUAL-GROUPS rendered blank (${res.eq.w}×${res.eq.h})`);
+          if (!res.eq.fits) problems.push(`${at}: EQUAL-GROUPS overflows the card (${res.eq.w}px wide)`);
+          if (res.eq.rings !== 3) problems.push(`${at}: EQUAL-GROUPS has ${res.eq.rings} rings, expected 3`);
+          if (res.eq.dots !== 12) problems.push(`${at}: EQUAL-GROUPS has ${res.eq.dots} dots, expected 12`);
+          if (res.eq.ringStroke !== BRAND) problems.push(`${at}: EQUAL-GROUPS ring stroke is ${res.eq.ringStroke}, must be brand ${BRAND}`);
+          if (res.eq.ringFill !== "none" && res.eq.ringFill !== "rgba(0, 0, 0, 0)") problems.push(`${at}: EQUAL-GROUPS ring is FILLED (${res.eq.ringFill}) — must be transparent (no intermediate surface)`);
+          if (res.eq.dotFill !== BRAND) problems.push(`${at}: EQUAL-GROUPS dot fill is ${res.eq.dotFill}, must be brand ${BRAND}`);
+          if (res.eq.labels !== 0) problems.push(`${at}: EQUAL-GROUPS draws ${res.eq.labels} text label(s) — a count label can leak the answer; the figure must draw none`);
+        }
+        if (!res.seq) problems.push(`${at}: SEQUENCE figure did not render at all (no .fig-wrap svg on the card)`);
+        else {
+          if (!(res.seq.w >= 2 && res.seq.h >= 2)) problems.push(`${at}: SEQUENCE rendered blank (${res.seq.w}×${res.seq.h})`);
+          if (!res.seq.fits) problems.push(`${at}: SEQUENCE overflows the card (${res.seq.w}px wide)`);
+          if (res.seq.boxes !== 4) problems.push(`${at}: SEQUENCE has ${res.seq.boxes} boxes, expected 4`);
+          if (res.seq.dashed !== 1) problems.push(`${at}: SEQUENCE has ${res.seq.dashed} dashed blank box(es), expected exactly 1`);
+          if (res.seq.boxStroke !== BRAND) problems.push(`${at}: SEQUENCE box stroke is ${res.seq.boxStroke}, must be brand ${BRAND}`);
+          if (res.seq.textFill !== INK) problems.push(`${at}: SEQUENCE numeral fill is ${res.seq.textFill}, must be ink ${INK}`);
+          if (res.seq.texts.join(",") !== "4,8,12") problems.push(`${at}: SEQUENCE terms are [${res.seq.texts.join(",")}] — expected the three known terms 4,8,12 and a BLANK box (the missing term must never be printed)`);
+          if (res.seq.arrows < 3) problems.push(`${at}: SEQUENCE has ${res.seq.arrows} arrows, expected ≥ 3`);
+        }
+      } finally {
+        await page.close();
+      }
+    }
+  } finally {
+    try { fs.unlinkSync(tmp); } catch (e) {}
+  }
+  return problems;
+}
+
+/* ---- OPTION-LAYOUT LADDER (rao-master-19 Part D) — computed-style per tier ----
+   Build-time tiers from the longest option: ≤10 chars → 4-across (unchanged),
+   11–18 → 2×2 grid, >18 → one full-width row per option. Laws checked on paint,
+   at a desktop AND a phone viewport: the tier's actual row/column arrangement,
+   IDENTICAL font-size across all three tiers, and no mid-expression wrap (every
+   .nw expression run renders as a single fragment). */
+async function checkOptionLadder(browser) {
+  const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8");
+  const html =
+    `<!doctype html><html><head><meta charset="utf-8">` +
+    `<meta name="viewport" content="width=device-width">` +
+    `<style>${read("engine/rao.css")}</style>` +
+    `<style>${read("engine/rao-card.css")}</style></head><body style="margin:0;padding:0">` +
+    `<div id="source">` +
+    `<!--@q\ntype: single-select\nanswer: ["24"]\n-->` +
+    `<div class="question" data-type="single-select">` +
+    `<p class="prompt">What is 4 × 6?</p>` +
+    `<ul class="options"><li>24</li><li>18</li><li>28</li><li>30</li></ul>` +
+    `</div>` +
+    `<!--@q\ntype: single-select\nanswer: ["9,000 + 400"]\n-->` +
+    `<div class="question" data-type="single-select">` +
+    `<p class="prompt">Which sum is right?</p>` +
+    `<ul class="options"><li>9,000 + 400</li><li>9,000 + 40</li><li>900 + 400</li><li>90 + 4</li></ul>` +
+    `</div>` +
+    `<!--@q\ntype: single-select\nanswer: ["24,516 + 18,097 = 42,613"]\n-->` +
+    `<div class="question" data-type="single-select">` +
+    `<p class="prompt">Which addition sentence is correct?</p>` +
+    `<ul class="options"><li>24,516 + 18,097 = 42,613</li><li>24,516 + 18,097 = 41,613</li><li>24,516 + 18,097 = 43,613</li></ul>` +
+    `</div>` +
+    `</div>` +
+    `<div id="preview" class="rao-lesson" data-theme="grape">` +
+    `</div>` +
+    `<script>${read("engine/preview-engine.js").replace(/<\/script/gi, "<\\/script")}</script>` +
+    `<script>${read("engine/rao-card.js").replace(/<\/script/gi, "<\\/script")}</script>` +
+    `</body></html>`;
+  const tmp = path.join(ROOT, "review", "__ladder_fixture.html");
+  fs.writeFileSync(tmp, html);
+  const problems = [];
+  try {
+    for (const vp of [{ width: 1280, height: 800 }, { width: 390, height: 844 }]) {
+      const page = await browser.newPage({ viewport: vp });
+      try {
+        await page.goto("file://" + tmp);
+        await page.waitForFunction(() => document.querySelectorAll(".pv-frame").length >= 3, { timeout: 15000 })
+                  .catch(() => {});
+        await page.waitForTimeout(300);
+        const at = `${vp.width}px`;
+        const res = await page.evaluate(() => {
+          const layout = (optsEl) => {
+            const btns = [...optsEl.querySelectorAll(".opt")];
+            const rows = [];
+            btns.forEach((b) => {
+              const r = b.getBoundingClientRect();
+              const row = rows.find((x) => Math.abs(x.top - r.top) < 4);
+              if (row) row.n++;
+              else rows.push({ top: r.top, n: 1 });
+            });
+            const ow = optsEl.getBoundingClientRect().width;
+            return {
+              tier: optsEl.getAttribute("data-opt-tier"),
+              cls: optsEl.className,
+              rows: rows.sort((a, b) => a.top - b.top).map((r) => r.n),
+              fullWidth: btns.every((b) => b.getBoundingClientRect().width >= ow * 0.95),
+              font: getComputedStyle(btns[0]).fontSize,
+              nwFragments: [...optsEl.querySelectorAll(".nw")].map((s) => s.getClientRects().length),
+              overflow: optsEl.scrollWidth > optsEl.clientWidth + 2,
+            };
+          };
+          return [...document.querySelectorAll(".pv-frame .opts")].map(layout);
+        });
+        if (res.length !== 3) { problems.push(`${at}: expected 3 option sets, found ${res.length}`); continue; }
+        const [s, m, l] = res;
+        const shape = (r) => r.rows.join(",");
+        if (s.tier !== "short") problems.push(`${at}: SHORT set stamped tier "${s.tier}" (class "${s.cls}") — expected short`);
+        if (m.tier !== "mid") problems.push(`${at}: MEDIUM set stamped tier "${m.tier}" (class "${m.cls}") — expected mid`);
+        if (l.tier !== "long") problems.push(`${at}: LONG set stamped tier "${l.tier}" (class "${l.cls}") — expected long`);
+        // Phone note: at 390px the lesson CONTAINER is 342px, so the PRE-EXISTING
+        // ≤360px-container rule already makes every plain grid one column — the
+        // short tier at a phone is one-per-row TODAY, unchanged by the ladder.
+        if (vp.width >= 1280 && shape(s) !== "4") problems.push(`${at}: SHORT tier renders rows [${shape(s)}] — expected one row of 4 (today's grid)`);
+        if (vp.width < 1280 && shape(s) !== "1,1,1,1") problems.push(`${at}: SHORT tier renders rows [${shape(s)}] — expected today's phone behavior (one per row via the ≤360px container rule)`);
+        if (vp.width >= 1280 && shape(m) !== "2,2") problems.push(`${at}: MEDIUM tier renders rows [${shape(m)}] — expected a 2×2 grid`);
+        if (vp.width < 1280 && shape(m) !== "1,1,1,1") problems.push(`${at}: MEDIUM tier renders rows [${shape(m)}] — expected one option per row at phone width (an 18-char expression cannot fit half a phone)`);
+        if (shape(l) !== "1,1,1") problems.push(`${at}: LONG tier renders rows [${shape(l)}] — expected one full-width row per option`);
+        if (!l.fullWidth) problems.push(`${at}: LONG tier options are not full-width rows`);
+        if (!(s.font === m.font && m.font === l.font))
+          problems.push(`${at}: FONT SIZE differs between tiers (short ${s.font} / mid ${m.font} / long ${l.font}) — the ladder must NEVER change font size`);
+        const wrapped = [m, l].flatMap((r) => r.nwFragments).filter((n) => n > 1).length;
+        if (wrapped) problems.push(`${at}: ${wrapped} expression run(s) WRAP mid-expression (an .nw span split across lines)`);
+        if (res.some((r) => r.overflow)) problems.push(`${at}: an option set overflows its card horizontally`);
+      } finally {
+        await page.close();
+      }
+    }
+  } finally {
+    try { fs.unlinkSync(tmp); } catch (e) {}
+  }
+  return problems;
+}
+
 (async () => {
+  // --figures-only / --ladder-only: run just the rao-master-19 fixture checks
+  // (used for fast sabotage-proof runs; the full suite still runs everything).
+  if (process.argv.includes("--figures-only") || process.argv.includes("--ladder-only")) {
+    const browser = await chromium.launch();
+    const problems = process.argv.includes("--figures-only")
+      ? await checkFigures(browser)
+      : await checkOptionLadder(browser);
+    await browser.close();
+    const label = process.argv.includes("--figures-only") ? "figures (equal-groups + sequence)" : "option ladder (short/mid/long)";
+    if (problems.length) {
+      console.log(`FAIL  ${label} (1280px + 390px)`);
+      problems.forEach((p) => console.log("      - " + p));
+      process.exit(1);
+    }
+    console.log(`PASS  ${label} — at 1280px and 390px`);
+    process.exit(0);
+  }
+
   // --card-look-only: run just the card-anatomy fixture check (used for fast
   // sabotage-proof runs; the full suite still runs everything).
   if (process.argv.includes("--card-look-only")) {
@@ -577,8 +816,28 @@ async function checkCardLook(browser) {
     console.log(`PASS  card look  (frame 3px, radius 25px, halo 9/21@.34, ledge 5@.12, white page, checker .09 @ 30px — at 1280px and 390px)`);
   }
 
+  // Figures — equal-groups + sequence paint on real cards, 1280px and 390px (rao-master-19).
+  const figureProblems = await checkFigures(browser);
+  if (figureProblems.length) {
+    failed++;
+    console.log(`\nFAIL  figures (equal-groups + sequence)`);
+    figureProblems.forEach((p) => console.log("      - " + p));
+  } else {
+    console.log(`PASS  figures  (equal-groups + sequence paint, brand colours, no leak labels — at 1280px and 390px)`);
+  }
+
+  // Option ladder — tier layout, constant font, no mid-expression wrap (rao-master-19).
+  const ladderProblems = await checkOptionLadder(browser);
+  if (ladderProblems.length) {
+    failed++;
+    console.log(`\nFAIL  option ladder (short/mid/long)`);
+    ladderProblems.forEach((p) => console.log("      - " + p));
+  } else {
+    console.log(`PASS  option ladder  (4-across / 2×2 / stacked, one font size, no mid-expression wrap — at 1280px and 390px)`);
+  }
+
   await browser.close();
-  const total = files.length + 3;   // +1 explain, +1 mobile, +1 card look
+  const total = files.length + 5;   // +1 explain, +1 mobile, +1 card look, +1 figures, +1 ladder
   console.log(failed ? `\n${failed}/${total} FAILED` : `\nselection styling is clean`);
   process.exit(failed ? 1 : 0);
 })();

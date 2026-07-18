@@ -110,14 +110,16 @@ is `—` throughout.
 | Transportation 24h more15 | 15 | `lessons/incoming/transportation_24h_more15.html` | `review/transportation_24h_more15.html` | — |
 | Transportation 24h remix | 12 | `lessons/incoming/transportation_24h_remix.html` | `review/transportation_24h_remix.html` | — |
 | Transportation schedules 12h complete | 30 | `lessons/incoming/transportation-schedules-12h-complete.html` | `review/transportation-schedules-12h-complete.html` | — |
-| Type coverage (harness fixture) | 15 | `lessons/_type-coverage.html` | `review/_type-coverage.html` | — |
+| Type coverage (harness fixture) | 20 | `lessons/_type-coverage.html` | `review/_type-coverage.html` | — |
 | Understanding probability remix | 30 | `lessons/incoming/Understanding_probability_remix.html` | `review/Understanding_probability_remix.html` | — |
 | Unit prices remix | 27 | `lessons/incoming/Unit_prices_remix.html` | `review/Unit_prices_remix.html` | — |
 | Word problems with extra or missing information | 24 | `lessons/incoming/Word problems with extra or missing information.html` | `review/Word problems with extra or missing information.html` | — |
 
-**Totals: 104 lessons, 2,722 questions.**
-Matches the recorded 104 / 2,722 exactly.
+**Totals: 104 lessons, 2,727 questions.**
+Matches the recorded 104 / 2,727 exactly (2,722 → 2,727 on 2026-07-18:
+BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html` —
+equal-groups figure, sequence figure, and one option-set per ladder tier).
 
 Note: the recorded totals include `_type-coverage.html`, the harness fixture
-that keeps every question type under test (15 questions). It is listed above
+that keeps every question type under test (20 questions). It is listed above
 as part of the corpus.

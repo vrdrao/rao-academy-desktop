@@ -158,6 +158,16 @@
 .rao-lesson /* ── MCQ / multi-select option buttons ── */
 .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:6px 0;}
 @media(max-width:600px){.rao-lesson .opts{grid-template-columns:repeat(var(--rz-opt-cols,2),1fr);}.rao-lesson .opts.opts-stack{grid-template-columns:1fr;}.rao-lesson .opts.opts-signs{grid-template-columns:repeat(3,1fr);}}
+/* ── rao-master-19: OPTION-LAYOUT LADDER (build-time; thresholds live in the engine's
+   OPTION_LADDER constant — these rules only key off the stamped class). Tiers change
+   LAYOUT ONLY — never font-size. opts-mid = 2×2 grid (drops to one column ≤480px,
+   where an 18-char expression cannot fit half a phone). opts-long = one full-width
+   row per option (flex column, so it stays stacked at every width). .nw keeps an
+   expression run on one line — prose around it still wraps at spaces. */
+.rao-lesson .opts.opts-mid{grid-template-columns:repeat(2,1fr);}
+.rao-lesson .opts.opts-long{display:flex;flex-direction:column;gap:12px;}
+.rao-lesson .opt .nw{white-space:nowrap;}
+@media(max-width:480px){.rao-lesson .opts.opts-mid{grid-template-columns:1fr;}}
 .rao-lesson .opt{font-family:var(--fm);font-size:0.98rem;font-weight:700;color:var(--brand);background:#fff;border:2px solid #e0dbf4;
   border-radius:var(--rz-r-chip,12px);padding:15px 12px;cursor:pointer;text-align:center;
   transition:transform .12s,border-color .15s,background .15s,box-shadow .15s;}
@@ -792,7 +802,9 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
 .rao-lesson .lat-svg,
 .rao-lesson .nl-svg,
 .rao-lesson .poly-svg,
-.rao-lesson .spin-svg {
+.rao-lesson .spin-svg,
+.rao-lesson .eqg-svg,   /* rao-master-19: equal-groups */
+.rao-lesson .seq-svg {  /* rao-master-19: sequence chain */
   max-width: 100%;
   height: auto;
 }
@@ -848,6 +860,7 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
   .rao-lesson .prompt        { font-size: 1.0625rem; }
   .rao-lesson .opt,
   .rao-lesson .opt-text      { font-size: 1.125rem; }
+  .rao-lesson .opts.opts-mid { grid-template-columns: 1fr; } /* rao-master-19 ladder */
   .rao-lesson .hcell         { font-size: .62rem; }
   .rao-lesson .lp-col,
   .rao-lesson .lp-tick       { width: 28px; }

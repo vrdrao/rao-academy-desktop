@@ -163,6 +163,68 @@ description: explain precedence coverage — markup p.explain beats frontmatter 
 
 <!--@q
 type: single-select
+answer: ["4"]
+description: equal-groups figure coverage (rao-master-19 Part A) — rings of dots, no count labels
+hint: Count how many dots sit inside one ring.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Each ring holds the same number of dots. How many dots are in each ring?</p>
+  <figure data-show="equal-groups" data-groups="3" data-per="4"></figure>
+  <ul class="options"><li>3</li><li>4</li><li>5</li><li>12</li></ul>
+  <p class="explain">Each of the 3 rings holds 4 dots: 12 ÷ 3 = 4.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["16"]
+description: sequence figure coverage (rao-master-19 Part B) — boxed chain with a dashed blank box
+hint: How much bigger is each number than the one before it?
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What number belongs in the empty box?</p>
+  <figure data-show="sequence" data-values="4,8,12,?"></figure>
+  <ul class="options"><li>14</li><li>16</li><li>20</li><li>13</li></ul>
+  <p class="explain">The pattern adds 4 each time: 12 + 4 = 16.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["24"]
+description: option-ladder coverage, SHORT tier (rao-master-19 Part D) — longest option ≤ 10 chars, 4-across grid
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is 4 × 6?</p>
+  <ul class="options"><li>24</li><li>18</li><li>28</li><li>30</li></ul>
+  <p class="explain">4 × 6 = 24.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["9,000 + 400"]
+description: option-ladder coverage, MEDIUM tier (rao-master-19 Part D) — longest option 11-18 chars, 2×2 grid
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which sum names the value of the 9 and the 4 in 9,427?</p>
+  <ul class="options"><li>9,000 + 400</li><li>9,000 + 40</li><li>900 + 400</li><li>90 + 4</li></ul>
+  <p class="explain">The 9 is worth 9,000 and the 4 is worth 400.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["24,516 + 18,097 = 42,613"]
+description: option-ladder coverage, LONG tier (rao-master-19 Part D) — longest option > 18 chars, one full-width row per option
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which addition sentence is correct?</p>
+  <ul class="options"><li>24,516 + 18,097 = 42,613</li><li>24,516 + 18,097 = 41,613</li><li>24,516 + 18,097 = 43,613</li></ul>
+  <p class="explain">24,516 + 18,097 = 42,613 — add the ones, tens, hundreds and thousands with their carries.</p>
+</div>
+
+<!-- KEEP THIS QUESTION LAST: tools/verify-touch.js drives "the LAST card on the
+     page" as its fixture and needs this one (3-rung hint ladder + whyWrong +
+     walkthrough). New coverage questions go ABOVE it. -->
+<!--@q
+type: single-select
 answer: ["70,000"]
 hint:
   - "Find the place each number should be rounded to."

@@ -6,9 +6,11 @@ Last updated: 2026-07-18
 
 ## Corpus
 
-**104 lesson files. 2,722 questions. 0 failures.** (was 108/2,808 on 2026-07-14;
+**104 lesson files. 2,727 questions. 0 failures.** (was 108/2,808 on 2026-07-14;
 that delta predates Brief 7.6. 2,721 → 2,722 on 2026-07-17: one precedence-
-coverage question added to `_type-coverage.html` by Brief 7.6.1.)
+coverage question added to `_type-coverage.html` by Brief 7.6.1. 2,722 → 2,727 on
+2026-07-18: BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`
+— equal-groups figure, sequence figure, and one option-set per ladder tier.)
 
 All tested in a real Chromium browser: build, render, grade correct, reject wrong, 8 themes,
 CSS containment, container queries, double-attach idempotency, type coverage (12/12), zero
@@ -18,7 +20,7 @@ The corpus lives in `lessons/` (2 authored lessons + `_type-coverage.html` fixtu
 `lessons/incoming/` (101 files, imported from the Class 4 Word doc bank). `lessons/_preview/`
 is gitignored scratch. **Every lesson has a matching `review/<name>.html`** (complete set
 generated 2026-07-18, commit `5eb6297`), plus `review/index.html` (plain alphabetical index)
-and `LESSONS-MANIFEST.md` at the root (one row per lesson, totals reconciled 104 / 2,722).
+and `LESSONS-MANIFEST.md` at the root (one row per lesson, totals reconciled 104 / 2,727).
 
 ---
 
@@ -229,19 +231,21 @@ were both ruled AUTHORIZED retroactively by Venkat, 2026-07-18 (recorded in the
 audit file). Executed briefs are now archived in `docs/briefs/` (see CLAUDE.md
 Working style) so future audits don't hit the deleted-brief wall.
 
-## KNOWN DEFECT — 7 missing figures (warn-level, awaiting an engine brief)
+## RESOLVED 2026-07-18 — the 7 missing figures (BRIEF-ENGINE-19, rao-master-19)
 
-Surfaced by the 2026-07-18 audit: 7 questions request a named figure via a
-`data-show` value the engine doesn't recognize, so the intended visual is
-silently absent (the questions still grade correctly):
+The 7 questions that requested a `data-show` type the engine lacked now render
+their intended visuals:
 
 - `equal-groups` ×2 — `lessons/incoming/Division_facts_to_10.html` q1, q2
+  (rings of star/heart items; no count labels — the counts ARE those answers)
 - `sequence` ×5 — `lessons/incoming/number-patterns-word-problems-remix.html`
-  q2, q7, q12, q19, q24
+  q2, q7, q12, q19, q24 (boxed number chains with arrows)
 
-Awaiting an engine brief that will (a) implement both figure types and
-(b) promote unknown `data-show` from a warn to a build-failing error, so this
-class of silent gap cannot ship again.
+Unknown `data-show` is now a build-FAILING error (`UNKNOWN_FIGURE`, error-level,
+enforced by verify-grading-node in both the commit and push gates; fixture case
++ level guard in verify-structural). rao-master-19 also added the option-layout
+ladder (short/2×2/stacked by longest option, thresholds in the engine's
+`OPTION_LADDER` constant) with computed-style guards in verify-styles.
 
 ## What is next
 
@@ -254,7 +258,7 @@ class of silent gap cannot ship again.
   deleted in the corpus cleanup (see HANDOFF-6; corpus 108 → 104 predates 7.6)
 - Brief 7.8: Robo personality pack, gaze, stage props, palette tint, poke
   ladder, entrance (fenced out of 7.7 by design)
-- The 7 missing figures above — needs the engine brief
+- ~~The 7 missing figures~~ — DONE 2026-07-18 (BRIEF-ENGINE-19, rao-master-19)
 - Rapid-mode stale green + no-lock (HANDOFF-8/9 open item; rapid has no
   signed-off brief yet)
 - App wiring: load the drop per DEPLOY.md, set `RaoAccount.firstName`, then
