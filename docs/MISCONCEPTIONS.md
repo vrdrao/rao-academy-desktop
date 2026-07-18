@@ -347,7 +347,7 @@ message         student-facing template. Describes the option, not the child.
 - **concept:** money word problems
 - **rule:** `correct == a + b` AND `distractor == a − b` (or vice versa) with money values
 - **message:** "Check whether the problem asks to add or subtract."
-- **status:** DORMANT — documented rule, zero live assignments as of this commit.
+- **status:** LIVE since 2026-07-19 (money A/S/M/D lesson) — used for wrong-operation distractors on money word problems.
 
 ---
 

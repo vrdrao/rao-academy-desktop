@@ -65,6 +65,7 @@ lesson's row links its document.
 | Interpret line plots remix | 30 | `lessons/incoming/interpret-line-plots-remix.html` | `review/interpret-line-plots-remix.html` | — |
 | Interpret remainders | 29 | `lessons/incoming/interpret-remainders.html` | `review/interpret-remainders.html` | — |
 | Metric mixed units remix | 31 | `lessons/incoming/metric_mixed_units_remix.html` | `review/metric_mixed_units_remix.html` | — |
+| Money add subtract multiply divide | 30 | `lessons/money_add_subtract_multiply_divide.html` | `review/money_add_subtract_multiply_divide.html` | `sources/LDM- Money-Add, subtract, multiply and divide money amounts(D).html` |
 | Money add subtract remix | 24 | `lessons/incoming/money_add_subtract_remix.html` | `review/money_add_subtract_remix.html` | — |
 | Multi step word problems mcq | 28 | `lessons/incoming/multi-step-word-problems-mcq.html` | `review/multi-step-word-problems-mcq.html` | — |
 | Multiplication facts to 10 remix | 32 | `lessons/incoming/Multiplication_facts_to_10_remix.html` | `review/Multiplication_facts_to_10_remix.html` | — |
@@ -118,7 +119,7 @@ lesson's row links its document.
 | Use perimeter to determine cost | 20 | `lessons/use_perimeter_to_determine_cost.html` | `review/use_perimeter_to_determine_cost.html` | `sources/Geometric Measurements-Use perimeter to determine cost(D).html` |
 | Word problems with extra or missing information | 24 | `lessons/incoming/Word problems with extra or missing information.html` | `review/Word problems with extra or missing information.html` | — |
 
-**Totals: 106 lessons, 2,766 questions.**
+**Totals: 107 lessons, 2,796 questions.**
 Matches the recorded 102 / 2,687 exactly (2,722 → 2,727 on 2026-07-18:
 BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`;
 104 / 2,727 → 102 / 2,687 per BRIEF-DUPLICATE-CULL, Venkat's ruling

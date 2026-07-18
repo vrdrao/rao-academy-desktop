@@ -1,0 +1,1249 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["5.55"]
+description: Subtract ₹9.68 − ₹4.13
+hint:
+  - "Money subtracts column by column, just like plain numbers."
+  - "Line up the decimal points so paise sit under paise."
+  - "Subtract the paise first, then the rupees."
+explain: "Paise: 68 − 13 = 55. Rupees: 9 − 4 = 5. Answer: ₹5.55."
+whyWrong:
+  "13.81":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "₹13.81 is the two amounts added — the minus sign asks for the gap between them."
+  "5.45":
+    code: NEAR_MISS
+    message: "The rupees are right but the paise slipped: 68 − 13 leaves 55 paise, not 45."
+  "4.55":
+    code: OFF_BY_ONE
+    message: "A rupee went missing — 9 − 4 is 5, and the paise never needed to borrow one."
+solution:
+  - type: step
+    goal: Subtract the paise.
+    working: "68 − 13 = 55 paise"
+  - type: step
+    goal: Subtract the rupees.
+    working: "9 − 4 = 5 rupees → ₹5.55"
+    reason: 68 is bigger than 13, so no borrowing crosses the decimal point.
+  - type: takeaway
+    text: Line up the decimal points and money behaves exactly like column subtraction.
+  - type: verification
+    text: "Check by adding back: ₹5.55 + ₹4.13 = ₹9.68 ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">₹9.68 − ₹4.13 = ?</p>
+  <ul class="options">
+    <li data-val="5.55">₹5.55</li>
+    <li data-val="13.81">₹13.81</li>
+    <li data-val="5.45">₹5.45</li>
+    <li data-val="4.55">₹4.55</li>
+  </ul>
+  <p class="explain">8 − 3 = 5 and 6 − 1 = 5 paise; 9 − 4 = 5 rupees → ₹5.55.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["349"]
+description: Subtract ₹456 − ₹107 with regrouping
+hint:
+  - "Start at the ones column."
+  - "You cannot take 7 from 6 — a ten must be broken open."
+  - "After regrouping, subtract column by column as usual."
+explain: "Regroup a ten: 16 − 7 = 9, then 4 − 0 = 4 tens, 4 − 1 = 3 hundreds: ₹349."
+whyWrong:
+  "563":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "₹563 adds the amounts — spending ₹107 should leave less than ₹456, not more."
+  "359":
+    code: BORROW_ERROR
+    message: "The ones borrowed a ten, but the tens column never paid it back — it still shows 5 tens instead of 4."
+  "351":
+    code: OFF_BY_TWO
+    message: "In the ones column this takes 6 from 7 instead of borrowing to take 7 from 16."
+solution:
+  - type: step
+    goal: Regroup for the ones.
+    working: "456 → 4 hundreds, 4 tens, 16 ones"
+    reason: 7 cannot come out of 6, so one ten becomes ten ones.
+  - type: step
+    goal: Subtract each column.
+    working: "16 − 7 = 9 · 4 − 0 = 4 · 4 − 1 = 3 → ₹349"
+  - type: takeaway
+    text: When a column comes up short, it borrows from its neighbour — and the neighbour must remember.
+  - type: verification
+    text: "₹349 + ₹107 = ₹456 — the change and the price rebuild the note."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">₹456 − ₹107 = ?</p>
+  <ul class="options">
+    <li data-val="349">₹349</li>
+    <li data-val="563">₹563</li>
+    <li data-val="359">₹359</li>
+    <li data-val="351">₹351</li>
+  </ul>
+  <p class="explain">Regroup: 16 − 7 = 9. The 5 becomes 4, so 4 − 0 = 4. Then 4 − 1 = 3 → ₹349.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["94.19"]
+description: Add ₹76.02 + ₹18.17
+hint:
+  - "Keep paise under paise and rupees under rupees."
+  - "Add the paise column first."
+  - "Then add the rupees, carrying if a column passes 9."
+explain: "Paise: 02 + 17 = 19. Rupees: 76 + 18 = 94. Answer: ₹94.19."
+whyWrong:
+  "57.85":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "₹57.85 is the difference between the amounts — the plus sign asks for them joined together."
+  "84.19":
+    code: CARRY_DROPPED
+    message: "The paise are right, but 76 + 18 carries into the tens — this total shows 84 instead of 94."
+  "94.09":
+    code: CARRY_DROPPED
+    message: "The rupees are right, but 2 + 17 paise makes 19 — the 1 in the paise tens went missing."
+solution:
+  - type: step
+    goal: Add the paise.
+    working: "02 + 17 = 19 paise"
+  - type: step
+    goal: Add the rupees.
+    working: "76 + 18 = 94 → ₹94.19"
+    reason: 6 + 8 = 14, so a ten carries into the tens column.
+  - type: takeaway
+    text: Decimal points in a line keep every paisa in its proper column.
+  - type: verification
+    text: "Estimate first: ₹76 + ₹18 is about ₹94 — the exact ₹94.19 agrees."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">₹76.02 + ₹18.17 = ?</p>
+  <ul class="options">
+    <li data-val="94.19">₹94.19</li>
+    <li data-val="57.85">₹57.85</li>
+    <li data-val="84.19">₹84.19</li>
+    <li data-val="94.09">₹94.09</li>
+  </ul>
+  <p class="explain">Paise: 02 + 17 = 19. Rupees: 76 + 18 = 94 → ₹94.19.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["117"]
+description: Multiply 3 × ₹39
+hint:
+  - "Three pens at ₹39 each — same price three times over."
+  - "Multiply the ones digit first: what happens if it passes 9?"
+  - "Carry into the tens, then multiply the tens."
+explain: "3 × 9 = 27 — write 7, carry 2. 3 × 3 tens = 9 tens, plus 2 = 11 tens: ₹117."
+whyWrong:
+  "42":
+    code: WRONG_OP_ADD_FOR_MULT
+    message: "₹42 is 3 + 39 — but three whole ₹39 price tags pile up much higher than that."
+  "97":
+    code: DROPPED_CARRY
+    message: "3 × 9 = 27 carries 2 tens — this answer wrote the 7 and let the carry escape."
+  "927":
+    code: PARTIAL_PRODUCT_PLACE_ERROR
+    message: "This writes 27 in full and then 9 in front — the 2 of the 27 must be carried, not kept."
+solution:
+  - type: step
+    goal: Multiply the ones.
+    working: "3 × 9 = 27 → write 7, carry 2"
+  - type: step
+    goal: Multiply the tens and add the carry.
+    working: "3 × 3 = 9, + 2 = 11 → ₹117"
+  - type: takeaway
+    text: A carry is part of the answer travelling left — it must land in the next column.
+  - type: verification
+    text: "Estimate: 3 × ₹40 = ₹120, and ₹117 sits just under it — exactly right for 39 being just under 40."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">3 × ₹39 = ?</p>
+  <ul class="options">
+    <li data-val="117">₹117</li>
+    <li data-val="42">₹42</li>
+    <li data-val="97">₹97</li>
+    <li data-val="927">₹927</li>
+  </ul>
+  <p class="explain">3 × 9 = 27 (write 7, carry 2); 3 × 3 = 9, plus the carried 2 = 11 → ₹117.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["7"]
+description: Divide ₹42 ÷ 6
+hint:
+  - "₹42 shared into 6 equal parts."
+  - "Think of the 6-times table."
+  - "Which number times 6 lands exactly on 42?"
+explain: "6 × 7 = 42, so ₹42 ÷ 6 = ₹7."
+whyWrong:
+  "36":
+    code: WRONG_OP_SUB_FOR_DIV
+    message: "₹36 is 42 minus 6 — but sharing means splitting into equal parts, not taking one part away."
+  "8":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "6 × 8 = 48 — that overshoots the ₹42 being shared."
+  "6":
+    code: DIVISOR_AS_ANSWER
+    message: "6 is how many parts the money splits into — the question asks how much lands in each part."
+solution:
+  - type: step
+    goal: Ask the times-table question.
+    working: "6 × ? = 42"
+  - type: step
+    goal: Answer it.
+    working: "6 × 7 = 42 → ₹7 each"
+  - type: takeaway
+    text: Every division is a multiplication question read backwards.
+  - type: verification
+    text: "6 parts of ₹7 rebuild the ₹42 exactly, with nothing left over."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">₹42 ÷ 6 = ?</p>
+  <ul class="options">
+    <li data-val="7">₹7</li>
+    <li data-val="36">₹36</li>
+    <li data-val="8">₹8</li>
+    <li data-val="6">₹6</li>
+  </ul>
+  <p class="explain">6 × 7 = 42, so ₹42 ÷ 6 = ₹7.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["4904"]
+description: Multiply ₹613 × 8
+hint:
+  - "Multiply 8 by each digit of 613, starting from the ones."
+  - "Whenever a product passes 9, carry to the next column."
+  - "Work ones, then tens, then hundreds — carrying as you go."
+explain: "8 × 3 = 24 (write 4, carry 2) · 8 × 1 = 8, + 2 = 10 (write 0, carry 1) · 8 × 6 = 48, + 1 = 49: ₹4,904."
+whyWrong:
+  "4884":
+    code: DROPPED_CARRY
+    message: "The carry from 8 × 3 = 24 reached the tens, but the tens' own carry into the hundreds went missing."
+  "5604":
+    code: PARTIAL_PRODUCT_PLACE_ERROR
+    message: "The hundreds grew too big — 8 × 6 is 48, and only the 1 carried in should join it, making 49."
+  "4104":
+    code: PARTIAL_PRODUCT_PLACE_ERROR
+    message: "The hundreds show 41 — the 8 × 6 = 48 lost part of itself on the way."
+solution:
+  - type: step
+    goal: Ones.
+    working: "8 × 3 = 24 → write 4, carry 2"
+  - type: step
+    goal: Tens.
+    working: "8 × 1 = 8, + 2 = 10 → write 0, carry 1"
+  - type: step
+    goal: Hundreds.
+    working: "8 × 6 = 48, + 1 = 49 → ₹4,904"
+  - type: takeaway
+    text: Long multiplication is a relay — each column runs its lap and passes the carry on.
+  - type: verification
+    text: "Estimate: 8 × ₹600 = ₹4,800 — the exact ₹4,904 lands just above, as the extra 13 promises."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">₹613 × 8 = ?</p>
+  <ul class="options">
+    <li data-val="4904">₹4,904</li>
+    <li data-val="4884">₹4,884</li>
+    <li data-val="5604">₹5,604</li>
+    <li data-val="4104">₹4,104</li>
+  </ul>
+  <p class="explain">8 × 3 = 24 (write 4, carry 2); 8 × 1 = 8, + 2 = 10 (write 0, carry 1); 8 × 6 = 48, + 1 = 49 → ₹4,904.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["15624"]
+description: Multiply ₹252 × 62
+hint:
+  - "Break 62 into 2 and 60."
+  - "Multiply 252 by each part separately."
+  - "The ×60 row ends in a zero — then add the two rows."
+explain: "252 × 2 = 504 and 252 × 60 = 15,120; together 504 + 15,120 = ₹15,624."
+whyWrong:
+  "15120":
+    code: PARTIAL_COMPUTATION
+    message: "₹15,120 is only the ×60 row — the ×2 row (₹504) never joined the total."
+  "2016":
+    code: PARTIAL_PRODUCT_PLACE_ERROR
+    message: "This adds 504 and 1,512 — the ×6 row forgot it really means ×60 and lost its zero."
+  "15024":
+    code: PARTIAL_PRODUCT_PLACE_ERROR
+    message: "The two rows are 504 and 15,120 — this total dropped ₹600 while adding them."
+solution:
+  - type: step
+    goal: Multiply by the ones.
+    working: "252 × 2 = 504"
+  - type: step
+    goal: Multiply by the tens.
+    working: "252 × 60 = 15,120"
+    reason: ×60 is ×6 with a zero on the end — the shift is what makes it tens.
+  - type: step
+    goal: Add the rows.
+    working: "504 + 15,120 = ₹15,624"
+  - type: takeaway
+    text: Two-digit multiplication is two easy rows plus one addition — the shift zero is the part to guard.
+  - type: verification
+    text: "Estimate: 250 × 62 = 15,500 — the exact answer sits a whisker above, as 252 demands."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">₹252 × 62 = ?</p>
+  <ul class="options">
+    <li data-val="15624">₹15,624</li>
+    <li data-val="15120">₹15,120</li>
+    <li data-val="2016">₹2,016</li>
+    <li data-val="15024">₹15,024</li>
+  </ul>
+  <p class="explain">252 × 2 = 504; 252 × 60 = 15,120; 504 + 15,120 = ₹15,624.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["9825"]
+description: Add ₹5,403 + ₹4,422
+hint:
+  - "Line up thousands, hundreds, tens and ones."
+  - "Add column by column from the right."
+  - "No column passes 9 here — so no carrying at all."
+explain: "3+2=5, 0+2=2, 4+4=8, 5+4=9: ₹9,825."
+whyWrong:
+  "9815":
+    code: CARRY_DROPPED
+    message: "The tens show 1, but 0 + 2 = 2 — a ten leaked out somewhere."
+  "9925":
+    code: CARRY_EXTRA
+    message: "A phantom carry crept into the hundreds — 4 + 4 is 8, and nothing arrives from the tens."
+  "8825":
+    code: CARRY_DROPPED
+    message: "The thousands lost one — 5 + 4 = 9, and no borrowing happens in addition."
+solution:
+  - type: step
+    goal: Add each column from the right.
+    working: "ones 3+2=5 · tens 0+2=2 · hundreds 4+4=8 · thousands 5+4=9"
+  - type: step
+    goal: Read the answer.
+    working: "₹9,825"
+    reason: No column reached 10, so nothing carried — a rare peaceful addition.
+  - type: takeaway
+    text: Not every addition carries — but every column still deserves its own check.
+  - type: verification
+    text: "Estimate: ₹5,400 + ₹4,400 = ₹9,800 — the exact ₹9,825 is right beside it."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">₹5,403 + ₹4,422 = ?</p>
+  <ul class="options">
+    <li data-val="9825">₹9,825</li>
+    <li data-val="9815">₹9,815</li>
+    <li data-val="9925">₹9,925</li>
+    <li data-val="8825">₹8,825</li>
+  </ul>
+  <p class="explain">3 + 2 = 5; 0 + 2 = 2; 4 + 4 = 8; 5 + 4 = 9 → ₹9,825.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["101746"]
+description: Add ₹89,295 + ₹12,451 — the carry creates a new place
+hint:
+  - "Add column by column from the right, carrying as needed."
+  - "Keep going left — the last column may overflow."
+  - "When the leftmost column passes 9, its carry opens a brand-new place."
+explain: "89,295 + 12,451 = 1,01,746 — the ten-thousands column overflows and opens the lakh place."
+whyWrong:
+  "91746":
+    code: CARRY_DROPPED
+    message: "The final carry vanished — 8 + 1 plus the carry makes 10, which must open a new place, not disappear."
+  "101646":
+    code: CARRY_DROPPED
+    message: "In the hundreds, 2 + 4 gains a carry from 9 + 5 = 14 tens... this total lost one of those hundreds."
+  "101756":
+    code: CARRY_EXTRA
+    message: "An extra ten slipped in — 9 tens + 5 tens is 14 tens: write 4, carry 1, nothing more."
+solution:
+  - type: step
+    goal: Add the lower columns.
+    working: "5+1=6 · 9+5=14 → write 4, carry 1 · 2+4+1=7"
+  - type: step
+    goal: Add the top columns.
+    working: "9+2=11 → write 1, carry 1 · 8+1+1=10"
+  - type: step
+    goal: Let the overflow open a new place.
+    working: "the 10 writes as '10' in front → ₹1,01,746"
+    reason: A carry off the left end is not lost — it becomes a new, bigger place value.
+  - type: takeaway
+    text: When the leftmost column overflows, the number simply grows a new place — carries never vanish.
+  - type: verification
+    text: "Estimate: ₹89,000 + ₹12,000 = ₹1,01,000 — six digits, exactly as the answer shows."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">₹89,295 + ₹12,451 = ?</p>
+  <ul class="options">
+    <li data-val="101746">₹1,01,746</li>
+    <li data-val="91746">₹91,746</li>
+    <li data-val="101646">₹1,01,646</li>
+    <li data-val="101756">₹1,01,756</li>
+  </ul>
+  <p class="explain">89,295 + 12,451 = ₹1,01,746. The final carry creates a new place — the answer has six digits, not five.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["45"]
+description: Divide ₹360 ÷ 8
+hint:
+  - "₹360 split into 8 equal parts."
+  - "Try jumps of the 8-times table towards 360."
+  - "8 × 40 gets close — how much further is there to go?"
+explain: "8 × 45 = 360, so each part is ₹45."
+whyWrong:
+  "40":
+    code: NEAR_MISS
+    message: "8 × 40 = 320 — that shares out only ₹320 of the ₹360."
+  "46":
+    code: OFF_BY_ONE
+    message: "8 × 46 = 368 — ₹8 more than the pot holds."
+  "44":
+    code: OFF_BY_ONE
+    message: "8 × 44 = 352 — ₹8 of the pot would be left unshared."
+solution:
+  - type: step
+    goal: Get close with a friendly multiple.
+    working: "8 × 40 = 320"
+  - type: step
+    goal: Share the rest.
+    working: "360 − 320 = 40, and 40 ÷ 8 = 5 → 40 + 5 = ₹45"
+  - type: takeaway
+    text: Big divisions break into a friendly jump plus a small share.
+  - type: verification
+    text: "8 × 45 = 360 — every rupee shared, none left over."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">₹360 ÷ 8 = ?</p>
+  <ul class="options">
+    <li data-val="45">₹45</li>
+    <li data-val="40">₹40</li>
+    <li data-val="46">₹46</li>
+    <li data-val="44">₹44</li>
+  </ul>
+  <p class="explain">8 × 45 = 360, so ₹360 ÷ 8 = ₹45.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["32"]
+description: Change from a ₹100 note
+hint:
+  - "Change is what comes back after the price is taken out of the note."
+  - "Take ₹68 away from ₹100."
+  - "Try counting up: 68 to 70, then 70 to 100."
+explain: "₹100 − ₹68 = ₹32 change."
+whyWrong:
+  "168":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "₹168 adds the note and the price — change comes back smaller than the note, never bigger."
+  "42":
+    code: BORROW_ERROR
+    message: "A ten too many — from 68, counting up to 100 is 2 then 30, making 32."
+  "38":
+    code: NEAR_MISS
+    message: "Close, but counting up from 68 gives 2 to reach 70 and 30 more to reach 100 — ₹32."
+solution:
+  - type: step
+    goal: Count up from the price.
+    working: "68 → 70 is 2 · 70 → 100 is 30"
+  - type: step
+    goal: Add the jumps.
+    working: "2 + 30 = ₹32"
+    reason: Counting up to the note is how shopkeepers give change.
+  - type: takeaway
+    text: "Change = note minus price — or count up from the price to the note."
+  - type: verification
+    text: "₹68 + ₹32 = ₹100 — the price and the change rebuild the note."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya pays with a ₹100 note for a toy costing ₹68. How much change does she get?</p>
+  <ul class="options">
+    <li data-val="32">₹32</li>
+    <li data-val="168">₹168</li>
+    <li data-val="42">₹42</li>
+    <li data-val="38">₹38</li>
+  </ul>
+  <p class="explain">Change means taking away: 100 − 68 = ₹32.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["17.25"]
+description: Change with paise — subtract from a whole note
+hint:
+  - "Write the note as ₹50.00 so both amounts have paise."
+  - "The paise column reads 00 − 75 — that needs a borrowed rupee."
+  - "After borrowing, subtract paise, then rupees."
+explain: "₹50.00 − ₹32.75: borrow a rupee for the paise (100 − 75 = 25), then 49 − 32 = 17: ₹17.25."
+whyWrong:
+  "18.25":
+    code: BORROW_ERROR
+    message: "The paise borrowed a rupee from the 50, but the rupees column forgot to hand it over — 49 − 32 = 17."
+  "17.75":
+    code: NEAR_MISS
+    message: "This keeps the 75 paise from the price — the change's paise are 100 − 75 = 25."
+  "82.75":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "₹82.75 adds the price to the note — change is what is left after the price comes out."
+solution:
+  - type: step
+    goal: Rewrite the note with paise.
+    working: "₹50 → ₹50.00 → 49 rupees + 100 paise"
+    reason: The paise column needs something to subtract from.
+  - type: step
+    goal: Subtract paise, then rupees.
+    working: "100 − 75 = 25 · 49 − 32 = 17 → ₹17.25"
+  - type: takeaway
+    text: A whole-rupee note hides 00 paise — borrow one rupee and the 00 becomes 100.
+  - type: verification
+    text: "₹32.75 + ₹17.25 = ₹50.00 — price plus change equals the note exactly."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Rohan pays ₹50 for a book costing ₹32.75. How much change does he get?</p>
+  <ul class="options">
+    <li data-val="17.25">₹17.25</li>
+    <li data-val="18.25">₹18.25</li>
+    <li data-val="17.75">₹17.75</li>
+    <li data-val="82.75">₹82.75</li>
+  </ul>
+  <p class="explain">Write ₹50 as ₹50.00. Then 50.00 − 32.75 = ₹17.25.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["65"]
+description: Money left after spending
+hint:
+  - "Spending makes the amount go down."
+  - "Take the ₹185 spent away from the ₹250 she started with."
+  - "Regroup where a column comes up short."
+explain: "₹250 − ₹185 = ₹65 left."
+whyWrong:
+  "435":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "₹435 adds the price — after buying a book Priya cannot end up richer than she began."
+  "185":
+    code: OPERAND_ECHO
+    message: "₹185 is the price of the book, straight from the question — not what remains in her purse."
+  "135":
+    code: BORROW_ERROR
+    message: "Each column here subtracted the smaller digit from the bigger one — but 250 − 185 needs real borrowing, giving 65."
+solution:
+  - type: step
+    goal: Set up the subtraction.
+    working: "₹250 − ₹185"
+  - type: step
+    goal: Work it column by column.
+    working: "10 − 5 = 5 · 14 − 8 = 6 · 1 − 1 = 0 → ₹65"
+    reason: The ones and tens both borrow — columns never swap their order to dodge it.
+  - type: takeaway
+    text: Money left = start minus spent, borrowing honestly along the way.
+  - type: verification
+    text: "₹185 + ₹65 = ₹250 — the spending and the leftovers rebuild her purse."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya has ₹250. She spends ₹185 on a book. How much money is left?</p>
+  <ul class="options">
+    <li data-val="65">₹65</li>
+    <li data-val="435">₹435</li>
+    <li data-val="185">₹185</li>
+    <li data-val="135">₹135</li>
+  </ul>
+  <p class="explain">250 − 185 = ₹65.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["270"]
+description: Equal prices — multiply
+hint:
+  - "Six pens, one price each — the same amount six times."
+  - "Repeated equal amounts is what multiplication is for."
+  - "Multiply ₹45 by 6, carrying where needed."
+explain: "6 × ₹45 = ₹270."
+whyWrong:
+  "51":
+    code: WRONG_OP_ADD_FOR_MULT
+    message: "₹51 is 6 + 45 — but six price tags of ₹45 stack far higher than one plus a count."
+  "240":
+    code: PARTIAL_COMPUTATION
+    message: "₹240 is 6 × ₹40 — the ₹5 on each pen's tag (₹30 in all) never made it in."
+  "2430":
+    code: DIGIT_INSERT_OR_SHIFT
+    message: "This multiplies as if the price were ₹405 — an extra zero slipped inside the 45."
+solution:
+  - type: step
+    goal: Multiply the ones.
+    working: "6 × 5 = 30 → write 0, carry 3"
+  - type: step
+    goal: Multiply the tens.
+    working: "6 × 4 = 24, + 3 = 27 → ₹270"
+  - type: takeaway
+    text: "'Each' is the signal word for multiplication — same amount, many times."
+  - type: verification
+    text: "Estimate: 6 × ₹50 = ₹300 — a little high, and ₹270 sits sensibly below it."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Arjun buys 6 pens. Each pen costs ₹45. How much does he pay in total?</p>
+  <ul class="options">
+    <li data-val="270">₹270</li>
+    <li data-val="51">₹51</li>
+    <li data-val="240">₹240</li>
+    <li data-val="2430">₹2,430</li>
+  </ul>
+  <p class="explain">6 equal groups of ₹45: 6 × 45 = ₹270.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["120"]
+description: Sharing equally — divide
+hint:
+  - "Sharing equally is dividing."
+  - "₹480 splits into 4 equal parts."
+  - "Divide the hundreds first, then the tens."
+explain: "₹480 ÷ 4 = ₹120 each."
+whyWrong:
+  "1920":
+    code: MULTIPLIED_NOT_DIVIDED
+    message: "₹1,920 multiplies by 4 — but sharing splits the pot, it doesn't grow it."
+  "484":
+    code: MONEY_WRONG_OPERATION
+    message: "₹484 adds the 4 friends to the money — the 4 says how many ways to split, not what to add."
+  "12":
+    code: PLACE_SHIFT_DOWN
+    message: "A zero fell off — 4 × 12 is only ₹48, nowhere near the ₹480 being shared."
+solution:
+  - type: step
+    goal: Divide the hundreds.
+    working: "4 ÷ 4 = 1 hundred each"
+  - type: step
+    goal: Divide the tens.
+    working: "8 tens ÷ 4 = 2 tens each → ₹120"
+  - type: takeaway
+    text: "'Shared equally' is the signal for division — the pot splits, one part each."
+  - type: verification
+    text: "4 friends × ₹120 = ₹480 — the shares rebuild the pot."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">₹480 is shared equally among 4 friends. How much does each friend get?</p>
+  <ul class="options">
+    <li data-val="120">₹120</li>
+    <li data-val="1920">₹1,920</li>
+    <li data-val="484">₹484</li>
+    <li data-val="12">₹12</li>
+  </ul>
+  <p class="explain">Sharing equally means dividing: 480 ÷ 4 = ₹120.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["23"]
+description: Unit price — divide the total by the count
+hint:
+  - "₹92 pays for 4 identical toys."
+  - "One toy costs the total split 4 ways."
+  - "Divide: how many 4s in 92?"
+explain: "₹92 ÷ 4 = ₹23 for one toy."
+whyWrong:
+  "368":
+    code: MULTIPLIED_NOT_DIVIDED
+    message: "₹368 multiplies the total by 4 — but one toy costs less than four toys, not more."
+  "96":
+    code: MONEY_WRONG_OPERATION
+    message: "₹96 adds the count to the total — the 4 tells you how many ways to split the ₹92."
+  "22":
+    code: OFF_BY_ONE
+    message: "4 × 22 = 88 — that leaves ₹4 of the bill unpaid."
+solution:
+  - type: step
+    goal: Split the tens.
+    working: "9 tens ÷ 4 = 2 tens, remainder 1 ten"
+  - type: step
+    goal: Split what is left.
+    working: "12 ones ÷ 4 = 3 → ₹23"
+  - type: takeaway
+    text: "Price of one = price of all ÷ how many. Undo the grouping."
+  - type: verification
+    text: "4 × ₹23 = ₹92 — four toys at that price ring up the exact bill."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">4 identical toys cost ₹92 altogether. How much does one toy cost?</p>
+  <ul class="options">
+    <li data-val="23">₹23</li>
+    <li data-val="368">₹368</li>
+    <li data-val="96">₹96</li>
+    <li data-val="22">₹22</li>
+  </ul>
+  <p class="explain">To find the cost of one, divide: 92 ÷ 4 = ₹23.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["140"]
+description: Two steps — multiply for the cost, subtract for the change
+hint:
+  - "Two jobs hide in this one: a cost, then a change."
+  - "First find what 3 books at ₹120 cost together."
+  - "Then take that cost away from his ₹500."
+explain: "3 × ₹120 = ₹360; ₹500 − ₹360 = ₹140 change."
+whyWrong:
+  "380":
+    code: PARTIAL_COMPUTATION
+    message: "₹380 subtracts the price of just one book — Kabir bought three."
+  "360":
+    code: PARTIAL_COMPUTATION
+    message: "₹360 is the cost of the books — the question asks what is left of the ₹500 after paying it."
+  "260":
+    code: MULTI_STEP_ERROR
+    message: "This takes away ₹240 — two books' worth. All three books, ₹360, come out of the ₹500."
+solution:
+  - type: step
+    goal: Cost of the books.
+    working: "3 × ₹120 = ₹360"
+  - type: step
+    goal: Change from the note.
+    working: "₹500 − ₹360 = ₹140"
+  - type: takeaway
+    text: Two-step problems hand you the second step only after the first is done — cost first, change second.
+  - type: verification
+    text: "₹360 spent + ₹140 kept = ₹500 — every rupee accounted for."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Kabir has ₹500. He buys 3 books costing ₹120 each. How much change does he get?</p>
+  <ul class="options">
+    <li data-val="140">₹140</li>
+    <li data-val="380">₹380</li>
+    <li data-val="360">₹360</li>
+    <li data-val="260">₹260</li>
+  </ul>
+  <p class="explain">Step 1: 3 × 120 = ₹360 spent. Step 2: 500 − 360 = ₹140 change.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["notebooks5"]
+description: Compare two totals
+hint:
+  - "Each side needs its own total first."
+  - "Work out 3 × ₹45 and 2 × ₹70 separately."
+  - "Then compare the two totals and find the gap."
+explain: "Pens: 3 × 45 = ₹135. Notebooks: 2 × 70 = ₹140. The notebooks cost ₹5 more."
+whyWrong:
+  "pens5":
+    code: COMPARISON_REVERSED
+    message: "The totals are ₹135 and ₹140 — the pens' side is the smaller one."
+  "notebooks25":
+    code: PARTIAL_COMPUTATION
+    message: "₹25 is the gap between single prices (70 − 45) — the question compares the TOTALS, which differ by ₹5."
+  "same":
+    code: COMPARISON_EQUAL_WRONG
+    message: "Close, but not equal — ₹135 and ₹140 are five rupees apart."
+solution:
+  - type: step
+    goal: Total the pens.
+    working: "3 × ₹45 = ₹135"
+  - type: step
+    goal: Total the notebooks.
+    working: "2 × ₹70 = ₹140"
+  - type: step
+    goal: Compare.
+    working: "140 − 135 = ₹5 → notebooks by ₹5"
+  - type: takeaway
+    text: Compare totals, never single prices — few-but-costly can beat many-but-cheap.
+  - type: verification
+    text: "Both totals were rebuilt from their own prices, and 140 really is 5 past 135."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">3 pens cost ₹45 each. 2 notebooks cost ₹70 each. Which costs more in total?</p>
+  <ul class="options">
+    <li data-val="notebooks5">The notebooks, by ₹5</li>
+    <li data-val="pens5">The pens, by ₹5</li>
+    <li data-val="notebooks25">The notebooks, by ₹25</li>
+    <li data-val="same">They cost the same</li>
+  </ul>
+  <p class="explain">Pens: 3 × 45 = ₹135. Notebooks: 2 × 70 = ₹140. The notebooks cost ₹5 more.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["12r2"]
+description: Sharing with a remainder
+hint:
+  - "Share whole rupees as far as they will go."
+  - "How many 4s fit inside 50?"
+  - "Whatever will not split evenly is the left-over."
+explain: "4 × 12 = 48, so each child gets ₹12 and ₹2 stays left over."
+whyWrong:
+  "12r0":
+    code: NEAR_MISS
+    message: "4 × 12 = 48 — the last ₹2 of the ₹50 is still sitting in the pot, unshared."
+  "13r2":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "₹13 each would need 4 × 13 = ₹52 — two rupees more than there are."
+  "12r4":
+    code: NEAR_MISS
+    message: "A left-over of ₹4 could be shared again — ₹1 more each. The true remainder is smaller than the number of children."
+solution:
+  - type: step
+    goal: Share whole rupees.
+    working: "4 × 12 = 48 → ₹12 each"
+  - type: step
+    goal: Find the left-over.
+    working: "50 − 48 = ₹2 remaining"
+    reason: ₹2 cannot split into 4 whole-rupee shares.
+  - type: takeaway
+    text: A remainder must always be smaller than the number of sharers — otherwise share again.
+  - type: verification
+    text: "4 × 12 + 2 = 50 — shares plus left-over rebuild the fifty."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">₹50 is shared equally among 4 children. How much does each child get, and how much is left over?</p>
+  <ul class="options">
+    <li data-val="12r2">₹12 each, ₹2 left over</li>
+    <li data-val="12r0">₹12 each, nothing left over</li>
+    <li data-val="13r2">₹13 each, ₹2 left over</li>
+    <li data-val="12r4">₹12 each, ₹4 left over</li>
+  </ul>
+  <p class="explain">4 × 12 = 48, and 50 − 48 = 2. So each child gets ₹12 and ₹2 is left over.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["200.00"]
+description: Adding money where the paise make a whole rupee
+hint:
+  - "Add the paise first and watch them closely."
+  - "50 + 50 paise makes a full hundred."
+  - "A hundred paise is not written as paise — it moves left."
+explain: "50 + 50 paise = 100 paise = ₹1, carried over: 125 + 74 + 1 = ₹200.00."
+whyWrong:
+  "199.00":
+    code: CARRY_DROPPED
+    message: "The two 50-paise halves made a whole rupee — this total let it vanish instead of carrying it."
+  "200.10":
+    code: CARRY_EXTRA
+    message: "The paise made exactly one rupee, nothing more — no stray 10 paise should remain."
+  "51.00":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "₹51 is the difference between the amounts — her sister GAVE her money, so the amounts join."
+solution:
+  - type: step
+    goal: Add the paise.
+    working: "50 + 50 = 100 paise = ₹1"
+  - type: step
+    goal: Add the rupees plus the carried rupee.
+    working: "125 + 74 + 1 = ₹200.00"
+  - type: takeaway
+    text: One hundred paise is a rupee in disguise — it always crosses the decimal point.
+  - type: verification
+    text: "Estimate: ₹125 + ₹75 = ₹200 — spot on."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Meera has ₹125.50 and her sister gives her ₹74.50. How much does she have now?</p>
+  <ul class="options">
+    <li data-val="200.00">₹200.00</li>
+    <li data-val="199.00">₹199.00</li>
+    <li data-val="200.10">₹200.10</li>
+    <li data-val="51.00">₹51.00</li>
+  </ul>
+  <p class="explain">50 paise + 50 paise = ₹1. So 125 + 74 + 1 = ₹200.00.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["85"]
+description: Missing part — subtract from the whole
+hint:
+  - "The two parts together make ₹150."
+  - "One part is ₹65 — the mystery is the other part."
+  - "Whole minus the known part gives the missing one."
+explain: "₹150 − ₹65 = ₹85, and ₹85 + ₹65 = ₹150 ✓."
+whyWrong:
+  "215":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "₹215 adds the whole and the part — but ₹150 is the TOTAL; the missing part must be smaller than it."
+  "95":
+    code: BORROW_ERROR
+    message: "A ten too many — from 65, it takes 5 to reach 70 and 80 more to reach 150: ₹85."
+  "115":
+    code: NEAR_MISS
+    message: "₹115 + ₹65 = ₹180 — thirty past the ₹150 target."
+solution:
+  - type: step
+    goal: See the parts and the whole.
+    working: "? + 65 = 150 → whole 150, known part 65"
+  - type: step
+    goal: Subtract the known part.
+    working: "150 − 65 = ₹85"
+  - type: takeaway
+    text: When the whole and one part are known, the other part is a subtraction away.
+  - type: verification
+    text: "₹85 + ₹65 = ₹150 — the parts really do rebuild the whole."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">₹? + ₹65 = ₹150</p>
+  <ul class="options">
+    <li data-val="85">₹85</li>
+    <li data-val="215">₹215</li>
+    <li data-val="95">₹95</li>
+    <li data-val="115">₹115</li>
+  </ul>
+  <p class="explain">Work backwards with subtraction: 150 − 65 = ₹85.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["30"]
+description: Missing factor — divide to undo multiplying
+hint:
+  - "Some amount, taken 7 times, makes ₹210."
+  - "Multiplying and dividing undo each other."
+  - "Divide 210 by 7 to work backwards."
+explain: "₹210 ÷ 7 = ₹30, and ₹30 × 7 = ₹210 ✓."
+whyWrong:
+  "203":
+    code: WRONG_OP_SUB_FOR_DIV
+    message: "₹203 is 210 minus 7 — undoing a multiplication needs division, not subtraction."
+  "1470":
+    code: MULTIPLIED_NOT_DIVIDED
+    message: "₹1,470 multiplies again — going backwards means dividing the ₹210 up."
+  "3":
+    code: PLACE_SHIFT_DOWN
+    message: "7 × 3 is only ₹21 — a zero went missing from the ₹30."
+solution:
+  - type: step
+    goal: Read the equation backwards.
+    working: "? × 7 = 210 → ? = 210 ÷ 7"
+  - type: step
+    goal: Divide.
+    working: "210 ÷ 7 = ₹30"
+  - type: takeaway
+    text: To find a missing factor, divide the product by the factor you know.
+  - type: verification
+    text: "₹30 × 7 = ₹210 — the equation closes perfectly."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">₹? × 7 = ₹210</p>
+  <ul class="options">
+    <li data-val="30">₹30</li>
+    <li data-val="203">₹203</li>
+    <li data-val="1470">₹1,470</li>
+    <li data-val="3">₹3</li>
+  </ul>
+  <p class="explain">Work backwards with division: 210 ÷ 7 = ₹30.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["600"]
+description: Estimate ₹198 + ₹403
+hint:
+  - "No exact adding — round each amount first."
+  - "Take each amount to its nearest hundred."
+  - "Add the two friendly hundreds."
+explain: "₹198 is about ₹200 and ₹403 is about ₹400: together about ₹600."
+whyWrong:
+  "500":
+    code: ROUND_ONE_WRONG
+    message: "This treats ₹198 as ₹100 — but 198 is sitting right next to 200."
+  "700":
+    code: ROUND_ONE_WRONG
+    message: "This pushes ₹403 up to ₹500 — 403 has barely left 400."
+  "60":
+    code: PLACE_SHIFT_DOWN
+    message: "About ₹60 is ten times too small — the amounts are hundreds, not tens."
+solution:
+  - type: step
+    goal: Round each amount.
+    working: "198 → 200 · 403 → 400"
+  - type: step
+    goal: Add the rounded amounts.
+    working: "200 + 400 = ₹600"
+  - type: takeaway
+    text: Estimates trade exact digits for friendly hundreds — round first, then add.
+  - type: verification
+    text: "The exact total is ₹601 — the estimate of ₹600 is almost on top of it."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">About how much is ₹198 + ₹403?</p>
+  <ul class="options">
+    <li data-val="600">about ₹600</li>
+    <li data-val="500">about ₹500</li>
+    <li data-val="700">about ₹700</li>
+    <li data-val="60">about ₹60</li>
+  </ul>
+  <p class="explain">₹198 rounds to ₹200 and ₹403 rounds to ₹400, so about ₹600. (Exactly, it is ₹601.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["250"]
+description: Estimate ₹49 × 5
+hint:
+  - "Swap the tricky number for a nearby friendly one."
+  - "₹49 is one rupee away from a very round number."
+  - "Multiply the friendly number by 5."
+explain: "₹49 is about ₹50, and 50 × 5 = ₹250."
+whyWrong:
+  "200":
+    code: ROUND_ONE_WRONG
+    message: "This rounds ₹49 down to ₹40 — but 49 is only one step from 50."
+  "450":
+    code: ESTIMATE_WRONG_VALUE
+    message: "About ₹450 would need each item near ₹90 — twice the real price."
+  "54":
+    code: WRONG_OP_ADD_FOR_MULT
+    message: "₹54 adds 49 + 5 — five price tags of ₹49 pile up to five times as much."
+solution:
+  - type: step
+    goal: Round the price.
+    working: "49 → 50"
+  - type: step
+    goal: Multiply.
+    working: "50 × 5 = ₹250"
+  - type: takeaway
+    text: One rupee of rounding buys a multiplication you can do in your head.
+  - type: verification
+    text: "The exact answer is ₹245 — just ₹5 below the estimate, one for each item."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">About how much is ₹49 × 5?</p>
+  <ul class="options">
+    <li data-val="250">about ₹250</li>
+    <li data-val="200">about ₹200</li>
+    <li data-val="450">about ₹450</li>
+    <li data-val="54">about ₹54</li>
+  </ul>
+  <p class="explain">₹49 is close to ₹50, and 50 × 5 = ₹250. (Exactly, it is ₹245.)</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["₹50 + ₹50","₹40 + ₹60","₹25 × 4","₹200 ÷ 2"]
+description: Every way to make exactly ₹100
+hint:
+  - "Work out the value of every card before choosing."
+  - "Some add, one multiplies, one divides — the operation changes everything."
+  - "Keep only the cards whose value lands exactly on ₹100."
+explain: "50+50, 40+60, 25×4 and 200÷2 all make exactly ₹100; the two others make ₹110."
+whyWrong:
+  "₹30 + ₹80":
+    code: SUM_EVAL_ERROR
+    message: "30 + 80 = ₹110 — ten rupees past the target."
+  "₹90 + ₹20":
+    code: SUM_EVAL_ERROR
+    message: "90 + 20 = ₹110 — this pair overshoots by ten."
+solution:
+  - type: step
+    goal: Evaluate every card.
+    working: "50+50=100 · 40+60=100 · 30+80=110 · 25×4=100 · 90+20=110 · 200÷2=100"
+  - type: step
+    goal: Keep the exact hundreds.
+    working: "four cards land exactly on ₹100"
+  - type: takeaway
+    text: Different operations can reach the same amount — value each expression before judging it.
+  - type: verification
+    text: "The two rejects both total ₹110 — close only counts with estimates, and this question said exactly."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select all the ways to make exactly ₹100.</p>
+  <ul class="options">
+    <li>₹50 + ₹50</li>
+    <li>₹40 + ₹60</li>
+    <li>₹30 + ₹80</li>
+    <li>₹25 × 4</li>
+    <li>₹90 + ₹20</li>
+    <li>₹200 ÷ 2</li>
+  </ul>
+  <p class="explain">₹30 + ₹80 and ₹90 + ₹20 both make ₹110 — not ₹100.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["₹1,200","₹505","₹750"]
+description: Amounts strictly more than ₹500
+hint:
+  - "Compare every amount with ₹500, one at a time."
+  - "Read the words again — MORE than ₹500."
+  - "Think hard about the amount that is exactly ₹500."
+explain: "₹1,200, ₹505 and ₹750 are all past ₹500; ₹500 itself is not MORE than ₹500."
+whyWrong:
+  "₹450":
+    code: WRONG_NUMBER_PAIR
+    message: "₹450 sits fifty short of the ₹500 line."
+  "₹499":
+    code: WRONG_NUMBER_PAIR
+    message: "One rupee short — ₹499 never crosses the line."
+  "₹500":
+    code: COMPARISON_EQUAL_WRONG
+    message: "Exactly ₹500 EQUALS the line — 'more than' means past it, even by a rupee."
+solution:
+  - type: step
+    goal: Test each amount against ₹500.
+    working: "450 ✗ · 1,200 ✓ · 505 ✓ · 499 ✗ · 500 ✗ · 750 ✓"
+  - type: step
+    goal: Mind the boundary.
+    working: "500 is equal, not more — it stays out"
+  - type: takeaway
+    text: "'More than' draws a strict line — the boundary number itself never crosses it."
+  - type: verification
+    text: "Each chosen amount beats 500 by at least ₹5; each rejected one is 500 or below."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select all the amounts that are more than ₹500.</p>
+  <ul class="options">
+    <li>₹450</li>
+    <li>₹1,200</li>
+    <li>₹505</li>
+    <li>₹499</li>
+    <li>₹500</li>
+    <li>₹750</li>
+  </ul>
+  <p class="explain">₹500 is not <em>more than</em> ₹500 — it is equal to it. ₹505 is only ₹5 more, but it still counts.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["₹85","₹140","₹320","₹1,050"]
+low: smallest
+high: largest
+description: Order money amounts by size
+hint:
+  - "Count each amount's digits before comparing anything."
+  - "Fewer digits means a smaller amount — that places two cards straight away."
+  - "For amounts with the same number of digits, compare the front digit."
+explain: "₹85 (2 digits) < ₹140 < ₹320 (front digits 1 < 3) < ₹1,050 (4 digits)."
+solution:
+  - type: step
+    goal: Sort by digit count.
+    working: "85 → 2 digits · 140, 320 → 3 · 1,050 → 4"
+  - type: step
+    goal: Settle the tie.
+    working: "140 vs 320 → 1 < 3 → 140 first"
+  - type: step
+    goal: Read the line.
+    working: "₹85, ₹140, ₹320, ₹1,050"
+  - type: takeaway
+    text: Digit count first, front digit second — most money comparisons end right there.
+  - type: verification
+    text: "Each neighbour really is bigger than the last: 85 < 140 < 320 < 1,050."
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Order these amounts from smallest to largest.</p>
+  <ol class="order">
+    <li>₹320</li>
+    <li>₹85</li>
+    <li>₹1,050</li>
+    <li>₹140</li>
+  </ol>
+</div>
+
+<!--@q
+type: order
+answer: ["₹9.05","₹9.15","₹9.50","₹10.05"]
+low: smallest
+high: largest
+description: Order decimal money amounts
+hint:
+  - "Compare the rupee parts first."
+  - "When rupees match, the paise decide — read them as a two-digit number."
+  - "Careful: .50 means fifty paise, not five."
+explain: "₹9.05 (5 paise) < ₹9.15 (15) < ₹9.50 (50) < ₹10.05 (ten rupees beats nine)."
+solution:
+  - type: step
+    goal: Compare rupees.
+    working: "9, 9, 9 and 10 → ₹10.05 goes last"
+  - type: step
+    goal: Compare the nines by paise.
+    working: "05 < 15 < 50"
+    reason: .50 is fifty paise — the zero after the 5 keeps it big.
+  - type: takeaway
+    text: Paise are a two-digit number — ₹9.50 towers over ₹9.05.
+  - type: verification
+    text: "50 paise really is ten times 5 paise — the middle pair cannot swap."
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Order these amounts from smallest to largest.</p>
+  <ol class="order">
+    <li>₹9.50</li>
+    <li>₹10.05</li>
+    <li>₹9.05</li>
+    <li>₹9.15</li>
+  </ol>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"lt","label":"Less than ₹100"},{"id":"ge","label":"₹100 or more"}]
+answer: ["lt","ge","lt","ge"]
+description: Sort amounts against the ₹100 benchmark
+hint:
+  - "Compare each amount with ₹100 before dragging."
+  - "Count the digits — two-digit amounts can never reach ₹100."
+  - "Three digits or more means ₹100 or beyond."
+explain: "₹45 and ₹78 (two digits) fall below ₹100; ₹117 and ₹349 (three digits) are ₹100 or more."
+solution:
+  - type: step
+    goal: Spot the two-digit amounts.
+    working: "₹45, ₹78 → below ₹100"
+    reason: Two digits top out at ₹99.
+  - type: step
+    goal: Spot the three-digit amounts.
+    working: "₹117, ₹349 → ₹100 or more"
+  - type: takeaway
+    text: The digit count is a built-in ₹100 detector — three digits always clears it.
+  - type: verification
+    text: "Two amounts landed in each box, and every three-digit amount really does start at ₹100 or above."
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Sort each amount into the right box.</p>
+  <ul class="tiles">
+    <li>₹45</li>
+    <li>₹117</li>
+    <li>₹78</li>
+    <li>₹349</li>
+  </ul>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["₹75","₹100","₹125","₹150"]
+palette: ["₹75","₹100","₹125","₹150"]
+description: Skip-count savings by ₹25 each week
+hint:
+  - "Each week adds another ₹25 to the pile."
+  - "Start from ₹50 and keep adding the same step."
+  - "Watch the jumps: 25, 50, then keep the rhythm going."
+explain: "Adding ₹25 each week: 25, 50, 75, 100, 125, 150."
+solution:
+  - type: step
+    goal: Find the rule.
+    working: "25 → 50 is +25 each week"
+  - type: step
+    goal: Keep the jumps going.
+    working: "50 → 75 → 100 → 125 → 150"
+    reason: A steady saver climbs by the same step every week.
+  - type: takeaway
+    text: Skip-counting by 25s runs 25, 50, 75, 100 — the pattern of quarter-hundreds.
+  - type: verification
+    text: "Six weeks of ₹25 is 6 × 25 = ₹150 — exactly where the chain ends."
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Diya saves ₹25 every week. Build her savings for the next four weeks.</p>
+  <p class="reference">₹25, ₹50, … , … , … , …</p>
+</div>
+
+</div>
