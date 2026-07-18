@@ -1,0 +1,630 @@
+<div id="source">
+<!--@q
+type: fill-blanks
+answer: ["6"]
+description: Count the faces of a cube
+hint:
+  - "A face is one flat surface of the solid."
+  - "Picture turning the cube — some faces hide at the back and underneath."
+  - "Count in pairs: front and back, left and right, top and bottom."
+explain: "A cube has 6 faces: front, back, left, right, top and bottom."
+solution:
+  - type: step
+    goal: Count the faces you can see.
+    working: "front, top, right side → 3"
+  - type: step
+    goal: Add the hidden partners.
+    working: "back, bottom, left side → 3 more"
+    reason: Every visible face of a cube has a matching face directly opposite it.
+  - type: step
+    goal: Total.
+    working: "3 + 3 = 6 faces"
+  - type: takeaway
+    text: Solids keep faces hidden at the back — count opposite pairs so none escape.
+  - type: verification
+    text: A dice is a cube, and it carries the numbers 1 to 6 — one number per face.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">How many faces does this cube have? Count the hidden ones at the back too. []</p>
+  <svg viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg" width="160" height="150"><polygon points="40,55 100,55 100,120 40,120" fill="#fde39a" stroke="#e0a800" stroke-width="2.5"/><polygon points="40,55 65,32 125,32 100,55" fill="#fde39a" stroke="#e0a800" stroke-width="2.5"/><polygon points="100,55 125,32 125,97 100,120" fill="#fde39a" stroke="#e0a800" stroke-width="2.5"/><path d="M40 55 L65 32 M65 32 L65 97 L40 120 M65 97 L125 97" fill="none" stroke="#e0a800" stroke-width="1.4" stroke-dasharray="3 3" opacity="0.75"/></svg>
+  <p class="explain">A cube has 6 faces: front, back, left, right, top and bottom.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1"]
+description: What shape is a face of a cube?
+hint:
+  - "Pick one face of the cube and look only at that."
+  - "Count its sides — and check whether they are all the same length."
+  - "Four equal sides and four square corners name the shape."
+explain: Every face of a cube is a square — four equal sides, four square corners.
+whyWrong:
+  "2":
+    code: SHAPE_CONFUSED
+    message: "A triangle has 3 sides — a cube's faces all have 4 equal sides."
+  "3":
+    code: SHAPE_CONFUSED
+    message: "A circle has no corners at all — a cube's faces have 4 sharp corners each."
+solution:
+  - type: step
+    goal: Isolate one face.
+    working: "look at the front face alone"
+  - type: step
+    goal: Describe it.
+    working: "4 sides, all equal · 4 square corners → a square"
+    reason: A cube is built from six identical squares.
+  - type: takeaway
+    text: "Cube = six squares folded up. The equal sides are what make it a cube and not just any box."
+  - type: verification
+    text: If even one face were a different shape, the solid could not close up into a cube.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What shape is each face of this cube?</p>
+  <svg viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg" width="160" height="150"><polygon points="40,55 100,55 100,120 40,120" fill="#fde39a" stroke="#e0a800" stroke-width="2.5"/><polygon points="40,55 65,32 125,32 100,55" fill="#fde39a" stroke="#e0a800" stroke-width="2.5"/><polygon points="100,55 125,32 125,97 100,120" fill="#fde39a" stroke="#e0a800" stroke-width="2.5"/><path d="M40 55 L65 32 M65 32 L65 97 L40 120 M65 97 L125 97" fill="none" stroke="#e0a800" stroke-width="1.4" stroke-dasharray="3 3" opacity="0.75"/></svg>
+  <ul class="options">
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="22" width="56" height="56" rx="4" fill="#7b5cff"/></svg></li>
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><path d="M50 20 L80 76 L20 76 Z" fill="#10b981" stroke-linejoin="round"/></svg></li>
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="30" fill="#ff7eb6"/></svg></li>
+  </ul>
+  <p class="explain">Every face of a cube is a square — 4 straight sides, all the same length.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["It has 6 faces, and each face is a rectangle."]
+description: A stretched box still has 6 faces, but they are rectangles
+hint:
+  - "There are two things to check: how many faces, and what shape they are."
+  - "Count the faces in opposite pairs, like on a cube."
+  - "Then look at one face — are its sides all equal, or is it longer one way?"
+explain: The box still has 6 faces, but they are stretched — rectangles, not squares.
+whyWrong:
+  "It has 6 faces, and each face is a square.":
+    code: SHAPE_CONFUSED
+    message: "The face count is right, but these faces are longer than they are tall — rectangles, not squares."
+  "It has 4 faces, and each face is a rectangle.":
+    code: SHAPE_PROPERTY_CONFUSED
+    message: "The face shape is right, but two faces went missing — every box has 6, counting the hidden ones."
+solution:
+  - type: step
+    goal: Count the faces.
+    working: "front/back + left/right + top/bottom = 6"
+    reason: Stretching a cube never adds or removes faces.
+  - type: step
+    goal: Name the face shape.
+    working: "sides are not all equal → rectangles"
+  - type: takeaway
+    text: A rectangular prism is a stretched cube — same six faces, but rectangles.
+  - type: verification
+    text: A cereal box shows it — six rectangular faces, and it closes perfectly.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which sentence about this box is true?</p>
+  <svg viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg" width="160" height="150"><polygon points="30,60 110,60 110,112 30,112" fill="#c3e8a6" stroke="#57a83a" stroke-width="2.5"/><polygon points="30,60 54,40 134,40 110,60" fill="#c3e8a6" stroke="#57a83a" stroke-width="2.5"/><polygon points="110,60 134,40 134,92 110,112" fill="#c3e8a6" stroke="#57a83a" stroke-width="2.5"/><path d="M30 60 L54 40 M54 40 L54 92 L30 112 M54 92 L134 92" fill="none" stroke="#57a83a" stroke-width="1.4" stroke-dasharray="3 3" opacity="0.7"/></svg>
+  <ul class="options">
+    <li>It has 6 faces, and each face is a square.</li>
+    <li>It has 6 faces, and each face is a rectangle.</li>
+    <li>It has 4 faces, and each face is a rectangle.</li>
+  </ul>
+  <p class="explain">Stretching a cube does not change how many faces it has — still 6. But the faces are now rectangles, not squares.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["5"]
+description: Count the faces of a square pyramid
+hint:
+  - "This solid has two kinds of faces — sloping ones and the one it stands on."
+  - "Count the triangle walls first."
+  - "Then remember the square base hiding underneath."
+explain: "A square pyramid has 4 triangle faces plus its square base: 5 in all."
+solution:
+  - type: step
+    goal: Count the sloping faces.
+    working: "4 triangles, one on each side of the square"
+  - type: step
+    goal: Add the base.
+    working: "4 + 1 = 5 faces"
+    reason: The base is a real face even though the pyramid sits on it.
+  - type: takeaway
+    text: The face a solid stands on still counts — do not let the floor hide it.
+  - type: verification
+    text: "Check by shape: 4 triangles + 1 square = 5 flat surfaces, and there is nowhere else to touch."
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">How many faces does this square pyramid have? Count the base it stands on too. []</p>
+  <svg viewBox="0 0 230 225" width="190" height="200" xmlns="http://www.w3.org/2000/svg" role="img"><polygon points="110,45 85,165 45,205" fill="#f9c99a" fill-opacity="0.5" stroke="none"/><polygon points="110,45 45,205 175,205" fill="#f9c99a" fill-opacity="0.62" stroke="none"/><polygon points="110,45 175,205 215,165" fill="#f9c99a" fill-opacity="0.5" stroke="none"/><line x1="110" y1="45" x2="45" y2="205" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="110" y1="45" x2="175" y2="205" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="110" y1="45" x2="215" y2="165" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="45" y1="205" x2="175" y2="205" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="175" y1="205" x2="215" y2="165" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="110" y1="45" x2="85" y2="165" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="5 4"/><line x1="85" y1="165" x2="45" y2="205" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="5 4"/><line x1="85" y1="165" x2="215" y2="165" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="5 4"/></svg>
+  <p class="explain">A square pyramid has 5 faces: 4 triangles, plus the square base underneath.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["1","3"]
+description: A square pyramid has two different face shapes
+hint:
+  - "Go face by face around the pyramid."
+  - "The sloping walls are one shape; the base is another."
+  - "Count the sides of each face before you decide its name."
+explain: The pyramid's sloping walls are triangles and its base is a square — two shapes, nothing else.
+whyWrong:
+  "2":
+    code: SHAPE_CONFUSED
+    message: "A circle would need a curved edge — every edge of a pyramid is dead straight."
+  "4":
+    code: SHAPE_CONFUSED
+    message: "A long rectangle appears on prisms — the pyramid's base is a perfect square, not a stretched one."
+solution:
+  - type: step
+    goal: Name the sloping faces.
+    working: "4 walls, each with 3 sides → triangles"
+  - type: step
+    goal: Name the base.
+    working: "4 equal sides → a square"
+  - type: takeaway
+    text: "'Square pyramid' says it all: square base, triangle walls."
+  - type: verification
+    text: Two shapes cover all 5 faces — 4 triangles and 1 square, no circles or rectangles anywhere.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every shape that is one of this pyramid's faces.</p>
+  <svg viewBox="0 0 230 225" width="190" height="200" xmlns="http://www.w3.org/2000/svg" role="img"><polygon points="110,45 85,165 45,205" fill="#f9c99a" fill-opacity="0.5" stroke="none"/><polygon points="110,45 45,205 175,205" fill="#f9c99a" fill-opacity="0.62" stroke="none"/><polygon points="110,45 175,205 215,165" fill="#f9c99a" fill-opacity="0.5" stroke="none"/><line x1="110" y1="45" x2="45" y2="205" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="110" y1="45" x2="175" y2="205" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="110" y1="45" x2="215" y2="165" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="45" y1="205" x2="175" y2="205" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="175" y1="205" x2="215" y2="165" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="110" y1="45" x2="85" y2="165" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="5 4"/><line x1="85" y1="165" x2="45" y2="205" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="5 4"/><line x1="85" y1="165" x2="215" y2="165" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="5 4"/></svg>
+  <ul class="options">
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><path d="M50 20 L80 76 L20 76 Z" fill="#10b981" stroke-linejoin="round"/></svg></li>
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="30" fill="#ff7eb6"/></svg></li>
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="22" width="56" height="56" rx="4" fill="#7b5cff"/></svg></li>
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="30" width="68" height="40" rx="4" fill="#f59e0b"/></svg></li>
+  </ul>
+  <p class="explain">A square pyramid has 4 triangle faces and 1 square base — two different face shapes.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["4"]
+description: How many faces of a square pyramid are triangles?
+hint:
+  - "A triangle has exactly 3 sides."
+  - "Only the sloping walls of the pyramid are triangles."
+  - "Count one wall for each side of the square base."
+explain: The square base has 4 sides, and each side carries one triangular wall — 4 triangles.
+whyWrong:
+  "3":
+    code: SHAPE_PROPERTY_CONFUSED
+    message: "3 walls would leave one side of the square base open — the base has 4 sides, so 4 walls."
+  "5":
+    code: SHAPE_PROPERTY_CONFUSED
+    message: "5 counts every face, including the base — but the base is a square, not a triangle."
+solution:
+  - type: step
+    goal: Count the triangle walls.
+    working: "one wall per base side → 4 triangles"
+  - type: step
+    goal: Check the base.
+    working: "the base is a square — not a triangle, so it is not counted"
+  - type: takeaway
+    text: Face-shape questions need a filter — count only the faces matching the shape asked for.
+  - type: verification
+    text: "4 triangles + 1 square base = 5 faces, matching the pyramid's total exactly."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">How many of this pyramid’s faces are triangles?</p>
+  <svg viewBox="0 0 230 225" width="190" height="200" xmlns="http://www.w3.org/2000/svg" role="img"><polygon points="110,45 85,165 45,205" fill="#f9c99a" fill-opacity="0.5" stroke="none"/><polygon points="110,45 45,205 175,205" fill="#f9c99a" fill-opacity="0.62" stroke="none"/><polygon points="110,45 175,205 215,165" fill="#f9c99a" fill-opacity="0.5" stroke="none"/><line x1="110" y1="45" x2="45" y2="205" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="110" y1="45" x2="175" y2="205" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="110" y1="45" x2="215" y2="165" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="45" y1="205" x2="175" y2="205" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="175" y1="205" x2="215" y2="165" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round"/><line x1="110" y1="45" x2="85" y2="165" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="5 4"/><line x1="85" y1="165" x2="45" y2="205" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="5 4"/><line x1="85" y1="165" x2="215" y2="165" stroke="#e07a2c" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="5 4"/></svg>
+  <ul class="options"><li>3</li><li>4</li><li>5</li></ul>
+  <p class="explain">4 faces are triangles. The 5th face is the square base — a square, not a triangle.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["5"]
+description: Count the faces of a triangular prism
+hint:
+  - "A prism has two matching ends plus wrap-around faces."
+  - "Count the two triangle ends first."
+  - "Then count the rectangles wrapped around the middle."
+explain: "A triangular prism has 2 triangle ends and 3 rectangle sides: 5 faces."
+solution:
+  - type: step
+    goal: Count the ends.
+    working: "2 matching triangles"
+  - type: step
+    goal: Count the wrap-around faces.
+    working: "3 rectangles, one for each side of the triangle"
+  - type: step
+    goal: Total.
+    working: "2 + 3 = 5 faces"
+  - type: takeaway
+    text: "A prism is two ends plus one rectangle per side of the end shape."
+  - type: verification
+    text: A tent has this shape — two triangle ends, a floor and two sloping sides: five surfaces.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">How many faces does this triangular prism have? Count the faces turned away from you too. []</p>
+  <svg viewBox="0 0 210 275" width="190" height="200" xmlns="http://www.w3.org/2000/svg" role="img"><polygon points="105,70 50,45 160,55" fill="#edb9f2" fill-opacity="0.7" stroke="none"/><polygon points="105,70 50,45 50,225 105,250" fill="#edb9f2" fill-opacity="0.5" stroke="none"/><polygon points="105,70 160,55 160,235 105,250" fill="#edb9f2" fill-opacity="0.58" stroke="none"/><line x1="105" y1="70" x2="50" y2="45" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="105" y1="70" x2="160" y2="55" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="50" y1="45" x2="160" y2="55" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="105" y1="70" x2="105" y2="250" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="50" y1="45" x2="50" y2="225" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="160" y1="55" x2="160" y2="235" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="105" y1="250" x2="50" y2="225" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="105" y1="250" x2="160" y2="235" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="50" y1="225" x2="160" y2="235" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="5 4"/></svg>
+  <p class="explain">A triangular prism has 5 faces: 2 triangle ends and 3 rectangle sides.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["1","3"]
+description: A triangular prism has two different face shapes
+hint:
+  - "Go face by face — the ends and the wrap-around are different."
+  - "Count the sides of each face before naming it."
+  - "The two ends share one shape; the three around the middle share another."
+explain: The prism's two ends are triangles and the three faces around the middle are rectangles.
+whyWrong:
+  "2":
+    code: SHAPE_CONFUSED
+    message: "A circle needs a curved edge — every face of this prism has straight sides only."
+  "4":
+    code: SHAPE_CONFUSED
+    message: "A square would need all four sides equal — the prism's wrap-around faces are longer than they are wide."
+solution:
+  - type: step
+    goal: Name the ends.
+    working: "2 faces with 3 sides each → triangles"
+  - type: step
+    goal: Name the wrap-around faces.
+    working: "3 faces with 4 sides, longer than wide → rectangles"
+  - type: takeaway
+    text: "'Triangular prism' names its ends — the sides are always rectangles."
+  - type: verification
+    text: "2 triangles + 3 rectangles = 5 faces — the full count, with only two shapes used."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every shape that is one of this prism's faces.</p>
+  <svg viewBox="0 0 210 275" width="190" height="200" xmlns="http://www.w3.org/2000/svg" role="img"><polygon points="105,70 50,45 160,55" fill="#edb9f2" fill-opacity="0.7" stroke="none"/><polygon points="105,70 50,45 50,225 105,250" fill="#edb9f2" fill-opacity="0.5" stroke="none"/><polygon points="105,70 160,55 160,235 105,250" fill="#edb9f2" fill-opacity="0.58" stroke="none"/><line x1="105" y1="70" x2="50" y2="45" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="105" y1="70" x2="160" y2="55" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="50" y1="45" x2="160" y2="55" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="105" y1="70" x2="105" y2="250" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="50" y1="45" x2="50" y2="225" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="160" y1="55" x2="160" y2="235" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="105" y1="250" x2="50" y2="225" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="105" y1="250" x2="160" y2="235" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round"/><line x1="50" y1="225" x2="160" y2="235" stroke="#b25dc4" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="5 4"/></svg>
+  <ul class="options">
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><path d="M50 20 L80 76 L20 76 Z" fill="#10b981" stroke-linejoin="round"/></svg></li>
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="30" fill="#ff7eb6"/></svg></li>
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="30" width="68" height="40" rx="4" fill="#f59e0b"/></svg></li>
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="22" width="56" height="56" rx="4" fill="#7b5cff"/></svg></li>
+  </ul>
+  <p class="explain">A triangular prism has 2 triangle faces on the ends and 3 rectangle faces along the sides.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["2"]
+description: A cylinder has 2 flat faces
+hint:
+  - "Flat faces are surfaces that could sit flush on a table."
+  - "Check the two ends and the side separately."
+  - "The side is curved — does curved count as flat?"
+explain: Only the two circular ends are flat — the curved side is not a face.
+solution:
+  - type: step
+    goal: Check the ends.
+    working: "top circle flat ✓ · bottom circle flat ✓"
+  - type: step
+    goal: Check the side.
+    working: "curved — not a flat face"
+    reason: A flat face could rest flush against a table; the curved side never can.
+  - type: step
+    goal: Total.
+    working: "2 flat faces"
+  - type: takeaway
+    text: Curved surfaces are not faces — a face must be flat.
+  - type: verification
+    text: A tin can stands on either end but rolls on its side — flat, flat, curved.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">How many flat faces does this cylinder have? []</p>
+  <svg viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg" width="160" height="150"><path d="M50 28 L50 122 A30 11 0 0 0 110 122 L110 28" fill="#cdc3f0" stroke="#8b7fd6" stroke-width="2.5"/><ellipse cx="80" cy="28" rx="30" ry="11" fill="#cdc3f0" stroke="#8b7fd6" stroke-width="2.5"/><path d="M50 122 A30 11 0 0 1 110 122" fill="none" stroke="#8b7fd6" stroke-width="1.6" stroke-dasharray="3 3" opacity="0.8"/></svg>
+  <p class="explain">A cylinder has 2 flat faces — the top and the bottom. Its curved side is not a flat face.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3"]
+description: What shape are a cylinder's flat faces?
+hint:
+  - "Picture looking straight down at the top of a tin can."
+  - "What outline do you see from directly above?"
+  - "It has no corners and no straight sides."
+explain: Looking straight at either end of a cylinder, you see a circle.
+whyWrong:
+  "1":
+    code: SHAPE_CONFUSED
+    message: "A square has 4 straight sides — a cylinder's ends have no straight sides at all."
+  "2":
+    code: SHAPE_CONFUSED
+    message: "A triangle has 3 corners — a cylinder's ends have none."
+  "4":
+    code: SHAPE_CONFUSED
+    message: "The side of the can LOOKS like a rectangle from far away, but the flat ends are perfectly round."
+solution:
+  - type: step
+    goal: Look at one end straight on.
+    working: "a perfectly round outline → a circle"
+  - type: takeaway
+    text: "A cylinder is two circles with a curved wall between them."
+  - type: verification
+    text: Trace around a tin can on paper — the pencil draws a circle both times.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What shape are this cylinder’s flat faces?</p>
+  <svg viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg" width="160" height="150"><path d="M50 28 L50 122 A30 11 0 0 0 110 122 L110 28" fill="#cdc3f0" stroke="#8b7fd6" stroke-width="2.5"/><ellipse cx="80" cy="28" rx="30" ry="11" fill="#cdc3f0" stroke="#8b7fd6" stroke-width="2.5"/><path d="M50 122 A30 11 0 0 1 110 122" fill="none" stroke="#8b7fd6" stroke-width="1.6" stroke-dasharray="3 3" opacity="0.8"/></svg>
+  <ul class="options">
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="22" width="56" height="56" rx="4" fill="#7b5cff"/></svg></li>
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><path d="M50 20 L80 76 L20 76 Z" fill="#10b981" stroke-linejoin="round"/></svg></li>
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="30" fill="#ff7eb6"/></svg></li>
+    <li><svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="30" width="68" height="40" rx="4" fill="#f59e0b"/></svg></li>
+  </ul>
+  <p class="explain">Both flat faces of a cylinder are circles.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["1"]
+description: A cone has exactly 1 flat face
+hint:
+  - "Check the cone all over — the point, the slope, the bottom."
+  - "The sloping surface is curved, like a rolled party hat."
+  - "What is the cone standing on?"
+explain: "Only the circular base is flat — the sloping surface is curved, and the point is not a face at all."
+solution:
+  - type: step
+    goal: Check the slope.
+    working: "curved all the way around — not a face"
+  - type: step
+    goal: Check the bottom.
+    working: "a flat circle → 1 flat face"
+    reason: Turn the cone upside down and the circle it stood on is plain to see.
+  - type: takeaway
+    text: A cone is a circle wearing a curved hat — one flat face, one curved surface, one point.
+  - type: verification
+    text: An ice-cream cone balances on its circle but never on its curved side — one flat face only.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">How many flat faces does this cone have? []</p>
+  <svg viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg" width="160" height="150"><path d="M80 20 L36 118 A46 15 0 0 0 124 118 Z" fill="#eeb0e6" stroke="#cc44cc" stroke-width="2.5"/><path d="M36 118 A46 15 0 0 1 124 118" fill="none" stroke="#cc44cc" stroke-width="1.6" stroke-dasharray="3 3" opacity="0.8"/></svg>
+  <p class="explain">A cone has just 1 flat face — the circle it stands on.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["0"]
+description: A sphere has no flat faces at all
+hint:
+  - "A flat face could rest flush against a table without wobbling."
+  - "Try to imagine any flat patch on a ball."
+  - "If everywhere is curved, how many flat faces is that?"
+explain: A sphere is curved everywhere — it has no flat faces at all.
+solution:
+  - type: step
+    goal: Hunt for a flat patch.
+    working: "every part of a sphere curves — no flat patch exists"
+    reason: That is why a ball rolls in any direction — no face to settle on.
+  - type: step
+    goal: Count.
+    working: "0 flat faces"
+  - type: takeaway
+    text: Zero is a real answer — some solids have no faces to count.
+  - type: verification
+    text: A ball never sits still on a slope, but a box does — the box has faces, the ball has none.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">How many flat faces does this sphere have? []</p>
+  <svg viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg" width="160" height="150"><circle cx="80" cy="78" r="52" fill="#f9c79a" stroke="#e08a3a" stroke-width="2.5"/><ellipse cx="80" cy="78" rx="52" ry="17" fill="none" stroke="#e08a3a" stroke-width="1.6" stroke-dasharray="3 3" opacity="0.8"/></svg>
+  <p class="explain">A sphere is curved all over. It has 0 flat faces — there is nothing flat to tap.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"yes","label":"Has a square face"},{"id":"no","label":"No square face"}]
+answer: ["yes","yes","no","no"]
+description: Sort solids by whether any face is a square
+hint:
+  - "A square has 4 straight sides, all exactly the same length."
+  - "Check every face of each solid — including the base it stands on."
+  - "Curved solids cannot hide a square anywhere."
+explain: "The cube's faces are all squares and the pyramid's base is a square; the cylinder and cone have only circles and curves."
+solution:
+  - type: step
+    goal: Check the straight-edged solids.
+    working: "cube → every face square ✓ · square pyramid → its base is a square ✓"
+  - type: step
+    goal: Check the curved solids.
+    working: "cylinder → circles only ✗ · cone → one circle ✗"
+    reason: Circles have no straight sides, so they can never be squares.
+  - type: takeaway
+    text: To find a face shape, check every face — bases included.
+  - type: verification
+    text: Two solids in each box, and every 'yes' can point to the exact square that earned it.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each solid into the right box.</p>
+  <ul class="tiles">
+    <li><svg viewBox="0 0 100 100" width="88" height="88" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#6b9e3f" stroke-width="2" fill="#bfe08f" stroke-linejoin="round">
+<path d="M25 35 L60 35 L60 75 L25 75 Z"/>
+<path d="M25 35 L40 20 L75 20 L60 35 Z" fill="#a9d472"/>
+<path d="M60 35 L75 20 L75 60 L60 75 Z" fill="#95c95c"/>
+</g>
+<g stroke="#6b9e3f" stroke-width="1.5" fill="none" stroke-dasharray="3 3" opacity="0.7">
+<path d="M25 35 L40 20 M40 20 L40 60 L25 75 M40 60 L75 60"/>
+</g></svg></li>
+    <li><svg viewBox="0 0 100 100" width="88" height="88" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#e08a3f" stroke-width="2" fill="#f6c48a" stroke-linejoin="round">
+<path d="M50 14 L20 62 L52 78 Z"/>
+<path d="M50 14 L52 78 L84 58 Z" fill="#eea54a"/>
+</g>
+<g stroke="#e08a3f" stroke-width="1.5" fill="none" stroke-dasharray="3 3" opacity="0.75">
+<path d="M20 62 L54 50 L84 58 M54 50 L52 78"/>
+</g></svg></li>
+    <li><svg viewBox="0 0 100 100" width="88" height="88" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#6b9e3f" stroke-width="2" fill="#bfe08f">
+<path d="M28 28 L28 72 A22 9 0 0 0 72 72 L72 28 Z" fill="#aad46f"/>
+<ellipse cx="50" cy="28" rx="22" ry="9" fill="#cbe89f"/>
+</g>
+<path d="M28 72 A22 9 0 0 1 72 72" stroke="#6b9e3f" stroke-width="1.5" fill="none" stroke-dasharray="3 3" opacity="0.7"/></svg></li>
+    <li><svg viewBox="0 0 100 100" width="88" height="88" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#e0a83f" stroke-width="2" fill="#f6d48a">
+<path d="M50 14 L28 74 A22 8 0 0 0 72 74 Z" fill="#f0c76a"/>
+<ellipse cx="50" cy="74" rx="22" ry="8" fill="#f6d48a"/>
+</g>
+<path d="M28 74 A22 8 0 0 1 72 74" stroke="#e0a83f" stroke-width="1.5" fill="none" stroke-dasharray="3 3" opacity="0.7"/></svg></li>
+  </ul>
+  <p class="explain">A cube has 6 square faces, and a square pyramid has a square base. Cylinders and cones have circle faces, not squares.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"yes","label":"Has a triangle face"},{"id":"no","label":"No triangle face"}]
+answer: ["yes","yes","no","no"]
+description: Sort solids by whether any face is a triangle
+hint:
+  - "A triangle has exactly 3 straight sides."
+  - "Check every face of each solid, even the hidden ones."
+  - "Squares and circles are not triangles, however tilted they look."
+explain: "The pyramid's walls and the prism's ends are triangles; the cube and sphere have none."
+solution:
+  - type: step
+    goal: Find the triangle owners.
+    working: "square pyramid → 4 triangle walls ✓ · triangular prism → 2 triangle ends ✓"
+  - type: step
+    goal: Clear the rest.
+    working: "cube → all squares ✗ · sphere → no faces at all ✗"
+  - type: takeaway
+    text: A solid's name often gives its faces away — 'triangular' prism, square 'pyramid'.
+  - type: verification
+    text: Both 'yes' solids can show their triangles; the cube and sphere have not a single 3-sided face between them.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Drag each solid into the right box.</p>
+  <ul class="tiles">
+    <li><svg viewBox="0 0 100 100" width="88" height="88" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#e08a3f" stroke-width="2" fill="#f6c48a" stroke-linejoin="round">
+<path d="M50 14 L20 62 L52 78 Z"/>
+<path d="M50 14 L52 78 L84 58 Z" fill="#eea54a"/>
+</g>
+<g stroke="#e08a3f" stroke-width="1.5" fill="none" stroke-dasharray="3 3" opacity="0.75">
+<path d="M20 62 L54 50 L84 58 M54 50 L52 78"/>
+</g></svg></li>
+    <li><svg viewBox="0 0 100 100" width="88" height="88" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#c257c2" stroke-width="2" fill="#eab8ea" stroke-linejoin="round">
+<path d="M22 70 L40 32 L58 70 Z"/>
+<path d="M40 32 L60 26 L78 64 L58 70 Z" fill="#e0aae0"/>
+</g>
+<g stroke="#c257c2" stroke-width="1.5" fill="none" stroke-dasharray="3 3" opacity="0.75">
+<path d="M22 70 L42 64 L60 26 M42 64 L78 64"/>
+</g></svg></li>
+    <li><svg viewBox="0 0 100 100" width="88" height="88" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#6b9e3f" stroke-width="2" fill="#bfe08f" stroke-linejoin="round">
+<path d="M25 35 L60 35 L60 75 L25 75 Z"/>
+<path d="M25 35 L40 20 L75 20 L60 35 Z" fill="#a9d472"/>
+<path d="M60 35 L75 20 L75 60 L60 75 Z" fill="#95c95c"/>
+</g>
+<g stroke="#6b9e3f" stroke-width="1.5" fill="none" stroke-dasharray="3 3" opacity="0.7">
+<path d="M25 35 L40 20 M40 20 L40 60 L25 75 M40 60 L75 60"/>
+</g></svg></li>
+    <li><svg viewBox="0 0 100 100" width="88" height="88" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="48" r="34" fill="#f6d48a" stroke="#e0a83f" stroke-width="2"/>
+<ellipse cx="50" cy="48" rx="34" ry="11" fill="none" stroke="#e0a83f" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.7"/>
+<path d="M50 14 A34 34 0 0 1 50 82" fill="none" stroke="#e0a83f" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.6"/></svg></li>
+  </ul>
+  <p class="explain">A square pyramid has 4 triangle faces and a triangular prism has 2. A cube has only squares, and a sphere has no flat faces at all.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["1","2"]
+description: Which solids have a rectangle face?
+hint:
+  - "A rectangle has 4 straight sides and 4 square corners."
+  - "A solid can own more than one face shape — check them all."
+  - "Curved solids have no straight-sided faces at all."
+explain: The tall box's faces are rectangles and the prism's wrap-around faces are rectangles; the cone and sphere have none.
+whyWrong:
+  "3":
+    code: SHAPE_PROPERTY_CONFUSED
+    message: "A cone owns one circle and a curved slope — no straight-sided face anywhere."
+  "4":
+    code: SHAPE_PROPERTY_CONFUSED
+    message: "A sphere has no faces at all — nothing flat, so nothing rectangular."
+solution:
+  - type: step
+    goal: Check the box.
+    working: "tall rectangular prism → rectangle faces ✓"
+  - type: step
+    goal: Check the prism.
+    working: "triangular prism → 3 rectangle faces around the middle ✓"
+    reason: Its ENDS are triangles, but the wrap-around faces are rectangles — one solid, two shapes.
+  - type: step
+    goal: Clear the curved pair.
+    working: "cone ✗ · sphere ✗"
+  - type: takeaway
+    text: Check every face before ruling a solid out — prisms carry two shapes at once.
+  - type: verification
+    text: Each selected solid can point to a real rectangle; neither curved solid can offer a single straight side.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Tap every solid that has a rectangle face.</p>
+  <ul class="options">
+    <li><svg viewBox="0 0 100 100" width="88" height="88" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#7b6fd0" stroke-width="2" fill="#cbc2f0" stroke-linejoin="round">
+<path d="M32 22 L52 22 L52 82 L32 82 Z"/>
+<path d="M32 22 L44 12 L64 12 L52 22 Z" fill="#b8adea"/>
+<path d="M52 22 L64 12 L64 72 L52 82 Z" fill="#a89ce0"/>
+</g>
+<g stroke="#7b6fd0" stroke-width="1.5" fill="none" stroke-dasharray="3 3" opacity="0.7">
+<path d="M32 22 L44 12 M44 12 L44 72 L32 82 M44 72 L64 72"/>
+</g></svg></li>
+    <li><svg viewBox="0 0 100 100" width="88" height="88" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#c257c2" stroke-width="2" fill="#eab8ea" stroke-linejoin="round">
+<path d="M22 70 L40 32 L58 70 Z"/>
+<path d="M40 32 L60 26 L78 64 L58 70 Z" fill="#e0aae0"/>
+</g>
+<g stroke="#c257c2" stroke-width="1.5" fill="none" stroke-dasharray="3 3" opacity="0.75">
+<path d="M22 70 L42 64 L60 26 M42 64 L78 64"/>
+</g></svg></li>
+    <li><svg viewBox="0 0 100 100" width="88" height="88" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#e0a83f" stroke-width="2" fill="#f6d48a">
+<path d="M50 14 L28 74 A22 8 0 0 0 72 74 Z" fill="#f0c76a"/>
+<ellipse cx="50" cy="74" rx="22" ry="8" fill="#f6d48a"/>
+</g>
+<path d="M28 74 A22 8 0 0 1 72 74" stroke="#e0a83f" stroke-width="1.5" fill="none" stroke-dasharray="3 3" opacity="0.7"/></svg></li>
+    <li><svg viewBox="0 0 100 100" width="88" height="88" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="48" r="34" fill="#f6d48a" stroke="#e0a83f" stroke-width="2"/>
+<ellipse cx="50" cy="48" rx="34" ry="11" fill="none" stroke="#e0a83f" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.7"/>
+<path d="M50 14 A34 34 0 0 1 50 82" fill="none" stroke="#e0a83f" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.6"/></svg></li>
+  </ul>
+  <p class="explain">A rectangular prism has 6 rectangle faces, and a triangular prism has 3. Cones and spheres have no rectangle faces.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["no"]
+description: Is the cylinder's curved side a rectangle face?
+hint:
+  - "Think about what makes a surface a face in the first place."
+  - "On the actual can, run a finger down the side — is it flat or curved?"
+  - "What a surface looks like after unrolling is not what it is on the solid."
+explain: "No — on the cylinder itself the side is curved, and a face must be flat. Unrolling changes the shape."
+whyWrong:
+  "yes":
+    code: SHAPE_PROPERTY_CONFUSED
+    message: "The unrolled label is a rectangle, but on the can that surface is wrapped into a curve — and faces must be flat."
+solution:
+  - type: step
+    goal: Recall what a face is.
+    working: "a face = one FLAT surface of the solid"
+  - type: step
+    goal: Test the cylinder's side.
+    working: "curved on the solid → not a face"
+    reason: Unrolling flattens it, but the solid itself never has it flat.
+  - type: takeaway
+    text: Judge a face on the solid as it stands — not on what the surface could be unrolled into.
+  - type: verification
+    text: "The cylinder's face count stays 2 — the two circle ends — which matches what we counted earlier."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Unroll the side of a cylinder and it makes a rectangle. So does a cylinder have a rectangle as a face?</p>
+  <ul class="options"><li>yes</li><li>no</li></ul>
+  <p class="explain">No. A face has to be flat. The side of a cylinder is curved, so it is not a face. A cylinder’s only faces are its 2 flat circles.</p>
+</div>
+
+</div>

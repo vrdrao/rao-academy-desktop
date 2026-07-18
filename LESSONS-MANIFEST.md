@@ -57,6 +57,7 @@ lesson's row links its document.
 | Frequency tables | 21 | `lessons/frequency_tables.html` | `review/frequency_tables.html` | `sources/Data and graphs-Frequency tables(D).html` |
 | Geometric patterns remix | 30 | `lessons/incoming/geometric_patterns_remix.html` | `review/geometric_patterns_remix.html` | — |
 | Guess and check lesson30 | 30 | `lessons/incoming/guess-and-check_lesson30.html` | `review/guess-and-check_lesson30.html` | — |
+| Identify faces of three dimensional figures | 16 | `lessons/identify_faces_of_3d_figures.html` | `review/identify_faces_of_3d_figures.html` | `sources/Geometry-Identify faces of three-dimensional figures(D).html` |
 | Identify three dimensional figures | 25 | `lessons/incoming/identify-three-dimensional-figures.html` | `review/identify-three-dimensional-figures.html` | — |
 | Increasing number pattern remix | 37 | `lessons/incoming/increasing_number_pattern__remix.html` | `review/increasing_number_pattern__remix.html` | — |
 | Inequalities remix | 8 | `lessons/incoming/inequalities_remix.html` | `review/inequalities_remix.html` | — |
@@ -116,7 +117,7 @@ lesson's row links its document.
 | Use perimeter to determine cost | 20 | `lessons/use_perimeter_to_determine_cost.html` | `review/use_perimeter_to_determine_cost.html` | `sources/Geometric Measurements-Use perimeter to determine cost(D).html` |
 | Word problems with extra or missing information | 24 | `lessons/incoming/Word problems with extra or missing information.html` | `review/Word problems with extra or missing information.html` | — |
 
-**Totals: 104 lessons, 2,728 questions.**
+**Totals: 105 lessons, 2,744 questions.**
 Matches the recorded 102 / 2,687 exactly (2,722 → 2,727 on 2026-07-18:
 BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`;
 104 / 2,727 → 102 / 2,687 per BRIEF-DUPLICATE-CULL, Venkat's ruling
