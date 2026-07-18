@@ -51,11 +51,18 @@
 :root{--brand-rgb:123,92,255; --brand-hover:#6741e6; --ink-rgb:44,33,80;--rz-fw-prompt:700; --rz-fz-prompt:1.125rem; --rz-lh-prompt:1.5; --rz-ls-prompt:0.01em;--rz-gap-po:24px; --rz-gap-fig:12px; --rz-card-floor:300px; --rz-fz-chip:1.125rem; --rz-fz-tile:1.125rem;--rz-r-chip:12px; --rz-opt-cols:2;
   --brand:#7b5cff; --blue:#5B8DEF; --green:#10b981; --amber:#f59e0b; --red:#ef4444;
   --purple:#5A55E0; --pink:#5AC8FA;
-  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#f4f1fb; --card:#fff;
+  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#ffffff; --card:#fff;
   --fd:'Baloo 2',cursive; --fm:'Baloo 2',cursive; --fs:'Quicksand','DM Sans',sans-serif;
+  /* checkered pane grid (CALM-CARD-MASTER-SPEC §1, revised 2026-07-18): grape pins
+     the shipped grid purple 124,58,237; --grid-rgb is the palette-tint hook. */
+  --checker-line:rgba(var(--grid-rgb,124,58,237),.09); --checker-size:30px;
 }
 .rao-lesson *{margin:0;padding:0;box-sizing:border-box;}
-.rao-lesson{font-family:var(--fs);background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;}
+.rao-lesson{font-family:var(--fs);background-color:var(--bg);
+  background-image:linear-gradient(to right,var(--checker-line) 1px,transparent 1px),
+    linear-gradient(to bottom,var(--checker-line) 1px,transparent 1px);
+  background-size:var(--checker-size) var(--checker-size);background-position:center center;
+  color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;}
 .rao-lesson .wrap{max-width:880px;margin:0 auto;padding:28px 22px 90px;}
 
 .rao-lesson /* ── Page header ── */
@@ -549,7 +556,7 @@
 :root{--brand-rgb:123,92,255; --brand-hover:#6741e6; --ink-rgb:44,33,80;--rz-fw-prompt:700; --rz-fz-prompt:1.125rem; --rz-lh-prompt:1.5; --rz-ls-prompt:0.01em;--rz-gap-po:24px; --rz-gap-fig:12px; --rz-card-floor:300px; --rz-fz-chip:1.125rem; --rz-fz-tile:1.125rem;--rz-r-chip:12px; --rz-opt-cols:2;
   --brand:#7b5cff; --blue:#5B8DEF; --green:#10b981; --amber:#f59e0b; --red:#ef4444;
   --purple:#5A55E0; --pink:#5AC8FA;
-  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#f4f1fb; --card:#fff;
+  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#ffffff; --card:#fff;
   --fd:'Baloo 2',cursive; --fm:'Baloo 2',cursive; --fs:'Quicksand','DM Sans',sans-serif;
 }
 .rao-lesson .opt, .rao-lesson .opt-text{font-size:var(--rz-fz-chip);}
@@ -623,7 +630,7 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
 :root{--brand-rgb:123,92,255; --brand-hover:#6741e6; --ink-rgb:44,33,80;--rz-fw-prompt:700; --rz-fz-prompt:1.125rem; --rz-lh-prompt:1.5; --rz-ls-prompt:0.01em;--rz-gap-po:24px; --rz-card-floor:300px; --rz-fz-chip:1.125rem; --rz-fz-tile:1.125rem;--rz-r-chip:12px; --rz-opt-cols:2;
   --brand:#7b5cff; --blue:#5B8DEF; --green:#10b981; --amber:#f59e0b; --red:#ef4444;
   --purple:#5A55E0; --pink:#5AC8FA;
-  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#f4f1fb; --card:#fff;
+  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#ffffff; --card:#fff;
   --fd:'Baloo 2',cursive; --fm:'Baloo 2',cursive; --fs:'Quicksand','DM Sans',sans-serif;
 }
 
@@ -639,7 +646,7 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
   --fd:'Baloo 2',cursive;
   --brand:#7b5cff; --brand-hover:#6741e6; --brand-rgb:123,92,255;
   --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af;
-  --bg:#f4f1fb; --card:#fff;
+  --bg:#ffffff; --card:#fff;
   --blue:#5B8DEF; --green:#10b981; --amber:#f59e0b; --red:#ef4444; --pink:#5AC8FA;
 }
 

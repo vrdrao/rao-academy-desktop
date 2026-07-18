@@ -68,11 +68,18 @@
 :root{--brand-rgb:123,92,255; --brand-hover:#6741e6; --ink-rgb:44,33,80;--rz-fw-prompt:700; --rz-fz-prompt:1.125rem; --rz-lh-prompt:1.5; --rz-ls-prompt:0.01em;--rz-gap-po:24px; --rz-gap-fig:12px; --rz-card-floor:300px; --rz-fz-chip:1.125rem; --rz-fz-tile:1.125rem;--rz-r-chip:12px; --rz-opt-cols:2;
   --brand:#7b5cff; --blue:#5B8DEF; --green:#10b981; --amber:#f59e0b; --red:#ef4444;
   --purple:#5A55E0; --pink:#5AC8FA;
-  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#f4f1fb; --card:#fff;
+  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#ffffff; --card:#fff;
   --fd:'Baloo 2',cursive; --fm:'Baloo 2',cursive; --fs:'Quicksand','DM Sans',sans-serif;
+  /* checkered pane grid (CALM-CARD-MASTER-SPEC §1, revised 2026-07-18): grape pins
+     the shipped grid purple 124,58,237; --grid-rgb is the palette-tint hook. */
+  --checker-line:rgba(var(--grid-rgb,124,58,237),.09); --checker-size:30px;
 }
 .rao-lesson *{margin:0;padding:0;box-sizing:border-box;}
-.rao-lesson{font-family:var(--fs);background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;}
+.rao-lesson{font-family:var(--fs);background-color:var(--bg);
+  background-image:linear-gradient(to right,var(--checker-line) 1px,transparent 1px),
+    linear-gradient(to bottom,var(--checker-line) 1px,transparent 1px);
+  background-size:var(--checker-size) var(--checker-size);background-position:center center;
+  color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;}
 .rao-lesson .wrap{max-width:880px;margin:0 auto;padding:28px 22px 90px;}
 
 .rao-lesson /* ── Page header ── */
@@ -566,7 +573,7 @@
 :root{--brand-rgb:123,92,255; --brand-hover:#6741e6; --ink-rgb:44,33,80;--rz-fw-prompt:700; --rz-fz-prompt:1.125rem; --rz-lh-prompt:1.5; --rz-ls-prompt:0.01em;--rz-gap-po:24px; --rz-gap-fig:12px; --rz-card-floor:300px; --rz-fz-chip:1.125rem; --rz-fz-tile:1.125rem;--rz-r-chip:12px; --rz-opt-cols:2;
   --brand:#7b5cff; --blue:#5B8DEF; --green:#10b981; --amber:#f59e0b; --red:#ef4444;
   --purple:#5A55E0; --pink:#5AC8FA;
-  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#f4f1fb; --card:#fff;
+  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#ffffff; --card:#fff;
   --fd:'Baloo 2',cursive; --fm:'Baloo 2',cursive; --fs:'Quicksand','DM Sans',sans-serif;
 }
 .rao-lesson .opt, .rao-lesson .opt-text{font-size:var(--rz-fz-chip);}
@@ -640,7 +647,7 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
 :root{--brand-rgb:123,92,255; --brand-hover:#6741e6; --ink-rgb:44,33,80;--rz-fw-prompt:700; --rz-fz-prompt:1.125rem; --rz-lh-prompt:1.5; --rz-ls-prompt:0.01em;--rz-gap-po:24px; --rz-card-floor:300px; --rz-fz-chip:1.125rem; --rz-fz-tile:1.125rem;--rz-r-chip:12px; --rz-opt-cols:2;
   --brand:#7b5cff; --blue:#5B8DEF; --green:#10b981; --amber:#f59e0b; --red:#ef4444;
   --purple:#5A55E0; --pink:#5AC8FA;
-  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#f4f1fb; --card:#fff;
+  --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af; --bg:#ffffff; --card:#fff;
   --fd:'Baloo 2',cursive; --fm:'Baloo 2',cursive; --fs:'Quicksand','DM Sans',sans-serif;
 }
 
@@ -656,7 +663,7 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
   --fd:'Baloo 2',cursive;
   --brand:#7b5cff; --brand-hover:#6741e6; --brand-rgb:123,92,255;
   --ink:#2c2150; --sub:#6b5b9a; --mute:#9ca3af;
-  --bg:#f4f1fb; --card:#fff;
+  --bg:#ffffff; --card:#fff;
   --blue:#5B8DEF; --green:#10b981; --amber:#f59e0b; --red:#ef4444; --pink:#5AC8FA;
 }
 
@@ -1001,7 +1008,7 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
 </style>
 <style>/* page furniture — the review page is standalone; your app supplies its own */
 
-body{font-family:'Quicksand','DM Sans',system-ui,sans-serif;max-width:820px;margin:0 auto;padding:24px;background:#f4f1fb;color:#2c2150}
+body{font-family:'Quicksand','DM Sans',system-ui,sans-serif;max-width:820px;margin:0 auto;padding:24px;background:#ffffff;color:#2c2150}
 h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
 .note{background:#fff;border-left:4px solid #7b5cff;padding:10px 14px;border-radius:8px;color:#6b5b9a;margin:8px 0 18px;font-size:.9rem}
 #source{display:none}
@@ -1043,8 +1050,13 @@ h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
    Never put theme vars in an inline style= on the mount — that kills data-theme.
    ========================================================================== */
 
-.pv-frame{background:linear-gradient(160deg,#7b5cff 0%,#9b6bff 55%,#ff7eb6 130%);border-radius:18px;padding:6px;margin:20px 0 6px;box-shadow:0 10px 28px rgba(123,92,255,.22)}
- .pv-card{position:relative;background:#fff;border-radius:14px;padding:26px 28px 20px;box-shadow:0 4px 0 rgba(123,92,255,.08);transition:box-shadow .2s}
+/* Card anatomy (CALM-CARD-MASTER-SPEC §1, revised 2026-07-18 tuner readout):
+   FRAME = this wrapper's 3px padding (outer radius 28; card inner = 28−3 = 25,
+   the concentric rule). HALO = the glow shadow here. LEDGE = the 0 5px 0 lip on
+   .pv-card. The --halo-rgb var is the palette-tint hook from the spec; nothing
+   sets it yet, so the grape fallback 123,92,255 is what paints. */
+.pv-frame{background:linear-gradient(160deg,#7b5cff 0%,#9b6bff 55%,#ff7eb6 130%);border-radius:28px;padding:3px;margin:20px 0 6px;box-shadow:0 9px 21px rgba(var(--halo-rgb,123,92,255),.34)}
+ .pv-card{position:relative;background:#fff;border-radius:25px;padding:26px 28px 20px;box-shadow:0 5px 0 rgba(var(--halo-rgb,123,92,255),.12);transition:box-shadow .2s}
  /* Mobile card padding — a @container query (not @media) so it fires on a narrow
     LESSON, e.g. a 340px side-panel on a wide desktop, not just a narrow window.
     Relies on `.rao-lesson`'s container-name:lesson (set in rao.css). */

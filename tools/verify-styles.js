@@ -43,6 +43,16 @@ async function checkLesson(page, file) {
 
   const problems = [];
 
+  // ---- REVIEW PAGE BACKGROUND — the page furniture must match the app's white --
+  // A review page built before the 2026-07-18 card-look revision still carries the
+  // old lavender body. On-disk reviews are the deliverable, so assert per page.
+  // (transparent is fine too — an undeclared body paints over the white canvas;
+  //  review/index.html has no body background at all. The target here is a STALE
+  //  page still carrying the pre-2026-07-18 lavender #f4f1fb.)
+  const pageBg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  if (pageBg !== "rgb(255, 255, 255)" && pageBg !== "rgba(0, 0, 0, 0)")
+    problems.push(`review page body background is ${pageBg} — must be #ffffff (stale page? regenerate with make-review)`);
+
   // ---- FRACTION RENDERING — n/d must be STACKED, barred, and NOT oversized ----
   // Guards the exact bug reported on simple_fractions_shape: the sign-detector saw "1/2"
   // as a 3-char symbol and blew every fraction up to the 2.1rem opt-sign glyph. A green
@@ -441,7 +451,107 @@ async function checkMobileInvariants(browser) {
   return problems;
 }
 
+/* ---- CARD LOOK — the shipped card anatomy (CALM-CARD-MASTER-SPEC §1, ----------
+   revised 2026-07-18 by tuner readout). The grading harness never looks at the
+   chrome, and a stale on-disk review page still carries the OLD css it was built
+   with — so this check renders a fixture from the CURRENT shared files
+   (rao.css + rao-card.css), the same way the app composes them, and asserts on
+   computed style at BOTH a desktop and a phone viewport:
+     frame  — .pv-frame padding 3px on all sides
+     card   — .pv-card border-radius 25px (concentric: 28 outer − 3 frame)
+     halo   — .pv-frame box-shadow 0 9px 21px @ alpha .34 (grape 123,92,255)
+     ledge  — .pv-card box-shadow 0 5px 0 @ alpha .12
+     page   — .rao-lesson background-color #ffffff
+     grid   — checker lines rgba(124,58,237,.09) (grape pinned), 30px cells   */
+async function checkCardLook(browser) {
+  const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8");
+  const html =
+    `<!doctype html><html><head><meta charset="utf-8">` +
+    `<meta name="viewport" content="width=device-width">` +
+    `<style>${read("engine/rao.css")}</style>` +
+    `<style>${read("engine/rao-card.css")}</style></head><body style="margin:0;padding:0">` +
+    `<div id="source">` +
+    `<!--@q\ntype: single-select\nanswer: ["4"]\n-->` +
+    `<div class="question" data-type="single-select">` +
+    `<p class="prompt">What is 2 + 2?</p>` +
+    `<ul class="options"><li data-val="3">3</li><li data-val="4">4</li></ul>` +
+    `</div></div>` +
+    `<div id="preview" class="rao-lesson" data-theme="grape"></div>` +
+    `<script>${read("engine/preview-engine.js")}</script>` +
+    `<script>${read("engine/rao-card.js")}</script>` +
+    `</body></html>`;
+  const tmp = path.join(ROOT, "review", "__cardlook_fixture.html");
+  if (!fs.existsSync(path.dirname(tmp))) fs.mkdirSync(path.dirname(tmp), { recursive: true });
+  fs.writeFileSync(tmp, html);
+  const problems = [];
+  try {
+    for (const vp of [{ width: 1280, height: 800 }, { width: 390, height: 844 }]) {
+      const page = await browser.newPage({ viewport: vp });
+      try {
+        await page.goto("file://" + tmp);
+        await page.waitForFunction(() => document.querySelectorAll(".pv-frame").length > 0, { timeout: 15000 })
+                  .catch(() => {});
+        await page.waitForTimeout(300);
+        const look = await page.evaluate(() => {
+          const frame = document.querySelector(".pv-frame");
+          const card = document.querySelector(".pv-card");
+          const pane = document.querySelector(".rao-lesson");
+          if (!frame || !card || !pane) return null;
+          const f = getComputedStyle(frame), c = getComputedStyle(card), p = getComputedStyle(pane);
+          return {
+            pad: [f.paddingTop, f.paddingRight, f.paddingBottom, f.paddingLeft],
+            radius: c.borderTopLeftRadius,
+            halo: f.boxShadow,
+            ledge: c.boxShadow,
+            paneBg: p.backgroundColor,
+            grid: p.backgroundImage,
+            gridSize: p.backgroundSize,
+          };
+        });
+        const at = `${vp.width}px`;
+        if (!look) { problems.push(`${at}: no .pv-frame/.pv-card/.rao-lesson rendered — cannot verify card look`); continue; }
+        if (!look.pad.every((v) => v === "3px"))
+          problems.push(`${at}: FRAME thickness is ${look.pad.join("/")} — .pv-frame padding must be 3px on all sides`);
+        if (look.radius !== "25px")
+          problems.push(`${at}: CARD inner border-radius is ${look.radius} — must be 25px (concentric: 28 − 3)`);
+        if (!(look.halo.includes("0px 9px 21px") && look.halo.includes("rgba(123, 92, 255, 0.34)")))
+          problems.push(`${at}: HALO box-shadow is "${look.halo}" — must be 0 9px 21px rgba(123, 92, 255, 0.34)`);
+        if (!(look.ledge.includes("0px 5px 0px") && look.ledge.includes("rgba(123, 92, 255, 0.12)")))
+          problems.push(`${at}: LEDGE box-shadow is "${look.ledge}" — must be 0 5px 0 rgba(123, 92, 255, 0.12)`);
+        if (look.paneBg !== "rgb(255, 255, 255)")
+          problems.push(`${at}: PAGE background-color is ${look.paneBg} — .rao-lesson must paint #ffffff`);
+        const lines = (look.grid.match(/rgba\(124, 58, 237, 0\.09\)/g) || []).length;
+        if (lines !== 2)
+          problems.push(`${at}: CHECKER grid — found ${lines} gradient line colours at rgba(124, 58, 237, 0.09), expected 2 (horizontal + vertical). background-image: "${look.grid}"`);
+        // background-size serializes once PER GRADIENT LAYER ("30px 30px, 30px 30px")
+        if (!look.gridSize.split(/,\s*/).every((s) => s.trim() === "30px 30px"))
+          problems.push(`${at}: CHECKER size is "${look.gridSize}" — every layer must be 30px 30px`);
+      } finally {
+        await page.close();
+      }
+    }
+  } finally {
+    try { fs.unlinkSync(tmp); } catch (e) {}
+  }
+  return problems;
+}
+
 (async () => {
+  // --card-look-only: run just the card-anatomy fixture check (used for fast
+  // sabotage-proof runs; the full suite still runs everything).
+  if (process.argv.includes("--card-look-only")) {
+    const browser = await chromium.launch();
+    const problems = await checkCardLook(browser);
+    await browser.close();
+    if (problems.length) {
+      console.log("FAIL  card look (1280px + 390px)");
+      problems.forEach((p) => console.log("      - " + p));
+      process.exit(1);
+    }
+    console.log("PASS  card look (frame 3px, radius 25px, halo 9/21@.34, ledge 5@.12, white page, checker .09 @ 30px — at 1280px and 390px)");
+    process.exit(0);
+  }
+
   const files = fs.existsSync(REVIEW)
     ? fs.readdirSync(REVIEW).filter((f) => f.endsWith(".html") && !f.startsWith("__"))
     : [];
@@ -486,8 +596,18 @@ async function checkMobileInvariants(browser) {
     console.log(`PASS  mobile (380×800)  (gutters, overflow, buttons, blank-input)`);
   }
 
+  // Card look — shipped anatomy from the CURRENT shared files, 1280px and 390px.
+  const lookProblems = await checkCardLook(browser);
+  if (lookProblems.length) {
+    failed++;
+    console.log(`\nFAIL  card look (1280px + 390px)`);
+    lookProblems.forEach((p) => console.log("      - " + p));
+  } else {
+    console.log(`PASS  card look  (frame 3px, radius 25px, halo 9/21@.34, ledge 5@.12, white page, checker .09 @ 30px — at 1280px and 390px)`);
+  }
+
   await browser.close();
-  const total = files.length + 2;   // +1 explain, +1 mobile
+  const total = files.length + 3;   // +1 explain, +1 mobile, +1 card look
   console.log(failed ? `\n${failed}/${total} FAILED` : `\nselection styling is clean`);
   process.exit(failed ? 1 : 0);
 })();

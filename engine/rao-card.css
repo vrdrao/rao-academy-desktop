@@ -34,8 +34,13 @@
    Never put theme vars in an inline style= on the mount — that kills data-theme.
    ========================================================================== */
 
-.pv-frame{background:linear-gradient(160deg,#7b5cff 0%,#9b6bff 55%,#ff7eb6 130%);border-radius:18px;padding:6px;margin:20px 0 6px;box-shadow:0 10px 28px rgba(123,92,255,.22)}
- .pv-card{position:relative;background:#fff;border-radius:14px;padding:26px 28px 20px;box-shadow:0 4px 0 rgba(123,92,255,.08);transition:box-shadow .2s}
+/* Card anatomy (CALM-CARD-MASTER-SPEC §1, revised 2026-07-18 tuner readout):
+   FRAME = this wrapper's 3px padding (outer radius 28; card inner = 28−3 = 25,
+   the concentric rule). HALO = the glow shadow here. LEDGE = the 0 5px 0 lip on
+   .pv-card. The --halo-rgb var is the palette-tint hook from the spec; nothing
+   sets it yet, so the grape fallback 123,92,255 is what paints. */
+.pv-frame{background:linear-gradient(160deg,#7b5cff 0%,#9b6bff 55%,#ff7eb6 130%);border-radius:28px;padding:3px;margin:20px 0 6px;box-shadow:0 9px 21px rgba(var(--halo-rgb,123,92,255),.34)}
+ .pv-card{position:relative;background:#fff;border-radius:25px;padding:26px 28px 20px;box-shadow:0 5px 0 rgba(var(--halo-rgb,123,92,255),.12);transition:box-shadow .2s}
  /* Mobile card padding — a @container query (not @media) so it fires on a narrow
     LESSON, e.g. a 340px side-panel on a wide desktop, not just a narrow window.
     Relies on `.rao-lesson`'s container-name:lesson (set in rao.css). */

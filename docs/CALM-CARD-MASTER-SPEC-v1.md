@@ -15,14 +15,21 @@ BRIEF-7.8-DRAFT.md (the paste-ready production brief) · HANDOFF-12.md (session 
 
 ## 1. Card anatomy — exact numbers (shipped defaults, tuner at rest)
 
+> **Revision 2026-07-18** (per `docs/briefs/BRIEF-CARD-LOOK-2026-07-18.md`): Venkat's
+> tuner readout `frame 3px · ledge 5px · halo 9px/21px @ .34 / bg #ffffff · grid 0.090`
+> replaces the v1 values. Old → new: frame padding 5px → **3px**; card radius 23px →
+> **25px** (concentric rule, 28 − 3); halo `0 12px 28px` → **`0 9px 21px`** (alpha .34
+> unchanged); page bg #eef1f6 → **#ffffff**; grid alpha .06 → **.09**. Ledge and
+> checker size unchanged.
+
 | Layer | Property | Value |
 |---|---|---|
-| **Frame** (the coloured ring) | `.quiz` padding | **5px**; background `var(--frame-g)` gradient; border-radius **28px** |
-| **Card** | `.q.active` border-radius | **23px** — concentric rule: inner = 28 − frame, floor 12 |
+| **Frame** (the coloured ring) | `.quiz` padding | **3px**; background `var(--frame-g)` gradient; border-radius **28px** |
+| **Card** | `.q.active` border-radius | **25px** — concentric rule: inner = 28 − frame, floor 12 |
 | **Ledge** (lip under card) | `.q.active` box-shadow | `0 5px 0 rgba(var(--halo-rgb,123,92,255),.12)` |
-| **Halo** (glow) | `.quiz` box-shadow | `0 12px 28px rgba(var(--halo-rgb,123,92,255),.34)` |
-| **Page background** | `.proto-right` background-color | `var(--bg)` = **#eef1f6** (light mode) |
-| **Checkered grid** | `--checker-line` | `rgba(var(--grid-rgb,124,58,237),.06)`, `--checker-size` **30px** |
+| **Halo** (glow) | `.quiz` box-shadow | `0 9px 21px rgba(var(--halo-rgb,123,92,255),.34)` |
+| **Page background** | `.proto-right` background-color | `var(--bg)` = **#ffffff** (light mode) |
+| **Checkered grid** | `--checker-line` | `rgba(var(--grid-rgb,124,58,237),.09)`, `--checker-size` **30px** |
 | Card face | `.q.active` background | **#fff**, no CSS border (border-width 0 on all sides) |
 
 The card has NO border property. The visible "purple border" is the frame (gradient

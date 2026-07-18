@@ -82,9 +82,13 @@ function chromeCss() {
 
 /* The review page is a standalone HTML document, so it also needs the few page-level
    rules a lesson has but an app supplies itself (body background, the h1, the note).
-   These are page furniture, NOT card design — they never go in rao-card.css. */
+   These are page furniture, NOT card design — they never go in rao-card.css.
+   Body is plain --bg white; the checkered grid is NOT painted here, because it
+   arrives via the shared rao.css on `.rao-lesson` — the pane the cards actually
+   sit in, exactly as in the app. Painting a second grid on body would overlap
+   the pane's own grid out of phase and draw a seam the app never shows. */
 const PAGE_CSS = `
-body{font-family:'Quicksand','DM Sans',system-ui,sans-serif;max-width:820px;margin:0 auto;padding:24px;background:#f4f1fb;color:#2c2150}
+body{font-family:'Quicksand','DM Sans',system-ui,sans-serif;max-width:820px;margin:0 auto;padding:24px;background:#ffffff;color:#2c2150}
 h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
 .note{background:#fff;border-left:4px solid #7b5cff;padding:10px 14px;border-radius:8px;color:#6b5b9a;margin:8px 0 18px;font-size:.9rem}
 #source{display:none}
