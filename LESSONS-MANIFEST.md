@@ -3,10 +3,11 @@
 One row per lesson in the corpus (`lessons/` + `lessons/incoming/`, excluding
 `lessons/_preview/` scratch). Question count = `<!--@q` blocks in the file.
 
-**Source Word documents:** none are tracked in this repository. The only
-`.docx` in the repo is `How to Use.docx`, a usage guide, not a lesson source.
-No lesson can be traced to an in-repo source document, so the column below
-is `—` throughout.
+**Source documents:** lessons converted before 2026-07-19 have no in-repo
+source (the only `.docx` in the repo is `How to Use.docx`, a usage guide),
+so their Source doc column is `—`. From the 2026-07-19 overnight batch
+onwards, source documents are tracked in `sources/` and each converted
+lesson's row links its document.
 
 | Title | Questions | Lesson | Review | Source doc |
 |---|---:|---|---|---|
@@ -53,6 +54,7 @@ is `—` throughout.
 | Find start and end times remix | 30 | `lessons/incoming/find-start-and-end-times-remix.html` | `review/find-start-and-end-times-remix.html` | — |
 | Find the order remix | 30 | `lessons/incoming/find-the-order-remix.html` | `review/find-the-order-remix.html` | — |
 | Find two numbers based on sum difference product and quotient | 23 | `lessons/incoming/find-two-numbers-based-on-sum-difference-product-and-quotient.html` | `review/find-two-numbers-based-on-sum-difference-product-and-quotient.html` | — |
+| Frequency tables | 21 | `lessons/frequency_tables.html` | `review/frequency_tables.html` | `sources/Data and graphs-Frequency tables(D).html` |
 | Geometric patterns remix | 30 | `lessons/incoming/geometric_patterns_remix.html` | `review/geometric_patterns_remix.html` | — |
 | Guess and check lesson30 | 30 | `lessons/incoming/guess-and-check_lesson30.html` | `review/guess-and-check_lesson30.html` | — |
 | Identify three dimensional figures | 25 | `lessons/incoming/identify-three-dimensional-figures.html` | `review/identify-three-dimensional-figures.html` | — |
@@ -113,7 +115,7 @@ is `—` throughout.
 | Unit prices remix | 27 | `lessons/incoming/Unit_prices_remix.html` | `review/Unit_prices_remix.html` | — |
 | Word problems with extra or missing information | 24 | `lessons/incoming/Word problems with extra or missing information.html` | `review/Word problems with extra or missing information.html` | — |
 
-**Totals: 102 lessons, 2,687 questions.**
+**Totals: 103 lessons, 2,708 questions.**
 Matches the recorded 102 / 2,687 exactly (2,722 → 2,727 on 2026-07-18:
 BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`;
 104 / 2,727 → 102 / 2,687 per BRIEF-DUPLICATE-CULL, Venkat's ruling

@@ -1,0 +1,792 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["37"]
+description: Frequency table — count spins greater than 2
+hint:
+  - "Which rows of the table is the question asking about?"
+  - "Greater than 2 means the rows for 3, 4 and 5 — the row for 2 itself stays out."
+  - "Read the frequency of each of those rows, then add the three frequencies."
+explain: The rows greater than 2 are 3, 4 and 5, so 3 + 15 + 19 = 37 students.
+whyWrong:
+  "34":
+    code: DATA_READING_ERROR
+    message: "This adds only the rows for 4 and 5 — the row for 3 also belongs in 'greater than 2'."
+  "48":
+    code: DATA_READING_ERROR
+    message: "This includes the row for 2 itself — but 'greater than 2' starts just above it."
+  "66":
+    code: DATA_READING_ERROR
+    message: "This adds every row in the table — the question only wants the rows above 2."
+solution:
+  - type: step
+    goal: Pick the rows that count.
+    working: "greater than 2 → the rows for 3, 4 and 5"
+    reason: "'Greater than 2' does not include 2 itself."
+  - type: step
+    goal: Read their frequencies.
+    working: "3 → 3 students, 4 → 15 students, 5 → 19 students"
+  - type: step
+    goal: Add them.
+    working: "3 + 15 + 19 = 37"
+  - type: takeaway
+    text: Phrases like 'greater than' choose table rows first — then you add frequencies, never the numbers that were spun.
+  - type: verification
+    text: All six rows together hold 66 students, so 37 — a bit more than half — is sensible for the top three rows.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">For a maths assignment, students noted the number of times a wheel landed on the numbers 0 through 5. How many students spun a number <b>greater than 2</b>?</p>
+  <svg viewBox="0 0 360 298" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="296.5" fill="#fff" stroke="#d98a7e" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#fbe0dc"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Number spun</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#d98a7e" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">0</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">10</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#d98a7e" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">8</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#d98a7e" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">11</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#d98a7e" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">3</text><line x1="1.5" y1="214" x2="358.5" y2="214" stroke="#d98a7e" stroke-width="1"/><text x="90" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">4</text><text x="270" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">15</text><line x1="1.5" y1="256" x2="358.5" y2="256" stroke="#d98a7e" stroke-width="1"/><text x="90" y="277" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">5</text><text x="270" y="277" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">19</text><line x1="180" y1="1.5" x2="180" y2="296.5" stroke="#d98a7e" stroke-width="1"/></svg>
+  <ul class="options"><li>34</li><li>37</li><li>48</li><li>66</li></ul>
+  <p class="explain">Greater than 2 means 3, 4 and 5 — not 2 itself: 3 + 15 + 19 = 37. (48 would be the answer if you wrongly counted the 2s too.)</p>
+</div>
+
+<!--@q
+type: bar-graph
+categories: ["0","1","2","3"]
+values: [20,15,10,5]
+editable: [[2,0],[3,0]]
+max: 25
+step: 5
+y_label: Number of students
+x_label: Number of sweatshirts
+description: Finish the bar graph from the frequency table
+hint:
+  - "The table tells you exactly how tall each bar must be."
+  - "Find the sweatshirt number under an empty bar, then read that row's frequency in the table."
+  - "Raise the bar until it lines up with that frequency — the gridlines go up in 5s."
+explain: The table says 2 sweatshirts → 10 students and 3 sweatshirts → 5 students, so the last two bars rise to 10 and 5.
+solution:
+  - type: step
+    goal: Read the two unfinished rows.
+    working: "2 sweatshirts → 10, 3 sweatshirts → 5"
+    reason: The bars for 0 and 1 are already drawn — only these two rows are left.
+  - type: step
+    goal: Build each bar to its number.
+    working: "bar over 2 → up to 10 · bar over 3 → up to 5"
+    reason: Each gridline is worth 5, so 10 is exactly two gridlines up.
+  - type: takeaway
+    text: A bar graph is the frequency table drawn as heights — one row, one bar.
+  - type: verification
+    text: Finished, the four bars step down evenly — 20, 15, 10, 5 — just like the table.
+-->
+<div class="question" data-type="bar-graph">
+  <p class="prompt">The fundraising committee counted how many sweatshirts students already own. Two bars are drawn for you. <b>Drag the last two bars</b> to finish the graph.</p>
+  <svg viewBox="0 0 360 214" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="212.5" fill="#fff" stroke="#3aa88f" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#d9f0ea"/><text x="100" y="14" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="700" fill="#14213d">Number of sweatshirts</text><text x="100" y="32" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="700" fill="#14213d"></text><text x="280" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#3aa88f" stroke-width="1"/><text x="100" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">0</text><text x="280" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">20</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#3aa88f" stroke-width="1"/><text x="100" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="280" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">15</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#3aa88f" stroke-width="1"/><text x="100" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="280" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">10</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#3aa88f" stroke-width="1"/><text x="100" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="280" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">5</text><line x1="200" y1="1.5" x2="200" y2="212.5" stroke="#3aa88f" stroke-width="1"/></svg>
+  <p class="explain">The bar for 2 rises to 10, and the bar for 3 rises to 5 — exactly the frequencies in the table.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["6"]
+description: Find the smudged frequency using the total
+hint:
+  - "The story gives you the total of ALL the rows."
+  - "Add up the rows you can still read."
+  - "The missing row is whatever is left to reach 37."
+explain: The visible rows add to 20 + 2 + 9 = 31, and 37 − 31 = 6.
+solution:
+  - type: step
+    goal: Add the rows you can see.
+    working: "20 + 2 + 9 = 31"
+  - type: step
+    goal: Compare with the survey total.
+    working: "37 − 31 = 6"
+    reason: Every student sits in exactly one row, so all the rows must add to 37.
+  - type: takeaway
+    text: When one frequency is smudged, the total is the way in — add what you can see, then subtract from the total.
+  - type: verification
+    text: "Check it: 20 + 6 + 2 + 9 = 37, the exact number surveyed."
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Mrs. Espinoza surveyed <b>37 students</b> in all. One frequency has been smudged out. How many students went to the museum exactly <b>1</b> time? []</p>
+  <svg viewBox="0 0 360 214" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="212.5" fill="#fff" stroke="#e07a9c" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#fbdce7"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Number of trips</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#e07a9c" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">0</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">20</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#e07a9c" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">?</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#e07a9c" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">2</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#e07a9c" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">9</text><line x1="180" y1="1.5" x2="180" y2="212.5" stroke="#e07a9c" stroke-width="1"/></svg>
+  <p class="explain">The three we can see add to 20 + 2 + 9 = 31. The total is 37, so the missing row is 37 − 31 = 6.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["More people went 2 times than 5 times.","Only 1 person went 3 times.","Fewer than 10 people went 5 times."]
+description: True statements about the funfair table
+hint:
+  - "Test each sentence against the table, one at a time."
+  - "'Most common' means the biggest number in the Frequency column."
+  - "For each sentence, find the exact row or rows it talks about and check its claim."
+explain: "True: 18 > 6, exactly 1 person went 3 times, and 6 < 10. False: the most common number of trips was 2."
+whyWrong:
+  "The most common number of trips was 4.":
+    code: DATA_READING_ERROR
+    message: "The biggest frequency is 18, and it sits beside 2 trips — 4 trips only has 14."
+solution:
+  - type: step
+    goal: Check the comparing sentence.
+    working: "2 times → 18, 5 times → 6"
+    reason: 18 is more than 6, so the first sentence is true.
+  - type: step
+    goal: Check 'most common'.
+    working: "frequencies 3, 18, 1, 14, 6 — biggest is 18, beside 2 trips"
+    reason: The most common number of trips was 2, not 4 — that sentence is false.
+  - type: step
+    goal: Check the last two sentences.
+    working: "3 times → exactly 1 person · 5 times → 6, and 6 < 10"
+  - type: takeaway
+    text: "'Most common' points at the biggest frequency — not at the biggest number in the left column."
+  - type: verification
+    text: Three sentences survived the row-by-row test — exactly the three to select.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Pamela surveyed people at the funfair. <b>Select every statement that is true.</b></p>
+  <svg viewBox="0 0 360 256" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="254.5" fill="#fff" stroke="#6f9fd8" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#dbeafd"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Number of trips</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">3</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">18</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">1</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">4</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">14</text><line x1="1.5" y1="214" x2="358.5" y2="214" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">5</text><text x="270" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">6</text><line x1="180" y1="1.5" x2="180" y2="254.5" stroke="#6f9fd8" stroke-width="1"/></svg>
+  <ul class="options">
+    <li>More people went 2 times than 5 times.</li>
+    <li>The most common number of trips was 4.</li>
+    <li>Only 1 person went 3 times.</li>
+    <li>Fewer than 10 people went 5 times.</li>
+  </ul>
+  <p class="explain">The 2-row (18) is bigger than the 5-row (6) ✓. The most common is 2 with 18 people, not 4 ✗. The 3-row shows 1 person ✓. The 5-row shows 6, which is fewer than 10 ✓.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["8","9","7","5","4","6"]
+description: Order the cards by how often they were drawn
+hint:
+  - "You are ordering the cards, but by their frequencies — not by the card numbers."
+  - "Look up each card's frequency in the table first."
+  - "Start with the card drawn the fewest times, then climb frequency by frequency."
+explain: "By frequency: 8 (3 times), 9 (6), 7 (7), 5 (13), 4 (17), 6 (18)."
+solution:
+  - type: step
+    goal: Read each card's frequency.
+    working: "4 → 17, 5 → 13, 6 → 18, 7 → 7, 8 → 3, 9 → 6"
+  - type: step
+    goal: Sort the frequencies, smallest first.
+    working: "3, 6, 7, 13, 17, 18"
+  - type: step
+    goal: Turn the frequencies back into cards.
+    working: "8, 9, 7, 5, 4, 6"
+    reason: The card drawn 3 times goes first, the card drawn 18 times goes last.
+  - type: takeaway
+    text: Order by the Frequency column — the card numbers themselves are just labels.
+  - type: verification
+    text: First in line is 8 (drawn 3 times) and last is 6 (drawn 18 times) — fewest to most, as asked.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Put the cards in order from the <b>fewest times drawn</b> to the <b>most times drawn</b>.</p>
+  <svg viewBox="0 0 360 298" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="296.5" fill="#fff" stroke="#e07a9c" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#fbdce7"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Number drawn</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#e07a9c" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">4</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">17</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#e07a9c" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">5</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">13</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#e07a9c" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">6</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">18</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#e07a9c" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">7</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">7</text><line x1="1.5" y1="214" x2="358.5" y2="214" stroke="#e07a9c" stroke-width="1"/><text x="90" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">8</text><text x="270" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">3</text><line x1="1.5" y1="256" x2="358.5" y2="256" stroke="#e07a9c" stroke-width="1"/><text x="90" y="277" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">9</text><text x="270" y="277" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">6</text><line x1="180" y1="1.5" x2="180" y2="296.5" stroke="#e07a9c" stroke-width="1"/></svg>
+  <ol class="order"><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li></ol>
+  <p class="explain">By frequency: 8 (3), 9 (6), 7 (7), 5 (13), 4 (17), 6 (18).</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["10"]
+description: Which score did the greatest number of people receive?
+hint:
+  - "Which column counts people?"
+  - "Find the biggest number in the Frequency column."
+  - "Then slide left along that row to read off the score."
+explain: The greatest frequency is 18, and it belongs to score 10.
+whyWrong:
+  "5":
+    code: DATA_READING_ERROR
+    message: "5 is the smallest score in the table — only 3 people received it."
+  "9":
+    code: DATA_READING_ERROR
+    message: "Score 9 was received by 15 people — a lot, but score 10 beat it with 18."
+  "18":
+    code: OPERAND_ECHO
+    message: "18 is the frequency itself — the question asks for the score that those 18 people received."
+solution:
+  - type: step
+    goal: Find the biggest frequency.
+    working: "3, 7, 10, 9, 15, 18 → biggest is 18"
+  - type: step
+    goal: Read across to the score.
+    working: "frequency 18 → score 10"
+    reason: The frequency counts the people; the score column says what they received.
+  - type: takeaway
+    text: The most popular value lives in the left column, but you find it through the Frequency column.
+  - type: verification
+    text: No other row reaches 18, so score 10 stands alone at the top.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Kayla tracked the scores on a TV game show. <b>Which score</b> did the greatest number of people receive?</p>
+  <svg viewBox="0 0 360 298" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="296.5" fill="#fff" stroke="#66c266" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#dcf5dc"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Score</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#66c266" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">5</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">3</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#66c266" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">6</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">7</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#66c266" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">7</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">10</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#66c266" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">8</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">9</text><line x1="1.5" y1="214" x2="358.5" y2="214" stroke="#66c266" stroke-width="1"/><text x="90" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">9</text><text x="270" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">15</text><line x1="1.5" y1="256" x2="358.5" y2="256" stroke="#66c266" stroke-width="1"/><text x="90" y="277" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">10</text><text x="270" y="277" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">18</text><line x1="180" y1="1.5" x2="180" y2="296.5" stroke="#66c266" stroke-width="1"/></svg>
+  <ul class="options"><li>5</li><li>9</li><li>10</li><li>18</li></ul>
+  <p class="explain">The largest frequency is 18 — but the question asks for the <i>score</i>, which is 10. (18 is the frequency, not the score.)</p>
+</div>
+
+<!--@q
+type: line-plot
+categories: ["0","1","2","3"]
+answer: [4,2,5,3]
+y_label: Number of people
+x_label: Letters written
+description: Build the line plot from the frequency table
+hint:
+  - "Each X stands for exactly one person."
+  - "Take one number of letters at a time and read its frequency from the table."
+  - "Stack exactly that many X's above that number."
+explain: The plot needs 4 X's over 0, 2 over 1, 5 over 2 and 3 over 3 — straight from the table.
+solution:
+  - type: step
+    goal: Read the table.
+    working: "0 → 4, 1 → 2, 2 → 5, 3 → 3"
+  - type: step
+    goal: Stack the X's.
+    working: "4 X's, then 2, then 5, then 3"
+    reason: A column of X's is that number's frequency drawn as a tower.
+  - type: takeaway
+    text: A line plot is a frequency table built out of X's — same numbers, new picture.
+  - type: verification
+    text: Count every X — 4 + 2 + 5 + 3 = 14 people, the same total as the table.
+-->
+<div class="question" data-type="line-plot">
+  <p class="prompt">A researcher asked a small group how many letters they wrote. <b>Click to place an X</b> for each person, so the plot matches the table.</p>
+  <svg viewBox="0 0 360 214" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="212.5" fill="#fff" stroke="#c2a44c" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#f2e6c4"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Letters written</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#c2a44c" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">0</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">4</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#c2a44c" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">2</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#c2a44c" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">5</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#c2a44c" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">3</text><line x1="180" y1="1.5" x2="180" y2="212.5" stroke="#c2a44c" stroke-width="1"/></svg>
+  <p class="explain">Stack 4 X's over 0, 2 over 1, 5 over 2, and 3 over 3 — one X per person.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["20"]
+description: Count people who went at least 4 times
+hint:
+  - "'At least 4' is really about which rows to include."
+  - "It means 4 or more — so 4 itself counts."
+  - "Add the frequencies of every row from 4 upwards."
+explain: "'At least 4' covers the rows for 4 and 5: 14 + 6 = 20."
+whyWrong:
+  "6":
+    code: DATA_READING_ERROR
+    message: "6 is only the people who went exactly 5 times — 'at least 4' includes the 4-time visitors too."
+  "14":
+    code: DATA_READING_ERROR
+    message: "14 is only the people who went exactly 4 times — the 5-time visitors belong in 'at least 4' as well."
+  "21":
+    code: DATA_READING_ERROR
+    message: "This adds the row for 3 trips as well — but 'at least 4' starts at 4."
+solution:
+  - type: step
+    goal: Pick the rows.
+    working: "at least 4 → the rows for 4 and 5"
+    reason: "'At least' always includes the number itself."
+  - type: step
+    goal: Add their frequencies.
+    working: "14 + 6 = 20"
+  - type: takeaway
+    text: "'At least n' means n and everything above it — the boundary row is in."
+  - type: verification
+    text: The whole table holds 42 people, so 20 for the top two rows is a sensible share.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">How many people went to a funfair <b>at least 4 times</b>?</p>
+  <svg viewBox="0 0 360 256" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="254.5" fill="#fff" stroke="#6f9fd8" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#dbeafd"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Number of trips</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">3</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">18</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">1</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">4</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">14</text><line x1="1.5" y1="214" x2="358.5" y2="214" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">5</text><text x="270" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">6</text><line x1="180" y1="1.5" x2="180" y2="254.5" stroke="#6f9fd8" stroke-width="1"/></svg>
+  <ul class="options"><li>6</li><li>14</li><li>20</li><li>21</li></ul>
+  <p class="explain">"At least 4" means 4 and 5: 14 + 6 = 20. (21 would wrongly include the single person who went 3 times.)</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["17","2","60"]
+description: Complete the summary of the game-show table
+hint:
+  - "Three blanks, three different jobs — read each sentence slowly."
+  - "'Most common' and 'rarest' are about the Frequency column, not the scores."
+  - "The last blank wants the whole Frequency column added up."
+explain: "Most common: 17 people (score 6). Rarest: 2 people (score 8). Total: 60 contestants."
+solution:
+  - type: step
+    goal: Find the most common score.
+    working: "biggest frequency = 17, beside score 6"
+    reason: The blank asks how many people chose it — 17.
+  - type: step
+    goal: Find the rarest score.
+    working: "smallest frequency = 2, beside score 8"
+  - type: step
+    goal: Count all the contestants.
+    working: "6 + 17 + 8 + 2 + 12 + 15 = 60"
+  - type: takeaway
+    text: Frequency answers 'how many people' — the score column never does.
+  - type: verification
+    text: 17 really is the biggest number in the column and 2 the smallest, and 60 counts every contestant once.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Complete the summary. The most common score was chosen by [] people. The rarest score was chosen by [] people. Altogether there were [] contestants.</p>
+  <svg viewBox="0 0 360 298" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="296.5" fill="#fff" stroke="#b878d6" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#efdcf7"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Score</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#b878d6" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">5</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">6</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#b878d6" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">6</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">17</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#b878d6" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">7</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">8</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#b878d6" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">8</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">2</text><line x1="1.5" y1="214" x2="358.5" y2="214" stroke="#b878d6" stroke-width="1"/><text x="90" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">9</text><text x="270" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">12</text><line x1="1.5" y1="256" x2="358.5" y2="256" stroke="#b878d6" stroke-width="1"/><text x="90" y="277" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">10</text><text x="270" y="277" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">15</text><line x1="180" y1="1.5" x2="180" y2="296.5" stroke="#b878d6" stroke-width="1"/></svg>
+  <p class="explain">Biggest frequency = 17, smallest = 2, and 6 + 17 + 8 + 2 + 12 + 15 = 60.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["0","1","4"]
+description: Sibling counts that 10 or more students had
+hint:
+  - "Check each row's frequency against 10, one row at a time."
+  - "'10 or more' includes a row that is exactly 10."
+  - "Three rows pass the test — one of them only just."
+explain: "Rows with frequency 10 or more: 0 siblings (18), 1 sibling (12) and 4 siblings (exactly 10)."
+whyWrong:
+  "2":
+    code: DATA_READING_ERROR
+    message: "Only 3 students have 2 siblings — that row falls well short of 10."
+  "3":
+    code: DATA_READING_ERROR
+    message: "Only 2 students have 3 siblings — far under 10."
+solution:
+  - type: step
+    goal: Test every row against 10.
+    working: "0 → 18 ✓ · 1 → 12 ✓ · 2 → 3 ✗ · 3 → 2 ✗ · 4 → 10 ✓"
+    reason: "'10 or more' lets exactly-10 in, so the last row passes."
+  - type: takeaway
+    text: "'Or more' always includes the boundary number itself."
+  - type: verification
+    text: The three selected rows hold 18, 12 and 10 students — each at least 10.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Mr. Ortega's class recorded their siblings. <b>Select every number of siblings</b> that <b>10 or more</b> students had.</p>
+  <svg viewBox="0 0 360 256" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="254.5" fill="#fff" stroke="#6f9fd8" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#dbeafd"/><text x="100" y="14" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="700" fill="#14213d">Number of</text><text x="100" y="32" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="700" fill="#14213d">siblings</text><text x="280" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#6f9fd8" stroke-width="1"/><text x="100" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">0</text><text x="280" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">18</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#6f9fd8" stroke-width="1"/><text x="100" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="280" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">12</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#6f9fd8" stroke-width="1"/><text x="100" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="280" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">3</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#6f9fd8" stroke-width="1"/><text x="100" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="280" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">2</text><line x1="1.5" y1="214" x2="358.5" y2="214" stroke="#6f9fd8" stroke-width="1"/><text x="100" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">4</text><text x="280" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">10</text><line x1="200" y1="1.5" x2="200" y2="254.5" stroke="#6f9fd8" stroke-width="1"/></svg>
+  <ul class="options"><li>0</li><li>1</li><li>2</li><li>3</li><li>4</li></ul>
+  <p class="explain">18 ✓, 12 ✓, 3 ✗, 2 ✗, 10 ✓ — remember "10 or more" includes exactly 10.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["27"]
+description: Count people who wrote fewer than 2 letters
+hint:
+  - "'Fewer than 2' — first decide which rows that covers."
+  - "It means 0 letters or 1 letter, and not 2 itself."
+  - "Add the frequencies of just those rows."
+explain: "Fewer than 2 means the rows for 0 and 1: 14 + 13 = 27."
+whyWrong:
+  "13":
+    code: DATA_READING_ERROR
+    message: "13 is only the people who wrote exactly 1 letter — those who wrote 0 letters also wrote fewer than 2."
+  "14":
+    code: DATA_READING_ERROR
+    message: "14 is only the people who wrote 0 letters — the 1-letter writers count too."
+  "45":
+    code: DATA_READING_ERROR
+    message: "This includes the row for exactly 2 letters — but 'fewer than 2' stops just below 2."
+solution:
+  - type: step
+    goal: Pick the rows.
+    working: "fewer than 2 → the rows for 0 and 1"
+    reason: "'Fewer than 2' stops below 2 — the 2s row stays out."
+  - type: step
+    goal: Add their frequencies.
+    working: "14 + 13 = 27"
+  - type: takeaway
+    text: "'Fewer than n' never includes n itself."
+  - type: verification
+    text: The left-out rows hold 18 + 3 = 21 people, and 27 + 21 covers the whole table.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">How many people wrote <b>fewer than 2</b> letters?</p>
+  <svg viewBox="0 0 360 214" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="212.5" fill="#fff" stroke="#c2a44c" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#f2e6c4"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Letters written</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#c2a44c" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">0</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">14</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#c2a44c" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">13</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#c2a44c" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">18</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#c2a44c" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">3</text><line x1="180" y1="1.5" x2="180" y2="212.5" stroke="#c2a44c" stroke-width="1"/></svg>
+  <ul class="options"><li>13</li><li>14</li><li>27</li><li>45</li></ul>
+  <p class="explain">"Fewer than 2" means 0 and 1: 14 + 13 = 27. (45 would wrongly include the 18 people who wrote exactly 2.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["40"]
+description: Count children who wrote at least 1 thank-you note
+hint:
+  - "'At least 1' — decide which rows of the table are included."
+  - "Everyone except the 0 row wrote at least 1 note."
+  - "Add every row from 1 upwards — or subtract the 0 row from the total."
+explain: "Everyone except the 0 row: 10 + 17 + 4 + 2 + 7 = 40."
+whyWrong:
+  "10":
+    code: DATA_READING_ERROR
+    message: "10 is only the children who wrote exactly 1 note — 'at least 1' includes every bigger row too."
+  "20":
+    code: DATA_READING_ERROR
+    message: "20 is the children who wrote 0 notes — exactly the ones 'at least 1' leaves out."
+  "60":
+    code: DATA_READING_ERROR
+    message: "This counts every child in the table, including the 20 who wrote no notes at all."
+solution:
+  - type: step
+    goal: Rule out the 0 row.
+    working: "at least 1 → the rows for 1, 2, 3, 4 and 5"
+  - type: step
+    goal: Add them.
+    working: "10 + 17 + 4 + 2 + 7 = 40"
+    reason: "Quicker path: the table totals 60, and 60 − 20 non-writers = 40."
+  - type: takeaway
+    text: "'At least 1' is often fastest as the total minus the zero row."
+  - type: verification
+    text: 40 writers + 20 non-writers = 60 — every child counted exactly once.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">How many children wrote <b>at least 1</b> thank-you note?</p>
+  <svg viewBox="0 0 360 298" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="296.5" fill="#fff" stroke="#3aa88f" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#d9f0ea"/><text x="100" y="14" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="700" fill="#14213d">Thank-you notes</text><text x="100" y="32" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="700" fill="#14213d">written</text><text x="280" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#3aa88f" stroke-width="1"/><text x="100" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">0</text><text x="280" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">20</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#3aa88f" stroke-width="1"/><text x="100" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="280" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">10</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#3aa88f" stroke-width="1"/><text x="100" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="280" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">17</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#3aa88f" stroke-width="1"/><text x="100" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="280" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">4</text><line x1="1.5" y1="214" x2="358.5" y2="214" stroke="#3aa88f" stroke-width="1"/><text x="100" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">4</text><text x="280" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">2</text><line x1="1.5" y1="256" x2="358.5" y2="256" stroke="#3aa88f" stroke-width="1"/><text x="100" y="277" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">5</text><text x="280" y="277" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">7</text><line x1="200" y1="1.5" x2="200" y2="296.5" stroke="#3aa88f" stroke-width="1"/></svg>
+  <ul class="options"><li>10</li><li>20</li><li>40</li><li>60</li></ul>
+  <p class="explain">Everyone <i>except</i> the 20 who wrote none: 10 + 17 + 4 + 2 + 7 = 40. (60 wrongly counts the children who wrote nothing.)</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["Exactly 5 people ate 2 bananas.","More people ate 3 bananas than any other amount."]
+description: True statements about the banana table
+hint:
+  - "Check each sentence against its exact row — no guessing."
+  - "The 0 row still counts people, even though 0 bananas were eaten."
+  - "For 'more than any other', hunt for the biggest frequency in the column."
+explain: "True: 5 people ate 2 bananas, and 3 bananas (17 people) tops the table. False: 14 people ate 0, and 15 ≠ 13."
+whyWrong:
+  "Nobody ate 0 bananas.":
+    code: DATA_READING_ERROR
+    message: "The 0 row is not empty — 14 people ate no bananas at all."
+  "The same number of people ate 1 banana as ate 4 bananas.":
+    code: DATA_READING_ERROR
+    message: "Those two rows do not match — 15 people ate 1 banana but 13 people ate 4."
+solution:
+  - type: step
+    goal: Check the '2 bananas' sentence.
+    working: "2 bananas → 5 people ✓"
+  - type: step
+    goal: Check 'more than any other amount'.
+    working: "frequencies 14, 15, 5, 17, 13 → biggest is 17, beside 3 bananas ✓"
+  - type: step
+    goal: Check the two false sentences.
+    working: "0 bananas → 14 people, not nobody · 1 banana → 15 but 4 bananas → 13"
+  - type: takeaway
+    text: A row ABOUT zero bananas is not the same as a row holding zero people.
+  - type: verification
+    text: Two sentences pass the row test and two fail — matching the two selections.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">A chef tracked bananas eaten last week. <b>Select every statement that is true.</b></p>
+  <svg viewBox="0 0 360 256" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="254.5" fill="#fff" stroke="#c2a44c" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#f2e6c4"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Bananas eaten</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#c2a44c" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">0</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">14</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#c2a44c" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">15</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#c2a44c" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">5</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#c2a44c" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">17</text><line x1="1.5" y1="214" x2="358.5" y2="214" stroke="#c2a44c" stroke-width="1"/><text x="90" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">4</text><text x="270" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">13</text><line x1="180" y1="1.5" x2="180" y2="254.5" stroke="#c2a44c" stroke-width="1"/></svg>
+  <ul class="options">
+    <li>Exactly 5 people ate 2 bananas.</li>
+    <li>More people ate 3 bananas than any other amount.</li>
+    <li>Nobody ate 0 bananas.</li>
+    <li>The same number of people ate 1 banana as ate 4 bananas.</li>
+  </ul>
+  <p class="explain">The 2-row shows 5 ✓. The biggest frequency is 17, at 3 bananas ✓. 14 people ate none, so "nobody" is false ✗. 15 ≠ 13, so the last one is false ✗.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["13"]
+description: How many more members earned 5 badges than 3 badges?
+hint:
+  - "'How many more' compares two rows of the table."
+  - "Find the 5-badge row and the 3-badge row."
+  - "The answer is the gap between those two frequencies."
+explain: "17 members earned 5 badges and 4 earned 3 badges: 17 − 4 = 13."
+whyWrong:
+  "4":
+    code: OPERAND_ECHO
+    message: "4 is the frequency for 3 badges, lifted straight from the table — the question asks for the difference."
+  "17":
+    code: OPERAND_ECHO
+    message: "17 is the frequency for 5 badges — the question wants how many MORE that is than the 3-badge row."
+  "21":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "This adds 17 and 4 — 'how many more' asks for the gap between them, not their total."
+solution:
+  - type: step
+    goal: Read both rows.
+    working: "5 badges → 17 members, 3 badges → 4 members"
+  - type: step
+    goal: Subtract to find the gap.
+    working: "17 − 4 = 13"
+    reason: "'How many more' is a difference, so the smaller count comes off the bigger one."
+  - type: takeaway
+    text: "'How many more' is always a subtraction between two rows — never an addition."
+  - type: verification
+    text: 13 more than 4 lands exactly on 17 — it checks out.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A club recorded how many badges each member earned. <b>How many more</b> members earned 5 badges than earned 3 badges?</p>
+  <svg viewBox="0 0 360 256" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="254.5" fill="#fff" stroke="#b878d6" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#efdcf7"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Badges earned</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#b878d6" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">12</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#b878d6" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">9</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#b878d6" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">4</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#b878d6" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">4</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">15</text><line x1="1.5" y1="214" x2="358.5" y2="214" stroke="#b878d6" stroke-width="1"/><text x="90" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">5</text><text x="270" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">17</text><line x1="180" y1="1.5" x2="180" y2="254.5" stroke="#b878d6" stroke-width="1"/></svg>
+  <ul class="options"><li>4</li><li>13</li><li>17</li><li>21</li></ul>
+  <p class="explain">The 5-row shows 17 and the 3-row shows 4. "How many more" means subtract: 17 − 4 = 13. (21 would be adding them instead of subtracting.)</p>
+</div>
+
+<!--@q
+type: bar-graph
+categories: ["Cricket","Football","Tennis","Hockey"]
+values: [20,10,5,15]
+max: 25
+step: 5
+y_label: Number of students
+description: Build the sports bar graph from the table
+hint:
+  - "One sport at a time — table first, then bar."
+  - "Find the sport's frequency in the table."
+  - "Raise its bar to exactly that height — the gridlines go up in 5s."
+explain: "The bars rise to 20, 10, 5 and 15 — straight from the table."
+solution:
+  - type: step
+    goal: Read the table.
+    working: "Cricket 20 · Football 10 · Tennis 5 · Hockey 15"
+  - type: step
+    goal: Build each bar to its number.
+    working: "20, 10, 5, 15"
+    reason: Each gridline is worth 5, so Cricket's bar climbs four gridlines.
+  - type: takeaway
+    text: Bars are frequencies made visible — same numbers, new shape.
+  - type: verification
+    text: Cricket ends tallest and Tennis shortest, exactly as 20 and 5 demand.
+-->
+<div class="question" data-type="bar-graph">
+  <p class="prompt">Students voted for their favourite sport. <b>Drag each bar</b> to build the graph from the table.</p>
+  <svg viewBox="0 0 360 214" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="212.5" fill="#fff" stroke="#66c266" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#dcf5dc"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Sport</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#66c266" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">Cricket</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">20</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#66c266" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">Football</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">10</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#66c266" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">Tennis</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">5</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#66c266" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">Hockey</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">15</text><line x1="180" y1="1.5" x2="180" y2="212.5" stroke="#66c266" stroke-width="1"/></svg>
+  <p class="explain">Each bar's height is that sport's frequency: Cricket 20, Football 10, Tennis 5, Hockey 15.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["11","9"]
+description: Read the graph to complete the table
+hint:
+  - "This time the graph is full and the table has the gaps."
+  - "Find the bar above 1 book, then the bar above 3 books."
+  - "Read each bar's height off the scale — count up from a gridline if a bar top sits between lines."
+explain: The bar over 1 book reaches 11 and the bar over 3 books reaches 9.
+solution:
+  - type: step
+    goal: Read the bar for 1 book.
+    working: "its top sits between the 9 and 12 gridlines → 11"
+    reason: The scale climbs in 3s, and this bar top is 2 above the 9 line.
+  - type: step
+    goal: Read the bar for 3 books.
+    working: "its top sits exactly on the 9 gridline → 9"
+  - type: takeaway
+    text: Reading a graph is drawing one in reverse — heights turn back into numbers.
+  - type: verification
+    text: The other two bars read 6 and 3, so the four heights 6, 11, 3, 9 all land on or between sensible gridlines.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">This graph shows how many books children read last month. The table below it is missing two numbers. Read the <b>graph</b> and complete the <b>table</b>: 1 book → [] children, 3 books → [] children.</p>
+  <div class="fig-wrap">
+  <svg viewBox="0 0 420 250" width="100%" style="max-width:420px" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand',sans-serif">
+    <line x1="52" y1="10" x2="410" y2="10" stroke="#eee" stroke-width="1"/>
+    <line x1="52" y1="55" x2="410" y2="55" stroke="#eee" stroke-width="1"/>
+    <line x1="52" y1="100" x2="410" y2="100" stroke="#eee" stroke-width="1"/>
+    <line x1="52" y1="145" x2="410" y2="145" stroke="#eee" stroke-width="1"/>
+    <line x1="52" y1="190" x2="410" y2="190" stroke="#eee" stroke-width="1"/>
+    <text x="44" y="14" text-anchor="end" font-size="12" fill="#6b5b9a">12</text>
+    <text x="44" y="59" text-anchor="end" font-size="12" fill="#6b5b9a">9</text>
+    <text x="44" y="104" text-anchor="end" font-size="12" fill="#6b5b9a">6</text>
+    <text x="44" y="149" text-anchor="end" font-size="12" fill="#6b5b9a">3</text>
+    <text x="44" y="194" text-anchor="end" font-size="12" fill="#6b5b9a">0</text>
+    <rect x="75"  y="100" width="46" height="90"  fill="#7b5cff" rx="3"/>
+    <rect x="155" y="25"  width="46" height="165" fill="#7b5cff" rx="3"/>
+    <rect x="235" y="145" width="46" height="45"  fill="#7b5cff" rx="3"/>
+    <rect x="315" y="55"  width="46" height="135" fill="#7b5cff" rx="3"/>
+    <line x1="52" y1="190" x2="410" y2="190" stroke="#2c2150" stroke-width="2.5"/>
+    <text x="98"  y="210" text-anchor="middle" font-size="14" font-weight="700" fill="#2c2150">0</text>
+    <text x="178" y="210" text-anchor="middle" font-size="14" font-weight="700" fill="#2c2150">1</text>
+    <text x="258" y="210" text-anchor="middle" font-size="14" font-weight="700" fill="#2c2150">2</text>
+    <text x="338" y="210" text-anchor="middle" font-size="14" font-weight="700" fill="#2c2150">3</text>
+    <text x="230" y="235" text-anchor="middle" font-size="13" font-weight="700" fill="#6b5b9a">Books read</text>
+  </svg>
+  </div>
+  <p class="explain">The bar above 1 reaches 11, and the bar above 3 reaches 9.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["15","9"]
+description: Two smudged rows — use the total and the clue
+hint:
+  - "Two rows are missing, but the story hands you one of them for free."
+  - "First write in the row the story states."
+  - "Then add every known row and see what is left to reach 45."
+explain: "13 + 15 + 8 = 36, and 45 − 36 = 9 people own 2 pets."
+solution:
+  - type: step
+    goal: Use the given fact.
+    working: "1 pet → 15 people"
+    reason: The story states it directly — no detective work needed.
+  - type: step
+    goal: Add every known row.
+    working: "13 + 15 + 8 = 36"
+  - type: step
+    goal: Find the last row from the total.
+    working: "45 − 36 = 9"
+  - type: takeaway
+    text: "A survey total closes gaps: add what you know, subtract from the total."
+  - type: verification
+    text: "13 + 15 + 9 + 8 = 45 — the whole survey accounted for."
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A survey of <b>45 people</b> asked how many pets they own. Two rows were smudged. We know <b>15 people</b> own exactly 1 pet. Fill in both missing numbers: 1 pet → [] people, 2 pets → [] people.</p>
+  <svg viewBox="0 0 360 214" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="212.5" fill="#fff" stroke="#6f9fd8" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#dbeafd"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Number of pets</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">0</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">13</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">?</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">?</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#6f9fd8" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">8</text><line x1="180" y1="1.5" x2="180" y2="212.5" stroke="#6f9fd8" stroke-width="1"/></svg>
+  <p class="explain">The two visible rows give 13 + 8 = 21. So the two missing rows must total 45 − 21 = 24. We are told 1 pet = 15, so 2 pets = 24 − 15 = 9.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Green"]
+description: Find the row where the table disagrees with the tallies
+hint:
+  - "Count each row of tally marks for yourself."
+  - "A crossed bundle is worth 5; loose sticks are 1 each."
+  - "Compare each count with the table — one row's number does not match."
+explain: "Green's tallies count to 15, but the table says 9 — every other row matches."
+whyWrong:
+  "Red":
+    code: DATA_READING_ERROR
+    message: "Red's tallies count to 12 — two full bundles and two singles — exactly what the table says."
+  "Blue":
+    code: DATA_READING_ERROR
+    message: "Blue's tallies count to 7 — one bundle and two singles — matching its table entry."
+  "Yellow":
+    code: DATA_READING_ERROR
+    message: "Yellow shows 4 single marks, and the table says 4 — a perfect match."
+solution:
+  - type: step
+    goal: Count each row of tallies.
+    working: "Red 12 · Blue 7 · Green 15 · Yellow 4"
+    reason: Bundles of 5 first, then the loose sticks.
+  - type: step
+    goal: Compare with the table.
+    working: "Red 12 ✓ · Blue 7 ✓ · Green 9 ✗ · Yellow 4 ✓"
+    reason: Green's tallies show three full bundles — 15, not the 9 written down.
+  - type: takeaway
+    text: Tally bundles of 5 make miscounts easy to catch — count bundles, then singles.
+  - type: verification
+    text: Exactly one row disagrees, just as the story promised.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Miss Rao counted votes with tally marks, then wrote the numbers in her table. <b>One row does not match her tallies.</b> Which colour did she write down wrong?</p>
+  <svg viewBox="0 0 520 252" width="100%" style="max-width:520px" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand',sans-serif"><rect x="0.5" y="0.5" width="519" height="251" fill="#fff" stroke="#b878d6" stroke-width="1.5" rx="6"/><path d="M1,7 a6,6 0 0 1 6,-6 h506 a6,6 0 0 1 6,6 v37 h-518 z" fill="#efdcf7"/><text x="80" y="22" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="700" fill="#14213d">Colour</text><text x="270" y="22" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="700" fill="#14213d">Tally</text><text x="450" y="22" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="700" fill="#14213d">Table says</text><line x1="1" y1="44" x2="519" y2="44" stroke="#b878d6" stroke-width="1"/><text x="80" y="70" text-anchor="middle" dominant-baseline="central" font-size="16" fill="#14213d">Red</text><g transform="translate(175,53)"><line x1="0" y1="4" x2="0" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="7" y1="4" x2="7" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="14" y1="4" x2="14" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="21" y1="4" x2="21" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="-3" y1="28" x2="25" y2="6" stroke="#2c2150" stroke-width="2.5"/><line x1="38" y1="4" x2="38" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="45" y1="4" x2="45" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="52" y1="4" x2="52" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="59" y1="4" x2="59" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="35" y1="28" x2="63" y2="6" stroke="#2c2150" stroke-width="2.5"/><line x1="76" y1="4" x2="76" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="83" y1="4" x2="83" y2="30" stroke="#2c2150" stroke-width="2.5"/></g><text x="450" y="70" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">12</text><line x1="1" y1="96" x2="519" y2="96" stroke="#b878d6" stroke-width="1"/><text x="80" y="122" text-anchor="middle" dominant-baseline="central" font-size="16" fill="#14213d">Blue</text><g transform="translate(175,105)"><line x1="0" y1="4" x2="0" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="7" y1="4" x2="7" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="14" y1="4" x2="14" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="21" y1="4" x2="21" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="-3" y1="28" x2="25" y2="6" stroke="#2c2150" stroke-width="2.5"/><line x1="38" y1="4" x2="38" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="45" y1="4" x2="45" y2="30" stroke="#2c2150" stroke-width="2.5"/></g><text x="450" y="122" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">7</text><line x1="1" y1="148" x2="519" y2="148" stroke="#b878d6" stroke-width="1"/><text x="80" y="174" text-anchor="middle" dominant-baseline="central" font-size="16" fill="#14213d">Green</text><g transform="translate(175,157)"><line x1="0" y1="4" x2="0" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="7" y1="4" x2="7" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="14" y1="4" x2="14" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="21" y1="4" x2="21" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="-3" y1="28" x2="25" y2="6" stroke="#2c2150" stroke-width="2.5"/><line x1="38" y1="4" x2="38" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="45" y1="4" x2="45" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="52" y1="4" x2="52" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="59" y1="4" x2="59" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="35" y1="28" x2="63" y2="6" stroke="#2c2150" stroke-width="2.5"/><line x1="76" y1="4" x2="76" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="83" y1="4" x2="83" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="90" y1="4" x2="90" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="97" y1="4" x2="97" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="73" y1="28" x2="101" y2="6" stroke="#2c2150" stroke-width="2.5"/></g><text x="450" y="174" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">9</text><line x1="1" y1="200" x2="519" y2="200" stroke="#b878d6" stroke-width="1"/><text x="80" y="226" text-anchor="middle" dominant-baseline="central" font-size="16" fill="#14213d">Yellow</text><g transform="translate(175,209)"><line x1="0" y1="4" x2="0" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="7" y1="4" x2="7" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="14" y1="4" x2="14" y2="30" stroke="#2c2150" stroke-width="2.5"/><line x1="21" y1="4" x2="21" y2="30" stroke="#2c2150" stroke-width="2.5"/></g><text x="450" y="226" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">4</text><line x1="160" y1="1" x2="160" y2="251" stroke="#b878d6" stroke-width="1"/><line x1="385" y1="1" x2="385" y2="251" stroke="#b878d6" stroke-width="1"/></svg>
+  <ul class="options"><li>Red</li><li>Blue</li><li>Green</li><li>Yellow</li></ul>
+  <p class="explain">Green's tallies are two full groups of 5 plus 5 more, which is 15 — but the table says 9. Every other row matches: Red 12, Blue 7, Yellow 4.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1"]
+description: Which number of pencils was brought by more than half the class?
+hint:
+  - "First work out how big the whole class is."
+  - "Add the whole Frequency column, then halve it."
+  - "Now look for the one row that beats that half."
+explain: "The class has 40 children; 22 brought 1 pencil, and 22 is more than half of 40."
+whyWrong:
+  "0":
+    code: DATA_READING_ERROR
+    message: "Only 4 children brought 0 pencils — nowhere near half of the class of 40."
+  "2":
+    code: DATA_READING_ERROR
+    message: "9 children brought 2 pencils — well under half of the 40-child class."
+  "3":
+    code: DATA_READING_ERROR
+    message: "Only 5 children brought 3 pencils — far fewer than half the class."
+solution:
+  - type: step
+    goal: Find the class size.
+    working: "4 + 22 + 9 + 5 = 40"
+  - type: step
+    goal: Halve it.
+    working: "half of 40 = 20"
+  - type: step
+    goal: Find the row that beats 20.
+    working: "1 pencil → 22 children, and 22 > 20"
+  - type: takeaway
+    text: "'More than half' needs the total first — no total, no half."
+  - type: verification
+    text: The other three rows together hold only 18 children — fewer than the 22 who brought one pencil.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A class recorded how many pencils each child brought. <b>Which number of pencils</b> was brought by <b>more than half</b> the class?</p>
+  <svg viewBox="0 0 360 214" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="212.5" fill="#fff" stroke="#c2a44c" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#f2e6c4"/><text x="90" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Pencils brought</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#c2a44c" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">0</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">4</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#c2a44c" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">22</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#c2a44c" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">9</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#c2a44c" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">5</text><line x1="180" y1="1.5" x2="180" y2="212.5" stroke="#c2a44c" stroke-width="1"/></svg>
+  <ul class="options"><li>0</li><li>1</li><li>2</li><li>3</li></ul>
+  <p class="explain">The whole class is 4 + 22 + 9 + 5 = 40, so half is 20. Only the 1-row (22 children) is more than 20.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["The same number of children have 1 sibling as have 2 siblings.","More than 10 children have 4 siblings.","43 children have at least 1 sibling."]
+description: True statements about the siblings table
+hint:
+  - "Check each sentence against the table, one at a time."
+  - "Two sentences need single rows; one needs several rows added together."
+  - "For 'at least 1', add every row except the 0 row."
+explain: "True: 15 = 15, 11 > 10, and 15 + 15 + 2 + 11 = 43. False: 2 children do have exactly 3 siblings."
+whyWrong:
+  "No child has exactly 3 siblings.":
+    code: DATA_READING_ERROR
+    message: "The 3-siblings row is not empty — 2 children are in it."
+solution:
+  - type: step
+    goal: Check the matching rows.
+    working: "1 sibling → 15, 2 siblings → 15 — the same ✓"
+  - type: step
+    goal: Check the 4-siblings row.
+    working: "11 children, and 11 > 10 ✓"
+  - type: step
+    goal: Check 'at least 1 sibling'.
+    working: "15 + 15 + 2 + 11 = 43 ✓"
+    reason: Only the 0-siblings row (7 children) is left out.
+  - type: step
+    goal: Check the leftover sentence.
+    working: "3 siblings → 2 children, so 'no child' is wrong"
+  - type: takeaway
+    text: A small frequency is not the same as an empty row.
+  - type: verification
+    text: 43 + 7 = 50 — every child in the year group counted once.
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">A year group recorded their siblings. <b>Select every statement that is true.</b></p>
+  <svg viewBox="0 0 360 256" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="254.5" fill="#fff" stroke="#d98a7e" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#fbe0dc"/><text x="100" y="14" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="700" fill="#14213d">Number of</text><text x="100" y="32" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="700" fill="#14213d">siblings</text><text x="280" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#d98a7e" stroke-width="1"/><text x="100" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">0</text><text x="280" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">7</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#d98a7e" stroke-width="1"/><text x="100" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">1</text><text x="280" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">15</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#d98a7e" stroke-width="1"/><text x="100" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">2</text><text x="280" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">15</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#d98a7e" stroke-width="1"/><text x="100" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">3</text><text x="280" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">2</text><line x1="1.5" y1="214" x2="358.5" y2="214" stroke="#d98a7e" stroke-width="1"/><text x="100" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">4</text><text x="280" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">11</text><line x1="200" y1="1.5" x2="200" y2="254.5" stroke="#d98a7e" stroke-width="1"/></svg>
+  <ul class="options">
+    <li>The same number of children have 1 sibling as have 2 siblings.</li>
+    <li>More than 10 children have 4 siblings.</li>
+    <li>No child has exactly 3 siblings.</li>
+    <li>43 children have at least 1 sibling.</li>
+  </ul>
+  <p class="explain">Both the 1-row and the 2-row show 15 ✓. The 4-row shows 11, which is more than 10 ✓. Two children do have 3 siblings, so that one is false ✗. The whole group is 50 and 7 have none, so 50 − 7 = 43 have at least one ✓.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["50"]
+description: How many customers were there altogether?
+hint:
+  - "Which column actually counts customers?"
+  - "The ₹ column says what was spent — not how many people spent it."
+  - "Add up the whole Frequency column."
+explain: "Adding the Frequency column: 4 + 13 + 8 + 16 + 9 = 50 customers."
+whyWrong:
+  "16":
+    code: DATA_READING_ERROR
+    message: "16 is just the biggest single frequency (the ₹40 row) — not everyone added together."
+  "41":
+    code: DATA_READING_ERROR
+    message: "This total leaves out the ₹50 row — all five frequencies belong in the sum."
+  "150":
+    code: DATA_READING_ERROR
+    message: "This adds the rupee amounts 10 + 20 + 30 + 40 + 50 — but customers are counted in the Frequency column."
+solution:
+  - type: step
+    goal: Choose the right column.
+    working: "customers live in the Frequency column"
+    reason: The ₹ column only labels the rows; it does not count people.
+  - type: step
+    goal: Add it up.
+    working: "4 + 13 + 8 + 16 + 9 = 50"
+  - type: takeaway
+    text: The total of the Frequency column is the number of people surveyed — always.
+  - type: verification
+    text: Five rows, the biggest holding 16 — a total of 50 sits right in that ballpark.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A shop recorded how much each customer spent. <b>How many customers</b> were there altogether?</p>
+  <svg viewBox="0 0 360 256" width="100%" style="max-width:360px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" font-family="'Quicksand','DM Sans',sans-serif" role="img" aria-label="frequency table"><rect x="0.75" y="0.75" width="358.5" height="254.5" fill="#fff" stroke="#66c266" stroke-width="1.5" rx="8"/><path d="M1.5,9 a7.5,7.5 0 0 1 7.5,-7.5 h342 a7.5,7.5 0 0 1 7.5,7.5 v37 h-357 z" fill="#dcf5dc"/><text x="90" y="14" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="700" fill="#14213d">Amount spent</text><text x="90" y="32" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="700" fill="#14213d">(₹)</text><text x="270" y="23" text-anchor="middle" dominant-baseline="central" font-size="16" font-weight="700" fill="#14213d">Frequency</text><line x1="1.5" y1="46" x2="358.5" y2="46" stroke="#66c266" stroke-width="1"/><text x="90" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">10</text><text x="270" y="67" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">4</text><line x1="1.5" y1="88" x2="358.5" y2="88" stroke="#66c266" stroke-width="1"/><text x="90" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">20</text><text x="270" y="109" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">13</text><line x1="1.5" y1="130" x2="358.5" y2="130" stroke="#66c266" stroke-width="1"/><text x="90" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">30</text><text x="270" y="151" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">8</text><line x1="1.5" y1="172" x2="358.5" y2="172" stroke="#66c266" stroke-width="1"/><text x="90" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">40</text><text x="270" y="193" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">16</text><line x1="1.5" y1="214" x2="358.5" y2="214" stroke="#66c266" stroke-width="1"/><text x="90" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#14213d">50</text><text x="270" y="235" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#14213d">9</text><line x1="180" y1="1.5" x2="180" y2="254.5" stroke="#66c266" stroke-width="1"/></svg>
+  <ul class="options"><li>16</li><li>41</li><li>50</li><li>150</li></ul>
+  <p class="explain">Add the Frequency column: 4 + 13 + 8 + 16 + 9 = 50. (150 is the total money, not the number of customers — and 41 misses a row.)</p>
+</div>
+
+</div>
