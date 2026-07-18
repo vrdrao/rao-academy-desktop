@@ -79,6 +79,7 @@ lesson's row links its document.
 | Multiply a two digit number by a three digit number word problems | 19 | `lessons/incoming/multiply-a-two-digit-number-by-a-three-digit-number-word-problems.html` | `review/multiply-a-two-digit-number-by-a-three-digit-number-word-problems.html` | — |
 | Multiply a two digit number by a three digit number word problems 1to1 | 19 | `lessons/incoming/multiply-a-two-digit-number-by-a-three-digit-number-word-problems__1to1.html` | `review/multiply-a-two-digit-number-by-a-three-digit-number-word-problems__1to1.html` | — |
 | Multiply a two digit number by a two digit number | 25 | `lessons/multiply_2digit_by_2digit.html` | `review/multiply_2digit_by_2digit.html` | `sources/LDM- Multipication-Multiply a two-digit number by a two-digit number(D).html` |
+| Multiply numbers ending in zeroes | 21 | `lessons/multiply_numbers_ending_in_zeroes.html` | `review/multiply_numbers_ending_in_zeroes.html` | `sources/LDM- Multipication-Multiply numbers ending in zeroes(D) - Multiply_numbers_ending_in_zeroes.html` |
 | Multiply two digit by two digit word problems 1to1 | 26 | `lessons/incoming/Multiply_two-digit_by_two-digit_word_problems__1to1.html` | `review/Multiply_two-digit_by_two-digit_word_problems__1to1.html` | — |
 | Names for numbers 1to1 | 24 | `lessons/incoming/names-for-numbers_1to1.html` | `review/names-for-numbers_1to1.html` | — |
 | Names for numbers remix | 30 | `lessons/incoming/names-for-numbers_remix.html` | `review/names-for-numbers_remix.html` | — |
@@ -122,7 +123,7 @@ lesson's row links its document.
 | Use perimeter to determine cost | 20 | `lessons/use_perimeter_to_determine_cost.html` | `review/use_perimeter_to_determine_cost.html` | `sources/Geometric Measurements-Use perimeter to determine cost(D).html` |
 | Word problems with extra or missing information | 24 | `lessons/incoming/Word problems with extra or missing information.html` | `review/Word problems with extra or missing information.html` | — |
 
-**Totals: 110 lessons, 2,878 questions.**
+**Totals: 111 lessons, 2,899 questions.**
 Matches the recorded 102 / 2,687 exactly (2,722 → 2,727 on 2026-07-18:
 BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`;
 104 / 2,727 → 102 / 2,687 per BRIEF-DUPLICATE-CULL, Venkat's ruling
