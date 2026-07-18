@@ -74,6 +74,7 @@ lesson's row links its document.
 | Multiplication patterns over increasing place values 1to1 | 31 | `lessons/incoming/multiplication-patterns-over-increasing-place-values-1to1.html` | `review/multiplication-patterns-over-increasing-place-values-1to1.html` | — |
 | Multiply 1x2 remix | 29 | `lessons/incoming/Multiply_1x2_remix.html` | `review/Multiply_1x2_remix.html` | — |
 | Multiply 1x3 4digit REMIX | 34 | `lessons/incoming/Multiply_1x3-4digit_REMIX.html` | `review/Multiply_1x3-4digit_REMIX.html` | — |
+| Multiply 2x2 complete the missing steps | 37 | `lessons/multiply_2x2_complete_missing_steps.html` | `review/multiply_2x2_complete_missing_steps.html` | `sources/LDM- Multipication-Multiply a two-digit number by a two-digit number_ complete the missing steps(D) - multiply-a-two-digit-number-by-a-two-digit-number-complete-the-missing-steps.html` |
 | Multiply a two digit number by a three digit number | 27 | `lessons/incoming/multiply-a-two-digit-number-by-a-three-digit-number.html` | `review/multiply-a-two-digit-number-by-a-three-digit-number.html` | — |
 | Multiply a two digit number by a three digit number word problems | 19 | `lessons/incoming/multiply-a-two-digit-number-by-a-three-digit-number-word-problems.html` | `review/multiply-a-two-digit-number-by-a-three-digit-number-word-problems.html` | — |
 | Multiply a two digit number by a three digit number word problems 1to1 | 19 | `lessons/incoming/multiply-a-two-digit-number-by-a-three-digit-number-word-problems__1to1.html` | `review/multiply-a-two-digit-number-by-a-three-digit-number-word-problems__1to1.html` | — |
@@ -121,7 +122,7 @@ lesson's row links its document.
 | Use perimeter to determine cost | 20 | `lessons/use_perimeter_to_determine_cost.html` | `review/use_perimeter_to_determine_cost.html` | `sources/Geometric Measurements-Use perimeter to determine cost(D).html` |
 | Word problems with extra or missing information | 24 | `lessons/incoming/Word problems with extra or missing information.html` | `review/Word problems with extra or missing information.html` | — |
 
-**Totals: 109 lessons, 2,841 questions.**
+**Totals: 110 lessons, 2,878 questions.**
 Matches the recorded 102 / 2,687 exactly (2,722 → 2,727 on 2026-07-18:
 BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`;
 104 / 2,727 → 102 / 2,687 per BRIEF-DUPLICATE-CULL, Venkat's ruling

@@ -1,0 +1,1049 @@
+<div id="source">
+<!--@q
+type: fill-blanks
+answer: ["7220"]
+description: Missing total step of 95 × 76
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The two lines are the two halves of the product — nothing else is missing."
+  - "Add them column by column, ones under ones, tens under tens."
+explain: The total adds the two lines: 570 + 6,650 = 7,220.
+solution:
+  - type: step
+    goal: Add the two lines.
+    working: "570 + 6,650 = 7,220"
+    reason: Ones under ones, tens under tens — the two partial products join into the full answer.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: Sanity check: 95 × 76 is near 95 × 80 = 7,600 — and 7,220 sits close by.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">95 × 76: both lines are done — 95 × 6 = 570 and 95 × 70 = 6,650. Add them for the total: []</p>
+  <p class="explain">570 + 6,650 = 7,220.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["41"]
+description: Missing ones step of 41 × 21
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "Multiply 41 by the ones digit of 21 — just that digit."
+  - "Work right to left and carry anything past 9 into the next column."
+explain: The ones line multiplies 41 by the 1 of 21: 41 × 1 = 41.
+solution:
+  - type: step
+    goal: Multiply by the ones digit.
+    working: "41 × 1 = 41"
+    reason: The 1 in 21 is worth 1 ones, so this line is a plain 41 × 1.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The full product will be 861 — and it starts from this 41.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">41 × 21: the working starts by multiplying by the ones digit. 41 × 1 = []</p>
+  <p class="explain">41 &times; 1 = 41.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["282"]
+description: The ones line of 47 × 26
+hint:
+  - "This line multiplies 47 by just the 6."
+  - "Work right to left: 7 × 6 first."
+  - "7 × 6 passes 9, so a carry must ride into the next column and be ADDED there."
+explain: "47 × 6: 7 × 6 = 42 → write 2, carry 4; 4 × 6 = 24, + 4 = 28 → 282."
+whyWrong:
+  "222":
+    code: DROPPED_CARRY
+    message: "The carry from 7 × 6 = 42 went missing — 4 × 6 = 24 still needs that extra 4 added."
+  "322":
+    code: CARRY_EXTRA
+    message: "Too much carried — 24 + 4 = 28, not 32."
+  "242":
+    code: DROPPED_CARRY
+    message: "24 and 42 sit side by side here — the 4 of the 42 must be carried into the 24, making 28."
+solution:
+  - type: step
+    goal: Ones digit times 6.
+    working: "7 × 6 = 42 → write 2, carry 4"
+  - type: step
+    goal: Tens digit times 6, plus the carry.
+    working: "4 × 6 = 24, + 4 = 28 → 282"
+  - type: takeaway
+    text: A carry is not decoration — it must be added into the very next column.
+  - type: verification
+    text: "Estimate: 47 × 6 ≈ 50 × 6 = 300 — 282 sits just below it."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">To work out 47 &times; 26, the first line is 47 &times; 6. What number goes there?</p>
+  <ul class="options">
+    <li data-val="222">222</li>
+    <li data-val="282">282</li>
+    <li data-val="322">322</li>
+    <li data-val="242">242</li>
+  </ul>
+  <p class="explain">7 &times; 6 = 42, so write 2 and carry 4. Then 4 &times; 6 = 24, plus the carry 4 = 28. The line is 282.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["320"]
+description: Missing tens step of 32 × 13
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The 1 in 13 sits in the tens place — it is worth ten times its face."
+  - "Multiply 32 by 1, then give the answer its zero back."
+explain: The 1 of 13 is worth 10, so the tens line is 32 × 10 = 320.
+solution:
+  - type: step
+    goal: Multiply by the tens digit at its true value.
+    working: "32 × 10 = 320"
+    reason: The 1 sits in the tens place, so this line is 32 × 1 with a zero restored on the end.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The tens line always ends in 0 — 320 does, and it is ten times 32 × 1 = 32.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">32 × 13: the ones line 32 × 3 = 96 is done. Now the tens line — the 1 is worth 1 tens: 32 × 10 = []</p>
+  <p class="explain">32 &times; 1 = 32, and because it is 1 <b>tens</b>, write a 0 in the ones place: 320.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["504"]
+description: Missing total step of 24 × 21
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The two lines are the two halves of the product — nothing else is missing."
+  - "Add them column by column, ones under ones, tens under tens."
+explain: The total adds the two lines: 24 + 480 = 504.
+solution:
+  - type: step
+    goal: Add the two lines.
+    working: "24 + 480 = 504"
+    reason: Ones under ones, tens under tens — the two partial products join into the full answer.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: Sanity check: 24 × 21 is near 24 × 20 = 480 — and 504 sits close by.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">24 × 21: both lines are done — 24 × 1 = 24 and 24 × 20 = 480. Add them for the total: []</p>
+  <p class="explain">24 + 480 = 504.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["66"]
+description: Missing ones step of 33 × 12
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "Multiply 33 by the ones digit of 12 — just that digit."
+  - "Work right to left and carry anything past 9 into the next column."
+explain: The ones line multiplies 33 by the 2 of 12: 33 × 2 = 66.
+solution:
+  - type: step
+    goal: Multiply by the ones digit.
+    working: "33 × 2 = 66"
+    reason: The 2 in 12 is worth 2 ones, so this line is a plain 33 × 2.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The full product will be 396 — and it starts from this 66.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">33 × 12: the working starts by multiplying by the ones digit. 33 × 2 = []</p>
+  <p class="explain">33 &times; 2 = 66.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["460"]
+description: The tens line of 23 × 21
+hint:
+  - "This line multiplies 23 by the 2 of 21 — at its true value."
+  - "That 2 sits in the tens place: it is worth twenty."
+  - "Multiply 23 × 2, then restore the zero."
+explain: "The 2 is worth 2 tens, so the line is 23 × 20 = 460."
+whyWrong:
+  "46":
+    code: PLACE_SHIFT_DOWN
+    message: "46 is 23 × 2 — the 2 of 21 is worth twenty, so this line needs its zero back."
+  "230":
+    code: NEAR_MISS
+    message: "230 is 23 × 10 — the tens digit here is a 2, making the line worth 23 × 20."
+  "480":
+    code: ADJACENT_TABLE_FACT
+    message: "480 is 24 × 20 — the number being multiplied is 23."
+solution:
+  - type: step
+    goal: Multiply by the digit.
+    working: "23 × 2 = 46"
+  - type: step
+    goal: Restore the place value.
+    working: "23 × 20 = 460"
+    reason: The 2 stands in the tens place — its line is ten times bigger.
+  - type: takeaway
+    text: Tens-line answers always end in zero — no zero, no shift, no good.
+  - type: verification
+    text: "Ten 23s make 230, so twenty of them make 460 ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">To work out 23 &times; 21, the second line is 23 &times; 2 <b>tens</b>. What number goes there?</p>
+  <ul class="options">
+    <li data-val="46">46</li>
+    <li data-val="230">230</li>
+    <li data-val="480">480</li>
+    <li data-val="460">460</li>
+  </ul>
+  <p class="explain">23 &times; 2 = 46. It is 2 <b>tens</b>, not 2 ones, so write a 0 in the ones place: 460.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["430"]
+description: Missing tens step of 43 × 12
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The 1 in 12 sits in the tens place — it is worth ten times its face."
+  - "Multiply 43 by 1, then give the answer its zero back."
+explain: The 1 of 12 is worth 10, so the tens line is 43 × 10 = 430.
+solution:
+  - type: step
+    goal: Multiply by the tens digit at its true value.
+    working: "43 × 10 = 430"
+    reason: The 1 sits in the tens place, so this line is 43 × 1 with a zero restored on the end.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The tens line always ends in 0 — 430 does, and it is ten times 43 × 1 = 43.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">43 × 12: the ones line 43 × 2 = 86 is done. Now the tens line — the 1 is worth 1 tens: 43 × 10 = []</p>
+  <p class="explain">43 &times; 1 = 43, and because it is 1 <b>tens</b>, write a 0 in the ones place: 430.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["714"]
+description: Missing total step of 21 × 34
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The two lines are the two halves of the product — nothing else is missing."
+  - "Add them column by column, ones under ones, tens under tens."
+explain: The total adds the two lines: 84 + 630 = 714.
+solution:
+  - type: step
+    goal: Add the two lines.
+    working: "84 + 630 = 714"
+    reason: Ones under ones, tens under tens — the two partial products join into the full answer.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: Sanity check: 21 × 34 is near 21 × 30 = 630 — and 714 sits close by.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">21 × 34: both lines are done — 21 × 4 = 84 and 21 × 30 = 630. Add them for the total: []</p>
+  <p class="explain">84 + 630 = 714.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["14"]
+description: Missing ones step of 14 × 21
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "Multiply 14 by the ones digit of 21 — just that digit."
+  - "Work right to left and carry anything past 9 into the next column."
+explain: The ones line multiplies 14 by the 1 of 21: 14 × 1 = 14.
+solution:
+  - type: step
+    goal: Multiply by the ones digit.
+    working: "14 × 1 = 14"
+    reason: The 1 in 21 is worth 1 ones, so this line is a plain 14 × 1.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The full product will be 294 — and it starts from this 14.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">14 × 21: the working starts by multiplying by the ones digit. 14 × 1 = []</p>
+  <p class="explain">14 &times; 1 = 14.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["B"]
+description: Find the first mistake in 21 × 34
+hint:
+  - "Redo the working yourself, line by line, before judging."
+  - "Compare from the top down and stop at the FIRST line that disagrees."
+  - "A perfect addition on top of a broken line is still broken — check the multiplying lines hardest."
+explain: "21 × 3 tens = 630, not 63 — the line lost its shift zero. Every later line inherits the damage."
+whyWrong:
+  "A":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "21 × 4 really is 84 — the ones line is sound."
+  "C":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "The adding is honest: 84 + 63 = 147. The slip happened a line above."
+solution:
+  - type: step
+    goal: Redo the ones line.
+    working: "21 × 4 = 84"
+  - type: step
+    goal: Redo the tens line.
+    working: "21 × 30 = 630"
+  - type: step
+    goal: Compare with the shown work.
+    working: "21 × 3 tens = 630, not 63 — the line lost its shift zero"
+  - type: takeaway
+    text: Find-the-mistake questions are solved by redoing, not by staring — your own working is the judge.
+  - type: verification
+    text: "The true product is 84 + 630 = 714 — nothing like the broken total, which confirms the diagnosis."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Here is someone's work for 21 &times; 34. Which line has the <b>first</b> mistake?</p>
+  <ul class="options">
+    <li data-val="A">A) 21 &times; 4 = 84</li>
+    <li data-val="B">B) 21 &times; 3 tens = 63</li>
+    <li data-val="C">C) 84 + 63 = 147</li>
+  </ul>
+  <p class="explain">Line B is wrong: 21 &times; 3 <b>tens</b> is 630, not 63 &mdash; the 0 is missing. Line C adds correctly, but it used B's wrong number, so the total is wrong too.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["220"]
+description: Missing tens step of 22 × 14
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The 1 in 14 sits in the tens place — it is worth ten times its face."
+  - "Multiply 22 by 1, then give the answer its zero back."
+explain: The 1 of 14 is worth 10, so the tens line is 22 × 10 = 220.
+solution:
+  - type: step
+    goal: Multiply by the tens digit at its true value.
+    working: "22 × 10 = 220"
+    reason: The 1 sits in the tens place, so this line is 22 × 1 with a zero restored on the end.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The tens line always ends in 0 — 220 does, and it is ten times 22 × 1 = 22.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">22 × 14: the ones line 22 × 4 = 88 is done. Now the tens line — the 1 is worth 1 tens: 22 × 10 = []</p>
+  <p class="explain">22 &times; 1 = 22, and because it is 1 <b>tens</b>, write a 0 in the ones place: 220.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["713"]
+description: Missing total step of 31 × 23
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The two lines are the two halves of the product — nothing else is missing."
+  - "Add them column by column, ones under ones, tens under tens."
+explain: The total adds the two lines: 93 + 620 = 713.
+solution:
+  - type: step
+    goal: Add the two lines.
+    working: "93 + 620 = 713"
+    reason: Ones under ones, tens under tens — the two partial products join into the full answer.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: Sanity check: 31 × 23 is near 31 × 20 = 620 — and 713 sits close by.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">31 × 23: both lines are done — 31 × 3 = 93 and 31 × 20 = 620. Add them for the total: []</p>
+  <p class="explain">93 + 620 = 713.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["13"]
+description: Missing ones step of 13 × 31
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "Multiply 13 by the ones digit of 31 — just that digit."
+  - "Work right to left and carry anything past 9 into the next column."
+explain: The ones line multiplies 13 by the 1 of 31: 13 × 1 = 13.
+solution:
+  - type: step
+    goal: Multiply by the ones digit.
+    working: "13 × 1 = 13"
+    reason: The 1 in 31 is worth 1 ones, so this line is a plain 13 × 1.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The full product will be 403 — and it starts from this 13.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">13 × 31: the working starts by multiplying by the ones digit. 13 × 1 = []</p>
+  <p class="explain">13 &times; 1 = 13.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["174"]
+description: The ones line of 58 × 23
+hint:
+  - "This line multiplies 58 by just the 3."
+  - "Work right to left: 8 × 3 first."
+  - "8 × 3 passes 9 — its carry must be added to 5 × 3."
+explain: "58 × 3: 8 × 3 = 24 → write 4, carry 2; 5 × 3 = 15, + 2 = 17 → 174."
+whyWrong:
+  "144":
+    code: DIGIT_INSERT_OR_SHIFT
+    message: "144 is 48 × 3 — the 5 of 58 slipped to a 4 somewhere in the working."
+  "194":
+    code: CARRY_EXTRA
+    message: "Too much carried — 15 + 2 = 17, not 19."
+  "154":
+    code: DROPPED_CARRY
+    message: "The carry from 8 × 3 = 24 vanished — 5 × 3 = 15 still needs its extra 2."
+solution:
+  - type: step
+    goal: Ones digit times 3.
+    working: "8 × 3 = 24 → write 4, carry 2"
+  - type: step
+    goal: Tens digit times 3, plus the carry.
+    working: "5 × 3 = 15, + 2 = 17 → 174"
+  - type: takeaway
+    text: The carry from the ones column belongs to the tens column — always.
+  - type: verification
+    text: "Estimate: 58 × 3 ≈ 60 × 3 = 180 — 174 lands right beside it."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">To work out 58 &times; 23, the first line is 58 &times; 3. What number goes there?</p>
+  <ul class="options">
+    <li data-val="144">144</li>
+    <li data-val="174">174</li>
+    <li data-val="194">194</li>
+    <li data-val="154">154</li>
+  </ul>
+  <p class="explain">8 &times; 3 = 24, so write 4 and carry 2. Then 5 &times; 3 = 15, plus the carry 2 = 17. The line is 174.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["340"]
+description: Missing tens step of 34 × 12
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The 1 in 12 sits in the tens place — it is worth ten times its face."
+  - "Multiply 34 by 1, then give the answer its zero back."
+explain: The 1 of 12 is worth 10, so the tens line is 34 × 10 = 340.
+solution:
+  - type: step
+    goal: Multiply by the tens digit at its true value.
+    working: "34 × 10 = 340"
+    reason: The 1 sits in the tens place, so this line is 34 × 1 with a zero restored on the end.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The tens line always ends in 0 — 340 does, and it is ten times 34 × 1 = 34.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">34 × 12: the ones line 34 × 2 = 68 is done. Now the tens line — the 1 is worth 1 tens: 34 × 10 = []</p>
+  <p class="explain">34 &times; 1 = 34, and because it is 1 <b>tens</b>, write a 0 in the ones place: 340.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["516"]
+description: Missing total step of 12 × 43
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The two lines are the two halves of the product — nothing else is missing."
+  - "Add them column by column, ones under ones, tens under tens."
+explain: The total adds the two lines: 36 + 480 = 516.
+solution:
+  - type: step
+    goal: Add the two lines.
+    working: "36 + 480 = 516"
+    reason: Ones under ones, tens under tens — the two partial products join into the full answer.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: Sanity check: 12 × 43 is near 12 × 40 = 480 — and 516 sits close by.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">12 × 43: both lines are done — 12 × 3 = 36 and 12 × 40 = 480. Add them for the total: []</p>
+  <p class="explain">36 + 480 = 516.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["940"]
+description: The tens line of 47 × 26
+hint:
+  - "This line multiplies 47 by the 2 of 26 — at its true value."
+  - "That 2 sits in the tens place: it is worth twenty."
+  - "Multiply 47 × 2, then restore the zero."
+explain: "The 2 is worth 2 tens, so the line is 47 × 20 = 940."
+whyWrong:
+  "2820":
+    code: PARTIAL_PRODUCT_PLACE_ERROR
+    message: "2,820 is 47 × 60 — this line uses the 2 of 26, not the 6."
+  "960":
+    code: ADJACENT_TABLE_FACT
+    message: "960 is 48 × 20 — the number being multiplied is 47."
+  "94":
+    code: PLACE_SHIFT_DOWN
+    message: "94 is 47 × 2 — the 2 of 26 is worth twenty, so the line needs its zero."
+solution:
+  - type: step
+    goal: Multiply by the digit.
+    working: "47 × 2 = 94"
+  - type: step
+    goal: Restore the place value.
+    working: "47 × 20 = 940"
+  - type: takeaway
+    text: Each digit multiplies at its place value — the tens digit brings a zero with it.
+  - type: verification
+    text: "Ten 47s are 470; twenty are 940 ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">To work out 47 &times; 26, the second line is 47 &times; 2 <b>tens</b>. What number goes there?</p>
+  <ul class="options">
+    <li data-val="2820">2,820</li>
+    <li data-val="940">940</li>
+    <li data-val="960">960</li>
+    <li data-val="94">94</li>
+  </ul>
+  <p class="explain">47 &times; 2 = 94. It is 2 <b>tens</b>, not 2 ones, so write a 0 in the ones place: 940.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["44"]
+description: Missing ones step of 44 × 11
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "Multiply 44 by the ones digit of 11 — just that digit."
+  - "Work right to left and carry anything past 9 into the next column."
+explain: The ones line multiplies 44 by the 1 of 11: 44 × 1 = 44.
+solution:
+  - type: step
+    goal: Multiply by the ones digit.
+    working: "44 × 1 = 44"
+    reason: The 1 in 11 is worth 1 ones, so this line is a plain 44 × 1.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The full product will be 484 — and it starts from this 44.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">44 × 11: the working starts by multiplying by the ones digit. 44 × 1 = []</p>
+  <p class="explain">44 &times; 1 = 44.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["230"]
+description: Missing tens step of 23 × 13
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The 1 in 13 sits in the tens place — it is worth ten times its face."
+  - "Multiply 23 by 1, then give the answer its zero back."
+explain: The 1 of 13 is worth 10, so the tens line is 23 × 10 = 230.
+solution:
+  - type: step
+    goal: Multiply by the tens digit at its true value.
+    working: "23 × 10 = 230"
+    reason: The 1 sits in the tens place, so this line is 23 × 1 with a zero restored on the end.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The tens line always ends in 0 — 230 does, and it is ten times 23 × 1 = 23.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">23 × 13: the ones line 23 × 3 = 69 is done. Now the tens line — the 1 is worth 1 tens: 23 × 10 = []</p>
+  <p class="explain">23 &times; 1 = 23, and because it is 1 <b>tens</b>, write a 0 in the ones place: 230.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["A"]
+description: Find the first mistake in 47 × 26
+hint:
+  - "Redo the working yourself, line by line, before judging."
+  - "Compare from the top down and stop at the FIRST line that disagrees."
+  - "A perfect addition on top of a broken line is still broken — check the multiplying lines hardest."
+explain: "47 × 6 = 282, not 242 — the carried 4 from 7 × 6 = 42 was dropped. Every later line inherits the damage."
+whyWrong:
+  "B":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "47 × 2 tens really is 940 — shift and all."
+  "C":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "The adding is honest: 242 + 940 = 1,182. The slip is in line A."
+solution:
+  - type: step
+    goal: Redo the ones line.
+    working: "47 × 6 = 282"
+  - type: step
+    goal: Redo the tens line.
+    working: "47 × 20 = 940"
+  - type: step
+    goal: Compare with the shown work.
+    working: "47 × 6 = 282, not 242 — the carried 4 from 7 × 6 = 42 was dropped"
+  - type: takeaway
+    text: Find-the-mistake questions are solved by redoing, not by staring — your own working is the judge.
+  - type: verification
+    text: "The true product is 282 + 940 = 1,222 — nothing like the broken total, which confirms the diagnosis."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Here is someone's work for 47 &times; 26. Which line has the <b>first</b> mistake?</p>
+  <ul class="options">
+    <li data-val="A">A) 47 &times; 6 = 242</li>
+    <li data-val="B">B) 47 &times; 2 tens = 940</li>
+    <li data-val="C">C) 242 + 940 = 1,182</li>
+  </ul>
+  <p class="explain">Line A is wrong: 7 &times; 6 = 42, so carry the 4. Then 4 &times; 6 = 24, <b>plus the carry</b> = 28. It should be 282, not 242. Line C adds correctly but used A's wrong number.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["672"]
+description: Missing total step of 32 × 21
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The two lines are the two halves of the product — nothing else is missing."
+  - "Add them column by column, ones under ones, tens under tens."
+explain: The total adds the two lines: 32 + 640 = 672.
+solution:
+  - type: step
+    goal: Add the two lines.
+    working: "32 + 640 = 672"
+    reason: Ones under ones, tens under tens — the two partial products join into the full answer.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: Sanity check: 32 × 21 is near 32 × 20 = 640 — and 672 sits close by.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">32 × 21: both lines are done — 32 × 1 = 32 and 32 × 20 = 640. Add them for the total: []</p>
+  <p class="explain">32 + 640 = 672.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["44"]
+description: Missing ones step of 11 × 44
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "Multiply 11 by the ones digit of 44 — just that digit."
+  - "Work right to left and carry anything past 9 into the next column."
+explain: The ones line multiplies 11 by the 4 of 44: 11 × 4 = 44.
+solution:
+  - type: step
+    goal: Multiply by the ones digit.
+    working: "11 × 4 = 44"
+    reason: The 4 in 44 is worth 4 ones, so this line is a plain 11 × 4.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The full product will be 484 — and it starts from this 44.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">11 × 44: the working starts by multiplying by the ones digit. 11 × 4 = []</p>
+  <p class="explain">11 &times; 4 = 44.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["282"]
+description: Missing ones step of 47 × 26
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "Multiply 47 by the ones digit of 26 — just that digit."
+  - "Work right to left and carry anything past 9 into the next column."
+explain: The ones line multiplies 47 by the 6 of 26: 47 × 6 = 282.
+solution:
+  - type: step
+    goal: Multiply by the ones digit.
+    working: "47 × 6 = 282"
+    reason: The 6 in 26 is worth 6 ones, so this line is a plain 47 × 6.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The full product will be 1,222 — and it starts from this 282.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">47 × 26: the working starts by multiplying by the ones digit. 47 × 6 = []</p>
+  <p class="explain">47 &times; 6 = 282.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["240"]
+description: Missing tens step of 24 × 12
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The 1 in 12 sits in the tens place — it is worth ten times its face."
+  - "Multiply 24 by 1, then give the answer its zero back."
+explain: The 1 of 12 is worth 10, so the tens line is 24 × 10 = 240.
+solution:
+  - type: step
+    goal: Multiply by the tens digit at its true value.
+    working: "24 × 10 = 240"
+    reason: The 1 sits in the tens place, so this line is 24 × 1 with a zero restored on the end.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The tens line always ends in 0 — 240 does, and it is ten times 24 × 1 = 24.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">24 × 12: the ones line 24 × 2 = 48 is done. Now the tens line — the 1 is worth 1 tens: 24 × 10 = []</p>
+  <p class="explain">24 &times; 1 = 24, and because it is 1 <b>tens</b>, write a 0 in the ones place: 240.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["286"]
+description: Missing total step of 13 × 22
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The two lines are the two halves of the product — nothing else is missing."
+  - "Add them column by column, ones under ones, tens under tens."
+explain: The total adds the two lines: 26 + 260 = 286.
+solution:
+  - type: step
+    goal: Add the two lines.
+    working: "26 + 260 = 286"
+    reason: Ones under ones, tens under tens — the two partial products join into the full answer.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: Sanity check: 13 × 22 is near 13 × 20 = 260 — and 286 sits close by.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">13 × 22: both lines are done — 13 × 2 = 26 and 13 × 20 = 260. Add them for the total: []</p>
+  <p class="explain">26 + 260 = 286.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["720"]
+description: The tens line of 36 × 25
+hint:
+  - "This line multiplies 36 by the 2 of 25 — at its true value."
+  - "That 2 sits in the tens place: it is worth twenty."
+  - "Multiply 36 × 2, then restore the zero."
+explain: "The 2 is worth 2 tens, so the line is 36 × 20 = 720."
+whyWrong:
+  "72":
+    code: PLACE_SHIFT_DOWN
+    message: "72 is 36 × 2 — the 2 of 25 means twenty, so the line is ten times bigger."
+  "740":
+    code: ADJACENT_TABLE_FACT
+    message: "740 is 37 × 20 — the number being multiplied is 36."
+  "1800":
+    code: PARTIAL_PRODUCT_PLACE_ERROR
+    message: "1,800 is 36 × 50 — this line uses the 2 of 25, not the 5."
+solution:
+  - type: step
+    goal: Multiply by the digit.
+    working: "36 × 2 = 72"
+  - type: step
+    goal: Restore the place value.
+    working: "36 × 20 = 720"
+  - type: takeaway
+    text: Which digit, and what is it worth — two questions every line must answer.
+  - type: verification
+    text: "Ten 36s are 360; twenty are 720 ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">To work out 36 &times; 25, the second line is 36 &times; 2 <b>tens</b>. What number goes there?</p>
+  <ul class="options">
+    <li data-val="720">720</li>
+    <li data-val="72">72</li>
+    <li data-val="740">740</li>
+    <li data-val="1800">1,800</li>
+  </ul>
+  <p class="explain">36 &times; 2 = 72. It is 2 <b>tens</b>, not 2 ones, so write a 0 in the ones place: 720.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["42"]
+description: Missing ones step of 42 × 11
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "Multiply 42 by the ones digit of 11 — just that digit."
+  - "Work right to left and carry anything past 9 into the next column."
+explain: The ones line multiplies 42 by the 1 of 11: 42 × 1 = 42.
+solution:
+  - type: step
+    goal: Multiply by the ones digit.
+    working: "42 × 1 = 42"
+    reason: The 1 in 11 is worth 1 ones, so this line is a plain 42 × 1.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The full product will be 462 — and it starts from this 42.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">42 × 11: the working starts by multiplying by the ones digit. 42 × 1 = []</p>
+  <p class="explain">42 &times; 1 = 42.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["840"]
+description: Missing tens step of 21 × 43
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The 4 in 43 sits in the tens place — it is worth ten times its face."
+  - "Multiply 21 by 4, then give the answer its zero back."
+explain: The 4 of 43 is worth 40, so the tens line is 21 × 40 = 840.
+solution:
+  - type: step
+    goal: Multiply by the tens digit at its true value.
+    working: "21 × 40 = 840"
+    reason: The 4 sits in the tens place, so this line is 21 × 4 with a zero restored on the end.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The tens line always ends in 0 — 840 does, and it is ten times 21 × 4 = 84.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">21 × 43: the ones line 21 × 3 = 63 is done. Now the tens line — the 4 is worth 4 tens: 21 × 40 = []</p>
+  <p class="explain">21 &times; 4 = 84, and because it is 4 <b>tens</b>, write a 0 in the ones place: 840.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["B"]
+description: Find the first mistake in 36 × 25
+hint:
+  - "Redo the working yourself, line by line, before judging."
+  - "Compare from the top down and stop at the FIRST line that disagrees."
+  - "A perfect addition on top of a broken line is still broken — check the multiplying lines hardest."
+explain: "36 × 2 tens = 720, not 72 — the shift zero went missing. Every later line inherits the damage."
+whyWrong:
+  "A":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "36 × 5 really is 180 — carry included."
+  "C":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "The adding is honest: 180 + 72 = 252. The slip is above it."
+solution:
+  - type: step
+    goal: Redo the ones line.
+    working: "36 × 5 = 180"
+  - type: step
+    goal: Redo the tens line.
+    working: "36 × 20 = 720"
+  - type: step
+    goal: Compare with the shown work.
+    working: "36 × 2 tens = 720, not 72 — the shift zero went missing"
+  - type: takeaway
+    text: Find-the-mistake questions are solved by redoing, not by staring — your own working is the judge.
+  - type: verification
+    text: "The true product is 180 + 720 = 900 — nothing like the broken total, which confirms the diagnosis."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Here is someone's work for 36 &times; 25. Which line has the <b>first</b> mistake?</p>
+  <ul class="options">
+    <li data-val="A">A) 36 &times; 5 = 180</li>
+    <li data-val="B">B) 36 &times; 2 tens = 72</li>
+    <li data-val="C">C) 180 + 72 = 252</li>
+  </ul>
+  <p class="explain">Line B is wrong: 36 &times; 2 <b>tens</b> is 720, not 72 &mdash; the 0 is missing. Line C adds correctly, but it used B's wrong number, so the total is wrong too.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["693"]
+description: Missing total step of 33 × 21
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The two lines are the two halves of the product — nothing else is missing."
+  - "Add them column by column, ones under ones, tens under tens."
+explain: The total adds the two lines: 33 + 660 = 693.
+solution:
+  - type: step
+    goal: Add the two lines.
+    working: "33 + 660 = 693"
+    reason: Ones under ones, tens under tens — the two partial products join into the full answer.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: Sanity check: 33 × 21 is near 33 × 20 = 660 — and 693 sits close by.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">33 × 21: both lines are done — 33 × 1 = 33 and 33 × 20 = 660. Add them for the total: []</p>
+  <p class="explain">33 + 660 = 693.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["1740"]
+description: Missing tens step of 58 × 34
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The 3 in 34 sits in the tens place — it is worth ten times its face."
+  - "Multiply 58 by 3, then give the answer its zero back."
+explain: The 3 of 34 is worth 30, so the tens line is 58 × 30 = 1,740.
+solution:
+  - type: step
+    goal: Multiply by the tens digit at its true value.
+    working: "58 × 30 = 1,740"
+    reason: The 3 sits in the tens place, so this line is 58 × 3 with a zero restored on the end.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The tens line always ends in 0 — 1,740 does, and it is ten times 58 × 3 = 174.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">58 × 34: the ones line 58 × 4 = 232 is done. Now the tens line — the 3 is worth 3 tens: 58 × 30 = []</p>
+  <p class="explain">58 &times; 3 = 174, and because it is 3 <b>tens</b>, write a 0 in the ones place: 1,740.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["48"]
+description: Missing ones step of 12 × 34
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "Multiply 12 by the ones digit of 34 — just that digit."
+  - "Work right to left and carry anything past 9 into the next column."
+explain: The ones line multiplies 12 by the 4 of 34: 12 × 4 = 48.
+solution:
+  - type: step
+    goal: Multiply by the ones digit.
+    working: "12 × 4 = 48"
+    reason: The 4 in 34 is worth 4 ones, so this line is a plain 12 × 4.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The full product will be 408 — and it starts from this 48.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">12 × 34: the working starts by multiplying by the ones digit. 12 × 4 = []</p>
+  <p class="explain">12 &times; 4 = 48.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["460"]
+description: Missing tens step of 23 × 21
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The 2 in 21 sits in the tens place — it is worth ten times its face."
+  - "Multiply 23 by 2, then give the answer its zero back."
+explain: The 2 of 21 is worth 20, so the tens line is 23 × 20 = 460.
+solution:
+  - type: step
+    goal: Multiply by the tens digit at its true value.
+    working: "23 × 20 = 460"
+    reason: The 2 sits in the tens place, so this line is 23 × 2 with a zero restored on the end.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: The tens line always ends in 0 — 460 does, and it is ten times 23 × 2 = 46.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">23 × 21: the ones line 23 × 1 = 23 is done. Now the tens line — the 2 is worth 2 tens: 23 × 20 = []</p>
+  <p class="explain">23 &times; 2 = 46, and because it is 2 <b>tens</b>, write a 0 in the ones place: 460.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["A"]
+description: Find the first mistake in 95 × 76
+hint:
+  - "Redo the working yourself, line by line, before judging."
+  - "Compare from the top down and stop at the FIRST line that disagrees."
+  - "A perfect addition on top of a broken line is still broken — check the multiplying lines hardest."
+explain: "95 × 6 = 570, not 540 — the carried 3 from 5 × 6 = 30 was dropped. Every later line inherits the damage."
+whyWrong:
+  "B":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "95 × 7 tens really is 6,650."
+  "C":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "The adding is honest: 540 + 6,650 = 7,190. The leak is in line A."
+solution:
+  - type: step
+    goal: Redo the ones line.
+    working: "95 × 6 = 570"
+  - type: step
+    goal: Redo the tens line.
+    working: "95 × 70 = 6,650"
+  - type: step
+    goal: Compare with the shown work.
+    working: "95 × 6 = 570, not 540 — the carried 3 from 5 × 6 = 30 was dropped"
+  - type: takeaway
+    text: Find-the-mistake questions are solved by redoing, not by staring — your own working is the judge.
+  - type: verification
+    text: "The true product is 570 + 6,650 = 7,220 — nothing like the broken total, which confirms the diagnosis."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Here is someone's work for 95 &times; 76. Which line has the <b>first</b> mistake?</p>
+  <ul class="options">
+    <li data-val="A">A) 95 &times; 6 = 540</li>
+    <li data-val="B">B) 95 &times; 7 tens = 6,650</li>
+    <li data-val="C">C) 540 + 6,650 = 7,190</li>
+  </ul>
+  <p class="explain">Line A is wrong: 5 &times; 6 = 30, so carry the 3. Then 9 &times; 6 = 54, <b>plus the carry</b> = 57. It should be 570, not 540. Line C adds correctly but used A's wrong number.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["168"]
+description: Missing total step of 14 × 12
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The two lines are the two halves of the product — nothing else is missing."
+  - "Add them column by column, ones under ones, tens under tens."
+explain: The total adds the two lines: 28 + 140 = 168.
+solution:
+  - type: step
+    goal: Add the two lines.
+    working: "28 + 140 = 168"
+    reason: Ones under ones, tens under tens — the two partial products join into the full answer.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: Sanity check: 14 × 12 is near 14 × 10 = 140 — and 168 sits close by.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">14 × 12: both lines are done — 14 × 2 = 28 and 14 × 10 = 140. Add them for the total: []</p>
+  <p class="explain">28 + 140 = 168.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["2368"]
+description: Missing total step of 64 × 37
+hint:
+  - "Every 2-digit multiplication runs the same three steps — ones line, tens line, total."
+  - "The two lines are the two halves of the product — nothing else is missing."
+  - "Add them column by column, ones under ones, tens under tens."
+explain: The total adds the two lines: 448 + 1,920 = 2,368.
+solution:
+  - type: step
+    goal: Add the two lines.
+    working: "448 + 1,920 = 2,368"
+    reason: Ones under ones, tens under tens — the two partial products join into the full answer.
+  - type: takeaway
+    text: "Ones line, tens line, add — the tens line always carries its shift zero."
+  - type: verification
+    text: Sanity check: 64 × 37 is near 64 × 40 = 2,560 — and 2,368 sits close by.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">64 × 37: both lines are done — 64 × 7 = 448 and 64 × 30 = 1,920. Add them for the total: []</p>
+  <p class="explain">448 + 1,920 = 2,368.</p>
+</div>
+
+</div>
