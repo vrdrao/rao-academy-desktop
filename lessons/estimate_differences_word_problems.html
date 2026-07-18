@@ -1,0 +1,825 @@
+<div id="source">
+<!--@q
+type: fill-blanks
+answer: ["90","70","20"]
+description: Round then subtract (88 − 72)
+hint:
+  - "Which tens does each number sit between? Start there."
+  - "Check each ones digit against 5 — 5 or more climbs to the higher ten, less than 5 stays down."
+  - "Round both numbers first, then subtract the two friendly tens."
+explain: 88 rounds to 90 and 72 rounds to 70; 90 − 70 = 20.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "88 → 90"
+    reason: The ones digit is 8, so 88 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "72 → 70"
+    reason: The ones digit is 2, so 72 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "90 − 70 = 20"
+  - type: takeaway
+    text: Round both numbers first, then subtract — never subtract first and round after.
+  - type: verification
+    text: The exact difference, 16, lands close to 20 — the estimate is sound.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Maya collected 88 seashells. She gave 72 to her brother. About how many seashells are left? 88 rounds to [] and 72 rounds to []. So the estimate is []</p>
+  <p class="explain">88 → 90 and 72 → 70, so the estimate is 90 − 70 = 20.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["40"]
+description: Estimate the difference (99 − 62)
+hint:
+  - "Round first — no exact subtracting needed anywhere."
+  - "Take each number to its nearest ten — the ones digit decides up or down."
+  - "Subtract the two rounded tens, and expect a round-number answer."
+explain: 99 rounds to 100 and 62 rounds to 60; 100 − 60 = 40.
+whyWrong:
+  "30":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 99 down to 90 — but 99 is nearer 100."
+  "50":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding to the nearest ten gives 100 − 60 — this estimate comes from rounding at least one number to the wrong ten."
+  "37":
+    code: EXACT_NOT_ROUNDED
+    message: "37 is the exact answer showing off — the question only wants an estimate from rounded numbers."
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "99 → 100"
+    reason: The ones digit is 9, so 99 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "62 → 60"
+    reason: The ones digit is 2, so 62 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "100 − 60 = 40"
+  - type: takeaway
+    text: Estimates come from rounded numbers — an exact-looking answer is the trap, not the prize.
+  - type: verification
+    text: The exact difference is 37, and 40 sits right beside it — a good estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">The library had 99 books. 62 were checked out. Round each number to the nearest ten to estimate about how many books are left.</p>
+  <ul class="options"><li data-val="40">40</li><li data-val="30">30</li><li data-val="50">50</li><li data-val="37">37</li></ul>
+  <p class="explain">99 → 100 and 62 → 60, so the estimate is 100 − 60 = 40.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["30"]
+description: Estimate the difference (84 − 49)
+hint:
+  - "Round first — no exact subtracting needed anywhere."
+  - "Take each number to its nearest ten — the ones digit decides up or down."
+  - "Subtract the two rounded tens, and expect a round-number answer."
+explain: 84 rounds to 80 and 49 rounds to 50; 80 − 50 = 30.
+whyWrong:
+  "20":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding to the nearest ten gives 80 − 50 — this estimate comes from rounding at least one number to the wrong ten."
+  "40":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 84 up to 90 — but 84 is nearer 80."
+  "35":
+    code: EXACT_NOT_ROUNDED
+    message: "35 is the exact answer showing off — the question only wants an estimate from rounded numbers."
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "84 → 80"
+    reason: The ones digit is 4, so 84 stays down.
+  - type: step
+    goal: Round the second number.
+    working: "49 → 50"
+    reason: The ones digit is 9, so 49 climbs up.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "80 − 50 = 30"
+  - type: takeaway
+    text: Estimates come from rounded numbers — an exact-looking answer is the trap, not the prize.
+  - type: verification
+    text: The exact difference is 35, and 30 sits right beside it — a good estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Leo had 84 stickers. He used 49 on his poster. Round each number to the nearest ten to estimate about how many stickers are left.</p>
+  <ul class="options"><li data-val="20">20</li><li data-val="40">40</li><li data-val="30">30</li><li data-val="35">35</li></ul>
+  <p class="explain">84 → 80 and 49 → 50, so the estimate is 80 − 50 = 30.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Estimate is LESS"]
+description: Is the estimate more or less than the exact answer? (64 − 27)
+hint:
+  - "Compare each rounded number with the number it replaced."
+  - "Did rounding make the starting amount bigger or smaller? And the amount taken away?"
+  - "Taking away more than the true amount leaves less; taking away less leaves more."
+explain: "The estimate 30 is below the exact answer 37 — rounding took away more and started lower."
+whyWrong:
+  "Estimate is MORE":
+    code: COMPARISON_REVERSED
+    message: "Rounding turned the take-away into 30 — more than the real 27 — so the estimate ends up smaller than the true answer, not bigger."
+solution:
+  - type: step
+    goal: See what rounding did to each number.
+    working: "64 → 60 (a smaller start) · 27 → 30 (takes away more)"
+  - type: step
+    goal: Predict the direction.
+    working: "the estimate must be LESS than the exact answer"
+    reason: Taking away more than the truth leaves less behind.
+  - type: step
+    goal: Confirm with the exact answer.
+    working: "64 − 27 = 37, and the estimate 30 is below it"
+  - type: takeaway
+    text: You can predict an estimate's direction without ever finding the exact answer — watch which way each number was rounded.
+  - type: verification
+    text: "30 < 37 — the prediction matches the numbers."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A farm had 64 apples. 27 were sold at the market. Rounding to the nearest ten gives an estimate of 30. Is the estimate MORE or LESS than the exact answer?</p>
+  <ul class="options"><li data-val="Estimate is MORE">Estimate is MORE</li><li data-val="Estimate is LESS">Estimate is LESS</li></ul>
+  <p class="explain">The exact answer is 64 − 27 = 37, so the estimate 30 is less than the exact answer. 27 was rounded up to 30. We took away more than we really needed to, so the estimate ended up lower than the exact answer.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["20"]
+description: Estimate the difference (36 − 23)
+hint:
+  - "Round first — no exact subtracting needed anywhere."
+  - "Take each number to its nearest ten — the ones digit decides up or down."
+  - "Subtract the two rounded tens, and expect a round-number answer."
+explain: 36 rounds to 40 and 23 rounds to 20; 40 − 20 = 20.
+whyWrong:
+  "10":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 36 down to 30 — but 36 is nearer 40."
+  "13":
+    code: EXACT_NOT_ROUNDED
+    message: "13 is the exact answer showing off — the question only wants an estimate from rounded numbers."
+  "30":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding to the nearest ten gives 40 − 20 — this estimate comes from rounding at least one number to the wrong ten."
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "36 → 40"
+    reason: The ones digit is 6, so 36 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "23 → 20"
+    reason: The ones digit is 3, so 23 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "40 − 20 = 20"
+  - type: takeaway
+    text: Estimates come from rounded numbers — an exact-looking answer is the trap, not the prize.
+  - type: verification
+    text: The exact difference is 13, and 20 sits right beside it — a good estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya owned 36 marbles. She lost 23 of them. Round each number to the nearest ten to estimate about how many marbles are left.</p>
+  <ul class="options"><li data-val="20">20</li><li data-val="10">10</li><li data-val="13">13</li><li data-val="30">30</li></ul>
+  <p class="explain">36 → 40 and 23 → 20, so the estimate is 40 − 20 = 20.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["80","50","30"]
+description: Round then subtract (83 − 46)
+hint:
+  - "Which tens does each number sit between? Start there."
+  - "Check each ones digit against 5 — 5 or more climbs to the higher ten, less than 5 stays down."
+  - "Round both numbers first, then subtract the two friendly tens."
+explain: 83 rounds to 80 and 46 rounds to 50; 80 − 50 = 30.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "83 → 80"
+    reason: The ones digit is 3, so 83 stays down.
+  - type: step
+    goal: Round the second number.
+    working: "46 → 50"
+    reason: The ones digit is 6, so 46 climbs up.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "80 − 50 = 30"
+  - type: takeaway
+    text: Round both numbers first, then subtract — never subtract first and round after.
+  - type: verification
+    text: The exact difference, 37, lands close to 30 — the estimate is sound.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A box held 83 crayons. 46 were broken. About how many crayons are left? 83 rounds to [] and 46 rounds to []. So the estimate is []</p>
+  <p class="explain">83 → 80 and 46 → 50, so the estimate is 80 − 50 = 30.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["60"]
+description: Estimate the difference (78 − 21)
+hint:
+  - "Round first — no exact subtracting needed anywhere."
+  - "Take each number to its nearest ten — the ones digit decides up or down."
+  - "Subtract the two rounded tens, and expect a round-number answer."
+explain: 78 rounds to 80 and 21 rounds to 20; 80 − 20 = 60.
+whyWrong:
+  "57":
+    code: EXACT_NOT_ROUNDED
+    message: "57 is the exact answer showing off — the question only wants an estimate from rounded numbers."
+  "50":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 78 down to 70 — but 78 is nearer 80."
+  "70":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding to the nearest ten gives 80 − 20 — this estimate comes from rounding at least one number to the wrong ten."
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "78 → 80"
+    reason: The ones digit is 8, so 78 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "21 → 20"
+    reason: The ones digit is 1, so 21 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "80 − 20 = 60"
+  - type: takeaway
+    text: Estimates come from rounded numbers — an exact-looking answer is the trap, not the prize.
+  - type: verification
+    text: The exact difference is 57, and 60 sits right beside it — a good estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Sam saved 78 coins. He spent 21 at the fair. Round each number to the nearest ten to estimate about how many coins are left.</p>
+  <ul class="options"><li data-val="60">60</li><li data-val="57">57</li><li data-val="50">50</li><li data-val="70">70</li></ul>
+  <p class="explain">78 → 80 and 21 → 20, so the estimate is 80 − 20 = 60.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Estimate is MORE"]
+description: Is the estimate more or less than the exact answer? (89 − 34)
+hint:
+  - "Compare each rounded number with the number it replaced."
+  - "Did rounding make the starting amount bigger or smaller? And the amount taken away?"
+  - "Taking away more than the true amount leaves less; taking away less leaves more."
+explain: "The estimate 60 is above the exact answer 55 — rounding kept more in the pile."
+whyWrong:
+  "Estimate is LESS":
+    code: COMPARISON_REVERSED
+    message: "Rounding turned the take-away into 30 — less than the real 34 — so the estimate keeps more than the true answer, not less."
+solution:
+  - type: step
+    goal: See what rounding did to each number.
+    working: "89 → 90 (a bigger start) · 34 → 30 (takes away less)"
+  - type: step
+    goal: Predict the direction.
+    working: "the estimate must be MORE than the exact answer"
+    reason: Taking away less than the truth leaves more behind.
+  - type: step
+    goal: Confirm with the exact answer.
+    working: "89 − 34 = 55, and the estimate 60 is above it"
+  - type: takeaway
+    text: You can predict an estimate's direction without ever finding the exact answer — watch which way each number was rounded.
+  - type: verification
+    text: "60 > 55 — the prediction matches the numbers."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A garden had 89 flowers. 34 were picked. Rounding to the nearest ten gives an estimate of 60. Is the estimate MORE or LESS than the exact answer?</p>
+  <ul class="options"><li data-val="Estimate is MORE">Estimate is MORE</li><li data-val="Estimate is LESS">Estimate is LESS</li></ul>
+  <p class="explain">The exact answer is 89 − 34 = 55, so the estimate 60 is more than the exact answer. 34 was rounded down to 30. We took away less than we really needed to, so the estimate ended up higher than the exact answer.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["70"]
+description: Estimate the difference (76 − 11)
+hint:
+  - "Round first — no exact subtracting needed anywhere."
+  - "Take each number to its nearest ten — the ones digit decides up or down."
+  - "Subtract the two rounded tens, and expect a round-number answer."
+explain: 76 rounds to 80 and 11 rounds to 10; 80 − 10 = 70.
+whyWrong:
+  "65":
+    code: EXACT_NOT_ROUNDED
+    message: "65 is the exact answer showing off — the question only wants an estimate from rounded numbers."
+  "60":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 76 down to 70 — but 76 is nearer 80."
+  "80":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding to the nearest ten gives 80 − 10 — this estimate comes from rounding at least one number to the wrong ten."
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "76 → 80"
+    reason: The ones digit is 6, so 76 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "11 → 10"
+    reason: The ones digit is 1, so 11 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "80 − 10 = 70"
+  - type: takeaway
+    text: Estimates come from rounded numbers — an exact-looking answer is the trap, not the prize.
+  - type: verification
+    text: The exact difference is 65, and 70 sits right beside it — a good estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Ravi had 76 cards. He traded 11 away. Round each number to the nearest ten to estimate about how many cards are left.</p>
+  <ul class="options"><li data-val="65">65</li><li data-val="70">70</li><li data-val="60">60</li><li data-val="80">80</li></ul>
+  <p class="explain">76 → 80 and 11 → 10, so the estimate is 80 − 10 = 70.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["80","20","60"]
+description: Round then subtract (79 − 21)
+hint:
+  - "Which tens does each number sit between? Start there."
+  - "Check each ones digit against 5 — 5 or more climbs to the higher ten, less than 5 stays down."
+  - "Round both numbers first, then subtract the two friendly tens."
+explain: 79 rounds to 80 and 21 rounds to 20; 80 − 20 = 60.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "79 → 80"
+    reason: The ones digit is 9, so 79 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "21 → 20"
+    reason: The ones digit is 1, so 21 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "80 − 20 = 60"
+  - type: takeaway
+    text: Round both numbers first, then subtract — never subtract first and round after.
+  - type: verification
+    text: The exact difference, 58, lands close to 60 — the estimate is sound.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A jar held 79 buttons. 21 fell out. About how many buttons are left? 79 rounds to [] and 21 rounds to []. So the estimate is []</p>
+  <p class="explain">79 → 80 and 21 → 20, so the estimate is 80 − 20 = 60.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["30"]
+description: Estimate the difference (49 − 24)
+hint:
+  - "Round first — no exact subtracting needed anywhere."
+  - "Take each number to its nearest ten — the ones digit decides up or down."
+  - "Subtract the two rounded tens, and expect a round-number answer."
+explain: 49 rounds to 50 and 24 rounds to 20; 50 − 20 = 30.
+whyWrong:
+  "40":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding to the nearest ten gives 50 − 20 — this estimate comes from rounding at least one number to the wrong ten."
+  "20":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 49 down to 40 — but 49 is nearer 50."
+  "25":
+    code: EXACT_NOT_ROUNDED
+    message: "25 is the exact answer showing off — the question only wants an estimate from rounded numbers."
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "49 → 50"
+    reason: The ones digit is 9, so 49 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "24 → 20"
+    reason: The ones digit is 4, so 24 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "50 − 20 = 30"
+  - type: takeaway
+    text: Estimates come from rounded numbers — an exact-looking answer is the trap, not the prize.
+  - type: verification
+    text: The exact difference is 25, and 30 sits right beside it — a good estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A tree dropped 49 leaves. 24 blew away. Round each number to the nearest ten to estimate about how many leaves are left.</p>
+  <ul class="options"><li data-val="30">30</li><li data-val="40">40</li><li data-val="20">20</li><li data-val="25">25</li></ul>
+  <p class="explain">49 → 50 and 24 → 20, so the estimate is 50 − 20 = 30.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["50"]
+description: Estimate the difference (97 − 53)
+hint:
+  - "Round first — no exact subtracting needed anywhere."
+  - "Take each number to its nearest ten — the ones digit decides up or down."
+  - "Subtract the two rounded tens, and expect a round-number answer."
+explain: 97 rounds to 100 and 53 rounds to 50; 100 − 50 = 50.
+whyWrong:
+  "44":
+    code: EXACT_NOT_ROUNDED
+    message: "44 is the exact answer showing off — the question only wants an estimate from rounded numbers."
+  "60":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding to the nearest ten gives 100 − 50 — this estimate comes from rounding at least one number to the wrong ten."
+  "40":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 97 down to 90 — but 97 is nearer 100."
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "97 → 100"
+    reason: The ones digit is 7, so 97 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "53 → 50"
+    reason: The ones digit is 3, so 53 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "100 − 50 = 50"
+  - type: takeaway
+    text: Estimates come from rounded numbers — an exact-looking answer is the trap, not the prize.
+  - type: verification
+    text: The exact difference is 44, and 50 sits right beside it — a good estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Ana drew 97 stars. She erased 53. Round each number to the nearest ten to estimate about how many stars are left.</p>
+  <ul class="options"><li data-val="44">44</li><li data-val="60">60</li><li data-val="40">40</li><li data-val="50">50</li></ul>
+  <p class="explain">97 → 100 and 53 → 50, so the estimate is 100 − 50 = 50.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Estimate is LESS"]
+description: Is the estimate more or less than the exact answer? (91 − 56)
+hint:
+  - "Compare each rounded number with the number it replaced."
+  - "Did rounding make the starting amount bigger or smaller? And the amount taken away?"
+  - "Taking away more than the true amount leaves less; taking away less leaves more."
+explain: "The estimate 30 is below the exact answer 35 — rounding took away more and started lower."
+whyWrong:
+  "Estimate is MORE":
+    code: COMPARISON_REVERSED
+    message: "Rounding turned the take-away into 60 — more than the real 56 — so the estimate ends up smaller than the true answer, not bigger."
+solution:
+  - type: step
+    goal: See what rounding did to each number.
+    working: "91 → 90 (a smaller start) · 56 → 60 (takes away more)"
+  - type: step
+    goal: Predict the direction.
+    working: "the estimate must be LESS than the exact answer"
+    reason: Taking away more than the truth leaves less behind.
+  - type: step
+    goal: Confirm with the exact answer.
+    working: "91 − 56 = 35, and the estimate 30 is below it"
+  - type: takeaway
+    text: You can predict an estimate's direction without ever finding the exact answer — watch which way each number was rounded.
+  - type: verification
+    text: "30 < 35 — the prediction matches the numbers."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A bracelet kit had 91 beads. 56 were used. Rounding to the nearest ten gives an estimate of 30. Is the estimate MORE or LESS than the exact answer?</p>
+  <ul class="options"><li data-val="Estimate is MORE">Estimate is MORE</li><li data-val="Estimate is LESS">Estimate is LESS</li></ul>
+  <p class="explain">The exact answer is 91 − 56 = 35, so the estimate 30 is less than the exact answer. 56 was rounded up to 60. We took away more than we really needed to, so the estimate ended up lower than the exact answer.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["80","10","70"]
+description: Round then subtract (78 − 11)
+hint:
+  - "Which tens does each number sit between? Start there."
+  - "Check each ones digit against 5 — 5 or more climbs to the higher ten, less than 5 stays down."
+  - "Round both numbers first, then subtract the two friendly tens."
+explain: 78 rounds to 80 and 11 rounds to 10; 80 − 10 = 70.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "78 → 80"
+    reason: The ones digit is 8, so 78 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "11 → 10"
+    reason: The ones digit is 1, so 11 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "80 − 10 = 70"
+  - type: takeaway
+    text: Round both numbers first, then subtract — never subtract first and round after.
+  - type: verification
+    text: The exact difference, 67, lands close to 70 — the estimate is sound.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Ben found 78 rocks. He put 11 back. About how many rocks are left? 78 rounds to [] and 11 rounds to []. So the estimate is []</p>
+  <p class="explain">78 → 80 and 11 → 10, so the estimate is 80 − 10 = 70.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["40"]
+description: Estimate the difference (58 − 24)
+hint:
+  - "Round first — no exact subtracting needed anywhere."
+  - "Take each number to its nearest ten — the ones digit decides up or down."
+  - "Subtract the two rounded tens, and expect a round-number answer."
+explain: 58 rounds to 60 and 24 rounds to 20; 60 − 20 = 40.
+whyWrong:
+  "30":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 58 down to 50 — but 58 is nearer 60."
+  "50":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding to the nearest ten gives 60 − 20 — this estimate comes from rounding at least one number to the wrong ten."
+  "34":
+    code: EXACT_NOT_ROUNDED
+    message: "34 is the exact answer showing off — the question only wants an estimate from rounded numbers."
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "58 → 60"
+    reason: The ones digit is 8, so 58 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "24 → 20"
+    reason: The ones digit is 4, so 24 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "60 − 20 = 40"
+  - type: takeaway
+    text: Estimates come from rounded numbers — an exact-looking answer is the trap, not the prize.
+  - type: verification
+    text: The exact difference is 34, and 40 sits right beside it — a good estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Zoe had 58 shells. She gave 24 to a friend. Round each number to the nearest ten to estimate about how many shells are left.</p>
+  <ul class="options"><li data-val="30">30</li><li data-val="50">50</li><li data-val="40">40</li><li data-val="34">34</li></ul>
+  <p class="explain">58 → 60 and 24 → 20, so the estimate is 60 − 20 = 40.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["40"]
+description: Estimate the difference (78 − 42)
+hint:
+  - "Round first — no exact subtracting needed anywhere."
+  - "Take each number to its nearest ten — the ones digit decides up or down."
+  - "Subtract the two rounded tens, and expect a round-number answer."
+explain: 78 rounds to 80 and 42 rounds to 40; 80 − 40 = 40.
+whyWrong:
+  "36":
+    code: EXACT_NOT_ROUNDED
+    message: "36 is the exact answer showing off — the question only wants an estimate from rounded numbers."
+  "50":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding to the nearest ten gives 80 − 40 — this estimate comes from rounding at least one number to the wrong ten."
+  "30":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 78 down to 70 — but 78 is nearer 80."
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "78 → 80"
+    reason: The ones digit is 8, so 78 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "42 → 40"
+    reason: The ones digit is 2, so 42 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "80 − 40 = 40"
+  - type: takeaway
+    text: Estimates come from rounded numbers — an exact-looking answer is the trap, not the prize.
+  - type: verification
+    text: The exact difference is 36, and 40 sits right beside it — a good estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A jar had 78 candies. 42 were taken. Round each number to the nearest ten to estimate about how many candies are left.</p>
+  <ul class="options"><li data-val="40">40</li><li data-val="36">36</li><li data-val="50">50</li><li data-val="30">30</li></ul>
+  <p class="explain">78 → 80 and 42 → 40, so the estimate is 80 − 40 = 40.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["90","40","50"]
+description: Round then subtract (86 − 44)
+hint:
+  - "Which tens does each number sit between? Start there."
+  - "Check each ones digit against 5 — 5 or more climbs to the higher ten, less than 5 stays down."
+  - "Round both numbers first, then subtract the two friendly tens."
+explain: 86 rounds to 90 and 44 rounds to 40; 90 − 40 = 50.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "86 → 90"
+    reason: The ones digit is 6, so 86 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "44 → 40"
+    reason: The ones digit is 4, so 44 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "90 − 40 = 50"
+  - type: takeaway
+    text: Round both numbers first, then subtract — never subtract first and round after.
+  - type: verification
+    text: The exact difference, 42, lands close to 50 — the estimate is sound.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A bin had 86 blocks. 44 were used to build. About how many blocks are left? 86 rounds to [] and 44 rounds to []. So the estimate is []</p>
+  <p class="explain">86 → 90 and 44 → 40, so the estimate is 90 − 40 = 50.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Estimate is MORE"]
+description: Is the estimate more or less than the exact answer? (96 − 61)
+hint:
+  - "Compare each rounded number with the number it replaced."
+  - "Did rounding make the starting amount bigger or smaller? And the amount taken away?"
+  - "Taking away more than the true amount leaves less; taking away less leaves more."
+explain: "The estimate 40 is above the exact answer 35 — rounding kept more in the pile."
+whyWrong:
+  "Estimate is LESS":
+    code: COMPARISON_REVERSED
+    message: "Rounding turned the take-away into 60 — less than the real 61 — so the estimate keeps more than the true answer, not less."
+solution:
+  - type: step
+    goal: See what rounding did to each number.
+    working: "96 → 100 (a bigger start) · 61 → 60 (takes away less)"
+  - type: step
+    goal: Predict the direction.
+    working: "the estimate must be MORE than the exact answer"
+    reason: Taking away less than the truth leaves more behind.
+  - type: step
+    goal: Confirm with the exact answer.
+    working: "96 − 61 = 35, and the estimate 40 is above it"
+  - type: takeaway
+    text: You can predict an estimate's direction without ever finding the exact answer — watch which way each number was rounded.
+  - type: verification
+    text: "40 > 35 — the prediction matches the numbers."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">The shop had 96 pens. It sold 61. Rounding to the nearest ten gives an estimate of 40. Is the estimate MORE or LESS than the exact answer?</p>
+  <ul class="options"><li data-val="Estimate is MORE">Estimate is MORE</li><li data-val="Estimate is LESS">Estimate is LESS</li></ul>
+  <p class="explain">The exact answer is 96 − 61 = 35, so the estimate 40 is more than the exact answer. 61 was rounded down to 60. We took away less than we really needed to, so the estimate ended up higher than the exact answer.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["50"]
+description: Estimate the difference (57 − 11)
+hint:
+  - "Round first — no exact subtracting needed anywhere."
+  - "Take each number to its nearest ten — the ones digit decides up or down."
+  - "Subtract the two rounded tens, and expect a round-number answer."
+explain: 57 rounds to 60 and 11 rounds to 10; 60 − 10 = 50.
+whyWrong:
+  "40":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 57 down to 50 — but 57 is nearer 60."
+  "60":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding to the nearest ten gives 60 − 10 — this estimate comes from rounding at least one number to the wrong ten."
+  "46":
+    code: EXACT_NOT_ROUNDED
+    message: "46 is the exact answer showing off — the question only wants an estimate from rounded numbers."
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "57 → 60"
+    reason: The ones digit is 7, so 57 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "11 → 10"
+    reason: The ones digit is 1, so 11 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "60 − 10 = 50"
+  - type: takeaway
+    text: Estimates come from rounded numbers — an exact-looking answer is the trap, not the prize.
+  - type: verification
+    text: The exact difference is 46, and 50 sits right beside it — a good estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A shelf held 57 toys. 11 were bought. Round each number to the nearest ten to estimate about how many toys are left.</p>
+  <ul class="options"><li data-val="50">50</li><li data-val="40">40</li><li data-val="60">60</li><li data-val="46">46</li></ul>
+  <p class="explain">57 → 60 and 11 → 10, so the estimate is 60 − 10 = 50.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["60"]
+description: Estimate the difference (96 − 44)
+hint:
+  - "Round first — no exact subtracting needed anywhere."
+  - "Take each number to its nearest ten — the ones digit decides up or down."
+  - "Subtract the two rounded tens, and expect a round-number answer."
+explain: 96 rounds to 100 and 44 rounds to 40; 100 − 40 = 60.
+whyWrong:
+  "52":
+    code: EXACT_NOT_ROUNDED
+    message: "52 is the exact answer showing off — the question only wants an estimate from rounded numbers."
+  "50":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 96 down to 90 — but 96 is nearer 100."
+  "70":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding to the nearest ten gives 100 − 40 — this estimate comes from rounding at least one number to the wrong ten."
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "96 → 100"
+    reason: The ones digit is 6, so 96 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "44 → 40"
+    reason: The ones digit is 4, so 44 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "100 − 40 = 60"
+  - type: takeaway
+    text: Estimates come from rounded numbers — an exact-looking answer is the trap, not the prize.
+  - type: verification
+    text: The exact difference is 52, and 60 sits right beside it — a good estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">There were 96 balloons. 44 popped. Round each number to the nearest ten to estimate about how many balloons are left.</p>
+  <ul class="options"><li data-val="52">52</li><li data-val="50">50</li><li data-val="60">60</li><li data-val="70">70</li></ul>
+  <p class="explain">96 → 100 and 44 → 40, so the estimate is 100 − 40 = 60.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["60","40","20"]
+description: Round then subtract (56 − 41)
+hint:
+  - "Which tens does each number sit between? Start there."
+  - "Check each ones digit against 5 — 5 or more climbs to the higher ten, less than 5 stays down."
+  - "Round both numbers first, then subtract the two friendly tens."
+explain: 56 rounds to 60 and 41 rounds to 40; 60 − 40 = 20.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "56 → 60"
+    reason: The ones digit is 6, so 56 climbs up.
+  - type: step
+    goal: Round the second number.
+    working: "41 → 40"
+    reason: The ones digit is 1, so 41 stays down.
+  - type: step
+    goal: Subtract the rounded numbers.
+    working: "60 − 40 = 20"
+  - type: takeaway
+    text: Round both numbers first, then subtract — never subtract first and round after.
+  - type: verification
+    text: The exact difference, 15, lands close to 20 — the estimate is sound.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A tray had 56 cookies. 41 were eaten. About how many cookies are left? 56 rounds to [] and 41 rounds to []. So the estimate is []</p>
+  <p class="explain">56 → 60 and 41 → 40, so the estimate is 60 − 40 = 20.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Estimate is LESS"]
+description: Is the estimate more or less than the exact answer? (94 − 58)
+hint:
+  - "Compare each rounded number with the number it replaced."
+  - "Did rounding make the starting amount bigger or smaller? And the amount taken away?"
+  - "Taking away more than the true amount leaves less; taking away less leaves more."
+explain: "The estimate 30 is below the exact answer 36 — rounding took away more and started lower."
+whyWrong:
+  "Estimate is MORE":
+    code: COMPARISON_REVERSED
+    message: "Rounding turned the take-away into 60 — more than the real 58 — so the estimate ends up smaller than the true answer, not bigger."
+solution:
+  - type: step
+    goal: See what rounding did to each number.
+    working: "94 → 90 (a smaller start) · 58 → 60 (takes away more)"
+  - type: step
+    goal: Predict the direction.
+    working: "the estimate must be LESS than the exact answer"
+    reason: Taking away more than the truth leaves less behind.
+  - type: step
+    goal: Confirm with the exact answer.
+    working: "94 − 58 = 36, and the estimate 30 is below it"
+  - type: takeaway
+    text: You can predict an estimate's direction without ever finding the exact answer — watch which way each number was rounded.
+  - type: verification
+    text: "30 < 36 — the prediction matches the numbers."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A box held 94 ribbons. 58 were used. Rounding to the nearest ten gives an estimate of 30. Is the estimate MORE or LESS than the exact answer?</p>
+  <ul class="options"><li data-val="Estimate is MORE">Estimate is MORE</li><li data-val="Estimate is LESS">Estimate is LESS</li></ul>
+  <p class="explain">The exact answer is 94 − 58 = 36, so the estimate 30 is less than the exact answer. 58 was rounded up to 60. We took away more than we really needed to, so the estimate ended up lower than the exact answer.</p>
+</div>
+
+</div>

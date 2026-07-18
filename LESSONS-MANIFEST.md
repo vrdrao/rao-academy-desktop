@@ -41,6 +41,7 @@ lesson's row links its document.
 | Elapsed time remix | 30 | `lessons/incoming/Elapsed_time_remix.html` | `review/Elapsed_time_remix.html` | — |
 | Equal parts | 35 | `lessons/incoming/equal-parts.html` | `review/equal-parts.html` | — |
 | Estimate differences all | 42 | `lessons/incoming/estimate_differences_all.html` | `review/estimate_differences_all.html` | — |
+| Estimate differences word problems | 22 | `lessons/estimate_differences_word_problems.html` | `review/estimate_differences_word_problems.html` | `sources/LD-Subtraction-Estimate differences_ word problems(D) - estimate-differences-word-problems.html` |
 | Estimate products 1to1 | 24 | `lessons/incoming/estimate-products_1to1.html` | `review/estimate-products_1to1.html` | — |
 | Estimate products remix | 20 | `lessons/incoming/estimate-products_remix.html` | `review/estimate-products_remix.html` | — |
 | Estimate quotients word problems | 21 | `lessons/incoming/Estimate quotients - word problems.html` | `review/Estimate quotients - word problems.html` | — |
@@ -117,7 +118,7 @@ lesson's row links its document.
 | Use perimeter to determine cost | 20 | `lessons/use_perimeter_to_determine_cost.html` | `review/use_perimeter_to_determine_cost.html` | `sources/Geometric Measurements-Use perimeter to determine cost(D).html` |
 | Word problems with extra or missing information | 24 | `lessons/incoming/Word problems with extra or missing information.html` | `review/Word problems with extra or missing information.html` | — |
 
-**Totals: 105 lessons, 2,744 questions.**
+**Totals: 106 lessons, 2,766 questions.**
 Matches the recorded 102 / 2,687 exactly (2,722 → 2,727 on 2026-07-18:
 BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`;
 104 / 2,727 → 102 / 2,687 per BRIEF-DUPLICATE-CULL, Venkat's ruling
