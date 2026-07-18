@@ -1,0 +1,973 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["Commutative"]
+description: Name the property in 9 × 2 = 2 × 9
+hint:
+  - "Compare the left side with the right side, piece by piece."
+  - "Ask what changed: the order, the grouping, a 1, a 0, or a sum being shared."
+  - "The one thing that changed names the property."
+explain: "The same two factors swap their order and the product survives — that is the commutative property."
+whyWrong:
+  "Associative":
+    code: PROPERTY_CONFUSED
+    message: "Associative is about moving BRACKETS — there are no brackets here, only swapped order."
+  "Identity":
+    code: PROPERTY_CONFUSED
+    message: "Identity needs a ×1 doing nothing — both factors here are busy."
+  "Zero":
+    code: PROPERTY_CONFUSED
+    message: "The zero property needs a 0, and neither factor is one."
+solution:
+  - type: step
+    goal: Spot what changed.
+    working: "9 × 2 = 2 × 9"
+    reason: The same two factors swap their order and the product survives — that is the commutative property.
+  - type: takeaway
+    text: Each property changes exactly one thing — order, grouping, ×1, ×0, or a shared sum.
+  - type: verification
+    text: "Both sides make 18 — the order swap cost nothing."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">9 × 2 = 2 × 9. Which property is this?</p>
+  <ul class="options">
+    <li data-val="Commutative">Commutative</li>
+    <li data-val="Associative">Associative</li>
+    <li data-val="Identity">Identity (×1)</li>
+    <li data-val="Zero">Zero (×0)</li>
+  </ul>
+  <p class="explain">The factors swapped order, so this is the commutative property.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Identity"]
+description: Name the property in 15 × 1 = 15
+hint:
+  - "Compare the left side with the right side, piece by piece."
+  - "Ask what changed: the order, the grouping, a 1, a 0, or a sum being shared."
+  - "The one thing that changed names the property."
+explain: "Multiplying by 1 leaves a number exactly as it was — the identity property."
+whyWrong:
+  "Zero":
+    code: PROPERTY_CONFUSED
+    message: "×0 would crush the answer to 0 — here the 15 came through untouched."
+  "Commutative":
+    code: PROPERTY_CONFUSED
+    message: "Nothing swapped order here — the special guest is the 1."
+  "Distributive":
+    code: PROPERTY_CONFUSED
+    message: "No sum is being shared out — just a quiet ×1 doing nothing."
+solution:
+  - type: step
+    goal: Spot what changed.
+    working: "15 × 1 = 15"
+    reason: Multiplying by 1 leaves a number exactly as it was — the identity property.
+  - type: takeaway
+    text: Each property changes exactly one thing — order, grouping, ×1, ×0, or a shared sum.
+  - type: verification
+    text: "15 went in, 15 came out — the 1 changed nothing, exactly as identity promises."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">15 × 1 = 15. Which property is this?</p>
+  <ul class="options">
+    <li data-val="Identity">Identity (×1)</li>
+    <li data-val="Zero">Zero (×0)</li>
+    <li data-val="Commutative">Commutative</li>
+    <li data-val="Distributive">Distributive</li>
+  </ul>
+  <p class="explain">Multiplying by 1 leaves a number exactly as it was — the identity property.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Zero"]
+description: Name the property in 23 × 0 = 0
+hint:
+  - "Compare the left side with the right side, piece by piece."
+  - "Ask what changed: the order, the grouping, a 1, a 0, or a sum being shared."
+  - "The one thing that changed names the property."
+explain: "Any number times 0 collapses to 0 — the zero property."
+whyWrong:
+  "Identity":
+    code: PROPERTY_CONFUSED
+    message: "Identity (×1) would leave 23 unchanged — instead the answer vanished, which is 0's signature."
+  "Associative":
+    code: PROPERTY_CONFUSED
+    message: "No brackets moved — the 0 did all the work."
+  "Commutative":
+    code: PROPERTY_CONFUSED
+    message: "No order swap here — the 0 is what flattened the answer."
+solution:
+  - type: step
+    goal: Spot what changed.
+    working: "23 × 0 = 0"
+    reason: Any number times 0 collapses to 0 — the zero property.
+  - type: takeaway
+    text: Each property changes exactly one thing — order, grouping, ×1, ×0, or a shared sum.
+  - type: verification
+    text: "Twenty-three groups of nothing is still nothing — the size of 23 never mattered."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">23 × 0 = 0. Which property is this?</p>
+  <ul class="options">
+    <li data-val="Zero">Zero (×0)</li>
+    <li data-val="Identity">Identity (×1)</li>
+    <li data-val="Associative">Associative</li>
+    <li data-val="Commutative">Commutative</li>
+  </ul>
+  <p class="explain">Any number times 0 is 0 — the zero property.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Associative"]
+description: Name the property in (2 × 3) × 4 = 2 × (3 × 4)
+hint:
+  - "Compare the left side with the right side, piece by piece."
+  - "Ask what changed: the order, the grouping, a 1, a 0, or a sum being shared."
+  - "The one thing that changed names the property."
+explain: "The factors keep their order but the brackets move — that regrouping is the associative property."
+whyWrong:
+  "Commutative":
+    code: PROPERTY_CONFUSED
+    message: "Read both sides left to right: 2, 3, 4 — the ORDER never changed, only the brackets."
+  "Distributive":
+    code: PROPERTY_CONFUSED
+    message: "Distributive needs a sum inside the brackets — these brackets hold only ×."
+  "Zero":
+    code: PROPERTY_CONFUSED
+    message: "No zero anywhere — and the answer (24) is very much alive."
+solution:
+  - type: step
+    goal: Spot what changed.
+    working: "(2 × 3) × 4 = 2 × (3 × 4)"
+    reason: The factors keep their order but the brackets move — that regrouping is the associative property.
+  - type: takeaway
+    text: Each property changes exactly one thing — order, grouping, ×1, ×0, or a shared sum.
+  - type: verification
+    text: "Both groupings make 24: 6 × 4 and 2 × 12."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">(2 × 3) × 4 = 2 × (3 × 4). Which property is this?</p>
+  <ul class="options">
+    <li data-val="Associative">Associative</li>
+    <li data-val="Commutative">Commutative</li>
+    <li data-val="Distributive">Distributive</li>
+    <li data-val="Zero">Zero (×0)</li>
+  </ul>
+  <p class="explain">Same order, different grouping — the associative property.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Distributive"]
+description: Name the property in 6 × (3 + 2) = (6 × 3) + (6 × 2)
+hint:
+  - "Compare the left side with the right side, piece by piece."
+  - "Ask what changed: the order, the grouping, a 1, a 0, or a sum being shared."
+  - "The one thing that changed names the property."
+explain: "The 6 is shared out over the sum — it multiplies the 3 AND the 2. That sharing is the distributive property."
+whyWrong:
+  "Associative":
+    code: PROPERTY_CONFUSED
+    message: "Associative brackets hold only multiplication — these brackets hold a SUM being shared."
+  "Commutative":
+    code: PROPERTY_CONFUSED
+    message: "Nothing swapped order — the 6 got distributed to both parts of the sum."
+  "Identity":
+    code: PROPERTY_CONFUSED
+    message: "No ×1 here — the 6 is actively multiplying both the 3 and the 2."
+solution:
+  - type: step
+    goal: Spot what changed.
+    working: "6 × (3 + 2) = (6 × 3) + (6 × 2)"
+    reason: The 6 is shared out over the sum — it multiplies the 3 AND the 2. That sharing is the distributive property.
+  - type: takeaway
+    text: Each property changes exactly one thing — order, grouping, ×1, ×0, or a shared sum.
+  - type: verification
+    text: "Both sides make 30: 6 × 5 and 18 + 12."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">6 × (3 + 2) = (6 × 3) + (6 × 2). Which property is this?</p>
+  <ul class="options">
+    <li data-val="Distributive">Distributive</li>
+    <li data-val="Associative">Associative</li>
+    <li data-val="Commutative">Commutative</li>
+    <li data-val="Identity">Identity (×1)</li>
+  </ul>
+  <p class="explain">The 6 was shared across the sum — the distributive property.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"comm","label":"Commutative"},{"id":"iden","label":"Identity ×1"},{"id":"zero","label":"Zero ×0"}]
+answer: ["comm","iden","zero","comm","iden"]
+description: Sort sentences under their properties
+hint:
+  - "Run three quick checks on each tile."
+  - "Did the order swap? Is there a ×1? Is there a ×0?"
+  - "Exactly one check fires per tile."
+explain: "7×3=3×7 and 4×6=6×4 swap order (commutative); 8×1=8 and 1×12=12 are ×1 (identity); 5×0=0 is the zero property."
+solution:
+  - type: step
+    goal: Find the order-swappers.
+    working: "7×3=3×7 · 4×6=6×4 → commutative"
+  - type: step
+    goal: Find the ×1s.
+    working: "8×1=8 · 1×12=12 → identity"
+    reason: The 1 can stand on either side — it still changes nothing.
+  - type: step
+    goal: Find the ×0.
+    working: "5×0=0 → zero property"
+  - type: takeaway
+    text: "Three fingerprints: swapped order, a do-nothing 1, an all-crushing 0."
+  - type: verification
+    text: Every tile matched exactly one fingerprint — no tile fit two boxes.
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Sort each number sentence under the property it shows.</p>
+  <ul class="tiles">
+    <li>7 × 3 = 3 × 7</li>
+    <li>8 × 1 = 8</li>
+    <li>5 × 0 = 0</li>
+    <li>4 × 6 = 6 × 4</li>
+    <li>1 × 12 = 12</li>
+  </ul>
+  <p class="explain">Order swapped → commutative. A 1 → identity. A 0 → zero.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"assoc","label":"Associative"},{"id":"dist","label":"Distributive"}]
+answer: ["assoc","dist","dist","assoc"]
+description: Regrouping vs splitting over a sum
+hint:
+  - "Look inside the brackets on each tile."
+  - "A × inside the brackets means pure regrouping."
+  - "A + inside means a factor is being shared over a sum."
+explain: "Tiles with only × in the brackets regroup (associative); tiles with a + inside share a factor over a sum (distributive)."
+solution:
+  - type: step
+    goal: Check each tile's brackets.
+    working: "(2 × 5) → × inside · (5 + 1) → + inside · (2 + 4) → + inside · (3 × 2) → × inside"
+  - type: step
+    goal: Sort by the inner sign.
+    working: "× → associative · + → distributive"
+  - type: takeaway
+    text: The sign INSIDE the brackets betrays the property — × regroups, + distributes.
+  - type: verification
+    text: "Two tiles in each box, and each distributive tile shows its factor reaching both addends."
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Regrouping, or splitting over a sum? Sort them.</p>
+  <ul class="tiles">
+    <li>(2 × 5) × 3 = 2 × (5 × 3)</li>
+    <li>4 × (5 + 1) = 4×5 + 4×1</li>
+    <li>6 × (2 + 4) = 6×2 + 6×4</li>
+    <li>(3 × 2) × 5 = 3 × (2 × 5)</li>
+  </ul>
+  <p class="explain">Brackets hold a product → associative. Brackets hold a sum being shared → distributive.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id":"comm","label":"Commutative"},{"id":"assoc","label":"Associative"},{"id":"dist","label":"Distributive"}]
+answer: ["comm","assoc","dist"]
+description: Match plain-language rules to property names
+hint:
+  - "Each rule changes exactly one thing."
+  - "Order, grouping, or a sum being shared out."
+  - "Match the changed thing to the property that owns it."
+explain: "Swapping order = commutative; changing which factors multiply first = associative; splitting a factor across a sum = distributive."
+solution:
+  - type: step
+    goal: Match each rule.
+    working: "swap order → commutative · regroup first → associative · split across a sum → distributive"
+  - type: takeaway
+    text: Properties are permissions — each one licenses a single specific move.
+  - type: verification
+    text: "Test each rule on numbers: 2×3=3×2 ✓, (2×3)×4=2×(3×4) ✓, 2×(3+4)=6+8 ✓."
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Match each rule to its property.</p>
+  <ul class="tiles">
+    <li>You can swap the order of the factors.</li>
+    <li>You can change which factors multiply first.</li>
+    <li>You can split a factor across a sum.</li>
+  </ul>
+  <p class="explain">Swap = commutative. Regroup = associative. Split = distributive.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Both are 15"]
+description: One array, two readings — commutativity made visible
+hint:
+  - "It is the very same set of dots both times."
+  - "Nothing was added and nothing was taken away."
+  - "Can a total change just because your head tilted?"
+explain: "The dots never moved — 3 rows of 5 and 5 columns of 3 count the same 15 dots."
+whyWrong:
+  "5x3 bigger":
+    code: PROPERTY_CONFUSED
+    message: "The same dots cannot grow by being read sideways — both readings count 15."
+  "3x5 bigger":
+    code: PROPERTY_CONFUSED
+    message: "No dots vanished in the tilt — both readings hold the same 15."
+  "recount":
+    code: PROPERTY_CONFUSED
+    message: "No recount needed — the dots are IDENTICAL, so the two products must match. That certainty is the property."
+solution:
+  - type: step
+    goal: Read the array both ways.
+    working: "3 rows of 5 = 15 · 5 columns of 3 = 15"
+  - type: step
+    goal: Draw the conclusion.
+    working: "3 × 5 = 5 × 3 — the same dots, so the same total"
+    reason: The array PROVES commutativity — no arithmetic faith required.
+  - type: takeaway
+    text: An array read two ways is why order never matters in multiplication.
+  - type: verification
+    text: "Count the dots any way you like — every path through them lands on 15."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Read the dots as 3 rows of 5. Now tilt your head and read the SAME dots as 5 columns of 3. What happens to the total?</p>
+  <svg viewBox="0 0 220 140" width="220" height="140" role="img" aria-label="3 rows of 5 dots">
+    <g fill="#7b5cff">
+      <circle cx="30" cy="30" r="10"/><circle cx="70" cy="30" r="10"/><circle cx="110" cy="30" r="10"/><circle cx="150" cy="30" r="10"/><circle cx="190" cy="30" r="10"/>
+      <circle cx="30" cy="70" r="10"/><circle cx="70" cy="70" r="10"/><circle cx="110" cy="70" r="10"/><circle cx="150" cy="70" r="10"/><circle cx="190" cy="70" r="10"/>
+      <circle cx="30" cy="110" r="10"/><circle cx="70" cy="110" r="10"/><circle cx="110" cy="110" r="10"/><circle cx="150" cy="110" r="10"/><circle cx="190" cy="110" r="10"/>
+    </g>
+  </svg>
+  <ul class="options">
+    <li data-val="Both are 15">3 × 5 and 5 × 3 both give 15</li>
+    <li data-val="5x3 bigger">5 × 3 gives more than 3 × 5</li>
+    <li data-val="3x5 bigger">3 × 5 gives more than 5 × 3</li>
+    <li data-val="recount">You have to count again to know</li>
+  </ul>
+  <p class="explain">Same dots, just read a different way. 3 × 5 = 5 × 3 = 15. That is WHY order does not matter.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["6"]
+description: Complete the commutative pair
+hint:
+  - "Both sides must use the very same two factors."
+  - "The left side uses 6 and 4."
+  - "Which of them is missing on the right?"
+explain: "6 × 4 = 4 × 6 — the missing factor is the 6."
+whyWrong:
+  "4":
+    code: OPERAND_ECHO
+    message: "The 4 is already on the right side — its partner 6 is the one missing."
+  "10":
+    code: WRONG_OP_ADD_FOR_MULT
+    message: "10 is 6 + 4 — but the property swaps factors, it never adds them."
+  "24":
+    code: MULTI_STEP_ERROR
+    message: "24 is the product — the box wants the missing FACTOR, not the answer."
+solution:
+  - type: step
+    goal: List the left side's factors.
+    working: "6 and 4"
+  - type: step
+    goal: Complete the right side.
+    working: "4 × 6 — the 6 fills the box"
+  - type: takeaway
+    text: A commutative pair recycles the same factors — nothing new enters.
+  - type: verification
+    text: "6 × 4 = 24 and 4 × 6 = 24 — the swap costs nothing."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">6 × 4 = 4 × ?  — tap the missing number.</p>
+  <ul class="options">
+    <li data-val="4">4</li>
+    <li data-val="6">6</li>
+    <li data-val="10">10</li>
+    <li data-val="24">24</li>
+  </ul>
+  <p class="explain">6 × 4 = 4 × 6. Both equal 24.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Same"]
+description: Commutativity settles a word problem without computing
+hint:
+  - "Look at the two plantings side by side."
+  - "6 rows of 4 against 4 rows of 6 — what property is hiding here?"
+  - "You can answer without working out either total."
+explain: "6 × 4 and 4 × 6 are the same product — they planted the same number, no counting needed."
+whyWrong:
+  "Priya":
+    code: PROPERTY_CONFUSED
+    message: "6 × 4 does not beat 4 × 6 — swapping rows and columns never changes the count."
+  "Arjun":
+    code: PROPERTY_CONFUSED
+    message: "4 × 6 equals 6 × 4 exactly — no arrangement of the same factors wins."
+  "cant tell":
+    code: PROPERTY_CONFUSED
+    message: "You CAN tell without counting — the commutative property guarantees the totals match."
+solution:
+  - type: step
+    goal: Write both plantings as products.
+    working: "Priya: 6 × 4 · Arjun: 4 × 6"
+  - type: step
+    goal: Apply the property.
+    working: "6 × 4 = 4 × 6 → same number"
+    reason: Same factors, swapped order — the property answers before arithmetic can.
+  - type: takeaway
+    text: Properties save work — commutativity settles equal-factor comparisons instantly.
+  - type: verification
+    text: "If you do compute: both are 24 saplings — the shortcut told the truth."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya plants 6 rows of 4 saplings. Arjun plants 4 rows of 6 saplings. Who planted more?</p>
+  <ul class="options">
+    <li data-val="Same">They planted the same number</li>
+    <li data-val="Priya">Priya planted more</li>
+    <li data-val="Arjun">Arjun planted more</li>
+    <li data-val="cant tell">You cannot tell without counting</li>
+  </ul>
+  <p class="explain">6 × 4 = 4 × 6 = 24. The commutative property tells you they are equal before you multiply anything.</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["5","5","5"]
+palette: ["5","3"]
+description: Build 3 × 5 as repeated addition
+hint:
+  - "In 3 × 5, one number counts the groups and the other sizes them."
+  - "Three groups, each holding five."
+  - "So every box gets the same group-sized tile."
+explain: "3 × 5 means 5 + 5 + 5 — three fives, not five threes here: the 3 counts, the 5 fills."
+solution:
+  - type: step
+    goal: Read the multiplication.
+    working: "3 × 5 = three groups of 5"
+  - type: step
+    goal: Build the sum.
+    working: "5 + 5 + 5"
+    reason: The 3 tile is the trap — 3 counts the groups; it never sits inside one.
+  - type: takeaway
+    text: "In a × b, one number counts and the other fills — know which is which."
+  - type: verification
+    text: "5 + 5 + 5 = 15 = 3 × 5 ✓"
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">3 × 5 means three 5s added together. Build it — drag the right tiles into the boxes.</p>
+  <p class="reference">3 × 5 = ? + ? + ?</p>
+  <p class="explain">3 × 5 = 5 + 5 + 5 = 15. And 5 × 3 = 3 + 3 + 3 + 3 + 3 = 15 as well — different chains, same total.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["0 × 9","15 × 0","7 × 0"]
+description: Every product equal to 0
+hint:
+  - "Work out every expression — do not judge by looks."
+  - "×1 and ×0 do very different things."
+  - "Keep only the ones that truly collapse to 0."
+explain: "0×9, 15×0 and 7×0 all contain a zero factor → 0; 9×1 = 9 and 1×7 = 7 survive."
+whyWrong:
+  "9 × 1":
+    code: PROPERTY_CONFUSED
+    message: "9 × 1 = 9 — the 1 leaves numbers alone; only a 0 factor can zero a product."
+  "1 × 7":
+    code: PROPERTY_CONFUSED
+    message: "1 × 7 = 7 — identity, not annihilation. The 1 is not a 0."
+solution:
+  - type: step
+    goal: Scan for zero factors.
+    working: "0×9 ✓ · 15×0 ✓ · 7×0 ✓"
+  - type: step
+    goal: Check the ×1s survive.
+    working: "9×1 = 9 · 1×7 = 7 — both alive"
+  - type: takeaway
+    text: One 0 factor kills any product; a 1 factor touches nothing.
+  - type: verification
+    text: "Every selected expression has a 0 in it — and every rejected one does not."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select every expression that equals 0.</p>
+  <ul class="options">
+    <li data-val="0 × 9">0 × 9</li>
+    <li data-val="9 × 1">9 × 1</li>
+    <li data-val="15 × 0">15 × 0</li>
+    <li data-val="1 × 7">1 × 7</li>
+    <li data-val="7 × 0">7 × 0</li>
+  </ul>
+  <p class="explain">Multiplying by 0 gives 0. Multiplying by 1 just gives the number back.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["8 × 1","1 × 10","5 × 1"]
+description: Where does the number stay the same?
+hint:
+  - "Multiply each one out honestly."
+  - "Compare each answer with the number that went in."
+  - "Watch for the 0s pretending to be 1s."
+explain: "8×1 = 8, 1×10 = 10 and 5×1 = 5 — unchanged; 8×0 and 0×10 collapse to 0."
+whyWrong:
+  "8 × 0":
+    code: PROPERTY_CONFUSED
+    message: "8 × 0 = 0 — the 8 did not survive; zero flattens, it never preserves."
+  "0 × 10":
+    code: PROPERTY_CONFUSED
+    message: "0 × 10 = 0 — the 10 is gone; only ×1 leaves a number untouched."
+solution:
+  - type: step
+    goal: Multiply each out.
+    working: "8×1 = 8 · 8×0 = 0 · 1×10 = 10 · 0×10 = 0 · 5×1 = 5"
+  - type: step
+    goal: Keep the unchanged ones.
+    working: "8, 10 and 5 came through intact"
+  - type: takeaway
+    text: "Identity's test is simple: what went in must come out."
+  - type: verification
+    text: "Each keeper contains a 1; each reject contains a 0 — the pattern is airtight."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">In which of these does the number stay exactly the same? (For example, 8 × 1 = 8 — the 8 did not change.)</p>
+  <ul class="options">
+    <li data-val="8 × 1">8 × 1</li>
+    <li data-val="8 × 0">8 × 0</li>
+    <li data-val="1 × 10">1 × 10</li>
+    <li data-val="0 × 10">0 × 10</li>
+    <li data-val="5 × 1">5 × 1</li>
+  </ul>
+  <p class="explain">×1 keeps the number the same. ×0 wipes it out to 0.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["0"]
+description: A zero hiding in a factor chain
+hint:
+  - "Scan all three factors before starting any work."
+  - "One of them ends the story instantly."
+  - "What does a single 0 factor do to a whole product?"
+explain: "The chain contains × 0 — the whole product collapses to 0, no matter what 6 × 4 makes."
+whyWrong:
+  "10":
+    code: WRONG_OP_ADD_FOR_MULT
+    message: "10 is 6 + 4 + 0 — adding. The × signs make this a product, and the 0 flattens it."
+  "24":
+    code: PARTIAL_COMPUTATION
+    message: "24 is 6 × 4 with the × 0 politely ignored — but the zero factor is part of the product."
+  "240":
+    code: PLACE_SHIFT_UP
+    message: "240 treats the 0 as 'stick a zero on the end' — ×0 erases, it never appends."
+solution:
+  - type: step
+    goal: Scan the factors.
+    working: "6, 4, 0 — a zero is present"
+  - type: step
+    goal: Apply the zero property.
+    working: "anything × 0 = 0"
+    reason: The 6 × 4 never needs computing — zero wins first.
+  - type: takeaway
+    text: Scan factor chains for a 0 before working — it can save every step.
+  - type: verification
+    text: "Even grinding it out: 24 × 0 = 0 — same collapse, more effort."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">6 × 4 × 0 = ?</p>
+  <ul class="options">
+    <li data-val="0">0</li>
+    <li data-val="10">10</li>
+    <li data-val="24">24</li>
+    <li data-val="240">240</li>
+  </ul>
+  <p class="explain">Once a 0 is one of the factors, the whole product is 0. You never even need to work out 6 × 4.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["8"]
+description: Identity plus zero in one expression
+hint:
+  - "Work out each bracket on its own."
+  - "One bracket keeps its number; the other loses it."
+  - "Then add the two results."
+explain: "(8 × 1) = 8 and (8 × 0) = 0; 8 + 0 = 8."
+whyWrong:
+  "0":
+    code: PROPERTY_CONFUSED
+    message: "Only the second bracket dies — (8 × 1) keeps its 8 alive."
+  "16":
+    code: PROPERTY_CONFUSED
+    message: "16 treats ×0 as if it were ×1 — but (8 × 0) contributes nothing, not another 8."
+  "64":
+    code: MULTI_STEP_ERROR
+    message: "64 multiplies the brackets — the + between them asks for adding."
+solution:
+  - type: step
+    goal: Evaluate each bracket.
+    working: "8 × 1 = 8 · 8 × 0 = 0"
+  - type: step
+    goal: Add.
+    working: "8 + 0 = 8"
+  - type: takeaway
+    text: ×1 preserves and ×0 erases — side by side, only the preserved part remains.
+  - type: verification
+    text: "The two properties pulled opposite ways, and the surviving 8 is the proof."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">(8 × 1) + (8 × 0) = ?</p>
+  <ul class="options">
+    <li data-val="0">0</li>
+    <li data-val="8">8</li>
+    <li data-val="16">16</li>
+    <li data-val="64">64</li>
+  </ul>
+  <p class="explain">8 × 1 = 8 and 8 × 0 = 0. So 8 + 0 = 8.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["10"]
+description: Complete the regrouping
+hint:
+  - "The left side groups 4 with 2; the right side regroups."
+  - "On the right, which two factors now sit together?"
+  - "The box holds their product."
+explain: "(4 × 2) × 5 = 4 × (2 × 5) — the box holds 2 × 5 = 10."
+whyWrong:
+  "7":
+    code: WRONG_OP_ADD_FOR_MULT
+    message: "7 adds 2 + 5 — the regrouped pair still multiplies."
+  "20":
+    code: MULTI_STEP_ERROR
+    message: "20 groups the OUTER numbers (4 × 5) — the brackets moved to hold 2 and 5."
+  "40":
+    code: MULTI_STEP_ERROR
+    message: "40 is the whole product — the box only wants the regrouped pair 2 × 5."
+solution:
+  - type: step
+    goal: See the new grouping.
+    working: "4 × (2 × 5)"
+  - type: step
+    goal: Fill the box.
+    working: "2 × 5 = 10"
+  - type: takeaway
+    text: Regrouping never changes the cast — only which two factors share a bracket.
+  - type: verification
+    text: "Both groupings agree: 8 × 5 = 40 and 4 × 10 = 40."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">(4 × 2) × 5 = 4 × ?  — which number goes in the box?</p>
+  <ul class="options">
+    <li data-val="7">7</li>
+    <li data-val="10">10</li>
+    <li data-val="20">20</li>
+    <li data-val="40">40</li>
+  </ul>
+  <p class="explain">The 2 and the 5 are now grouped: 2 × 5 = 10. So 4 × 10 = 40 — the same as (4 × 2) × 5.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["(2 × 5) × 9"]
+description: Regroup for the easiest mental path
+hint:
+  - "All the regroupings give the same answer — that is the property."
+  - "The question is which is EASIEST in your head."
+  - "Hunt for the pair that multiplies to a round ten."
+explain: "2 × 5 = 10, and 10 × 9 = 90 is instant — the other groupings pass through 18 × 5 or 45 × 2."
+whyWrong:
+  "(2 × 9) × 5":
+    code: NEAR_MISS
+    message: "18 × 5 gets there, but juggling 18s is harder than the 10 that 2 × 5 hands you."
+  "(9 × 5) × 2":
+    code: NEAR_MISS
+    message: "45 × 2 works too — but doubling 45 is slower than riding 10 × 9."
+  "none":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "One regrouping absolutely helps — the pair that makes a 10 turns this into a one-step product."
+solution:
+  - type: step
+    goal: Hunt for a friendly pair.
+    working: "2 × 5 = 10"
+  - type: step
+    goal: Finish on the easy road.
+    working: "10 × 9 = 90"
+    reason: Multiplying by 10 is the easiest move in arithmetic — regroup to reach it.
+  - type: takeaway
+    text: Use the associative property strategically — pair the factors that make tens.
+  - type: verification
+    text: "All three groupings give 90 — but only one of them lets you do it in a breath."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">You need to work out 2 × 9 × 5. Which regrouping makes it EASIEST to do in your head?</p>
+  <ul class="options">
+    <li data-val="(2 × 5) × 9">(2 × 5) × 9</li>
+    <li data-val="(2 × 9) × 5">(2 × 9) × 5</li>
+    <li data-val="(9 × 5) × 2">(9 × 5) × 2</li>
+    <li data-val="none">No regrouping helps</li>
+  </ul>
+  <p class="explain">2 × 5 = 10, and 10 × 9 = 90 — easy. That is what the associative property is FOR: regroup to make the maths friendlier.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["(6 × 3) + (6 × 2)"]
+description: The correct distributive split
+hint:
+  - "The 6 must multiply — and it must reach BOTH parts of the sum."
+  - "Check each option: does the 6 touch the 3 AND the 2?"
+  - "Any option where something is left unmultiplied is broken."
+explain: "6 × (3 + 2) shares the 6 over both addends: (6 × 3) + (6 × 2) = 18 + 12 = 30 ✓"
+whyWrong:
+  "(6 × 3) + 2":
+    code: WRONG_OP_IN_EXPRESSION
+    message: "The 2 never met the 6 — it must be multiplied too, giving 18 + 12, not 18 + 2."
+  "6 + 3 + 2":
+    code: WRONG_OP_IN_EXPRESSION
+    message: "All the multiplying vanished — this adds to 11, while the real product is 30."
+  "(6 + 3) × (6 + 2)":
+    code: WRONG_OP_IN_EXPRESSION
+    message: "This invents 9 × 8 = 72 — the 6 distributes by MULTIPLYING each addend, not by joining them in sums."
+solution:
+  - type: step
+    goal: Share the 6 over the sum.
+    working: "6 × 3 and 6 × 2"
+  - type: step
+    goal: Add the parts.
+    working: "18 + 12 = 30"
+  - type: takeaway
+    text: Distribution is delivery — the outside factor must visit every term inside.
+  - type: verification
+    text: "Direct check: 6 × 5 = 30 — the split and the original agree."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which one correctly breaks apart 6 × (3 + 2)?</p>
+  <ul class="options">
+    <li data-val="(6 × 3) + (6 × 2)">(6 × 3) + (6 × 2)</li>
+    <li data-val="(6 × 3) + 2">(6 × 3) + 2</li>
+    <li data-val="6 + 3 + 2">6 + 3 + 2</li>
+    <li data-val="(6 + 3) × (6 + 2)">(6 + 3) × (6 + 2)</li>
+  </ul>
+  <p class="explain">The 6 is shared with each part: 6 × 3 and 6 × 2. Forgetting the second one is the most common mistake.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["56"]
+description: Break 8 × 7 apart using known facts
+helper: 8 × 5 = 40 and 8 × 2 = 16
+hint:
+  - "7 splits into 5 + 2 — two pieces you already know."
+  - "7 groups of 8 = 5 groups of 8 plus 2 more groups of 8."
+  - "Add the two known products."
+explain: "8 × 7 = 8 × (5 + 2) = 40 + 16 = 56."
+whyWrong:
+  "24":
+    code: WRONG_OP_ADD_FOR_SUB
+    message: "24 subtracts the parts (40 − 16) — the two groups of products must join, not fight."
+  "40":
+    code: PARTIAL_COMPUTATION
+    message: "40 is only the 8 × 5 piece — the 8 × 2 = 16 piece completes the seven groups."
+  "64":
+    code: ADJACENT_TABLE_FACT
+    message: "64 is 8 × 8 — one group of 8 too many; the split was 5 + 2, making 7."
+solution:
+  - type: step
+    goal: Split the 7.
+    working: "7 = 5 + 2"
+  - type: step
+    goal: Use the known facts and add.
+    working: "40 + 16 = 56"
+    reason: The distributive property glues known facts into unknown ones.
+  - type: takeaway
+    text: Forgotten facts fall to break-apart — split, use what you know, add.
+  - type: verification
+    text: "Count by 8s to seven: 8, 16, 24, 32, 40, 48, 56 ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">You cannot remember 8 × 7. But you DO know 8 × 5 = 40 and 8 × 2 = 16. Since 7 = 5 + 2, what is 8 × 7?</p>
+  <ul class="options">
+    <li data-val="24">24</li>
+    <li data-val="40">40</li>
+    <li data-val="56">56</li>
+    <li data-val="64">64</li>
+  </ul>
+  <p class="explain">8 × 7 = 8 × (5 + 2) = 40 + 16 = 56. Breaking one hard fact into two easy ones is what the distributive property gives you.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["63"]
+description: Distributive with a friendly ten — 7 × 9
+hint:
+  - "Meera overshoots to ten groups because tens are easy."
+  - "Ten groups of 7 is one group too many."
+  - "So one 7 must come back off."
+explain: "7 × 9 = 7 × 10 − 7 = 70 − 7 = 63."
+whyWrong:
+  "16":
+    code: WRONG_OP_ADD_FOR_MULT
+    message: "16 is 7 + 9 — the problem multiplies groups, it doesn't add the two numbers."
+  "56":
+    code: ADJACENT_TABLE_FACT
+    message: "56 is 7 × 8 — two 7s came off the 70 instead of the single extra one."
+  "70":
+    code: PARTIAL_COMPUTATION
+    message: "70 is the overshoot (7 × 10) still uncorrected — the borrowed tenth group must go back."
+solution:
+  - type: step
+    goal: Overshoot to ten groups.
+    working: "7 × 10 = 70"
+  - type: step
+    goal: Return the extra group.
+    working: "70 − 7 = 63"
+    reason: Nine groups is exactly one group less than ten.
+  - type: takeaway
+    text: "×9 is ×10 minus one group — compensation is distribution in disguise."
+  - type: verification
+    text: "Straight check: 7 × 9 = 63, and 63 + 7 really rebuilds the 70."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">To find 7 × 9, Meera thinks: "9 is one less than 10, so 7 × 9 = (7 × 10) − 7." What is 7 × 9?</p>
+  <ul class="options">
+    <li data-val="16">16</li>
+    <li data-val="56">56</li>
+    <li data-val="63">63</li>
+    <li data-val="70">70</li>
+  </ul>
+  <p class="explain">7 × 10 = 70, minus one group of 7 gives 70 − 7 = 63. Meera never had to memorise 7 × 9.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["7 × 4 = 4 × 7"]
+description: Which sentence is true?
+hint:
+  - "Test each sentence against a rule you know."
+  - "Check the ×1s, the ×0s, and any × pretending to be +."
+  - "Only one sentence survives all the checks."
+explain: "7 × 4 = 4 × 7 is the commutative property; the others break the ×1, ×0 and ×/+ rules."
+whyWrong:
+  "9 × 1 = 0":
+    code: PROPERTY_CONFUSED
+    message: "×1 preserves: 9 × 1 = 9 — only ×0 could send it to 0."
+  "6 × 0 = 6":
+    code: PROPERTY_CONFUSED
+    message: "×0 erases: 6 × 0 = 0 — this sentence gives zero the identity's job."
+  "3 × 8 = 8 + 3":
+    code: WRONG_OP_IN_EXPRESSION
+    message: "3 × 8 = 24 but 8 + 3 = 11 — a product and a sum are rarely twins."
+solution:
+  - type: step
+    goal: Test the true one.
+    working: "7 × 4 = 28 = 4 × 7 ✓"
+  - type: step
+    goal: Expose the three imposters.
+    working: "9×1 = 9 (not 0) · 6×0 = 0 (not 6) · 3×8 = 24 ≠ 11"
+  - type: takeaway
+    text: Properties are testable — plug in the numbers and false sentences collapse.
+  - type: verification
+    text: "Each wrong sentence breaks exactly one rule — identity, zero, and operation-swap in turn."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which number sentence is TRUE?</p>
+  <ul class="options">
+    <li data-val="7 × 4 = 4 × 7">7 × 4 = 4 × 7</li>
+    <li data-val="9 × 1 = 0">9 × 1 = 0</li>
+    <li data-val="6 × 0 = 6">6 × 0 = 6</li>
+    <li data-val="3 × 8 = 8 + 3">3 × 8 = 8 + 3</li>
+  </ul>
+  <p class="explain">Only 7 × 4 = 4 × 7 (both 28). The others confuse ×1 with ×0, ×0 with ×1, and multiplying with adding.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["6 × 4","(2 × 2) × 6","4 × (5 + 1)"]
+description: Every expression equal to 24
+hint:
+  - "Solve every option before tapping anything."
+  - "Brackets first, always."
+  - "Keep only the exact 24s."
+explain: "6×4 = 24, (2×2)×6 = 4×6 = 24, 4×(5+1) = 4×6 = 24; 8×4 = 32 and 5×(2+3) = 25 miss."
+whyWrong:
+  "8 × 4":
+    code: SUM_EVAL_ERROR
+    message: "8 × 4 = 32 — eight past the target."
+  "5 × (2 + 3)":
+    code: SUM_EVAL_ERROR
+    message: "5 × (2 + 3) = 5 × 5 = 25 — one over 24."
+solution:
+  - type: step
+    goal: Evaluate every expression.
+    working: "6×4 = 24 · (2×2)×6 = 24 · 4×(5+1) = 24 · 8×4 = 32 · 5×(2+3) = 25"
+  - type: step
+    goal: Keep the 24s.
+    working: "three expressions hit the target"
+  - type: takeaway
+    text: The same value wears many expressions — brackets and properties are its wardrobe.
+  - type: verification
+    text: "The three keepers all reduce to 4 × 6 or 6 × 4 — the same fact three ways."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select every expression that equals 24.</p>
+  <ul class="options">
+    <li data-val="6 × 4">6 × 4</li>
+    <li data-val="(2 × 2) × 6">(2 × 2) × 6</li>
+    <li data-val="4 × (5 + 1)">4 × (5 + 1)</li>
+    <li data-val="8 × 4">8 × 4</li>
+    <li data-val="5 × (2 + 3)">5 × (2 + 3)</li>
+  </ul>
+  <p class="explain">6 × 4 = 24, (2 × 2) × 6 = 4 × 6 = 24, and 4 × (5 + 1) = 4 × 6 = 24. But 8 × 4 = 32 and 5 × 5 = 25.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["20 × 0"]
+description: The odd one out — which is NOT 20?
+hint:
+  - "Work out all four expressions."
+  - "Three land on the same answer."
+  - "Remember what ×0 does — it is not the same as ×1."
+explain: "4×5 = 20, 20×1 = 20, 10×2 = 20 — but 20×0 = 0."
+whyWrong:
+  "4 × 5":
+    code: SUM_EVAL_ERROR
+    message: "4 × 5 lands exactly on 20 — this one belongs with the crowd."
+  "20 × 1":
+    code: SUM_EVAL_ERROR
+    message: "20 × 1 = 20 — the identity keeps it in the club."
+  "10 × 2":
+    code: SUM_EVAL_ERROR
+    message: "10 × 2 = 20 — a true twenty."
+solution:
+  - type: step
+    goal: Evaluate all four.
+    working: "4×5 = 20 · 20×1 = 20 · 10×2 = 20 · 20×0 = 0"
+  - type: step
+    goal: Spot the outsider.
+    working: "20 × 0 = 0 — nothing like 20"
+    reason: The 0 factor collapses even a 20 to nothing.
+  - type: takeaway
+    text: ×1 keeps a number in the family; ×0 throws it out entirely.
+  - type: verification
+    text: "The three true twenties differ only in costume — the ×0 alone changed the value."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which expression does NOT equal 20?</p>
+  <ul class="options">
+    <li data-val="4 × 5">4 × 5</li>
+    <li data-val="20 × 1">20 × 1</li>
+    <li data-val="10 × 2">10 × 2</li>
+    <li data-val="20 × 0">20 × 0</li>
+  </ul>
+  <p class="explain">20 × 0 = 0, not 20. The other three all equal 20.</p>
+</div>
+
+</div>

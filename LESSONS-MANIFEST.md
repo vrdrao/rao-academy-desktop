@@ -99,6 +99,7 @@ lesson's row links its document.
 | Price lists with multiplication | 20 | `lessons/incoming/price-lists-with-multiplication.html` | `review/price-lists-with-multiplication.html` | — |
 | Properties of addition full30 | 30 | `lessons/incoming/Properties_of_addition_full30.html` | `review/Properties_of_addition_full30.html` | — |
 | Properties of addition new8 | 8 | `lessons/incoming/Properties_of_addition_new8.html` | `review/Properties_of_addition_new8.html` | — |
+| Properties of multiplication | 24 | `lessons/properties_of_multiplication.html` | `review/properties_of_multiplication.html` | `sources/LDM-Multipication-Properties of multiplication(D).html` |
 | Read a table | 30 | `lessons/incoming/read_a_table.html` | `review/read_a_table.html` | — |
 | Rotational symmetry | 23 | `lessons/incoming/rotational_symmetry.html` | `review/rotational_symmetry.html` | — |
 | Round money amounts | 25 | `lessons/incoming/round-money-amounts.html` | `review/round-money-amounts.html` | — |
@@ -128,7 +129,7 @@ lesson's row links its document.
 | Use perimeter to determine cost | 20 | `lessons/use_perimeter_to_determine_cost.html` | `review/use_perimeter_to_determine_cost.html` | `sources/Geometric Measurements-Use perimeter to determine cost(D).html` |
 | Word problems with extra or missing information | 24 | `lessons/incoming/Word problems with extra or missing information.html` | `review/Word problems with extra or missing information.html` | — |
 
-**Totals: 116 lessons, 3,025 questions.**
+**Totals: 117 lessons, 3,049 questions.**
 Matches the recorded 102 / 2,687 exactly (2,722 → 2,727 on 2026-07-18:
 BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`;
 104 / 2,727 → 102 / 2,687 per BRIEF-DUPLICATE-CULL, Venkat's ruling
