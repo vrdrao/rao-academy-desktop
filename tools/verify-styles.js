@@ -109,53 +109,20 @@ async function checkLesson(page, file) {
     }
   }
 
-  // ---- QBODY WORK-PANEL — the soft background behind the question must PAINT ---
-  // The panel stops a small figure/equation floating in a sea of white. It is
-  // theme-tinted (derived from --brand), so a grading run never sees it and a mere
-  // structural check cannot tell a painted panel from a transparent one. Assert on
-  // computed style: the .qbody must have a non-transparent, rounded background, AND
-  // it must RE-TINT when the theme changes — a dead grey would satisfy a plain
-  // "non-transparent" check but is not what we ship. Runs before the .opt lookup so
-  // figure-only lessons (which have no options) are covered too.
-  const panel = await page.evaluate(() => {
+  // ---- NO INNER QUESTION PANEL (BRIEF-CARD-LOOK-2, 2026-07-18) ---------------
+  // This INVERTS the old "work-panel must paint" guard: per the signed-off demo,
+  // there is NO intermediate surface between the white card face and the question
+  // content. The .qbody must paint no background of its own — transparent (or
+  // plain white) over the card face. A grading run can never see this; assert on
+  // computed style.
+  const panelBg = await page.evaluate(() => {
     const q = document.querySelector(".pv-frame .qbody");
-    if (!q) return null;
-    const wrap = q.closest(".rao-lesson") || document.querySelector(".rao-lesson");
-    const alpha = (rgb) => {
-      const m = /rgba?\(([^)]+)\)/.exec(rgb || "");
-      if (!m) return 0;
-      const p = m[1].split(",").map((s) => s.trim());
-      return p.length >= 4 ? parseFloat(p[3]) : 1; // rgb() with no alpha is opaque
-    };
-    const read = () => {
-      const c = getComputedStyle(q);
-      return { bg: c.backgroundColor, radius: parseFloat(c.borderTopLeftRadius) || 0 };
-    };
-    const prev = wrap ? wrap.getAttribute("data-theme") : null;
-    const base = read();
-    let other = null;
-    if (wrap) {
-      // grape and mint have different --brand, so a brand-derived tint must differ
-      wrap.setAttribute("data-theme", prev === "mint" ? "sunshine" : "mint");
-      other = read();
-      wrap.setAttribute("data-theme", prev || "grape");
-    }
-    return { bg: base.bg, radius: base.radius, alpha: alpha(base.bg), otherBg: other && other.bg };
+    return q ? getComputedStyle(q).backgroundColor : null;
   });
-  if (panel) {
-    if (!(panel.alpha > 0))
-      problems.push(
-        `the .qbody work-panel has NO visible background (computed ${panel.bg}) — ` +
-        `the soft panel behind the question is not painting`);
-    if (!(panel.radius > 0))
-      problems.push(
-        `the .qbody work-panel is not rounded (border-radius ${panel.radius}px) — ` +
-        `it should read as a defined work area, not a full-bleed flood`);
-    if (panel.otherBg && panel.otherBg === panel.bg)
-      problems.push(
-        `the .qbody work-panel does NOT re-tint with the theme (two themes both ` +
-        `compute ${panel.bg}) — it is a dead colour, not a --brand-derived tint`);
-  }
+  if (panelBg && panelBg !== "rgba(0, 0, 0, 0)" && panelBg !== "rgb(255, 255, 255)")
+    problems.push(
+      `the .qbody paints an INNER PANEL (computed background ${panelBg}) — the card ` +
+      `face is the only surface; question content sits directly on white`);
 
   // ---- find a card with plain .opt options (single-select / multi-select) -----
   const idx = await page.evaluate(() => {
@@ -498,6 +465,7 @@ async function checkCardLook(browser) {
           const pane = document.querySelector(".rao-lesson");
           if (!frame || !card || !pane) return null;
           const f = getComputedStyle(frame), c = getComputedStyle(card), p = getComputedStyle(pane);
+          const qbody = document.querySelector(".pv-frame .qbody");
           return {
             pad: [f.paddingTop, f.paddingRight, f.paddingBottom, f.paddingLeft],
             radius: c.borderTopLeftRadius,
@@ -506,6 +474,7 @@ async function checkCardLook(browser) {
             paneBg: p.backgroundColor,
             grid: p.backgroundImage,
             gridSize: p.backgroundSize,
+            qbodyBg: qbody ? getComputedStyle(qbody).backgroundColor : "MISSING",
           };
         });
         const at = `${vp.width}px`;
@@ -526,6 +495,8 @@ async function checkCardLook(browser) {
         // background-size serializes once PER GRADIENT LAYER ("30px 30px, 30px 30px")
         if (!look.gridSize.split(/,\s*/).every((s) => s.trim() === "30px 30px"))
           problems.push(`${at}: CHECKER size is "${look.gridSize}" — every layer must be 30px 30px`);
+        if (look.qbodyBg !== "rgba(0, 0, 0, 0)" && look.qbodyBg !== "rgb(255, 255, 255)")
+          problems.push(`${at}: INNER PANEL — .qbody paints background ${look.qbodyBg}; the card face is the only surface (must be transparent or #ffffff)`);
       } finally {
         await page.close();
       }
@@ -572,7 +543,7 @@ async function checkCardLook(browser) {
       console.log(`\nFAIL  ${f}`);
       problems.forEach((p) => console.log("      - " + p));
     } else {
-      console.log(`PASS  ${f.replace(/\.html$/, "")}  (one ring, visible selection, keyboard ring, panel painted)`);
+      console.log(`PASS  ${f.replace(/\.html$/, "")}  (one ring, visible selection, keyboard ring, no inner panel)`);
     }
   }
 

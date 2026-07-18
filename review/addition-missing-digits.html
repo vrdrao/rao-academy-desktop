@@ -781,25 +781,13 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
   overflow-x: clip;          /* clip, not hidden: doesn't create a scroll container */
 }
 
-/* ── Soft work-panel behind the question ──────────────────────────────────────
-   A small figure/equation used to float in a sea of white card. This gives the
-   .qbody (the middle region, between the PROBLEM head and the Hint/Check foot)
-   a faint theme-tinted panel so the content sits in a defined work area.
-   Theme-aware: the tint is derived from --brand, so it re-tints across all 8
-   themes. Very low alpha so it never competes with option cards or figures. */
-.rao-lesson .qbody {
-  background: rgba(var(--brand-rgb,123,92,255), .045);
-  border: 1px solid rgba(var(--brand-rgb,123,92,255), .08);
-  border-radius: 16px;
-  padding: 20px 22px;
-  margin: 6px 0 2px;
-}
-@container lesson (max-width: 480px) {
-  .rao-lesson .qbody { padding: 14px 10px; }   /* tighter on a narrow panel */
-}
-@container lesson (max-width: 380px) {
-  .rao-lesson .qbody { padding: 10px 6px; }    /* phone: max content width */
-}
+/* ── No inner question panel (BRIEF-CARD-LOOK-2, 2026-07-18) ─────────────────
+   The .qbody used to paint a faint --brand-tinted "work-panel" here (background
+   + border + 16px radius + its own padding). Removed by spec: between the card
+   face (#fff) and the question content there is NO intermediate surface — the
+   card face is the only surface, as in the signed-off calm-card demo. Do not
+   reintroduce a background on .qbody; tools/verify-styles.js now asserts it
+   stays transparent. */
 
 /* ── Wide stimuli get their own scroll rail instead of breaking the layout ──
    A table/plot that genuinely cannot shrink should scroll horizontally on its
