@@ -1,0 +1,702 @@
+<div id="source">
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id": "less", "label": "Less than 1 litre"}, {"id": "more", "label": "More than 1 litre"}]
+answer: ["less", "less", "less", "more", "more"]
+description: Sort volumes around the 1-litre benchmark
+hint:
+  - "The benchmark is given: 1 litre = 1,000 millilitres."
+  - "Compare each amount with 1,000."
+  - "Under 1,000 mL goes left; over goes right."
+explain: "593, 341 and 298 mL sit under 1,000 mL; 1,053 and 1,740 mL are past it."
+solution:
+  - type: step
+    goal: Fix the benchmark.
+    working: "1 L = 1,000 mL"
+  - type: step
+    goal: Test each amount.
+    working: "593 ✗ · 341 ✗ · 298 ✗ · 1,053 ✓ · 1,740 ✓ (✓ = over 1,000)"
+  - type: takeaway
+    text: 1,000 mL is the litre line — every millilitre amount is judged against it.
+  - type: verification
+    text: "The closest call is 1,053 mL — just 53 mL past the line, but past is past."
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">1 litre = 1,000 millilitres. Drag each amount into the right box.</p>
+  <ul class="tiles"><li>593 mL</li><li>341 mL</li><li>298 mL</li><li>1,053 mL</li><li>1,740 mL</li></ul>
+  <p class="explain">Anything under 1,000 mL is less than a litre; over 1,000 mL is more.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["eq"]
+description: Compare 3 litres and 3,000 millilitres
+hint:
+  - "Two different units cannot be compared as they stand."
+  - "Convert both sides into the SAME unit first."
+  - "Then compare the two plain numbers."
+explain: "3 litres = 3,000 millilitres — 3 L converts to exactly 3,000 mL — the sides match."
+whyWrong:
+  "lt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — 3 L converts to exactly 3,000 mL — the sides match."
+  "gt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — 3 L converts to exactly 3,000 mL — the sides match."
+solution:
+  - type: step
+    goal: Convert to one unit.
+    working: "3 L converts to exactly 3,000 mL — the sides match."
+  - type: step
+    goal: Compare the numbers.
+    working: "3 litres = 3,000 millilitres"
+  - type: takeaway
+    text: "Same unit first, compare second — units are the language, numbers are the sentence."
+  - type: verification
+    text: "3 × 1,000 = 3,000 — the conversion is exact, so the sign is =."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">3 litres ? 3,000 millilitres — which sign makes this true?</p>
+  <ul class="options"><li data-val="lt">&lt;</li><li data-val="eq">=</li><li data-val="gt">&gt;</li></ul>
+  <p class="explain">3 litres = 3,000 millilitres, so they are equal.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["lt"]
+description: Compare 842 litres and 1 kilolitre
+hint:
+  - "Two different units cannot be compared as they stand."
+  - "Convert both sides into the SAME unit first."
+  - "Then compare the two plain numbers."
+explain: "842 litres < 1 kilolitre — 1 kL is 1,000 L, and 842 falls short of 1,000."
+whyWrong:
+  "eq":
+    code: COMPARISON_EQUAL_WRONG
+    message: "The two sides are not equal — convert to one unit and the numbers differ."
+  "gt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — 1 kL is 1,000 L, and 842 falls short of 1,000."
+solution:
+  - type: step
+    goal: Convert to one unit.
+    working: "1 kL is 1,000 L, and 842 falls short of 1,000."
+  - type: step
+    goal: Compare the numbers.
+    working: "842 litres < 1 kilolitre"
+  - type: takeaway
+    text: "Same unit first, compare second — units are the language, numbers are the sentence."
+  - type: verification
+    text: "842 needs 158 more litres to fill a kilolitre."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">842 litres ? 1 kilolitre — which sign makes this true?</p>
+  <ul class="options"><li data-val="lt">&lt;</li><li data-val="eq">=</li><li data-val="gt">&gt;</li></ul>
+  <p class="explain">1 kilolitre = 1,000 litres, and 842 is less than 1,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["gt"]
+description: Compare 2 kilolitres and 1,999 litres
+hint:
+  - "Two different units cannot be compared as they stand."
+  - "Convert both sides into the SAME unit first."
+  - "Then compare the two plain numbers."
+explain: "2 kilolitres > 1,999 litres — 2 kL is 2,000 L, one more than 1,999."
+whyWrong:
+  "lt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — 2 kL is 2,000 L, one more than 1,999."
+  "eq":
+    code: COMPARISON_EQUAL_WRONG
+    message: "The two sides are not equal — convert to one unit and the numbers differ."
+solution:
+  - type: step
+    goal: Convert to one unit.
+    working: "2 kL is 2,000 L, one more than 1,999."
+  - type: step
+    goal: Compare the numbers.
+    working: "2 kilolitres > 1,999 litres"
+  - type: takeaway
+    text: "Same unit first, compare second — units are the language, numbers are the sentence."
+  - type: verification
+    text: "The gap is a single litre — but 2,000 still beats 1,999."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">2 kilolitres ? 1,999 litres — which sign makes this true?</p>
+  <ul class="options"><li data-val="lt">&lt;</li><li data-val="eq">=</li><li data-val="gt">&gt;</li></ul>
+  <p class="explain">2 kilolitres = 2,000 litres. And 2,000 is more than 1,999 &mdash; by just 1 litre!</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1,740 litres"]
+description: Which is more — 1 kL or 1,740 L?
+hint:
+  - "Turn the kilolitre into litres first."
+  - "One kilolitre is a thousand litres."
+  - "Now compare the two litre counts."
+explain: "1 kL = 1,000 L, and 1,740 L is more than 1,000 L."
+whyWrong:
+  "1 kilolitre":
+    code: WRONG_UNIT_CHOSEN
+    message: "A kilolitre sounds mighty, but it is 1,000 L — and 1,740 L tops it comfortably."
+  "neither; they are equal":
+    code: COMPARISON_EQUAL_WRONG
+    message: "Equal would need 1,740 L to be exactly 1,000 L — it is 740 litres past that."
+solution:
+  - type: step
+    goal: Convert the kilolitre.
+    working: "1 kL = 1,000 L"
+  - type: step
+    goal: Compare.
+    working: "1,740 > 1,000 → 1,740 litres is more"
+  - type: takeaway
+    text: A big-sounding unit can still hold the smaller amount — convert before you crown a winner.
+  - type: verification
+    text: "1,740 L is nearly two whole kilolitres — the comparison is not even close."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which is more, 1 kilolitre or 1,740 litres?</p>
+  <ul class="options"><li data-val="1 kilolitre">1 kilolitre</li><li data-val="1,740 litres">1,740 litres</li><li data-val="neither; they are equal">neither; they are equal</li></ul>
+  <p class="explain">1 kilolitre = 1,000 litres, and 1,740 is more than 1,000.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["341 mL", "1 L", "1,053 mL", "1,740 mL", "2 L"]
+low: smallest
+high: largest
+description: Order mixed volumes smallest to largest
+hint:
+  - "Mixed units cannot be ordered as they stand."
+  - "Change every amount into millilitres."
+  - "Then order the plain numbers."
+explain: "In mL: 341 < 1,000 (1 L) < 1,053 < 1,740 < 2,000 (2 L)."
+solution:
+  - type: step
+    goal: Convert everything to millilitres.
+    working: "341 · 1,000 · 1,053 · 1,740 · 2,000"
+  - type: step
+    goal: Order the numbers.
+    working: "341 < 1,000 < 1,053 < 1,740 < 2,000"
+    reason: 1 L slots BETWEEN 341 and 1,053 — converting is what reveals that.
+  - type: takeaway
+    text: One shared unit turns a mixed-unit muddle into a plain number sort.
+  - type: verification
+    text: "Neighbours climb every step: +659, +53, +687, +260 — strictly uphill."
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Order these from smallest to largest.</p>
+  <ol class="order"><li>1,740 mL</li><li>341 mL</li><li>2 L</li><li>1 L</li><li>1,053 mL</li></ol>
+  <p class="explain">In millilitres: 341, 1,000, 1,053, 1,740, 2,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["5000"]
+description: Convert 5 litres to millilitres
+hint:
+  - "Millilitres are much smaller than litres."
+  - "A smaller unit needs MORE of them — so multiply."
+  - "Each litre holds 1,000 millilitres."
+explain: "5 × 1,000 = 5,000 millilitres."
+whyWrong:
+  "50":
+    code: PLACE_SHIFT_DOWN
+    message: "50 uses a factor of 10 — a litre holds a full 1,000 millilitres."
+  "500":
+    code: PLACE_SHIFT_DOWN
+    message: "500 multiplies by 100 — one zero short of the 1,000 a litre holds."
+  "50000":
+    code: PLACE_SHIFT_UP
+    message: "50,000 has one zero too many — 5 × 1,000 stops at 5,000."
+solution:
+  - type: step
+    goal: Recall the conversion.
+    working: "1 L = 1,000 mL"
+  - type: step
+    goal: Multiply.
+    working: "5 × 1,000 = 5,000 mL"
+  - type: takeaway
+    text: "Bigger unit to smaller unit: multiply — the amount doesn't change, only its name."
+  - type: verification
+    text: "Backwards: 5,000 ÷ 1,000 = 5 litres — the round trip returns home."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">5 litres = how many millilitres?</p>
+  <ul class="options"><li data-val="50">50</li><li data-val="500">500</li><li data-val="5000">5,000</li><li data-val="50000">50,000</li></ul>
+  <p class="explain">1 litre = 1,000 millilitres, so 5 litres = 5,000 millilitres.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1000000"]
+description: Convert 1 kilolitre to millilitres — two hops
+hint:
+  - "No single fact covers kL to mL — go through litres."
+  - "First: kilolitres to litres."
+  - "Then: each of those litres to millilitres."
+explain: "1 kL = 1,000 L, and each litre is 1,000 mL: 1,000 × 1,000 = 1,000,000 mL."
+whyWrong:
+  "1000":
+    code: PARTIAL_COMPUTATION
+    message: "1,000 stops after the first hop (kL → L) — every one of those litres still holds 1,000 mL."
+  "10000":
+    code: PLACE_SHIFT_DOWN
+    message: "10,000 mixes the two hops — the full journey is 1,000 × 1,000."
+  "100000":
+    code: PLACE_SHIFT_DOWN
+    message: "100,000 is one zero short — a thousand thousands is a million."
+solution:
+  - type: step
+    goal: First hop.
+    working: "1 kL = 1,000 L"
+  - type: step
+    goal: Second hop.
+    working: "1,000 L × 1,000 = 1,000,000 mL"
+  - type: takeaway
+    text: Long conversions chain small ones — hop unit to unit, multiplying as you go.
+  - type: verification
+    text: "Count the zeros: three from each hop, six in all — 1,000,000 has exactly six."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">1 kilolitre = how many millilitres?</p>
+  <ul class="options"><li data-val="1000">1,000</li><li data-val="10000">10,000</li><li data-val="100000">100,000</li><li data-val="1000000">1,000,000</li></ul>
+  <p class="explain">1 kilolitre = 1,000 litres = 1,000,000 millilitres.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["4"]
+description: Convert millilitres to litres
+hint:
+  - "Litres are bigger than millilitres."
+  - "A bigger unit needs FEWER of them — so divide."
+  - "How many thousands fit in 4,000?"
+explain: "4,000 ÷ 1,000 = 4 litres."
+solution:
+  - type: step
+    goal: Recall the conversion.
+    working: "1,000 mL = 1 L"
+  - type: step
+    goal: Divide.
+    working: "4,000 ÷ 1,000 = 4 L"
+  - type: takeaway
+    text: "Smaller unit to bigger unit: divide — the amount stays, the count shrinks."
+  - type: verification
+    text: "Backwards: 4 × 1,000 = 4,000 mL ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Convert: 4,000 millilitres = [] litres.</p>
+  <p class="explain">1,000 millilitres = 1 litre, so 4,000 mL = 4 litres.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["10", "2", "4", "60", "7"]
+description: Centilitres and millilitres — use the given fact
+hint:
+  - "Use the conversion fact written at the top of the question."
+  - "Going cL to mL, multiply by 10."
+  - "Going mL back to cL, divide by 10."
+explain: "Using 1 cL = 10 mL: 1 cL→10 mL, 20 mL→2 cL, 40 mL→4 cL, 6 cL→60 mL, 70 mL→7 cL."
+solution:
+  - type: step
+    goal: Multiply for the mL blanks.
+    working: "1 cL = 10 mL · 6 cL = 60 mL"
+  - type: step
+    goal: Divide for the cL blanks.
+    working: "20 mL = 2 cL · 40 mL = 4 cL · 70 mL = 7 cL"
+    reason: The factor of 10 works both ways — multiply one direction, divide the other.
+  - type: takeaway
+    text: One conversion fact powers a whole table — ×10 one way, ÷10 the other.
+  - type: verification
+    text: "Every pair keeps the ratio 1:10 — check any row and the mL number is ten times the cL number."
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">1 centilitre = 10 millilitres. Fill in: 1 cL = [] mL · [] cL = 20 mL · [] cL = 40 mL · 6 cL = [] mL · [] cL = 70 mL</p>
+  <p class="explain">Every centilitre is 10 millilitres — read across each row.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["2,000 mL", "200 cL"]
+description: Every amount equal to 2 litres
+hint:
+  - "Turn every option into millilitres first."
+  - "1 L = 1,000 mL and 1 cL = 10 mL."
+  - "Keep only the amounts that match the target exactly."
+explain: "2,000 mL and 200 cL (= 2,000 mL) equal 2 L; the rest are 200 mL, 200 mL, 2,000 L and 20,000 mL."
+whyWrong:
+  "200 mL":
+    code: WRONG_UNIT_CHOSEN
+    message: "200 mL is a tenth of 2 litres — a small glass, not two bottles."
+  "20 cL":
+    code: WRONG_UNIT_CHOSEN
+    message: "20 cL is 200 mL — a tenth of the 2,000 mL needed."
+  "2 kL":
+    code: WRONG_UNIT_CHOSEN
+    message: "2 kL is 2,000 LITRES — a thousand times the 2 litres asked for."
+  "2,000 cL":
+    code: WRONG_UNIT_CHOSEN
+    message: "2,000 cL is 20,000 mL — ten times too much."
+solution:
+  - type: step
+    goal: Set the target.
+    working: "2 L = 2,000 mL"
+  - type: step
+    goal: Convert every option.
+    working: "2,000 mL ✓ · 200 mL ✗ · 200 cL = 2,000 mL ✓ · 20 cL = 200 mL ✗ · 2 kL = 2,000,000 mL ✗ · 2,000 cL = 20,000 mL ✗"
+  - type: takeaway
+    text: Equal amounts can wear different units — convert to one unit and the disguises fall away.
+  - type: verification
+    text: "The two keepers both land exactly on 2,000 mL; every reject misses by a factor of ten or more."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select <b>all</b> the amounts that are equal to 2 litres.</p>
+  <ul class="options"><li data-val="2,000 mL">2,000 mL</li><li data-val="200 mL">200 mL</li><li data-val="200 cL">200 cL</li><li data-val="20 cL">20 cL</li><li data-val="2 kL">2 kL</li><li data-val="2,000 cL">2,000 cL</li></ul>
+  <p class="explain">2 L = 2,000 mL. And 200 cL = 2,000 mL too, because 1 cL = 10 mL.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1000"]
+description: Four 250 mL glasses
+hint:
+  - "Every glass holds the same 250 mL."
+  - "Equal amounts, four times — multiply."
+  - "Count up: 250, 500, 750..."
+explain: "4 × 250 mL = 1,000 mL — exactly one litre."
+whyWrong:
+  "750":
+    code: PARTIAL_COMPUTATION
+    message: "750 mL is only three glasses — the fourth is still on the table."
+  "1250":
+    code: NEAR_MISS
+    message: "1,250 mL would be five glasses — Priya drank four."
+  "2500":
+    code: PLACE_SHIFT_UP
+    message: "2,500 comes from 10 glasses — a zero slipped into the counting."
+solution:
+  - type: step
+    goal: Multiply.
+    working: "4 × 250 = 1,000 mL"
+  - type: takeaway
+    text: Four quarter-litres snap together into exactly one litre.
+  - type: verification
+    text: "Skip-count the glasses: 250, 500, 750, 1,000 ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya drinks 4 glasses of water. Each glass holds 250 mL. How many millilitres does she drink in all?</p>
+  <ul class="options"><li data-val="750">750 mL</li><li data-val="1000">1,000 mL</li><li data-val="1250">1,250 mL</li><li data-val="2500">2,500 mL</li></ul>
+  <p class="explain">4 &times; 250 = 1,000 mL, which is exactly 1 litre.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["2250"]
+description: Add mixed volume units
+hint:
+  - "The two amounts speak different units."
+  - "Turn 1 L 500 mL fully into millilitres first."
+  - "Then add the two millilitre numbers."
+explain: "1 L 500 mL = 1,500 mL, and 1,500 + 750 = 2,250 mL."
+solution:
+  - type: step
+    goal: Convert the mixed amount.
+    working: "1 L 500 mL = 1,500 mL"
+  - type: step
+    goal: Add.
+    working: "1,500 + 750 = 2,250 mL"
+  - type: takeaway
+    text: Arithmetic only works inside one unit — convert first, then add.
+  - type: verification
+    text: "2,250 mL reads back as 2 L 250 mL — sensibly bigger than either starting amount."
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Add: 1 L 500 mL + 750 mL = [] mL.</p>
+  <p class="explain">1 L 500 mL = 1,500 mL. 1,500 + 750 = 2,250 mL.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["1750"]
+description: Subtract across volume units
+hint:
+  - "The amounts wear different units — fix that first."
+  - "Write 3 L as millilitres."
+  - "Then subtract the plain numbers."
+explain: "3 L = 3,000 mL, and 3,000 − 1,250 = 1,750 mL."
+solution:
+  - type: step
+    goal: Convert the litres.
+    working: "3 L = 3,000 mL"
+  - type: step
+    goal: Subtract.
+    working: "3,000 − 1,250 = 1,750 mL"
+  - type: takeaway
+    text: Same-unit first is the law of measurement arithmetic — subtraction included.
+  - type: verification
+    text: "1,750 + 1,250 = 3,000 mL — the two parts rebuild the 3 litres."
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Subtract: 3 L − 1,250 mL = [] mL.</p>
+  <p class="explain">3 L = 3,000 mL. 3,000 &minus; 1,250 = 1,750 mL.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["a"]
+description: Choose the number sentence for the water left
+hint:
+  - "The bottle and the drink use different units."
+  - "The litres must become millilitres before subtracting."
+  - "Check each sentence's conversion AND its direction."
+explain: "2 L = 2,000 mL, and what is left is 2,000 − 600 = 1,400 mL."
+whyWrong:
+  "b":
+    code: WRONG_UNIT_CHOSEN
+    message: "This writes 2 litres as '2 mL' — the bottle would barely wet a spoon; the conversion was skipped."
+  "c":
+    code: MONEY_WRONG_OPERATION
+    message: "Adding gives water than never existed — drinking takes 600 mL OUT of the bottle."
+  "d":
+    code: WRONG_OP_IN_EXPRESSION
+    message: "600 − 2,000 subtracts the bottle from the drink — the amounts have swapped seats."
+solution:
+  - type: step
+    goal: Convert the bottle.
+    working: "2 L = 2,000 mL"
+  - type: step
+    goal: Build the sentence.
+    working: "2,000 mL − 600 mL = 1,400 mL"
+    reason: Start with the full bottle, take away what was drunk.
+  - type: takeaway
+    text: A good number sentence converts first AND subtracts in the right direction.
+  - type: verification
+    text: "1,400 mL left + 600 mL drunk = the 2,000 mL bottle ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Arjun&rsquo;s bottle holds 2 litres. He drinks 600 mL. Which number sentence shows how much is left?</p>
+  <ul class="options"><li data-val="a">2,000 mL &minus; 600 mL = 1,400 mL</li><li data-val="b">2 mL &minus; 600 mL = 1,400 mL</li><li data-val="c">2,000 mL + 600 mL = 2,600 mL</li><li data-val="d">600 mL &minus; 2,000 mL = 1,400 mL</li></ul>
+  <p class="explain">First change 2 litres into 2,000 mL. Then 2,000 &minus; 600 = 1,400 mL.</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["250", "500", "750", "1000"]
+palette: ["250", "500", "750", "1000", "1250"]
+description: Skip-count 250 mL up to one litre
+hint:
+  - "Each fill adds the same amount — the question says how much."
+  - "Keep a running total as you build."
+  - "Stop when the total reaches one litre — know how many mL that is."
+explain: "250 → 500 → 750 → 1,000 mL — four fills reach exactly 1 litre; the 1,250 tile overshoots."
+solution:
+  - type: step
+    goal: Build the chain.
+    working: "250, 500, 750, 1,000"
+  - type: step
+    goal: Stop at the litre.
+    working: "1,000 mL = 1 L — the target"
+    reason: The 1,250 tile is the trap — it sails past the litre.
+  - type: takeaway
+    text: Four 250s make 1,000 — quarters of a litre, just like quarters of a thousand.
+  - type: verification
+    text: "4 × 250 = 1,000 ✓ — the chain's last link IS the litre."
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Rohan fills his bottle 250 mL at a time. Build the pattern up to 1 litre.</p>
+  <p class="reference">250 mL, &hellip; , &hellip; , &hellip; , &hellip;</p>
+  <p class="explain">250, 500, 750, 1,000 mL &mdash; and 1,000 mL is 1 litre.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["3,000 L", "2 kL", "300 L", "30,000 mL"]
+low: largest
+high: smallest
+description: Order mixed volumes LARGEST to smallest
+hint:
+  - "Convert every amount to one unit — litres works well here."
+  - "Note the direction: LARGEST first this time."
+  - "Then order the plain numbers downhill."
+explain: "In litres: 3,000 > 2,000 (2 kL) > 300 > 30 (30,000 mL) — largest to smallest."
+solution:
+  - type: step
+    goal: Convert to litres.
+    working: "3,000 L · 2 kL = 2,000 L · 300 L · 30,000 mL = 30 L"
+  - type: step
+    goal: Order downhill.
+    working: "3,000 > 2,000 > 300 > 30"
+    reason: The question wants largest first — read the direction before dragging.
+  - type: takeaway
+    text: The same digits '3' and '30,000' can hide wildly different volumes — units first, always.
+  - type: verification
+    text: "Each step drops by at least a factor of ten except the first — strictly downhill."
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Order these from largest to smallest.</p>
+  <ol class="order"><li>300 L</li><li>30,000 mL</li><li>3,000 L</li><li>2 kL</li></ol>
+  <p class="explain">In millilitres: 3,000,000 &gt; 2,000,000 &gt; 300,000 &gt; 30,000.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: bins
+regions: [{"id": "mL", "label": "millilitres"}, {"id": "L", "label": "litres"}, {"id": "kL", "label": "kilolitres"}]
+answer: ["mL", "kL", "L", "mL", "kL", "L"]
+description: Choose the best unit for each container
+hint:
+  - "Picture each container's real size."
+  - "Spoon-sized things take millilitres; bottle-and-bucket things take litres."
+  - "Only tanker-and-pool amounts earn kilolitres."
+explain: "Spoon and raindrop → mL; bucket and jug → L; swimming pool and tanker → kL."
+solution:
+  - type: step
+    goal: Sort the tiny ones.
+    working: "spoon of medicine, drop of rain → millilitres"
+  - type: step
+    goal: Sort the everyday ones.
+    working: "bucket, jug of juice → litres"
+  - type: step
+    goal: Sort the giants.
+    working: "swimming pool, water tanker → kilolitres"
+  - type: takeaway
+    text: Match the unit to the container's scale — sensible numbers are the giveaway.
+  - type: verification
+    text: "A pool in millilitres would need millions — absurd numbers mean a wrong unit."
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Which unit would you use to measure each one? Drag it into the right box.</p>
+  <ul class="tiles"><li>a spoon of medicine</li><li>a swimming pool</li><li>a large bucket</li><li>a drop of rain</li><li>a water tanker</li><li>a jug of juice</li></ul>
+  <p class="explain">Tiny amounts &rarr; mL. Everyday amounts &rarr; L. Huge amounts &rarr; kL.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["1", "300", "5", "700"]
+description: Centilitres and litres — use the given fact
+hint:
+  - "Use the conversion fact given at the top of the question."
+  - "Going cL to L, divide by 100."
+  - "Going L back to cL, multiply by 100."
+explain: "With 100 cL = 1 L: 100 cL→1 L, 3 L→300 cL, 500 cL→5 L, 7 L→700 cL."
+solution:
+  - type: step
+    goal: Divide for the litre blanks.
+    working: "100 cL = 1 L · 500 cL = 5 L"
+  - type: step
+    goal: Multiply for the centilitre blanks.
+    working: "3 L = 300 cL · 7 L = 700 cL"
+  - type: takeaway
+    text: A factor of 100 runs this table — two zeros on, two zeros off.
+  - type: verification
+    text: "Every row keeps the 100:1 ratio — the cL number is always the L number with two extra zeros."
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">100 centilitres = 1 litre. Fill in: 100 cL = [] L · [] cL = 3 L · 500 cL = [] L · [] cL = 7 L</p>
+  <p class="explain">100 centilitres = 1 litre.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["yes"]
+description: Is a 5 L can enough for eight 500 mL jugs?
+hint:
+  - "Work out what all 8 jugs need, in millilitres."
+  - "Convert the 5 litre can into millilitres too."
+  - "Compare the need with the supply."
+explain: "8 × 500 = 4,000 mL needed; the can holds 5,000 mL — enough, with 1,000 mL spare."
+whyWrong:
+  "no":
+    code: MULTI_STEP_ERROR
+    message: "The jugs need 4,000 mL and the can carries 5,000 — the supply wins by a full litre."
+  "exact":
+    code: NEAR_MISS
+    message: "Exactly enough would need 5,000 mL of jugs — they only ask for 4,000, so a litre stays behind."
+solution:
+  - type: step
+    goal: Total the need.
+    working: "8 × 500 = 4,000 mL"
+  - type: step
+    goal: Convert the supply.
+    working: "5 L = 5,000 mL"
+  - type: step
+    goal: Compare.
+    working: "5,000 − 4,000 = 1,000 mL to spare → yes"
+  - type: takeaway
+    text: Enough-questions end in a comparison — total need against total supply, in one unit.
+  - type: verification
+    text: "Two more jugs would need 1,000 mL — exactly the leftover, confirming the arithmetic."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Meera needs to fill 8 jugs. Each jug holds 500 mL. She has a 5 litre can. Is that enough?</p>
+  <ul class="options"><li data-val="yes">Yes &mdash; there is enough</li><li data-val="no">No &mdash; she needs more</li><li data-val="exact">It is exactly enough, none left over</li></ul>
+  <p class="explain">8 &times; 500 = 4,000 mL. The can holds 5,000 mL, so there is 1,000 mL spare.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["gt"]
+description: Compare 1 litre and 950 millilitres
+hint:
+  - "Two different units cannot be compared as they stand."
+  - "Convert both sides into the SAME unit first."
+  - "Then compare the two plain numbers."
+explain: "1 litre > 950 millilitres — 1 L is 1,000 mL, which beats 950."
+whyWrong:
+  "lt":
+    code: COMPARISON_REVERSED
+    message: "This sign points the wrong way — 1 L is 1,000 mL, which beats 950."
+  "eq":
+    code: COMPARISON_EQUAL_WRONG
+    message: "The two sides are not equal — convert to one unit and the numbers differ."
+solution:
+  - type: step
+    goal: Convert to one unit.
+    working: "1 L is 1,000 mL, which beats 950."
+  - type: step
+    goal: Compare the numbers.
+    working: "1 litre > 950 millilitres"
+  - type: takeaway
+    text: "Same unit first, compare second — units are the language, numbers are the sentence."
+  - type: verification
+    text: "The gap is 50 mL — small, but the litre still wins."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">1 litre ? 950 millilitres — which sign makes this true?</p>
+  <ul class="options"><li data-val="lt">&lt;</li><li data-val="eq">=</li><li data-val="gt">&gt;</li></ul>
+  <p class="explain">1 litre = 1,000 mL. Even though 950 has more digits than 1, it is still less than 1,000.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["2", "500"]
+description: Split 2,500 mL into litres and millilitres
+hint:
+  - "Ask how many WHOLE litres hide inside 2,500 mL."
+  - "Each whole litre swallows 1,000 mL."
+  - "Whatever will not make a full litre stays as millilitres."
+explain: "2,500 mL holds 2 whole litres (2,000 mL) with 500 mL left over: 2 L 500 mL."
+solution:
+  - type: step
+    goal: Pull out the whole litres.
+    working: "2,500 ÷ 1,000 → 2 whole litres"
+  - type: step
+    goal: Keep the remainder as millilitres.
+    working: "2,500 − 2,000 = 500 mL"
+  - type: takeaway
+    text: Mixed units are a division in disguise — whole litres out, remainder millilitres.
+  - type: verification
+    text: "Rebuild it: 2 × 1,000 + 500 = 2,500 mL ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Fill in the blanks: 2,500 mL = [] L [] mL.</p>
+  <p class="explain">2,500 mL = 2,000 mL + 500 mL. That is 2 litres and 500 millilitres left over.</p>
+</div>
+
+</div>
