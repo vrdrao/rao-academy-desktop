@@ -21,6 +21,10 @@ BRIEF-7.8-DRAFT.md (the paste-ready production brief) · HANDOFF-12.md (session 
 > **25px** (concentric rule, 28 − 3); halo `0 12px 28px` → **`0 9px 21px`** (alpha .34
 > unchanged); page bg #eef1f6 → **#ffffff**; grid alpha .06 → **.09**. Ledge and
 > checker size unchanged.
+>
+> **Revision 2026-07-18 (2)** (per `docs/briefs/BRIEF-PRECOMMIT-SPEED-2026-07-18.md`,
+> rider): added the question-body surface row — no inner panel, authority
+> BRIEF-CARD-LOOK-2.
 
 | Layer | Property | Value |
 |---|---|---|
@@ -31,6 +35,7 @@ BRIEF-7.8-DRAFT.md (the paste-ready production brief) · HANDOFF-12.md (session 
 | **Page background** | `.proto-right` background-color | `var(--bg)` = **#ffffff** (light mode) |
 | **Checkered grid** | `--checker-line` | `rgba(var(--grid-rgb,124,58,237),.09)`, `--checker-size` **30px** |
 | Card face | `.q.active` background | **#fff**, no CSS border (border-width 0 on all sides) |
+| **Question-body surface** | `.qbody` background | **NONE — transparent.** No intermediate surface between the card face (#fff) and the question content; the card face is the only surface (authority: BRIEF-CARD-LOOK-2, 2026-07-18) |
 
 The card has NO border property. The visible "purple border" is the frame (gradient
 wrapper padding); the "underline" is the ledge shadow; the "aura" is the halo shadow.

@@ -1,19 +1,21 @@
 #!/bin/sh
-# Rao Academy pre-commit hook.
-# THE ONE RULE: never commit without a green harness.
-# Runs `npm test` and blocks the commit if anything fails.
+# Rao Academy pre-commit hook — the FAST gate (BRIEF-PRECOMMIT-SPEED, 2026-07-18).
+# Runs `npm run test:fast` (~1-2 min): Node-only grading of the full corpus,
+# authoring/format/firewall guards. The FULL browser suite (`npm test`, ~12-15 min)
+# runs in the pre-push hook — nothing reaches origin without it green.
+# NEVER bypass with --no-verify. That is forbidden (CLAUDE.md, THE ONE RULE).
 
-echo "pre-commit: running npm test (this takes ~30s)..."
+echo "pre-commit: running npm run test:fast (~1-2 min; the full suite runs at push time)..."
 
-npm test
+npm run test:fast
 status=$?
 
 if [ "$status" -ne 0 ]; then
   echo ""
-  echo "❌ pre-commit: npm test FAILED — commit blocked."
-  echo "   Fix the failure (or, only if you truly must, bypass with 'git commit --no-verify')."
+  echo "❌ pre-commit: fast gate FAILED — commit blocked."
+  echo "   Fix the failure. Do NOT bypass with --no-verify — it is forbidden (CLAUDE.md)."
   exit 1
 fi
 
-echo "✅ pre-commit: npm test passed — proceeding with commit."
+echo "✅ pre-commit: fast gate passed — proceeding with commit."
 exit 0

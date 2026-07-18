@@ -47,7 +47,18 @@ figure should be. A child sees it before you do.
 
 `npm test` opens every lesson in a real browser, answers every question right (must grade
 CORRECT), answers every question wrong (must grade WRONG), checks every figure actually
-rendered, and checks all 8 themes re-tint. It takes ~30 seconds.
+rendered, and checks all 8 themes re-tint. It takes ~12–15 minutes.
+
+**Where it runs (since 2026-07-18, BRIEF-PRECOMMIT-SPEED):** the pre-commit hook runs a
+fast ~1–2 min subset (`npm run test:fast` — Node-only grading of all 2,722 questions +
+format/authoring guards); the **pre-push hook runs the FULL `npm test` and blocks the
+push on any failure**. Same invariant, moved in time: nothing reaches origin without the
+full suite green on that exact tree. Engine changes still warrant a full local `npm test`
+before you rely on them — don't lean on the push gate to find out.
+
+**`--no-verify` is FORBIDDEN.** git offers `git commit --no-verify` / `git push --no-verify`
+as built-ins that skip these hooks. Never use either, never suggest either — a bypassed
+gate is how silent breakage ships. If a hook seems wrongly red, fix the cause or ask Venkat.
 
 **Red = do not ship. No exceptions, no "it's a small change".**
 

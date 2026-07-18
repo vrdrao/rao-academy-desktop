@@ -82,6 +82,19 @@ The conversation dies. The state survives. That's the whole trick.
 
 ---
 
+## Pushing — the full suite runs at push time
+
+**A `git push` runs the complete `npm test` (~15 minutes) in the pre-push hook and
+blocks the push if anything fails. Never abort a push mid-hook** — killing it half-way
+proves nothing and leaves you unsure what state the gate saw. Let it finish either way.
+(Committing is fast now — a ~1–2 minute subset; the full browser suite moved to push
+time. Same safety, different moment: nothing reaches GitHub without the full suite
+green on that exact tree.) Any Claude Code shell command that wraps a `git push` or
+`git commit` must use a **30-minute timeout** — the default 2-minute timeout has
+already killed one commit mid-hook.
+
+---
+
 ## Permissions — the trap you already hit
 
 **"Yes, don't ask again" saves the ENTIRE compound command, not just the safe part.**
