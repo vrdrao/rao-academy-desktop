@@ -1,0 +1,937 @@
+<div id="source">
+<!--@q
+type: fill-blanks
+answer: ["600", "210", "80", "28", "918"]
+description: Area model for 34 × 27
+hint:
+  - "Each box multiplies one piece of 34 by one piece of 27."
+  - "Use the digits' REAL values — the 3 in 34 is worth thirty."
+  - "Fill all four boxes, then add the four partial products."
+explain: "30×20=600, 30×7=210, 4×20=80, 4×7=28; together 600+210+80+28 = 918."
+solution:
+  - type: step
+    goal: Multiply the big pieces.
+    working: "30 × 20 = 600"
+    reason: Tens times tens gives hundreds — the biggest box.
+  - type: step
+    goal: Fill the mixed boxes.
+    working: "30 × 7 = 210 · 4 × 20 = 80"
+  - type: step
+    goal: Fill the small box and add everything.
+    working: "4 × 7 = 28 → 600 + 210 + 80 + 28 = 918"
+  - type: takeaway
+    text: The area model turns one hard multiplication into four easy ones plus an addition.
+  - type: verification
+    text: "Estimate: 30 × 30 = 900 — the exact 918 sits right beside it."
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">34 × 27. 34 splits into 30 and 4. 27 splits into 20 and 7. Fill each box: 30×20 = [], 30×7 = [], 4×20 = [], 4×7 = [], total = []</p>
+  <svg viewBox="0 0 260 150" width="100%" style="max-width:300px"><rect x="52" y="30" width="120" height="66" fill="#e9dfff" stroke="#7b5cff" stroke-width="2"/><rect x="172" y="30" width="56" height="66" fill="#fff0f7" stroke="#7b5cff" stroke-width="2"/><rect x="52" y="96" width="120" height="36" fill="#fff0f7" stroke="#7b5cff" stroke-width="2"/><rect x="172" y="96" width="56" height="36" fill="#e9dfff" stroke="#7b5cff" stroke-width="2"/><text x="112" y="22" font-size="15" text-anchor="middle" font-weight="700" fill="#2c2150">20</text><text x="200" y="22" font-size="15" text-anchor="middle" font-weight="700" fill="#2c2150">7</text><text x="34" y="68" font-size="15" text-anchor="middle" font-weight="700" fill="#2c2150">30</text><text x="34" y="118" font-size="15" text-anchor="middle" font-weight="700" fill="#2c2150">4</text></svg>
+  <p class="explain">600 + 210 + 80 + 28 = 918.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["504"]
+description: Multiply 24 × 21
+hint:
+  - "Split 21 into 20 and 1."
+  - "The 2 in 21 is worth twenty — multiply 24 by 20, not by 2."
+  - "Add the two rows: 24 × 20 and 24 × 1."
+explain: "24 × 20 = 480 and 24 × 1 = 24; 480 + 24 = 504."
+whyWrong:
+  "480":
+    code: PARTIAL_COMPUTATION
+    message: "480 is only the 24 × 20 row — the final 24 × 1 never joined it."
+  "483":
+    code: ADJACENT_TABLE_FACT
+    message: "483 is 23 × 21 — one whole 21 short of the real product."
+  "494":
+    code: CARRY_DROPPED
+    message: "Ten short — 480 + 24 makes 504, and this total lost a ten on the way."
+solution:
+  - type: step
+    goal: Multiply by the tens.
+    working: "24 × 20 = 480"
+  - type: step
+    goal: Multiply by the ones and add.
+    working: "24 × 1 = 24 → 480 + 24 = 504"
+  - type: takeaway
+    text: Split the second number by place value — the tens row does the heavy lifting.
+  - type: verification
+    text: "Estimate: 24 × 20 = 480, so the true answer must sit just above it — 504 does."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">24 × 21 = ?</p>
+  <ul class="options"><li data-val="480">480</li><li data-val="483">483</li><li data-val="494">494</li><li data-val="504">504</li></ul>
+  <p class="explain">24 × 21 = 504. The near misses come from forgetting that the tens digit is worth ten times more.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["440"]
+description: The tens part of 22 × 21
+hint:
+  - "You are multiplying by the TENS piece of 21."
+  - "That piece is worth twenty, not two."
+  - "Multiply 22 by 2, then give the answer its zero back."
+explain: "22 × 20 = 440 — multiply 22 × 2 = 44, then restore the zero of the 20."
+whyWrong:
+  "22":
+    code: OPERAND_ECHO
+    message: "22 is just the first number repeated — no multiplying has happened yet."
+  "44":
+    code: PLACE_SHIFT_DOWN
+    message: "44 is 22 × 2 — but the 2 in 21 is worth twenty, so the answer needs its zero back."
+  "462":
+    code: MULTI_STEP_ERROR
+    message: "462 is the complete 22 × 21 — this question asks for the tens row alone."
+solution:
+  - type: step
+    goal: Multiply by the front digit.
+    working: "22 × 2 = 44"
+  - type: step
+    goal: Restore the place value.
+    working: "22 × 20 = 440"
+    reason: The 2 was standing in the tens place, so the product is ten times bigger.
+  - type: takeaway
+    text: A tens digit never forgets its zero — ×20 is ×2 with a shift.
+  - type: verification
+    text: "Ten twenty-twos are 220, so twenty of them are 440 — double-checked."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">To work out 22 × 21, you split 21 into 20 and 1. What is 22 × 20?</p>
+  <ul class="options"><li data-val="22">22</li><li data-val="44">44</li><li data-val="440">440</li><li data-val="462">462</li></ul>
+  <p class="explain">22 × 20 = 440. Answering 44 means you multiplied by 2 instead of 20.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1170"]
+description: Cost of 26 packets at ₹45 each
+hint:
+  - "26 equal groups of ₹45 — equal groups means multiply."
+  - "Split 26 into 20 and 6."
+  - "Add the two rows: 45 × 20 and 45 × 6."
+explain: "45 × 20 = 900 and 45 × 6 = 270; 900 + 270 = ₹1,170."
+whyWrong:
+  "1040":
+    code: PARTIAL_COMPUTATION
+    message: "₹1,040 is 26 × 40 — the ₹5 on each packet's price (₹130 in all) went missing."
+  "1144":
+    code: ADJACENT_TABLE_FACT
+    message: "₹1,144 is 26 × 44 — one rupee per packet short."
+  "1160":
+    code: CARRY_DROPPED
+    message: "Ten rupees short — 900 + 270 lands on 1,170."
+solution:
+  - type: step
+    goal: Multiply by the tens of 26.
+    working: "45 × 20 = 900"
+  - type: step
+    goal: Multiply by the ones and add.
+    working: "45 × 6 = 270 → 900 + 270 = ₹1,170"
+  - type: takeaway
+    text: "'Each' plus a count is multiplication — split the count by place value."
+  - type: verification
+    text: "Estimate: 26 × ₹45 is near 25 × 45 = 1,125 — ₹1,170 sits just above, as it should."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Arjun buys 26 packets of sketch pens. Each packet costs ₹45. What is the total cost?</p>
+  <ul class="options"><li data-val="1040">₹1040</li><li data-val="1144">₹1144</li><li data-val="1160">₹1160</li><li data-val="1170">₹1170</li></ul>
+  <p class="explain">26 × ₹45 = ₹1170.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["20 × 13", "22 × 13", "12 × 24", "11 × 27"]
+low: smallest
+high: largest
+description: Order four close products
+hint:
+  - "These are all near 300 — rounding will not separate them."
+  - "Work out each product exactly."
+  - "Then line the cards up by those exact answers."
+explain: "20×13 = 260, 22×13 = 286, 12×24 = 288, 11×27 = 297 — smallest to largest."
+solution:
+  - type: step
+    goal: Work out every product.
+    working: "20×13 = 260 · 22×13 = 286 · 12×24 = 288 · 11×27 = 297"
+  - type: step
+    goal: Line them up.
+    working: "260 < 286 < 288 < 297"
+    reason: 286 and 288 sit two apart — only exact work could split them.
+  - type: takeaway
+    text: When products crowd together, estimates give up — exact answers settle it.
+  - type: verification
+    text: The gap between neighbours is 26, then 2, then 9 — every step really climbs.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Work out each product, then order them from smallest to largest.</p>
+  <ol class="order"><li>11 × 27</li><li>12 × 24</li><li>22 × 13</li><li>20 × 13</li></ol>
+  <p class="explain">20 × 13=260 &lt; 22 × 13=286 &lt; 12 × 24=288 &lt; 11 × 27=297.</p>
+</div>
+
+<!--@q
+type: sequence-build
+answer: ["235", "1410", "1645"]
+palette: ["235", "1410", "1645", "141"]
+description: Build the working for 47 × 35
+hint:
+  - "Three tiles build the working: ones row, tens row, total."
+  - "One tray tile is a trap — the tens row multiplies by thirty, not three."
+  - "Work each part out yourself before picking its tile."
+explain: "47 × 5 = 235, 47 × 30 = 1,410, and 235 + 1,410 = 1,645. The 141 tile is the no-shift trap (47 × 3)."
+solution:
+  - type: step
+    goal: The ones row.
+    working: "47 × 5 = 235"
+  - type: step
+    goal: The tens row.
+    working: "47 × 30 = 1,410"
+    reason: The trap tile 141 is 47 × 3 — the 3 of 35 is worth thirty, so its row is ten times bigger.
+  - type: step
+    goal: The total.
+    working: "235 + 1,410 = 1,645"
+  - type: takeaway
+    text: The tens row always ends in 0 — a tens row that doesn't has lost its shift.
+  - type: verification
+    text: "Estimate: 47 × 35 is near 50 × 35 = 1,750 — 1,645 sits sensibly below it."
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Build the working for 47 × 35: the ones part, then the tens part, then the total.</p>
+  <p class="reference">47 × 5 = … , 47 × 30 = … , total = …</p>
+  <p class="explain">47×5=235, 47×30=1410, and 235+1410=1645. (141 is the trap — that is 47×3, forgetting that the 3 means 30.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["663"]
+description: Multiply 13 × 51
+hint:
+  - "Split 51 into 50 and 1."
+  - "The 5 in 51 is worth fifty — multiply 13 by 50, not by 5."
+  - "Add the two rows: 13 × 50 and 13 × 1."
+explain: "13 × 50 = 650 and 13 × 1 = 13; 650 + 13 = 663."
+whyWrong:
+  "650":
+    code: PARTIAL_COMPUTATION
+    message: "650 is only the 13 × 50 row — the last 13 never joined the total."
+  "653":
+    code: CARRY_DROPPED
+    message: "Ten short — 650 + 13 reaches 663."
+  "676":
+    code: ADJACENT_TABLE_FACT
+    message: "676 is 13 × 52 — one whole 13 too many."
+solution:
+  - type: step
+    goal: Multiply by the tens.
+    working: "13 × 50 = 650"
+  - type: step
+    goal: Multiply by the ones and add.
+    working: "13 × 1 = 13 → 650 + 13 = 663"
+  - type: takeaway
+    text: Fifty is five tens — its row carries a zero the five alone would not.
+  - type: verification
+    text: "651 would be 650 + 1; the real add is 650 + 13 = 663 — thirteen past the tens row."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">13 × 51 = ?</p>
+  <ul class="options"><li data-val="650">650</li><li data-val="653">653</li><li data-val="663">663</li><li data-val="676">676</li></ul>
+  <p class="explain">13 × 51 = 663. The near misses come from forgetting that the tens digit is worth ten times more.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["step1"]
+description: Find the mistake in Meena's 58 × 24
+hint:
+  - "Check each line by redoing it yourself."
+  - "The first line multiplies 58 by 4 — watch its carry."
+  - "8 × 4 makes more than 9, so something must travel to the tens."
+explain: "58 × 4 = 232, not 202 — 8 × 4 = 32 carries 3 tens, and that carry was dropped. The other lines are sound."
+whyWrong:
+  "step2":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "58 × 20 really is 1,160 — the tens row kept its shift and its carry."
+  "step3":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "The addition is honest: 202 + 1,160 = 1,362. The problem happened before this line."
+  "none":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "There is a slip — check 58 × 4 with its carry and compare it with the 202 on the page."
+solution:
+  - type: step
+    goal: Redo the ones row.
+    working: "58 × 4: 8 × 4 = 32 → write 2, carry 3 · 5 × 4 = 20, + 3 = 23 → 232"
+    reason: Meena's 202 lost the carried 3 tens.
+  - type: step
+    goal: Confirm the rest.
+    working: "58 × 20 = 1,160 ✓ · addition itself ✓"
+  - type: takeaway
+    text: Checking someone's working means redoing each line — not judging how tidy it looks.
+  - type: verification
+    text: "The true product is 232 + 1,160 = 1,392, so 1,362 (built on the slip) confirms line 1 was the leak."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Meena worked out 58 × 24. Which line is wrong?</p>
+  <ul class="options">
+    <li data-val="step1">58 × 4 = 202</li>
+    <li data-val="step2">58 × 20 = 1160</li>
+    <li data-val="step3">202 + 1160 = 1362</li>
+    <li data-val="none">No mistake</li>
+  </ul>
+  <p class="explain">The first line is wrong: 58 × 4 = 232, not 202. Meena forgot to carry the 3 from 8×4=32. The other two lines are done correctly — but on the wrong number.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["840"]
+description: Pages read in 24 days
+hint:
+  - "The same 35 pages, once for every one of 24 days."
+  - "Repeating equal amounts is multiplication."
+  - "Split 24 into 20 and 4, multiply each, add."
+explain: "35 × 20 = 700 and 35 × 4 = 140; 700 + 140 = 840 pages."
+whyWrong:
+  "700":
+    code: PARTIAL_COMPUTATION
+    message: "700 is 35 × 20 — the last 4 days of reading never made it in."
+  "816":
+    code: ADJACENT_TABLE_FACT
+    message: "816 is 34 × 24 — one page per day short."
+  "830":
+    code: CARRY_DROPPED
+    message: "Ten short — 700 + 140 lands on 840."
+solution:
+  - type: step
+    goal: Multiply by the tens of 24.
+    working: "35 × 20 = 700"
+  - type: step
+    goal: Multiply by the ones and add.
+    working: "35 × 4 = 140 → 700 + 140 = 840"
+  - type: takeaway
+    text: Days times pages-per-day gives pages — equal groups always multiply.
+  - type: verification
+    text: "Estimate: 35 × 24 is near 35 × 25 = 875 — 840 sits just below, as losing a day suggests."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya reads 35 pages every day for 24 days. How many pages in all?</p>
+  <ul class="options"><li data-val="700">700</li><li data-val="816">816</li><li data-val="830">830</li><li data-val="840">840</li></ul>
+  <p class="explain">24 × 35 = 840 pages.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["Split 36 into 30 and 6", "Multiply 74 × 6 = 444", "Multiply 74 × 30 = 2220", "Add 444 + 2220 = 2664"]
+low: first
+high: last
+description: Order the steps of 74 × 36
+hint:
+  - "Think about which step makes the others possible."
+  - "Nothing can be multiplied before the number is split."
+  - "The adding can only happen once both rows exist — and ones come before tens."
+explain: "Split first, then the ones row (74 × 6), then the tens row (74 × 30), then add the rows."
+solution:
+  - type: step
+    goal: Split the multiplier.
+    working: "36 → 30 and 6"
+  - type: step
+    goal: Multiply the ones, then the tens.
+    working: "74 × 6 = 444 · 74 × 30 = 2,220"
+  - type: step
+    goal: Add the rows.
+    working: "444 + 2,220 = 2,664"
+  - type: takeaway
+    text: "Split → ones row → tens row → add: the four-step dance of long multiplication."
+  - type: verification
+    text: "Estimate: 74 × 36 ≈ 70 × 40 = 2,800 — the exact 2,664 lands close by."
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Put the steps for 74 × 36 in the right order.</p>
+  <ol class="order">
+    <li>Multiply 74 × 30 = 2220</li>
+    <li>Split 36 into 30 and 6</li>
+    <li>Add 444 + 2220 = 2664</li>
+    <li>Multiply 74 × 6 = 444</li>
+  </ol>
+  <p class="explain">Split, multiply by the ones, multiply by the tens, then add: 444 + 2220 = 2664.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["720","36","684"]
+description: 36 × 19 by compensation
+hint:
+  - "Nineteen groups is one group fewer than twenty groups."
+  - "Find twenty 36s first — that is the easy multiplication."
+  - "Then take away ONE whole group of 36, not one."
+explain: "36 × 20 = 720; one group too many, so 720 − 36 = 684."
+solution:
+  - type: step
+    goal: Overshoot to a friendly twenty.
+    working: "36 × 20 = 720"
+  - type: step
+    goal: Give back the extra group.
+    working: "720 − 36 = 684"
+    reason: Twenty groups is one group more than nineteen — and a group is 36, not 1.
+  - type: takeaway
+    text: "×19 is ×20 minus one group — compensation turns hard numbers friendly."
+  - type: verification
+    text: "Check the ones digit: 6 × 9 = 54 ends in 4, and 684 ends in 4 ✓"
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">36 × 19 the easy way. 36 × 20 = [], and 36 × 1 = [], so 36 × 19 = []</p>
+  <p class="explain">36 × 20 = 720. Nineteen 36s is one 36 less than twenty 36s: 720 − 36 = 684.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3564"]
+description: Multiply 81 × 44
+hint:
+  - "Split 44 into 40 and 4."
+  - "The first 4 is worth forty — its row is 81 × 40."
+  - "Add the two rows: 81 × 40 and 81 × 4."
+explain: "81 × 40 = 3,240 and 81 × 4 = 324; 3,240 + 324 = 3,564."
+whyWrong:
+  "3240":
+    code: PARTIAL_COMPUTATION
+    message: "3,240 is only the 81 × 40 row — the 81 × 4 row (324) is still waiting."
+  "3520":
+    code: ADJACENT_TABLE_FACT
+    message: "3,520 is 80 × 44 — the 1 of 81 dropped out, losing one whole 44."
+  "3554":
+    code: CARRY_DROPPED
+    message: "Ten short — 3,240 + 324 makes 3,564."
+solution:
+  - type: step
+    goal: Multiply by the tens.
+    working: "81 × 40 = 3,240"
+  - type: step
+    goal: Multiply by the ones and add.
+    working: "81 × 4 = 324 → 3,240 + 324 = 3,564"
+  - type: takeaway
+    text: Twin digits still differ — in 44, the first 4 is ten times the second.
+  - type: verification
+    text: "Estimate: 80 × 44 = 3,520 — the true answer must sit one 44 above it: 3,564 ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">81 × 44 = ?</p>
+  <ul class="options"><li data-val="3240">3240</li><li data-val="3520">3520</li><li data-val="3554">3554</li><li data-val="3564">3564</li></ul>
+  <p class="explain">81 × 44 = 3564. The near misses come from forgetting that the tens digit is worth ten times more.</p>
+</div>
+
+<!--@q
+type: categorize
+layout: venn2
+left_label: even product
+right_label: product over 1000
+answer: ["A", "AB", "B", "OUT"]
+description: Venn — even products and products over 1000
+hint:
+  - "Each card gets two checks: even or odd, and over or under 1000."
+  - "A product is even if either number in it is even."
+  - "Both checks true → the overlap. Only one true → that circle alone. Neither → outside."
+explain: "24×21 = 504 (even, under 1000 → left only) · 48×74 = 3,552 (even and over → overlap) · 29×65 = 1,885 (odd, over → right only) · 11×27 = 297 (odd, under → outside)."
+solution:
+  - type: step
+    goal: Work out each product.
+    working: "24×21 = 504 · 48×74 = 3,552 · 29×65 = 1,885 · 11×27 = 297"
+  - type: step
+    goal: Run both tests on each.
+    working: "504: even ✓ over ✗ → A · 3,552: ✓✓ → AB · 1,885: ✗✓ → B · 297: ✗✗ → OUT"
+    reason: The overlap is for cards that pass BOTH tests, and outside is for passing neither.
+  - type: takeaway
+    text: A Venn's overlap means AND — two separate tests, both true.
+  - type: verification
+    text: "Parity check without multiplying: 24 and 48 are even (even products ✓); 29×65 and 11×27 multiply odds only (odd ✓)."
+-->
+<div class="question" data-type="categorize">
+  <p class="prompt">Work out each product, then drop it into the Venn diagram.</p>
+  <ul class="tiles">
+    <li>24 × 21</li>
+    <li>48 × 74</li>
+    <li>29 × 65</li>
+    <li>11 × 27</li>
+  </ul>
+  <p class="explain">24×21=504 (even, under 1000). 48×74=3552 (even, over 1000). 29×65=1885 (odd, over 1000). 11×27=297 (odd, under 1000).</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["1500", "300", "60", "12", "1872"]
+description: Area model for 52 × 36
+hint:
+  - "Each box multiplies one piece of 52 by one piece of 36."
+  - "Real values only — the 5 means fifty, the 3 means thirty."
+  - "Four boxes filled, then one addition."
+explain: "50×30=1500, 50×6=300, 2×30=60, 2×6=12; total 1,872."
+solution:
+  - type: step
+    goal: The big box.
+    working: "50 × 30 = 1,500"
+  - type: step
+    goal: The two mixed boxes.
+    working: "50 × 6 = 300 · 2 × 30 = 60"
+  - type: step
+    goal: The small box, then add all four.
+    working: "2 × 6 = 12 → 1,500 + 300 + 60 + 12 = 1,872"
+  - type: takeaway
+    text: Four boxes, four easy products — place value does the organising.
+  - type: verification
+    text: "Estimate: 50 × 36 = 1,800 — the exact 1,872 sits just above, thanks to the extra 2 rows."
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">52 × 36. 52 splits into 50 and 2. 36 splits into 30 and 6. Fill each box: 50×30 = [], 50×6 = [], 2×30 = [], 2×6 = [], total = []</p>
+  <svg viewBox="0 0 260 150" width="100%" style="max-width:300px"><rect x="52" y="30" width="120" height="66" fill="#e9dfff" stroke="#7b5cff" stroke-width="2"/><rect x="172" y="30" width="56" height="66" fill="#fff0f7" stroke="#7b5cff" stroke-width="2"/><rect x="52" y="96" width="120" height="36" fill="#fff0f7" stroke="#7b5cff" stroke-width="2"/><rect x="172" y="96" width="56" height="36" fill="#e9dfff" stroke="#7b5cff" stroke-width="2"/><text x="112" y="22" font-size="15" text-anchor="middle" font-weight="700" fill="#2c2150">30</text><text x="200" y="22" font-size="15" text-anchor="middle" font-weight="700" fill="#2c2150">6</text><text x="34" y="68" font-size="15" text-anchor="middle" font-weight="700" fill="#2c2150">50</text><text x="34" y="118" font-size="15" text-anchor="middle" font-weight="700" fill="#2c2150">2</text></svg>
+  <p class="explain">1500 + 300 + 60 + 12 = 1872.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["744"]
+description: Use 24 × 30 to find 24 × 31
+hint:
+  - "From 30 groups to 31 groups is one more group."
+  - "How big is one group here?"
+  - "Add one whole group of 24 to the 720."
+explain: "31 groups is one more group of 24 than 30 groups: 720 + 24 = 744."
+whyWrong:
+  "721":
+    code: NEAR_MISS
+    message: "This adds 1 — but going from 30 groups to 31 adds a whole group of 24, not a single one."
+  "730":
+    code: NEAR_MISS
+    message: "This adds 10 — the new group is a full 24."
+  "750":
+    code: NEAR_MISS
+    message: "This adds 30 — but the extra group is a 24; the 30 counts groups, it isn't one."
+solution:
+  - type: step
+    goal: See what changed.
+    working: "24 × 30 → 24 × 31 is one extra group"
+  - type: step
+    goal: Add one group.
+    working: "720 + 24 = 744"
+    reason: Each group is worth 24 — that is what gets added.
+  - type: takeaway
+    text: Known facts stretch — one more group costs exactly one group's worth.
+  - type: verification
+    text: "Direct check: 24 × 31 = 24 × 30 + 24 = 744, and 744 − 720 really is 24."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">You already know 24 × 30 = 720. What is 24 × 31?</p>
+  <ul class="options">
+    <li data-val="721">721</li>
+    <li data-val="730">730</li>
+    <li data-val="744">744</li>
+    <li data-val="750">750</li>
+  </ul>
+  <p class="explain">31 groups is one more group of 24 than 30 groups: 720 + 24 = 744. Adding just 1 (721) or 10 (730) forgets that each group is worth 24.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1472"]
+description: Area of a 46 m × 32 m field
+hint:
+  - "Area fills the inside with 1-metre squares."
+  - "Rows of squares: 32 rows of 46 — multiply."
+  - "Split 32 into 30 and 2, multiply each, add."
+explain: "46 × 30 = 1,380 and 46 × 2 = 92; together 1,472 square metres."
+whyWrong:
+  "1380":
+    code: PARTIAL_COMPUTATION
+    message: "1,380 is 46 × 30 — two more rows of 46 squares complete the field."
+  "1440":
+    code: ADJACENT_TABLE_FACT
+    message: "1,440 is 45 × 32 — one metre of length went missing."
+  "1462":
+    code: CARRY_DROPPED
+    message: "Ten short — 1,380 + 92 lands on 1,472."
+solution:
+  - type: step
+    goal: Multiply by the tens of 32.
+    working: "46 × 30 = 1,380"
+  - type: step
+    goal: Multiply by the ones and add.
+    working: "46 × 2 = 92 → 1,380 + 92 = 1,472 sq m"
+  - type: takeaway
+    text: "Area = length × width — a multiplication wearing a geometry coat."
+  - type: verification
+    text: "Estimate: 46 × 32 ≈ 45 × 30 = 1,350 — the exact answer sits a little above, as both roundings dropped."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A field is 46 m long and 32 m wide. What is its area, in square metres?</p>
+  <svg viewBox="0 0 220 130" width="100%" style="max-width:260px"><rect x="30" y="24" width="160" height="84" fill="#e9dfff" stroke="#7b5cff" stroke-width="2" rx="3"/><text x="110" y="16" font-size="14" text-anchor="middle" font-weight="700" fill="#2c2150">46 m</text><text x="16" y="70" font-size="14" text-anchor="middle" font-weight="700" fill="#2c2150">32 m</text></svg>
+  <ul class="options"><li data-val="1380">1380</li><li data-val="1440">1440</li><li data-val="1462">1462</li><li data-val="1472">1472</li></ul>
+  <p class="explain">46 × 32 = 1472 square metres.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["step2"]
+description: Find the mistake in Rohan's 46 × 27
+hint:
+  - "Redo each line yourself before judging."
+  - "Ask what the 2 in 27 is really worth."
+  - "A tens row should dwarf the ones row — compare line 2 with line 1."
+explain: "46 × 20 = 920, not 92 — the 2 is worth twenty, and the row lost its shift zero. Lines 1 and 3 are sound."
+whyWrong:
+  "step1":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "46 × 7 really is 322 — the ones row carried its 4 correctly."
+  "step3":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "The adding is fine: 322 + 92 = 414. The rot set in a line earlier."
+  "none":
+    code: WRONG_ERROR_DIAGNOSIS
+    message: "There is a slip — 46 × 27 must land near 46 × 30 ≈ 1,400, and 414 is nowhere close."
+solution:
+  - type: step
+    goal: Redo the tens row.
+    working: "46 × 20 = 920"
+    reason: Rohan's 92 is 46 × 2 — the zero of the twenty was dropped.
+  - type: step
+    goal: Rebuild the total.
+    working: "322 + 920 = 1,242"
+  - type: takeaway
+    text: A tens row smaller than the ones row is a sure sign the shift went missing.
+  - type: verification
+    text: "Estimate: 46 × 27 ≈ 46 × 30 = 1,380 — 1,242 is close; Rohan's 414 was the giveaway."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Rohan worked out 46 × 27. Which line is wrong?</p>
+  <ul class="options">
+    <li data-val="step1">46 × 7 = 322</li>
+    <li data-val="step2">46 × 20 = 92</li>
+    <li data-val="step3">322 + 92 = 414</li>
+    <li data-val="none">No mistake</li>
+  </ul>
+  <p class="explain">The second line is wrong. In 27 the 2 means 20, so 46 × 20 = 920, not 92. Rohan multiplied by 2 instead of 20. The real answer is 1242.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2970"]
+description: Multiply 45 × 66
+hint:
+  - "Split 66 into 60 and 6."
+  - "The first 6 is worth sixty — its row is 45 × 60."
+  - "Add the two rows: 45 × 60 and 45 × 6."
+explain: "45 × 60 = 2,700 and 45 × 6 = 270; 2,700 + 270 = 2,970."
+whyWrong:
+  "2700":
+    code: PARTIAL_COMPUTATION
+    message: "2,700 is only the 45 × 60 row — the 45 × 6 row (270) is missing."
+  "2925":
+    code: ADJACENT_TABLE_FACT
+    message: "2,925 is 45 × 65 — one whole 45 short."
+  "2960":
+    code: CARRY_DROPPED
+    message: "Ten short — 2,700 + 270 makes 2,970."
+solution:
+  - type: step
+    goal: Multiply by the tens.
+    working: "45 × 60 = 2,700"
+  - type: step
+    goal: Multiply by the ones and add.
+    working: "45 × 6 = 270 → 2,700 + 270 = 2,970"
+  - type: takeaway
+    text: In 66 the two sixes differ by a factor of ten — their rows must too.
+  - type: verification
+    text: "The two rows sit in a neat 10:1 ratio (2,700 and 270) — exactly what twin digits promise."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">45 × 66 = ?</p>
+  <ul class="options"><li data-val="2700">2700</li><li data-val="2925">2925</li><li data-val="2960">2960</li><li data-val="2970">2970</li></ul>
+  <p class="explain">45 × 66 = 2970. The near misses come from forgetting that the tens digit is worth ten times more.</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["24 × 52", "52 × 20 + 52 × 4", "50 × 24 + 2 × 24"]
+description: Equivalent ways to write 52 × 24
+hint:
+  - "Splitting is allowed — but each piece must keep its real value."
+  - "And every piece must still be multiplied, not left dangling."
+  - "Test each line: does it rebuild the whole 52 × 24?"
+explain: "Swapping order (24 × 52) and splitting either number by place value both keep the product; 52×2 forgets the 20's zero, and a lone +2 was never multiplied."
+whyWrong:
+  "52 × 2 + 52 × 4":
+    code: PLACE_SHIFT_IN_EXPRESSION
+    message: "The 24 split into 2 and 4 — but the 2 is worth twenty. This expression makes only 52 × 6."
+  "50 × 24 + 2":
+    code: WRONG_OP_IN_EXPRESSION
+    message: "The 2 of 52 never got multiplied — it needs its own 2 × 24, not a bare +2."
+solution:
+  - type: step
+    goal: Check the swap.
+    working: "24 × 52 = 52 × 24 ✓"
+    reason: Order never changes a product.
+  - type: step
+    goal: Check the splits.
+    working: "52 × 20 + 52 × 4 → splits 24 ✓ · 50 × 24 + 2 × 24 → splits 52 ✓"
+  - type: step
+    goal: Expose the traps.
+    working: "52 × 2 + 52 × 4 = 52 × 6 ✗ · 50 × 24 + 2 = 1,202 ✗"
+  - type: takeaway
+    text: A split is legal when the pieces keep their place value and every piece multiplies.
+  - type: verification
+    text: "All three keepers equal 1,248; both traps land elsewhere (312 and 1,202)."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select every expression that equals 52 × 24.</p>
+  <ul class="options">
+    <li data-val="24 × 52">24 × 52</li>
+    <li data-val="52 × 20 + 52 × 4">52 × 20 + 52 × 4</li>
+    <li data-val="50 × 24 + 2 × 24">50 × 24 + 2 × 24</li>
+    <li data-val="52 × 2 + 52 × 4">52 × 2 + 52 × 4</li>
+    <li data-val="50 × 24 + 2">50 × 24 + 2</li>
+  </ul>
+  <p class="explain">52 × 24 = 1248. You can swap the order, split 24 into 20+4, or split 52 into 50+2. But "52 × 2" forgets the 20 means twenty, and "+ 2" forgets to multiply the 2 at all.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1"]
+description: The last digit of 47 × 63
+hint:
+  - "Only the last digits of the two numbers decide the last digit of the answer."
+  - "Multiply just those two ones digits."
+  - "The ones digit of THAT little product is your answer."
+explain: "7 × 3 = 21, so the product must end in 1."
+whyWrong:
+  "0":
+    code: NEAR_MISS
+    message: "A product ends in 0 only when the ones digits make a ten — 7 × 3 = 21 does not."
+  "3":
+    code: OPERAND_ECHO
+    message: "3 is just the ones digit of 63 — the answer's last digit comes from 7 × 3."
+  "7":
+    code: OPERAND_ECHO
+    message: "7 is just the ones digit of 47 — multiply it by 3 to see the true last digit."
+solution:
+  - type: step
+    goal: Take the ones digits.
+    working: "47 → 7 · 63 → 3"
+  - type: step
+    goal: Multiply just those.
+    working: "7 × 3 = 21 → last digit 1"
+    reason: Every other part of the multiplication produces tens or bigger — it cannot touch the ones.
+  - type: takeaway
+    text: The ones digit of a product is decided by the ones digits alone — a free answer check.
+  - type: verification
+    text: "Full product: 47 × 63 = 2,961 — and it ends in 1, as promised."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">47 × 63. What will the LAST digit of the answer be? (You do not need to finish the multiplication.)</p>
+  <ul class="options">
+    <li data-val="0">0</li>
+    <li data-val="1">1</li>
+    <li data-val="3">3</li>
+    <li data-val="7">7</li>
+  </ul>
+  <p class="explain">The last digit comes only from 7 × 3 = 21, which ends in 1. (The full answer is 2961.)</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1820"]
+description: Cost of 28 chairs at ₹65 each
+hint:
+  - "28 equal groups of ₹65 — multiply."
+  - "Split 28 into 20 and 8."
+  - "Add the rows: 65 × 20 and 65 × 8."
+explain: "65 × 20 = 1,300 and 65 × 8 = 520; together ₹1,820."
+whyWrong:
+  "1680":
+    code: PARTIAL_COMPUTATION
+    message: "₹1,680 is 28 × 60 — the ₹5 on each chair (₹140 altogether) went missing."
+  "1792":
+    code: ADJACENT_TABLE_FACT
+    message: "₹1,792 is 28 × 64 — one rupee per chair short."
+  "1810":
+    code: CARRY_DROPPED
+    message: "Ten rupees short — 1,300 + 520 makes 1,820."
+solution:
+  - type: step
+    goal: Multiply by the tens of 28.
+    working: "65 × 20 = 1,300"
+  - type: step
+    goal: Multiply by the ones and add.
+    working: "65 × 8 = 520 → 1,300 + 520 = ₹1,820"
+  - type: takeaway
+    text: Count times price — the split-by-tens method eats any two-digit pair.
+  - type: verification
+    text: "Estimate: 28 × 65 ≈ 30 × 65 = 1,950 — ₹1,820 sits below it by about two chairs' worth ✓"
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A school buys 28 chairs. Each chair costs ₹65. What is the total cost?</p>
+  <ul class="options"><li data-val="1680">₹1680</li><li data-val="1792">₹1792</li><li data-val="1810">₹1810</li><li data-val="1820">₹1820</li></ul>
+  <p class="explain">28 × ₹65 = ₹1820.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["28"]
+description: Missing factor — 45 × ? = 1260
+hint:
+  - "Try a friendly number first and see which side of 1,260 it lands."
+  - "45 × 30 is easy — compare it with 1,260."
+  - "Step down from 30, one 45 at a time."
+explain: "45 × 30 = 1,350 — too big by 90, which is two 45s: the missing number is 28."
+whyWrong:
+  "26":
+    code: OFF_BY_TWO
+    message: "45 × 26 = 1,170 — ninety short of 1,260."
+  "27":
+    code: OFF_BY_ONE
+    message: "45 × 27 = 1,215 — one 45 short."
+  "38":
+    code: DIGIT_INSERT_OR_SHIFT
+    message: "45 × 38 = 1,710 — far past 1,260; the tens digit is one too many."
+solution:
+  - type: step
+    goal: Anchor on a friendly multiple.
+    working: "45 × 30 = 1,350"
+  - type: step
+    goal: Measure the overshoot.
+    working: "1,350 − 1,260 = 90 = two 45s → 30 − 2 = 28"
+  - type: takeaway
+    text: Hunt missing factors from a round anchor, stepping by whole groups.
+  - type: verification
+    text: "45 × 28 = 45 × 30 − 90 = 1,260 — the equation closes."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">45 × ? = 1260. Which number is missing?</p>
+  <ul class="options">
+    <li data-val="26">26</li>
+    <li data-val="27">27</li>
+    <li data-val="28">28</li>
+    <li data-val="38">38</li>
+  </ul>
+  <p class="explain">45 × 28 = 1260. A good start is 45 × 30 = 1350 — slightly too big, so the answer is a little under 30.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3432"]
+description: Multiply 78 × 44
+hint:
+  - "Split 44 into 40 and 4."
+  - "The first 4 is worth forty — its row is 78 × 40."
+  - "Add the rows: 78 × 40 and 78 × 4."
+explain: "78 × 40 = 3,120 and 78 × 4 = 312; 3,120 + 312 = 3,432."
+whyWrong:
+  "3120":
+    code: PARTIAL_COMPUTATION
+    message: "3,120 is only the 78 × 40 row — the 78 × 4 row (312) never joined."
+  "3388":
+    code: ADJACENT_TABLE_FACT
+    message: "3,388 is 77 × 44 — one whole 44 short."
+  "3422":
+    code: CARRY_DROPPED
+    message: "Ten short — 3,120 + 312 makes 3,432."
+solution:
+  - type: step
+    goal: Multiply by the tens.
+    working: "78 × 40 = 3,120"
+  - type: step
+    goal: Multiply by the ones and add.
+    working: "78 × 4 = 312 → 3,120 + 312 = 3,432"
+  - type: takeaway
+    text: Twin-digit multipliers make tidy rows — the tens row is exactly ten times the ones row.
+  - type: verification
+    text: "The rows 3,120 and 312 sit in the promised 10:1 ratio, and their sum ends in 2, matching 8 × 4 = 32."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">78 × 44 = ?</p>
+  <ul class="options"><li data-val="3120">3120</li><li data-val="3388">3388</li><li data-val="3422">3422</li><li data-val="3432">3432</li></ul>
+  <p class="explain">78 × 44 = 3432. The near misses come from forgetting that the tens digit is worth ten times more.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["toosmall"]
+description: Is 190 a reasonable answer for 52 × 38?
+hint:
+  - "No exact work — round both numbers to friendly tens."
+  - "Multiply the two rounded numbers in your head."
+  - "Compare that rough size with Kabir's 190."
+explain: "52 × 38 is about 50 × 40 = 2,000 — Kabir's 190 is roughly ten times too small (it is close to 5 × 38)."
+whyWrong:
+  "about":
+    code: ESTIMATE_WRONG_VALUE
+    message: "The rough size is 50 × 40 = 2,000 — 190 is a tenth of that, not close at all."
+  "toobig":
+    code: ESTIMATE_WRONG_VALUE
+    message: "190 cannot be too big — even 50 × 4 alone reaches 200, and the real multiplier is 38."
+solution:
+  - type: step
+    goal: Round both numbers.
+    working: "52 → 50 · 38 → 40"
+  - type: step
+    goal: Multiply the friendly pair.
+    working: "50 × 40 = 2,000"
+  - type: step
+    goal: Compare.
+    working: "190 is about one tenth of 2,000 → way too small"
+    reason: 190 is what 5 × 38 gives — a dropped zero is the likely culprit.
+  - type: takeaway
+    text: A quick estimate is a lie detector for answers — tenfold gaps mean a lost zero.
+  - type: verification
+    text: "Exact: 52 × 38 = 1,976 — right beside the 2,000 estimate, and nowhere near 190."
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Kabir says 52 × 38 = 190. Without working it out, what do you think?</p>
+  <ul class="options">
+    <li data-val="toosmall">Way too small</li>
+    <li data-val="about">About right</li>
+    <li data-val="toobig">Way too big</li>
+  </ul>
+  <p class="explain">50 × 40 is about 2000, so 190 is far too small — Kabir has probably lost a whole partial product. (The real answer is 1976.)</p>
+</div>
+
+<!--@q
+type: multi-select
+answer: ["48 × 74", "75 × 56"]
+description: Which products are greater than 1000?
+hint:
+  - "Exact answers are overkill — round each pair to the nearest ten."
+  - "Multiply the rounded pairs in your head."
+  - "Keep the cards whose rough size clears 1,000."
+explain: "48×74 ≈ 50×70 = 3,500 ✓ and 75×56 ≈ 80×60 = 4,800 ✓; 24×21 ≈ 500 and 13×51 ≈ 650 fall short."
+whyWrong:
+  "24 × 21":
+    code: WRONG_NUMBER_PAIR
+    message: "24 × 21 ≈ 20 × 20 = 400-odd (exactly 504) — only half way to 1,000."
+  "13 × 51":
+    code: WRONG_NUMBER_PAIR
+    message: "13 × 51 ≈ 10 × 50 = 500-odd (exactly 663) — under the 1,000 line."
+solution:
+  - type: step
+    goal: Estimate every card.
+    working: "24×21 ≈ 500 · 48×74 ≈ 3,500 · 13×51 ≈ 650 · 75×56 ≈ 4,800"
+  - type: step
+    goal: Compare with 1,000.
+    working: "two clear it easily; two fall short"
+    reason: When estimates land this far from the line, no exact check is needed.
+  - type: takeaway
+    text: Estimates sort products against a benchmark without a single exact multiplication.
+  - type: verification
+    text: "Exact values agree: 3,552 and 4,200 are over; 504 and 663 are under."
+-->
+<div class="question" data-type="multi-select">
+  <p class="prompt">Select every product that is greater than 1000.</p>
+  <ul class="options">
+    <li data-val="24 × 21">24 × 21</li>
+    <li data-val="48 × 74">48 × 74</li>
+    <li data-val="13 × 51">13 × 51</li>
+    <li data-val="75 × 56">75 × 56</li>
+  </ul>
+  <p class="explain">24×21=504 and 13×51=663 are both under 1000. 48×74=3552 and 75×56=4200 are over.</p>
+</div>
+
+</div>
