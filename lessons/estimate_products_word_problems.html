@@ -1,0 +1,670 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["1200"]
+description: Estimate the product (18 × 62)
+hint:
+  - "About how many — so round before you multiply."
+  - "Take each number to its biggest place: the digit just below it decides up or down."
+  - "Multiply the two rounded numbers — the zeros ride along at the end."
+explain: 18 is about 20 and 62 is about 60; 20 × 60 = 1,200.
+whyWrong:
+  "120":
+    code: PLACE_SHIFT_DOWN
+    message: "This is 1,200 with a zero missing — count the zeros of 20 × 60 carefully."
+  "1800":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding each number to its biggest place gives 20 × 60 = 1,200 — this estimate strays too far from that."
+solution:
+  - type: step
+    goal: Round each number.
+    working: "18 → 20 · 62 → 60"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "20 × 60 = 1,200"
+    reason: Multiply the front digits, then hang the zeros of both numbers on the end.
+  - type: takeaway
+    text: Round both numbers first, then multiply — friendly numbers make big products easy.
+  - type: verification
+    text: The exact product is 1,116, and 1,200 sits close beside it — a fair estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya's gym has 62 bins of tennis balls. Each bin holds 18 balls. About how many tennis balls are there in all?</p>
+  <ul class="options"><li data-val="1200">1,200</li><li data-val="120">120</li><li data-val="1800">1,800</li></ul>
+  <p class="explain">18 rounds to 20 and 62 rounds to 60. 20 × 60 = 1,200.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["800"]
+description: Estimate the product (42 × 21)
+hint:
+  - "About how many — so round before you multiply."
+  - "Take each number to its biggest place: the digit just below it decides up or down."
+  - "Multiply the two rounded numbers — the zeros ride along at the end."
+explain: 42 is about 40 and 21 is about 20; 40 × 20 = 800.
+whyWrong:
+  "1200":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 21 to 30 — but 21 is nearer 20."
+  "600":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding each number to its biggest place gives 40 × 20 = 800 — this estimate strays too far from that."
+solution:
+  - type: step
+    goal: Round each number.
+    working: "42 → 40 · 21 → 20"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "40 × 20 = 800"
+    reason: Multiply the front digits, then hang the zeros of both numbers on the end.
+  - type: takeaway
+    text: Round both numbers first, then multiply — friendly numbers make big products easy.
+  - type: verification
+    text: The exact product is 882, and 800 sits close beside it — a fair estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A theatre has 21 rows of seats. Each row has 42 seats. About how many seats are there in all?</p>
+  <ul class="options"><li data-val="800">800</li><li data-val="1200">1,200</li><li data-val="600">600</li></ul>
+  <p class="explain">42 rounds to 40 and 21 rounds to 20. 40 × 20 = 800.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["6000"]
+description: Estimate the product (288 × 19)
+hint:
+  - "About how many — so round before you multiply."
+  - "Take each number to its biggest place: the digit just below it decides up or down."
+  - "Multiply the two rounded numbers — the zeros ride along at the end."
+explain: 288 is about 300 and 19 is about 20; 300 × 20 = 6,000.
+whyWrong:
+  "600":
+    code: PLACE_SHIFT_DOWN
+    message: "This is 6,000 with a zero missing — count the zeros of 300 × 20 carefully."
+  "2000":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding each number to its biggest place gives 300 × 20 = 6,000 — this estimate strays too far from that."
+solution:
+  - type: step
+    goal: Round each number.
+    working: "288 → 300 · 19 → 20"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "300 × 20 = 6,000"
+    reason: Multiply the front digits, then hang the zeros of both numbers on the end.
+  - type: takeaway
+    text: Round both numbers first, then multiply — friendly numbers make big products easy.
+  - type: verification
+    text: The exact product is 5,472, and 6,000 sits close beside it — a fair estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A library has 19 bookcases. Each bookcase holds 288 books. About how many books are there in all?</p>
+  <ul class="options"><li data-val="6000">6,000</li><li data-val="600">600</li><li data-val="2000">2,000</li></ul>
+  <p class="explain">288 rounds to 300 and 19 rounds to 20. 300 × 20 = 6,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1500"]
+description: Estimate the product (31 × 48)
+hint:
+  - "About how many — so round before you multiply."
+  - "Take each number to its biggest place: the digit just below it decides up or down."
+  - "Multiply the two rounded numbers — the zeros ride along at the end."
+explain: 31 is about 30 and 48 is about 50; 30 × 50 = 1,500.
+whyWrong:
+  "800":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding each number to its biggest place gives 30 × 50 = 1,500 — this estimate strays too far from that."
+  "2000":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 31 to 40 — but 31 is nearer 30."
+solution:
+  - type: step
+    goal: Round each number.
+    working: "31 → 30 · 48 → 50"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "30 × 50 = 1,500"
+    reason: Multiply the front digits, then hang the zeros of both numbers on the end.
+  - type: takeaway
+    text: Round both numbers first, then multiply — friendly numbers make big products easy.
+  - type: verification
+    text: The exact product is 1,488, and 1,500 sits close beside it — a fair estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Arjun plants 48 packets of seeds. Each packet has 31 seeds. About how many seeds are there in all?</p>
+  <ul class="options"><li data-val="1500">1,500</li><li data-val="800">800</li><li data-val="2000">2,000</li></ul>
+  <p class="explain">31 rounds to 30 and 48 rounds to 50. 30 × 50 = 1,500.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3500"]
+description: Estimate the product (68 × 53)
+hint:
+  - "About how many — so round before you multiply."
+  - "Take each number to its biggest place: the digit just below it decides up or down."
+  - "Multiply the two rounded numbers — the zeros ride along at the end."
+explain: 68 is about 70 and 53 is about 50; 70 × 50 = 3,500.
+whyWrong:
+  "350":
+    code: PLACE_SHIFT_DOWN
+    message: "This is 3,500 with a zero missing — count the zeros of 70 × 50 carefully."
+  "2400":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding each number to its biggest place gives 70 × 50 = 3,500 — this estimate strays too far from that."
+solution:
+  - type: step
+    goal: Round each number.
+    working: "68 → 70 · 53 → 50"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "70 × 50 = 3,500"
+    reason: Multiply the front digits, then hang the zeros of both numbers on the end.
+  - type: takeaway
+    text: Round both numbers first, then multiply — friendly numbers make big products easy.
+  - type: verification
+    text: The exact product is 3,604, and 3,500 sits close beside it — a fair estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">There are 53 jars of marbles. Each jar holds 68 marbles. About how many marbles are there in all?</p>
+  <ul class="options"><li data-val="3500">3,500</li><li data-val="350">350</li><li data-val="2400">2,400</li></ul>
+  <p class="explain">68 rounds to 70 and 53 rounds to 50. 70 × 50 = 3,500.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["800"]
+description: Estimate the product (22 × 38)
+hint:
+  - "About how many — so round before you multiply."
+  - "Take each number to its biggest place: the digit just below it decides up or down."
+  - "Multiply the two rounded numbers — the zeros ride along at the end."
+explain: 22 is about 20 and 38 is about 40; 20 × 40 = 800.
+whyWrong:
+  "80":
+    code: PLACE_SHIFT_DOWN
+    message: "This is 800 with a zero missing — count the zeros of 20 × 40 carefully."
+  "1200":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 22 to 30 — but 22 is nearer 20."
+solution:
+  - type: step
+    goal: Round each number.
+    working: "22 → 20 · 38 → 40"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "20 × 40 = 800"
+    reason: Multiply the front digits, then hang the zeros of both numbers on the end.
+  - type: takeaway
+    text: Round both numbers first, then multiply — friendly numbers make big products easy.
+  - type: verification
+    text: The exact product is 836, and 800 sits close beside it — a fair estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A sticker book has 38 pages. Each page has 22 stickers. About how many stickers are there in all?</p>
+  <ul class="options"><li data-val="800">800</li><li data-val="80">80</li><li data-val="1200">1,200</li></ul>
+  <p class="explain">22 rounds to 20 and 38 rounds to 40. 20 × 40 = 800.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["4000"]
+description: Estimate the product (96 × 41)
+hint:
+  - "About how many — so round before you multiply."
+  - "Take each number to its biggest place: the digit just below it decides up or down."
+  - "Multiply the two rounded numbers — the zeros ride along at the end."
+explain: 96 is about 100 and 41 is about 40; 100 × 40 = 4,000.
+whyWrong:
+  "3600":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 96 to 90 — but 96 is nearer 100."
+  "400":
+    code: PLACE_SHIFT_DOWN
+    message: "This is 4,000 with a zero missing — count the zeros of 100 × 40 carefully."
+solution:
+  - type: step
+    goal: Round each number.
+    working: "96 → 100 · 41 → 40"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "100 × 40 = 4,000"
+    reason: Multiply the front digits, then hang the zeros of both numbers on the end.
+  - type: takeaway
+    text: Round both numbers first, then multiply — friendly numbers make big products easy.
+  - type: verification
+    text: The exact product is 3,936, and 4,000 sits close beside it — a fair estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A shop has 41 boxes of crayons. Each box has 96 crayons. About how many crayons are there in all?</p>
+  <ul class="options"><li data-val="4000">4,000</li><li data-val="3600">3,600</li><li data-val="400">400</li></ul>
+  <p class="explain">96 rounds to 100 and 41 rounds to 40. 100 × 40 = 4,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1800"]
+description: Estimate the product (58 × 29)
+hint:
+  - "About how many — so round before you multiply."
+  - "Take each number to its biggest place: the digit just below it decides up or down."
+  - "Multiply the two rounded numbers — the zeros ride along at the end."
+explain: 58 is about 60 and 29 is about 30; 60 × 30 = 1,800.
+whyWrong:
+  "180":
+    code: PLACE_SHIFT_DOWN
+    message: "This is 1,800 with a zero missing — count the zeros of 60 × 30 carefully."
+  "1500":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 58 to 50 — but 58 is nearer 60."
+solution:
+  - type: step
+    goal: Round each number.
+    working: "58 → 60 · 29 → 30"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "60 × 30 = 1,800"
+    reason: Multiply the front digits, then hang the zeros of both numbers on the end.
+  - type: takeaway
+    text: Round both numbers first, then multiply — friendly numbers make big products easy.
+  - type: verification
+    text: The exact product is 1,682, and 1,800 sits close beside it — a fair estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">A farm packs 29 crates of apples. Each crate holds 58 apples. About how many apples are there in all?</p>
+  <ul class="options"><li data-val="1800">1,800</li><li data-val="180">180</li><li data-val="1500">1,500</li></ul>
+  <p class="explain">58 rounds to 60 and 29 rounds to 30. 60 × 30 = 1,800.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["3000"]
+description: Estimate the product (47 × 62)
+hint:
+  - "About how many — so round before you multiply."
+  - "Take each number to its biggest place: the digit just below it decides up or down."
+  - "Multiply the two rounded numbers — the zeros ride along at the end."
+explain: 47 is about 50 and 62 is about 60; 50 × 60 = 3,000.
+whyWrong:
+  "2400":
+    code: ROUND_ONE_WRONG
+    message: "This rounds 47 to 40 — but 47 is nearer 50."
+  "300":
+    code: PLACE_SHIFT_DOWN
+    message: "This is 3,000 with a zero missing — count the zeros of 50 × 60 carefully."
+solution:
+  - type: step
+    goal: Round each number.
+    working: "47 → 50 · 62 → 60"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "50 × 60 = 3,000"
+    reason: Multiply the front digits, then hang the zeros of both numbers on the end.
+  - type: takeaway
+    text: Round both numbers first, then multiply — friendly numbers make big products easy.
+  - type: verification
+    text: The exact product is 2,914, and 3,000 sits close beside it — a fair estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Meera makes 62 necklaces. Each necklace uses 47 beads. About how many beads are used in all?</p>
+  <ul class="options"><li data-val="3000">3,000</li><li data-val="2400">2,400</li><li data-val="300">300</li></ul>
+  <p class="explain">47 rounds to 50 and 62 rounds to 60. 50 × 60 = 3,000.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["1200"]
+description: Estimate the product (19 × 63)
+hint:
+  - "About how many — so round before you multiply."
+  - "Take each number to its biggest place: the digit just below it decides up or down."
+  - "Multiply the two rounded numbers — the zeros ride along at the end."
+explain: 19 is about 20 and 63 is about 60; 20 × 60 = 1,200.
+whyWrong:
+  "120":
+    code: PLACE_SHIFT_DOWN
+    message: "This is 1,200 with a zero missing — count the zeros of 20 × 60 carefully."
+  "1800":
+    code: ESTIMATE_WRONG_VALUE
+    message: "Rounding each number to its biggest place gives 20 × 60 = 1,200 — this estimate strays too far from that."
+solution:
+  - type: step
+    goal: Round each number.
+    working: "19 → 20 · 63 → 60"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "20 × 60 = 1,200"
+    reason: Multiply the front digits, then hang the zeros of both numbers on the end.
+  - type: takeaway
+    text: Round both numbers first, then multiply — friendly numbers make big products easy.
+  - type: verification
+    text: The exact product is 1,197, and 1,200 sits close beside it — a fair estimate.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Kabir fills 63 trays with cookies. Each tray holds 19 cookies. About how many cookies are there in all?</p>
+  <ul class="options"><li data-val="1200">1,200</li><li data-val="120">120</li><li data-val="1800">1,800</li></ul>
+  <p class="explain">19 rounds to 20 and 63 rounds to 60. 20 × 60 = 1,200.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [83, 38]
+op: ×
+answer: ["80","40","3200"]
+description: Round, then estimate (83 × 38)
+hint:
+  - "Round each number before any multiplying."
+  - "Check the digit just below each number's biggest place — 5 or more climbs, less than 5 stays."
+  - "Multiply the two rounded numbers and keep every zero."
+explain: 83 rounds to 80 and 38 rounds to 40; 80 × 40 = 3,200.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "83 → 80"
+  - type: step
+    goal: Round the second number.
+    working: "38 → 40"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "80 × 40 = 3,200"
+    reason: Front digits first, then the zeros from both numbers join the end.
+  - type: takeaway
+    text: Estimate products by rounding both numbers first — never multiply the messy originals.
+  - type: verification
+    text: The exact product, 3,154, lands near 3,200 — the estimate holds.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">There are 38 photo albums. Each album holds 83 photos. Round each number, then estimate the total.</p>
+  <p class="explain">83 → 80, 38 → 40, and 80 × 40 = 3,200.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [52, 28]
+op: ×
+answer: ["50","30","1500"]
+description: Round, then estimate (52 × 28)
+hint:
+  - "Round each number before any multiplying."
+  - "Check the digit just below each number's biggest place — 5 or more climbs, less than 5 stays."
+  - "Multiply the two rounded numbers and keep every zero."
+explain: 52 rounds to 50 and 28 rounds to 30; 50 × 30 = 1,500.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "52 → 50"
+  - type: step
+    goal: Round the second number.
+    working: "28 → 30"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "50 × 30 = 1,500"
+    reason: Front digits first, then the zeros from both numbers join the end.
+  - type: takeaway
+    text: Estimate products by rounding both numbers first — never multiply the messy originals.
+  - type: verification
+    text: The exact product, 1,456, lands near 1,500 — the estimate holds.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A school has 28 buses. Each bus carries 52 students. Round each number, then estimate the total.</p>
+  <p class="explain">52 → 50, 28 → 30, and 50 × 30 = 1,500.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [178, 21]
+op: ×
+answer: ["200","20","4000"]
+description: Round, then estimate (178 × 21)
+hint:
+  - "Round each number before any multiplying."
+  - "Check the digit just below each number's biggest place — 5 or more climbs, less than 5 stays."
+  - "Multiply the two rounded numbers and keep every zero."
+explain: 178 rounds to 200 and 21 rounds to 20; 200 × 20 = 4,000.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "178 → 200"
+  - type: step
+    goal: Round the second number.
+    working: "21 → 20"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "200 × 20 = 4,000"
+    reason: Front digits first, then the zeros from both numbers join the end.
+  - type: takeaway
+    text: Estimate products by rounding both numbers first — never multiply the messy originals.
+  - type: verification
+    text: The exact product, 3,738, lands near 4,000 — the estimate holds.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A builder makes 21 walls. Each wall uses 178 bricks. Round each number, then estimate the total.</p>
+  <p class="explain">178 → 200, 21 → 20, and 200 × 20 = 4,000.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [19, 72]
+op: ×
+answer: ["20","70","1400"]
+description: Round, then estimate (19 × 72)
+hint:
+  - "Round each number before any multiplying."
+  - "Check the digit just below each number's biggest place — 5 or more climbs, less than 5 stays."
+  - "Multiply the two rounded numbers and keep every zero."
+explain: 19 rounds to 20 and 72 rounds to 70; 20 × 70 = 1,400.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "19 → 20"
+  - type: step
+    goal: Round the second number.
+    working: "72 → 70"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "20 × 70 = 1,400"
+    reason: Front digits first, then the zeros from both numbers join the end.
+  - type: takeaway
+    text: Estimate products by rounding both numbers first — never multiply the messy originals.
+  - type: verification
+    text: The exact product, 1,368, lands near 1,400 — the estimate holds.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Ananya's shop sells 72 packs of pencils. Each pack has 19 pencils. Round each number, then estimate the total.</p>
+  <p class="explain">19 → 20, 72 → 70, and 20 × 70 = 1,400.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [61, 39]
+op: ×
+answer: ["60","40","2400"]
+description: Round, then estimate (61 × 39)
+hint:
+  - "Round each number before any multiplying."
+  - "Check the digit just below each number's biggest place — 5 or more climbs, less than 5 stays."
+  - "Multiply the two rounded numbers and keep every zero."
+explain: 61 rounds to 60 and 39 rounds to 40; 60 × 40 = 2,400.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "61 → 60"
+  - type: step
+    goal: Round the second number.
+    working: "39 → 40"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "60 × 40 = 2,400"
+    reason: Front digits first, then the zeros from both numbers join the end.
+  - type: takeaway
+    text: Estimate products by rounding both numbers first — never multiply the messy originals.
+  - type: verification
+    text: The exact product, 2,379, lands near 2,400 — the estimate holds.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">There are 39 bags of coins. Each bag holds 61 coins. Round each number, then estimate the total.</p>
+  <p class="explain">61 → 60, 39 → 40, and 60 × 40 = 2,400.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [27, 73]
+op: ×
+answer: ["30","70","2100"]
+description: Round, then estimate (27 × 73)
+hint:
+  - "Round each number before any multiplying."
+  - "Check the digit just below each number's biggest place — 5 or more climbs, less than 5 stays."
+  - "Multiply the two rounded numbers and keep every zero."
+explain: 27 rounds to 30 and 73 rounds to 70; 30 × 70 = 2,100.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "27 → 30"
+  - type: step
+    goal: Round the second number.
+    working: "73 → 70"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "30 × 70 = 2,100"
+    reason: Front digits first, then the zeros from both numbers join the end.
+  - type: takeaway
+    text: Estimate products by rounding both numbers first — never multiply the messy originals.
+  - type: verification
+    text: The exact product, 1,971, lands near 2,100 — the estimate holds.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">A nursery has 73 flower beds. Each bed has 27 flowers. Round each number, then estimate the total.</p>
+  <p class="explain">27 → 30, 73 → 70, and 30 × 70 = 2,100.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+layout: round-scaffold
+top: [34, 58]
+op: ×
+answer: ["30","60","1800"]
+description: Round, then estimate (34 × 58)
+hint:
+  - "Round each number before any multiplying."
+  - "Check the digit just below each number's biggest place — 5 or more climbs, less than 5 stays."
+  - "Multiply the two rounded numbers and keep every zero."
+explain: 34 rounds to 30 and 58 rounds to 60; 30 × 60 = 1,800.
+solution:
+  - type: step
+    goal: Round the first number.
+    working: "34 → 30"
+  - type: step
+    goal: Round the second number.
+    working: "58 → 60"
+  - type: step
+    goal: Multiply the rounded numbers.
+    working: "30 × 60 = 1,800"
+    reason: Front digits first, then the zeros from both numbers join the end.
+  - type: takeaway
+    text: Estimate products by rounding both numbers first — never multiply the messy originals.
+  - type: verification
+    text: The exact product, 1,972, lands near 1,800 — the estimate holds.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">There are 58 playlists. Each playlist has 34 songs. Round each number, then estimate the total.</p>
+  <p class="explain">34 → 30, 58 → 60, and 30 × 60 = 1,800.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["19 × 21", "47 × 19", "23 × 78"]
+low: smallest estimate
+high: largest estimate
+description: Order the products by their estimates
+hint:
+  - "No exact multiplying — a rough size for each card is enough."
+  - "Round both numbers on each card to their biggest place."
+  - "Multiply the rounded pairs, then line the cards up by those rough sizes."
+explain: "Estimates: 19 × 21 ≈ 400 · 47 × 19 ≈ 1,000 · 23 × 78 ≈ 1,600 — smallest to largest."
+solution:
+  - type: step
+    goal: Estimate each card.
+    working: "19 × 21 ≈ 400 · 47 × 19 ≈ 1,000 · 23 × 78 ≈ 1,600"
+  - type: step
+    goal: Line them up by size.
+    working: "400 < 1,000 < 1,600"
+  - type: takeaway
+    text: Estimates are for comparing — rough sizes order the cards without a single exact product.
+  - type: verification
+    text: Each estimate is clearly bigger than the one before it, so the order cannot flip.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Estimate each product, then order them from the smallest estimate to the largest.</p>
+  <ol class="order"><li data-val="19 × 21">19 × 21</li><li data-val="47 × 19">47 × 19</li><li data-val="23 × 78">23 × 78</li></ol>
+  <p class="explain">19 × 21 ≈ 400, 47 × 19 ≈ 1,000, 23 × 78 ≈ 1,600.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["42 × 21", "31 × 48", "68 × 53"]
+low: smallest estimate
+high: largest estimate
+description: Order the products by their estimates
+hint:
+  - "No exact multiplying — a rough size for each card is enough."
+  - "Round both numbers on each card to their biggest place."
+  - "Multiply the rounded pairs, then line the cards up by those rough sizes."
+explain: "Estimates: 42 × 21 ≈ 800 · 31 × 48 ≈ 1,500 · 68 × 53 ≈ 3,500 — smallest to largest."
+solution:
+  - type: step
+    goal: Estimate each card.
+    working: "42 × 21 ≈ 800 · 31 × 48 ≈ 1,500 · 68 × 53 ≈ 3,500"
+  - type: step
+    goal: Line them up by size.
+    working: "800 < 1,500 < 3,500"
+  - type: takeaway
+    text: Estimates are for comparing — rough sizes order the cards without a single exact product.
+  - type: verification
+    text: Each estimate is clearly bigger than the one before it, so the order cannot flip.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Estimate each product, then order them from the smallest estimate to the largest.</p>
+  <ol class="order"><li data-val="42 × 21">42 × 21</li><li data-val="31 × 48">31 × 48</li><li data-val="68 × 53">68 × 53</li></ol>
+  <p class="explain">42 × 21 ≈ 800, 31 × 48 ≈ 1,500, 68 × 53 ≈ 3,500.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["58 × 29", "47 × 62", "288 × 19"]
+low: smallest estimate
+high: largest estimate
+description: Order the products by their estimates
+hint:
+  - "No exact multiplying — a rough size for each card is enough."
+  - "Round both numbers on each card to their biggest place."
+  - "Multiply the rounded pairs, then line the cards up by those rough sizes."
+explain: "Estimates: 58 × 29 ≈ 1,800 · 47 × 62 ≈ 3,000 · 288 × 19 ≈ 6,000 — smallest to largest."
+solution:
+  - type: step
+    goal: Estimate each card.
+    working: "58 × 29 ≈ 1,800 · 47 × 62 ≈ 3,000 · 288 × 19 ≈ 6,000"
+  - type: step
+    goal: Line them up by size.
+    working: "1,800 < 3,000 < 6,000"
+  - type: takeaway
+    text: Estimates are for comparing — rough sizes order the cards without a single exact product.
+  - type: verification
+    text: Each estimate is clearly bigger than the one before it, so the order cannot flip.
+-->
+<div class="question" data-type="order">
+  <p class="prompt">Estimate each product, then order them from the smallest estimate to the largest.</p>
+  <ol class="order"><li data-val="58 × 29">58 × 29</li><li data-val="47 × 62">47 × 62</li><li data-val="288 × 19">288 × 19</li></ol>
+  <p class="explain">58 × 29 ≈ 1,800, 47 × 62 ≈ 3,000, 288 × 19 ≈ 6,000.</p>
+</div>
+
+</div>
