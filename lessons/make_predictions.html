@@ -1,0 +1,763 @@
+<div id="source">
+<!--@q
+type: single-select
+answer: ["Certain"]
+description: An all-blue spinner must land on blue
+hint:
+  - "Look at what colours this spinner actually has."
+  - "Could any spin end on something that is not blue?"
+  - "An event that happens every single time has a special name."
+explain: "Every part is blue, so landing on blue happens on every spin — certain."
+whyWrong:
+  "Possible":
+    code: PROBABILITY_WRONG_LEVEL
+    message: "'Possible' undersells it — blue is not just one option here, it is the only one."
+  "Impossible":
+    code: PROBABILITY_WRONG_LEVEL
+    message: "Impossible means it can never happen — but this spinner can land nowhere else."
+solution:
+  - type: step
+    goal: Check the spinner.
+    working: "every part is blue"
+  - type: step
+    goal: Name the event.
+    working: "blue on every spin → certain"
+    reason: No other outcome exists.
+  - type: takeaway
+    text: Certain means every outcome wins — nothing is left to chance.
+  - type: verification
+    text: Try to describe a spin that misses blue — there isn't one.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Every part of this spinner is blue. If you spin it, will it land on BLUE?</p>
+  <figure data-show="spinner" data-slices="blue:1"></figure>
+  <ul class="options">
+    <li data-val="Certain">Certain</li>
+    <li data-val="Possible">Possible</li>
+    <li data-val="Impossible">Impossible</li>
+  </ul>
+  <p class="explain">The whole spinner is blue, so landing on blue always happens. It is certain.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Impossible"]
+description: An all-pink spinner cannot land on yellow
+hint:
+  - "Check the spinner for yellow first."
+  - "A spinner can only land on colours it actually has."
+  - "An event with no way to happen has a special name."
+explain: "There is no yellow anywhere on this spinner — landing on yellow is impossible."
+whyWrong:
+  "Certain":
+    code: PROBABILITY_WRONG_LEVEL
+    message: "Certain is the opposite end — pink is certain here, yellow is the one that can never come up."
+  "Possible":
+    code: PROBABILITY_WRONG_LEVEL
+    message: "'Possible' needs at least one yellow part — this spinner has none."
+solution:
+  - type: step
+    goal: Hunt for yellow.
+    working: "0 parts"
+  - type: step
+    goal: Name the event.
+    working: "no yellow to land on → impossible"
+  - type: takeaway
+    text: Impossible is a real category — no winning outcome exists at all.
+  - type: verification
+    text: Every spin ends on pink, which is precisely why yellow never happens.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This whole spinner is pink. If you spin it, can it land on YELLOW?</p>
+  <figure data-show="spinner" data-slices="#f7a8c4:1"></figure>
+  <ul class="options">
+    <li data-val="Certain">Certain</li>
+    <li data-val="Possible">Possible</li>
+    <li data-val="Impossible">Impossible</li>
+  </ul>
+  <p class="explain">The whole spinner is pink, so landing on yellow is impossible.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Impossible"]
+description: No orange marble to pick
+hint:
+  - "Look at the colours actually in the bag."
+  - "You can only pick a colour that is in there."
+  - "What do we call an event with no way to happen?"
+explain: "The bag holds green, purple and blue — no orange, so picking orange is impossible."
+whyWrong:
+  "Certain":
+    code: PROBABILITY_WRONG_LEVEL
+    message: "Certain would need EVERY marble to be orange — none of them are."
+  "Possible":
+    code: PROBABILITY_WRONG_LEVEL
+    message: "Possible needs at least one orange marble in the bag — check again; there is none."
+solution:
+  - type: step
+    goal: List the bag.
+    working: "1 green, 3 purple, 1 blue"
+  - type: step
+    goal: Look for orange.
+    working: "0 → impossible"
+  - type: takeaway
+    text: Check the bag before judging the chance — missing colours are impossible draws.
+  - type: verification
+    text: Five marbles, none orange — no lucky pick can produce what is not there.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Look at the marbles in the bag. You pick one without looking. Can you pick an ORANGE marble?</p><svg viewBox="0 0 152 84" width="152" height="84" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="bag of marbles"><rect x="2" y="2" width="148" height="80" rx="12" fill="#f6f3fc" stroke="#b9a8e8" stroke-width="2"/><circle cx="25" cy="25" r="13" fill="#22c55e" stroke="#00000022" stroke-width="1.5"/><circle cx="59" cy="25" r="13" fill="#a855f7" stroke="#00000022" stroke-width="1.5"/><circle cx="93" cy="25" r="13" fill="#a855f7" stroke="#00000022" stroke-width="1.5"/><circle cx="127" cy="25" r="13" fill="#a855f7" stroke="#00000022" stroke-width="1.5"/><circle cx="25" cy="59" r="13" fill="#2f9fe8" stroke="#00000022" stroke-width="1.5"/></svg>
+  
+  <ul class="options">
+    <li data-val="Certain">Certain</li>
+    <li data-val="Possible">Possible</li>
+    <li data-val="Impossible">Impossible</li>
+  </ul>
+  <p class="explain">There are no orange marbles, so picking orange is impossible.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Equally likely"]
+description: 3 red vs 3 blue — a fair split
+hint:
+  - "Count the red parts and the blue parts."
+  - "The colour with more parts is more likely."
+  - "What if neither colour has more?"
+explain: "Red and blue have 3 parts each — the same share, so they are equally likely."
+whyWrong:
+  "Red":
+    code: DATA_READING_ERROR
+    message: "Red's 3 parts are exactly matched by blue's 3 — no edge either way."
+  "Blue":
+    code: DATA_READING_ERROR
+    message: "Blue holds 3 parts, and so does red — a perfect tie, not a blue win."
+solution:
+  - type: step
+    goal: Count the parts.
+    working: "red 3 · blue 3"
+  - type: step
+    goal: Compare.
+    working: "equal shares → equally likely"
+  - type: takeaway
+    text: Equal parts means equal chances — 'more likely' needs a real difference.
+  - type: verification
+    text: 3 + 3 fills all six parts, split perfectly down the middle.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This spinner has 3 red parts and 3 blue parts. Is RED or BLUE more likely?</p>
+  <figure data-show="spinner" data-slices="red:3,blue:3"></figure>
+  <ul class="options">
+    <li data-val="Red">Red</li>
+    <li data-val="Blue">Blue</li>
+    <li data-val="Equally likely">Equally likely</li>
+  </ul>
+  <p class="explain">Red is 3 of 6 parts and blue is 3 of 6 parts. They are the same, so they are equally likely.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Green"]
+description: Which colour is more likely?
+hint:
+  - "Count each colour's parts."
+  - "More parts means more of the spinner belongs to that colour."
+  - "Compare the two counts."
+explain: "Green covers 5 parts and pink only 3 — green is more likely."
+whyWrong:
+  "Pink":
+    code: COMPARISON_REVERSED
+    message: "Pink owns 3 parts to green's 5 — the smaller share, so the less likely colour."
+  "Equally likely":
+    code: COMPARISON_EQUAL_WRONG
+    message: "5 against 3 is not a tie — green genuinely holds more of the spinner."
+solution:
+  - type: step
+    goal: Count the parts.
+    working: "green 5 · pink 3"
+  - type: step
+    goal: Compare.
+    working: "5 > 3 → green"
+  - type: takeaway
+    text: The bigger slice-count wins 'more likely' — count, then compare.
+  - type: verification
+    text: 5 + 3 = 8 parts in all, and green's 5 is clearly past half.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Which colour is this spinner MORE likely to land on?</p>
+  <figure data-show="spinner" data-slices="green:5,pink:3"></figure>
+  <ul class="options">
+    <li data-val="Green">Green</li>
+    <li data-val="Pink">Pink</li>
+    <li data-val="Equally likely">Equally likely</li>
+  </ul>
+  <p class="explain">Green covers 5 of the 8 parts and pink covers only 3. Green is more likely.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["Blue"]
+description: Which colour is MOST likely?
+hint:
+  - "Count the parts of every colour, not just two."
+  - "The winner is the colour with the most parts."
+  - "Compare all three counts."
+explain: "Blue has 4 parts; yellow and green have 2 each — blue is most likely."
+whyWrong:
+  "Yellow":
+    code: DATA_READING_ERROR
+    message: "Yellow covers 2 parts — half of blue's 4."
+  "Green":
+    code: DATA_READING_ERROR
+    message: "Green also stops at 2 parts — blue doubles it."
+solution:
+  - type: step
+    goal: Count every colour.
+    working: "blue 4 · yellow 2 · green 2"
+  - type: step
+    goal: Pick the biggest.
+    working: "4 beats 2 and 2 → blue"
+  - type: takeaway
+    text: 'Most likely' is a three-way contest — count every colour before crowning one.
+  - type: verification
+    text: 4 + 2 + 2 = 8 parts — blue owns exactly half the spinner.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Priya spins this spinner once. Which colour is it MOST likely to land on?</p>
+  <figure data-show="spinner" data-slices="blue:4,yellow:2,green:2"></figure>
+  <ul class="options">
+    <li data-val="Blue">Blue</li>
+    <li data-val="Yellow">Yellow</li>
+    <li data-val="Green">Green</li>
+  </ul>
+  <p class="explain">Blue has 4 parts. Yellow has 2 and green has 2. Blue has the most parts, so blue is most likely.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["2"]
+description: Ways a coin can land
+hint:
+  - "Picture the coin in the air, then landing."
+  - "Which faces could be looking up?"
+  - "Count those faces — that is the number of outcomes."
+explain: "A coin can land heads or tails — 2 different outcomes."
+solution:
+  - type: step
+    goal: List the outcomes.
+    working: "heads, tails"
+  - type: step
+    goal: Count them.
+    working: "2"
+  - type: takeaway
+    text: Counting outcomes is the first step of every probability question.
+  - type: verification
+    text: Each flip shows exactly one of these two faces — never both, never neither.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">How many different ways can a coin land when you flip it? []</p><svg viewBox="0 0 80 80" width="72" height="72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="coin"><circle cx="40" cy="40" r="34" fill="#fcd34d" stroke="#d97706" stroke-width="3"/><circle cx="40" cy="40" r="26" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3 3"/><text x="40" y="41" text-anchor="middle" dominant-baseline="central" font-size="28" font-weight="800" fill="#92400e" font-family="'Baloo 2',cursive">H</text></svg><svg viewBox="0 0 80 80" width="72" height="72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="coin"><circle cx="40" cy="40" r="34" fill="#fcd34d" stroke="#d97706" stroke-width="3"/><circle cx="40" cy="40" r="26" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3 3"/><text x="40" y="41" text-anchor="middle" dominant-baseline="central" font-size="28" font-weight="800" fill="#92400e" font-family="'Baloo 2',cursive">T</text></svg>
+  
+  
+  <p class="explain">A coin can land on heads or tails, so there are 2 outcomes.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["6"]
+description: Ways a die can land
+hint:
+  - "Think about what a number cube shows on each face."
+  - "List the different numbers you could roll."
+  - "Count the list."
+explain: "A die shows 1, 2, 3, 4, 5 or 6 — six different outcomes."
+solution:
+  - type: step
+    goal: List the outcomes.
+    working: "1, 2, 3, 4, 5, 6"
+  - type: step
+    goal: Count them.
+    working: "6"
+  - type: takeaway
+    text: A cube has six faces, so a roll has six possible outcomes.
+  - type: verification
+    text: No face repeats and none is missing — the list is exactly the outcomes.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">How many different numbers can you roll on a number cube (a die)? []</p><svg viewBox="0 0 80 80" width="72" height="72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="die"><rect x="6" y="6" width="68" height="68" rx="14" fill="#ffffff" stroke="#7b5cff" stroke-width="3"/><circle cx="24" cy="22" r="6" fill="#2c2150"/><circle cx="56" cy="22" r="6" fill="#2c2150"/><circle cx="24" cy="40" r="6" fill="#2c2150"/><circle cx="56" cy="40" r="6" fill="#2c2150"/><circle cx="24" cy="58" r="6" fill="#2c2150"/><circle cx="56" cy="58" r="6" fill="#2c2150"/></svg>
+  
+  <p class="explain">A number cube has faces 1, 2, 3, 4, 5, 6, so there are 6 outcomes.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["3"]
+description: Predict heads in 6 flips
+hint:
+  - "Heads comes up about half the time."
+  - "The prediction takes that share of the 6 flips."
+  - "What is half of 6?"
+explain: "Heads is a 1-in-2 chance, and half of 6 flips is 3."
+solution:
+  - type: step
+    goal: Find the share.
+    working: "P(heads) = 1/2"
+  - type: step
+    goal: Apply it to the flips.
+    working: "half of 6 = 3"
+    reason: A prediction is the share times the number of tries.
+  - type: takeaway
+    text: Predictions scale the chance up to the number of tries.
+  - type: verification
+    text: 3 heads and 3 tails together account for all 6 flips.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">If you flip a coin 6 times, how many times do you predict it will land on HEADS? []</p><svg viewBox="0 0 80 80" width="72" height="72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="coin"><circle cx="40" cy="40" r="34" fill="#fcd34d" stroke="#d97706" stroke-width="3"/><circle cx="40" cy="40" r="26" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3 3"/><text x="40" y="41" text-anchor="middle" dominant-baseline="central" font-size="28" font-weight="800" fill="#92400e" font-family="'Baloo 2',cursive">H</text></svg>
+  
+  <p class="explain">6 &times; 1/2 = 3.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["3"]
+description: Predict yellow in 6 spins (half-yellow spinner)
+hint:
+  - "Work out yellow's share of the spinner first."
+  - "Yellow and green split this spinner evenly."
+  - "Take that share of the 6 spins."
+explain: "Yellow covers 2 of 4 parts — half — and half of 6 spins is 3."
+solution:
+  - type: step
+    goal: Find yellow's share.
+    working: "2 of 4 parts = 1/2"
+  - type: step
+    goal: Scale to 6 spins.
+    working: "half of 6 = 3"
+  - type: takeaway
+    text: Share first, spins second — every prediction follows this two-step.
+  - type: verification
+    text: Green expects the other 3 spins; together they cover all 6.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">If you spin this spinner 6 times, how many times do you predict it will land on YELLOW? []</p>
+  <figure data-show="spinner" data-slices="yellow:2,green:2"></figure>
+  <p class="explain">Yellow is 2 of 4 parts, which is half. Half of 6 is 3.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["6"]
+description: Same spinner, twice the spins
+hint:
+  - "This is the same half-yellow spinner as before."
+  - "Only the number of spins changed — 12 now."
+  - "Take yellow's share of 12."
+explain: "Yellow's share is still 1/2, and half of 12 spins is 6."
+solution:
+  - type: step
+    goal: Recall the share.
+    working: "yellow = 1/2"
+  - type: step
+    goal: Scale to 12 spins.
+    working: "half of 12 = 6"
+    reason: Double the spins, double the prediction — the share never changed.
+  - type: takeaway
+    text: When tries double, predictions double — the underlying chance is untouched.
+  - type: verification
+    text: 6 is exactly twice the prediction for 6 spins, matching the doubled tries.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">If you spin this spinner 12 times, how many times do you predict it will land on YELLOW? []</p>
+  <figure data-show="spinner" data-slices="yellow:2,green:2"></figure>
+  <p class="explain">Yellow is 2 of 4 parts, which is half. Half of 12 is 6.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["2"]
+description: Predict blue — 1 part in 3
+hint:
+  - "Count the parts and find how many are blue."
+  - "Blue owns 1 of the 3 parts."
+  - "Share the 6 spins equally between the parts."
+explain: "Blue is 1 part of 3, and a third of 6 spins is 2."
+solution:
+  - type: step
+    goal: Find blue's share.
+    working: "1 of 3 parts = 1/3"
+  - type: step
+    goal: Scale to 6 spins.
+    working: "6 ÷ 3 = 2"
+  - type: takeaway
+    text: Each equal part expects an equal share of the spins.
+  - type: verification
+    text: The yellow parts expect 4 spins; 4 + 2 = 6 ✓
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">If you spin this spinner 6 times, how many times do you predict it will land on BLUE? []</p>
+  <figure data-show="spinner" data-slices="#4fc3f7:1,#f9d34e:2"></figure>
+  <p class="explain">Blue is 1 of 3 equal parts: 6 &times; 1/3 = 2.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["3"]
+description: Predict blue — 3 parts in 9
+hint:
+  - "Count all the parts, then the blue ones."
+  - "Blue owns 3 of the 9 parts."
+  - "Share the 9 spins between the 9 parts."
+explain: "With 9 spins over 9 parts, each part expects one spin — blue's 3 parts expect 3."
+solution:
+  - type: step
+    goal: Find blue's share.
+    working: "3 of 9 parts"
+  - type: step
+    goal: Scale to 9 spins.
+    working: "one spin per part → 3 for blue"
+  - type: takeaway
+    text: When spins equal parts, each part expects exactly one — a lovely shortcut.
+  - type: verification
+    text: Yellow (4) and green (2) expect the other 6 spins: 3 + 4 + 2 = 9 ✓
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">If you spin this spinner 9 times, how many times do you predict it will land on BLUE? []</p>
+  <figure data-show="spinner" data-slices="#4fc3f7:3,#f9d34e:4,#7ed957:2"></figure>
+  <p class="explain">Blue is 3 of 9 equal parts: 9 &times; 3/9 = 3.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["2"]
+description: Predict rolling a 3 in 12 rolls
+hint:
+  - "Only one face of the six shows a 3."
+  - "Split the 12 rolls evenly between the six faces."
+  - "How many rolls does each face expect?"
+explain: "Each face expects 12 ÷ 6 = 2 rolls — so about 2 threes."
+whyWrong:
+  "3":
+    code: OPERAND_ECHO
+    message: "3 echoes the face being watched — the prediction comes from 12 ÷ 6, not from the face's name."
+  "6":
+    code: NEAR_MISS
+    message: "6 would be half the rolls — a coin's share, not one face in six."
+solution:
+  - type: step
+    goal: Share the rolls.
+    working: "12 ÷ 6 faces = 2 each"
+  - type: step
+    goal: Read off the 3's share.
+    working: "about 2 rolls"
+    reason: Each face gets an equal slice of the rolls.
+  - type: takeaway
+    text: Fair dice share rolls equally — total rolls ÷ six faces.
+  - type: verification
+    text: Six faces × 2 expected rolls each = 12 — every roll accounted for.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Meena rolls a number cube 12 times. What is the best prediction for how many times she rolls a 3?</p><svg viewBox="0 0 80 80" width="72" height="72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="die"><rect x="6" y="6" width="68" height="68" rx="14" fill="#ffffff" stroke="#7b5cff" stroke-width="3"/><circle cx="24" cy="24" r="6" fill="#2c2150"/><circle cx="40" cy="40" r="6" fill="#2c2150"/><circle cx="56" cy="56" r="6" fill="#2c2150"/></svg>
+  
+  <ul class="options">
+    <li data-val="2">2 times</li>
+    <li data-val="3">3 times</li>
+    <li data-val="6">6 times</li>
+  </ul>
+  <p class="explain">A 3 is 1 of the 6 faces. One sixth of 12 is 2.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["8"]
+description: Predict yellow — 8 parts in 10, 10 spins
+hint:
+  - "Spins equal parts here — 10 and 10."
+  - "So each part expects exactly one spin."
+  - "Yellow owns 8 parts."
+explain: "With 10 spins across 10 parts, each part expects one — yellow's 8 parts expect 8 spins."
+whyWrong:
+  "10":
+    code: OPERAND_ECHO
+    message: "10 is the number of spins — yellow expects only its own 8 parts' worth."
+  "2":
+    code: DATA_READING_ERROR
+    message: "2 is the share of the NON-yellow parts — the question asks about yellow itself."
+solution:
+  - type: step
+    goal: Match spins to parts.
+    working: "10 spins ÷ 10 parts = 1 each"
+  - type: step
+    goal: Count yellow's parts.
+    working: "8 → about 8 spins"
+  - type: takeaway
+    text: One spin per part is the cleanest prediction there is.
+  - type: verification
+    text: Yellow 8 + others 2 = 10 — the whole session accounted for.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This spinner has 8 yellow parts out of 10. If you spin it 10 times, what is the best prediction for YELLOW?</p>
+  <figure data-show="spinner" data-slices="#f9d34e:8,#4fc3f7:1,#7ed957:1"></figure>
+  <ul class="options">
+    <li data-val="8">8 times</li>
+    <li data-val="10">10 times</li>
+    <li data-val="2">2 times</li>
+  </ul>
+  <p class="explain">Yellow is 8 out of 10 parts: 10 &times; 8/10 = 8.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["7"]
+description: Predict pink — 7 parts in 9, 9 spins
+hint:
+  - "Spins equal parts again — 9 and 9."
+  - "Each part expects one spin."
+  - "Count pink's parts."
+explain: "Nine spins across nine parts is one each — pink's 7 parts expect 7 spins."
+whyWrong:
+  "2":
+    code: DATA_READING_ERROR
+    message: "2 belongs to the blue parts — pink's share is the other seven."
+  "9":
+    code: OPERAND_ECHO
+    message: "9 is the total spins — pink only claims its 7 parts' worth."
+solution:
+  - type: step
+    goal: Match spins to parts.
+    working: "9 ÷ 9 = 1 spin per part"
+  - type: step
+    goal: Count pink.
+    working: "7 parts → about 7 spins"
+  - type: takeaway
+    text: Equal spins and parts make predictions a pure counting job.
+  - type: verification
+    text: 7 + 2 = 9 — pink and blue split the spins exactly.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This spinner has 7 pink parts out of 9. If you spin it 9 times, what is the best prediction for PINK?</p>
+  <figure data-show="spinner" data-slices="#f7a8c4:7,#4fc3f7:2"></figure>
+  <ul class="options">
+    <li data-val="7">7 times</li>
+    <li data-val="2">2 times</li>
+    <li data-val="9">9 times</li>
+  </ul>
+  <p class="explain">Pink is 7 out of 9 parts: 9 &times; 7/9 = 7.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["10"]
+description: Predict yellow — 5 parts in 6, 12 spins
+hint:
+  - "Split the 12 spins evenly between the 6 parts first."
+  - "Each part expects 2 spins."
+  - "Yellow owns 5 of those parts."
+explain: "12 ÷ 6 = 2 spins per part, and yellow's 5 parts expect 5 × 2 = 10."
+whyWrong:
+  "5":
+    code: PARTIAL_COMPUTATION
+    message: "5 is yellow's PART count — each part expects 2 of the 12 spins, so yellow expects 10."
+  "12":
+    code: OPERAND_ECHO
+    message: "12 is every spin there is — the single green part keeps 2 of them."
+solution:
+  - type: step
+    goal: Spins per part.
+    working: "12 ÷ 6 = 2"
+  - type: step
+    goal: Yellow's share.
+    working: "5 parts × 2 = 10"
+  - type: takeaway
+    text: Two steps when spins outnumber parts: spins-per-part, then times the colour's parts.
+  - type: verification
+    text: Green's 1 part expects 2 spins, and 10 + 2 = 12 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">This spinner has 5 yellow parts out of 6. If you spin it 12 times, what is the best prediction for YELLOW?</p>
+  <figure data-show="spinner" data-slices="#f9d34e:5,#7ed957:1"></figure>
+  <ul class="options">
+    <li data-val="10">10 times</li>
+    <li data-val="5">5 times</li>
+    <li data-val="12">12 times</li>
+  </ul>
+  <p class="explain">Yellow is 5 out of 6 parts: 12 &times; 5/6 = 10.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["6"]
+description: Predict red picks in 24 tries
+hint:
+  - "Count the red marbles and the whole bag."
+  - "Red is 3 of the 12 marbles — a quarter."
+  - "Take a quarter of the 24 picks."
+explain: "Red is 3/12 = 1/4 of the bag, and a quarter of 24 picks is 6."
+solution:
+  - type: step
+    goal: Find red's share.
+    working: "3 of 12 = 1/4"
+  - type: step
+    goal: Scale to 24 picks.
+    working: "24 ÷ 4 = 6"
+    reason: Putting the marble back keeps the chance the same every pick.
+  - type: takeaway
+    text: Putting it back keeps every pick identical — one share, many tries.
+  - type: verification
+    text: Blue expects the other 18 picks: 6 + 18 = 24 ✓
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Diya picks a marble without looking and puts it back, 24 times. How many times do you predict she picks a RED marble? []</p><svg viewBox="0 0 220 84" width="220" height="84" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="bag of marbles"><rect x="2" y="2" width="216" height="80" rx="12" fill="#f6f3fc" stroke="#b9a8e8" stroke-width="2"/><circle cx="25" cy="25" r="13" fill="#ef4444" stroke="#00000022" stroke-width="1.5"/><circle cx="59" cy="25" r="13" fill="#ef4444" stroke="#00000022" stroke-width="1.5"/><circle cx="93" cy="25" r="13" fill="#ef4444" stroke="#00000022" stroke-width="1.5"/><circle cx="127" cy="25" r="13" fill="#2f9fe8" stroke="#00000022" stroke-width="1.5"/><circle cx="161" cy="25" r="13" fill="#2f9fe8" stroke="#00000022" stroke-width="1.5"/><circle cx="195" cy="25" r="13" fill="#2f9fe8" stroke="#00000022" stroke-width="1.5"/><circle cx="25" cy="59" r="13" fill="#2f9fe8" stroke="#00000022" stroke-width="1.5"/><circle cx="59" cy="59" r="13" fill="#2f9fe8" stroke="#00000022" stroke-width="1.5"/><circle cx="93" cy="59" r="13" fill="#2f9fe8" stroke="#00000022" stroke-width="1.5"/><circle cx="127" cy="59" r="13" fill="#2f9fe8" stroke="#00000022" stroke-width="1.5"/><circle cx="161" cy="59" r="13" fill="#2f9fe8" stroke="#00000022" stroke-width="1.5"/><circle cx="195" cy="59" r="13" fill="#2f9fe8" stroke="#00000022" stroke-width="1.5"/></svg>
+  
+  <p class="explain">Red is 3 of the 12 marbles, which is 1 of every 4. One fourth of 24 is 6.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["5"]
+description: Predict blue picks in 20 tries
+hint:
+  - "Count the blues and the whole bag."
+  - "Blue is 2 of the 8 marbles — a quarter."
+  - "Take a quarter of the 20 picks."
+explain: "Blue is 2/8 = 1/4 of the bag, and a quarter of 20 picks is 5."
+solution:
+  - type: step
+    goal: Find blue's share.
+    working: "2 of 8 = 1/4"
+  - type: step
+    goal: Scale to 20 picks.
+    working: "20 ÷ 4 = 5"
+  - type: takeaway
+    text: Simplify the share first — quarters are far friendlier than eighths.
+  - type: verification
+    text: Orange expects the other 15 picks: 5 + 15 = 20 ✓
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Kabir picks a marble without looking and puts it back, 20 times. How many times do you predict he picks a BLUE marble? []</p><svg viewBox="0 0 152 84" width="152" height="84" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="bag of marbles"><rect x="2" y="2" width="148" height="80" rx="12" fill="#f6f3fc" stroke="#b9a8e8" stroke-width="2"/><circle cx="25" cy="25" r="13" fill="#2f9fe8" stroke="#00000022" stroke-width="1.5"/><circle cx="59" cy="25" r="13" fill="#2f9fe8" stroke="#00000022" stroke-width="1.5"/><circle cx="93" cy="25" r="13" fill="#f97316" stroke="#00000022" stroke-width="1.5"/><circle cx="127" cy="25" r="13" fill="#f97316" stroke="#00000022" stroke-width="1.5"/><circle cx="25" cy="59" r="13" fill="#f97316" stroke="#00000022" stroke-width="1.5"/><circle cx="59" cy="59" r="13" fill="#f97316" stroke="#00000022" stroke-width="1.5"/><circle cx="93" cy="59" r="13" fill="#f97316" stroke="#00000022" stroke-width="1.5"/><circle cx="127" cy="59" r="13" fill="#f97316" stroke="#00000022" stroke-width="1.5"/></svg>
+  
+  <p class="explain">Blue is 2 of the 8 marbles, which is 1 of every 4. One fourth of 20 is 5.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["25"]
+description: Predict heads in 50 flips
+hint:
+  - "Heads comes up about half the time."
+  - "The prediction takes that share of all 50 flips."
+  - "What is half of 50?"
+explain: "Heads is a 1-in-2 chance, and half of 50 is 25."
+solution:
+  - type: step
+    goal: Find the share.
+    working: "P(heads) = 1/2"
+  - type: step
+    goal: Scale to 50 flips.
+    working: "half of 50 = 25"
+  - type: takeaway
+    text: Big numbers change nothing — the share rules the prediction at any size.
+  - type: verification
+    text: 25 heads + 25 tails = 50 flips, a perfectly balanced expectation.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">If Rohan flips a coin 50 times, how many times do you predict it will land on HEADS? []</p><svg viewBox="0 0 80 80" width="72" height="72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="coin"><circle cx="40" cy="40" r="34" fill="#fcd34d" stroke="#d97706" stroke-width="3"/><circle cx="40" cy="40" r="26" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3 3"/><text x="40" y="41" text-anchor="middle" dominant-baseline="central" font-size="28" font-weight="800" fill="#92400e" font-family="'Baloo 2',cursive">H</text></svg>
+  
+  <p class="explain">Heads happens about half the time. Half of 50 is 25.</p>
+</div>
+
+<!--@q
+type: fill-blanks
+answer: ["20"]
+description: Predict blue in 40 spins (half-blue spinner)
+hint:
+  - "Find blue's share of this spinner."
+  - "Blue and yellow split it evenly."
+  - "Take that share of the 40 spins."
+explain: "Blue covers half the spinner, and half of 40 spins is 20."
+solution:
+  - type: step
+    goal: Find blue's share.
+    working: "1 of 2 parts = 1/2"
+  - type: step
+    goal: Scale to 40 spins.
+    working: "half of 40 = 20"
+  - type: takeaway
+    text: Half the spinner earns half the spins — shares scale to any count.
+  - type: verification
+    text: Yellow expects the other 20 — together the full 40.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">If you spin this spinner 40 times, how many times do you predict it will land on BLUE? []</p>
+  <figure data-show="spinner" data-slices="blue:1,yellow:1"></figure>
+  <p class="explain">Blue is 1 of 2 equal parts, which is half. Half of 40 is 20.</p>
+</div>
+
+<!--@q
+type: single-select
+answer: ["4 times"]
+description: Predict green — 1 part in 4, 16 spins
+hint:
+  - "Share the 16 spins evenly between the 4 parts."
+  - "How many spins does each part expect?"
+  - "Green owns exactly one part."
+explain: "16 ÷ 4 = 4 spins per part — green's single part expects 4."
+whyWrong:
+  "1 time":
+    code: PARTIAL_COMPUTATION
+    message: "1 is green's PART count — each part expects 4 of the 16 spins."
+  "8 times":
+    code: NEAR_MISS
+    message: "8 would be half the spins — green owns a quarter, not half."
+solution:
+  - type: step
+    goal: Spins per part.
+    working: "16 ÷ 4 = 4"
+  - type: step
+    goal: Green's share.
+    working: "1 part × 4 = 4 spins"
+  - type: takeaway
+    text: Predictions divide the tries by the parts — then multiply by the colour's parts.
+  - type: verification
+    text: All four colours expect 4 each, and 4 × 4 = 16 ✓
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">Arjun spins this spinner 16 times. What is the best prediction for GREEN?</p>
+  <figure data-show="spinner" data-slices="green:1,yellow:1,blue:1,pink:1"></figure>
+  <ul class="options">
+    <li data-val="4 times">4 times</li>
+    <li data-val="1 time">1 time</li>
+    <li data-val="8 times">8 times</li>
+  </ul>
+  <p class="explain">Green is 1 of 4 equal parts. 16 spins split into 4 equal groups gives 4 spins per part, so green about 4 times.</p>
+</div>
+
+<!--@q
+type: order
+answer: ["Purple","Blue","Yellow"]
+low: least likely
+high: most likely
+description: Order colours by their part counts
+hint:
+  - "Count each colour's parts on the spinner."
+  - "Fewer parts means less likely."
+  - "Line the colours up from the smallest count to the biggest."
+explain: "Purple has 1 part, blue 3, yellow 4 — least to most likely: purple, blue, yellow."
+solution:
+  - type: step
+    goal: Count parts per colour.
+    working: "purple 1 · blue 3 · yellow 4"
+  - type: step
+    goal: Order by count.
+    working: "1 < 3 < 4 → purple, blue, yellow"
+  - type: takeaway
+    text: Likelihood rankings are part-count rankings — nothing more.
+  - type: verification
+    text: "1 + 3 + 4 = 8 parts — the whole spinner, in three teams."
+-->
+<div class="question" data-type="order">
+  <p class="prompt">This spinner has 1 purple, 3 blue, and 4 yellow parts. Drag the colours from LEAST likely to MOST likely.</p>
+  <figure data-show="spinner" data-slices="purple:1,blue:3,yellow:4"></figure>
+  <ol class="order"><li>Yellow</li><li>Purple</li><li>Blue</li></ol>
+</div>
+
+</div>

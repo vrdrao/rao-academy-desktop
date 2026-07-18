@@ -67,6 +67,7 @@ lesson's row links its document.
 | Inequalities remix | 8 | `lessons/incoming/inequalities_remix.html` | `review/inequalities_remix.html` | — |
 | Interpret line plots remix | 30 | `lessons/incoming/interpret-line-plots-remix.html` | `review/interpret-line-plots-remix.html` | — |
 | Interpret remainders | 29 | `lessons/incoming/interpret-remainders.html` | `review/interpret-remainders.html` | — |
+| Make predictions | 23 | `lessons/make_predictions.html` | `review/make_predictions.html` | `sources/LDM- Probability-Make predictions(D).html` |
 | Metric mixed units remix | 31 | `lessons/incoming/metric_mixed_units_remix.html` | `review/metric_mixed_units_remix.html` | — |
 | Money add subtract multiply divide | 30 | `lessons/money_add_subtract_multiply_divide.html` | `review/money_add_subtract_multiply_divide.html` | `sources/LDM- Money-Add, subtract, multiply and divide money amounts(D).html` |
 | Money add subtract remix | 24 | `lessons/incoming/money_add_subtract_remix.html` | `review/money_add_subtract_remix.html` | — |
@@ -125,7 +126,7 @@ lesson's row links its document.
 | Use perimeter to determine cost | 20 | `lessons/use_perimeter_to_determine_cost.html` | `review/use_perimeter_to_determine_cost.html` | `sources/Geometric Measurements-Use perimeter to determine cost(D).html` |
 | Word problems with extra or missing information | 24 | `lessons/incoming/Word problems with extra or missing information.html` | `review/Word problems with extra or missing information.html` | — |
 
-**Totals: 113 lessons, 2,959 questions.**
+**Totals: 114 lessons, 2,982 questions.**
 Matches the recorded 102 / 2,687 exactly (2,722 → 2,727 on 2026-07-18:
 BRIEF-ENGINE-19 added five coverage questions to `_type-coverage.html`;
 104 / 2,727 → 102 / 2,687 per BRIEF-DUPLICATE-CULL, Venkat's ruling
