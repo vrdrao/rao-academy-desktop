@@ -814,6 +814,47 @@ async function checkRender1(browser) {
           if (rgb(c1r.keyColor) !== rgb(c1r.marks[0].markColor))
             problems.push(`${at}: C1 legend ✕ is ${c1r.keyColor} but plotted marks are ${c1r.marks[0].markColor} — figure and legend disagree`);
         }
+
+        // ── C2: source table BESIDE the plot at desktop, stacked at phone.
+        //    The child transcribes the table while building — off-screen data
+        //    means forced scrolling on every placement. ──
+        const c2 = await page.evaluate(() => {
+          const frame = [...document.querySelectorAll(".pv-frame")].find((f) =>
+            f.querySelector(".lp-plot") && f.querySelector('svg[aria-label="frequency table"]'));
+          if (!frame) return { missing: true };
+          const srcw = frame.querySelector(".lp-row .lp-srcwrap");
+          const plot = frame.querySelector(".lp-row .lp-plot");
+          if (!srcw || !plot) return { noSrcwrap: true, strayFig: !!frame.querySelector(".qbody > .fig-wrap") };
+          const a = srcw.getBoundingClientRect(), b = plot.getBoundingClientRect();
+          const slot = frame.querySelector(".lp-slot").getBoundingClientRect();
+          return {
+            table: { l: a.left, r: a.right, t: a.top, b: a.bottom, w: a.width },
+            plot: { l: b.left, r: b.right, t: b.top, b: b.bottom, w: b.width },
+            slot: { w: slot.width, h: slot.height },
+          };
+        });
+        if (c2.missing) problems.push(`${at}: C2 fixture not found`);
+        else if (c2.noSrcwrap) problems.push(`${at}: C2 the source table is NOT in the lp-row source slot${c2.strayFig ? " — it renders as a stray full-width figure ABOVE the plot" : ""}`);
+        else {
+          const hDisjoint = c2.table.r <= c2.plot.l + 2 || c2.plot.r <= c2.table.l + 2;
+          const vOverlap = Math.min(c2.table.b, c2.plot.b) - Math.max(c2.table.t, c2.plot.t);
+          const vDisjoint = c2.table.b <= c2.plot.t + 2 || c2.plot.b <= c2.table.t + 2;
+          if (vp.width >= 1280) {
+            if (!(hDisjoint && vOverlap > 0))
+              problems.push(`${at}: C2 table and plot are NOT side by side (table ${JSON.stringify(c2.table)}, plot ${JSON.stringify(c2.plot)})`);
+            if (c2.table.w < 300)
+              problems.push(`${at}: C2 side-by-side table squashed to ${c2.table.w.toFixed(0)}px (<300px legibility floor)`);
+          } else {
+            if (!vDisjoint)
+              problems.push(`${at}: C2 at phone width table and plot must STACK — two squashed figures is worse than scrolling (table ${JSON.stringify(c2.table)}, plot ${JSON.stringify(c2.plot)})`);
+          }
+          // Slot size floor = the engine's own container-query ladder (34 → 28 →
+          // 24px as the card narrows). The LAYOUT change must never squash slots
+          // below what the sizing ladder itself grants at that width.
+          const slotFloor = vp.width >= 1280 ? 34 : 24;
+          if (!(c2.slot.w >= slotFloor && c2.slot.h >= 24))
+            problems.push(`${at}: C2 plot slots shrank to ${c2.slot.w}×${c2.slot.h}px (floor ${slotFloor}×24) — layout must never squash the tap targets`);
+        }
       } finally {
         await page.close();
       }
