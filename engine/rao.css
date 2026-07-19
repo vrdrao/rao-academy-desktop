@@ -949,15 +949,32 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
   max-width:100%;
 }
 /* Wide stimuli — number lines, bar models, arrays, rulers — are authored with a
-   large viewBox width. Let them use the width instead of the height. */
-.rao-lesson .fig-wrap > svg[viewBox^="0 0 3"],
-.rao-lesson .fig-wrap > svg[viewBox^="0 0 4"],
-.rao-lesson .fig-wrap > svg[viewBox^="0 0 5"],
-.rao-lesson .fig-wrap > svg[viewBox^="0 0 6"],
-.rao-lesson .fig-wrap > svg[viewBox^="0 0 7"]{
+   large viewBox width. Let them use the width instead of the height.
+   RENDER-1 C5: this applies ONLY to figures WITHOUT a fixed authored width —
+   the contract above ("a figure authored with width/height attrs renders at
+   that size") was being violated: a 300px two-rectangle comparison figure was
+   upscaled to 520px and dominated the card. Percentage-width figures keep the
+   520px cap they always had (54 of them carry no inline max-width and would
+   otherwise balloon to full card width). */
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 3"]:not([width]),
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 4"]:not([width]),
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 5"]:not([width]),
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 6"]:not([width]),
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 7"]:not([width]),
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 3"][width="100%"],
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 4"][width="100%"],
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 5"][width="100%"],
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 6"][width="100%"],
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 7"][width="100%"]{
   height:auto;
   width:100%;
   max-width:520px;
+}
+/* Fixed-px-width figures render at their authored size — shrink-only when the
+   card is narrower than the figure (aspect kept via the viewBox). */
+.rao-lesson .fig-wrap > svg[width]:not([width="100%"]){
+  max-width:100%;
+  height:auto;
 }
 @container lesson (max-width: 420px){
   .rao-lesson .fig-wrap > svg,

@@ -923,6 +923,35 @@ async function checkRender1(browser) {
             });
           });
         }
+
+        // ── C5: comparison figures — an authored-size figure keeps its authored
+        //    size (the wide-stimulus upscale must not blow a 300px pair to 520px
+        //    and let it dominate the card), and the PAIR shares one scale:
+        //    rendered-width ratio == stated-dimension ratio (12 m : 6 m = 2). ──
+        const c5 = await page.evaluate(() => {
+          const frame = [...document.querySelectorAll(".pv-frame")].find((f) =>
+            f.querySelector('svg[aria-label="two rectangles, A and B"]'));
+          if (!frame) return { missing: true };
+          const svg = frame.querySelector('svg[aria-label="two rectangles, A and B"]');
+          const rects = [...svg.querySelectorAll("rect")].map((r) => r.getBoundingClientRect().width);
+          return {
+            svgW: svg.getBoundingClientRect().width,
+            qbodyW: frame.querySelector(".qbody").getBoundingClientRect().width,
+            authored: parseFloat(svg.getAttribute("width")),
+            rectWs: rects,
+          };
+        });
+        if (c5.missing) problems.push(`${at}: C5 fixture (two-rectangle comparison figure) not found in _type-coverage`);
+        else {
+          const cap = Math.min(c5.authored, c5.qbodyW);
+          if (c5.svgW > cap + 2)
+            problems.push(`${at}: C5 figure renders ${c5.svgW.toFixed(0)}px — larger than its authored ${c5.authored}px (cap ${cap.toFixed(0)}px); the pair dominates the card`);
+          if (c5.qbodyW >= 500 && c5.svgW > 0.6 * c5.qbodyW)
+            problems.push(`${at}: C5 figure takes ${(c5.svgW / c5.qbodyW * 100).toFixed(0)}% of the card width (>60% cap at desktop)`);
+          const ratio = c5.rectWs[0] / c5.rectWs[1];
+          if (!(Math.abs(ratio - 2) <= 0.05))
+            problems.push(`${at}: C5 rendered-width ratio A:B is ${ratio.toFixed(3)} — must equal the stated 12:6 = 2 (ONE shared scale; sizing each figure independently would destroy the question's point)`);
+        }
       } finally {
         await page.close();
       }
