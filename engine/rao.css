@@ -608,7 +608,7 @@
 
 .rao-lesson /* ---- tap-target floor: your own spec says >=44px ---- */
 .opt, .rao-lesson .tile, .rao-lesson .order-slot, .rao-lesson .vs-tile, .rao-lesson .bin, .rao-lesson .rao-hint, .rao-lesson .rao-check{min-height:44px;}
-.rao-lesson .tile, .rao-lesson .vs-tile, .rao-lesson .order-slot{touch-action:none;}   .rao-lesson /* or dragging scrolls the page on a phone */
+.rao-lesson .tile, .rao-lesson .vs-tile, .rao-lesson .order-slot, .rao-lesson .sb-tile{touch-action:none;}   .rao-lesson /* or dragging scrolls the page on a phone */
 
 /* ---- DARK MODE — the engine has none. Repoint the tokens; every
         rule above inherits automatically because they all use var(). ---- */

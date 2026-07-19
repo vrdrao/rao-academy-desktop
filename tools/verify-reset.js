@@ -338,14 +338,22 @@ async function runViewport(browser, vp, touch) {
     }
   });
 
-  // 5 sequence-build — fill every slot with "2" (wrong) via the tap-arm/
-  // tap-slot path (real CDP taps on mobile). NOTE: the sb-tile TOUCH DRAG is a
-  // pre-existing shipped defect — .sb-tile has no touch-action:none in rao.css
-  // (rao.css:611 covers .tile/.vs-tile/.order-slot only), so a finger drag
-  // pointercancels into a page scroll. Reported in BRIEF FR-1; fixing it needs
-  // rao.css, which is outside FR-1's allowed files.
-  if (touch) console.log("  NOTE  sequence-build touch DRAG is a known pre-existing defect (.sb-tile lacks touch-action:none) — driving via the tap path");
+  // 5 sequence-build — fill every slot with "2" (wrong). On the MOBILE pass
+  // the FIRST placement is a genuine touch DRAG (touchStart→touchMove→touchEnd)
+  // and the target slot MUST end up filled — this guards .sb-tile's
+  // touch-action:none coverage in rao.css:611; without it the drag
+  // pointercancels into a page scroll and the slot stays empty. The remaining
+  // slots (and the whole desktop pass) fill via the tap-arm/tap-slot path.
   await drill(5, "sequence-build", async (id) => {
+    if (touch) {
+      await drag(`#${id} .sb-palette .sb-tile`, 0, `#${id} .sb-slot`, 0);
+      const dragFilled = await page.evaluate((fid) => {
+        const s = document.querySelector(`#${fid} .sb-slot`);
+        return !!s && s.classList.contains("filled");
+      }, id);
+      if (!dragFilled) throw new Error("sb-tile TOUCH DRAG did not fill the first slot — the drag pointercancelled into a scroll (.sb-tile lacks touch-action:none in rao.css:611)");
+      await page.waitForTimeout(350); // gesture-recognizer settle: a tap right after a touch drag can be swallowed as a double-tap candidate
+    }
     for (let attempt = 0; attempt < 10; attempt++) {
       const sIdx = await page.evaluate((fid) =>
         [...document.querySelectorAll(`#${fid} .sb-slot`)].findIndex((s) => !s.classList.contains("filled")), id);
