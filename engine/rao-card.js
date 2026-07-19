@@ -12,13 +12,18 @@
      2. NO ANSWER REVEAL while attempting is possible. No green, no correct
         highlight, no reveal text. The reveal happens ONCE, at the walkthrough's
         final step (or on a correct answer).
-     3. WRONG IS A WHISPER, AND THE WHISPER DOES NOT LINGER (amended by BRIEF
-        FR-1, 2026-07-19 — supersedes the Brief 7.6 "✕ persists" wording). A
-        wrong attempt leaves NO persistent mark on the task: no ✕, no is-wrong
-        red flood, no shake, no "Not quite" pill in adaptive mode. The selection
-        returns to rest and the bubble carries the feedback. On "Try again" the
-        task returns to EXACTLY its first-attempt state — restored from a
-        snapshot taken at mount (guard: tools/verify-reset.js).
+     3. WRONG IS A WHISPER (amended by BRIEF FR-2, 2026-07-19, per HANDOFF-24
+        rulings 1–4 — reverses FR-1's no-mark wording, supersedes Brief 7.6's
+        "✕ persists"). A wrong SELECTION is marked with a small red ✕ glyph
+        before its text — never on a correct selection, never on an unselected
+        option; multi-select marks EVERY wrong selection. Fill-blanks get NO
+        glyph: the wrong blank tints softly red (border + text) and the typed
+        value is NEVER cleared — erasing it reads as punishment. No is-wrong
+        red flood, no shake, no "Not quite" pill in adaptive mode; the bubble
+        carries the feedback. On "Try again" every ✕/tint clears and the task
+        returns to its first-attempt state — restored from a snapshot taken at
+        mount, with fill-blanks typed values preserved verbatim (guard:
+        tools/verify-reset.js A1–A5).
      4. HELP ACCUMULATES — hint bubbles and walkthrough steps only ever stack;
         nothing the card has told the child disappears while the question lives.
      5. ONE HINT LADDER — the whyWrong message after a wrong attempt IS the next
@@ -198,8 +203,23 @@ function wireCard(frame) {
   // rungIdx, shownWhys) live in this closure and are deliberately NOT reset.
   function restoreTask() {
     if (!qbody || taskSnap == null || !window.RaoPreview || !window.RaoPreview.attach) return;
+    // FR-2 ruling 4: the typed value is the child's handwriting — NEVER
+    // cleared. The snapshot restore wipes input PROPERTIES (they are not
+    // attributes), so fill-blanks values are carried across the re-mount.
+    // Tints clear with the restore; values return. Fill-blanks only — every
+    // other behavior keeps the full FR-1 first-attempt restore.
+    var keep = null;
+    if (behavior === "fill-blanks") {
+      keep = [];
+      var inpsBefore = qbody.querySelectorAll(".blank-input");
+      for (var i = 0; i < inpsBefore.length; i++) keep.push(inpsBefore[i].value);
+    }
     qbody.innerHTML = taskSnap;
     window.RaoPreview.attach(qbody, behavior);
+    if (keep) {
+      var inpsAfter = qbody.querySelectorAll(".blank-input");
+      for (var j = 0; j < inpsAfter.length; j++) if (keep[j] != null) inpsAfter[j].value = keep[j];
+    }
   }
   function resumeAnswering() {
     removeRow();
@@ -211,8 +231,35 @@ function wireCard(frame) {
     syncHintBtn();
   }
 
-  // ── the whisper (LAW 3 as amended by BRIEF FR-1): a wrong attempt leaves NO
-  //    mark — the selection simply returns to rest. Queries .st-apple scene
+  // ── the whisper (LAW 3 as amended by BRIEF FR-2): a wrong SELECTION gets a
+  //    small red ✕ before its text — the ONLY change to it (rulings 1–3:
+  //    never on a correct selection, never on an unselected option;
+  //    multi-select marks EVERY wrong selection). Runs BEFORE clearSelection
+  //    so .is-sel still identifies what the child picked; val is read before
+  //    the glyph is inserted so textContent-keyed options stay uncorrupted. ──
+  function markWrongSelections() {
+    var sel = qbody.querySelectorAll(".opt.is-sel, .opt-fig.is-sel, .hcell.is-sel");
+    var ans = (answer || []).map(String);
+    for (var i = 0; i < sel.length; i++) {
+      var el = sel[i];
+      var val = String(el.dataset.val != null ? el.dataset.val : (el.textContent || "").trim());
+      if (ans.indexOf(val) !== -1) continue;         // ruling 2: correct selections stay unmarked
+      el.classList.add("cc-tried");
+      if (!el.querySelector(".cc-x")) {
+        var x = document.createElement("span");
+        x.className = "cc-x";
+        x.textContent = "✕";
+        var txt = el.querySelector(".opt-text");
+        if (txt) txt.insertBefore(x, txt.firstChild);
+        else {
+          var ind = el.querySelector(".check-ind");
+          if (ind && ind.nextSibling) el.insertBefore(x, ind.nextSibling);
+          else el.insertBefore(x, el.firstChild);
+        }
+      }
+    }
+  }
+  // Selection returns to rest after marking. Queries .st-apple scene
   //    selects too, which the retired markTried() never did (pre-existing
   //    defect: an apple-scene selection survived a wrong attempt), and
   //    re-syncs the scene count chip. ──
@@ -353,7 +400,7 @@ function wireCard(frame) {
         qbody.dispatchEvent(new CustomEvent("rao:whywrong", { bubbles: true, detail: { code: entry.code } }));
       } catch (e) { /* logging must never break the card */ }
     }
-    if (isSelect) clearSelection();
+    if (isSelect) { markWrongSelections(); clearSelection(); }       // ✕ on wrong selections (FR-2 rulings 1–3)
     else markFeedback(qbody, behavior, user, answer, false, true);   // wrong marks only — NO green while attemptable
     freezeTask(true);
     hideFoot(true);
