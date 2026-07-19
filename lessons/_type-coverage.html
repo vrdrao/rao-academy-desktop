@@ -133,6 +133,15 @@ description: RENDER-1 C3 fixture — per-digit product boxes must keep a visible
 </div>
 
 <!--@q
+type: fill-blanks
+layout: vertical
+operands: ["12,34_", "45,231"]
+sum: "57,5_7"
+description: RENDER-1 C4 fixture — thousands comma must render understated (smaller, lighter, muted vs digits) in a narrow column, and digit columns must stay x-centre-aligned across all rows including rows that carry a blank
+-->
+<div class="question" data-type="fill-blanks"></div>
+
+<!--@q
 type: time
 answer: ["3:45 PM"]
 description: time coverage — was COMPLETELY DEAD until rao-master-11

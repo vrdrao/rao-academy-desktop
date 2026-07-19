@@ -883,6 +883,46 @@ async function checkRender1(browser) {
               problems.push(`${at}: C3 column ${i} x-centre misaligned — top digit at ${t.toFixed(1)}, answer box at ${a == null ? "MISSING" : a.toFixed(1)} (tolerance 1.5px); a gap that shifts blanks off their place-value columns is a worse defect than flush boxes`);
           });
         }
+
+        // ── C4: thousands comma — understated (smaller, lighter, muted) in a
+        //    narrow column; digit columns x-centre-aligned across ALL rows,
+        //    including rows carrying a blank (the 44px blank floor used to
+        //    clamp blanks wider than static cells at phone width → 4-8px skew). ──
+        const c4 = await page.evaluate(() => {
+          const frame = [...document.querySelectorAll(".pv-frame")].find((f) => f.querySelector(".vcol .cm-sep"));
+          if (!frame) return { missing: true };
+          const sep = frame.querySelector(".vcol .cm-sep");
+          const cell = frame.querySelector(".vcol .cm-cell");
+          const s = getComputedStyle(sep), c = getComputedStyle(cell);
+          const rows = [...frame.querySelectorAll(".vcol .row")].map((row) =>
+            [...row.querySelectorAll(".cm-cell, .blank-input")].map((el) => {
+              const r = el.getBoundingClientRect();
+              return +((r.left + r.right) / 2).toFixed(1);
+            }));
+          return {
+            sep: { fs: parseFloat(s.fontSize), fw: parseInt(s.fontWeight), color: s.color, w: sep.getBoundingClientRect().width },
+            cell: { fs: parseFloat(c.fontSize), fw: parseInt(c.fontWeight), color: c.color, w: cell.getBoundingClientRect().width },
+            rows,
+          };
+        });
+        if (c4.missing) problems.push(`${at}: C4 fixture (layout: vertical with commas) not found in _type-coverage`);
+        else {
+          if (!(c4.sep.fs < 0.85 * c4.cell.fs))
+            problems.push(`${at}: C4 comma font-size ${c4.sep.fs}px vs digit ${c4.cell.fs}px — the comma must be SMALLER than the digits (<85%)`);
+          if (!(c4.sep.fw < c4.cell.fw))
+            problems.push(`${at}: C4 comma font-weight ${c4.sep.fw} vs digit ${c4.cell.fw} — the comma must be LIGHTER than the digits`);
+          if (c4.sep.color === c4.cell.color)
+            problems.push(`${at}: C4 comma colour ${c4.sep.color} equals digit colour — the comma must be muted`);
+          if (!(c4.sep.w <= 0.35 * c4.cell.w))
+            problems.push(`${at}: C4 comma column ${c4.sep.w}px vs digit column ${c4.cell.w}px — the comma column must stay narrow (≤35% of a digit column)`);
+          const base = c4.rows[0];
+          c4.rows.slice(1).forEach((row, ri) => {
+            row.forEach((x, i) => {
+              if (base[i] == null || Math.abs(x - base[i]) > 1.5)
+                problems.push(`${at}: C4 row ${ri + 1} column ${i} x-centre ${x} vs row 0 ${base[i]} — digit columns must align vertically across operand and result rows (tolerance 1.5px)`);
+            });
+          });
+        }
       } finally {
         await page.close();
       }
