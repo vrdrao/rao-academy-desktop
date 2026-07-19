@@ -13,9 +13,13 @@
  *                     styling (each option must computed-equal its own resting
  *                     snapshot) and no reveal text/.explain is visible inside
  *                     the card while the question is attemptable.
- *   b. LOCK-ON-OPEN — opening a walkthrough locks the question immediately,
- *                     records solved-with-help (not correct), and no retry
- *                     control exists anywhere inside it.
+ *   b. LOCK-ON-OPEN — opening a walkthrough — by the child's tap OR the
+ *                     second-wrong auto-open (LAW 6 as amended by BRIEF FR-2,
+ *                     2026-07-19: "never auto-opened" is re-pointed; either
+ *                     path locks immediately and records solved-with-help,
+ *                     not correct) — with no retry control anywhere inside
+ *                     it. This file drives the TAP path; the AUTO-OPEN path
+ *                     is guarded by tools/verify-reset.js A6–A9.
  *   c. TASK-IMMUTABILITY — computed color/bg/border/opacity of the prompt and
  *                     ALL options are snapshotted while answering and must be
  *                     IDENTICAL in the wrong, hint, and walkthrough states.

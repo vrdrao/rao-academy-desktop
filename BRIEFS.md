@@ -471,7 +471,7 @@ THE LAWS (each maps to a test below):
 
 5. ONE HINT LADDER, TUTOR-BUBBLE PRESENTATION. The whyWrong message after a wrong attempt IS hint rung 1, chip-labeled exactly "Hint 1"; forward hints continue the count ("Hint 2", ...). Hint labels carry no total — never "of N". A pre-attempt "Hint" press starts the ladder at the first forward hint; numbering adapts. Presentation is the approved tutor-conversation pattern, identical to steps: append-only typed chat bubbles — the bubble node is created once showing typing dots and filled ONCE (dots → chip + text) at 650ms; earlier bubbles are never touched again; bubbles are faceless (no avatar seat — remove dead .cc-ava CSS in production). Content model unchanged: whyWrong entries keep their taxonomy codes; hint rungs stay move-naming, no arithmetic — the unification is presentation only.
 
-6. WALKTHROUGH: TRIGGER AND COMMIT. Child-initiated only, via a "Walk me through it" button that appears after the SECOND wrong attempt OR when all hints are used, never before the first attempt, never auto-opened. (This trigger button is intentionally absent from the demo, which drives states via its dev bar — this law governs.) OPENING THE WALKTHROUGH IS THE COMMIT POINT: the question locks immediately and is recorded as solved-with-help, NOT correct. There is NO retry inside the walkthrough — one button per step: "Next step", then "Got it" on the final step, exactly as v36 state 4 behaves (child-paced, steps type in as bubbles under the "Solution — step by step" header — header currently KEPT, subject to Venkat's pending one-word ruling; build so its removal is a one-line change). The final step reveals the answer and marks the correct option green, quietly — triumph and rescue must feel different. No chalkboard/blackboard solution surface anywhere.
+6. WALKTHROUGH: TRIGGER AND COMMIT. [AMENDED 2026-07-19 by BRIEF FR-2, per HANDOFF-24 ruling 7, Venkat-accepted — the original wording here read "Child-initiated only, via a 'Walk me through it' button that appears after the SECOND wrong attempt OR when all hints are used, never before the first attempt, never auto-opened." The law is re-pointed to assert what now matters:] The walkthrough opens by EITHER path — the child taps "Walk me through it" (offered once hints are used after a wrong attempt, never before the first attempt), or it AUTO-OPENS on the second wrong attempt wherever a solution exists (TWO ATTEMPTS IS THE CAP: no Try Again is offered, and no decision is demanded of a child who has just failed twice). Opening by either path locks the question immediately and records solved-with-help. (This trigger button is intentionally absent from the demo, which drives states via its dev bar — this law governs.) OPENING THE WALKTHROUGH IS THE COMMIT POINT: the question locks immediately and is recorded as solved-with-help, NOT correct. There is NO retry inside the walkthrough — one button per step: "Next step", then "Got it" on the final step, exactly as v36 state 4 behaves (child-paced, steps type in as bubbles under the "Solution — step by step" header — header currently KEPT, subject to Venkat's pending one-word ruling; build so its removal is a one-line change). The final step reveals the answer and marks the correct option green, quietly — triumph and rescue must feel different. No chalkboard/blackboard solution surface anywhere.
 
 7. CORRECT IS THE ONLY LOUD MOMENT. On correct: the chosen option gets the green correct treatment, all other options unchanged (no dimming), a green-edged "The idea to keep" takeaway panel, then "Next question →". Green appears in exactly two situations in the whole system: this, and the walkthrough final step.
 
@@ -616,3 +616,31 @@ this brief. Changes:
    incoming/calm-card-v36.html. If the rig in v36 conflicts with any
    requirement in this brief, STOP and report; do not resolve it yourself.
 
+
+# AMENDMENT NOTE — 2026-07-19 (BRIEF FR-2, per HANDOFF-24, Venkat-accepted)
+
+Laws amended by BRIEF FR-2 (engine rao-master-21), ruling provenance
+HANDOFF-24, chat-side, Venkat-accepted:
+
+- **Law 6 (walkthrough trigger and commit)** — "never auto-opened" is
+  re-pointed: the walkthrough opens by EITHER path (child's tap, or the
+  second-wrong AUTO-OPEN where a solution exists). Two attempts is the cap.
+  Either path locks immediately and records solved-with-help. Amended in
+  place at the Brief 7.6 law list above, in the engine/rao-card.js header,
+  and in the LOCK-ON-OPEN guard commentary (tools/verify-calm.js,
+  tools/verify-touch.js); the auto-open half is guarded by
+  tools/verify-reset.js A6–A9.
+- **Law 3 (wrong is a whisper)** — FR-1's "no mark, ever" wording is
+  reversed: a wrong SELECTION carries the small red ✕ again (wrong
+  selections ONLY — never a correct selection, never an unselected option;
+  this also reverses Brief 7.6's "✕ on every selected option" for
+  multi-select), fill-blanks tint softly red (border + text) with NO glyph
+  and the typed value NEVER cleared, and every ✕/tint clears on Try Again.
+  Guarded by tools/verify-reset.js A1–A5.
+- **Green-twice invariant** — UNCHANGED: green appears exactly twice ever
+  (the correct moment, and the walkthrough's final reveal). No green at
+  walkthrough open, either path — guarded by A8.
+- Questions with NO solution (canWalk false) are deliberately unchanged —
+  a second wrong still re-offers Try again. Parked with Venkat, expected on
+  the morning ruling list, together with whether a second-wrong auto-open
+  should score differently from a voluntary help request.

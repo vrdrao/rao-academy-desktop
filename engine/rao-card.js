@@ -29,10 +29,16 @@
      5. ONE HINT LADDER — the whyWrong message after a wrong attempt IS the next
         hint rung ("Hint 1", "Hint 2", … — never "of N"). Presentation: typed
         tutor bubbles (RaoSolution.bubbles — ONE copy, shared with the steps).
-     6. WALKTHROUGH commit — "Walk me through it" appears after the SECOND wrong
-        attempt OR when all hints are used, never before the first attempt.
-        Opening it LOCKS the question and records solved-with-help. No retry
-        inside. Final step reveals quietly — triumph ≠ rescue.
+     6. WALKTHROUGH commit (amended by BRIEF FR-2, 2026-07-19, per HANDOFF-24
+        ruling 7 — was "child-initiated only, never auto-opened"). The
+        walkthrough opens by EITHER path: the child taps "Walk me through it"
+        (offered once hints are used after a wrong attempt, never before the
+        first attempt), or it AUTO-OPENS on the second wrong attempt where a
+        solution exists (TWO ATTEMPTS IS THE CAP — no Try Again offered).
+        EITHER path LOCKS the question immediately and records
+        solved-with-help. No retry inside. Final step reveals quietly —
+        triumph ≠ rescue. Guards: verify-calm.js b (tap), verify-reset.js
+        A6–A9 (auto-open).
      7. CORRECT is the only loud moment: green option + cc-win + sparks + chime,
         takeaway panel ("The idea to keep"), then "Next question →".
      8. MODES — adaptive: all of the above. rapid: verdict flash + one-line

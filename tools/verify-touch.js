@@ -16,10 +16,13 @@
  *      "Try again" the task is back to its first-attempt state (✕ ABSENT —
  *      inverted from the superseded "✕ persists" assertion, per FR-1
  *      Amendment 1 ruling 2; full state-restore proof is tools/verify-reset.js).
- *   3. Walkthrough trigger + commit — "Walk me through it" appears only once
- *      all hints are used (or after the 2nd wrong attempt); opening it locks
- *      the card IMMEDIATELY, records solved-with-help, and offers NO retry
- *      control anywhere. One button per step: Next step → Got it.
+ *   3. Walkthrough trigger + commit (LAW 6 as amended by BRIEF FR-2,
+ *      2026-07-19) — the TAP path: "Walk me through it" appears once all
+ *      hints are used after a wrong attempt; opening locks the card
+ *      IMMEDIATELY, records solved-with-help, and offers NO retry control
+ *      anywhere. One button per step: Next step → Got it. (The second-wrong
+ *      AUTO-OPEN path — two attempts is the cap — is guarded by
+ *      verify-reset.js A6–A9.)
  *   4. Firewall at runtime — check() is spied; opening/stepping/finishing the
  *      walkthrough adds ZERO calls.
  *   5. Retry path — on a fresh card: wrong → "Try again" unlocks → correct
