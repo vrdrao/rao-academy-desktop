@@ -855,6 +855,34 @@ async function checkRender1(browser) {
           if (!(c2.slot.w >= slotFloor && c2.slot.h >= 24))
             problems.push(`${at}: C2 plot slots shrank to ${c2.slot.w}×${c2.slot.h}px (floor ${slotFloor}×24) — layout must never squash the tap targets`);
         }
+
+        // ── C3: vertical-multiply answer boxes — visible gap between adjacent
+        //    digit boxes AND x-centre alignment with the digit columns above.
+        //    (rao.css's 44px blank-input tap floor used to clamp the boxes wider
+        //    than their 40px columns: −4px overlap at desktop, −12px at phone.) ──
+        const c3 = await page.evaluate(() => {
+          const frame = [...document.querySelectorAll(".pv-frame")].find((f) => f.querySelector(".vmul"));
+          if (!frame) return { missing: true };
+          const boxes = [...frame.querySelectorAll(".vm-ans .blank-input")].map((b) => b.getBoundingClientRect());
+          const centres = (sel) => [...frame.querySelectorAll(sel)].map((d) => { const r = d.getBoundingClientRect(); return (r.left + r.right) / 2; });
+          return {
+            boxes: boxes.map((r) => ({ l: +r.left.toFixed(1), r: +r.right.toFixed(1) })),
+            topCentres: centres(".vm-top .vm-d"),
+            ansCentres: centres(".vm-ans .vm-d"),
+          };
+        });
+        if (c3.missing) problems.push(`${at}: C3 fixture (layout: multiply) not found in _type-coverage`);
+        else {
+          c3.boxes.slice(1).forEach((b, i) => {
+            const gap = b.l - c3.boxes[i].r;
+            if (!(gap > 2)) problems.push(`${at}: C3 answer boxes ${i}/${i + 1} gap is ${gap.toFixed(1)}px — adjacent digit boxes must keep a visible gap (>2px), not fuse or overlap`);
+          });
+          c3.topCentres.forEach((t, i) => {
+            const a = c3.ansCentres[i];
+            if (a == null || Math.abs(t - a) > 1.5)
+              problems.push(`${at}: C3 column ${i} x-centre misaligned — top digit at ${t.toFixed(1)}, answer box at ${a == null ? "MISSING" : a.toFixed(1)} (tolerance 1.5px); a gap that shifts blanks off their place-value columns is a worse defect than flush boxes`);
+          });
+        }
       } finally {
         await page.close();
       }

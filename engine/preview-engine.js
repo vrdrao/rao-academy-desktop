@@ -1299,12 +1299,13 @@ function buildVerticalMultiply(fm, qid) {
   var rightAlign = function (str) { var s = String(str).split(""); var pad = cols.length - s.length; return cols.map(function (_, i) { return i < pad ? "" : s[i - pad]; }); };
   var topChars = rightAlign(withCommas(a));
   var ansDigits = cols.filter(function (c) { return c !== ","; });
-  var colW = function (c) { return c === "," ? 12 : 40; };
-  var totalW = cols.reduce(function (w, c) { return w + colW(c); }, 0);
   var GUT = '<span class="vm-gut"></span>';
   var topRow = GUT + cols.map(function (c, i) { return c === "," ? '<span class="vm-c vm-comma">,</span>' : '<span class="vm-d">' + (topChars[i] || "") + '</span>'; }).join("");
   var multRow = '<span class="vm-gut vm-op">\u00d7</span>' + cols.map(function (c, i) { return c === "," ? '<span class="vm-c"></span>' : '<span class="vm-d">' + (i === cols.length - 1 ? String(b) : "") + '</span>'; }).join("");
-  var ruleRow = GUT + '<span class="vm-rule" style="width:' + totalW + 'px"></span>';
+  // RENDER-1 C3: the rule stretches to the row (flex), so its width always
+  // matches the CSS column sizing — a JS px total went stale whenever the
+  // container query resized the columns.
+  var ruleRow = GUT + '<span class="vm-rule" style="flex:1 1 auto"></span>';
   var bi = 0;
   var ansRow = GUT + cols.map(function (c) { return c === "," ? '<span class="vm-c vm-comma">,</span>' : '<span class="vm-d"><input class="blank-input vm-cell" data-blank="' + (bi++) + '" inputmode="numeric" maxlength="1" aria-label="product digit"></span>'; }).join("");
   var answerArea = '<div class="vmul"><div class="vmul-grid">' +

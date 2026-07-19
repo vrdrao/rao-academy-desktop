@@ -122,6 +122,17 @@ description: RENDER-1 fixtures C1+C2 — a 5-mark column must read as 5 discrete
 </div>
 
 <!--@q
+type: fill-blanks
+layout: multiply
+top: 1234
+bottom: 3
+description: RENDER-1 C3 fixture — per-digit product boxes must keep a visible gap between columns AND stay x-centre-aligned with the digit columns above (place-value columns must never fuse into one segmented box)
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Multiply 1,234 × 3.</p>
+</div>
+
+<!--@q
 type: time
 answer: ["3:45 PM"]
 description: time coverage — was COMPLETELY DEAD until rao-master-11
