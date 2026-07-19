@@ -1,30 +1,28 @@
-# Deploying the Rao Academy engine (rao-master-21) to tulipmath.com
+# Deploying the Rao Academy engine (rao-master-22) to tulipmath.com
 
 This folder is the complete engine drop for the app. It was built and verified
-at the BRIEF FR-2 commit-6 tree — the drop and the `engine/` sources it
+at the BRIEF-RENDER-1 closing tree — the drop and the `engine/` sources it
 md5-matches are committed TOGETHER in that same commit (the commit that carries
-this file; its five predecessors are the FR-2 stack `b972aec`..`ba3c556` on top
-of the four CLEANSTART commits). The full test suite ran green on that exact
-tree (118 lessons, 3,075 questions, all guards green, including the Robo suite
-and the new A1–A9 wrong-mark/cap guards). **Copy the files exactly as they
-are. Never edit them by hand.**
+this file; its five predecessors are the RENDER-1 stack `faa1fc3`..`feb0ffc` on
+top of the FR-2 stack). The full test suite ran green on that exact tree
+(118 lessons, 3,079 questions incl. the four RENDER-1 fixtures, all guards
+green including the new RENDER-1 computed-style guards). **Copy the files
+exactly as they are. Never edit them by hand.**
 
-New in this drop (rao-master-21, BRIEF FR-2 per HANDOFF-24):
+New in this drop (rao-master-22, BRIEF-RENDER-1):
 
-- **The ✕ wrong-mark is back — on wrong selections only.** A wrong selection
-  shows a small red ✕ before its text (multi-select: every wrong selection;
-  never a correct selection, never an unselected option). Try again clears
-  every ✕. This restores what FR-1 over-removed.
-- **Fill-blanks: wrong entries tint softly red (border + text), no glyph —
-  and the typed value is NEVER cleared**, through Check or Try again. The
-  child's handwriting stays.
-- **Two attempts is the cap.** A second wrong attempt locks the question and
-  the step-by-step walkthrough opens AUTOMATICALLY (where a solution exists);
-  no Try again is offered, no green appears at open, and the outcome records
-  `solved-with-help` — same as a voluntary "Walk me through it" tap.
-  Questions with no authored solution are unchanged (retry loop stays).
-- **Dark-mode CSS fix** — a dangling `.rao-lesson` token in `rao.css` was
-  silently making the first dark-mode rule unmatchable; removed.
+- **Line-plot marks are discrete ✕s** — a filled slot paints a countable brand
+  ✕ glyph instead of a solid block, and the legend's ✕ matches the marks in
+  every theme.
+- **Line-plot source table sits BESIDE the plot** at desktop widths (stacked
+  below ~540px of card width) so the child can see the data while building.
+- **Vertical-multiply answer boxes keep a visible gap** and stay aligned with
+  their place-value columns (the 44px tap floor no longer makes them overlap).
+- **Thousands commas are understated** (smaller, lighter, muted, narrow column)
+  in both vertical layouts, and digit columns now align across rows on phones.
+- **Authored-size figures keep their authored size** — the wide-stimulus
+  upscale applies only to figures without a fixed width (Q19-class comparison
+  pairs no longer balloon to 520px).
 
 ---
 
@@ -61,8 +59,8 @@ one does not match, the copy is corrupted or stale — recopy before going on.
 
 | File | md5 fingerprint | size (bytes) |
 |---|---|---:|
-| `preview-engine.js` | `23c059f50a91fd033643304b7c35a398` | 206,179 |
-| `rao.css` | `cbb68a2a1f07638fe515585ee43bfb6c` | 90,885 |
+| `preview-engine.js` | `bc2d670d8b1a65689f51d59f5836a6ec` | 206,869 |
+| `rao.css` | `ecbeacef3592f70108e8425069a50f01` | 92,859 |
 | `rao-card.css` | `b3bcb2aefbc4e07cf0b7e2ba56ac47f6` | 10,406 |
 | `rao-card.js` | `54aec41624375f22f619767a87cbe99f` | 32,684 |
 | `solution-renderer.js` | `0a17636d35a482cf82ebeaf65e65fa1c` | 15,207 |
@@ -113,8 +111,10 @@ is silently nameless ("Nailed it! ⚡ 3 in a row!" instead of
 ## Step 4 — only now import lessons
 
 Lessons relying on the rao-master-21 wrong-mark/cap behavior need engine
-rao-master-21 or newer (forward-only, as always). The live engine version is
-visible in the browser console as `RaoPreview.__version`.
+rao-master-21 or newer (forward-only, as always). The rao-master-22 changes are
+rendering-only — no lesson requires a newer minimum than before, but deploy 22
+so children get the fixed line-plot marks, layouts, and figure sizing. The live
+engine version is visible in the browser console as `RaoPreview.__version`.
 
 ---
 

@@ -2674,5 +2674,5 @@ module.exports = { attach, serialize, check, BEHAVIORS };
     return { ok: errs === 0, errors: errs, warnings: warns, items: report };
   }
   var B = MODS["preview-behaviors"];
-  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-21"};
+  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-22"};
 })();

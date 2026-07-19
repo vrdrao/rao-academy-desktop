@@ -61,7 +61,12 @@
  .rao-lesson .rao-check{font-family:'Baloo 2',cursive;font-weight:800;color:#fff;background:linear-gradient(90deg,#ff9d4d,#ff6b9d);border:0;border-radius:18px;padding:13px 28px;box-shadow:0 5px 0 #d4477a;cursor:pointer;font-size:1.02rem;margin-left:auto}
  .rao-lesson .rao-check:active{transform:translateY(4px);box-shadow:0 1px 0 #d4477a}
  
- .rao-lesson .qbody .lp-slot.on{background:var(--brand,#4361ee);border-radius:3px}
+ /* RENDER-1 C1: a filled slot is a DISCRETE ✕ mark, never a solid block — the plot's
+    own key says "✕ = 1"; a solid background merges adjacent fills into one bar and a
+    child cannot count the marks. The ✕ glyph (::before, sized under the 24px slot)
+    keeps its neighbours visually separated. */
+ .rao-lesson .qbody .lp-slot.on{background:transparent}
+ .rao-lesson .qbody .lp-slot.on::before{color:var(--brand,#4361ee)}
  .rao-lesson .qbody .md-ruler{cursor:grab}
 
 /* ═══════════ LAYER 2 — THE QUESTION (engine CSS, .rao-lesson unchanged) ═══════════ */
@@ -152,7 +157,7 @@
 .rao-lesson .vcol .rule{border-top:2.5px solid var(--ink);width:100%;margin:4px 0;}
 .rao-lesson .vcol .row{gap:3px;line-height:1;}
 .rao-lesson .vcol .cm-cell{box-sizing:border-box;width:44px;height:44px;text-align:center;display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;}
-.rao-lesson .vcol .cm-sep{box-sizing:border-box;width:12px;text-align:center;color:var(--sub);display:inline-flex;align-items:center;justify-content:center;flex:0 0 12px;}
+.rao-lesson .vcol .cm-sep{box-sizing:border-box;width:9px;text-align:center;color:var(--sub);font-size:.72em;font-weight:500;display:inline-flex;align-items:flex-end;padding-bottom:.18em;justify-content:center;flex:0 0 9px;}
 .rao-lesson .vcol .blank-input{box-sizing:border-box;width:44px;height:44px;flex:0 0 44px;font-size:1.4rem;text-align:center;padding:0;}
 .rao-lesson /* place-value answer cells: one outer strip, .rao-lesson dashed dividers, .rao-lesson one digit per cell */
 .pv-strip{display:inline-flex;border:2.5px solid var(--brand);border-radius:10px;overflow:hidden;background:rgba(var(--brand-rgb,123,92,255),.06);}
@@ -536,8 +541,9 @@
 .rao-lesson .bins .vs-zone.over .bs-drop{background:rgba(var(--brand-rgb,123,92,255),.08);}
 
 .rao-lesson /* ── Line plot ── */
-.data-wrap{display:flex;justify-content:center;margin:8px 0 14px;}.rao-lesson .data-table{border-collapse:collapse;font-family:var(--fm, 'JetBrains Mono',monospace);min-width:260px;border-radius:10px;overflow:hidden; box-shadow:0 2px 10px rgba(var(--brand-rgb, 123,92,255),.1);}.rao-lesson .data-table caption{font-family:var(--fs, 'DM Sans',sans-serif);font-weight:700;font-size:.95rem;color:var(--ink, #2c2150);padding:0 0 8px;caption-side:top; display:flex;align-items:center;gap:7px;justify-content:center;}.rao-lesson .data-table th{padding:9px 22px;font-size:.9rem;font-weight:700;color:#fff;background:var(--brand,#7b5cff);}.rao-lesson .data-table td{padding:8px 22px;text-align:center;font-size:1.02rem;border:1.5px solid var(--line-soft,#e4e1f3);color:var(--ink, #2c2150);background:#fff;}.rao-lesson .data-table tr:nth-child(even) td{background:var(--tint,#f8f6fe);}.rao-lesson .data-table td:first-child{font-weight:600;}.rao-lesson .lp-row{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:28px;margin:8px 0 16px;}.rao-lesson .lp-srcwrap{flex:0 1 auto;display:flex;flex-direction:column;justify-content:flex-start;}.rao-lesson .lp-src{margin:0;}.rao-lesson .lp-src caption{caption-side:top;font-weight:700;color:var(--ink, #2c2150);padding-bottom:6px;font-size:.92rem;}.rao-lesson .lp-plot{flex:0 1 auto;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto; grid-template-areas:"ylabel plot" ". xlabel" ". key";align-items:end;gap:2px 10px;}.rao-lesson .lp-ylabel{grid-area:ylabel;align-self:center;}.rao-lesson .lp-ylabel span{display:inline-block;writing-mode:vertical-rl;transform:rotate(180deg); font-size:.8rem;font-weight:700;color:var(--sub, #4b5563);white-space:nowrap;letter-spacing:.02em;}.rao-lesson .lp-plotarea{grid-area:plot;position:relative;padding:0 4px;}.rao-lesson .lp-gridlines{position:absolute;left:4px;right:4px;bottom:30px;top:0;pointer-events:none;}.rao-lesson .lp-gridline{position:absolute;left:0;right:0;height:1px;background:rgba(44,33,80,.06);}.rao-lesson .lp-cols{display:flex;align-items:flex-end;gap:10px;position:relative;}.rao-lesson .lp-col{position:relative;width:34px;display:flex;flex-direction:column;justify-content:flex-end; border-radius:8px 8px 0 0;cursor:pointer;transition:background .12s;}.rao-lesson .lp-col:hover{background:rgba(91,141,239,.06);}.rao-lesson .lp-slot{flex:0 0 24px;height:24px;width:100%;border:0;background:transparent;padding:0;cursor:pointer; display:flex;align-items:center;justify-content:center;position:relative;}.rao-lesson .lp-slot::before{content:"✕";font-size:1.15rem;font-weight:800;line-height:1;color:transparent;transition:color .1s;}.rao-lesson .lp-col:hover .lp-slot:hover::before{color:rgba(91,141,239,.4);}.rao-lesson .lp-col:hover .lp-slot:hover ~ .lp-slot::before{color:rgba(91,141,239,.4);}.rao-lesson .lp-baseline{height:3px;background:#2c2150;border-radius:2px;margin-top:0;}.rao-lesson .lp-ticks{display:flex;gap:10px;margin-top:5px;padding:0;}.rao-lesson .lp-tick{width:34px;text-align:center;font-size:.86rem;font-weight:700;color:var(--ink, #2c2150);}.rao-lesson .lp-xlabel{grid-area:xlabel;text-align:center;font-size:.8rem;font-weight:700;color:var(--sub, #4b5563);margin-top:3px;}.rao-lesson .lp-key{grid-area:key;text-align:center;font-size:.78rem;color:var(--sub, #4b5563);margin-top:2px;}.rao-lesson .lp-key-x{color:#5B8DEF;font-weight:800;}.rao-lesson .prompt{font-family:'Quicksand';font-weight:var(--rz-fw-prompt,700);color:var(--ink, #2c2150);font-size:var(--rz-fz-prompt,1.125rem);line-height:var(--rz-lh-prompt,1.5);letter-spacing:var(--rz-ls-prompt,0.01em);}/* ROUND_SCAFFOLD */ .rao-lesson .rsf{display:flex;justify-content:center;margin:20px 0 8px;} .rao-lesson .rsf-grid{display:inline-grid;grid-template-columns:repeat(5,auto);align-items:center;justify-items:center;gap:6px 18px;} .rao-lesson .rsf-num{font-family:var(--fm);font-weight:700;font-size:1.7rem;color:var(--ink);} .rao-lesson .rsf-op{font-family:var(--fm);font-size:1.5rem;color:var(--sub);} .rao-lesson .rsf-eq{font-family:var(--fm);font-size:1.5rem;font-weight:700;color:var(--pink);} .rao-lesson .rsf-arrcell{display:flex;align-items:center;justify-content:center;} .rao-lesson .rsf-arr{color:var(--brand);animation:rsf-bob 1.8s ease-in-out infinite;} @keyframes rsf-bob{0%,100%{transform:translateY(-1px);}50%{transform:translateY(3px);}} .rao-lesson .rsf-blank{width:72px;} .rao-lesson .rsf-given{font-family:var(--fm, monospace);font-weight:700;font-size:1.5rem;color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.09);border-radius:10px;padding:2px 12px;white-space:nowrap;} @media(max-width:600px){.rao-lesson .rsf-num{font-size:1.4rem;}.rao-lesson .rsf-given{font-size:1.2rem;padding:2px 8px;}.rao-lesson .rsf-grid{gap:6px 10px;}.rao-lesson .rsf-blank{width:58px;}}/* CATEGORIZE_TILE_AFFORDANCE */ .rao-lesson .vs-tile{cursor:grab;border-radius:12px;transition:transform .12s,box-shadow .15s,border-color .15s;animation:vs-nudge 1s ease-in-out .25s 2;} .rao-lesson .vs-tile:active{cursor:grabbing;transform:scale(.96);} .rao-lesson .vs-text{display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border:2px solid var(--line,#d4cdf2);background:#fff;box-shadow:0 2px 7px rgba(var(--brand-rgb,123,92,255),.14);font-family:var(--fm, monospace);font-weight:600;font-size:1rem;color:var(--brand,#7b5cff);} .rao-lesson .vs-text:hover{transform:translateY(-2px);border-color:var(--brand,#7b5cff);box-shadow:0 6px 16px rgba(var(--brand-rgb,123,92,255),.24);} .rao-lesson .vs-grip{flex-shrink:0;fill:#b2aad4;} .rao-lesson .vs-text:hover .vs-grip{fill:var(--brand,#7b5cff);} .rao-lesson .vs-shape{display:inline-flex;align-items:center;justify-content:center;padding:5px;border:2px solid var(--line,#d4cdf2);background:#fff;border-radius:12px;box-shadow:0 2px 6px rgba(var(--brand-rgb,123,92,255),.12);} .rao-lesson .vs-shape:hover{transform:translateY(-2px);border-color:var(--brand,#7b5cff);box-shadow:0 5px 13px rgba(var(--brand-rgb,123,92,255),.22);} @keyframes vs-nudge{0%,100%{transform:none;}20%{transform:rotate(-3deg);}45%{transform:rotate(2.5deg);}70%{transform:rotate(-1.5deg);}} .rao-lesson .vs-fixed .vs-grip{display:none;}/* QPROMPT_SOLO */ .rao-lesson .prompt.qprompt-solo{display:flex;flex-direction:column;align-items:center;text-align:center;font-size:var(--rz-fz-prompt,1.125rem);gap:8px;line-height:var(--rz-lh-prompt,1.5);} .rao-lesson .prompt.qprompt-solo .blank-input{font-size:1.15em;} @media(max-width:600px){.rao-lesson .prompt.qprompt-solo{font-size:var(--rz-fz-prompt,1.125rem);}} .rao-lesson /* HELPER_FACT */ .helper-fact{display:flex;align-items:center;gap:9px;justify-content:center;margin:0 0 14px;flex-wrap:wrap;} .rao-lesson .hf-tag{background:var(--green, #10b981);color:#fff;font-family:var(--fs, sans-serif);font-weight:800;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:99px;} .rao-lesson .hf-val{font-family:var(--fm, monospace);font-weight:700;font-size:1.25rem;color:#047857;background:rgba(16,185,129,.12);padding:5px 13px;border-radius:9px;} .rao-lesson .prompt.qprompt-centered{display:flex;justify-content:center;text-align:center;font-size:clamp(1.05rem,calc(1.7rem - var(--pl,0)*0.011rem),1.5rem);line-height:1.4;} @media(max-width:600px){.rao-lesson .prompt.qprompt-centered{font-size:clamp(1rem,calc(1.5rem - var(--pl,0)*0.011rem),1.3rem);}} .rao-lesson /* QPROMPT_SPLIT */ .prompt.qprompt-split{display:flex;flex-direction:column;gap:12px;align-items:stretch;} .rao-lesson .prompt.qprompt-split .qp-lead{text-align:left;font-size:1.08rem;font-weight:700;color:var(--ink, #2c2150);line-height:1.4;} .rao-lesson .prompt.qprompt-split .qp-expr{text-align:center;font-family:var(--fm, 'JetBrains Mono',monospace);font-weight:600;font-size:1.75rem;color:var(--ink, #2c2150);letter-spacing:.01em;line-height:1.2;padding:4px 0 2px;} @media(max-width:600px){.rao-lesson .prompt.qprompt-split .qp-expr{font-size:1.5rem;}}.rao-lesson .prompt:has(.seq){display:block;}.rao-lesson .prompt:has(.seq) > span{display:block;}.rao-lesson .seq-lead{display:block;text-align:left;color:var(--sub, #4b5563);font-weight:600;font-size:1rem;margin-bottom:6px;}.rao-lesson .seq{display:block;text-align:center;font-family:var(--fm, 'JetBrains Mono',monospace);font-size:clamp(1.15rem, 5.4vw, 1.62rem);font-weight:600;color:#4d4a63;color:color-mix(in srgb, var(--ink, #2c2150) 76%, #ffffff);letter-spacing:.05em;line-height:1.5;background:linear-gradient(135deg,rgba(var(--brand-rgb,123,92,255),.06),rgba(90,200,250,.09));border:1.5px solid rgba(var(--brand-rgb,123,92,255),.15);border-radius:14px;padding:16px 18px;margin:2px 0 4px;}.rao-lesson .seq .sq{color:var(--brand,#7b5cff);font-weight:800;padding:0 3px;}.rao-lesson .seq .blank-input{width:clamp(42px, 12vw, 54px);font-size:clamp(1rem, 3.8vw, 1.3rem);vertical-align:middle;margin:0 3px;padding:6px 2px;}@media(max-width:600px){.rao-lesson .seq{padding:13px 12px;letter-spacing:.03em;}}.rao-lesson .sb-tile{font-family:var(--fm, 'JetBrains Mono',monospace);font-size:1.3rem;font-weight:700;color:var(--brand,#7b5cff);}
-.rao-lesson .vmul{display:flex;justify-content:center;margin:22px 0 6px;}.rao-lesson .vmul-grid{display:inline-flex;flex-direction:column;font-family:var(--fm);font-size:1.6rem;font-weight:600;color:var(--ink);align-items:stretch;}.rao-lesson .vm-row{display:flex;align-items:center;}.rao-lesson .vm-gut{width:26px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}.rao-lesson .vm-op{color:var(--sub);font-weight:500;}.rao-lesson .vm-d{width:40px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}.rao-lesson .vm-c{width:12px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}.rao-lesson .vm-comma{color:var(--ink);}.rao-lesson .vm-top{height:44px;}.rao-lesson .vm-mult{height:44px;}.rao-lesson .vm-rulerow{height:14px;}.rao-lesson .vm-ans{height:48px;}.rao-lesson .vm-rule{border-top:3px solid var(--ink);height:0;}.rao-lesson .vm-cell{width:34px;height:42px;padding:0;font-size:1.35rem;}.rao-lesson .dt-wrap{display:flex;justify-content:center;margin:10px 0 16px;}.rao-lesson .dt-table{border-collapse:collapse;font-family:var(--fm, 'JetBrains Mono',monospace);border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(var(--brand-rgb, 123,92,255),.14);}.rao-lesson .dt-table th{padding:9px 14px;font-size:.82rem;font-weight:700;color:#fff;background:var(--brand,#7b5cff);text-align:center;line-height:1.25;font-family:var(--fs, 'DM Sans',sans-serif);}.rao-lesson .dt-table td{padding:7px 14px;text-align:center;font-size:1.05rem;font-weight:600;border:1.5px solid var(--line-soft,#e4e1f3);color:var(--ink, #2c2150);background:#fff;}.rao-lesson .dt-table tr:nth-child(even) td{background:var(--tint,#f8f6fe);}.rao-lesson .dt-table td.dt-blank{padding:5px 8px;}.rao-lesson .dt-table .blank-input{width:56px;font-size:1.15rem;padding:5px 3px;}@media(max-width:600px){.rao-lesson .dt-table th{padding:8px 6px;font-size:.68rem;}.rao-lesson .dt-table td{padding:6px 6px;font-size:.92rem;}.rao-lesson .dt-table .blank-input{width:42px;font-size:.98rem;}}/* prompt alignment: LEFT by default; centered only for genuine expressions via .qprompt-solo (needs a math symbol) / .qprompt-split / .qprompt-centered. The word-count-only .p-center path was Bug 2 and is retired. */.rao-lesson .prompt{justify-content:flex-start;text-align:left;}.rao-lesson .prompt > span{text-align:inherit;}.rao-lesson .prompt.qprompt-solo{justify-content:center;text-align:center;}.rao-lesson .prompt:has(.lbl){display:block;}.rao-lesson .prompt:has(.lbl) > span{display:block;text-align:center;}.rao-lesson .lbl{display:block;text-align:left;margin-bottom:6px;}.rao-lesson .prompt:has(.lbl) .lbl{text-align:left;}.rao-lesson .eqn{justify-content:center;}.rao-lesson .time-row{display:flex;gap:14px;align-items:stretch;justify-content:center;margin:18px 0 6px;flex-wrap:wrap;} .rao-lesson .time-input{width:130px;padding:12px 14px;border:2px solid var(--line,#d4cdf2);border-radius:12px;font-family:var(--fm, 'JetBrains Mono',monospace);font-size:1.3rem;font-weight:700;text-align:center;color:var(--brand,#7b5cff);background:#fff;outline:none;transition:border-color .2s,box-shadow .2s;} .rao-lesson .time-input::placeholder{color:#b9c0cf;font-weight:600;opacity:1;} .rao-lesson .time-input::-webkit-input-placeholder{color:#b9c0cf;font-weight:600;} .rao-lesson .time-input:focus{border-color:var(--brand,#7b5cff);box-shadow:0 0 0 4px rgba(var(--brand-rgb,123,92,255),.14);} .rao-lesson .ampm-toggle{display:inline-flex;align-items:stretch;padding:4px;background:#eef1f8;border:2px solid #dbe1f0;border-radius:13px;gap:4px;} .rao-lesson .ampm-btn{min-width:66px;padding:0 20px;display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:9px;font-family:var(--fs, 'DM Sans',sans-serif);font-size:1.05rem;font-weight:800;letter-spacing:.04em;color:#8a93a8;background:transparent;cursor:pointer;user-select:none;transition:background .15s,color .15s,box-shadow .15s,transform .08s;} .rao-lesson .ampm-btn:hover{color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.08);} .rao-lesson .ampm-btn:active{transform:scale(.96);} .rao-lesson .ampm-btn.is-sel{background:var(--brand,#7b5cff);color:#fff;box-shadow:0 3px 8px rgba(var(--brand-rgb,123,92,255),.35);} .rao-lesson .ampm-btn.is-sel:hover{background:var(--brand,#7b5cff);color:#fff;}
+.data-wrap{display:flex;justify-content:center;margin:8px 0 14px;}.rao-lesson .data-table{border-collapse:collapse;font-family:var(--fm, 'JetBrains Mono',monospace);min-width:260px;border-radius:10px;overflow:hidden; box-shadow:0 2px 10px rgba(var(--brand-rgb, 123,92,255),.1);}.rao-lesson .data-table caption{font-family:var(--fs, 'DM Sans',sans-serif);font-weight:700;font-size:.95rem;color:var(--ink, #2c2150);padding:0 0 8px;caption-side:top; display:flex;align-items:center;gap:7px;justify-content:center;}.rao-lesson .data-table th{padding:9px 22px;font-size:.9rem;font-weight:700;color:#fff;background:var(--brand,#7b5cff);}.rao-lesson .data-table td{padding:8px 22px;text-align:center;font-size:1.02rem;border:1.5px solid var(--line-soft,#e4e1f3);color:var(--ink, #2c2150);background:#fff;}.rao-lesson .data-table tr:nth-child(even) td{background:var(--tint,#f8f6fe);}.rao-lesson .data-table td:first-child{font-weight:600;}.rao-lesson .lp-row{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:28px;margin:8px 0 16px;}.rao-lesson .lp-srcwrap{flex:0 1 auto;display:flex;flex-direction:column;justify-content:flex-start;min-width:300px;max-width:100%;}
+.rao-lesson .lp-srcwrap .fig-wrap{margin:0;width:auto;}.rao-lesson .lp-src{margin:0;}.rao-lesson .lp-src caption{caption-side:top;font-weight:700;color:var(--ink, #2c2150);padding-bottom:6px;font-size:.92rem;}.rao-lesson .lp-plot{flex:0 1 auto;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto; grid-template-areas:"ylabel plot" ". xlabel" ". key";align-items:end;gap:2px 10px;}.rao-lesson .lp-ylabel{grid-area:ylabel;align-self:center;}.rao-lesson .lp-ylabel span{display:inline-block;writing-mode:vertical-rl;transform:rotate(180deg); font-size:.8rem;font-weight:700;color:var(--sub, #4b5563);white-space:nowrap;letter-spacing:.02em;}.rao-lesson .lp-plotarea{grid-area:plot;position:relative;padding:0 4px;}.rao-lesson .lp-gridlines{position:absolute;left:4px;right:4px;bottom:30px;top:0;pointer-events:none;}.rao-lesson .lp-gridline{position:absolute;left:0;right:0;height:1px;background:rgba(44,33,80,.06);}.rao-lesson .lp-cols{display:flex;align-items:flex-end;gap:10px;position:relative;}.rao-lesson .lp-col{position:relative;width:34px;display:flex;flex-direction:column;justify-content:flex-end; border-radius:8px 8px 0 0;cursor:pointer;transition:background .12s;}.rao-lesson .lp-col:hover{background:rgba(91,141,239,.06);}.rao-lesson .lp-slot{flex:0 0 24px;height:24px;width:100%;border:0;background:transparent;padding:0;cursor:pointer; display:flex;align-items:center;justify-content:center;position:relative;}.rao-lesson .lp-slot::before{content:"✕";font-size:1.15rem;font-weight:800;line-height:1;color:transparent;transition:color .1s;}.rao-lesson .lp-col:hover .lp-slot:hover::before{color:rgba(91,141,239,.4);}.rao-lesson .lp-col:hover .lp-slot:hover ~ .lp-slot::before{color:rgba(91,141,239,.4);}.rao-lesson .lp-baseline{height:3px;background:#2c2150;border-radius:2px;margin-top:0;}.rao-lesson .lp-ticks{display:flex;gap:10px;margin-top:5px;padding:0;}.rao-lesson .lp-tick{width:34px;text-align:center;font-size:.86rem;font-weight:700;color:var(--ink, #2c2150);}.rao-lesson .lp-xlabel{grid-area:xlabel;text-align:center;font-size:.8rem;font-weight:700;color:var(--sub, #4b5563);margin-top:3px;}.rao-lesson .lp-key{grid-area:key;text-align:center;font-size:.78rem;color:var(--sub, #4b5563);margin-top:2px;}.rao-lesson .lp-key-x{color:var(--brand,#5B8DEF);font-weight:800;}.rao-lesson .prompt{font-family:'Quicksand';font-weight:var(--rz-fw-prompt,700);color:var(--ink, #2c2150);font-size:var(--rz-fz-prompt,1.125rem);line-height:var(--rz-lh-prompt,1.5);letter-spacing:var(--rz-ls-prompt,0.01em);}/* ROUND_SCAFFOLD */ .rao-lesson .rsf{display:flex;justify-content:center;margin:20px 0 8px;} .rao-lesson .rsf-grid{display:inline-grid;grid-template-columns:repeat(5,auto);align-items:center;justify-items:center;gap:6px 18px;} .rao-lesson .rsf-num{font-family:var(--fm);font-weight:700;font-size:1.7rem;color:var(--ink);} .rao-lesson .rsf-op{font-family:var(--fm);font-size:1.5rem;color:var(--sub);} .rao-lesson .rsf-eq{font-family:var(--fm);font-size:1.5rem;font-weight:700;color:var(--pink);} .rao-lesson .rsf-arrcell{display:flex;align-items:center;justify-content:center;} .rao-lesson .rsf-arr{color:var(--brand);animation:rsf-bob 1.8s ease-in-out infinite;} @keyframes rsf-bob{0%,100%{transform:translateY(-1px);}50%{transform:translateY(3px);}} .rao-lesson .rsf-blank{width:72px;} .rao-lesson .rsf-given{font-family:var(--fm, monospace);font-weight:700;font-size:1.5rem;color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.09);border-radius:10px;padding:2px 12px;white-space:nowrap;} @media(max-width:600px){.rao-lesson .rsf-num{font-size:1.4rem;}.rao-lesson .rsf-given{font-size:1.2rem;padding:2px 8px;}.rao-lesson .rsf-grid{gap:6px 10px;}.rao-lesson .rsf-blank{width:58px;}}/* CATEGORIZE_TILE_AFFORDANCE */ .rao-lesson .vs-tile{cursor:grab;border-radius:12px;transition:transform .12s,box-shadow .15s,border-color .15s;animation:vs-nudge 1s ease-in-out .25s 2;} .rao-lesson .vs-tile:active{cursor:grabbing;transform:scale(.96);} .rao-lesson .vs-text{display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border:2px solid var(--line,#d4cdf2);background:#fff;box-shadow:0 2px 7px rgba(var(--brand-rgb,123,92,255),.14);font-family:var(--fm, monospace);font-weight:600;font-size:1rem;color:var(--brand,#7b5cff);} .rao-lesson .vs-text:hover{transform:translateY(-2px);border-color:var(--brand,#7b5cff);box-shadow:0 6px 16px rgba(var(--brand-rgb,123,92,255),.24);} .rao-lesson .vs-grip{flex-shrink:0;fill:#b2aad4;} .rao-lesson .vs-text:hover .vs-grip{fill:var(--brand,#7b5cff);} .rao-lesson .vs-shape{display:inline-flex;align-items:center;justify-content:center;padding:5px;border:2px solid var(--line,#d4cdf2);background:#fff;border-radius:12px;box-shadow:0 2px 6px rgba(var(--brand-rgb,123,92,255),.12);} .rao-lesson .vs-shape:hover{transform:translateY(-2px);border-color:var(--brand,#7b5cff);box-shadow:0 5px 13px rgba(var(--brand-rgb,123,92,255),.22);} @keyframes vs-nudge{0%,100%{transform:none;}20%{transform:rotate(-3deg);}45%{transform:rotate(2.5deg);}70%{transform:rotate(-1.5deg);}} .rao-lesson .vs-fixed .vs-grip{display:none;}/* QPROMPT_SOLO */ .rao-lesson .prompt.qprompt-solo{display:flex;flex-direction:column;align-items:center;text-align:center;font-size:var(--rz-fz-prompt,1.125rem);gap:8px;line-height:var(--rz-lh-prompt,1.5);} .rao-lesson .prompt.qprompt-solo .blank-input{font-size:1.15em;} @media(max-width:600px){.rao-lesson .prompt.qprompt-solo{font-size:var(--rz-fz-prompt,1.125rem);}} .rao-lesson /* HELPER_FACT */ .helper-fact{display:flex;align-items:center;gap:9px;justify-content:center;margin:0 0 14px;flex-wrap:wrap;} .rao-lesson .hf-tag{background:var(--green, #10b981);color:#fff;font-family:var(--fs, sans-serif);font-weight:800;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:99px;} .rao-lesson .hf-val{font-family:var(--fm, monospace);font-weight:700;font-size:1.25rem;color:#047857;background:rgba(16,185,129,.12);padding:5px 13px;border-radius:9px;} .rao-lesson .prompt.qprompt-centered{display:flex;justify-content:center;text-align:center;font-size:clamp(1.05rem,calc(1.7rem - var(--pl,0)*0.011rem),1.5rem);line-height:1.4;} @media(max-width:600px){.rao-lesson .prompt.qprompt-centered{font-size:clamp(1rem,calc(1.5rem - var(--pl,0)*0.011rem),1.3rem);}} .rao-lesson /* QPROMPT_SPLIT */ .prompt.qprompt-split{display:flex;flex-direction:column;gap:12px;align-items:stretch;} .rao-lesson .prompt.qprompt-split .qp-lead{text-align:left;font-size:1.08rem;font-weight:700;color:var(--ink, #2c2150);line-height:1.4;} .rao-lesson .prompt.qprompt-split .qp-expr{text-align:center;font-family:var(--fm, 'JetBrains Mono',monospace);font-weight:600;font-size:1.75rem;color:var(--ink, #2c2150);letter-spacing:.01em;line-height:1.2;padding:4px 0 2px;} @media(max-width:600px){.rao-lesson .prompt.qprompt-split .qp-expr{font-size:1.5rem;}}.rao-lesson .prompt:has(.seq){display:block;}.rao-lesson .prompt:has(.seq) > span{display:block;}.rao-lesson .seq-lead{display:block;text-align:left;color:var(--sub, #4b5563);font-weight:600;font-size:1rem;margin-bottom:6px;}.rao-lesson .seq{display:block;text-align:center;font-family:var(--fm, 'JetBrains Mono',monospace);font-size:clamp(1.15rem, 5.4vw, 1.62rem);font-weight:600;color:#4d4a63;color:color-mix(in srgb, var(--ink, #2c2150) 76%, #ffffff);letter-spacing:.05em;line-height:1.5;background:linear-gradient(135deg,rgba(var(--brand-rgb,123,92,255),.06),rgba(90,200,250,.09));border:1.5px solid rgba(var(--brand-rgb,123,92,255),.15);border-radius:14px;padding:16px 18px;margin:2px 0 4px;}.rao-lesson .seq .sq{color:var(--brand,#7b5cff);font-weight:800;padding:0 3px;}.rao-lesson .seq .blank-input{width:clamp(42px, 12vw, 54px);font-size:clamp(1rem, 3.8vw, 1.3rem);vertical-align:middle;margin:0 3px;padding:6px 2px;}@media(max-width:600px){.rao-lesson .seq{padding:13px 12px;letter-spacing:.03em;}}.rao-lesson .sb-tile{font-family:var(--fm, 'JetBrains Mono',monospace);font-size:1.3rem;font-weight:700;color:var(--brand,#7b5cff);}
+.rao-lesson .vmul{display:flex;justify-content:center;margin:22px 0 6px;}.rao-lesson .vmul-grid{display:inline-flex;flex-direction:column;font-family:var(--fm);font-size:1.6rem;font-weight:600;color:var(--ink);align-items:stretch;}.rao-lesson .vm-row{display:flex;align-items:center;}.rao-lesson .vm-gut{width:26px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}.rao-lesson .vm-op{color:var(--sub);font-weight:500;}.rao-lesson .vm-d{width:52px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}.rao-lesson .vm-c{width:9px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}.rao-lesson .vm-comma{color:var(--sub);font-size:.72em;font-weight:500;align-self:flex-end;padding-bottom:.3em;}.rao-lesson .vm-top{height:44px;}.rao-lesson .vm-mult{height:44px;}.rao-lesson .vm-rulerow{height:14px;}.rao-lesson .vm-ans{height:48px;}.rao-lesson .vm-rule{border-top:3px solid var(--ink);height:0;}.rao-lesson .vm-cell{width:44px;height:44px;padding:0;font-size:1.35rem;}.rao-lesson .dt-wrap{display:flex;justify-content:center;margin:10px 0 16px;}.rao-lesson .dt-table{border-collapse:collapse;font-family:var(--fm, 'JetBrains Mono',monospace);border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(var(--brand-rgb, 123,92,255),.14);}.rao-lesson .dt-table th{padding:9px 14px;font-size:.82rem;font-weight:700;color:#fff;background:var(--brand,#7b5cff);text-align:center;line-height:1.25;font-family:var(--fs, 'DM Sans',sans-serif);}.rao-lesson .dt-table td{padding:7px 14px;text-align:center;font-size:1.05rem;font-weight:600;border:1.5px solid var(--line-soft,#e4e1f3);color:var(--ink, #2c2150);background:#fff;}.rao-lesson .dt-table tr:nth-child(even) td{background:var(--tint,#f8f6fe);}.rao-lesson .dt-table td.dt-blank{padding:5px 8px;}.rao-lesson .dt-table .blank-input{width:56px;font-size:1.15rem;padding:5px 3px;}@media(max-width:600px){.rao-lesson .dt-table th{padding:8px 6px;font-size:.68rem;}.rao-lesson .dt-table td{padding:6px 6px;font-size:.92rem;}.rao-lesson .dt-table .blank-input{width:42px;font-size:.98rem;}}/* prompt alignment: LEFT by default; centered only for genuine expressions via .qprompt-solo (needs a math symbol) / .qprompt-split / .qprompt-centered. The word-count-only .p-center path was Bug 2 and is retired. */.rao-lesson .prompt{justify-content:flex-start;text-align:left;}.rao-lesson .prompt > span{text-align:inherit;}.rao-lesson .prompt.qprompt-solo{justify-content:center;text-align:center;}.rao-lesson .prompt:has(.lbl){display:block;}.rao-lesson .prompt:has(.lbl) > span{display:block;text-align:center;}.rao-lesson .lbl{display:block;text-align:left;margin-bottom:6px;}.rao-lesson .prompt:has(.lbl) .lbl{text-align:left;}.rao-lesson .eqn{justify-content:center;}.rao-lesson .time-row{display:flex;gap:14px;align-items:stretch;justify-content:center;margin:18px 0 6px;flex-wrap:wrap;} .rao-lesson .time-input{width:130px;padding:12px 14px;border:2px solid var(--line,#d4cdf2);border-radius:12px;font-family:var(--fm, 'JetBrains Mono',monospace);font-size:1.3rem;font-weight:700;text-align:center;color:var(--brand,#7b5cff);background:#fff;outline:none;transition:border-color .2s,box-shadow .2s;} .rao-lesson .time-input::placeholder{color:#b9c0cf;font-weight:600;opacity:1;} .rao-lesson .time-input::-webkit-input-placeholder{color:#b9c0cf;font-weight:600;} .rao-lesson .time-input:focus{border-color:var(--brand,#7b5cff);box-shadow:0 0 0 4px rgba(var(--brand-rgb,123,92,255),.14);} .rao-lesson .ampm-toggle{display:inline-flex;align-items:stretch;padding:4px;background:#eef1f8;border:2px solid #dbe1f0;border-radius:13px;gap:4px;} .rao-lesson .ampm-btn{min-width:66px;padding:0 20px;display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:9px;font-family:var(--fs, 'DM Sans',sans-serif);font-size:1.05rem;font-weight:800;letter-spacing:.04em;color:#8a93a8;background:transparent;cursor:pointer;user-select:none;transition:background .15s,color .15s,box-shadow .15s,transform .08s;} .rao-lesson .ampm-btn:hover{color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.08);} .rao-lesson .ampm-btn:active{transform:scale(.96);} .rao-lesson .ampm-btn.is-sel{background:var(--brand,#7b5cff);color:#fff;box-shadow:0 3px 8px rgba(var(--brand-rgb,123,92,255),.35);} .rao-lesson .ampm-btn.is-sel:hover{background:var(--brand,#7b5cff);color:#fff;}
 .rao-lesson .barobj{height:30px;border-radius:6px;}
 .rao-lesson .bg-row{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:26px;margin:10px 0 16px;}
 .rao-lesson .bg-srcwrap{flex:0 1 auto;}
@@ -900,20 +906,25 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
 }
 
 /* ── MOBILE FIX: column-arithmetic overflow ─────────────────────────────────
-   .vmul-grid uses fixed-width cells (vm-d 40px, vm-gut 26px, vm-c 12px).
-   A 5-digit multiplication is ~5×40 + 26 + 5×12 = 286px of cells, which clips
-   on a 380px phone after card + qbody padding eats both sides. Shrink the cells
-   so the grid fits. */
+   RENDER-1 C3: the answer boxes carry the 44px blank-input tap floor
+   (min-width:44px), so columns must be WIDER than the floor or the boxes fuse
+   and overlap (they measured −12px gap at phone width when vm-d was 32px).
+   48px columns hold a 44px box with a 4px gap; a 5-digit product is
+   5×48 + gut 20 + comma 10 = 270px, which still fits a 380px phone card. */
 @container lesson (max-width: 480px) {
   .rao-lesson .vmul-grid   { font-size: 1.3rem; }
-  .rao-lesson .vm-d        { width: 32px; }
+  .rao-lesson .vm-d        { width: 48px; }
   .rao-lesson .vm-gut      { width: 20px; }
-  .rao-lesson .vm-c        { width: 10px; }
-  .rao-lesson .vm-cell     { width: 28px; height: 36px; font-size: 1.1rem; }
+  .rao-lesson .vm-c        { width: 8px; }
+  .rao-lesson .vm-cell     { width: 44px; height: 44px; font-size: 1.2rem; }
+  /* RENDER-1 C4: the 36px cell override is GONE — the 44px blank-input tap floor
+     (rao.css:128, min-width) clamped blanks to 44px while static cells stayed
+     36px, skewing any row with a blank 4-8px off its place-value columns. All
+     cells keep the desktop 44px: 5 digit columns + comma + opsign ≈ 268px,
+     which fits a 380px phone card. */
   .rao-lesson .vcol         { font-size: 1.4rem; }
-  .rao-lesson .vcol .cm-cell { width: 36px; height: 36px; flex: 0 0 36px; }
-  .rao-lesson .vcol .blank-input { width: 36px; height: 36px; flex: 0 0 36px; font-size: 1.15rem; }
-  .rao-lesson .vcol .cm-sep { width: 10px; flex: 0 0 10px; }
+  .rao-lesson .vcol .blank-input { font-size: 1.15rem; }
+  .rao-lesson .vcol .cm-sep { width: 8px; flex: 0 0 8px; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -955,15 +966,32 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
   max-width:100%;
 }
 /* Wide stimuli — number lines, bar models, arrays, rulers — are authored with a
-   large viewBox width. Let them use the width instead of the height. */
-.rao-lesson .fig-wrap > svg[viewBox^="0 0 3"],
-.rao-lesson .fig-wrap > svg[viewBox^="0 0 4"],
-.rao-lesson .fig-wrap > svg[viewBox^="0 0 5"],
-.rao-lesson .fig-wrap > svg[viewBox^="0 0 6"],
-.rao-lesson .fig-wrap > svg[viewBox^="0 0 7"]{
+   large viewBox width. Let them use the width instead of the height.
+   RENDER-1 C5: this applies ONLY to figures WITHOUT a fixed authored width —
+   the contract above ("a figure authored with width/height attrs renders at
+   that size") was being violated: a 300px two-rectangle comparison figure was
+   upscaled to 520px and dominated the card. Percentage-width figures keep the
+   520px cap they always had (54 of them carry no inline max-width and would
+   otherwise balloon to full card width). */
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 3"]:not([width]),
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 4"]:not([width]),
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 5"]:not([width]),
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 6"]:not([width]),
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 7"]:not([width]),
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 3"][width="100%"],
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 4"][width="100%"],
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 5"][width="100%"],
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 6"][width="100%"],
+.rao-lesson .fig-wrap > svg[viewBox^="0 0 7"][width="100%"]{
   height:auto;
   width:100%;
   max-width:520px;
+}
+/* Fixed-px-width figures render at their authored size — shrink-only when the
+   card is narrower than the figure (aspect kept via the viewBox). */
+.rao-lesson .fig-wrap > svg[width]:not([width="100%"]){
+  max-width:100%;
+  height:auto;
 }
 @container lesson (max-width: 420px){
   .rao-lesson .fig-wrap > svg,
@@ -3532,7 +3560,7 @@ function buildBarGraph(fm, content, qid) {
   return { answerArea: `<div class="bg-row">${srcTable}${plot}</div>`, answerArr };
 }
 
-function buildLinePlot(fm, content, qid) {
+function buildLinePlot(fm, content, qid, figHtml) {
   const cats = (Array.isArray(fm.categories) ? fm.categories : []).map(String);
   if (cats.length < 2) throw new Error(`${qid}: line-plot needs "categories: [...]" (>=2) in the frontmatter`);
   const answer = (Array.isArray(fm.answer) ? fm.answer : []).map((n) => String(Number(n) || 0));
@@ -3558,11 +3586,21 @@ function buildLinePlot(fm, content, qid) {
     .join("");
   const ticks = cats.map((label) => `<span class="lp-tick">${attrEsc(label)}</span>`).join("");
 
-  // optional source table the author pasted into the question
+  // optional source table the author pasted into the question. RENDER-1 C2:
+  // real lessons author the table as an SVG figure (build() drops <table>), which
+  // used to render as a stray full-width figure ABOVE the plot — the data the
+  // child is transcribing scrolled off-screen on every placement. Absorb that
+  // figure into the lp-row's source slot instead so table and plot sit side by
+  // side at desktop and stack (flex-wrap) on narrow cards.
   const tableMatch = content.match(/<table[\s\S]*?<\/table>/);
-  const srcTable = tableMatch
+  let srcTable = tableMatch
     ? `<div class="lp-srcwrap"><div class="data-wrap lp-src">${tableMatch[0]}</div></div>`
     : "";
+  let usedFig = false;
+  if (!srcTable && figHtml) {
+    srcTable = `<div class="lp-srcwrap">${figHtml}</div>`;
+    usedFig = true;
+  }
 
   const plot =
     `<div class="lp-plot" data-qid="${qid}" data-rows="${rows}" data-row-px="${ROW_PX}">` +
@@ -3577,7 +3615,7 @@ function buildLinePlot(fm, content, qid) {
     `<div class="lp-key"><span class="lp-key-x">✕</span> = 1 ${unit}</div>` +
     `</div>`;
 
-  return { answerArea: `<div class="lp-row">${srcTable}${plot}</div>`, answerArr: answer };
+  return { answerArea: `<div class="lp-row">${srcTable}${plot}</div>`, answerArr: answer, usedFig };
 }
 
 // Sequence-prominence. When a prompt reads "instruction: n, n, n, …, ?/[]" the number
@@ -3620,12 +3658,13 @@ function buildVerticalMultiply(fm, qid) {
   var rightAlign = function (str) { var s = String(str).split(""); var pad = cols.length - s.length; return cols.map(function (_, i) { return i < pad ? "" : s[i - pad]; }); };
   var topChars = rightAlign(withCommas(a));
   var ansDigits = cols.filter(function (c) { return c !== ","; });
-  var colW = function (c) { return c === "," ? 12 : 40; };
-  var totalW = cols.reduce(function (w, c) { return w + colW(c); }, 0);
   var GUT = '<span class="vm-gut"></span>';
   var topRow = GUT + cols.map(function (c, i) { return c === "," ? '<span class="vm-c vm-comma">,</span>' : '<span class="vm-d">' + (topChars[i] || "") + '</span>'; }).join("");
   var multRow = '<span class="vm-gut vm-op">\u00d7</span>' + cols.map(function (c, i) { return c === "," ? '<span class="vm-c"></span>' : '<span class="vm-d">' + (i === cols.length - 1 ? String(b) : "") + '</span>'; }).join("");
-  var ruleRow = GUT + '<span class="vm-rule" style="width:' + totalW + 'px"></span>';
+  // RENDER-1 C3: the rule stretches to the row (flex), so its width always
+  // matches the CSS column sizing — a JS px total went stale whenever the
+  // container query resized the columns.
+  var ruleRow = GUT + '<span class="vm-rule" style="flex:1 1 auto"></span>';
   var bi = 0;
   var ansRow = GUT + cols.map(function (c) { return c === "," ? '<span class="vm-c vm-comma">,</span>' : '<span class="vm-d"><input class="blank-input vm-cell" data-blank="' + (bi++) + '" inputmode="numeric" maxlength="1" aria-label="product digit"></span>'; }).join("");
   var answerArea = '<div class="vmul"><div class="vmul-grid">' +
@@ -3897,7 +3936,7 @@ function parseQuestion(attrs, content, fm, index) {
   const figContent = content
     .replace(/<ul\b[^>]*class="(?:palette|tiles|options)"[\s\S]*?<\/ul>/gi, "")
     .replace(/<ol\b[^>]*class="(?:order|sequence)"[\s\S]*?<\/ol>/gi, "");
-  const fig = figuresOf(figContent, warnings, qid, issues);
+  let fig = figuresOf(figContent, warnings, qid, issues);
   const fmAnswer = Array.isArray(fm.answer) ? fm.answer.map(String) : null;
 
   const seqPrompt = wrapSequencePrompt(promptHtml);
@@ -4076,9 +4115,10 @@ function parseQuestion(attrs, content, fm, index) {
     answerArea = built.answerArea;
     answerArr = built.answerArr;
   } else if (type === "line-plot") {
-    const built = buildLinePlot(fm, content, qid);
+    const built = buildLinePlot(fm, content, qid, fig);
     answerArea = built.answerArea;
     answerArr = built.answerArr;
+    if (built.usedFig) fig = "";   // the figure moved into the lp-row source slot
   } else if (type === "construct") {
     // Geometry. The interactive board + grading live in the geo engine (window.RaoGeo),
     // which the runtime `construct` behavior mounts into the .rao-construct div. Carry
@@ -4993,7 +5033,7 @@ module.exports = { attach, serialize, check, BEHAVIORS };
     return { ok: errs === 0, errors: errs, warnings: warns, items: report };
   }
   var B = MODS["preview-behaviors"];
-  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-21"};
+  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-22"};
 })();
 
 </script>

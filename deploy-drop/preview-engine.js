@@ -1201,7 +1201,7 @@ function buildBarGraph(fm, content, qid) {
   return { answerArea: `<div class="bg-row">${srcTable}${plot}</div>`, answerArr };
 }
 
-function buildLinePlot(fm, content, qid) {
+function buildLinePlot(fm, content, qid, figHtml) {
   const cats = (Array.isArray(fm.categories) ? fm.categories : []).map(String);
   if (cats.length < 2) throw new Error(`${qid}: line-plot needs "categories: [...]" (>=2) in the frontmatter`);
   const answer = (Array.isArray(fm.answer) ? fm.answer : []).map((n) => String(Number(n) || 0));
@@ -1227,11 +1227,21 @@ function buildLinePlot(fm, content, qid) {
     .join("");
   const ticks = cats.map((label) => `<span class="lp-tick">${attrEsc(label)}</span>`).join("");
 
-  // optional source table the author pasted into the question
+  // optional source table the author pasted into the question. RENDER-1 C2:
+  // real lessons author the table as an SVG figure (build() drops <table>), which
+  // used to render as a stray full-width figure ABOVE the plot — the data the
+  // child is transcribing scrolled off-screen on every placement. Absorb that
+  // figure into the lp-row's source slot instead so table and plot sit side by
+  // side at desktop and stack (flex-wrap) on narrow cards.
   const tableMatch = content.match(/<table[\s\S]*?<\/table>/);
-  const srcTable = tableMatch
+  let srcTable = tableMatch
     ? `<div class="lp-srcwrap"><div class="data-wrap lp-src">${tableMatch[0]}</div></div>`
     : "";
+  let usedFig = false;
+  if (!srcTable && figHtml) {
+    srcTable = `<div class="lp-srcwrap">${figHtml}</div>`;
+    usedFig = true;
+  }
 
   const plot =
     `<div class="lp-plot" data-qid="${qid}" data-rows="${rows}" data-row-px="${ROW_PX}">` +
@@ -1246,7 +1256,7 @@ function buildLinePlot(fm, content, qid) {
     `<div class="lp-key"><span class="lp-key-x">✕</span> = 1 ${unit}</div>` +
     `</div>`;
 
-  return { answerArea: `<div class="lp-row">${srcTable}${plot}</div>`, answerArr: answer };
+  return { answerArea: `<div class="lp-row">${srcTable}${plot}</div>`, answerArr: answer, usedFig };
 }
 
 // Sequence-prominence. When a prompt reads "instruction: n, n, n, …, ?/[]" the number
@@ -1289,12 +1299,13 @@ function buildVerticalMultiply(fm, qid) {
   var rightAlign = function (str) { var s = String(str).split(""); var pad = cols.length - s.length; return cols.map(function (_, i) { return i < pad ? "" : s[i - pad]; }); };
   var topChars = rightAlign(withCommas(a));
   var ansDigits = cols.filter(function (c) { return c !== ","; });
-  var colW = function (c) { return c === "," ? 12 : 40; };
-  var totalW = cols.reduce(function (w, c) { return w + colW(c); }, 0);
   var GUT = '<span class="vm-gut"></span>';
   var topRow = GUT + cols.map(function (c, i) { return c === "," ? '<span class="vm-c vm-comma">,</span>' : '<span class="vm-d">' + (topChars[i] || "") + '</span>'; }).join("");
   var multRow = '<span class="vm-gut vm-op">\u00d7</span>' + cols.map(function (c, i) { return c === "," ? '<span class="vm-c"></span>' : '<span class="vm-d">' + (i === cols.length - 1 ? String(b) : "") + '</span>'; }).join("");
-  var ruleRow = GUT + '<span class="vm-rule" style="width:' + totalW + 'px"></span>';
+  // RENDER-1 C3: the rule stretches to the row (flex), so its width always
+  // matches the CSS column sizing — a JS px total went stale whenever the
+  // container query resized the columns.
+  var ruleRow = GUT + '<span class="vm-rule" style="flex:1 1 auto"></span>';
   var bi = 0;
   var ansRow = GUT + cols.map(function (c) { return c === "," ? '<span class="vm-c vm-comma">,</span>' : '<span class="vm-d"><input class="blank-input vm-cell" data-blank="' + (bi++) + '" inputmode="numeric" maxlength="1" aria-label="product digit"></span>'; }).join("");
   var answerArea = '<div class="vmul"><div class="vmul-grid">' +
@@ -1566,7 +1577,7 @@ function parseQuestion(attrs, content, fm, index) {
   const figContent = content
     .replace(/<ul\b[^>]*class="(?:palette|tiles|options)"[\s\S]*?<\/ul>/gi, "")
     .replace(/<ol\b[^>]*class="(?:order|sequence)"[\s\S]*?<\/ol>/gi, "");
-  const fig = figuresOf(figContent, warnings, qid, issues);
+  let fig = figuresOf(figContent, warnings, qid, issues);
   const fmAnswer = Array.isArray(fm.answer) ? fm.answer.map(String) : null;
 
   const seqPrompt = wrapSequencePrompt(promptHtml);
@@ -1745,9 +1756,10 @@ function parseQuestion(attrs, content, fm, index) {
     answerArea = built.answerArea;
     answerArr = built.answerArr;
   } else if (type === "line-plot") {
-    const built = buildLinePlot(fm, content, qid);
+    const built = buildLinePlot(fm, content, qid, fig);
     answerArea = built.answerArea;
     answerArr = built.answerArr;
+    if (built.usedFig) fig = "";   // the figure moved into the lp-row source slot
   } else if (type === "construct") {
     // Geometry. The interactive board + grading live in the geo engine (window.RaoGeo),
     // which the runtime `construct` behavior mounts into the .rao-construct div. Carry
@@ -2662,5 +2674,5 @@ module.exports = { attach, serialize, check, BEHAVIORS };
     return { ok: errs === 0, errors: errs, warnings: warns, items: report };
   }
   var B = MODS["preview-behaviors"];
-  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-21"};
+  return { build: build, validate: validate, attach: B.attach, serialize: B.serialize, check: B.check , __version: "rao-master-22"};
 })();
