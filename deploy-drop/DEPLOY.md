@@ -1,19 +1,23 @@
-﻿# Deploying the Rao Academy engine (rao-master-19) to tulipmath.com
+# Deploying the Rao Academy engine (rao-master-20) to tulipmath.com
 
 This folder is the complete engine drop for the app. It was built and verified
-at repo commit `46d9189` â€” every file here passed the full test suite (104
-lessons, 2,727 questions, all guards green, including the Robo suite). **Copy
-the files exactly as they are. Never edit them by hand.**
+at repo commit `2366311` — every file here md5-matches the `engine/` sources of
+that commit, and the full test suite ran green on that exact tree (118 lessons,
+3,075 questions, all guards green, including the Robo suite). **Copy the files
+exactly as they are. Never edit them by hand.**
 
-New in this drop (rao-master-19, BRIEF-ENGINE-19):
-- **Two new figure types** â€” `equal-groups` (items sorted into rings) and
-  `sequence` (a boxed number chain with arrows). Seven existing questions that
-  previously showed a blank where their visual belonged now render it.
-- **Option-layout ladder** â€” long answer options (full equations) now get a
-  2Ã—2 grid or one full-width row each instead of squeezing into the 4-across
-  grid. Chosen automatically when the lesson is built; font size never changes.
-- **Unknown figure types now fail the lesson build loudly** instead of
-  silently rendering nothing.
+New in this drop (rao-master-20):
+
+- **"Try again" restores first-attempt state** (BRIEF FR-1) — when a child taps
+  Try again after a wrong answer, the task returns to EXACTLY its first-attempt
+  state for every behavior: no ✕ mark, no residual selection, no retained
+  input, no moved tiles. Help (hint bubbles, walkthrough steps) accumulates and
+  is never touched; attempt progress (the hint-ladder position, the
+  "Walk me through it" offer) survives the reset.
+- **Sequence-build tiles now drag on touch screens** (BRIEF CLEANSTART) —
+  `.sb-tile` joined the `touch-action:none` rule in `rao.css`. Before this, a
+  finger drag on a sequence-build tile scrolled the page instead of dragging
+  the tile (tapping still worked). 31 Grade 4 questions affected.
 
 ---
 
@@ -21,12 +25,12 @@ New in this drop (rao-master-19, BRIEF-ENGINE-19):
 
 Always put the new engine files on the site BEFORE importing any lesson.
 Never the other way around, and never go back to an older engine. An old
-engine cannot run new lessons â€” and it fails silently: the child just sees a
+engine cannot run new lessons — and it fails silently: the child just sees a
 blank space where a question should be. No error appears anywhere.
 
 ---
 
-## Step 1 â€” copy these files to the app's assets folder
+## Step 1 — copy these files to the app's assets folder
 
 Everything in this folder, keeping the `fonts/` subfolder together with
 `fonts.css`:
@@ -43,17 +47,17 @@ fonts.css
 fonts/            (all 8 .woff2 files)
 ```
 
-## Step 2 â€” verify the copies (do not skip this)
+## Step 2 — verify the copies (do not skip this)
 
 After copying, check each file's fingerprint and size ON THE SERVER. If even
-one does not match, the copy is corrupted or stale â€” recopy before going on.
+one does not match, the copy is corrupted or stale — recopy before going on.
 
 | File | md5 fingerprint | size (bytes) |
 |---|---|---:|
-| `preview-engine.js` | `574bcb7c47713ce4e7f8b432003001ed` | 206,179 |
-| `rao.css` | `c601b365bef55156ad9a7773d98d438e` | 90,858 |
-| `rao-card.css` | `2d88ece7e09af144644fe4ff028f9742` | 10,169 |
-| `rao-card.js` | `8af4da4bcc4f972dd702265fe29ed09a` | 27,472 |
+| `preview-engine.js` | `15c03853599f09627c063d5c3a43f55d` | 206,179 |
+| `rao.css` | `38a925ccab9da0865d2d1784d8d7123c` | 90,880 |
+| `rao-card.css` | `7d430f1871d851989e33898362cbd364` | 10,262 |
+| `rao-card.js` | `184ce9423b59dc952ff856ec3317cef1` | 28,703 |
 | `solution-renderer.js` | `0a17636d35a482cf82ebeaf65e65fa1c` | 15,207 |
 | `robo.js` | `f137b5ff4f2774abfef1fe3ab4d96aba` | 51,393 |
 | `robo.css` | `6b7336bf9f7a7ff872874e716631d715` | 51,183 |
@@ -61,10 +65,10 @@ one does not match, the copy is corrupted or stale â€” recopy before going 
 
 (On most servers: `md5sum <file>` prints the fingerprint, `ls -l` the size.)
 
-## Step 3 â€” the page must load ALL of them, in this order, with this mount
+## Step 3 — the page must load ALL of them, in this order, with this mount
 
 This exact block goes on every page that shows a question. The order matters,
-and the `rao-lesson` wrapper is LOAD-BEARING â€” without it every question card
+and the `rao-lesson` wrapper is LOAD-BEARING — without it every question card
 inflates to a 300px minimum height and the colour themes stop working:
 
 ```html
@@ -83,27 +87,27 @@ inflates to a 300px minimum height and the colour themes stop working:
 ```
 
 Three easy mistakes this prevents:
-- Skipping `solution-renderer.js` â€” the page still "works", but the hint
+- Skipping `solution-renderer.js` — the page still "works", but the hint
   bubbles and the step-by-step walkthrough silently disappear. It must load
   BEFORE `rao-card.js`.
-- Loading `robo.js` before `rao-card.js` â€” Robo listens for the card's
+- Loading `robo.js` before `rao-card.js` — Robo listens for the card's
   `rao:*` events; he must load AFTER the card renderer. His CSS loads after
   `rao-card.css`.
-- Putting theme colours in a `style=` attribute on the wrapper â€” that kills
+- Putting theme colours in a `style=` attribute on the wrapper — that kills
   the theme picker. The wrapper carries only `class="rao-lesson"` and
   `data-theme="grape"`.
 
 **Robo and the child's name:** the app must set
 `window.RaoAccount = { firstName: "<the child's first name>" }` at login.
-If it does not, nothing breaks â€” but Robo's milestone praise (streak 3 and 5)
-is silently nameless ("Nailed it! âš¡ 3 in a row!" instead of
-"Nailed it, Priya! âš¡ 3 in a row!").
+If it does not, nothing breaks — but Robo's milestone praise (streak 3 and 5)
+is silently nameless ("Nailed it! ⚡ 3 in a row!" instead of
+"Nailed it, Priya! ⚡ 3 in a row!").
 
-## Step 4 â€” only now import lessons
+## Step 4 — only now import lessons
 
-Lessons using the new figure types or the option ladder need engine
-rao-master-19 or newer. The live engine version is visible in the browser
-console as `RaoPreview.__version`.
+Lessons relying on the rao-master-20 reset behavior need engine rao-master-20
+or newer. The live engine version is visible in the browser console as
+`RaoPreview.__version`.
 
 ---
 
@@ -117,11 +121,11 @@ node tools/check-app.js https://www.tulipmath.com/<any-page-showing-a-question>
 ```
 
 (Run from the rao-academy repo folder. Replace the address with the actual
-page once it exists â€” the exact URL is still to be determined.)
+page once it exists — the exact URL is still to be determined.)
 
-It checks the five things that must ALL be true â€” engine loaded and version
+It checks the five things that must ALL be true — engine loaded and version
 matching, rao.css live, rao-card.css live, the load-bearing mount present,
 and the real fonts resolving. Green means what Venkat approved in review/
 is what a child will see. Anything else means DO NOT go live; it prints
-the reason. (It does not yet probe Robo â€” after wiring, confirm the dock
+the reason. (It does not yet probe Robo — after wiring, confirm the dock
 appears and reacts on the live page by answering one question.)

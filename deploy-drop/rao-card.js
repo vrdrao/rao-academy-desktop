@@ -12,9 +12,13 @@
      2. NO ANSWER REVEAL while attempting is possible. No green, no correct
         highlight, no reveal text. The reveal happens ONCE, at the walkthrough's
         final step (or on a correct answer).
-     3. WRONG IS A WHISPER — the tried option gets a small red ✕ glyph before
-        its text (persists for the life of the question) and NOTHING else. No
-        is-wrong red flood, no shake, no "Not quite" pill in adaptive mode.
+     3. WRONG IS A WHISPER, AND THE WHISPER DOES NOT LINGER (amended by BRIEF
+        FR-1, 2026-07-19 — supersedes the Brief 7.6 "✕ persists" wording). A
+        wrong attempt leaves NO persistent mark on the task: no ✕, no is-wrong
+        red flood, no shake, no "Not quite" pill in adaptive mode. The selection
+        returns to rest and the bubble carries the feedback. On "Try again" the
+        task returns to EXACTLY its first-attempt state — restored from a
+        snapshot taken at mount (guard: tools/verify-reset.js).
      4. HELP ACCUMULATES — hint bubbles and walkthrough steps only ever stack;
         nothing the card has told the child disappears while the question lives.
      5. ONE HINT LADDER — the whyWrong message after a wrong attempt IS the next
@@ -61,6 +65,12 @@ function wireCard(frame) {
   var qbody = frame.querySelector(".qbody");
   var behavior = frame.dataset.behavior;
   var answer; try { answer = JSON.parse(frame.dataset.answer || "null"); } catch (e) { answer = null; }
+  // FR-1: the first-attempt snapshot, captured BEFORE attach() so restore +
+  // re-attach replays the exact mount sequence. ONE mechanism for every
+  // behavior — a snapshot cannot drift out of sync with a behavior's rendering
+  // the way hand-written per-behavior teardown does. construct re-mounts its
+  // board from the pristine data-construct spec when attach() re-runs.
+  var taskSnap = qbody ? qbody.innerHTML : null;
   if (qbody && window.RaoPreview && window.RaoPreview.attach) window.RaoPreview.attach(qbody, behavior);
   // The compound reveal selector needs data-mode AND is-checked on the SAME
   // element (an ancestor of `.explain`); `.qbody` is that element. Default to
@@ -180,37 +190,37 @@ function wireCard(frame) {
       { label: solidLabel, ghost: false, onTap: resumeAnswering }
     ].filter(Boolean));
   }
+  // FR-1 reset: restore the mount-time snapshot and re-attach. attach() is
+  // idempotent (it tears down the previous binding first), and everything the
+  // card has TOLD the child lives OUTSIDE .qbody — the chat is inserted after
+  // it, walkthrough and action rows sit in .pv-card — so help is structurally
+  // untouched by the reset (law 4). Attempt counters (wrongCount, hintNum,
+  // rungIdx, shownWhys) live in this closure and are deliberately NOT reset.
+  function restoreTask() {
+    if (!qbody || taskSnap == null || !window.RaoPreview || !window.RaoPreview.attach) return;
+    qbody.innerHTML = taskSnap;
+    window.RaoPreview.attach(qbody, behavior);
+  }
   function resumeAnswering() {
     removeRow();
     freezeTask(false);
     hideFoot(false);
     quietChrome(false);
-    clearFeedback(qbody);            // input verdict marks go; ✕ and bubbles STAY
+    restoreTask();                   // LAW 3 (FR-1): first-attempt state back; bubbles STAY (law 4)
     fb.className = "pv-fb"; fb.textContent = ""; fb.style.color = "";
     syncHintBtn();
   }
 
-  // ── the whisper: mark the attempt with a small ✕, return options to their
-  //    resting look (is-sel comes off — the ✕ is the ONLY change, law 3). ──
-  function markTried() {
-    var sel = qbody.querySelectorAll(".opt.is-sel, .opt-fig.is-sel, .hcell.is-sel");
-    for (var i = 0; i < sel.length; i++) {
-      var el = sel[i];
-      el.classList.add("cc-tried");
-      el.classList.remove("is-sel");
-      if (!el.querySelector(".cc-x")) {
-        var x = document.createElement("span");
-        x.className = "cc-x";
-        x.textContent = "✕";
-        var txt = el.querySelector(".opt-text");
-        if (txt) txt.insertBefore(x, txt.firstChild);
-        else {
-          var ind = el.querySelector(".check-ind");
-          if (ind && ind.nextSibling) el.insertBefore(x, ind.nextSibling);
-          else el.insertBefore(x, el.firstChild);
-        }
-      }
-    }
+  // ── the whisper (LAW 3 as amended by BRIEF FR-1): a wrong attempt leaves NO
+  //    mark — the selection simply returns to rest. Queries .st-apple scene
+  //    selects too, which the retired markTried() never did (pre-existing
+  //    defect: an apple-scene selection survived a wrong attempt), and
+  //    re-syncs the scene count chip. ──
+  function clearSelection() {
+    var sel = qbody.querySelectorAll(".opt.is-sel, .opt-fig.is-sel, .hcell.is-sel, .st-apple.is-sel");
+    for (var i = 0; i < sel.length; i++) sel[i].classList.remove("is-sel");
+    var c = qbody.querySelector("[data-st-count]");
+    if (c) c.textContent = qbody.querySelectorAll(".st-apple.is-sel").length;
   }
   // The quiet reveal (walkthrough final step): green the correct option(s),
   // nothing else moves. Triumph and rescue must feel different.
@@ -343,12 +353,12 @@ function wireCard(frame) {
         qbody.dispatchEvent(new CustomEvent("rao:whywrong", { bubbles: true, detail: { code: entry.code } }));
       } catch (e) { /* logging must never break the card */ }
     }
-    if (isSelect) markTried();
+    if (isSelect) clearSelection();
     else markFeedback(qbody, behavior, user, answer, false, true);   // wrong marks only — NO green while attemptable
     freezeTask(true);
     hideFoot(true);
     quietChrome(true);
-    fb.className = "pv-fb"; fb.textContent = "";   // no "Not quite" — the ✕ and the bubble carry it
+    fb.className = "pv-fb"; fb.textContent = "";   // no "Not quite" — the bubble carries it
     var msg = entry && entry.message ? String(entry.message) : null;
     if (msg && !shownWhys[msg]) {
       shownWhys[msg] = true;
