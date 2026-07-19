@@ -315,18 +315,35 @@ const COMEBACK = ["You didn’t give up!", "You fixed it yourself!",
     await page.setContent(buildPage(), { waitUntil: "load" });
     const h = makeHelpers(page);
 
-    // two wrong attempts on the fixture → "Walk me through it" offered
+    // FR-2 ruling 5: the SECOND wrong attempt AUTO-opens the walkthrough (the
+    // fixture picks the same wrong option, whose whyWrong was already spoken,
+    // so the open fires straight from Check). Was: two wrongs → voluntary
+    // "Walk me through it" tap. The silence contract is unchanged — the open
+    // (either path) is the commit point.
     await h.fixtureWrong();
     await page.waitForTimeout(FILL_WAIT + 300);
     await h.tapRowButton(/Try again/);
     await page.waitForTimeout(200);
-    await h.fixtureWrong();
-    await page.waitForTimeout(FILL_WAIT + 300);
-
-    // a praise bubble may be about to show — prove silence kills bubbles at open:
-    // put a bubble up deliberately, then open the walkthrough
+    // a praise bubble may be about to show — prove silence kills bubbles at
+    // open: put a bubble up deliberately, then trip the cap
     await page.evaluate(() => window.Robo.bubble("about to be silenced", 5000));
-    await h.tapRowButton(/Walk me through it/);
+    await h.fixtureWrong();                          // wrong #2 → auto-open
+    const capOpened = await (async () => {
+      const deadline = Date.now() + 9000;
+      for (;;) {
+        const r = await page.evaluate(() => {
+          const frames = document.querySelectorAll(".pv-frame");
+          const f = frames[frames.length - 1];
+          const sol = f.querySelector(".pv-solwrap");
+          return !!(sol && !sol.hasAttribute("hidden"));
+        });
+        if (r) return true;
+        if (Date.now() > deadline) return false;
+        await page.waitForTimeout(80);
+      }
+    })();
+    if (capOpened) pass("second wrong AUTO-opens the walkthrough (FR-2 ruling 5)");
+    else fail("second wrong AUTO-opens the walkthrough (FR-2 ruling 5)", "no walkthrough within 9s of the capping Check");
     await page.waitForTimeout(150);
     let bb = await h.bubble();
     let m = await h.moodClass();

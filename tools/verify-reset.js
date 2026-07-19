@@ -345,6 +345,164 @@ async function wrongMarkLaws(browser) {
   await page.close();
 }
 
+/* ════════════════════════════════════════════════════════════════
+   A6–A9 — THE TWO-ATTEMPT CAP (BRIEF FR-2 rulings 5–7, per HANDOFF-24):
+     A6  a second wrong attempt locks the question: no Try Again control is
+         offered or functional after it.
+     A7  the walkthrough opens AUTOMATICALLY on the second wrong attempt,
+         without any child action, wherever canWalk() is true.
+     A8  at the moment the walkthrough opens (either path), NO green is
+         present anywhere on the card (proved by sabotage: force an early
+         green → FAIL → restore → PASS).
+     A9  opening by EITHER path locks immediately and records
+         solved-with-help. (The voluntary-tap half of A9 is guarded by
+         verify-calm.js b. LOCK-ON-OPEN and verify-touch.js §3; this section
+         proves the second-wrong AUTO-OPEN path.)
+   Questions where canWalk() is FALSE are measured and left UNCHANGED —
+   parked with Venkat (see the report), the injected no-solution fixture
+   documents today's behaviour.
+   ════════════════════════════════════════════════════════════════ */
+const NOWALK_FIXTURE = `
+<!--@q
+type: single-select
+answer: ["9"]
+hint:
+  - "Count on from the bigger number."
+  - "Picture both groups joining into one group."
+description: canWalk()-false fixture — select + ladder, NO solution (BRIEF FR-2 parked item)
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is 4 + 5?</p>
+  <ul class="options"><li>8</li><li>9</li><li>10</li></ul>
+</div>
+`;
+const GREEN_MARK = "rgb(16, 185, 129)";
+
+async function capLaws(browser) {
+  console.log(`\n${C.b}── A6–A9: the two-attempt cap (BRIEF FR-2 rulings 5–7) ──${C.x}`);
+  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(String(e)));
+  await page.setContent(
+    buildPage().replace('<div id="source">', '<div id="source">' + NOWALK_FIXTURE),
+    { waitUntil: "load" });
+  await page.evaluate(() => {
+    const fr = document.querySelectorAll(".pv-frame");
+    fr[0].id = "nowalk";                 // injected: canWalk() FALSE
+    fr[fr.length - 1].id = "cap";        // ladder fixture: whyWrong + solution, canWalk() TRUE
+  });
+
+  const wrongOn = (id, val) => page.evaluate(([fid, v]) => {
+    const f = document.getElementById(fid);
+    f.scrollIntoView({ block: "center" });
+    const o = [...f.querySelectorAll(".opt")].find((x) =>
+      String(x.dataset.val != null ? x.dataset.val : (x.textContent || "").trim()) === v);
+    if (!o) return false;
+    o.click();
+    f.querySelector(".pv-check").click();
+    return true;
+  }, [id, val]);
+  const rowState = (id) => page.evaluate((fid) => {
+    const f = document.getElementById(fid);
+    return {
+      row: [...f.querySelectorAll(".cc-actions button")]
+        .filter((b) => b.getBoundingClientRect().width > 0).map((b) => b.textContent),
+      solOpen: !!(f.querySelector(".pv-solwrap") && !f.querySelector(".pv-solwrap").hasAttribute("hidden")),
+      inert: f.querySelector(".qbody").inert === true,
+    };
+  }, id);
+  const tapTryAgain = async (id) => {
+    const deadline = Date.now() + 6000;
+    for (;;) {
+      const hit = await page.evaluate((fid) => {
+        const b = [...document.getElementById(fid).querySelectorAll(".cc-actions button")]
+          .find((x) => x.getBoundingClientRect().width > 0 && /try again/i.test(x.textContent));
+        if (b) b.click();
+        return !!b;
+      }, id);
+      if (hit) return true;
+      if (Date.now() > deadline) return false;
+      await page.waitForTimeout(120);
+    }
+  };
+
+  /* ── canWalk() TRUE — the cap fires ── */
+  await wrongOn("cap", "130,000");                 // wrong #1
+  if (!(await tapTryAgain("cap"))) { fail("A6–A9 drive", "no Try again after wrong #1 — cannot reach the second attempt"); await page.close(); return; }
+  const afterFirst = await rowState("cap");
+  if (!afterFirst.solOpen && !afterFirst.inert)
+    pass("cap is TWO, not one — first wrong leaves the question attemptable");
+  else fail("cap is TWO, not one", JSON.stringify(afterFirst));
+  await page.waitForTimeout(200);
+  await wrongOn("cap", "60,000");                  // wrong #2 — the cap
+  // Poll for the auto-open; capture the green/lock state ATOMICALLY in the
+  // same evaluate that first sees the walkthrough open (A8 is "at the moment
+  // the walkthrough opens").
+  const atOpen = await (async () => {
+    const deadline = Date.now() + 9000;
+    for (;;) {
+      const r = await page.evaluate(() => {
+        const f = document.getElementById("cap");
+        const sol = f.querySelector(".pv-solwrap");
+        if (!sol || sol.hasAttribute("hidden")) return null;
+        const qbody = f.querySelector(".qbody");
+        const ans = JSON.parse(f.dataset.answer || "[]").map(String);
+        const win = [...qbody.querySelectorAll(".opt")].find((o) =>
+          ans.indexOf(String(o.dataset.val != null ? o.dataset.val : (o.textContent || "").trim())) !== -1);
+        return {
+          greens: qbody.querySelectorAll(".is-correct, .cc-win").length,
+          take: !!f.querySelector(".cc-take"),
+          isChecked: qbody.classList.contains("is-checked"),
+          winBorder: win ? getComputedStyle(win).borderColor : null,
+          outcome: f.dataset.raoOutcome,
+          recorded: (window.__raoOutcomes || []).map((o) => o.outcome),
+          inert: qbody.inert === true,
+          footHidden: getComputedStyle(f.querySelector(".pv-foot")).display === "none",
+          retry: [...f.querySelectorAll("button")].filter((b) => {
+            const r2 = b.getBoundingClientRect();
+            return r2.width > 0 && /try again|try now|retry/i.test(b.textContent || "");
+          }).map((b) => b.textContent),
+        };
+      });
+      if (r) return r;
+      if (Date.now() > deadline) return { timedOut: true };
+      await page.waitForTimeout(80);
+    }
+  })();
+  if (!atOpen.timedOut)
+    pass("A7 — walkthrough OPENED AUTOMATICALLY on the second wrong attempt", "no child action beyond Check");
+  else fail("A7 — walkthrough OPENED AUTOMATICALLY on the second wrong attempt", "9s after the second wrong Check, no walkthrough opened");
+  if (!atOpen.timedOut && atOpen.inert && atOpen.footHidden && atOpen.retry.length === 0)
+    pass("A6 — second wrong LOCKS: qbody inert, foot hidden, zero retry controls");
+  else fail("A6 — second wrong LOCKS the question", JSON.stringify(atOpen));
+  if (!atOpen.timedOut && atOpen.greens === 0 && !atOpen.take && !atOpen.isChecked && atOpen.winBorder !== GREEN_MARK)
+    pass("A8 — NO green anywhere at walkthrough open", `correct option border ${atOpen.winBorder}`);
+  else fail("A8 — NO green anywhere at walkthrough open", JSON.stringify(atOpen));
+  if (!atOpen.timedOut && atOpen.outcome === "solved-with-help" &&
+      atOpen.recorded.includes("solved-with-help") && !atOpen.recorded.includes("correct"))
+    pass("A9 — auto-open records solved-with-help, not correct", `outcome=${atOpen.outcome}`);
+  else fail("A9 — auto-open records solved-with-help, not correct", JSON.stringify({ outcome: atOpen.outcome, recorded: atOpen.recorded }));
+  // A6, held: still no retry control materialises after the open settles
+  await page.waitForTimeout(900);
+  const settled = await rowState("cap");
+  if (settled.row.every((t) => !/try again|try now|retry/i.test(t)) && settled.inert)
+    pass("A6 — lock holds after the open settles", `row: ${JSON.stringify(settled.row)}`);
+  else fail("A6 — lock holds after the open settles", JSON.stringify(settled));
+
+  /* ── canWalk() FALSE — MEASURED, changed by nothing (parked with Venkat) ── */
+  await wrongOn("nowalk", "8");                    // wrong #1
+  await tapTryAgain("nowalk");
+  await page.waitForTimeout(200);
+  await wrongOn("nowalk", "8");                    // wrong #2
+  const gotRow = await tapTryAgain("nowalk") ? "Try again offered and functional" : "NO Try again";
+  const nowalk = await rowState("nowalk");
+  pass("parked (measured, unchanged) — canWalk()-false second wrong", `${gotRow}; no walkthrough (solOpen=${nowalk.solOpen}); the child may keep retrying`);
+
+  if (errors.length) fail("zero page errors (A6–A9 drive)", errors.join(" | "));
+  else pass("zero page errors (A6–A9 drive)");
+  await page.close();
+}
+
 async function runViewport(browser, vp, touch) {
   const label = `${vp.width}×${vp.height} ${touch ? "TOUCH (CDP)" : "desktop pointer"}`;
   console.log(`\n${C.b}── viewport ${label} ──${C.x}`);
@@ -668,13 +826,27 @@ async function runViewport(browser, vp, touch) {
     else fail(`${name} — ladder position survives`, `hint button reads "${mid.hintLabel}"`);
     await tap(`#${id} .opt`, await optIdx(`#${id} .opt`, "60,000"));
     await tap(`#${id} .pv-check`);
-    await waitForButton(id, /Try again/, 8000);
-    const row = await page.evaluate((fid) =>
-      [...document.querySelectorAll("#" + fid + " .cc-actions button")]
-        .filter((b) => b.getBoundingClientRect().width > 0).map((b) => b.textContent), id);
-    if (row.some((t) => /Walk me through it/.test(t)))
-      pass(`${name} — wrongCount survived`, `2nd wrong offers: ${row.join(" / ")}`);
-    else fail(`${name} — wrongCount survived`, `2nd wrong after reset offers only: ${JSON.stringify(row)} — the reset wiped attempt progress`);
+    // FR-2 ruling 5: the SECOND wrong now auto-opens the walkthrough — its
+    // firing is itself the proof that wrongCount survived the reset (the cap
+    // only trips at wrongCount >= 2). Was: "2nd wrong offers Walk me through
+    // it" — updated for the two-attempt cap.
+    const opened = await (async () => {
+      const deadline = Date.now() + 9000;
+      for (;;) {
+        const r = await page.evaluate((fid) => {
+          const f = document.getElementById(fid);
+          const sol = f.querySelector(".pv-solwrap");
+          if (!sol || sol.hasAttribute("hidden")) return null;
+          return { outcome: f.dataset.raoOutcome, inert: f.querySelector(".qbody").inert === true };
+        }, id);
+        if (r) return r;
+        if (Date.now() > deadline) return { timedOut: true };
+        await page.waitForTimeout(120);
+      }
+    })();
+    if (!opened.timedOut && opened.outcome === "solved-with-help" && opened.inert)
+      pass(`${name} — wrongCount survived`, `2nd wrong after the reset trips the cap: walkthrough auto-opened, solved-with-help`);
+    else fail(`${name} — wrongCount survived`, `2nd wrong after reset did not trip the cap: ${JSON.stringify(opened)} — the reset wiped attempt progress`);
   } catch (e) { fail(`progress survives reset [${label}]`, `drill errored: ${e.message}`); }
 
   // ── viewport hygiene: zero horizontal overflow, zero page errors ──
@@ -692,6 +864,7 @@ async function runViewport(browser, vp, touch) {
   console.log(`\n${C.b}RESET VERIFICATION${C.x} — wrong-marks (BRIEF FR-2 A1–A5) + Try Again restore (BRIEF FR-1)\n`);
   const browser = await chromium.launch();
   await wrongMarkLaws(browser);
+  await capLaws(browser);
   await runViewport(browser, { width: 1280, height: 800 }, false);
   await runViewport(browser, { width: 390, height: 844 }, true);
   await browser.close();

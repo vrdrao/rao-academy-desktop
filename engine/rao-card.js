@@ -279,7 +279,9 @@ function wireCard(frame) {
     });
   }
 
-  // ── WALKTHROUGH — child-initiated, and THE COMMIT POINT (law 6). ──
+  // ── WALKTHROUGH — opened by the child's tap OR by the second-wrong
+  //    auto-open (FR-2 ruling 7); EITHER path is THE COMMIT POINT (law 6 as
+  //    amended): locks immediately, records solved-with-help. ──
   function openWalkthrough() {
     if (locked) return;
     locked = true;
@@ -406,14 +408,28 @@ function wireCard(frame) {
     hideFoot(true);
     quietChrome(true);
     fb.className = "pv-fb"; fb.textContent = "";   // no "Not quite" — the bubble carries it
+    // ── TWO ATTEMPTS IS THE CAP (FR-2 ruling 5): the second wrong attempt
+    //    locks the question and the walkthrough opens AUTOMATICALLY — no Try
+    //    Again is offered, and no decision is demanded of a child who has
+    //    just failed twice. Only where a walkthrough exists (canWalk); a
+    //    question with no solution keeps today's retry loop (parked item).
+    //    A fresh whyWrong bubble still types first — help accumulates — then
+    //    the open happens instead of the action row. openWalkthrough() locks
+    //    and records solved-with-help for this path exactly as for the
+    //    voluntary tap (ruling 7 / law 6 as amended). No green at open
+    //    (ruling 6) — the reveal stays at the walkthrough's final step.
+    var capped = wrongCount >= 2 && canWalk();
     var msg = entry && entry.message ? String(entry.message) : null;
     if (msg && !shownWhys[msg]) {
       shownWhys[msg] = true;
       typing = true;
       bubbles.msg(ensureChat(), "Hint " + hintNum++, esc(msg), function () {
         typing = false;
-        feedbackRow("Try again");
+        if (capped) openWalkthrough();
+        else feedbackRow("Try again");
       });
+    } else if (capped) {
+      openWalkthrough();
     } else if (!allHintsUsed() && !typing) {
       // No fresh whyWrong (none authored — every non-select and the legacy
       // selects — or this option's message was already spoken): the wrong
