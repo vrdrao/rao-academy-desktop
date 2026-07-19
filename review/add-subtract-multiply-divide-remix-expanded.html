@@ -1982,8 +1982,35 @@ h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
 <!--@q
 type: single-select
 answer: ["9"]
-description: Add 6 + 3
-hint: Count on 3 from 6.
+description: Add 6 + 3 (count-on fact)
+hint:
+  - "Start from the bigger number and count on from there."
+  - "Say the bigger number, then take one counting step for each unit of the smaller one."
+  - "Hold the bigger number in your head and put up one finger per step — stop when the fingers match the smaller number."
+explain: Counting on from the bigger number takes exactly three steps.
+whyWrong:
+  "8":
+    code: OFF_BY_ONE
+    message: "Just one step short — one counting step went missing at the end."
+  "10":
+    code: OFF_BY_ONE
+    message: "One step too many — the counting ran one past the finish."
+  "12":
+    code: NEAR_MISS
+    message: "This lands too far away — more was added than the question gives."
+solution:
+  - type: step
+    goal: Start from the bigger number.
+    working: "start at 6"
+    reason: Counting on from the bigger number means fewer steps to keep track of.
+  - type: step
+    goal: Count on the smaller number.
+    working: "7, 8, 9 — three steps"
+    reason: Each step adds exactly one.
+  - type: takeaway
+    text: To add a small number, start from the bigger one and count on — never start from 1.
+  - type: verification
+    text: The answer must be bigger than 6 but not by much — 9 is exactly 3 more, so it fits.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">6 + 3 = ?</p>
@@ -1993,133 +2020,106 @@ hint: Count on 3 from 6.
 
 <!--@q
 type: single-select
-answer: ["9"]
-description: Add 5 + 4
-hint: Count on 4 from 5.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">5 + 4 = ?</p>
-  <ul class="options"><li data-val="8">8</li><li data-val="9">9</li><li data-val="1">1</li><li data-val="10">10</li></ul>
-  <p class="explain">5 and 4 more makes 9.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["13"]
-description: Add 7 + 6
-hint: Double 6 is 12, then one more.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">7 + 6 = ?</p>
-  <ul class="options"><li data-val="12">12</li><li data-val="13">13</li><li data-val="14">14</li><li data-val="1">1</li></ul>
-  <p class="explain">7 + 6 = 13.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["12"]
-description: Add 4 + 8
-hint: 8 + 2 = 10, then 2 more.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">4 + 8 = ?</p>
-  <ul class="options"><li data-val="11">11</li><li data-val="12">12</li><li data-val="13">13</li><li data-val="4">4</li></ul>
-  <p class="explain">4 + 8 = 12.</p>
-</div>
-
-<!--@q
-type: single-select
 answer: ["17"]
-description: Add 8 + 9
-hint: 8 + 10 is 18, then take 1 back.
+description: Add 8 + 9 (make-a-ten fact)
+hint:
+  - "One of these numbers is very close to ten."
+  - "Move just enough from one number to fill the other up to a full ten."
+  - "Fill the number nearest ten right up to ten, then add on whatever is left of the other number."
+explain: Fill one number up to a ten first — what is left over adds on easily.
+whyWrong:
+  "15":
+    code: OFF_BY_TWO
+    message: "Two short — some of the counting got lost on the way past ten."
+  "16":
+    code: OFF_BY_ONE
+    message: "So close — just one away. One counting step slipped at the finish."
+  "18":
+    code: OFF_BY_ONE
+    message: "This adds a whole ten without giving the borrowed one back."
+solution:
+  - type: step
+    goal: Spot the number nearest to ten.
+    working: "9 needs just 1 more to make 10"
+    reason: Tens are easy to add, so we build one first.
+  - type: step
+    goal: Move that amount across.
+    working: "8 + 9  →  7 + 10"
+    reason: Taking 1 from the 8 and giving it to the 9 keeps the total the same.
+  - type: step
+    goal: Add the easy way.
+    working: "7 + 10 = 17"
+  - type: takeaway
+    text: When one number is close to ten, fill it up to ten first — the total never changes.
+  - type: verification
+    text: 8 + 9 must be a little less than 8 + 10 = 18 — and 17 is exactly one less.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">8 + 9 = ?</p>
   <ul class="options"><li data-val="15">15</li><li data-val="16">16</li><li data-val="17">17</li><li data-val="18">18</li></ul>
-  <p class="explain">Make a ten: 8 + 9 = 17.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["16"]
-description: Add 9 + 7
-hint: 9 + 1 = 10, then 6 more.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">9 + 7 = ?</p>
-  <ul class="options"><li data-val="15">15</li><li data-val="16">16</li><li data-val="17">17</li><li data-val="14">14</li></ul>
-  <p class="explain">9 + 7 = 16.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["15"]
-description: Add 6 + 9
-hint: 9 + 1 = 10, then 5 more.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">6 + 9 = ?</p>
-  <ul class="options"><li data-val="14">14</li><li data-val="15">15</li><li data-val="16">16</li><li data-val="13">13</li></ul>
-  <p class="explain">6 + 9 = 15.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["15"]
-description: Add 8 + 7
-hint: 8 + 2 = 10, then 5 more.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">8 + 7 = ?</p>
-  <ul class="options"><li data-val="14">14</li><li data-val="15">15</li><li data-val="16">16</li><li data-val="13">13</li></ul>
-  <p class="explain">8 + 7 = 15.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["15"]
-description: Add 7 + 8
-hint: Double 7 is 14, then one more.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">7 + 8 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["14"]
-description: Add 9 + 5
-hint: 9 + 1 = 10, then 4 more.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">9 + 5 = []</p>
+  <p class="explain">Make a ten: move 1 across, then 7 + 10 = 17.</p>
 </div>
 
 <!--@q
 type: fill-blanks
 answer: ["13"]
-description: Add 6 + 7
-hint: Double 6 is 12, then one more.
+description: Add 6 + 7 (near-doubles fact, typed)
+hint:
+  - "These two numbers are nearly twins."
+  - "Think of the double you already know, then adjust."
+  - "Double the smaller number, then add the little difference between the twins."
+explain: Near-doubles — double the smaller number, then one more.
+solution:
+  - type: step
+    goal: Spot the near-double.
+    working: "6 and 7 sit side by side"
+    reason: Numbers one apart can lean on a doubles fact.
+  - type: step
+    goal: Use the double you know.
+    working: "6 + 6 = 12"
+    reason: Doubles are fast facts.
+  - type: step
+    goal: Adjust by the difference.
+    working: "12 + 1 = 13"
+    reason: 7 is one more than 6, so the total is one more than the double.
+  - type: takeaway
+    text: Numbers one apart make a near-double — double the smaller, then add 1.
+  - type: verification
+    text: The answer must sit between the two doubles, 12 and 14 — and it does.
 -->
 <div class="question" data-type="fill-blanks">
   <p class="prompt">6 + 7 = []</p>
 </div>
 
 <!--@q
-type: fill-blanks
-answer: ["14"]
-description: Add 8 + 6
-hint: 8 + 2 = 10, then 4 more.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">8 + 6 = []</p>
-</div>
-
-<!--@q
 type: expression
 answer: ["15 + 12 = 27"]
-description: Write the addition sentence
-hint: Add the tens, then the ones.
+description: Write the addition sentence for fifteen plus twelve
+hint:
+  - "Turn each number word into digits first."
+  - "A number sentence needs both numbers, a plus sign, an equals sign, and the total."
+  - "Add the tens of both numbers first, then the ones, then join the two parts."
+explain: Fifteen and twelve become digits, and tens-then-ones gives the total.
+solution:
+  - type: step
+    goal: Turn the words into numbers.
+    working: "fifteen → 15,  twelve → 12"
+    reason: A number sentence uses digits, not words.
+  - type: step
+    goal: Add the tens.
+    working: "10 + 10 = 20"
+  - type: step
+    goal: Add the ones, then join.
+    working: "5 + 2 = 7,  so 20 + 7 = 27"
+    reason: Splitting into tens and ones keeps each add tiny.
+  - type: step
+    goal: Write the full sentence.
+    working: "15 + 12 = 27"
+    reason: The sentence shows both numbers AND the total.
+  - type: takeaway
+    text: Add tens with tens and ones with ones, then put the two parts together.
+  - type: verification
+    text: Both ones digits are small, so nothing carries — the total's digits are just 2 tens and 7 ones.
 -->
 <div class="question" data-type="expression">
   <p class="prompt">Write the addition sentence for fifteen plus twelve, and give the total.</p>
@@ -2128,20 +2128,30 @@ hint: Add the tens, then the ones.
 
 <!--@q
 type: expression
-answer: ["23 + 14 = 37"]
-description: Write the addition sentence
-hint: Add tens (20+10), then ones (3+4).
--->
-<div class="question" data-type="expression">
-  <p class="prompt">Write the addition sentence for twenty-three plus fourteen, and give the total.</p>
-  <p class="explain">23 + 14 = 37.</p>
-</div>
-
-<!--@q
-type: expression
 answer: ["31 + 16 = 47"]
-description: Write the addition sentence
-hint: Add tens (30+10), then ones (1+6).
+description: Write the addition sentence for thirty-one plus sixteen
+hint:
+  - "Turn each number word into digits before you add anything."
+  - "Write the two numbers with a plus between them and an equals at the end."
+  - "Add the two tens digits first, then the two ones digits, and join the parts."
+explain: Thirty-one and sixteen in digits, then tens with tens and ones with ones.
+solution:
+  - type: step
+    goal: Turn the words into numbers.
+    working: "thirty-one → 31,  sixteen → 16"
+  - type: step
+    goal: Add the tens.
+    working: "30 + 10 = 40"
+  - type: step
+    goal: Add the ones, then join.
+    working: "1 + 6 = 7,  so 40 + 7 = 47"
+  - type: step
+    goal: Write the full sentence.
+    working: "31 + 16 = 47"
+  - type: takeaway
+    text: Number words become digits first; then tens add with tens and ones with ones.
+  - type: verification
+    text: 31 is about 30 and 16 is about 20, and 30 + 20 = 50 — the exact total should land just under that, and 47 does.
 -->
 <div class="question" data-type="expression">
   <p class="prompt">Write the addition sentence for thirty-one plus sixteen, and give the total.</p>
@@ -2149,157 +2159,149 @@ hint: Add tens (30+10), then ones (1+6).
 </div>
 
 <!--@q
-type: expression
-answer: ["24 + 22 = 46"]
-description: Write the addition sentence
-hint: Add tens (20+20), then ones (4+2).
--->
-<div class="question" data-type="expression">
-  <p class="prompt">Write the addition sentence for twenty-four plus twenty-two, and give the total.</p>
-  <p class="explain">24 + 22 = 46.</p>
-</div>
-
-<!--@q
 type: single-select
 answer: ["71"]
-description: Add 63 + 8
-hint: 63 + 7 = 70, then 1 more.
+description: Add 63 + 8 (two-digit + one-digit, crossing a ten)
+hint:
+  - "Adding this will carry you past the next ten."
+  - "Break the small number into two pieces — one piece to reach the ten, one piece to go past it."
+  - "Ask how much the bigger number needs to reach the next ten, use that much, then add what is left."
+explain: Bridge through the next ten — reach it first, then add the leftover.
+whyWrong:
+  "69":
+    code: OFF_BY_TWO
+    message: "Two counting steps went missing before the ten was even reached."
+  "70":
+    code: OFF_BY_ONE
+    message: "This stops exactly AT the ten — but there was still a little left to add."
+  "81":
+    code: CARRY_EXTRA
+    message: "A whole extra ten sneaked in — the jump past the ten only carries what is left over."
+solution:
+  - type: step
+    goal: Find the next ten.
+    working: "63 is 7 away from 70"
+    reason: Tens are landing pads — aim for the nearest one.
+  - type: step
+    goal: Split the 8 to bridge.
+    working: "8 = 7 + 1"
+    reason: Use exactly enough to reach the ten; the rest goes past it.
+  - type: step
+    goal: Jump, then finish.
+    working: "63 + 7 = 70,  70 + 1 = 71"
+  - type: takeaway
+    text: To cross a ten, split the small number — reach the ten first, then add the leftover.
+  - type: verification
+    text: The answer must land just past 70, because 63 needed only 7 of the 8 to get there.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">63 + 8 = ?</p>
   <ul class="options"><li data-val="69">69</li><li data-val="70">70</li><li data-val="71">71</li><li data-val="81">81</li></ul>
-  <p class="explain">Cross the ten: 63 + 8 = 71.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["53"]
-description: Add 47 + 6
-hint: 47 + 3 = 50, then 3 more.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">47 + 6 = ?</p>
-  <ul class="options"><li data-val="51">51</li><li data-val="52">52</li><li data-val="53">53</li><li data-val="43">43</li></ul>
-  <p class="explain">47 + 6 = 53.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["43"]
-description: Add 38 + 5
-hint: 38 + 2 = 40, then 3 more.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">38 + 5 = ?</p>
-  <ul class="options"><li data-val="42">42</li><li data-val="43">43</li><li data-val="44">44</li><li data-val="33">33</li></ul>
-  <p class="explain">38 + 5 = 43.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["63"]
-description: Add 56 + 7
-hint: 56 + 4 = 60, then 3 more.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">56 + 7 = ?</p>
-  <ul class="options"><li data-val="62">62</li><li data-val="63">63</li><li data-val="64">64</li><li data-val="53">53</li></ul>
-  <p class="explain">56 + 7 = 63.</p>
+  <p class="explain">Cross the ten: 63 + 7 = 70, then 1 more is 71.</p>
 </div>
 
 <!--@q
 type: fill-blanks
 answer: ["72"]
-description: Add 45 + 27
-hint: 40 + 20 = 60, and 5 + 7 = 12.
+description: Add 45 + 27 (two-digit + two-digit with regrouping, typed)
+hint:
+  - "Both numbers have tens and ones — deal with each kind separately."
+  - "Add the tens together and the ones together, then combine the two answers."
+  - "If the ones add up past ten, that extra ten joins the tens pile before you combine."
+explain: Split both numbers into tens and ones; the ones make an extra ten here.
+solution:
+  - type: step
+    goal: Add the tens.
+    working: "40 + 20 = 60"
+  - type: step
+    goal: Add the ones.
+    working: "5 + 7 = 12"
+    reason: The ones made more than ten — that is a ten in disguise plus some ones.
+  - type: step
+    goal: Combine the parts.
+    working: "60 + 12 = 72"
+    reason: The extra ten inside the 12 joins the tens.
+  - type: takeaway
+    text: Add tens with tens and ones with ones — and when the ones pass ten, that ten moves over to the tens.
+  - type: verification
+    text: 45 is nearly 50 and 27 is nearly 30, and 50 + 30 = 80 — the exact answer should sit a little under that, and 72 does.
 -->
 <div class="question" data-type="fill-blanks">
   <p class="prompt">45 + 27 = []</p>
 </div>
 
 <!--@q
-type: fill-blanks
-answer: ["64"]
-description: Add 38 + 26
-hint: 30 + 20 = 50, and 8 + 6 = 14.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">38 + 26 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["85"]
-description: Add 57 + 28
-hint: 50 + 20 = 70, and 7 + 8 = 15.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">57 + 28 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["85"]
-description: Add 46 + 39
-hint: 40 + 30 = 70, and 6 + 9 = 15.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">46 + 39 = []</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["384"]
-description: Add 234 + 150
-hint: Add the hundreds, then tens, then ones.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">234 + 150 = ?</p>
-  <ul class="options"><li data-val="374">374</li><li data-val="384">384</li><li data-val="484">484</li><li data-val="394">394</li></ul>
-  <p class="explain">200+100=300, 30+50=80, 4+0=4 → 384.</p>
-</div>
-
-<!--@q
 type: single-select
 answer: ["552"]
-description: Add 312 + 240
-hint: 300+200=500, 10+40=50, 2+0=2.
+description: Add 312 + 240 (three-digit, no regrouping)
+hint:
+  - "Three-digit numbers add place by place."
+  - "Add the hundreds together, the tens together, and the ones together."
+  - "Work one column at a time and check whether any column spills into the next."
+explain: Place by place — hundreds, tens, ones — with no column spilling over.
+whyWrong:
+  "542":
+    code: CARRY_DROPPED
+    message: "The tens column came out one ten short — check that column again."
+  "652":
+    code: CARRY_EXTRA
+    message: "A whole extra hundred appeared — the hundreds column only has what the two numbers gave it."
+  "562":
+    code: CARRY_EXTRA
+    message: "An extra ten crept into the tens column that neither number brought."
+solution:
+  - type: step
+    goal: Add the hundreds.
+    working: "300 + 200 = 500"
+  - type: step
+    goal: Add the tens.
+    working: "10 + 40 = 50"
+  - type: step
+    goal: Add the ones, then combine.
+    working: "2 + 0 = 2,  so 500 + 50 + 2 = 552"
+    reason: No column passed ten, so nothing carries.
+  - type: takeaway
+    text: Big numbers are added place by place — hundreds, tens, ones — each column on its own.
+  - type: verification
+    text: 312 is about 300 and 240 is about 250 — the total should land near 550, and it does.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">312 + 240 = ?</p>
   <ul class="options"><li data-val="542">542</li><li data-val="552">552</li><li data-val="652">652</li><li data-val="562">562</li></ul>
-  <p class="explain">312 + 240 = 552.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["555"]
-description: Add 425 + 130
-hint: 400+100=500, 20+30=50, 5+0=5.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">425 + 130 = ?</p>
-  <ul class="options"><li data-val="545">545</li><li data-val="555">555</li><li data-val="655">655</li><li data-val="565">565</li></ul>
-  <p class="explain">425 + 130 = 555.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["719"]
-description: Add 516 + 203
-hint: 500+200=700, 10+0=10, 6+3=9.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">516 + 203 = ?</p>
-  <ul class="options"><li data-val="709">709</li><li data-val="719">719</li><li data-val="819">819</li><li data-val="729">729</li></ul>
-  <p class="explain">516 + 203 = 719.</p>
+  <p class="explain">312 + 240: hundreds 500, tens 50, ones 2 — 552.</p>
 </div>
 
 <!--@q
 type: single-select
 answer: ["5"]
-description: Subtract 9 - 4
-hint: Count back 4 from 9.
+description: Subtract 9 - 4 (count-back fact)
+hint:
+  - "Taking away a small number — count backwards."
+  - "Start at the bigger number and take one step back for each unit you remove."
+  - "Say the starting number, then step back once per finger until the fingers match the number taken away."
+explain: Count back from the start — one step for each unit taken away.
+whyWrong:
+  "3":
+    code: OFF_BY_TWO
+    message: "Two steps too far back — the countdown ran past its stop."
+  "4":
+    code: OFF_BY_ONE
+    message: "One step too many — careful not to count the starting number itself as a step."
+  "6":
+    code: OFF_BY_ONE
+    message: "One step short — the countdown stopped a step early."
+solution:
+  - type: step
+    goal: Start at the whole amount.
+    working: "start at 9"
+  - type: step
+    goal: Count back the amount taken.
+    working: "8, 7, 6, 5 — four steps back"
+    reason: Each step removes exactly one.
+  - type: takeaway
+    text: Subtracting a small number is counting backwards — one careful step per unit.
+  - type: verification
+    text: The answer and the number taken away must add back to the start — and 5 with 4 rebuilds 9.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">9 - 4 = ?</p>
@@ -2308,222 +2310,181 @@ hint: Count back 4 from 9.
 </div>
 
 <!--@q
-type: single-select
-answer: ["5"]
-description: Subtract 8 - 3
-hint: Count back 3 from 8.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">8 - 3 = ?</p>
-  <ul class="options"><li data-val="4">4</li><li data-val="5">5</li><li data-val="6">6</li><li data-val="11">11</li></ul>
-  <p class="explain">8 - 3 = 5.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["5"]
-description: Subtract 7 - 2
-hint: Count back 2 from 7.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">7 - 2 = ?</p>
-  <ul class="options"><li data-val="4">4</li><li data-val="5">5</li><li data-val="6">6</li><li data-val="9">9</li></ul>
-  <p class="explain">7 - 2 = 5.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["3"]
-description: Subtract 9 - 6
-hint: Count back 6 from 9.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">9 - 6 = ?</p>
-  <ul class="options"><li data-val="2">2</li><li data-val="3">3</li><li data-val="4">4</li><li data-val="15">15</li></ul>
-  <p class="explain">9 - 6 = 3.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["9"]
-description: Subtract 16 - 7
-hint: 16 - 6 = 10, then 1 more back.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">16 - 7 = []</p>
-</div>
-
-<!--@q
 type: fill-blanks
 answer: ["7"]
-description: Subtract 15 - 8
-hint: 15 - 5 = 10, then 3 more back.
+description: Subtract 15 - 8 (teen fact, bridging back through ten)
+hint:
+  - "The answer lives on the other side of ten."
+  - "Take away just enough to land on ten, then take away the rest."
+  - "Ask how many the big number must drop to reach ten — use that much first, then remove what remains."
+explain: Bridge back through ten — land on it, then take the rest.
+solution:
+  - type: step
+    goal: Step down to ten first.
+    working: "15 − 5 = 10"
+    reason: Ten is a friendly landing pad on the way down too.
+  - type: step
+    goal: Take away what is left.
+    working: "8 = 5 + 3,  so 10 − 3 = 7"
+    reason: Five of the eight were used reaching ten; three remain.
+  - type: takeaway
+    text: To subtract past ten, land on ten first, then take away the leftover.
+  - type: verification
+    text: The answer plus 8 must rebuild 15 — and 7 with 8 does exactly that.
 -->
 <div class="question" data-type="fill-blanks">
   <p class="prompt">15 - 8 = []</p>
 </div>
 
 <!--@q
-type: fill-blanks
-answer: ["8"]
-description: Subtract 14 - 6
-hint: 14 - 4 = 10, then 2 more back.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">14 - 6 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["8"]
-description: Subtract 17 - 9
-hint: 17 - 7 = 10, then 2 more back.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">17 - 9 = []</p>
-</div>
-
-<!--@q
 type: single-select
 answer: ["27"]
-description: Subtract 50 - 23
-hint: 50 - 20 = 30, then take 3 more.
+description: Subtract 50 - 23 from a round ten
+hint:
+  - "Take away the tens first, then deal with the ones."
+  - "Split the number being subtracted into its tens and its ones, and remove them one kind at a time."
+  - "After the tens are gone, the ones still have to come OFF — the total keeps shrinking."
+explain: Subtract in two moves — tens off first, then ones off.
+whyWrong:
+  "23":
+    code: OPERAND_ECHO
+    message: "This number came straight out of the question — it is what was taken away, not what is left."
+  "33":
+    code: SUB_ONES_ADDED_BACK
+    message: "The tens came off, but then the ones were added back ON — both parts must come off."
+  "37":
+    code: BORROW_ERROR
+    message: "A whole ten too many is left over — check the tens after the ones come off."
+solution:
+  - type: step
+    goal: Split what is being taken away.
+    working: "23 = 20 + 3"
+    reason: Tens and ones are easier to remove one kind at a time.
+  - type: step
+    goal: Take the tens off.
+    working: "50 − 20 = 30"
+  - type: step
+    goal: Take the ones off too.
+    working: "30 − 3 = 27"
+    reason: The ones also come OFF — the number keeps going down.
+  - type: takeaway
+    text: Subtract the tens, then subtract the ones — both parts leave in the same direction.
+  - type: verification
+    text: What is left plus 23 must rebuild 50 — and 27 with 23 makes exactly 50.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">50 - 23 = ?</p>
   <ul class="options"><li data-val="23">23</li><li data-val="27">27</li><li data-val="33">33</li><li data-val="37">37</li></ul>
-  <p class="explain">50 - 23 = 27.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["26"]
-description: Subtract 60 - 34
-hint: 60 - 30 = 30, then take 4 more.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">60 - 34 = ?</p>
-  <ul class="options"><li data-val="26">26</li><li data-val="34">34</li><li data-val="36">36</li><li data-val="24">24</li></ul>
-  <p class="explain">60 - 34 = 26.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["22"]
-description: Subtract 40 - 18
-hint: 40 - 10 = 30, then take 8 more.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">40 - 18 = ?</p>
-  <ul class="options"><li data-val="22">22</li><li data-val="28">28</li><li data-val="32">32</li><li data-val="18">18</li></ul>
-  <p class="explain">40 - 18 = 22.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["25"]
-description: Subtract 70 - 45
-hint: 70 - 40 = 30, then take 5 more.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">70 - 45 = ?</p>
-  <ul class="options"><li data-val="25">25</li><li data-val="35">35</li><li data-val="45">45</li><li data-val="15">15</li></ul>
-  <p class="explain">70 - 45 = 25.</p>
+  <p class="explain">50 − 20 = 30, then 3 more off leaves 27.</p>
 </div>
 
 <!--@q
 type: fill-blanks
 answer: ["37"]
-description: Subtract 82 - 45
-hint: Borrow a ten: think 82 - 45.
+description: Subtract 82 - 45 with regrouping, typed
+hint:
+  - "The ones digit being taken away is bigger than the ones digit it comes from."
+  - "One of the tens has to open up and lend its ten to the ones column."
+  - "After the lend, the tens column has one ten fewer — subtract each column with its new amounts."
+explain: The ones can't manage alone — a ten is regrouped into the ones column first.
+solution:
+  - type: step
+    goal: Check the ones column.
+    working: "2 ones cannot give up 5 ones"
+    reason: The column being subtracted from is too small on its own.
+  - type: step
+    goal: Regroup a ten.
+    working: "82 = 70 + 12"
+    reason: One ten opens into ten ones, joining the 2 to make 12.
+  - type: step
+    goal: Subtract each column.
+    working: "12 − 5 = 7,  70 − 40 = 30"
+  - type: step
+    goal: Combine.
+    working: "30 + 7 = 37"
+  - type: takeaway
+    text: When the ones run short, a ten unpacks into ten ones — and the tens column remembers the loan.
+  - type: verification
+    text: The answer plus 45 must rebuild 82 — and 37 with 45 does.
 -->
 <div class="question" data-type="fill-blanks">
   <p class="prompt">82 - 45 = []</p>
 </div>
 
 <!--@q
-type: fill-blanks
-answer: ["33"]
-description: Subtract 71 - 38
-hint: Borrow a ten from 70.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">71 - 38 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["37"]
-description: Subtract 64 - 27
-hint: Borrow a ten from 60.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">64 - 27 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["37"]
-description: Subtract 93 - 56
-hint: Borrow a ten from 90.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">93 - 56 = []</p>
-</div>
-
-<!--@q
 type: single-select
 answer: ["124"]
-description: Subtract 300 - 176
-hint: Count up from 176 to 300.
+description: Subtract 300 - 176 by counting up
+hint:
+  - "Subtracting from a round number — try climbing UP instead of down."
+  - "Count up from the smaller number to the round number, collecting the jumps."
+  - "Jump from the smaller number to the next friendly ten, then to the next hundred, then home — the jumps together are the answer."
+explain: Count up from the smaller number — the jumps you collect are the difference.
+whyWrong:
+  "134":
+    code: BORROW_ERROR
+    message: "One ten too many is in this answer — one of the upward jumps got counted twice."
+  "176":
+    code: OPERAND_ECHO
+    message: "This number is straight from the question — it is what was taken away, not the gap."
+  "224":
+    code: BORROW_ERROR
+    message: "A whole hundred too many — one of the jumps overshot the landing."
+solution:
+  - type: step
+    goal: Jump to the next ten.
+    working: "176 + 4 = 180"
+    reason: Small first jump to a friendly number.
+  - type: step
+    goal: Jump to the next hundred.
+    working: "180 + 20 = 200"
+  - type: step
+    goal: Jump home, then collect the jumps.
+    working: "200 + 100 = 300,  and 4 + 20 + 100 = 124"
+    reason: The three jumps together are exactly the gap between the numbers.
+  - type: takeaway
+    text: Subtracting from a round number is easiest as a climb — count up and add the jumps.
+  - type: verification
+    text: 176 is close to 200, and 300 − 200 = 100 — so the answer should be a bit over 100, and 124 fits.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">300 - 176 = ?</p>
   <ul class="options"><li data-val="124">124</li><li data-val="134">134</li><li data-val="176">176</li><li data-val="224">224</li></ul>
-  <p class="explain">176 + 124 = 300.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["165"]
-description: Subtract 400 - 235
-hint: Count up from 235 to 400.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">400 - 235 = ?</p>
-  <ul class="options"><li data-val="165">165</li><li data-val="175">175</li><li data-val="235">235</li><li data-val="265">265</li></ul>
-  <p class="explain">235 + 165 = 400.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["182"]
-description: Subtract 500 - 318
-hint: Count up from 318 to 500.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">500 - 318 = ?</p>
-  <ul class="options"><li data-val="182">182</li><li data-val="192">192</li><li data-val="318">318</li><li data-val="282">282</li></ul>
-  <p class="explain">318 + 182 = 500.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["53"]
-description: Subtract 200 - 147
-hint: Count up from 147 to 200.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">200 - 147 = ?</p>
-  <ul class="options"><li data-val="53">53</li><li data-val="63">63</li><li data-val="147">147</li><li data-val="153">153</li></ul>
-  <p class="explain">147 + 53 = 200.</p>
+  <p class="explain">Count up: 176 → 180 → 200 → 300 collects 124.</p>
 </div>
 
 <!--@q
 type: single-select
 answer: ["12"]
-description: Multiply 3 × 4
-hint: 3 groups of 4.
+description: Multiply 3 × 4 (groups meaning)
+hint:
+  - "Times means groups — picture what this is groups OF."
+  - "Draw or imagine the equal groups, the same amount in every one."
+  - "Skip-count once per group, saying the group size each time, and stop at the last group."
+explain: Three equal groups of four, counted together.
+whyWrong:
+  "7":
+    code: WRONG_OP_ADD_FOR_MULT
+    message: "This just adds the two numbers — but times means equal GROUPS of them."
+  "14":
+    code: OFF_BY_TWO
+    message: "The skip-counting overshot — one of the jumps was too big."
+  "9":
+    code: ADJACENT_TABLE_FACT
+    message: "This is a neighbour from a different fact — one of the groups went missing."
+solution:
+  - type: step
+    goal: Picture the groups.
+    working: "3 groups, 4 in each"
+    reason: Times means this many equal groups.
+  - type: step
+    goal: Skip-count the groups.
+    working: "4, 8, 12"
+    reason: One count per group, growing by the group size.
+  - type: takeaway
+    text: Multiplication is repeated adding of equal groups — skip-count once per group.
+  - type: verification
+    text: Three groups of four must beat 3 + 4 by a lot — 12 is well past 7, as a multiplication should be.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">3 × 4 = ?</p>
@@ -2533,101 +2494,132 @@ hint: 3 groups of 4.
 
 <!--@q
 type: single-select
-answer: ["20"]
-description: Multiply 4 × 5
-hint: 4 groups of 5.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">4 × 5 = ?</p>
-  <ul class="options"><li data-val="9">9</li><li data-val="20">20</li><li data-val="16">16</li><li data-val="25">25</li></ul>
-  <p class="explain">4 × 5 = 20.</p>
-</div>
-
-<!--@q
-type: single-select
 answer: ["18"]
-description: Multiply 6 × 3
-hint: 6 groups of 3.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">6 × 3 = ?</p>
-  <ul class="options"><li data-val="9">9</li><li data-val="18">18</li><li data-val="21">21</li><li data-val="15">15</li></ul>
-  <p class="explain">6 × 3 = 18.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["18"]
-description: Multiply 2 × 9
-hint: Double 9.
+description: Multiply 2 × 9 (doubling strategy)
+hint:
+  - "Times two has a friendlier name."
+  - "Multiplying by two is the same as doubling — adding the number to itself."
+  - "Say the number, then add the very same number on top of it."
+explain: Times two is a double — the number plus itself.
+whyWrong:
+  "11":
+    code: WRONG_OP_ADD_FOR_MULT
+    message: "This adds the two numbers — but times two means the bigger number twice."
+  "16":
+    code: ADJACENT_TABLE_FACT
+    message: "This is the double of a neighbouring number — one door down the table."
+  "20":
+    code: ADJACENT_TABLE_FACT
+    message: "This is the double of the next number up — one door too far."
+solution:
+  - type: step
+    goal: See times-two as a double.
+    working: "2 × 9 means 9 + 9"
+    reason: Two groups of the same number is just the number twice.
+  - type: step
+    goal: Double it.
+    working: "9 + 9 = 18"
+  - type: takeaway
+    text: Multiplying by 2 is doubling — every times-two fact is an addition you already know.
+  - type: verification
+    text: Doubling an odd number lands on an even one — 18 is even, as it must be.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">2 × 9 = ?</p>
   <ul class="options"><li data-val="11">11</li><li data-val="18">18</li><li data-val="16">16</li><li data-val="20">20</li></ul>
-  <p class="explain">2 × 9 = 18.</p>
+  <p class="explain">Double 9 is 18.</p>
 </div>
 
 <!--@q
 type: order
-answer: ["40", "42", "54"]
+answer: ["8 × 5", "6 × 7", "9 × 6"]
 low: smallest
 high: largest
-description: Order the products 8×5, 6×7, 9×6
-hint: Work out each product first, then line them up.
+description: Order the products of 8×5, 6×7, 9×6 (tiles show the expressions)
+hint:
+  - "Each tile hides a product — you cannot order what you have not worked out."
+  - "Work out every product first and hold the three answers side by side."
+  - "Once all three products are known, drag the smallest product's tile first and build upward."
+explain: Work out all three products first; only then can the tiles be lined up.
+solution:
+  - type: step
+    goal: Work out each product.
+    working: "8 × 5 = 40,  6 × 7 = 42,  9 × 6 = 54"
+    reason: The order hides behind the arithmetic — nothing can be placed until all three are known.
+  - type: step
+    goal: Line the products up.
+    working: "40 < 42 < 54"
+  - type: step
+    goal: Drag the tiles to match.
+    working: "8 × 5 first, then 6 × 7, then 9 × 6"
+  - type: takeaway
+    text: To order expressions, work them all out first — the biggest-looking numbers do not always make the biggest product.
+  - type: verification
+    text: The first two products sit only 2 apart, so a single arithmetic slip would swap them — checking those two again confirms the line-up.
 -->
 <div class="question" data-type="order">
-  <p class="prompt">Work out each product, then order them from smallest to largest: 8×5, 6×7, 9×6.</p>
-  <ol class="order"><li>42</li><li>54</li><li>40</li></ol>
-  <p class="explain">8×5=40, 6×7=42, 9×6=54.</p>
+  <p class="prompt">Work out each product, then drag the problems in order from the smallest product to the largest.</p>
+  <ol class="order"><li>6 × 7</li><li>9 × 6</li><li>8 × 5</li></ol>
+  <p class="explain">The products line up as 40, then 42, then 54.</p>
 </div>
 
 <!--@q
 type: order
-answer: ["24", "28", "30"]
+answer: ["8 × 3", "7 × 4", "5 × 6"]
 low: smallest
 high: largest
-description: Order the products 7×4, 5×6, 8×3
-hint: Work out each product first, then line them up.
+description: Order the products of 7×4, 5×6, 8×3 (tiles show the expressions)
+hint:
+  - "The tiles show problems, not answers — the answers decide the order."
+  - "Work out all three products before touching a single tile."
+  - "Compare the three finished products and place the tile with the smallest one first."
+explain: Three products to work out — and the biggest first number does not give the biggest product.
+solution:
+  - type: step
+    goal: Work out each product.
+    working: "7 × 4 = 28,  5 × 6 = 30,  8 × 3 = 24"
+    reason: A tile's first number says nothing about its product's size.
+  - type: step
+    goal: Line the products up.
+    working: "24 < 28 < 30"
+  - type: step
+    goal: Drag the tiles to match.
+    working: "8 × 3 first, then 7 × 4, then 5 × 6"
+  - type: takeaway
+    text: The expression with the biggest first number can still hide the smallest product — always compute before comparing.
+  - type: verification
+    text: The tile starting with 8 landed FIRST — a good sign the products, not the first numbers, did the ordering.
 -->
 <div class="question" data-type="order">
-  <p class="prompt">Work out each product, then order them from smallest to largest: 7×4, 5×6, 8×3.</p>
-  <ol class="order"><li>28</li><li>24</li><li>30</li></ol>
-  <p class="explain">8×3=24, 7×4=28, 5×6=30.</p>
-</div>
-
-<!--@q
-type: order
-answer: ["18", "28", "30"]
-low: smallest
-high: largest
-description: Order the products 9×2, 4×7, 6×5
-hint: Work out each product first, then line them up.
--->
-<div class="question" data-type="order">
-  <p class="prompt">Work out each product, then order them from smallest to largest: 9×2, 4×7, 6×5.</p>
-  <ol class="order"><li>28</li><li>18</li><li>30</li></ol>
-  <p class="explain">9×2=18, 4×7=28, 6×5=30.</p>
-</div>
-
-<!--@q
-type: order
-answer: ["21", "24", "25"]
-low: smallest
-high: largest
-description: Order the products 3×8, 7×3, 5×5
-hint: Work out each product first, then line them up.
--->
-<div class="question" data-type="order">
-  <p class="prompt">Work out each product, then order them from smallest to largest: 3×8, 7×3, 5×5.</p>
-  <ol class="order"><li>24</li><li>21</li><li>25</li></ol>
-  <p class="explain">7×3=21, 3×8=24, 5×5=25.</p>
+  <p class="prompt">Work out each product, then drag the problems in order from the smallest product to the largest.</p>
+  <ol class="order"><li>7 × 4</li><li>5 × 6</li><li>8 × 3</li></ol>
+  <p class="explain">8×3 gives the smallest product, then 7×4, then 5×6.</p>
 </div>
 
 <!--@q
 type: fill-blanks
 answer: ["48"]
-description: Multiply 12 × 4
-hint: 10×4=40, plus 2×4=8.
+description: Multiply 12 × 4 (two-digit by one-digit, partial products)
+hint:
+  - "Twelve is a ten and some ones stuck together."
+  - "Multiply the ten part and the ones part separately, then add the two answers."
+  - "Break the two-digit number into ten-and-ones, multiply each piece by the single number, and join the pieces."
+explain: Split 12 into its ten and its ones; each piece multiplies on its own.
+solution:
+  - type: step
+    goal: Split the two-digit number.
+    working: "12 = 10 + 2"
+    reason: Each piece is easy to multiply on its own.
+  - type: step
+    goal: Multiply each piece.
+    working: "10 × 4 = 40,  2 × 4 = 8"
+  - type: step
+    goal: Add the partial products.
+    working: "40 + 8 = 48"
+  - type: takeaway
+    text: A two-digit number multiplies in pieces — tens first, ones second, then add the parts.
+  - type: verification
+    text: The answer must be a bit more than 10 × 4 = 40 — and 48 sits just past it.
 -->
 <div class="question" data-type="fill-blanks">
   <p class="prompt">12 × 4 = []</p>
@@ -2635,29 +2627,28 @@ hint: 10×4=40, plus 2×4=8.
 
 <!--@q
 type: fill-blanks
-answer: ["39"]
-description: Multiply 13 × 3
-hint: 10×3=30, plus 3×3=9.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">13 × 3 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["75"]
-description: Multiply 15 × 5
-hint: 10×5=50, plus 5×5=25.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">15 × 5 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
 answer: ["84"]
-description: Multiply 14 × 6
-hint: 10×6=60, plus 4×6=24.
+description: Multiply 14 × 6 (two-digit by one-digit, ones piece carries)
+hint:
+  - "Fourteen splits into a ten and some ones."
+  - "Multiply each piece separately — this time the ones piece grows past ten."
+  - "Multiply ten-part and ones-part by the single number, and take care adding the two answers — the second one is big."
+explain: The same splitting method — but here the ones piece itself passes ten.
+solution:
+  - type: step
+    goal: Split the two-digit number.
+    working: "14 = 10 + 4"
+  - type: step
+    goal: Multiply each piece.
+    working: "10 × 6 = 60,  4 × 6 = 24"
+    reason: The ones piece made a two-digit partial product — that is fine, it just adds on.
+  - type: step
+    goal: Add the partial products.
+    working: "60 + 24 = 84"
+  - type: takeaway
+    text: The pieces method never changes — even when the ones piece grows past ten, it simply adds on.
+  - type: verification
+    text: The answer must sit between 10 × 6 = 60 and 20 × 6 = 120, closer to the low end — 84 fits.
 -->
 <div class="question" data-type="fill-blanks">
   <p class="prompt">14 × 6 = []</p>
@@ -2666,56 +2657,112 @@ hint: 10×6=60, plus 4×6=24.
 <!--@q
 type: single-select
 answer: ["56"]
-description: Multiply 7 × 8
-hint: Which times table does this pair of consecutive numbers belong to?
+description: Multiply 7 × 8 (the classic hard fact)
+hint:
+  - "This is the famous tricky fact — but it has a memory hook."
+  - "The digits 5, 6, 7, 8 line up in a row — the fact hides inside that run."
+  - "Say the four counting numbers from five to eight in order: the first pair name the answer, the last pair name the question."
+explain: The 5-6-7-8 chant — first pair answer, last pair question.
+whyWrong:
+  "48":
+    code: ADJACENT_TABLE_FACT
+    message: "One row down in the table — this is a fact with a six in it, not a seven."
+  "54":
+    code: NEAR_MISS
+    message: "Close, but this product belongs to a different pair of numbers entirely."
+  "64":
+    code: ADJACENT_TABLE_FACT
+    message: "One door along — this is the eight-times-eight fact, not seven-times-eight."
+solution:
+  - type: step
+    goal: Use the counting-run hook.
+    working: "5 6 7 8  →  56 = 7 × 8"
+    reason: The run of counting numbers packs the whole fact into one chant.
+  - type: step
+    goal: Check it with pieces.
+    working: "7 × 8 = 7 × 4 + 7 × 4 = 28 + 28"
+    reason: Doubling a half-fact rebuilds the whole one.
+  - type: takeaway
+    text: Hard facts deserve hooks — 5-6-7-8 stores this one forever.
+  - type: verification
+    text: Doubling 28 lands on 56 — the chant and the pieces agree, so the fact holds.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">7 × 8 = ?</p>
   <ul class="options"><li data-val="48">48</li><li data-val="54">54</li><li data-val="56">56</li><li data-val="64">64</li></ul>
-  <p class="explain">56 = 7 × 8.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["48"]
-description: Multiply 6 × 8
-hint: Which times table does this pair of numbers belong to?
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">6 × 8 = ?</p>
-  <ul class="options"><li data-val="42">42</li><li data-val="48">48</li><li data-val="54">54</li><li data-val="56">56</li></ul>
-  <p class="explain">6 × 8 = 48.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["63"]
-description: Multiply 9 × 7
-hint: 10×7=70, take one 7 away.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">9 × 7 = ?</p>
-  <ul class="options"><li data-val="56">56</li><li data-val="63">63</li><li data-val="72">72</li><li data-val="54">54</li></ul>
-  <p class="explain">9 × 7 = 63.</p>
+  <p class="explain">56 = 7 × 8 — the 5-6-7-8 run.</p>
 </div>
 
 <!--@q
 type: single-select
 answer: ["72"]
-description: Multiply 8 × 9
-hint: 10×9=90, take two 9s away.
+description: Multiply 8 × 9 (compensation from a ten)
+hint:
+  - "Nine is one less than ten — use that."
+  - "Multiply by ten instead, then give back what you borrowed."
+  - "Take the easy times-ten answer, then remove ONE group — because nine groups is one group fewer than ten."
+explain: Times nine is times ten minus one group.
+whyWrong:
+  "63":
+    code: ADJACENT_TABLE_FACT
+    message: "One row over — this fact has a seven in it, not an eight."
+  "81":
+    code: ADJACENT_TABLE_FACT
+    message: "One door along — this is nine groups of nine, not eight."
+  "64":
+    code: ADJACENT_TABLE_FACT
+    message: "This is eight groups of eight — one group short of the nine the question asks."
+solution:
+  - type: step
+    goal: Jump to the easy ten.
+    working: "8 × 10 = 80"
+    reason: Times ten is the easiest fact there is.
+  - type: step
+    goal: Give back the extra group.
+    working: "80 − 8 = 72"
+    reason: Ten groups was one group too many; one 8 comes back off.
+  - type: takeaway
+    text: Times nine is always times ten minus one group of the number.
+  - type: verification
+    text: A nines answer has digits that add to nine — 7 + 2 does, so 72 belongs to the nine-times table.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">8 × 9 = ?</p>
   <ul class="options"><li data-val="63">63</li><li data-val="72">72</li><li data-val="81">81</li><li data-val="64">64</li></ul>
-  <p class="explain">8 × 9 = 72.</p>
+  <p class="explain">8 × 10 = 80, then one 8 back off leaves 72.</p>
 </div>
 
 <!--@q
 type: single-select
 answer: ["4"]
-description: Divide 12 ÷ 3
-hint: How many 3s make 12?
+description: Divide 12 ÷ 3 (skip-count meaning)
+hint:
+  - "Division asks how many equal groups fit inside."
+  - "Skip-count by the small number and keep track of how many counts it takes."
+  - "Count by the divisor up to the big number, holding up one finger per count — the fingers are the answer."
+explain: Count by threes up to the total; the number of counts is the answer.
+whyWrong:
+  "3":
+    code: DIVISOR_AS_ANSWER
+    message: "Sneaky — this is the number being divided BY, straight from the question."
+  "6":
+    code: WRONG_DIVISOR_USED
+    message: "This is what sharing 12 into TWO groups gives — the question asks for groups of three."
+  "9":
+    code: WRONG_OP_SUB_FOR_DIV
+    message: "This takes one number from the other — but division makes equal groups, it doesn't take away."
+solution:
+  - type: step
+    goal: Ask the grouping question.
+    working: "how many 3s live inside 12?"
+    reason: Division counts equal groups.
+  - type: step
+    goal: Skip-count and tally.
+    working: "3, 6, 9, 12 — four counts"
+  - type: takeaway
+    text: Dividing asks how many equal groups fit — skip-count by the divisor and count your counts.
+  - type: verification
+    text: Four groups of three rebuild the twelve exactly, with nothing left over.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">12 ÷ 3 = ?</p>
@@ -2725,342 +2772,268 @@ hint: How many 3s make 12?
 
 <!--@q
 type: single-select
-answer: ["5"]
-description: Divide 15 ÷ 3
-hint: How many 3s make 15?
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">15 ÷ 3 = ?</p>
-  <ul class="options"><li data-val="3">3</li><li data-val="5">5</li><li data-val="6">6</li><li data-val="12">12</li></ul>
-  <p class="explain">3×5 = 15.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["5"]
-description: Divide 20 ÷ 4
-hint: How many 4s make 20?
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">20 ÷ 4 = ?</p>
-  <ul class="options"><li data-val="4">4</li><li data-val="5">5</li><li data-val="6">6</li><li data-val="16">16</li></ul>
-  <p class="explain">4×5 = 20.</p>
-</div>
-
-<!--@q
-type: single-select
 answer: ["9"]
-description: Divide 18 ÷ 2
-hint: Half of 18.
+description: Divide 18 ÷ 2 (halving strategy)
+hint:
+  - "Dividing by two has a friendlier name."
+  - "Splitting into two equal groups is just finding half."
+  - "Share the number into two equal piles in your head — one pile is the answer."
+explain: Dividing by two is halving — one of two equal shares.
+whyWrong:
+  "8":
+    code: OFF_BY_ONE
+    message: "One below the true half — the two piles ended up uneven."
+  "16":
+    code: WRONG_OP_SUB_FOR_DIV
+    message: "This takes 2 away instead of splitting into 2 equal piles."
+  "20":
+    code: WRONG_OP_ADD_FOR_DIV
+    message: "This adds the numbers — but sharing always leaves LESS in each pile, never more."
+solution:
+  - type: step
+    goal: See divide-by-two as a half.
+    working: "18 ÷ 2 asks for half of 18"
+  - type: step
+    goal: Halve it.
+    working: "half of 18 is 9"
+    reason: Two equal piles of 9 rebuild 18.
+  - type: takeaway
+    text: Dividing by 2 is halving — every halving fact is a double read backwards.
+  - type: verification
+    text: The answer doubled must rebuild the start — and doubling 9 lands on 18.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">18 ÷ 2 = ?</p>
   <ul class="options"><li data-val="8">8</li><li data-val="9">9</li><li data-val="16">16</li><li data-val="20">20</li></ul>
-  <p class="explain">18 ÷ 2 = 9.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["4"]
-description: Divide 24 ÷ 6
-hint: 6, 12, 18, 24 — count the jumps.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">24 ÷ 6 = []</p>
+  <p class="explain">18 ÷ 2 = 9 — half of 18.</p>
 </div>
 
 <!--@q
 type: fill-blanks
 answer: ["7"]
-description: Divide 28 ÷ 4
-hint: 4 × what = 28?
+description: Divide 28 ÷ 4 via the related multiplication fact, typed
+hint:
+  - "Every division hides a multiplication."
+  - "Ask instead: four times WHAT makes this total?"
+  - "Run along the four-times table until it hits the big number — the step you land on is the answer."
+explain: Division read backwards — four times something makes twenty-eight.
+solution:
+  - type: step
+    goal: Flip it into a multiplication.
+    working: "4 × ? = 28"
+    reason: Division and multiplication are the same fact facing different ways.
+  - type: step
+    goal: Run the four-times table.
+    working: "4, 8, 12, 16, 20, 24, 28 — the seventh step"
+  - type: takeaway
+    text: Every division is a multiplication in reverse — ask times-what instead of divide-by.
+  - type: verification
+    text: Seven fours rebuild 28 exactly, so the fact family closes.
 -->
 <div class="question" data-type="fill-blanks">
   <p class="prompt">28 ÷ 4 = []</p>
 </div>
 
 <!--@q
-type: fill-blanks
-answer: ["6"]
-description: Divide 30 ÷ 5
-hint: Count by 5s to 30.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">30 ÷ 5 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["7"]
-description: Divide 21 ÷ 3
-hint: 3 × what = 21?
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">21 ÷ 3 = []</p>
-</div>
-
-<!--@q
 type: single-select
 answer: ["7"]
-description: Divide 35 ÷ 5
-hint: Count by 5s up to 35.
+description: Divide 35 ÷ 5 by skip-counting fives
+hint:
+  - "Fives are the friendliest skip-count there is."
+  - "Count by fives up to the total, keeping a tally of the counts."
+  - "Every count by five ends in five or zero — tally each one until the big number appears."
+explain: Skip-count by fives to the total; the tally of counts is the answer.
+whyWrong:
+  "5":
+    code: DIVISOR_AS_ANSWER
+    message: "Straight from the question — this is the size of each group, not how many groups."
+  "6":
+    code: OFF_BY_ONE
+    message: "One count short — the skip-counting stopped a step too early."
+  "8":
+    code: OFF_BY_ONE
+    message: "One count too many — the skip-counting ran past the total."
+solution:
+  - type: step
+    goal: Skip-count by fives.
+    working: "5, 10, 15, 20, 25, 30, 35"
+  - type: step
+    goal: Tally the counts.
+    working: "seven counts to reach 35"
+  - type: takeaway
+    text: Dividing by five rides the five-count — tally the counts, not the numbers.
+  - type: verification
+    text: Seven fives rebuild 35 exactly — the tally checks out.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">35 ÷ 5 = ?</p>
   <ul class="options"><li data-val="5">5</li><li data-val="6">6</li><li data-val="7">7</li><li data-val="8">8</li></ul>
-  <p class="explain">5×7 = 35.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["9"]
-description: Divide 45 ÷ 5
-hint: Count by 5s up to 45.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">45 ÷ 5 = ?</p>
-  <ul class="options"><li data-val="8">8</li><li data-val="9">9</li><li data-val="10">10</li><li data-val="7">7</li></ul>
-  <p class="explain">5×9 = 45.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["8"]
-description: Divide 40 ÷ 5
-hint: Count by 5s up to 40.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">40 ÷ 5 = ?</p>
-  <ul class="options"><li data-val="7">7</li><li data-val="8">8</li><li data-val="9">9</li><li data-val="6">6</li></ul>
-  <p class="explain">5×8 = 40.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["8"]
-description: Divide 32 ÷ 4
-hint: 4 × what = 32?
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">32 ÷ 4 = ?</p>
-  <ul class="options"><li data-val="7">7</li><li data-val="8">8</li><li data-val="9">9</li><li data-val="6">6</li></ul>
-  <p class="explain">4×8 = 32.</p>
+  <p class="explain">Count by fives: 35 arrives on the seventh count.</p>
 </div>
 
 <!--@q
 type: fill-blanks
 answer: ["6"]
-description: Divide 48 ÷ 8
-hint: 8 × what = 48?
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">48 ÷ 8 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["9"]
-description: Divide 54 ÷ 6
-hint: 6 × what = 54?
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">54 ÷ 6 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["6"]
-description: Divide 42 ÷ 7
-hint: 7 × what = 42?
+description: Divide 42 ÷ 7 via the related multiplication fact, typed
+hint:
+  - "Turn the division around into a times question."
+  - "Seven times WHAT lands on this total?"
+  - "Walk the seven-times table upward and note which step lands exactly on the big number."
+explain: Read it backwards — seven times something makes forty-two.
+solution:
+  - type: step
+    goal: Flip it into a multiplication.
+    working: "7 × ? = 42"
+  - type: step
+    goal: Walk the seven-times table.
+    working: "7, 14, 21, 28, 35, 42 — the sixth step"
+  - type: takeaway
+    text: When a division looks hard, its multiplication twin is usually a fact you already own.
+  - type: verification
+    text: Six sevens rebuild 42 with nothing left over — the family agrees.
 -->
 <div class="question" data-type="fill-blanks">
   <p class="prompt">42 ÷ 7 = []</p>
 </div>
 
 <!--@q
-type: fill-blanks
-answer: ["6"]
-description: Divide 36 ÷ 6
-hint: 6 × what = 36?
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">36 ÷ 6 = []</p>
-</div>
-
-<!--@q
 type: single-select
 answer: ["8"]
-description: Divide 56 ÷ 7
-hint: Think of the related multiplication fact.
+description: Divide 56 ÷ 7 via the related multiplication fact
+hint:
+  - "This total comes from a famous times fact."
+  - "Ask: seven times WHAT makes this number?"
+  - "The digits 5, 6, 7, 8 make a counting run — the run stores the whole fact family this question lives in."
+explain: The 5-6-7-8 run holds this whole fact family.
+whyWrong:
+  "6":
+    code: OFF_BY_TWO
+    message: "Two steps short on the seven-times table — the walk stopped early."
+  "7":
+    code: DIVISOR_AS_ANSWER
+    message: "This is the number being divided by, echoed back from the question."
+  "9":
+    code: OFF_BY_ONE
+    message: "One step too far along the table — that lands past the total."
+solution:
+  - type: step
+    goal: Flip it into a multiplication.
+    working: "7 × ? = 56"
+  - type: step
+    goal: Use the counting-run hook.
+    working: "5 6 7 8 — the run says 56 belongs with 7 and 8"
+    reason: The same chant that stores the times fact answers its division twin.
+  - type: takeaway
+    text: A fact family is one fact wearing four coats — the 5-6-7-8 run answers all of them.
+  - type: verification
+    text: Eight sevens rebuild 56 exactly — the family closes.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">56 ÷ 7 = ?</p>
   <ul class="options"><li data-val="6">6</li><li data-val="7">7</li><li data-val="8">8</li><li data-val="9">9</li></ul>
-  <p class="explain">The partner of 7×8=56.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["7"]
-description: Divide 63 ÷ 9
-hint: Think of the related multiplication fact.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">63 ÷ 9 = ?</p>
-  <ul class="options"><li data-val="6">6</li><li data-val="7">7</li><li data-val="8">8</li><li data-val="9">9</li></ul>
-  <p class="explain">The partner of 9×7=63.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["9"]
-description: Divide 72 ÷ 8
-hint: Think of the related multiplication fact.
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">72 ÷ 8 = ?</p>
-  <ul class="options"><li data-val="7">7</li><li data-val="8">8</li><li data-val="9">9</li><li data-val="6">6</li></ul>
-  <p class="explain">The partner of 8×9=72.</p>
+  <p class="explain">The partner fact of 7 × 8.</p>
 </div>
 
 <!--@q
 type: single-select
 answer: ["8"]
-description: Divide 64 ÷ 8
-hint: Think of the related multiplication fact.
+description: Divide 64 ÷ 8 (square fact)
+hint:
+  - "The number dividing and the answer might be closer than you think."
+  - "Ask: eight times WHAT makes this total? Try the number itself."
+  - "Some totals come from a number multiplied by ITSELF — check whether this is one of those."
+explain: A square fact — the total comes from a number times itself.
+whyWrong:
+  "6":
+    code: OFF_BY_TWO
+    message: "Two steps short on the eight-times table."
+  "7":
+    code: OFF_BY_ONE
+    message: "One step short — that eight-times step lands just under the total."
+  "9":
+    code: OFF_BY_ONE
+    message: "One step past — that eight-times step overshoots the total."
+solution:
+  - type: step
+    goal: Flip it into a multiplication.
+    working: "8 × ? = 64"
+  - type: step
+    goal: Spot the square.
+    working: "8 × 8 = 64"
+    reason: The total is the divisor multiplied by itself — a square fact.
+  - type: takeaway
+    text: When the total is a square number, the divisor and the answer are the very same number.
+  - type: verification
+    text: Eight eights rebuild 64 — divisor and quotient match, as squares always do.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">64 ÷ 8 = ?</p>
   <ul class="options"><li data-val="6">6</li><li data-val="7">7</li><li data-val="8">8</li><li data-val="9">9</li></ul>
-  <p class="explain">The partner of 8×8=64.</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["9"]
-description: Divide 81 ÷ 9
-hint: Think of the related multiplication fact.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">81 ÷ 9 = []</p>
+  <p class="explain">8 × 8 = 64 — a square fact.</p>
 </div>
 
 <!--@q
 type: fill-blanks
 answer: ["7"]
-description: Divide 49 ÷ 7
-hint: Think of the related multiplication fact.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">49 ÷ 7 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["4"]
-description: Divide 36 ÷ 9
-hint: Think of the related multiplication fact.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">36 ÷ 9 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["8"]
-description: Divide 48 ÷ 6
-hint: Think of the related multiplication fact.
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">48 ÷ 6 = []</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["7"]
-description: Find the missing factor: 6 × ? = 42
-hint: What number times 6 gives 42?
+description: Missing factor in second position, 6 × [] = 42, typed
+hint:
+  - "One of the multiplying numbers is hiding — the total is already there."
+  - "Ask: six times WHAT reaches this total?"
+  - "Walk up the six-times table step by step and note which step lands exactly on the total."
+explain: The total is known; the six-times table finds its hidden partner.
+solution:
+  - type: step
+    goal: Read what is missing.
+    working: "6 × ? = 42 — the second factor is hidden"
+    reason: The total is given; a factor is what's missing.
+  - type: step
+    goal: Walk the six-times table.
+    working: "6, 12, 18, 24, 30, 36, 42 — the seventh step"
+  - type: takeaway
+    text: A missing factor is found by walking that number's table up to the total.
+  - type: verification
+    text: Six times the found number rebuilds 42 exactly — the sentence closes.
 -->
 <div class="question" data-type="fill-blanks">
   <p class="prompt">6 × [] = 42</p>
 </div>
 
 <!--@q
-type: fill-blanks
-answer: ["9"]
-description: Find the missing factor: 4 × ? = 36
-hint: What number times 4 gives 36?
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">4 × [] = 36</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["5"]
-description: Find the missing factor: 7 × ? = 35
-hint: What number times 7 gives 35?
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">7 × [] = 35</p>
-</div>
-
-<!--@q
-type: fill-blanks
-answer: ["6"]
-description: Find the missing factor: 8 × ? = 48
-hint: What number times 8 gives 48?
--->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">8 × [] = 48</p>
-</div>
-
-<!--@q
 type: single-select
 answer: ["7"]
-description: Find the missing factor: ? × 8 = 56
-hint: What number times 8 gives 56?
+description: Missing factor in FIRST position, ? × 8 = 56
+hint:
+  - "This time the FIRST number of the times sentence is hiding."
+  - "Ask: how many groups of eight make this total?"
+  - "Count how many eights stack up to the total — the count of groups is the hidden number."
+explain: The first factor counts the groups — how many eights make the total.
+whyWrong:
+  "6":
+    code: OFF_BY_ONE
+    message: "One group of eight short — the stack doesn't reach the total yet."
+  "8":
+    code: OPERAND_ECHO
+    message: "This number is already in the sentence — the hidden number is the OTHER factor."
+  "9":
+    code: OFF_BY_TWO
+    message: "Two groups too many — the stack shoots past the total."
+solution:
+  - type: step
+    goal: Read what is missing.
+    working: "? × 8 = 56 — the FIRST factor is hidden"
+    reason: The hidden number counts how many groups of eight there are.
+  - type: step
+    goal: Count the eights.
+    working: "8, 16, 24, 32, 40, 48, 56 — seven eights"
+  - type: takeaway
+    text: Whichever position hides, the move is the same — count how many of the known factor fill the total.
+  - type: verification
+    text: Seven eights rebuild 56 — and the 5-6-7-8 run agrees with the whole family.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">? × 8 = 56</p>
   <ul class="options"><li data-val="6">6</li><li data-val="7">7</li><li data-val="8">8</li><li data-val="9">9</li></ul>
   <p class="explain">7 × 8 = 56.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["9"]
-description: Find the missing factor: ? × 5 = 45
-hint: What number times 5 gives 45?
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">? × 5 = 45</p>
-  <ul class="options"><li data-val="7">7</li><li data-val="8">8</li><li data-val="9">9</li><li data-val="6">6</li></ul>
-  <p class="explain">9 × 5 = 45.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["9"]
-description: Find the missing factor: ? × 6 = 54
-hint: What number times 6 gives 54?
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">? × 6 = 54</p>
-  <ul class="options"><li data-val="7">7</li><li data-val="8">8</li><li data-val="9">9</li><li data-val="6">6</li></ul>
-  <p class="explain">9 × 6 = 54.</p>
-</div>
-
-<!--@q
-type: single-select
-answer: ["4"]
-description: Find the missing factor: ? × 7 = 28
-hint: What number times 7 gives 28?
--->
-<div class="question" data-type="single-select">
-  <p class="prompt">? × 7 = 28</p>
-  <ul class="options"><li data-val="3">3</li><li data-val="4">4</li><li data-val="5">5</li><li data-val="6">6</li></ul>
-  <p class="explain">4 × 7 = 28.</p>
 </div>
 </div>
 

@@ -12,7 +12,7 @@ lesson's row links its document.
 | Title | Questions | Lesson | Review | Source doc |
 |---|---:|---|---|---|
 | Add 5digit word problems | 32 | `lessons/add_5digit_word_problems.html` | `review/add_5digit_word_problems.html` | — |
-| Add subtract multiply divide remix expanded | 96 | `lessons/incoming/add-subtract-multiply-divide-remix-expanded.html` | `review/add-subtract-multiply-divide-remix-expanded.html` | — |
+| Add subtract multiply divide remix expanded | 30 | `lessons/incoming/add-subtract-multiply-divide-remix-expanded.html` | `review/add-subtract-multiply-divide-remix-expanded.html` | — |
 | Addition missing digits | 27 | `lessons/incoming/addition-missing-digits.html` | `review/addition-missing-digits.html` | — |
 | Addition patterns over increasing place values | 26 | `lessons/Addition_patterns_over_increasing_place_values.html` | `review/Addition_patterns_over_increasing_place_values.html` | — |
 | Am or pm 1to1 | 20 | `lessons/incoming/am-or-pm_1to1.html` | `review/am-or-pm_1to1.html` | — |
