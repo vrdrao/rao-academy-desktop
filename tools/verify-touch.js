@@ -232,10 +232,11 @@ ${source}
   });
   if (afterWrong.fb === "") pass("no pill on wrong — the whisper carries it");
   else fail("wrong-state pill", `pv-fb reads "${afterWrong.fb}" (must be empty)`);
-  // INVERTED per BRIEF FR-1 Amendment 1 ruling 2: the ✕ must be ABSENT — a
-  // wrong attempt leaves NO mark on the task, ever.
-  if (!afterWrong.hasX && afterWrong.isSelGone && afterWrong.isWrongGone) pass("tried option: NO ✕, no is-sel, no is-wrong — the whisper leaves no mark");
-  else fail("whisper marking (LAW 3 as amended)", JSON.stringify(afterWrong));
+  // RE-INVERTED per BRIEF FR-2 (HANDOFF-24 ruling 1, reversing FR-1's
+  // removal): the ✕ must be PRESENT on the tried wrong option after Check —
+  // and it must CLEAR on Try Again (asserted further down, unchanged).
+  if (afterWrong.hasX && afterWrong.isSelGone && afterWrong.isWrongGone) pass("tried option: ✕ PRESENT, no is-sel, no is-wrong — the whisper marks the attempt (FR-2)");
+  else fail("wrong-mark presence (LAW 3 as amended by FR-2)", JSON.stringify(afterWrong));
   if (afterWrong.triedStyleEqualsRest) pass("tried option computed style == resting sibling", "border/bg/color/opacity identical");
   else fail("tried option styling", "differs from a resting option");
   if (afterWrong.chips[1] === "Hint 2" && /far larger/.test(afterWrong.lastBubble))

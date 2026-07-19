@@ -1,10 +1,16 @@
 #!/usr/bin/env node
-/* ── verify-reset.js — LAW 3 AS AMENDED (BRIEF FR-1, 2026-07-19) ──
+/* ── verify-reset.js — LAW 3 AS AMENDED (BRIEF FR-1 + BRIEF FR-2, 2026-07-19) ──
  *
- * WRONG IS A WHISPER, AND THE WHISPER DOES NOT LINGER. When the child taps
- * "Try again", the TASK must return to EXACTLY its first-attempt state: no ✕,
- * no residual selection, no retained input, no moved tiles. Help (hint bubbles,
- * walkthrough steps) accumulates and is NEVER touched by the reset (law 4).
+ * WRONG IS A WHISPER — a wrong SELECTION is marked with a small red ✕ glyph
+ * (rulings 1–3, HANDOFF-24), a wrong fill-blanks entry tints softly red with
+ * the typed value PRESERVED (ruling 4) — AND THE MARKS DO NOT LINGER: when the
+ * child taps "Try again" every ✕/tint clears and the TASK returns to its
+ * first-attempt state (fill-blanks keeps the child's typed values — erasing
+ * them reads as punishment). Help (hint bubbles, walkthrough steps)
+ * accumulates and is NEVER touched by the reset (law 4).
+ *
+ * A1–A5 (BRIEF FR-2) live in wrongMarkLaws() below; the per-behavior reset
+ * drill (FR-1) follows it.
  *
  * For EVERY behavior in the fixture (all 12 the engine supports):
  *   1. snapshot the question's COMPUTED state at first attempt
@@ -120,12 +126,14 @@ window.__stateOf = function (qbody) {
     };
   });
 };
-window.__firstDiff = function (a, b) {
+window.__firstDiff = function (a, b, skip) {
+  skip = skip || [];
   if (a.length !== b.length) return "element count " + a.length + " -> " + b.length +
     " (task structure changed — e.g. an injected mark or a moved tile)";
   for (var i = 0; i < a.length; i++) {
     var ka = a[i], kb = b[i];
     for (var k in ka) {
+      if (skip.indexOf(k) !== -1) continue;
       if (String(ka[k]) !== String(kb[k]))
         return "el#" + i + " <" + kb.tag.toLowerCase() + (kb.cls ? " ." + kb.cls.replace(/ /g, ".") : "") +
                "> field " + k + ": " + JSON.stringify(ka[k]).slice(0, 120) + " -> " + JSON.stringify(kb[k]).slice(0, 120);
@@ -134,6 +142,208 @@ window.__firstDiff = function (a, b) {
   return null;
 };
 `;
+
+/* ════════════════════════════════════════════════════════════════
+   A1–A5 — THE WRONG-MARK LAWS (BRIEF FR-2, 2026-07-19, per HANDOFF-24):
+     A1  a wrong selection displays a ✕ mark on that option after Check.
+     A2  a ✕ never appears on a correct selection — including a correct
+         selection inside a wrong multi-select attempt.
+     A3  a ✕ never appears on an unselected option.
+     A4  Try Again clears every ✕/tint, and ONLY those: hint bubbles, chat
+         content and action history are untouched (help accumulates), and
+         attempt counters do not reset (counter survival is proven by the
+         "progress survives reset" section — wrongCount + ladder position).
+     A5  fill-blanks: a wrong blank tints (border + text) with NO ✕ glyph;
+         a correct blank in the same attempt is untouched; the typed value
+         is preserved VERBATIM through Check and through Try Again.
+   Assertions are computed-style on a really-rendered card, never markup.
+   ════════════════════════════════════════════════════════════════ */
+const A5_FIXTURE = `
+<!--@q
+type: fill-blanks
+answer: ["14", "20"]
+hint: Add the ones first.
+description: A5 fixture — two blanks so one can be wrong while one is right (BRIEF FR-2)
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">7 + 7 = [] and 10 + 10 = []</p>
+</div>
+`;
+const RED_MARK = "rgb(239, 68, 68)";
+
+async function wrongMarkLaws(browser) {
+  console.log(`\n${C.b}── A1–A5: the wrong-mark laws (BRIEF FR-2) ──${C.x}`);
+  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(String(e)));
+  await page.setContent(
+    buildPage().replace('<div id="source">', '<div id="source">' + A5_FIXTURE),
+    { waitUntil: "load" });
+  // frame 0 = injected A5 fill-blanks · 1 = single-select ("30") · 2 = multi-select (2/4/6)
+  await page.evaluate(() => {
+    const fr = document.querySelectorAll(".pv-frame");
+    fr[0].id = "a5"; fr[1].id = "a1"; fr[2].id = "a2";
+  });
+
+  const clickOpt = (id, val) => page.evaluate(([fid, v]) => {
+    const f = document.getElementById(fid);
+    f.scrollIntoView({ block: "center" });
+    const o = [...f.querySelectorAll(".opt")].find((x) =>
+      String(x.dataset.val != null ? x.dataset.val : (x.textContent || "").trim()) === v);
+    if (o) o.click();
+    return !!o;
+  }, [id, val]);
+  const clickCheck = (id) => page.evaluate((fid) =>
+    document.getElementById(fid).querySelector(".pv-check").click(), id);
+  const tryAgain = async (id) => {
+    const deadline = Date.now() + 6000;
+    for (;;) {
+      const hit = await page.evaluate((fid) => {
+        const b = [...document.getElementById(fid).querySelectorAll(".cc-actions button")]
+          .find((x) => x.getBoundingClientRect().width > 0 && /try again/i.test(x.textContent));
+        if (b) b.click();
+        return !!b;
+      }, id);
+      if (hit) return;
+      if (Date.now() > deadline) throw new Error(`no "Try again" button appeared in #${id}`);
+      await page.waitForTimeout(120);
+    }
+  };
+  // per-option ✕ audit: {val, sel(at drive time is gone), hasX, xColor, xVisible}
+  const xAudit = (id) => page.evaluate((fid) => {
+    const f = document.getElementById(fid);
+    return [...f.querySelectorAll(".opt")].map((o) => {
+      const x = o.querySelector(".cc-x");
+      const r = x && x.getBoundingClientRect();
+      return {
+        val: String(o.dataset.val != null ? o.dataset.val : (o.textContent || "").trim()),
+        hasX: !!x,
+        tried: o.classList.contains("cc-tried"),
+        xColor: x ? getComputedStyle(x).color : null,
+        xVisible: !!(r && r.width > 0 && r.height > 0),
+        glyph: x ? x.textContent : null,
+      };
+    });
+  }, id);
+  const marksLeft = (id) => page.evaluate((fid) => {
+    const f = document.getElementById(fid);
+    return {
+      xs: f.querySelectorAll(".cc-x").length,
+      trieds: f.querySelectorAll(".cc-tried").length,
+      tints: f.querySelectorAll(".incorrect, .is-wrong").length,
+      bubbles: f.querySelectorAll(".cc-msg").length,
+      bubblesVisible: [...f.querySelectorAll(".cc-msg")]
+        .every((m) => m.getBoundingClientRect().height > 0 && parseFloat(getComputedStyle(m).opacity) > 0.99),
+    };
+  }, id);
+
+  /* ── A1 + A4 on the single-select frame ── */
+  await clickOpt("a1", "3");                       // wrong (answer is "30")
+  await clickCheck("a1");
+  await page.waitForTimeout(900);                  // bubble types
+  let audit = await xAudit("a1");
+  const tried = audit.find((o) => o.val === "3");
+  if (tried && tried.hasX && tried.xVisible && tried.xColor === RED_MARK && tried.glyph === "✕")
+    pass("A1 — wrong selection carries a rendered red ✕ after Check", `option "3": color ${tried.xColor}`);
+  else fail("A1 — wrong selection carries a rendered red ✕ after Check", JSON.stringify(tried));
+  const bubblesAtWrong = (await marksLeft("a1")).bubbles;
+  await tryAgain("a1");
+  await page.waitForTimeout(300);
+  let left = await marksLeft("a1");
+  if (left.xs === 0 && left.trieds === 0 && left.tints === 0)
+    pass("A4 — Try Again clears every ✕/tint (single-select)");
+  else fail("A4 — Try Again clears every ✕/tint (single-select)", JSON.stringify(left));
+  // (q1 authors no hint/whyWrong, so 0 bubbles is legitimate here — bubble
+  //  SURVIVAL with real bubbles is proven by the reset drill + progress
+  //  section below; this asserts the clear itself removed nothing.)
+  if (left.bubbles === bubblesAtWrong && left.bubblesVisible)
+    pass("A4 — help untouched by the clear", `${left.bubbles} bubble(s), unchanged`);
+  else fail("A4 — help untouched by the clear", `bubbles ${bubblesAtWrong} -> ${left.bubbles}, visible=${left.bubblesVisible}`);
+
+  /* ── A2 + A3 + A4 on the multi-select frame: "2" correct + "3" wrong ── */
+  await clickOpt("a2", "2");                       // correct selection
+  await clickOpt("a2", "3");                       // wrong selection
+  await clickCheck("a2");
+  await page.waitForTimeout(900);
+  audit = await xAudit("a2");
+  const wrongSel = audit.find((o) => o.val === "3");
+  const rightSel = audit.find((o) => o.val === "2");
+  const unselected = audit.filter((o) => ["4", "5", "6"].includes(o.val));
+  if (wrongSel && wrongSel.hasX && wrongSel.xVisible && wrongSel.xColor === RED_MARK)
+    pass("A1 — multi-select: the wrong selection carries the ✕", `option "3"`);
+  else fail("A1 — multi-select: the wrong selection carries the ✕", JSON.stringify(wrongSel));
+  if (rightSel && !rightSel.hasX && !rightSel.tried)
+    pass("A2 — NO ✕ on the correct selection inside a wrong multi-select attempt", `option "2" unmarked`);
+  else fail("A2 — NO ✕ on the correct selection inside a wrong multi-select attempt", JSON.stringify(rightSel));
+  if (unselected.every((o) => !o.hasX && !o.tried))
+    pass("A3 — NO ✕ on any unselected option", `options 4/5/6 unmarked`);
+  else fail("A3 — NO ✕ on any unselected option", JSON.stringify(unselected));
+  await tryAgain("a2");
+  await page.waitForTimeout(300);
+  left = await marksLeft("a2");
+  if (left.xs === 0 && left.trieds === 0 && left.tints === 0)
+    pass("A4 — Try Again clears every ✕ (multi-select)");
+  else fail("A4 — Try Again clears every ✕ (multi-select)", JSON.stringify(left));
+
+  /* ── A5 on the injected two-blank fill-blanks: blank 0 wrong, blank 1 right ── */
+  await page.evaluate(() => {
+    const f = document.getElementById("a5");
+    f.scrollIntoView({ block: "center" });
+    const inps = [...f.querySelectorAll(".blank-input")];
+    inps[0].value = "13"; inps[0].dispatchEvent(new Event("input", { bubbles: true }));
+    inps[1].value = "20"; inps[1].dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  const restRef = await page.evaluate(() => {
+    const inps = [...document.getElementById("a5").querySelectorAll(".blank-input")];
+    const c = getComputedStyle(inps[1]);
+    return { border: c.borderTopColor, text: c.color, bg: c.backgroundColor };
+  });
+  await clickCheck("a5");
+  await page.waitForTimeout(900);
+  const a5 = await page.evaluate(() => {
+    const f = document.getElementById("a5");
+    const inps = [...f.querySelectorAll(".blank-input")];
+    const css = (el) => { const c = getComputedStyle(el); return { border: c.borderTopColor, text: c.color, bg: c.backgroundColor }; };
+    return {
+      wrong: css(inps[0]), right: css(inps[1]),
+      wrongCls: inps[0].className, rightCls: inps[1].className,
+      values: inps.map((i) => i.value),
+      glyphs: f.querySelectorAll(".cc-x").length,
+    };
+  });
+  if (a5.wrong.border === RED_MARK && a5.wrong.text === RED_MARK)
+    pass("A5 — wrong blank tints border AND text softly red", `border ${a5.wrong.border}, text ${a5.wrong.text}`);
+  else fail("A5 — wrong blank tints border AND text softly red", JSON.stringify(a5.wrong));
+  if (a5.right.border === restRef.border && a5.right.text === restRef.text && a5.right.bg === restRef.bg && !/\b(in)?correct\b/.test(a5.rightCls))
+    pass("A5 — correct blank in the same attempt is untouched", `computed-equal to its resting self`);
+  else fail("A5 — correct blank in the same attempt is untouched", JSON.stringify({ right: a5.right, rest: restRef, cls: a5.rightCls }));
+  if (a5.glyphs === 0) pass("A5 — no ✕ glyph anywhere on fill-blanks");
+  else fail("A5 — no ✕ glyph anywhere on fill-blanks", `${a5.glyphs} .cc-x node(s)`);
+  if (a5.values.join("|") === "13|20") pass("A5 — typed values preserved verbatim through Check", a5.values.join(", "));
+  else fail("A5 — typed values preserved verbatim through Check", JSON.stringify(a5.values));
+  await tryAgain("a5");
+  await page.waitForTimeout(300);
+  const a5after = await page.evaluate(() => {
+    const f = document.getElementById("a5");
+    const inps = [...f.querySelectorAll(".blank-input")];
+    const c = getComputedStyle(inps[0]);
+    return {
+      values: inps.map((i) => i.value),
+      classes: inps.map((i) => i.className),
+      wrongBorder: c.borderTopColor, wrongText: c.color,
+    };
+  });
+  if (a5after.values.join("|") === "13|20")
+    pass("A5 — typed values preserved verbatim through Try Again", a5after.values.join(", "));
+  else fail("A5 — typed values preserved verbatim through Try Again", `values ${JSON.stringify(a5after.values)} — the child's handwriting was erased`);
+  if (a5after.wrongBorder !== RED_MARK && a5after.wrongText !== RED_MARK && a5after.classes.every((cl) => !/\b(in)?correct\b/.test(cl)))
+    pass("A4/A5 — Try Again clears the tint (border + text back to resting)");
+  else fail("A4/A5 — Try Again clears the tint", JSON.stringify(a5after));
+
+  if (errors.length) fail("zero page errors (A1–A5 drive)", errors.join(" | "));
+  else pass("zero page errors (A1–A5 drive)");
+  await page.close();
+}
 
 async function runViewport(browser, vp, touch) {
   const label = `${vp.width}×${vp.height} ${touch ? "TOUCH (CDP)" : "desktop pointer"}`;
@@ -244,14 +454,14 @@ async function runViewport(browser, vp, touch) {
   }
 
   /* ── the core drill: snapshot → wrong → Try again → compare ───────── */
-  async function drill(i, behavior, driveWrong, extraLabel) {
+  async function drill(i, behavior, driveWrong, extraLabel, opts) {
     const id = "rst" + i;
     const name = `${behavior}${extraLabel ? " " + extraLabel : ""} [${label}]`;
     if (behaviors[i] !== behavior) { fail(name, `fixture order changed: frame ${i} is ${behaviors[i]}`); return; }
-    try { return await drillBody(i, id, name, driveWrong); }
+    try { return await drillBody(i, id, name, driveWrong, opts || {}); }
     catch (e) { fail(name, `drill errored: ${e.message}`); }
   }
-  async function drillBody(i, id, name, driveWrong) {
+  async function drillBody(i, id, name, driveWrong, opts) {
     await scrollTo(`#${id} .qbody`);
     await parkPointer();
     const before = await page.evaluate((fid) => {
@@ -288,8 +498,16 @@ async function runViewport(browser, vp, touch) {
                anyX: !!q.querySelector(".cc-x"), anyTried: !!q.querySelector(".cc-tried") };
     }, id);
 
-    const diff = await page.evaluate(([a, b]) => window.__firstDiff(a, b), [before.state, after.state]);
-    if (!diff && before.ser === after.ser) pass(name, `state restored exactly (${before.state.length} els, serialize ${before.ser})`);
+    // FR-2 ruling 4 (keepValues): fill-blanks preserves the child's typed
+    // values through Try Again — the value PROPERTY is exempt from the
+    // exact-restore compare, and serialize must still read the DRIVEN values.
+    // Everything else (classes = tints, computed paint, structure) restores.
+    const diff = await page.evaluate(([a, b, skip]) => window.__firstDiff(a, b, skip),
+      [before.state, after.state, opts.keepValues ? ["val"] : []]);
+    if (opts.keepValues) {
+      if (!diff && after.ser === driven) pass(name, `marks cleared, typed values preserved verbatim (serialize ${driven}) — FR-2 ruling 4`);
+      else fail(name, diff || `serialize after Try Again ${after.ser} != driven ${driven} — the typed value was cleared (FR-1 behaviour; FR-2 ruling 4 forbids it)`);
+    } else if (!diff && before.ser === after.ser) pass(name, `state restored exactly (${before.state.length} els, serialize ${before.ser})`);
     else fail(name, diff || `serialize ${before.ser} -> ${after.ser}`);
     if (after.anyX || after.anyTried) fail(`${name} — no residual whisper mark`, `cc-x=${after.anyX} cc-tried=${after.anyTried}`);
     if (after.inert) fail(`${name} — unlocked`, "qbody still inert after Try again");
@@ -314,10 +532,12 @@ async function runViewport(browser, vp, touch) {
     await tap(`#${id} .opt`, await optIdx(`#${id} .opt`, "3"));
   }, "(q2 'even numbers')");
 
-  // 2 fill-blanks — type a wrong value; it must NOT survive the reset
+  // 2 fill-blanks — type a wrong value; per FR-2 ruling 4 it MUST survive the
+  // reset (the typed value is the child's handwriting — never erased), while
+  // the .incorrect tint clears. INVERTED from FR-1's "must NOT survive".
   await drill(2, "fill-blanks", async (id) => {
     await setValue(`#${id} .blank-input`, null, "13");
-  });
+  }, "(typed value survives, tint clears)", { keepValues: true });
 
   // 3 expression
   await drill(3, "expression", async (id) => {
@@ -469,8 +689,9 @@ async function runViewport(browser, vp, touch) {
 }
 
 (async () => {
-  console.log(`\n${C.b}RESET VERIFICATION${C.x} — Try Again restores first-attempt state (BRIEF FR-1, LAW 3 as amended)\n`);
+  console.log(`\n${C.b}RESET VERIFICATION${C.x} — wrong-marks (BRIEF FR-2 A1–A5) + Try Again restore (BRIEF FR-1)\n`);
   const browser = await chromium.launch();
+  await wrongMarkLaws(browser);
   await runViewport(browser, { width: 1280, height: 800 }, false);
   await runViewport(browser, { width: 390, height: 844 }, true);
   await browser.close();
