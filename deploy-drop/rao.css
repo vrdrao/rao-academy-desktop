@@ -123,7 +123,7 @@
   padding:6px 4px;outline:none;transition:all .15s;min-width:44px;min-height:44px;box-sizing:border-box;}
 .rao-lesson .blank-input:focus{border-style:solid;background:#fff;box-shadow:0 0 0 5px rgba(var(--brand-rgb,123,92,255),.12);}
 .rao-lesson .blank-input.correct{border-style:solid;border-color:var(--green);background:rgba(16,185,129,.08);color:#047857;}
-.rao-lesson .blank-input.incorrect{border-color:var(--red);background:rgba(239,68,68,.06);}
+.rao-lesson .blank-input.incorrect{border-color:var(--red);background:rgba(239,68,68,.06);color:var(--red);}
 .rao-lesson .blank-input.shake{animation:shake .38s;}
 @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
 
@@ -608,7 +608,7 @@
 
 .rao-lesson /* ---- tap-target floor: your own spec says >=44px ---- */
 .opt, .rao-lesson .tile, .rao-lesson .order-slot, .rao-lesson .vs-tile, .rao-lesson .bin, .rao-lesson .rao-hint, .rao-lesson .rao-check{min-height:44px;}
-.rao-lesson .tile, .rao-lesson .vs-tile, .rao-lesson .order-slot, .rao-lesson .sb-tile{touch-action:none;}   .rao-lesson /* or dragging scrolls the page on a phone */
+.rao-lesson .tile, .rao-lesson .vs-tile, .rao-lesson .order-slot, .rao-lesson .sb-tile{touch-action:none;}   /* or dragging scrolls the page on a phone */
 
 /* ---- DARK MODE — the engine has none. Repoint the tokens; every
         rule above inherits automatically because they all use var(). ---- */

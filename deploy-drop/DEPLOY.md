@@ -1,23 +1,30 @@
-# Deploying the Rao Academy engine (rao-master-20) to tulipmath.com
+# Deploying the Rao Academy engine (rao-master-21) to tulipmath.com
 
 This folder is the complete engine drop for the app. It was built and verified
-at repo commit `2366311` — every file here md5-matches the `engine/` sources of
-that commit, and the full test suite ran green on that exact tree (118 lessons,
-3,075 questions, all guards green, including the Robo suite). **Copy the files
-exactly as they are. Never edit them by hand.**
+at the BRIEF FR-2 commit-6 tree — the drop and the `engine/` sources it
+md5-matches are committed TOGETHER in that same commit (the commit that carries
+this file; its five predecessors are the FR-2 stack `b972aec`..`ba3c556` on top
+of the four CLEANSTART commits). The full test suite ran green on that exact
+tree (118 lessons, 3,075 questions, all guards green, including the Robo suite
+and the new A1–A9 wrong-mark/cap guards). **Copy the files exactly as they
+are. Never edit them by hand.**
 
-New in this drop (rao-master-20):
+New in this drop (rao-master-21, BRIEF FR-2 per HANDOFF-24):
 
-- **"Try again" restores first-attempt state** (BRIEF FR-1) — when a child taps
-  Try again after a wrong answer, the task returns to EXACTLY its first-attempt
-  state for every behavior: no ✕ mark, no residual selection, no retained
-  input, no moved tiles. Help (hint bubbles, walkthrough steps) accumulates and
-  is never touched; attempt progress (the hint-ladder position, the
-  "Walk me through it" offer) survives the reset.
-- **Sequence-build tiles now drag on touch screens** (BRIEF CLEANSTART) —
-  `.sb-tile` joined the `touch-action:none` rule in `rao.css`. Before this, a
-  finger drag on a sequence-build tile scrolled the page instead of dragging
-  the tile (tapping still worked). 31 Grade 4 questions affected.
+- **The ✕ wrong-mark is back — on wrong selections only.** A wrong selection
+  shows a small red ✕ before its text (multi-select: every wrong selection;
+  never a correct selection, never an unselected option). Try again clears
+  every ✕. This restores what FR-1 over-removed.
+- **Fill-blanks: wrong entries tint softly red (border + text), no glyph —
+  and the typed value is NEVER cleared**, through Check or Try again. The
+  child's handwriting stays.
+- **Two attempts is the cap.** A second wrong attempt locks the question and
+  the step-by-step walkthrough opens AUTOMATICALLY (where a solution exists);
+  no Try again is offered, no green appears at open, and the outcome records
+  `solved-with-help` — same as a voluntary "Walk me through it" tap.
+  Questions with no authored solution are unchanged (retry loop stays).
+- **Dark-mode CSS fix** — a dangling `.rao-lesson` token in `rao.css` was
+  silently making the first dark-mode rule unmatchable; removed.
 
 ---
 
@@ -54,10 +61,10 @@ one does not match, the copy is corrupted or stale — recopy before going on.
 
 | File | md5 fingerprint | size (bytes) |
 |---|---|---:|
-| `preview-engine.js` | `15c03853599f09627c063d5c3a43f55d` | 206,179 |
-| `rao.css` | `38a925ccab9da0865d2d1784d8d7123c` | 90,880 |
-| `rao-card.css` | `7d430f1871d851989e33898362cbd364` | 10,262 |
-| `rao-card.js` | `184ce9423b59dc952ff856ec3317cef1` | 28,703 |
+| `preview-engine.js` | `23c059f50a91fd033643304b7c35a398` | 206,179 |
+| `rao.css` | `cbb68a2a1f07638fe515585ee43bfb6c` | 90,885 |
+| `rao-card.css` | `b3bcb2aefbc4e07cf0b7e2ba56ac47f6` | 10,406 |
+| `rao-card.js` | `54aec41624375f22f619767a87cbe99f` | 32,684 |
 | `solution-renderer.js` | `0a17636d35a482cf82ebeaf65e65fa1c` | 15,207 |
 | `robo.js` | `f137b5ff4f2774abfef1fe3ab4d96aba` | 51,393 |
 | `robo.css` | `6b7336bf9f7a7ff872874e716631d715` | 51,183 |
@@ -105,9 +112,9 @@ is silently nameless ("Nailed it! ⚡ 3 in a row!" instead of
 
 ## Step 4 — only now import lessons
 
-Lessons relying on the rao-master-20 reset behavior need engine rao-master-20
-or newer. The live engine version is visible in the browser console as
-`RaoPreview.__version`.
+Lessons relying on the rao-master-21 wrong-mark/cap behavior need engine
+rao-master-21 or newer (forward-only, as always). The live engine version is
+visible in the browser console as `RaoPreview.__version`.
 
 ---
 
