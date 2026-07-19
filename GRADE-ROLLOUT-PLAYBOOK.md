@@ -1,13 +1,14 @@
 # GRADE-ROLLOUT-PLAYBOOK
 
-**Version:** `playbook-2` · **Date:** 2026-07-19
+**Version:** `playbook-3` · **Date:** 2026-07-19
 
 This file supersedes chat memory. If any chat's recollection of a rule conflicts
 with this file, this file wins; report the conflict to the engine chat.
 
-Every rule below is extracted from an existing repo file and carries a source
-tag. Rules that could not be found in any repo file are marked UNKNOWN and await
-chat-side text — they are listed in the creating brief's Deviations section.
+Every rule below carries a source tag: a repo file, or a chat-side
+ratification recorded by amendment. A rule that cannot be sourced
+does not enter this file — it is marked UNKNOWN pending chat-side
+text, per the anti-laundering law.
 
 ---
 
@@ -204,6 +205,12 @@ chat-side text — they are listed in the creating brief's Deviations section.
    Venkat rules — both/all members of every pair or group; nothing escapes the
    hold by being "probably the original".
    [src: BRIEF-G3-PILOT1-PREP-2026-07-19-v2.md]
+   The hold covers intra-grade suspected duplicate sources (which-copy-survives
+   questions). Cross-grade topic twins are enumerated in the same register for
+   awareness but are NOT held; each twin's variation plan must state its
+   differentiation from the other grade's lesson.
+   [src: Grade 3 chat amendment request via Venkat, ratified by engine chat
+   2026-07-19, playbook-3]
 4. **Three pilots.** Start with the scan's three recommended zero-gap pilot
    candidates; these first lessons are the grade's TEMPLATE — convert slowly,
    critique hard, then scale. Each pilot's variation plan is approved by
