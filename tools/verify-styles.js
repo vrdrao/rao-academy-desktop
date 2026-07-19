@@ -728,7 +728,117 @@ async function checkOptionLadder(browser) {
   return problems;
 }
 
+/* ---- BRIEF-RENDER-1 guards (rao-master-22) — computed style + pixel measurement
+   on the RENDER-1 fixture questions in lessons/_type-coverage.html, rendered live
+   through the CURRENT engine files (not a stale review page), at 1280px and 390px.
+
+   C1 — line-plot marks: a filled slot paints a DISCRETE ✕ glyph (::before, brand
+        colour, same colour as the legend's ✕), NOT a solid background block; and
+        adjacent marks keep non-zero visual separation (slot box − glyph box > 2px).
+        A green grading run can never see this: it reads data-count, never paint. */
+function buildTypeCoveragePage() {
+  const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8");
+  const lesson = read("lessons/_type-coverage.html");
+  const a = lesson.indexOf('<div id="source">');
+  const b = lesson.indexOf('<div id="preview"');
+  const source = lesson.slice(a, b > a ? b : undefined);
+  const safe = (s) => s.replace(/<\/script>/gi, "<\\/script>");
+  return `<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>${read("engine/rao.css")}</style>
+<style>${read("engine/rao-card.css")}</style></head><body style="margin:0;padding:0">
+${source}
+<div class="rao-lesson" data-theme="grape"><div id="preview"></div></div>
+<script>${safe(read("engine/preview-engine.js"))}</script>
+<script>${safe(read("engine/solution-renderer.js"))}</script>
+<script>${safe(read("engine/rao-card.js"))}</script>
+</body></html>`;
+}
+
+async function checkRender1(browser) {
+  const problems = [];
+  const tmp = path.join(ROOT, "review", "__render1_fixture.html");
+  fs.writeFileSync(tmp, buildTypeCoveragePage());
+  try {
+    for (const vp of [{ width: 1280, height: 900 }, { width: 390, height: 844 }]) {
+      const page = await browser.newPage({ viewport: vp });
+      const at = `${vp.width}px`;
+      try {
+        await page.goto("file://" + tmp);
+        await page.waitForFunction(() => document.querySelectorAll(".pv-frame").length > 3, { timeout: 15000 }).catch(() => {});
+        await page.waitForTimeout(400);
+
+        // ── C1: discrete ✕ marks ──
+        const c1 = await page.evaluate(() => {
+          const frame = [...document.querySelectorAll(".pv-frame")].find((f) =>
+            f.querySelector(".lp-plot") && f.querySelector('svg[aria-label="frequency table"]'));
+          if (!frame) return { missing: true };
+          frame.scrollIntoView();
+          const col = frame.querySelector(".lp-col");
+          const top = col.querySelector('.lp-slot[data-row="5"]');
+          top.click();
+          return { clicked: true };
+        });
+        if (c1.missing) { problems.push(`${at}: C1 fixture (line-plot with frequency-table svg) not found in _type-coverage`); await page.close(); continue; }
+        await page.waitForTimeout(300);   // .15s transitions must settle before computed reads
+        const c1r = await page.evaluate(() => {
+          const frame = [...document.querySelectorAll(".pv-frame")].find((f) =>
+            f.querySelector(".lp-plot") && f.querySelector('svg[aria-label="frequency table"]'));
+          const col = frame.querySelector(".lp-col");
+          const on = [...col.querySelectorAll(".lp-slot.on")];
+          const keyX = frame.querySelector(".lp-key-x");
+          const alpha = (c) => { const m = c.match(/rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(?:,\s*([\d.]+))?\)/); return m ? (m[1] == null ? 1 : parseFloat(m[1])) : 0; };
+          const rgb = (c) => (c.match(/\d+/g) || []).slice(0, 3).join(",");
+          return {
+            filled: on.length,
+            marks: on.map((s) => {
+              const b = getComputedStyle(s, "::before"), c = getComputedStyle(s);
+              const r = s.getBoundingClientRect();
+              return { content: b.content, markColor: b.color, markAlpha: alpha(b.color),
+                       glyphPx: parseFloat(b.fontSize), slotH: r.height, bg: c.backgroundColor, bgAlpha: alpha(c.backgroundColor) };
+            }),
+            keyColor: keyX ? getComputedStyle(keyX).color : null,
+            _rgb: rgb.toString(),
+          };
+        });
+        if (c1r.filled !== 5) problems.push(`${at}: C1 clicked row 5 but ${c1r.filled} slots are .on (expected 5)`);
+        c1r.marks.forEach((m, i) => {
+          if (!/✕/.test(m.content)) problems.push(`${at}: C1 slot ${i} has no ✕ glyph node (::before content ${m.content})`);
+          if (m.markAlpha < 0.9) problems.push(`${at}: C1 slot ${i} mark is INVISIBLE (::before color ${m.markColor}) — the filled state paints no countable glyph`);
+          if (m.bgAlpha > 0.05) problems.push(`${at}: C1 slot ${i} paints a SOLID BACKGROUND (${m.bg}) — adjacent fills merge into one block; the key says ✕ = 1`);
+          const sep = m.slotH - m.glyphPx;
+          if (!(sep > 2)) problems.push(`${at}: C1 slot ${i} mark separation ${sep.toFixed(1)}px (slot ${m.slotH}px − glyph ${m.glyphPx}px) — marks are not visually discrete`);
+        });
+        if (c1r.marks.length && c1r.keyColor && c1r.marks[0].markAlpha >= 0.9) {
+          const rgb = (c) => (c.match(/\d+/g) || []).slice(0, 3).join(",");
+          if (rgb(c1r.keyColor) !== rgb(c1r.marks[0].markColor))
+            problems.push(`${at}: C1 legend ✕ is ${c1r.keyColor} but plotted marks are ${c1r.marks[0].markColor} — figure and legend disagree`);
+        }
+      } finally {
+        await page.close();
+      }
+    }
+  } finally {
+    try { fs.unlinkSync(tmp); } catch (e) {}
+  }
+  return problems;
+}
+
 (async () => {
+  // --render1-only: just the BRIEF-RENDER-1 fixture guards (fast RED/PASS cycles).
+  if (process.argv.includes("--render1-only")) {
+    const browser = await chromium.launch();
+    const problems = await checkRender1(browser);
+    await browser.close();
+    if (problems.length) {
+      console.log("FAIL  RENDER-1 fixtures (1280px + 390px)");
+      problems.forEach((p) => console.log("      - " + p));
+      process.exit(1);
+    }
+    console.log("PASS  RENDER-1 fixtures — at 1280px and 390px");
+    process.exit(0);
+  }
+
   // --figures-only / --ladder-only: run just the rao-master-19 fixture checks
   // (used for fast sabotage-proof runs; the full suite still runs everything).
   if (process.argv.includes("--figures-only") || process.argv.includes("--ladder-only")) {
@@ -836,8 +946,18 @@ async function checkOptionLadder(browser) {
     console.log(`PASS  option ladder  (4-across / 2×2 / stacked, one font size, no mid-expression wrap — at 1280px and 390px)`);
   }
 
+  // BRIEF-RENDER-1 fixture guards — line-plot marks/layout, column math, comma, figure cap.
+  const render1Problems = await checkRender1(browser);
+  if (render1Problems.length) {
+    failed++;
+    console.log(`\nFAIL  RENDER-1 fixtures (1280px + 390px)`);
+    render1Problems.forEach((p) => console.log("      - " + p));
+  } else {
+    console.log(`PASS  RENDER-1 fixtures  (discrete ✕ marks — at 1280px and 390px)`);
+  }
+
   await browser.close();
-  const total = files.length + 5;   // +1 explain, +1 mobile, +1 card look, +1 figures, +1 ladder
+  const total = files.length + 6;   // +1 explain, +1 mobile, +1 card look, +1 figures, +1 ladder, +1 render1
   console.log(failed ? `\n${failed}/${total} FAILED` : `\nselection styling is clean`);
   process.exit(failed ? 1 : 0);
 })();

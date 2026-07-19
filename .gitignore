@@ -6,3 +6,4 @@ __pycache__/
 ~$*
 lessons/_preview/
 .claude/settings.local.json
+tools/scratch/
