@@ -235,6 +235,31 @@ message         student-facing template. Describes the option, not the child.
 - **rule:** `distractor == correct ± 1` AND question involves division with remainder context (round up/down)
 - **message:** "So close — one group too many, or one too few! Think about what happens to the leftover."
 
+### IDENTITY_DIV_ZERO
+- **concept:** division identities (a ÷ a)
+- **rule:** `distractor == 0` where the question is `a ÷ a` (correct is 1)
+- **message:** "Dividing by the same number never leaves zero — the pieces don't vanish, they get shared out."
+
+### DIV_BY_ONE_CONFUSION
+- **concept:** division identities (a ÷ 1)
+- **rule:** `distractor == 1` where the question is `a ÷ 1` (correct is a)
+- **message:** "Dividing by 1 doesn't squash a number down to 1 — one group of everything is still everything."
+
+### ZERO_RULE_CONFUSED
+- **concept:** division zero/one rules
+- **rule:** distractor applies the WRONG special rule (answers 1 for `0 ÷ a` as if it were `a ÷ a`, or 0 for `a ÷ 1` as if the amount vanished)
+- **message:** "That's the answer to a different special rule — check WHICH number is the zero or the one here."
+
+### DIVISION_ORDER_REVERSED
+- **concept:** division / fact families
+- **rule:** distractor equation reverses the roles in a division sentence (e.g. `7 ÷ 3 = 21` offered in the 3-7-21 family; small ÷ small = big)
+- **message:** "Dividing a small number can't make a bigger one — the total always goes first in a division sentence."
+
+### FACT_FAMILY_WRONG_OP
+- **concept:** fact families
+- **rule:** distractor equation is true but uses + or − inside a ×/÷ fact family question
+- **message:** "True sentence, wrong family — multiplication-and-division families don't take add or subtract sentences."
+
 ---
 
 ## 7. Fractions
