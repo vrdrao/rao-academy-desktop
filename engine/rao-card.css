@@ -88,11 +88,13 @@
 /* chrome quiets in feedback states — NEVER the prompt or the options (law 1) */
 .cc-dim{opacity:.45;filter:saturate(.35);transition:opacity .3s,filter .3s}
 
-/* wrong is a whisper (law 3): the ✕ is the ONLY change to the tried option.
-   v36 spec: glyph 0.8em, red, 7px right margin, bold. cc-tried itself paints
-   NOTHING — is-sel is removed on a wrong attempt, so the option is already back
-   to its resting look, byte-identical to its siblings. */
+/* RETIRED by BRIEF FR-1, 2026-07-19 — LAW 3 amended: WRONG IS A WHISPER, AND
+   THE WHISPER DOES NOT LINGER. No ✕ is ever inserted; a wrong attempt leaves
+   no mark and "Try again" restores the first-attempt state. Rule kept here
+   commented per FR-1 req 2 (never delete it in the same commit that changes
+   behavior). Original: the ✕ was the only change to the tried option —
 .cc-x{font-size:.8em;color:#ef4444;margin-right:7px;font-weight:700}
+*/
 
 /* — tutor conversation: hints and steps speak in one voice (law 5) — */
 .cc-chat{margin-top:14px;background:#f4f1ff;border:1px solid #e6e0ff;border-radius:14px;padding:14px 14px 16px}

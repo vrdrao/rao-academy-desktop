@@ -9,9 +9,13 @@
  * What it proves (Brief 7.6, rao-master-16):
  *   1. Hint bubbles — a pre-attempt Hint tap types ONE bubble; the ladder
  *      accumulates one bubble per tap; options stay live while hinting.
- *   2. Wrong is a whisper — the tried option gets ✕ + cc-tried, loses is-sel,
- *      shows NO pill, NO red flood; the whyWrong message types as the next
- *      "Hint n" bubble and its code is logged.
+ *   2. Wrong is a whisper, AND THE WHISPER DOES NOT LINGER (LAW 3 as amended
+ *      by BRIEF FR-1, 2026-07-19) — a wrong attempt leaves NO mark: no ✕, no
+ *      cc-tried, is-sel comes off, NO pill, NO red flood; the whyWrong message
+ *      types as the next "Hint n" bubble and its code is logged. After
+ *      "Try again" the task is back to its first-attempt state (✕ ABSENT —
+ *      inverted from the superseded "✕ persists" assertion, per FR-1
+ *      Amendment 1 ruling 2; full state-restore proof is tools/verify-reset.js).
  *   3. Walkthrough trigger + commit — "Walk me through it" appears only once
  *      all hints are used (or after the 2nd wrong attempt); opening it locks
  *      the card IMMEDIATELY, records solved-with-help, and offers NO retry
@@ -228,8 +232,10 @@ ${source}
   });
   if (afterWrong.fb === "") pass("no pill on wrong — the whisper carries it");
   else fail("wrong-state pill", `pv-fb reads "${afterWrong.fb}" (must be empty)`);
-  if (afterWrong.hasX && afterWrong.isSelGone && afterWrong.isWrongGone) pass("tried option: ✕ glyph, no is-sel, no is-wrong");
-  else fail("whisper marking", JSON.stringify(afterWrong));
+  // INVERTED per BRIEF FR-1 Amendment 1 ruling 2: the ✕ must be ABSENT — a
+  // wrong attempt leaves NO mark on the task, ever.
+  if (!afterWrong.hasX && afterWrong.isSelGone && afterWrong.isWrongGone) pass("tried option: NO ✕, no is-sel, no is-wrong — the whisper leaves no mark");
+  else fail("whisper marking (LAW 3 as amended)", JSON.stringify(afterWrong));
   if (afterWrong.triedStyleEqualsRest) pass("tried option computed style == resting sibling", "border/bg/color/opacity identical");
   else fail("tried option styling", "differs from a resting option");
   if (afterWrong.chips[1] === "Hint 2" && /far larger/.test(afterWrong.lastBubble))
@@ -371,18 +377,24 @@ ${source}
   await page.waitForTimeout(100);
   const unlocked = await page.evaluate(() => {
     const f = document.getElementById("fresh");
-    const tried = f.querySelector(".cc-tried");
+    const q = f.querySelector(".qbody");
     return {
-      inert: f.querySelector(".qbody").inert,
+      inert: q.inert,
       footBack: getComputedStyle(f.querySelector(".pv-foot")).display !== "none",
-      xKept: !!(tried && tried.querySelector(".cc-x")),
+      xKept: !!q.querySelector(".cc-x"),                 // INVERTED (FR-1): must be false
+      triedKept: !!q.querySelector(".cc-tried"),         // INVERTED (FR-1): must be false
+      residualSel: !!q.querySelector(".is-sel"),         // first-attempt state = nothing selected
       bubblesKept: f.querySelectorAll(".cc-msg").length,
     };
   });
   if (!unlocked.inert && unlocked.footBack) pass('"Try again" unlocks the card');
   else fail("Try again unlock", JSON.stringify(unlocked));
-  if (unlocked.xKept) pass("✕ persists for the life of the question");
-  else fail("✕ persistence", "the tried marker vanished on retry");
+  // INVERTED per BRIEF FR-1 Amendment 1 ruling 2 (was: "✕ persists for the
+  // life of the question"). LAW 3 as amended: the whisper does not linger —
+  // after Try Again the task carries NO ✕, NO cc-tried, NO residual selection.
+  if (!unlocked.xKept && !unlocked.triedKept && !unlocked.residualSel)
+    pass("✕ ABSENT after Try Again — the whisper does not linger (LAW 3 as amended, FR-1)");
+  else fail("✕ absence after Try Again (LAW 3 as amended)", JSON.stringify(unlocked));
 
   // ── 6. idempotency under touch: 2nd attach mid-flow must not double-fire ──
   await page.evaluate(() => {

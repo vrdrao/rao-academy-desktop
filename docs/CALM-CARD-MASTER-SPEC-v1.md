@@ -91,13 +91,30 @@ Demo states (`set(n)` in `cc-script`) and what each IS in production terms:
 | # | State | What happens |
 |---|---|---|
 | 1 | **Answering** | Clean card: prompt, options, Hint button. Task text and option colours are NEVER modified in any later state (task-immutable law). |
-| 2 | **Wrong** | Options disable; tried option gets `✕` marker + `cc-tried` (kept for context in all later states). Chrome quiets (`cc-dim` on tlabel/counter/pip — options dim ONLY in feedback states). A typed tutor bubble delivers **Hint 1**, then an action row: ghost "Give one more hint" / solid "Try again". |
+| 2 | **Wrong** | Options disable; **no persistent mark on the task** (LAW 3 as amended 2026-07-19 — see the amendment block below this table). Chrome quiets (`cc-dim` on tlabel/counter/pip — options dim ONLY in feedback states). A typed tutor bubble delivers **Hint 1**, then an action row: ghost "Give one more hint" / solid "Try again". On "Try again" the task returns to exactly its first-attempt state. |
 | 3 | **Hint** | Rungs accumulate: Hint 1 stays, **Hint 2 types beneath it** (help-accumulates law), then a single solid "I'll try now". |
 | 4 | **Walkthrough — Steps** | Header **"Solution — step by step"** (KEPT pending Venkat's open keep/remove ruling — one word overrules). Steps type in one at a time as tutor bubbles (Step k of n), each with a `done` chip trail; ends in the **quiet reveal** — the correct option greens with NO fanfare (triumph ≠ rescue). |
 | 5 | **Correct** | The card's ambient celebration: green option (the ONLY other green moment — green appears exactly twice ever), sparks, chime, takeaway panel after beat 3 (~550ms), Next button. All personal praise comes from Robo, never the card (one-character law). |
 | 6 | **Walkthrough — Video + Steps** | Toggle `▶ Watch` / `Steps`; **Watch is the default tab** (ratified). Video player with pause/finish handling; switching is free at any time; forward-seeking allowed (ratified). |
 | 7 | **Walkthrough — Try-it** | Interactive guided attempt variant. |
 | 8/9 | G10 exemplars | Quadratic / Geometry walkthroughs on sibling cards — prove the pattern generalises beyond Grade 4. |
+
+> **LAW 3 — AMENDED 2026-07-19 (BRIEF-FR-1; supersedes the Brief 7.6 wording
+> "the ✕ persists for the life of the question"):**
+>
+> WRONG IS A WHISPER, AND THE WHISPER DOES NOT LINGER. A wrong attempt
+> produces no persistent mark on the task. When the child taps Try Again,
+> the task returns to EXACTLY its first-attempt state: no ✕, no residual
+> selection, no retained input, no moved tiles. The child re-reads the
+> question cold.
+>
+> Rationale (Venkat, recorded in BRIEF-FR-1): a child who just answered knows
+> what they picked; the ✕ added nothing. On multi-select it actively lied — a
+> red ✕ on "2" in "select all the even numbers" teaches that 2 is odd.
+> LAW 4 (HELP ACCUMULATES) is unchanged and must not be weakened: hint bubbles
+> and walkthrough steps persist exactly as before. The chat log stays; the
+> TASK resets. Where `calm-card-v36.html` still shows the persisting ✕, the
+> demo reflects the superseded wording — this amendment wins.
 
 **Chat-bubble mechanics (exact):** `chatWrap` creates a `.cc-chat` container
 (optional `.cc-chat-hd` header — hints have NONE since v24; HINT chips carry the
