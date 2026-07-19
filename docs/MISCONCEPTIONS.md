@@ -430,7 +430,25 @@ message         student-facing template. Describes the option, not the child.
 - **concept:** multi-digit subtraction
 - **rule:** `distractor == correct + 10^k` where question is subtraction (forgot to decrease next column)
 - **message:** "A borrow was missed — recheck the subtraction."
-- **status:** DORMANT — documented rule, zero live assignments as of this commit.
+- **status:** LIVE since 2026-07-20 (A/S/M/D remix rebuild) — used on round-number and count-up subtraction distractors.
+
+### SUB_ONES_ADDED_BACK
+- **concept:** two-digit subtraction (tens-then-ones strategy)
+- **rule:** for subtraction `a − b`: `distractor == a − 10*floor(b/10) + (b mod 10)` — the tens were subtracted but the ones were ADDED back instead of subtracted.
+- **message:** "The tens came off, but the ones went back ON — both parts must come off."
+- **status:** LIVE since 2026-07-20 (A/S/M/D remix rebuild).
+
+### WRONG_DIVISOR_USED
+- **concept:** division facts
+- **rule:** `distractor == dividend ÷ d2` for some integer divisor `d2 ≠ divisor` (e.g. 12 ÷ 2 = 6 offered for 12 ÷ 3).
+- **message:** "This shares the total into a different number of groups than the question asks."
+- **status:** LIVE since 2026-07-20 (A/S/M/D remix rebuild).
+
+### WRONG_OP_ADD_FOR_DIV
+- **concept:** division
+- **rule:** `correct == a ÷ b` AND `distractor == a + b`
+- **message:** "This adds the numbers — but sharing always leaves less in each pile, never more."
+- **status:** LIVE since 2026-07-20 (A/S/M/D remix rebuild).
 
 ### DATA_READING_ERROR
 - **concept:** bar graphs, tables, line plots
