@@ -1,6 +1,6 @@
 # GRADE-ROLLOUT-PLAYBOOK
 
-**Version:** `playbook-1` · **Date:** 2026-07-19
+**Version:** `playbook-2` · **Date:** 2026-07-19
 
 This file supersedes chat memory. If any chat's recollection of a rule conflicts
 with this file, this file wins; report the conflict to the engine chat.
@@ -52,7 +52,8 @@ chat-side text — they are listed in the creating brief's Deviations section.
   `docs/briefs/` as part of its own work's commit — the paper trail outranks a
   tidy tree. [src: CLAUDE.md] [src: GRADE3-CHARTER.md]
 - **Veto ritual:** pre-typed Claude Code commands are cleared before pasting.
-  [src: GRADE3-CHARTER.md]
+  [src: GRADE3-CHARTER.md] The ritual applies in every permission mode, auto
+  included. [src: chat-side ratification 2026-07-19, playbook-2]
 - **Browser downloads may arrive renamed** `<name> (1).md`. Verify content
   (md5) and archive under the canonical name, removing the stray copy.
   [src: docs/handoffs/HANDOFF-11.md] [src: OVERNIGHT-REPORT-2026-07-19.md]
@@ -83,8 +84,11 @@ chat-side text — they are listed in the creating brief's Deviations section.
   and fix NOTHING — diagnosis only; Venkat and chat adjudicate.
   [src: docs/briefs/BRIEF-OVERNIGHT-CONVERSION-2026-07-18.md]
   [src: OVERNIGHT-REPORT-2026-07-19.md]
-- **Permission mode ("auto mode"):**
-  > UNKNOWN — not found in repo files; needs chat-side text.
+- **Permission mode ("auto mode"):** Permission mode is `defaultMode: auto`
+  with a small curated allow list and hard deny rules on `git push` (all
+  shells) and on `--no-verify`, merged in the repo's `.claude` settings. Auto
+  mode is what makes unattended overnight runs possible; the deny rules are
+  what make it safe. [src: chat-side ratification 2026-07-19, playbook-2]
 - **The allow list is curated and small.** Workspace is `rao-academy` only;
   allow list e.g. `npm install`, `npm test`, `npx playwright install chromium`.
   [src: WORKFLOW.md] `git push` is blocked by a deny rule.
@@ -110,11 +114,15 @@ chat-side text — they are listed in the creating brief's Deviations section.
 - **No-repaint law:** messages are append-only and type-then-fill; a bubble's
   content is filled once, and earlier bubbles are never touched again.
   [src: docs/CALM-CARD-MASTER-SPEC-v1.md]
-- **Build inside, not beside:**
-  > UNKNOWN — not found in repo files; needs chat-side text.
-  (Nearest repo statements, for chat to confirm or reject as this law: "there
-  is exactly ONE copy of the card in the system" and "Engine fixes go in the
-  engine … Never patch around a problem per-lesson" [src: CLAUDE.md].)
+- **Build inside, not beside:** when Venkat shares a reference file, work is
+  done by cloning and injecting into that file — never by rebuilding a
+  lookalike from scratch beside it. The reference is the ground truth for
+  structure and styling; a rebuild silently drops details the reference
+  carried. [src: chat-side ratification 2026-07-19, playbook-2]
+- **One copy of the card in the system.** There is exactly ONE copy of the
+  card; never introduce a parallel review-only card skin. [src: CLAUDE.md]
+- **Engine fixes go in the engine,** so every future lesson inherits them —
+  never patch around a problem per-lesson. [src: CLAUDE.md]
 - **Chase every number that changes.** A totals delta is enumerated question by
   question or the audit fails. [src: GRADE3-CHARTER.md]
 - **Fix the general case, not the file.** When 3+ files share the same defect,
@@ -164,10 +172,11 @@ chat-side text — they are listed in the creating brief's Deviations section.
   never to pad the count; never drop supplied questions. [src: CLAUDE.md]
   Unattended runs convert at source question counts and flag sub-30 counts for
   the audit rather than inventing questions. [src: OVERNIGHT-REPORT-2026-07-19.md]
-- **Thin-lesson top-ups by explicit ruling:**
-  > UNKNOWN — not found in repo files; needs chat-side text.
-  (The "daylight top-ups only by explicit ruling" clause has no repo source;
-  the sourced baseline above — fill gaps, never pad — stands meanwhile.)
+- **Thin-lesson top-ups by explicit ruling:** thin lessons (sub-30 questions)
+  ship at source counts and are flagged. Top-ups happen only by Venkat's
+  explicit ruling, as attended daylight briefs, and only to fill
+  interaction-type or misconception gaps — never to pad a count.
+  [src: chat-side ratification 2026-07-19, playbook-2]
 - **Delivery is REMIX-only.** Ship the enriched remix lesson; faithful 1:1
   conversions of the Word documents are not a deliverable.
   [src: GRADE3-CHARTER.md] When the engine changes, the deploy drop is
@@ -258,8 +267,8 @@ chat-side text — they are listed in the creating brief's Deviations section.
 
 ## §10 Change control
 
-> UNKNOWN — not found in repo files; needs chat-side text.
-(The intended rule — only the engine chat amends this playbook, via brief; every
-amendment increments the version stamp (`playbook-2`, …) and is pushed — exists
-in no pre-existing repo file and awaits chat-side ratification as this
-playbook's own governance.)
+Only the engine chat amends this playbook, via brief. Every amendment
+increments the version stamp (`playbook-2`, `playbook-3`, …) and is pushed.
+Grade chats propose amendments by routing an ENGINE REQUEST-style note through
+Venkat; they never edit this file.
+[src: chat-side ratification 2026-07-19, playbook-2]
