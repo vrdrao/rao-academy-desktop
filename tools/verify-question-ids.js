@@ -29,7 +29,16 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const C = { r: "\x1b[31m", g: "\x1b[32m", b: "\x1b[1m", x: "\x1b[0m" };
-const EXPECTED = 3015;
+// Corpus-size tripwire. This number must ONLY ever change as part of an
+// explicitly authorised brief that predicts the new value BEFORE the run.
+// Never edit this to make a failing test pass.
+//
+// History:
+//   3015 -> 2668  BRIEF-CULL-1A/1B, 2026-07-20: 15 duplicate _1to1/faithful
+//                 lessons archived to archive/lessons-1to1/. 347 questions
+//                 removed from the live corpus. Their IDs remain permanently
+//                 taken in docs/question-ids.json, which did not shrink.
+const EXPECTED = 2668;
 const ID_RE = /^q[23456789abcdefghijkmnpqrstuvwxyz]{8}$/;
 
 let failures = 0;
@@ -82,9 +91,9 @@ function sourceOf(html) {
   const total = perFile.reduce((s, r) => s + r.qs.length, 0);
   const allIds = perFile.flatMap((r) => r.qs.map((q) => q.id).filter(Boolean));
 
-  // corpus sanity: total must be 3015 (this brief changes no question)
+  // corpus sanity: total must equal the authorised EXPECTED tripwire above
   if (total === EXPECTED) console.log(`  scan: ${files.length} files, ${total} questions (expected ${EXPECTED})\n`);
-  else fail("corpus size is 3015", `saw ${total} across ${files.length} files`);
+  else fail(`corpus size is ${EXPECTED}`, `saw ${total} across ${files.length} files`);
 
   /* 1. every question has an id */
   const missing = perFile.flatMap((r) => r.qs.map((q, i) => ({ file: r.file, i: i + 1, id: q.id }))).filter((x) => !x.id);
