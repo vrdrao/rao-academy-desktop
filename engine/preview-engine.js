@@ -1952,6 +1952,47 @@ function parseQuestion(attrs, content, fm, index) {
       issues.push({ level: "warn", code: "DROPPED_PROSE",
         message: `${qid}: author content is NOT rendered — no extractor claims it: "${_residual.slice(0, 90)}${_residual.length > 90 ? "…" : ""}"` });
   }
+  // GUARD (BRIEF-3 Item B): DROPPED_PROSE is blind to FLATTENING — structured
+  // content (<table>/<ul>/<ol>) collapsed into one plain-text run technically
+  // renders, so it passed silently. That is how six option tables shipped as
+  // "Viola9010Violin5050Bass3030". For every authored structure: if its tag is
+  // gone from the rendered output but its text survives, warn FLATTENED_MARKUP.
+  // Exempt: the claimed list containers (options/tiles/palette/order/sequence
+  // legitimately transform into buttons/tiles) and, mirroring DROPPED_PROSE,
+  // tables in line-plot/bar-graph (claimed as figure DATA, not rendered markup).
+  {
+    const _balanced = (html, tag, from) => {
+      const re = new RegExp("<" + tag + "\\b|<\\/" + tag + "\\s*>", "gi");
+      re.lastIndex = from;
+      let depth = 0, m;
+      while ((m = re.exec(html))) {
+        if (m[0][1] === "/") { if (--depth === 0) return html.slice(from, re.lastIndex); }
+        else depth++;
+      }
+      return html.slice(from);
+    };
+    const _claimedList = /^<(?:ul|ol)\b[^>]*class="[^"]*\b(?:palette|tiles|options|order|sequence)\b[^"]*"/i;
+    const _renderedStructs = { ul: [], ol: [], table: [] };
+    const _rRe = /<(ul|ol|table)\b[^>]*>/gi;
+    let _rm;
+    while ((_rm = _rRe.exec(inner)))
+      _renderedStructs[_rm[1].toLowerCase()].push(stripTags(_balanced(inner, _rm[1], _rm.index)));
+    const _renderedText = stripTags(inner);
+    const _sRe = /<(ul|ol|table)\b[^>]*>/gi;
+    let _sm;
+    while ((_sm = _sRe.exec(content))) {
+      const _tag = _sm[1].toLowerCase();
+      if (_tag === "table" && (type === "line-plot" || type === "bar-graph")) continue;
+      const _whole = _balanced(content, _tag, _sm.index);
+      if (_tag !== "table" && _claimedList.test(_whole)) continue;
+      const _txt = stripTags(_whole);
+      if (!_txt) continue;
+      const _structural = _renderedStructs[_tag].some((t) => t.includes(_txt));
+      if (!_structural && _renderedText.includes(_txt))
+        issues.push({ level: "warn", code: "FLATTENED_MARKUP",
+          message: `${qid}: authored <${_tag}> structure is FLATTENED — its text renders as one run: "${_txt.slice(0, 90)}${_txt.length > 90 ? "…" : ""}"` });
+    }
+  }
   // surface parser warnings (e.g. unknown figure dropped) per-item instead of discarding them
   warnings.forEach((w) => issues.push({ level: "warn", code: "BUILD_WARNING", message: String(w) }));
   // frontmatter block problems (broken ladder indentation, unparseable whyWrong

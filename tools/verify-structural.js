@@ -115,6 +115,28 @@ const cases = [
          `<ul class="options"><li data-val="a">a</li><li data-val="b">b</li></ul>` +
          `<p class="explain">Because.</p></div>`,
     mustHave: [], mustLack: ["DROPPED_PROSE"], expectDetected: 1 },
+
+  // BRIEF-3 Item B: the Item G guard catches content that is DROPPED, but content
+  // whose STRUCTURE is collapsed to a plain-text run ("Viola9010Violin5050…")
+  // technically renders and passed silently — the exact bar_graphs_1to1 table
+  // class. Structure gone + text surviving must emit FLATTENED_MARKUP (warn).
+  { name: "structure collapsed to a text run emits FLATTENED_MARKUP warn",
+    src: `<!--@q\ntype: single-select\nanswer: ["1"]\n-->\n` +
+         `<div class="question"><p class="prompt">Which set?</p>` +
+         `<ul class="options">` +
+         `<li>Set headed alphaOne <ul><li>betaTwo</li><li>gammaThree</li></ul></li>` +
+         `<li>Set headed deltaFour <ul><li>epsilonFive</li><li>zetaSix</li></ul></li>` +
+         `</ul></div>`,
+    mustHave: ["FLATTENED_MARKUP"], expectDetected: 1 },
+
+  { name: "structure that survives to the output (table option) emits no FLATTENED_MARKUP",
+    src: `<!--@q\ntype: single-select\nanswer: ["1"]\n-->\n` +
+         `<div class="question"><p class="prompt">Which table?</p>` +
+         `<ul class="options">` +
+         `<li><table><tr><th>Day</th><th>Bags</th></tr><tr><td>Mon</td><td>80</td></tr></table></li>` +
+         `<li><table><tr><th>Day</th><th>Bags</th></tr><tr><td>Mon</td><td>90</td></tr></table></li>` +
+         `</ul></div>`,
+    mustHave: [], mustLack: ["FLATTENED_MARKUP", "DROPPED_PROSE"], expectDetected: 1 },
 ];
 
 let failed = 0;
