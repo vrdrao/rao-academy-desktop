@@ -92,6 +92,19 @@ body{font-family:'Quicksand','DM Sans',system-ui,sans-serif;max-width:820px;marg
 h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
 .note{background:#fff;border-left:4px solid #7b5cff;padding:10px 14px;border-radius:8px;color:#6b5b9a;margin:8px 0 18px;font-size:.9rem}
 #source{display:none}
+/* BRIEF-IDCHIP-1: the permanent question id, shown as a small muted monospace chip
+   beside the counter. REVIEW-ONLY page furniture — Venkat's instrument, never the
+   child's card. Reuses --fm/--mute/--sub tokens; must not compete with the question. */
+.id-chip{-webkit-appearance:none;appearance:none;display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--fm,'JetBrains Mono',monospace);font-size:.66rem;font-weight:600;letter-spacing:.02em;
+  color:var(--mute,#9ca3af);background:rgba(44,33,80,.05);border:1px solid rgba(44,33,80,.10);border-radius:7px;
+  padding:4px 8px;margin-left:auto;margin-right:8px;cursor:pointer;white-space:nowrap;line-height:1.1;
+  user-select:all;-webkit-user-select:all;transition:color .15s,background .15s,border-color .15s}
+.id-chip:hover{color:var(--sub,#4b5563);background:rgba(44,33,80,.09)}
+.id-chip:focus-visible{outline:2px solid var(--brand,#7b5cff);outline-offset:1px}
+.id-chip.is-copied{color:#0b9468;background:rgba(16,185,129,.14);border-color:rgba(16,185,129,.35)}
+/* mobile: keep the chip legible and give it a >=44px tap height without pushing the counter out */
+@media(max-width:480px){.id-chip{font-size:.6rem;padding:11px 8px;margin-right:6px}}
 `;
 
 /* The card RENDERER lives in engine/rao-card.js — a real shared file, exactly like
@@ -209,6 +222,46 @@ const BAR_JS = `
 })();
 `;
 
+/* BRIEF-IDCHIP-1 — REVIEW-ONLY. After the cards mount, tag each with its permanent
+   question id (read from the rendered .qbody[data-qid]) as a small copyable chip
+   beside the .pv-ring counter. This script is emitted ONLY into the review page by
+   make-review; the app's render path (engine + rao-card.js) never includes it, so
+   the id can never reach the child-facing card. Same class of mechanism as BAR_JS.
+   The chip element is never replaced — its text is mutated for the copy
+   confirmation (no-repaint law). Clipboard failure never throws: it falls back to
+   selecting the text and stays silent. */
+const CHIP_JS = `
+(function(){
+  var frames = document.querySelectorAll('.pv-frame');
+  frames.forEach(function(f){
+    var qb = f.querySelector('.qbody'); if(!qb) return;
+    var id = qb.getAttribute('data-qid'); if(!id) return;
+    var head = f.querySelector('.pv-head'); if(!head || head.querySelector('.id-chip')) return;
+    var ring = head.querySelector('.pv-ring');
+    var chip = document.createElement('button');
+    chip.type = 'button'; chip.className = 'id-chip'; chip.textContent = id;
+    chip.title = 'Click to copy question id';
+    chip.setAttribute('aria-label', 'Question id ' + id + ', click to copy');
+    chip.addEventListener('click', function(){
+      function confirmCopied(){
+        chip.classList.add('is-copied'); chip.textContent = 'copied';
+        setTimeout(function(){ chip.textContent = id; chip.classList.remove('is-copied'); }, 1000);
+      }
+      function selectFallback(){
+        try{ var r = document.createRange(); r.selectNodeContents(chip);
+          var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }catch(_){}
+      }
+      try{
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(id).then(confirmCopied, function(){ selectFallback(); confirmCopied(); });
+        } else { selectFallback(); confirmCopied(); }
+      }catch(e){ selectFallback(); confirmCopied(); }
+    });
+    if(ring) head.insertBefore(chip, ring); else head.appendChild(chip);
+  });
+})();
+`;
+
 /* ---------- build --------------------------------------------------------- */
 
 function build(lessonPath, outName) {
@@ -265,6 +318,8 @@ ${safeForScript(renderJs)}
    card renderer: he injects his own dock and listens for the card's rao:* events. */
 ${safeForScript(fs.readFileSync(ROBO_JS, "utf8").trim())}
 </script>
+<script>/* BRIEF-IDCHIP-1 — review-only id chip; never emitted into the app card path */
+${safeForScript(CHIP_JS)}</script>
 <script>${safeForScript(BAR_JS)}</script>
 </body>
 </html>`;
