@@ -261,6 +261,82 @@ for (const c of cases) {
   }
 }
 
+/* ── OPTION-TABLE GUARD (BRIEF-3 Item A) ────────────────────────────────────
+   An authored <table> inside an option <li> must render AS a table. Before the
+   fix, optionsOf() treated a table as text: stripTags collapsed it into one
+   unreadable run ("OrchestraInstrumentGirlsBoys…") that became BOTH the
+   button's visible content AND its data-val grading key. Two checks:
+   (1) fixture — a table option's built markup contains <table>, and its
+       data-val is NOT the concatenated cell run;
+   (2) corpus sweep — every real question authored with a table option renders
+       <table> markup in its built output. */
+{
+  const tbl = (r1, r2) =>
+    `<table><tr><th>Day</th><th>Bags</th></tr><tr><td>Mon</td><td>${r1}</td></tr><tr><td>Tue</td><td>${r2}</td></tr></table>`;
+  const src =
+    `<div id="source"><!--@q\ntype: single-select\nanswer: ["1"]\n-->` +
+    `<div class="question" data-type="single-select"><p class="prompt">Which table matches?</p>` +
+    `<ul class="options"><li>${tbl(80, 90)}</li><li>${tbl(90, 80)}</li></ul></div></div>`;
+  const q = RP.build(src)[0];
+  const buttons = [...q.markup.matchAll(/<button class="opt[^"]*" data-val="([^"]*)"[^>]*>([\s\S]*?)<\/button>/g)];
+  const problems = [];
+  if (buttons.length !== 2) problems.push(`expected 2 option buttons, found ${buttons.length}`);
+  buttons.forEach((b, i) => {
+    if (!/<table\b/i.test(b[2])) problems.push(`option ${i + 1} renders no <table> — its content is "${b[2].slice(0, 60)}"`);
+    if (/DayBags/i.test(b[1])) problems.push(`option ${i + 1} data-val is the concatenated cell run ("${b[1].slice(0, 40)}…")`);
+  });
+  // Grading must still pick exactly one option.
+  const trueKeys = buttons.filter((b) => RP.check(q.behavior, [b[1]], q.answer));
+  if (trueKeys.length !== 1) problems.push(`grading picks ${trueKeys.length} options, expected exactly 1`);
+  if (problems.length) {
+    failed++;
+    console.log(`${C.r}✗ option-table fixture renders as a table${C.x}`);
+    problems.forEach((p) => console.log(`    ${p}`));
+  } else {
+    console.log(`${C.g}✓${C.x} option-table fixture renders as a table (positional key, grades 1-of-2)`);
+  }
+
+  // Corpus sweep: any lesson question whose authored <li> holds a <table> must
+  // render <table> markup inside an option button.
+  const LESSONS = path.join(ROOT, "lessons");
+  function collect(dir) {
+    let out = [];
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (e.name === "_preview") continue;
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) out = out.concat(collect(full));
+      else if (e.name.endsWith(".html")) out.push(full);
+    }
+    return out;
+  }
+  let swept = 0, flat = [];
+  for (const f of collect(LESSONS)) {
+    const html = fs.readFileSync(f, "utf8");
+    if (!/<li[^>]*>\s*<table\b/i.test(html)) continue; // cheap pre-filter
+    const a = html.indexOf('<div id="source">');
+    if (a < 0) continue;
+    const b = html.indexOf('<div id="preview"');
+    const source = html.slice(a, b > a ? b : undefined);
+    const blocks = source.split(/<!--@q/).slice(1);
+    let qs;
+    try { qs = RP.build(source); } catch (e) { continue; } // build errors are verify-grading's job
+    qs.forEach((q2, i) => {
+      if (!/<li[^>]*>\s*<table\b/i.test(blocks[i] || "")) return;
+      swept++;
+      const optTables = [...q2.markup.matchAll(/<button class="opt[^"]*"[^>]*>([\s\S]*?)<\/button>/g)]
+        .filter((m) => /<table\b/i.test(m[1])).length;
+      if (!optTables) flat.push(`${path.relative(LESSONS, f).replace(/\\/g, "/")} Q${i + 1}`);
+    });
+  }
+  if (flat.length) {
+    failed++;
+    console.log(`${C.r}✗ ${flat.length} corpus question(s) flatten an authored option <table> to text:${C.x}`);
+    flat.forEach((x) => console.log(`    ${x}`));
+  } else {
+    console.log(`${C.g}✓${C.x} corpus option-table sweep: ${swept} table-option question(s), all render <table>`);
+  }
+}
+
 if (failed) {
   console.log(`\n${C.r}STRUCTURAL: ${failed} case(s) failed — malformed authoring is not being rejected.${C.x}`);
   process.exit(1);

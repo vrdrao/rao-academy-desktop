@@ -189,6 +189,16 @@
 .rao-lesson .opt.is-sel .check-ind:after{content:"";position:absolute;left:4px;top:0px;width:5px;height:10px;border:solid #fff;
   border-width:0 2.5px 2.5px 0;transform:rotate(45deg);}
 .rao-lesson .opt-text{font-size:0.98rem;font-weight:700;}.rao-lesson .opt.opt-sign{font-size:2.1rem;font-weight:800;line-height:1;padding:18px 12px;}@media(max-width:600px){.rao-lesson .opt.opt-sign{font-size:1.8rem;}}
+/* ── BRIEF-3 Item A: table-bearing options ("which table matches?" MCQ). Scoped to
+   .opts-tables / .opt-table only — general option buttons are untouched. One
+   full-width row per option (a table cannot share a row); the table centres in its
+   button; cell boundaries and a distinguishable header are guaranteed even when the
+   author supplies a bare <table> (authored inline styles, if present, win). */
+.rao-lesson .opts.opts-tables{display:flex;flex-direction:column;gap:12px;}
+.rao-lesson .opt.opt-table{padding:10px 12px;overflow-x:auto;}
+.rao-lesson .opt.opt-table table{border-collapse:collapse;margin:2px auto;color:var(--ink,#2c2150);font-weight:500;}
+.rao-lesson .opt.opt-table th,.rao-lesson .opt.opt-table td{border:1px solid #cdc7e8;padding:3px 8px;}
+.rao-lesson .opt.opt-table th{background:rgba(var(--brand-rgb,123,92,255),.12);}
 /* Stacked fraction (emitted by the engine's fracHTML for any "n/d" option or tile): numerator
    over a bar over denominator. Own font-size, so it never inherits the oversized opt-sign size.
    The bar is currentColor, so it re-tints with the option/tile state (brand / is-correct green /
