@@ -214,7 +214,7 @@
   color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin:6px 2px;}
 .rao-lesson .order-slots{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:10px;min-height:62px;padding:12px;margin:4px 0 14px;
   background:rgba(var(--brand-rgb,123,92,255),.05);border:2px dashed rgba(var(--brand-rgb,123,92,255),.28);border-radius:14px;}
-.rao-lesson .order-slot{min-width:0;width:auto;height:auto;min-height:54px;font-family:var(--fm);font-size:1.3rem;border-radius:11px;border:2px dashed rgba(var(--brand-rgb,123,92,255),.35);background:rgba(255,255,255,.55);
+.rao-lesson .order-slot{min-width:0;width:auto;height:auto;min-height:54px;font-family:var(--fm);font-size:1.125rem;border-radius:11px;border:2px dashed rgba(var(--brand-rgb,123,92,255),.35);background:rgba(255,255,255,.55);
   display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s;}
 .rao-lesson .order-slot.over{border-color:var(--brand);background:rgba(var(--brand-rgb,123,92,255),.12);}.rao-lesson .order-slot.filled{border-color:transparent;background:transparent;}
 .rao-lesson .order-bank{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:10px;min-height:54px;margin:0 0 6px;align-items:stretch;}
