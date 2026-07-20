@@ -357,6 +357,20 @@ what ships.
 
 ---
 
+## Issue tracking — `docs/ISSUES.md`
+
+- **`docs/ISSUES.md` is the authoritative record of known issues.** Handoffs
+  reference item numbers in it; they do **not** restate issue detail.
+- **Any newly found issue gets a row at the time it is found**, not at handoff
+  time.
+- **Closing an issue means setting `status` with a date and a resolution — never
+  delete a row.** It is append-only, the same law as `docs/question-ids.json`.
+  Item numbers are permanent and never reused or renumbered.
+- **An issue may be closed as `not-a-defect`** when investigation shows the report
+  was mistaken; the row and the reason stay.
+
+---
+
 ## Working style
 
 - **Every executed brief file is committed to `docs/briefs/` as part of its own work's
