@@ -962,7 +962,88 @@ async function checkRender1(browser) {
   return problems;
 }
 
+/* ── BRIEF-1 Item A: Venn circle labels must never collide ──────────────────
+   A green grading run drags tiles and reads regions — it never looks at the two
+   circle labels. With long labels ("has a vertical line of symmetry") both were
+   pinned to the same top row growing toward the centre and overlapped until one
+   was unreadable. This renders a venn2 card with the WORST real labels in the
+   corpus and asserts on bounding boxes: zero intersection, each label centred
+   over its own circle, each label no wider than its circle. */
+async function checkVennLabels(browser) {
+  const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8");
+  const html =
+    `<!doctype html><html><head><meta charset="utf-8">` +
+    `<meta name="viewport" content="width=device-width">` +
+    `<style>${read("engine/rao.css")}</style>` +
+    `<style>${read("engine/rao-card.css")}</style></head><body style="margin:0;padding:0">` +
+    `<div id="source">` +
+    `<!--@q\ntype: categorize\nlayout: venn2\nleft_label: has a vertical line of symmetry\nright_label: has a horizontal line of symmetry\nanswer: ["A","B","AB","OUT"]\n-->` +
+    `<div class="question" data-type="categorize">` +
+    `<p class="prompt">Drag each letter into the Venn diagram by which line of symmetry it has.</p>` +
+    `<ul class="tiles"><li>A</li><li>B</li><li>H</li><li>F</li></ul>` +
+    `</div>` +
+    `</div>` +
+    `<div id="preview" class="rao-lesson" data-theme="grape"></div>` +
+    `<script>${read("engine/preview-engine.js").replace(/<\/script/gi, "<\\/script")}</script>` +
+    `<script>${read("engine/rao-card.js").replace(/<\/script/gi, "<\\/script")}</script>` +
+    `</body></html>`;
+  const tmp = path.join(ROOT, "review", "__venn_fixture.html");
+  fs.writeFileSync(tmp, html);
+  const problems = [];
+  try {
+    for (const vp of [{ width: 1280, height: 900 }, { width: 390, height: 844 }]) {
+      const page = await browser.newPage({ viewport: vp });
+      const at = `${vp.width}px`;
+      try {
+        await page.goto("file://" + tmp);
+        await page.waitForFunction(() => document.querySelector(".venn-label-right"), { timeout: 15000 }).catch(() => {});
+        await page.waitForTimeout(300);
+        const r = await page.evaluate(() => {
+          const box = (el) => { const b = el.getBoundingClientRect(); return { l: b.left, r: b.right, t: b.top, b: b.bottom, w: b.width }; };
+          const L = document.querySelector(".venn-label-left"), R = document.querySelector(".venn-label-right");
+          const CL = document.querySelector(".venn-left"), CR = document.querySelector(".venn-right");
+          if (!L || !R || !CL || !CR) return { missing: true };
+          return { L: box(L), R: box(R), CL: box(CL), CR: box(CR) };
+        });
+        if (r.missing) { problems.push(`${at}: venn fixture did not render (.venn-label / .venn-circle missing)`); await page.close(); continue; }
+        const xOv = Math.min(r.L.r, r.R.r) - Math.max(r.L.l, r.R.l);
+        const yOv = Math.min(r.L.b, r.R.b) - Math.max(r.L.t, r.R.t);
+        if (xOv > 0 && yOv > 0)
+          problems.push(`${at}: venn labels OVERLAP by ${xOv.toFixed(1)}px × ${yOv.toFixed(1)}px — one label hides behind the other`);
+        const mid = (b) => (b.l + b.r) / 2;
+        if (!(mid(r.L) > r.CL.l - 2 && mid(r.L) < r.CL.r + 2))
+          problems.push(`${at}: LEFT label centre ${mid(r.L).toFixed(1)} is not over its circle [${r.CL.l.toFixed(1)}..${r.CL.r.toFixed(1)}]`);
+        if (!(mid(r.R) > r.CR.l - 2 && mid(r.R) < r.CR.r + 2))
+          problems.push(`${at}: RIGHT label centre ${mid(r.R).toFixed(1)} is not over its circle [${r.CR.l.toFixed(1)}..${r.CR.r.toFixed(1)}]`);
+        if (r.L.w > r.CL.w + 2)
+          problems.push(`${at}: LEFT label ${r.L.w.toFixed(1)}px is wider than its circle ${r.CL.w.toFixed(1)}px — long text must wrap, not bleed`);
+        if (r.R.w > r.CR.w + 2)
+          problems.push(`${at}: RIGHT label ${r.R.w.toFixed(1)}px is wider than its circle ${r.CR.w.toFixed(1)}px — long text must wrap, not bleed`);
+      } finally {
+        await page.close();
+      }
+    }
+  } finally {
+    try { fs.unlinkSync(tmp); } catch (e) {}
+  }
+  return problems;
+}
+
 (async () => {
+  // --venn-only: just the venn-label collision guard (fast RED/PASS cycles).
+  if (process.argv.includes("--venn-only")) {
+    const browser = await chromium.launch();
+    const problems = await checkVennLabels(browser);
+    await browser.close();
+    if (problems.length) {
+      console.log("FAIL  venn labels (1280px + 390px)");
+      problems.forEach((p) => console.log("      - " + p));
+      process.exit(1);
+    }
+    console.log("PASS  venn labels — no collision, each over its own circle, at 1280px and 390px");
+    process.exit(0);
+  }
+
   // --render1-only: just the BRIEF-RENDER-1 fixture guards (fast RED/PASS cycles).
   if (process.argv.includes("--render1-only")) {
     const browser = await chromium.launch();
@@ -1094,8 +1175,18 @@ async function checkRender1(browser) {
     console.log(`PASS  RENDER-1 fixtures  (discrete ✕ marks — at 1280px and 390px)`);
   }
 
+  // BRIEF-1 Item A — venn label collision guard, self-contained fixture.
+  const vennProblems = await checkVennLabels(browser);
+  if (vennProblems.length) {
+    failed++;
+    console.log(`\nFAIL  venn labels (1280px + 390px)`);
+    vennProblems.forEach((p) => console.log("      - " + p));
+  } else {
+    console.log(`PASS  venn labels  (no collision, each over its own circle — at 1280px and 390px)`);
+  }
+
   await browser.close();
-  const total = files.length + 6;   // +1 explain, +1 mobile, +1 card look, +1 figures, +1 ladder, +1 render1
+  const total = files.length + 7;   // +1 explain, +1 mobile, +1 card look, +1 figures, +1 ladder, +1 render1, +1 venn
   console.log(failed ? `\n${failed}/${total} FAILED` : `\nselection styling is clean`);
   process.exit(failed ? 1 : 0);
 })();
