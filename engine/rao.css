@@ -142,6 +142,28 @@
 .rao-lesson .vcol .cm-cell{box-sizing:border-box;width:44px;height:44px;text-align:center;display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;}
 .rao-lesson .vcol .cm-sep{box-sizing:border-box;width:9px;text-align:center;color:var(--sub);font-size:.72em;font-weight:500;display:inline-flex;align-items:flex-end;padding-bottom:.18em;justify-content:center;flex:0 0 9px;}
 .rao-lesson .vcol .blank-input{box-sizing:border-box;width:44px;height:44px;flex:0 0 44px;font-size:1.4rem;text-align:center;padding:0;}
+/* ── BRIEF-3 Item E: layout:column (cmath) — these classes previously had NO
+   CSS anywhere, so the table laid out auto: 34px colgroup hints lost to the
+   64px global .blank-input, digits sat text-align:start 27.5px off their
+   answer boxes, the ₹ floated loose and the rule row drew nothing. One fixed
+   column grid now: table-layout:fixed + classed <col> widths (width:1px makes
+   the used table width the SUM of the column widths), centred cells, a real
+   vinculum, and a ₹ that hugs its own number (translate into the gap the
+   centred digit leaves). Inputs stay ≥44px tap targets. */
+.rao-lesson .cmath-wrap{display:flex;justify-content:center;margin:18px 0 8px;max-width:100%;overflow-x:auto;}
+.rao-lesson table.cmath{table-layout:fixed;width:1px;border-collapse:collapse;font-family:var(--fm, 'JetBrains Mono',monospace);font-size:1.4rem;font-weight:600;color:var(--ink,#2c2150);}
+.rao-lesson .cmath col.cm-col-op{width:30px;}
+.rao-lesson .cmath col.cm-col-cur{width:26px;}
+.rao-lesson .cmath col.cm-col-d{width:46px;}
+.rao-lesson .cmath col.cm-col-dot{width:14px;}
+.rao-lesson .cmath td{text-align:center;padding:1px 0;height:50px;}
+.rao-lesson .cmath td.cm-op{color:var(--sub,#6b5b9a);font-weight:500;}
+.rao-lesson .cmath td.cm-cur,.rao-lesson .cmath td.cm-curd{text-align:right;}
+.rao-lesson .cmath .cm-cur-g{display:inline-block;transform:translateX(12px);font-size:.82em;color:var(--sub,#6b5b9a);}
+.rao-lesson .cmath tr.cm-rulerow td.cm-rule{height:4px;padding:0;border-top:2.5px solid var(--ink,#2c2150);}
+.rao-lesson .cmath tr.cm-ansrow td{padding-top:6px;}
+.rao-lesson .cmath .blank-input.cm-cell{box-sizing:border-box;width:44px;height:48px;padding:0;font-size:1.25rem;}
+
 .rao-lesson /* place-value answer cells: one outer strip, .rao-lesson dashed dividers, .rao-lesson one digit per cell */
 .pv-strip{display:inline-flex;border:2.5px solid var(--brand);border-radius:10px;overflow:hidden;background:rgba(var(--brand-rgb,123,92,255),.06);}
 .rao-lesson .pv-strip .pv-cell{width:42px;border:0;border-radius:0;background:transparent;border-left:2px dashed rgba(var(--brand-rgb,123,92,255),.4);}
