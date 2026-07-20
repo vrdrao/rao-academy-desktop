@@ -1599,7 +1599,10 @@ function sameMultiset(a, b) {
 }
 
 function parseQuestion(attrs, content, fm, index) {
-  const qid = `auth-q${index + 1}`;
+  // BRIEF-ID-1: identity is the authored, permanent `id:` when present. The
+  // positional auth-q fallback stays ONLY for a question not yet assigned one,
+  // so a freshly authored question still builds instead of crashing.
+  const qid = (typeof fm.id === "string" && fm.id.trim()) ? fm.id.trim() : `auth-q${index + 1}`;
   const type = (fm.type || getAttr(attrs, "data-type") || "").trim();
   if (!TYPES.has(type)) throw new Error(`${qid}: missing/invalid type ("${type}") — set it in the @q frontmatter`);
   const warnings = [];
@@ -2082,7 +2085,8 @@ function parseAuthoringHtml(html) {
       item = parseQuestion(m[2] || "", content, fm, i);
     } catch (e) {
       // F-12: return a flagged placeholder so the other questions survive the batch.
-      const bad = `auth-q${i + 1}`;
+      // BRIEF-ID-1: name it by its permanent id when the frontmatter carried one.
+      const bad = (typeof fm.id === "string" && fm.id.trim()) ? fm.id.trim() : `auth-q${i + 1}`;
       item = {
         behavior: "fill-blanks", qIdStr: bad, description: "(question failed to build)",
         inner: `<div class="prompt"><span>⚠ ${bad} could not be built.</span></div>`,
@@ -2829,9 +2833,11 @@ module.exports = { attach, serialize, check, BEHAVIORS };
     return (MODS.authoring.parseAuthoringHtml(sourceHtml).items || []).map(function(item){
       var sb = styleFor(item.inner);
       var body = styleFor.applyVarDefaults ? styleFor.applyVarDefaults(item.inner) : item.inner;
-      return { behavior:item.behavior, description:item.description, answer:item.answerArr, hint:item.hint||null,
+      return { behavior:item.behavior, id:item.qIdStr, description:item.description, answer:item.answerArr, hint:item.hint||null,
                explain:item.explain||null, whyWrong:item.whyWrong||null, solution:item.solution||null,
-               markup: sanitizeMarkup('<div class="qbody" style="min-height:var(--rz-card-floor,300px)" data-behavior="'+item.behavior+'">'+sb+body+'</div>'),
+               // BRIEF-ID-1: surface the permanent id onto the rendered root so it
+               // is present in the DOM and in every generated/imported artifact.
+               markup: sanitizeMarkup('<div class="qbody" data-qid="'+item.qIdStr+'" style="min-height:var(--rz-card-floor,300px)" data-behavior="'+item.behavior+'">'+sb+body+'</div>'),
                issues:item.issues||[] };
     });
   }
@@ -2845,7 +2851,7 @@ module.exports = { attach, serialize, check, BEHAVIORS };
       var iss = q.issues || [];
       errs  += iss.filter(function(x){ return x.level === 'error'; }).length;
       warns += iss.filter(function(x){ return x.level === 'warn';  }).length;
-      return { index:i, id:'auth-q'+(i+1), behavior:q.behavior, issues:iss };
+      return { index:i, id:q.id || ('auth-q'+(i+1)), behavior:q.behavior, issues:iss };
     });
     return { ok: errs === 0, errors: errs, warnings: warns, items: report };
   }
