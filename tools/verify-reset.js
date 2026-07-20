@@ -723,21 +723,32 @@ async function runViewport(browser, vp, touch) {
   // pointercancels into a page scroll and the slot stays empty. The remaining
   // slots (and the whole desktop pass) fill via the tap-arm/tap-slot path.
   await drill(5, "sequence-build", async (id) => {
-    if (touch) {
-      await drag(`#${id} .sb-palette .sb-tile`, 0, `#${id} .sb-slot`, 0);
-      const dragFilled = await page.evaluate((fid) => {
-        const s = document.querySelector(`#${fid} .sb-slot`);
-        return !!s && s.classList.contains("filled");
-      }, id);
-      if (!dragFilled) throw new Error("sb-tile TOUCH DRAG did not fill the first slot — the drag pointercancelled into a scroll (.sb-tile lacks touch-action:none in rao.css:611)");
-      await page.waitForTimeout(350); // gesture-recognizer settle: a tap right after a touch drag can be swallowed as a double-tap candidate
-    }
-    for (let attempt = 0; attempt < 10; attempt++) {
-      const sIdx = await page.evaluate((fid) =>
-        [...document.querySelectorAll(`#${fid} .sb-slot`)].findIndex((s) => !s.classList.contains("filled")), id);
-      if (sIdx < 0) break;
-      await tap(`#${id} .sb-palette .sb-tile`, 0);
-      await tap(`#${id} .sb-slot`, sIdx);
+    // BRIEF-3 Item C: sequence-build tiles now MOVE (placed once each), not COPY.
+    // The old wrong-drive tapped palette tile 0 into every slot to make [2,2,2,2];
+    // under move semantics that yields the CORRECT sequence and the drill can no
+    // longer reach a wrong state. Drive a wrong ORDER instead: rotate the answer
+    // by one (distinct tiles → guaranteed ≠ answer) and place each tile by value.
+    const answer = await page.evaluate((fid) => JSON.parse(document.getElementById(fid).dataset.answer), id);
+    const wrong = answer.slice(1).concat(answer.slice(0, 1));
+    const palIdxOf = (v) => page.evaluate(([fid, val]) =>
+      [...document.querySelectorAll(`#${fid} .sb-palette .sb-tile`)].findIndex((t) =>
+        (t.dataset.val != null ? t.dataset.val : (t.textContent || "").trim()) === val), [id, v]);
+    for (let i = 0; i < wrong.length; i++) {
+      const tIdx = await palIdxOf(wrong[i]);
+      if (tIdx < 0) throw new Error(`sequence-build palette tile "${wrong[i]}" not found (move semantics: already placed?)`);
+      if (touch && i === 0) {
+        // keep the touch-DRAG placement assertion (touch-action:none regression guard)
+        await drag(`#${id} .sb-palette .sb-tile`, tIdx, `#${id} .sb-slot`, 0);
+        const dragFilled = await page.evaluate((fid) => {
+          const s = document.querySelector(`#${fid} .sb-slot`);
+          return !!s && s.classList.contains("filled");
+        }, id);
+        if (!dragFilled) throw new Error("sb-tile TOUCH DRAG did not fill the first slot — the drag pointercancelled into a scroll (.sb-tile lacks touch-action:none in rao.css:611)");
+        await page.waitForTimeout(350); // gesture-recognizer settle
+      } else {
+        await tap(`#${id} .sb-palette .sb-tile`, tIdx);
+        await tap(`#${id} .sb-slot`, i);
+      }
     }
   });
 
