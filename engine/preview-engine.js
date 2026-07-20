@@ -1911,6 +1911,41 @@ function parseQuestion(attrs, content, fm, index) {
           message: `${qid}: answer[${ai}] "${a}" is ${String(a).length} chars but its input caps at ${cap} — the child cannot type it` });
     });
   }
+  // GUARD (BRIEF-1 Item G): parseQuestion assembles the card from NAMED pieces
+  // only — everything else in the authored content is DISCARDED with no trace.
+  // That is how 25 questions shipped with their perimeter in <p class="lead">
+  // and no automated check noticed. Re-run the extractors' claims as REMOVALS
+  // over the content; if what's left still carries visible text, an author
+  // wrote something the child will never see. Warn-level: the lesson still
+  // builds (content fixes are content-brief work), but the drop is loud.
+  {
+    let _left = content
+      .replace(/<!--[\s\S]*?-->/g, " ")
+      .replace(/<ul\b[^>]*class="(?:palette|tiles|options)"[\s\S]*?<\/ul>/gi, " ")
+      .replace(/<ol\b[^>]*class="(?:order|sequence)"[\s\S]*?<\/ol>/gi, " ")
+      .replace(/<p\b[^>]*class="(?:prompt|explain|answer|reference|sequence)"[\s\S]*?<\/p>/gi, " ")
+      .replace(/<div\b[^>]*class="rao-construct"[\s\S]*?<\/div>/gi, " ")
+      .replace(/<figure\b[^>]*\/?>(?:\s*<\/figure>)?/gi, " ");
+    // line-plot and bar-graph CLAIM an authored <table> (absorbed into the
+    // source slot); everywhere else a table is dropped and must flag.
+    if (type === "line-plot" || type === "bar-graph")
+      _left = _left.replace(/<table[\s\S]*?<\/table>/gi, " ");
+    // balanced-svg removal (stimulus SVGs are claimed by figuresOf; nested
+    // <svg> children mean a lazy regex would truncate early)
+    let _si;
+    while ((_si = _left.search(/<svg\b/i)) !== -1) {
+      const _b = matchBalancedSvg(_left, _si);
+      _left = _left.slice(0, _si) + " " + _left.slice(_b.end);
+    }
+    const _residual = _left
+      .replace(/<[^>]+>/g, " ")
+      .replace(/&(?:nbsp|amp|lt|gt|quot|#\d+|#x[0-9a-fA-F]+|[a-zA-Z]+);/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (/[A-Za-z0-9ऀ-ॿ₹]/.test(_residual))
+      issues.push({ level: "warn", code: "DROPPED_PROSE",
+        message: `${qid}: author content is NOT rendered — no extractor claims it: "${_residual.slice(0, 90)}${_residual.length > 90 ? "…" : ""}"` });
+  }
   // surface parser warnings (e.g. unknown figure dropped) per-item instead of discarding them
   warnings.forEach((w) => issues.push({ level: "warn", code: "BUILD_WARNING", message: String(w) }));
   // frontmatter block problems (broken ladder indentation, unparseable whyWrong

@@ -96,6 +96,25 @@ const cases = [
          `<figure data-show="sequence" data-values="2,4,?"></figure>` +
          `<ul class="options"><li data-val="a">a</li><li data-val="b">b</li></ul></div>`,
     mustHave: [], mustLack: ["UNKNOWN_FIGURE"], expectDetected: 1 },
+
+  // BRIEF-1 Item G: prose in an element no extractor claims is silently
+  // discarded — 25 questions shipped with their perimeter in <p class="lead">.
+  // The engine must WARN (not fail: content fixes are content-brief work).
+  { name: "unclaimed prose element (p.lead) emits DROPPED_PROSE warn",
+    src: `<!--@q\ntype: single-select\nanswer: ["a"]\n-->\n` +
+         `<div class="question"><p class="lead">The perimeter is 22.</p>` +
+         `<p class="prompt">X?</p>` +
+         `<ul class="options"><li data-val="a">a</li><li data-val="b">b</li></ul></div>`,
+    mustHave: ["DROPPED_PROSE"], expectDetected: 1 },
+
+  { name: "fully-claimed question (prompt+figure+svg+options+explain) emits no DROPPED_PROSE",
+    src: `<!--@q\ntype: single-select\nanswer: ["a"]\n-->\n` +
+         `<div class="question"><p class="prompt">X?</p>` +
+         `<svg viewBox="0 0 10 10" width="10" height="10"><text x="1" y="5">7</text></svg>` +
+         `<figure data-show="equal-groups" data-groups="3" data-per="4"></figure>` +
+         `<ul class="options"><li data-val="a">a</li><li data-val="b">b</li></ul>` +
+         `<p class="explain">Because.</p></div>`,
+    mustHave: [], mustLack: ["DROPPED_PROSE"], expectDetected: 1 },
 ];
 
 let failed = 0;
