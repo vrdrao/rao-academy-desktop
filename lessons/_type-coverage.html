@@ -69,6 +69,18 @@ description: sequence-build coverage
 </div>
 
 <!--@q
+type: sequence-build
+answer: ["odd","even","odd"]
+palette: ["odd","even"]
+hint: Check the ones digit of each number in turn.
+description: sequence-build REUSE coverage — palette deliberately smaller than the answer demands, so tiles must COPY on placement (BRIEF-3 Item C exemption; guarded by verify-drag.js)
+-->
+<div class="question" data-type="sequence-build">
+  <p class="prompt">Label each number in the pattern, in order: odd or even?</p>
+  <p class="reference">3, 8, 11</p>
+</div>
+
+<!--@q
 type: categorize
 layout: bins
 regions: [{"id":"even","label":"Even"},{"id":"odd","label":"Odd"}]

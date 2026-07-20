@@ -1776,7 +1776,16 @@ function parseQuestion(attrs, content, fm, index) {
     const pal = paletteKeys
       .map((v) => `<button class="sb-tile" data-val="${attrEsc(v)}" draggable="true">${tileVisual(v, htmlByVal[v], keys)}</button>`)
       .join("");
-    answerArea = `${refHtml}<div class="fig-wrap"><div class="sb-slots">${slots}</div></div><div class="sb-palette">${pal}</div>`;
+    // BRIEF-3 Item C: drag means MOVE — a placed tile leaves the tray. The one
+    // exception is a palette deliberately SMALLER than the answer demands (a
+    // 2-tile odd/even palette filling 4 slots): stamp data-reuse so the
+    // behavior layer keeps copy semantics for exactly those questions.
+    const _demand = {};
+    vals.forEach((v) => { _demand[String(v)] = (_demand[String(v)] || 0) + 1; });
+    const _supply = {};
+    paletteKeys.forEach((v) => { _supply[String(v)] = (_supply[String(v)] || 0) + 1; });
+    const _reuse = Object.keys(_demand).some((k) => _demand[k] > (_supply[k] || 0));
+    answerArea = `${refHtml}<div class="fig-wrap"><div class="sb-slots">${slots}</div></div><div class="sb-palette"${_reuse ? ' data-reuse="1"' : ""}>${pal}</div>`;
     answerArr = vals;
   } else if (type === "categorize") {
     const built = buildCategorize(fm, content, qid);
@@ -2480,7 +2489,10 @@ const seq = {
       root.addEventListener("click", on); return () => root.removeEventListener("click", on);
     }
     const slots = root.querySelector(".sb-slots"), pal = root.querySelector(".sb-palette"); if (!slots || !pal) return () => {};
-    return enableTileDrag(root, { tileSelector: ".sb-tile", slotSelector: ".sb-slot", isReusable: true });
+    // BRIEF-3 Item C: move semantics by default (a placed tile leaves the tray,
+    // bank = the palette so a removed tile returns to it). Copy semantics only
+    // where the builder stamped data-reuse (palette smaller than the answer).
+    return enableTileDrag(root, { tileSelector: ".sb-tile", slotSelector: ".sb-slot", isReusable: pal.hasAttribute("data-reuse"), bank: pal });
   },
 };
 const categorize = {
