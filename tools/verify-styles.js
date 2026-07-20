@@ -1029,7 +1029,86 @@ async function checkVennLabels(browser) {
   return problems;
 }
 
+/* ── BRIEF-1 Item D: the sequence strip is the STIMULUS, not a footnote ─────
+   "5, 10, 15, ▢ ▢ ▢" is what the child reads to find the pattern. It must
+   read as ONE continuous sequence: strip text at the same size as the blanks
+   inside it, and the whole strip centred in the card. Grading can never see
+   this — it types into the blanks and reads the verdict. */
+async function checkSeqStrip(browser) {
+  const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8");
+  const html =
+    `<!doctype html><html><head><meta charset="utf-8">` +
+    `<meta name="viewport" content="width=device-width">` +
+    `<style>${read("engine/rao.css")}</style>` +
+    `<style>${read("engine/rao-card.css")}</style></head><body style="margin:0;padding:0">` +
+    `<div id="source">` +
+    `<!--@q\ntype: fill-blanks\nanswer: ["20","25","30"]\n-->` +
+    `<div class="question" data-type="fill-blanks">` +
+    `<p class="prompt">Continue the pattern:</p>` +
+    `<p class="sequence">5, 10, 15, [], [], []</p>` +
+    `</div>` +
+    `</div>` +
+    `<div id="preview" class="rao-lesson" data-theme="grape"></div>` +
+    `<script>${read("engine/preview-engine.js").replace(/<\/script/gi, "<\\/script")}</script>` +
+    `<script>${read("engine/rao-card.js").replace(/<\/script/gi, "<\\/script")}</script>` +
+    `</body></html>`;
+  const tmp = path.join(ROOT, "review", "__seqstrip_fixture.html");
+  fs.writeFileSync(tmp, html);
+  const problems = [];
+  try {
+    for (const vp of [{ width: 1280, height: 900 }, { width: 390, height: 844 }]) {
+      const page = await browser.newPage({ viewport: vp });
+      const at = `${vp.width}px`;
+      try {
+        await page.goto("file://" + tmp);
+        await page.waitForFunction(() => document.querySelector(".seq-strip .blank-input"), { timeout: 15000 }).catch(() => {});
+        await page.waitForTimeout(300);
+        const r = await page.evaluate(() => {
+          const strip = document.querySelector(".seq-strip");
+          if (!strip) return { missing: true };
+          const blank = strip.querySelector(".blank-input");
+          const qb = strip.closest(".qbody");
+          const range = document.createRange();
+          range.selectNodeContents(strip);
+          const cb = range.getBoundingClientRect();
+          const qr = qb.getBoundingClientRect();
+          return {
+            stripFont: parseFloat(getComputedStyle(strip).fontSize),
+            blankFont: parseFloat(getComputedStyle(blank).fontSize),
+            contentCentre: (cb.left + cb.right) / 2,
+            containerCentre: (qr.left + qr.right) / 2,
+          };
+        });
+        if (r.missing) { problems.push(`${at}: seq-strip fixture did not render`); await page.close(); continue; }
+        if (Math.abs(r.stripFont - r.blankFont) > 1)
+          problems.push(`${at}: seq-strip font ${r.stripFont.toFixed(1)}px != blank font ${r.blankFont.toFixed(1)}px — the given terms look subordinate to the blanks`);
+        if (Math.abs(r.contentCentre - r.containerCentre) > 4)
+          problems.push(`${at}: seq-strip content centre ${r.contentCentre.toFixed(1)} vs container centre ${r.containerCentre.toFixed(1)} — the stimulus is not centred`);
+      } finally {
+        await page.close();
+      }
+    }
+  } finally {
+    try { fs.unlinkSync(tmp); } catch (e) {}
+  }
+  return problems;
+}
+
 (async () => {
+  // --seq-only: just the seq-strip stimulus guard (fast RED/PASS cycles).
+  if (process.argv.includes("--seq-only")) {
+    const browser = await chromium.launch();
+    const problems = await checkSeqStrip(browser);
+    await browser.close();
+    if (problems.length) {
+      console.log("FAIL  seq-strip stimulus (1280px + 390px)");
+      problems.forEach((p) => console.log("      - " + p));
+      process.exit(1);
+    }
+    console.log("PASS  seq-strip stimulus — same size as blanks, centred, at 1280px and 390px");
+    process.exit(0);
+  }
+
   // --venn-only: just the venn-label collision guard (fast RED/PASS cycles).
   if (process.argv.includes("--venn-only")) {
     const browser = await chromium.launch();
@@ -1185,8 +1264,18 @@ async function checkVennLabels(browser) {
     console.log(`PASS  venn labels  (no collision, each over its own circle — at 1280px and 390px)`);
   }
 
+  // BRIEF-1 Item D — seq-strip stimulus guard, self-contained fixture.
+  const seqProblems = await checkSeqStrip(browser);
+  if (seqProblems.length) {
+    failed++;
+    console.log(`\nFAIL  seq-strip stimulus (1280px + 390px)`);
+    seqProblems.forEach((p) => console.log("      - " + p));
+  } else {
+    console.log(`PASS  seq-strip stimulus  (same size as blanks, centred — at 1280px and 390px)`);
+  }
+
   await browser.close();
-  const total = files.length + 7;   // +1 explain, +1 mobile, +1 card look, +1 figures, +1 ladder, +1 render1, +1 venn
+  const total = files.length + 8;   // +1 explain, +1 mobile, +1 card look, +1 figures, +1 ladder, +1 render1, +1 venn, +1 seq-strip
   console.log(failed ? `\n${failed}/${total} FAILED` : `\nselection styling is clean`);
   process.exit(failed ? 1 : 0);
 })();
