@@ -1,0 +1,414 @@
+{
+  "Addition_patterns_over_increasing_place_values.html": {
+    "covered": 0,
+    "total": 26
+  },
+  "_type-coverage.html": {
+    "covered": 1,
+    "total": 26
+  },
+  "add_5digit_word_problems.html": {
+    "covered": 0,
+    "total": 32
+  },
+  "compare_convert_metric_volume.html": {
+    "covered": 11,
+    "total": 22
+  },
+  "compare_numbers_up_to_five_digits.html": {
+    "covered": 19,
+    "total": 30
+  },
+  "estimate_differences_word_problems.html": {
+    "covered": 16,
+    "total": 22
+  },
+  "estimate_products_word_problems.html": {
+    "covered": 10,
+    "total": 20
+  },
+  "find_the_probability.html": {
+    "covered": 23,
+    "total": 30
+  },
+  "frequency_tables.html": {
+    "covered": 13,
+    "total": 21
+  },
+  "identify_faces_of_3d_figures.html": {
+    "covered": 8,
+    "total": 16
+  },
+  "incoming/Choose numbers with a particular quotient.html": {
+    "covered": 0,
+    "total": 31
+  },
+  "incoming/Choose-numbers-with-a-particular-difference-30-remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/Compare-money-amounts.html": {
+    "covered": 0,
+    "total": 24
+  },
+  "incoming/Compare_numbers_using_multiplication_remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/Complete_the_division_table.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/Count_vertices__edges_and_faces.html": {
+    "covered": 0,
+    "total": 22
+  },
+  "incoming/Create figures with a given area.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/Create_line_plots_remix.html": {
+    "covered": 0,
+    "total": 42
+  },
+  "incoming/Divide larger numbers - word problems.html": {
+    "covered": 0,
+    "total": 25
+  },
+  "incoming/Divisibility_rules_remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/Division_facts_to_10.html": {
+    "covered": 0,
+    "total": 16
+  },
+  "incoming/Elapsed_time_remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/Estimate quotients - word problems.html": {
+    "covered": 0,
+    "total": 21
+  },
+  "incoming/Estimate_sums__word_problems.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/Multiplication_facts_to_10_remix.html": {
+    "covered": 0,
+    "total": 32
+  },
+  "incoming/Multiply_1x2_remix.html": {
+    "covered": 0,
+    "total": 29
+  },
+  "incoming/Multiply_1x3-4digit_REMIX.html": {
+    "covered": 0,
+    "total": 34
+  },
+  "incoming/Multiply_two-digit_by_two-digit_word_problems__1to1.html": {
+    "covered": 0,
+    "total": 26
+  },
+  "incoming/Place_values_remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/Properties_of_addition_full30.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/Properties_of_addition_new8.html": {
+    "covered": 0,
+    "total": 8
+  },
+  "incoming/Simple fractions - what fraction does the shape show.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/Subtraction_missing_digits_remix.html": {
+    "covered": 0,
+    "total": 32
+  },
+  "incoming/Time_patterns_remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/Understanding_probability_remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/Unit_prices_remix.html": {
+    "covered": 0,
+    "total": 27
+  },
+  "incoming/Word problems with extra or missing information.html": {
+    "covered": 0,
+    "total": 24
+  },
+  "incoming/add-subtract-multiply-divide-remix-expanded.html": {
+    "covered": 17,
+    "total": 30
+  },
+  "incoming/addition-missing-digits.html": {
+    "covered": 0,
+    "total": 27
+  },
+  "incoming/am-or-pm_remix.html": {
+    "covered": 0,
+    "total": 18
+  },
+  "incoming/area-and-perimeter-word-problems.html": {
+    "covered": 0,
+    "total": 25
+  },
+  "incoming/bar_graphs_remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/box_multiplication_remix.html": {
+    "covered": 0,
+    "total": 25
+  },
+  "incoming/choose-numbers-sum-diff-prod-quot__remix.html": {
+    "covered": 0,
+    "total": 23
+  },
+  "incoming/choose-product_remix.html": {
+    "covered": 0,
+    "total": 22
+  },
+  "incoming/choose-the-appropriate-metric-unit-of-measure.html": {
+    "covered": 0,
+    "total": 22
+  },
+  "incoming/divide-larger-numbers.html": {
+    "covered": 0,
+    "total": 24
+  },
+  "incoming/equal-parts.html": {
+    "covered": 0,
+    "total": 35
+  },
+  "incoming/estimate-products_remix.html": {
+    "covered": 0,
+    "total": 20
+  },
+  "incoming/estimate-sums-differences-products-and-quotients-word-problems-remix.html": {
+    "covered": 0,
+    "total": 24
+  },
+  "incoming/estimate-sums-faithful.html": {
+    "covered": 14,
+    "total": 30
+  },
+  "incoming/estimate-sums-remix.html": {
+    "covered": 0,
+    "total": 23
+  },
+  "incoming/estimate_differences_all.html": {
+    "covered": 0,
+    "total": 42
+  },
+  "incoming/even_odd_remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/find-start-and-end-times-remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/find-the-order-remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/find-two-numbers-based-on-sum-difference-product-and-quotient.html": {
+    "covered": 0,
+    "total": 23
+  },
+  "incoming/geometric_patterns_remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/guess-and-check_lesson30.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/identify-three-dimensional-figures.html": {
+    "covered": 0,
+    "total": 25
+  },
+  "incoming/increasing_number_pattern__remix.html": {
+    "covered": 0,
+    "total": 37
+  },
+  "incoming/inequalities_remix.html": {
+    "covered": 0,
+    "total": 8
+  },
+  "incoming/interpret-line-plots-remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/interpret-remainders.html": {
+    "covered": 0,
+    "total": 29
+  },
+  "incoming/metric_mixed_units_remix.html": {
+    "covered": 0,
+    "total": 31
+  },
+  "incoming/money_add_subtract_remix.html": {
+    "covered": 0,
+    "total": 24
+  },
+  "incoming/multi-step-word-problems-mcq.html": {
+    "covered": 0,
+    "total": 28
+  },
+  "incoming/multiplication-patterns-over-increasing-place-values.html": {
+    "covered": 0,
+    "total": 21
+  },
+  "incoming/multiply-a-two-digit-number-by-a-three-digit-number-word-problems.html": {
+    "covered": 0,
+    "total": 19
+  },
+  "incoming/multiply-a-two-digit-number-by-a-three-digit-number.html": {
+    "covered": 0,
+    "total": 27
+  },
+  "incoming/names-for-numbers_remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/number-patterns-mixed-review-remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/number-patterns-word-problems-remix.html": {
+    "covered": 0,
+    "total": 35
+  },
+  "incoming/ordinal-numbers-to-100th_remix.html": {
+    "covered": 0,
+    "total": 12
+  },
+  "incoming/ordinal-numbers-to-100th_set2.html": {
+    "covered": 0,
+    "total": 10
+  },
+  "incoming/perimeter_missing_side_remix.html": {
+    "covered": 0,
+    "total": 25
+  },
+  "incoming/perimeter_remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/place_values_unit_conversion_remix.html": {
+    "covered": 0,
+    "total": 32
+  },
+  "incoming/price-lists-with-multiplication.html": {
+    "covered": 0,
+    "total": 20
+  },
+  "incoming/read_a_table.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/rotational_symmetry.html": {
+    "covered": 0,
+    "total": 23
+  },
+  "incoming/round-money-amounts.html": {
+    "covered": 0,
+    "total": 25
+  },
+  "incoming/rounding_remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/select-area-remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/simple-fractions-30.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/simple-fractions-parts-of-a-group.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/symmetry_remix.html": {
+    "covered": 0,
+    "total": 11
+  },
+  "incoming/symmetry_set2.html": {
+    "covered": 0,
+    "total": 20
+  },
+  "incoming/time_12_24_remix.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/time_units_remix.html": {
+    "covered": 0,
+    "total": 16
+  },
+  "incoming/time_units_variations.html": {
+    "covered": 0,
+    "total": 15
+  },
+  "incoming/transportation-schedules-12h-complete.html": {
+    "covered": 0,
+    "total": 30
+  },
+  "incoming/transportation_24h_more15.html": {
+    "covered": 0,
+    "total": 15
+  },
+  "incoming/transportation_24h_remix.html": {
+    "covered": 0,
+    "total": 12
+  },
+  "make_predictions.html": {
+    "covered": 11,
+    "total": 23
+  },
+  "mixed_operations_word_problems.html": {
+    "covered": 26,
+    "total": 26
+  },
+  "money_add_subtract_multiply_divide.html": {
+    "covered": 26,
+    "total": 30
+  },
+  "multiply_2digit_by_2digit.html": {
+    "covered": 18,
+    "total": 25
+  },
+  "multiply_2x2_complete_missing_steps.html": {
+    "covered": 9,
+    "total": 37
+  },
+  "multiply_numbers_ending_in_zeroes.html": {
+    "covered": 13,
+    "total": 21
+  },
+  "properties_of_multiplication.html": {
+    "covered": 20,
+    "total": 24
+  },
+  "subtract_numbers_up_to_five_digits.html": {
+    "covered": 8,
+    "total": 21
+  },
+  "use_perimeter_to_determine_cost.html": {
+    "covered": 17,
+    "total": 20
+  }
+}
