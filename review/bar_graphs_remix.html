@@ -1238,6 +1238,12 @@ h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
 .cc-take{margin:16px 2px 0;padding:12px 16px;border-radius:0 12px 12px 0;background:#eefbf2;border:1px solid #bfe8cd;border-left:3px solid #10b981;animation:cc-line .3s ease}
 .cc-take p{margin:0;font-family:'Quicksand',sans-serif;color:#1e6b3a;font-weight:600;line-height:1.55}
 .cc-take .cc-tag{font-weight:800;color:#047857;margin-right:6px}
+/* the no-dead-end fallback band (Item 50): calm slate, deliberately NOT the
+   celebratory green of .cc-take — rescue must feel unlike triumph */
+.cc-shown{margin:16px 2px 0;padding:12px 16px;border-radius:0 12px 12px 0;background:#f6f7f9;border:1px solid #dfe3ea;border-left:3px solid #94a3b8;animation:cc-line .3s ease}
+.cc-shown p{margin:0;font-family:'Quicksand',sans-serif;color:#334155;font-weight:600;line-height:1.55}
+.cc-shown p+p{margin-top:6px}
+.cc-shown .cc-tag{font-weight:800;color:#475569;margin-right:6px}
 
 /* when the takeaway panel (or the full walkthrough) has carried the teaching,
    the .explain one-liner would be a duplicate — keep it sealed */
@@ -2318,7 +2324,7 @@ hint: Canteen students minus graduation students.
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">How many more students are on the canteen committee than the graduation committee?</p>
-  <svg class="pv-graph" viewBox="0 0 430 232" width="100%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans, sans-serif"><text x="206" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#444">Student council committees</text><line x1="46" y1="192.0" x2="367.0" y2="192.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="195.0" text-anchor="end" font-size="9" fill="#666">0</text><line x1="46" y1="183.6" x2="367.0" y2="183.6" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="186.6" text-anchor="end" font-size="9" fill="#666">5</text><line x1="46" y1="175.2" x2="367.0" y2="175.2" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="178.2" text-anchor="end" font-size="9" fill="#666">10</text><line x1="46" y1="166.8" x2="367.0" y2="166.8" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="169.8" text-anchor="end" font-size="9" fill="#666">15</text><line x1="46" y1="158.4" x2="367.0" y2="158.4" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="161.4" text-anchor="end" font-size="9" fill="#666">20</text><line x1="46" y1="150.0" x2="367.0" y2="150.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="153.0" text-anchor="end" font-size="9" fill="#666">25</text><line x1="46" y1="141.6" x2="367.0" y2="141.6" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="144.6" text-anchor="end" font-size="9" fill="#666">30</text><line x1="46" y1="133.2" x2="367.0" y2="133.2" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="136.2" text-anchor="end" font-size="9" fill="#666">35</text><line x1="46" y1="124.8" x2="367.0" y2="124.8" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="127.8" text-anchor="end" font-size="9" fill="#666">40</text><line x1="46" y1="116.4" x2="367.0" y2="116.4" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="119.4" text-anchor="end" font-size="9" fill="#666">45</text><line x1="46" y1="108.0" x2="367.0" y2="108.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="111.0" text-anchor="end" font-size="9" fill="#666">50</text><line x1="46" y1="99.6" x2="367.0" y2="99.6" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="102.6" text-anchor="end" font-size="9" fill="#666">55</text><line x1="46" y1="91.2" x2="367.0" y2="91.2" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="94.2" text-anchor="end" font-size="9" fill="#666">60</text><line x1="46" y1="82.8" x2="367.0" y2="82.8" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="85.8" text-anchor="end" font-size="9" fill="#666">65</text><line x1="46" y1="74.4" x2="367.0" y2="74.4" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="77.4" text-anchor="end" font-size="9" fill="#666">70</text><line x1="46" y1="66.0" x2="367.0" y2="66.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="69.0" text-anchor="end" font-size="9" fill="#666">75</text><line x1="46" y1="57.6" x2="367.0" y2="57.6" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="60.6" text-anchor="end" font-size="9" fill="#666">80</text><line x1="46" y1="49.2" x2="367.0" y2="49.2" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="52.2" text-anchor="end" font-size="9" fill="#666">85</text><line x1="46" y1="40.8" x2="367.0" y2="40.8" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="43.8" text-anchor="end" font-size="9" fill="#666">90</text><line x1="46" y1="32.4" x2="367.0" y2="32.4" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="35.4" text-anchor="end" font-size="9" fill="#666">95</text><line x1="46" y1="24.0" x2="367.0" y2="24.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="27.0" text-anchor="end" font-size="9" fill="#666">100</text><line x1="46" y1="24" x2="46" y2="192" stroke="#888" stroke-width="1.5"/><line x1="46" y1="192" x2="367.0" y2="192" stroke="#888" stroke-width="1.5"/><rect x="61.0" y="133.2" width="38.5" height="58.8" fill="#7cc0f0" stroke="#7a7a7a" stroke-width="0.6"/><rect x="99.5" y="82.8" width="38.5" height="109.2" fill="#eeaee8" stroke="#7a7a7a" stroke-width="0.6"/><text x="99.5" y="204" text-anchor="middle" font-size="9" fill="#444">Party</text><rect x="168.0" y="99.6" width="38.5" height="92.4" fill="#7cc0f0" stroke="#7a7a7a" stroke-width="0.6"/><rect x="206.5" y="32.4" width="38.5" height="159.6" fill="#eeaee8" stroke="#7a7a7a" stroke-width="0.6"/><text x="206.5" y="204" text-anchor="middle" font-size="9" fill="#444">Canteen</text><rect x="275.0" y="24.0" width="38.5" height="168.0" fill="#7cc0f0" stroke="#7a7a7a" stroke-width="0.6"/><rect x="313.5" y="82.8" width="38.5" height="109.2" fill="#eeaee8" stroke="#7a7a7a" stroke-width="0.6"/><text x="313.5" y="204" text-anchor="middle" font-size="9" fill="#444">Graduation</text><text x="206" y="226" text-anchor="middle" font-size="10" font-weight="600" fill="#555">Committees</text><text x="12" y="108.0" text-anchor="middle" font-size="10" font-weight="600" fill="#555" transform="rotate(-90 12 108)">Number of people</text><rect x="377.0" y="92.0" width="10" height="10" fill="#7cc0f0" stroke="#888" stroke-width="0.5"/><text x="391.0" y="101.0" font-size="9" fill="#444">Teachers</text><rect x="377.0" y="108.0" width="10" height="10" fill="#eeaee8" stroke="#888" stroke-width="0.5"/><text x="391.0" y="117.0" font-size="9" fill="#444">Students</text></svg>
+  <svg class="pv-graph" viewBox="0 0 430 232" width="100%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans, sans-serif"><text x="206" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#444">Student council committees</text><line x1="46" y1="192.0" x2="367.0" y2="192.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="195.0" text-anchor="end" font-size="9" fill="#666">0</text><line x1="46" y1="175.2" x2="367.0" y2="175.2" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="178.2" text-anchor="end" font-size="9" fill="#666">10</text><line x1="46" y1="158.4" x2="367.0" y2="158.4" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="161.4" text-anchor="end" font-size="9" fill="#666">20</text><line x1="46" y1="141.6" x2="367.0" y2="141.6" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="144.6" text-anchor="end" font-size="9" fill="#666">30</text><line x1="46" y1="124.8" x2="367.0" y2="124.8" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="127.8" text-anchor="end" font-size="9" fill="#666">40</text><line x1="46" y1="108.0" x2="367.0" y2="108.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="111.0" text-anchor="end" font-size="9" fill="#666">50</text><line x1="46" y1="91.2" x2="367.0" y2="91.2" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="94.2" text-anchor="end" font-size="9" fill="#666">60</text><line x1="46" y1="74.4" x2="367.0" y2="74.4" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="77.4" text-anchor="end" font-size="9" fill="#666">70</text><line x1="46" y1="57.6" x2="367.0" y2="57.6" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="60.6" text-anchor="end" font-size="9" fill="#666">80</text><line x1="46" y1="40.8" x2="367.0" y2="40.8" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="43.8" text-anchor="end" font-size="9" fill="#666">90</text><line x1="46" y1="24.0" x2="367.0" y2="24.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="27.0" text-anchor="end" font-size="9" fill="#666">100</text><line x1="46" y1="24" x2="46" y2="192" stroke="#888" stroke-width="1.5"/><line x1="46" y1="192" x2="367.0" y2="192" stroke="#888" stroke-width="1.5"/><rect x="61.0" y="133.2" width="38.5" height="58.8" fill="#7cc0f0" stroke="#7a7a7a" stroke-width="0.6"/><rect x="99.5" y="82.8" width="38.5" height="109.2" fill="#eeaee8" stroke="#7a7a7a" stroke-width="0.6"/><text x="99.5" y="204" text-anchor="middle" font-size="9" fill="#444">Party</text><rect x="168.0" y="99.6" width="38.5" height="92.4" fill="#7cc0f0" stroke="#7a7a7a" stroke-width="0.6"/><rect x="206.5" y="32.4" width="38.5" height="159.6" fill="#eeaee8" stroke="#7a7a7a" stroke-width="0.6"/><text x="206.5" y="204" text-anchor="middle" font-size="9" fill="#444">Canteen</text><rect x="275.0" y="24.0" width="38.5" height="168.0" fill="#7cc0f0" stroke="#7a7a7a" stroke-width="0.6"/><rect x="313.5" y="82.8" width="38.5" height="109.2" fill="#eeaee8" stroke="#7a7a7a" stroke-width="0.6"/><text x="313.5" y="204" text-anchor="middle" font-size="9" fill="#444">Graduation</text><text x="206" y="226" text-anchor="middle" font-size="10" font-weight="600" fill="#555">Committees</text><text x="12" y="108.0" text-anchor="middle" font-size="10" font-weight="600" fill="#555" transform="rotate(-90 12 108)">Number of people</text><rect x="377.0" y="92.0" width="10" height="10" fill="#7cc0f0" stroke="#888" stroke-width="0.5"/><text x="391.0" y="101.0" font-size="9" fill="#444">Teachers</text><rect x="377.0" y="108.0" width="10" height="10" fill="#eeaee8" stroke="#888" stroke-width="0.5"/><text x="391.0" y="117.0" font-size="9" fill="#444">Students</text></svg>
   <ul class="options"><li>20</li><li>30</li><li>40</li><li>60</li></ul>
   <p class="explain">95 canteen − 65 graduation = 30.</p>
 </div>
@@ -2402,7 +2408,7 @@ hint: Class A cats vs Class A dogs — how many fewer cats?
 -->
 <div class="question" data-type="single-select">
   <p class="prompt">In Class A, how many FEWER cats are there than dogs?</p>
-  <svg class="pv-graph" viewBox="0 0 430 232" width="100%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans, sans-serif"><text x="217" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#444">Pets owned</text><line x1="46" y1="192.0" x2="388.0" y2="192.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="195.0" text-anchor="end" font-size="9" fill="#666">0</text><line x1="46" y1="168.0" x2="388.0" y2="168.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="171.0" text-anchor="end" font-size="9" fill="#666">10</text><line x1="46" y1="144.0" x2="388.0" y2="144.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="147.0" text-anchor="end" font-size="9" fill="#666">20</text><line x1="46" y1="120.0" x2="388.0" y2="120.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="123.0" text-anchor="end" font-size="9" fill="#666">30</text><line x1="46" y1="96.0" x2="388.0" y2="96.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="99.0" text-anchor="end" font-size="9" fill="#666">40</text><line x1="46" y1="72.0" x2="388.0" y2="72.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="75.0" text-anchor="end" font-size="9" fill="#666">50</text><line x1="46" y1="48.0" x2="388.0" y2="48.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="51.0" text-anchor="end" font-size="9" fill="#666">60</text><line x1="46" y1="24.0" x2="388.0" y2="24.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="27.0" text-anchor="end" font-size="9" fill="#666">70</text><line x1="46" y1="24" x2="46" y2="192" stroke="#888" stroke-width="1.5"/><line x1="46" y1="192" x2="388.0" y2="192" stroke="#888" stroke-width="1.5"/><rect x="62.0" y="120.0" width="41.0" height="72.0" fill="#f5a55f" stroke="#7a7a7a" stroke-width="0.6"/><rect x="103.0" y="48.0" width="41.0" height="144.0" fill="#7bd39a" stroke="#7a7a7a" stroke-width="0.6"/><text x="103.0" y="204" text-anchor="middle" font-size="9" fill="#444">Class A</text><rect x="176.0" y="72.0" width="41.0" height="120.0" fill="#f5a55f" stroke="#7a7a7a" stroke-width="0.6"/><rect x="217.0" y="144.0" width="41.0" height="48.0" fill="#7bd39a" stroke="#7a7a7a" stroke-width="0.6"/><text x="217.0" y="204" text-anchor="middle" font-size="9" fill="#444">Class B</text><rect x="290.0" y="96.0" width="41.0" height="96.0" fill="#f5a55f" stroke="#7a7a7a" stroke-width="0.6"/><rect x="331.0" y="72.0" width="41.0" height="120.0" fill="#7bd39a" stroke="#7a7a7a" stroke-width="0.6"/><text x="331.0" y="204" text-anchor="middle" font-size="9" fill="#444">Class C</text><text x="217" y="226" text-anchor="middle" font-size="10" font-weight="600" fill="#555">Class</text><text x="12" y="108.0" text-anchor="middle" font-size="10" font-weight="600" fill="#555" transform="rotate(-90 12 108)">Number of pets</text><rect x="398.0" y="92.0" width="10" height="10" fill="#f5a55f" stroke="#888" stroke-width="0.5"/><text x="412.0" y="101.0" font-size="9" fill="#444">Cats</text><rect x="398.0" y="108.0" width="10" height="10" fill="#7bd39a" stroke="#888" stroke-width="0.5"/><text x="412.0" y="117.0" font-size="9" fill="#444">Dogs</text></svg>
+  <svg class="pv-graph" viewBox="0 0 448 232" width="100%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans, sans-serif"><text x="217" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#444">Pets owned</text><line x1="46" y1="192.0" x2="388.0" y2="192.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="195.0" text-anchor="end" font-size="9" fill="#666">0</text><line x1="46" y1="168.0" x2="388.0" y2="168.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="171.0" text-anchor="end" font-size="9" fill="#666">10</text><line x1="46" y1="144.0" x2="388.0" y2="144.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="147.0" text-anchor="end" font-size="9" fill="#666">20</text><line x1="46" y1="120.0" x2="388.0" y2="120.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="123.0" text-anchor="end" font-size="9" fill="#666">30</text><line x1="46" y1="96.0" x2="388.0" y2="96.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="99.0" text-anchor="end" font-size="9" fill="#666">40</text><line x1="46" y1="72.0" x2="388.0" y2="72.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="75.0" text-anchor="end" font-size="9" fill="#666">50</text><line x1="46" y1="48.0" x2="388.0" y2="48.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="51.0" text-anchor="end" font-size="9" fill="#666">60</text><line x1="46" y1="24.0" x2="388.0" y2="24.0" stroke="#e2e2e2" stroke-width="1"/><text x="41" y="27.0" text-anchor="end" font-size="9" fill="#666">70</text><line x1="46" y1="24" x2="46" y2="192" stroke="#888" stroke-width="1.5"/><line x1="46" y1="192" x2="388.0" y2="192" stroke="#888" stroke-width="1.5"/><rect x="62.0" y="120.0" width="41.0" height="72.0" fill="#f5a55f" stroke="#7a7a7a" stroke-width="0.6"/><rect x="103.0" y="48.0" width="41.0" height="144.0" fill="#7bd39a" stroke="#7a7a7a" stroke-width="0.6"/><text x="103.0" y="204" text-anchor="middle" font-size="9" fill="#444">Class A</text><rect x="176.0" y="72.0" width="41.0" height="120.0" fill="#f5a55f" stroke="#7a7a7a" stroke-width="0.6"/><rect x="217.0" y="144.0" width="41.0" height="48.0" fill="#7bd39a" stroke="#7a7a7a" stroke-width="0.6"/><text x="217.0" y="204" text-anchor="middle" font-size="9" fill="#444">Class B</text><rect x="290.0" y="96.0" width="41.0" height="96.0" fill="#f5a55f" stroke="#7a7a7a" stroke-width="0.6"/><rect x="331.0" y="72.0" width="41.0" height="120.0" fill="#7bd39a" stroke="#7a7a7a" stroke-width="0.6"/><text x="331.0" y="204" text-anchor="middle" font-size="9" fill="#444">Class C</text><text x="217" y="226" text-anchor="middle" font-size="10" font-weight="600" fill="#555">Class</text><text x="12" y="108.0" text-anchor="middle" font-size="10" font-weight="600" fill="#555" transform="rotate(-90 12 108)">Number of pets</text><rect x="398.0" y="92.0" width="10" height="10" fill="#f5a55f" stroke="#888" stroke-width="0.5"/><text x="412.0" y="101.0" font-size="9" fill="#444">Cats</text><rect x="398.0" y="108.0" width="10" height="10" fill="#7bd39a" stroke="#888" stroke-width="0.5"/><text x="412.0" y="117.0" font-size="9" fill="#444">Dogs</text></svg>
   <ul class="options"><li>20</li><li>30</li><li>40</li><li>90</li></ul>
   <p class="explain">Class A: 60 dogs − 30 cats = 30 fewer cats.</p>
 </div>
@@ -6030,6 +6036,42 @@ function wireCard(frame) {
     }
   }
 
+  // ── SHOW-ANSWER — the no-dead-end fallback (Item 50). Same COMMIT sequence as
+  //    openWalkthrough(), but there is no authored walkthrough to run — so it
+  //    reveals the answer, says ONE warm line, and offers Next. NO third attempt.
+  //    Venkat's ruling: NEVER fabricate a reason — a plain statement of the
+  //    correct answer is honest; an invented "because…" is not. The authored
+  //    explain: (if any) is revealed by is-checked, exactly as on a solved card;
+  //    nothing is generated. Append-only — the task DOM is never rebuilt. ──
+  function showAnswer() {
+    if (locked) return;
+    locked = true;
+    setOutcome("shown-answer");         // DISTINCT from solved-with-help: the child was shown, not helped to solve
+    removeRow();
+    freezeTask(true);
+    hideFoot(true);                     // no Check, no retry — anywhere
+    quietChrome(true);
+    if (hintBtn) hintBtn.style.display = "none";
+    revealCorrect();                    // greens the correct option(s); no-op for non-select (reused, not duplicated)
+    qbody.classList.add("is-checked");  // rao.css paints the green AND reveals the authored .explain (if any)
+    var cardEl = frame.querySelector(".pv-card");
+    var panel = document.createElement("div");
+    panel.className = "cc-shown";       // calm, NOT the celebratory green band — rescue must feel unlike triumph
+    var html = '<p class="cc-shown-line">Here’s the answer — you’ve got this!</p>';
+    // Select is already revealed by revealCorrect(); non-select has no green
+    // option, so state the answer plainly (honest — never a fabricated reason).
+    if (!isSelect) {
+      var a = Array.isArray(answer) ? answer.join(", ") : String(answer);
+      html += '<p class="cc-shown-ans"><span class="cc-tag">Answer</span>' + esc(a) + "</p>";
+    }
+    panel.innerHTML = html;
+    cardEl.insertBefore(panel, foot);
+    actionRow([{ label: "Next question →", ghost: false, onTap: nextQuestion }]);
+  }
+  // TWO wrong attempts is the cap on EVERY question. Where a walkthrough exists,
+  // open it (unchanged path); where none does, show the answer. No dead ends.
+  function commitCap() { if (canWalk()) openWalkthrough(); else showAnswer(); }
+
   // ── CORRECT — the only loud moment (law 7). ──
   function ding() {
     try {
@@ -6117,28 +6159,29 @@ function wireCard(frame) {
     hideFoot(true);
     quietChrome(true);
     fb.className = "pv-fb"; fb.textContent = "";   // no "Not quite" — the bubble carries it
-    // ── TWO ATTEMPTS IS THE CAP (FR-2 ruling 5): the second wrong attempt
-    //    locks the question and the walkthrough opens AUTOMATICALLY — no Try
-    //    Again is offered, and no decision is demanded of a child who has
-    //    just failed twice. Only where a walkthrough exists (canWalk); a
-    //    question with no solution keeps today's retry loop (parked item).
+    // ── TWO ATTEMPTS IS THE CAP (FR-2 ruling 5, extended by BRIEF-PUBLISH-1
+    //    Item 50): the second wrong attempt locks the question and commits —
+    //    no Try Again is offered, and no decision is demanded of a child who
+    //    has just failed twice. commitCap() routes EVERY question: where a
+    //    walkthrough exists it opens (unchanged path, records solved-with-help);
+    //    where none does it reveals the answer (records shown-answer). The old
+    //    `&& canWalk()` conjunct left the 83% of questions with no solution in
+    //    an endless retry loop — that was Item 50, the dead end, now closed.
     //    A fresh whyWrong bubble still types first — help accumulates — then
-    //    the open happens instead of the action row. openWalkthrough() locks
-    //    and records solved-with-help for this path exactly as for the
-    //    voluntary tap (ruling 7 / law 6 as amended). No green at open
+    //    the commit happens instead of the action row. No green at open
     //    (ruling 6) — the reveal stays at the walkthrough's final step.
-    var capped = wrongCount >= 2 && canWalk();
+    var capped = wrongCount >= 2;
     var msg = entry && entry.message ? String(entry.message) : null;
     if (msg && !shownWhys[msg]) {
       shownWhys[msg] = true;
       typing = true;
       bubbles.msg(ensureChat(), "Hint " + hintNum++, esc(msg), function () {
         typing = false;
-        if (capped) openWalkthrough();
+        if (capped) commitCap();
         else feedbackRow("Try again");
       });
     } else if (capped) {
-      openWalkthrough();
+      commitCap();
     } else if (!allHintsUsed() && !typing) {
       // No fresh whyWrong (none authored — every non-select and the legacy
       // selects — or this option's message was already spoken): the wrong

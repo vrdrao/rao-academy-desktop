@@ -115,11 +115,17 @@ description: calm-wrong fallback fixture — select + ladder, NO whyWrong (Brief
 `;
 
 // ════════════════════════════════════════════════════════════════
-// 5f. Law 5 fallback (Brief 7.7.2): a wrong attempt with NO fresh whyWrong
-// (none authored — every non-select, and the 1,585 legacy selects) must still
-// deliver "Hint 1" by typing the next forward rung, accumulating per Law 4;
-// the ghost label must never promise a rung it has not given; when the ladder
-// is exhausted, a further wrong is row-only with Law 6 availability unchanged.
+// 5f. Law 5 fallback (Brief 7.7.2): the FIRST wrong attempt with NO fresh
+// whyWrong (none authored — every non-select, and the 1,585 legacy selects)
+// must still deliver "Hint 1" by typing the next forward rung, accumulating
+// per Law 4; the ghost label must never promise a rung it has not given.
+//
+// The SECOND wrong is the cap (BRIEF-PUBLISH-1 Item 50): two attempts is the
+// cap on EVERY question. These fixtures have no solution, so the cap reveals the
+// answer (outcome "shown-answer") and offers "Next question →" — it does NOT
+// deliver a 2nd forward rung and does NOT re-offer "Try again". (Before Item 50
+// this path looped: Hint 2 on the 2nd wrong, then "Try again" row-only forever —
+// the dead end Item 50 removed. Those two old assertions were replaced here.)
 // ════════════════════════════════════════════════════════════════
 async function fallbackLaws(browser) {
   const page = await browser.newPage({ viewport: { width: 900, height: 1400 } });
@@ -185,23 +191,29 @@ async function fallbackLaws(browser) {
       pass(`5f. TRUTHFUL GHOST LABEL [${cse.name}]`, `${s.bubbles} rung shown → "Give one more hint"`);
     else fail(`5f. TRUTHFUL GHOST LABEL [${cse.name}]`, `${s.bubbles} rung(s) delivered but ghost=${JSON.stringify(s.ghost)} — the label promises a rung it has not given`);
 
+    // SECOND wrong = the cap (Item 50). No solution here → reveal the answer
+    // (shown-answer), offer Next, no Try again, no Hint 2. The earlier bubbles
+    // stay (help accumulates, Law 4).
     await tryAgain(cse.idx);
     await page.waitForTimeout(150);
     await cse.goWrong(cse.idx);
     await page.waitForTimeout(FILL_WAIT);
-    s = await state(cse.idx);
-    if (s.bubbles === 2 && s.allVisible && s.chips[1] === "Hint 2" && s.texts[1].includes(cse.rungs[1]))
-      pass(`5f. SECOND WRONG ADVANCES [${cse.name}]`, `"Hint 2" typed, rung 1 still visible (Law 4)`);
-    else fail(`5f. SECOND WRONG ADVANCES [${cse.name}]`, JSON.stringify({ bubbles: s.bubbles, chips: s.chips }));
-
-    await tryAgain(cse.idx);
-    await page.waitForTimeout(150);
-    await cse.goWrong(cse.idx);
-    await page.waitForTimeout(FILL_WAIT);
-    s = await state(cse.idx);
-    if (s.bubbles === 2 && !s.ghost && !s.walk && s.row.some((t) => /try again/i.test(t)))
-      pass(`5f. EXHAUSTED = ROW ONLY [${cse.name}]`, `no new bubble, no ghost, no walkthrough (none authored — Law 6 unchanged)`);
-    else fail(`5f. EXHAUSTED = ROW ONLY [${cse.name}]`, JSON.stringify({ bubbles: s.bubbles, ghost: s.ghost, row: s.row }));
+    const cap = await page.evaluate((k) => {
+      const f = document.querySelectorAll(".pv-frame")[k];
+      const qb = f.querySelector(".qbody");
+      const btns = [...f.querySelectorAll(".cc-actions button")].map((b) => b.textContent);
+      return {
+        locked: qb.classList.contains("cc-locked"),
+        shown: !!f.querySelector(".cc-shown"),
+        outcome: f.dataset.raoOutcome || null,
+        tryAgain: btns.some((t) => /try again/i.test(t)),
+        next: btns.some((t) => /next question/i.test(t)),
+        bubbles: f.querySelectorAll(".cc-msg").length,
+      };
+    }, cse.idx);
+    if (cap.locked && cap.shown && cap.next && !cap.tryAgain && cap.outcome === "shown-answer" && cap.bubbles >= 1)
+      pass(`5f. SECOND WRONG CAPS — answer shown, no loop [${cse.name}]`, `outcome=${cap.outcome}, Next present, NO Try again, help retained (${cap.bubbles} bubble(s))`);
+    else fail(`5f. SECOND WRONG CAPS [${cse.name}]`, JSON.stringify(cap));
   }
   if (errors.length) fail("zero page errors (fallback drive)", errors.join(" | "));
   else pass("zero page errors (fallback drive)");

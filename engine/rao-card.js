@@ -327,6 +327,42 @@ function wireCard(frame) {
     }
   }
 
+  // ── SHOW-ANSWER — the no-dead-end fallback (Item 50). Same COMMIT sequence as
+  //    openWalkthrough(), but there is no authored walkthrough to run — so it
+  //    reveals the answer, says ONE warm line, and offers Next. NO third attempt.
+  //    Venkat's ruling: NEVER fabricate a reason — a plain statement of the
+  //    correct answer is honest; an invented "because…" is not. The authored
+  //    explain: (if any) is revealed by is-checked, exactly as on a solved card;
+  //    nothing is generated. Append-only — the task DOM is never rebuilt. ──
+  function showAnswer() {
+    if (locked) return;
+    locked = true;
+    setOutcome("shown-answer");         // DISTINCT from solved-with-help: the child was shown, not helped to solve
+    removeRow();
+    freezeTask(true);
+    hideFoot(true);                     // no Check, no retry — anywhere
+    quietChrome(true);
+    if (hintBtn) hintBtn.style.display = "none";
+    revealCorrect();                    // greens the correct option(s); no-op for non-select (reused, not duplicated)
+    qbody.classList.add("is-checked");  // rao.css paints the green AND reveals the authored .explain (if any)
+    var cardEl = frame.querySelector(".pv-card");
+    var panel = document.createElement("div");
+    panel.className = "cc-shown";       // calm, NOT the celebratory green band — rescue must feel unlike triumph
+    var html = '<p class="cc-shown-line">Here’s the answer — you’ve got this!</p>';
+    // Select is already revealed by revealCorrect(); non-select has no green
+    // option, so state the answer plainly (honest — never a fabricated reason).
+    if (!isSelect) {
+      var a = Array.isArray(answer) ? answer.join(", ") : String(answer);
+      html += '<p class="cc-shown-ans"><span class="cc-tag">Answer</span>' + esc(a) + "</p>";
+    }
+    panel.innerHTML = html;
+    cardEl.insertBefore(panel, foot);
+    actionRow([{ label: "Next question →", ghost: false, onTap: nextQuestion }]);
+  }
+  // TWO wrong attempts is the cap on EVERY question. Where a walkthrough exists,
+  // open it (unchanged path); where none does, show the answer. No dead ends.
+  function commitCap() { if (canWalk()) openWalkthrough(); else showAnswer(); }
+
   // ── CORRECT — the only loud moment (law 7). ──
   function ding() {
     try {
@@ -414,28 +450,29 @@ function wireCard(frame) {
     hideFoot(true);
     quietChrome(true);
     fb.className = "pv-fb"; fb.textContent = "";   // no "Not quite" — the bubble carries it
-    // ── TWO ATTEMPTS IS THE CAP (FR-2 ruling 5): the second wrong attempt
-    //    locks the question and the walkthrough opens AUTOMATICALLY — no Try
-    //    Again is offered, and no decision is demanded of a child who has
-    //    just failed twice. Only where a walkthrough exists (canWalk); a
-    //    question with no solution keeps today's retry loop (parked item).
+    // ── TWO ATTEMPTS IS THE CAP (FR-2 ruling 5, extended by BRIEF-PUBLISH-1
+    //    Item 50): the second wrong attempt locks the question and commits —
+    //    no Try Again is offered, and no decision is demanded of a child who
+    //    has just failed twice. commitCap() routes EVERY question: where a
+    //    walkthrough exists it opens (unchanged path, records solved-with-help);
+    //    where none does it reveals the answer (records shown-answer). The old
+    //    `&& canWalk()` conjunct left the 83% of questions with no solution in
+    //    an endless retry loop — that was Item 50, the dead end, now closed.
     //    A fresh whyWrong bubble still types first — help accumulates — then
-    //    the open happens instead of the action row. openWalkthrough() locks
-    //    and records solved-with-help for this path exactly as for the
-    //    voluntary tap (ruling 7 / law 6 as amended). No green at open
+    //    the commit happens instead of the action row. No green at open
     //    (ruling 6) — the reveal stays at the walkthrough's final step.
-    var capped = wrongCount >= 2 && canWalk();
+    var capped = wrongCount >= 2;
     var msg = entry && entry.message ? String(entry.message) : null;
     if (msg && !shownWhys[msg]) {
       shownWhys[msg] = true;
       typing = true;
       bubbles.msg(ensureChat(), "Hint " + hintNum++, esc(msg), function () {
         typing = false;
-        if (capped) openWalkthrough();
+        if (capped) commitCap();
         else feedbackRow("Try again");
       });
     } else if (capped) {
-      openWalkthrough();
+      commitCap();
     } else if (!allHintsUsed() && !typing) {
       // No fresh whyWrong (none authored — every non-select and the legacy
       // selects — or this option's message was already spoken): the wrong

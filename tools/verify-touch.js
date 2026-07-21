@@ -466,10 +466,12 @@ ${source}
     await page.waitForTimeout(200);
   }
 
-  // ── 7. Law 5 fallback (Brief 7.7.2): a wrong with NO fresh whyWrong must
-  //    still deliver "Hint 1" (the next forward rung); the ghost label must
-  //    never promise a rung it has not given; exhausted rungs → row only,
-  //    walkthrough availability (Law 6) unchanged. Real CDP touch throughout. ──
+  // ── 7. Law 5 fallback (Brief 7.7.2): the FIRST wrong with NO fresh whyWrong
+  //    must still deliver "Hint 1" (the next forward rung); the ghost label must
+  //    never promise a rung it has not given. The SECOND wrong is the cap
+  //    (BRIEF-PUBLISH-1 Item 50): no solution here, so it reveals the answer
+  //    (shown-answer) and offers Next — no Hint 2, no "Try again" loop (that
+  //    loop was the dead end Item 50 removed). Real CDP touch throughout. ──
   async function driveFallback(id, label, enterWrong, rungs) {
     const S3 = (sel) => `#${id} ${sel}`;
     const st = () => page.evaluate((fid) => {
@@ -499,25 +501,30 @@ ${source}
       pass(`fallback [${label}]: ghost label truthful — ${s.bubbles} rung shown → "Give one more hint"`);
     else fail(`fallback [${label}]: ghost label truthful`, `${s.bubbles} rung(s) delivered but ghost=${JSON.stringify(s.ghost)} — the label promises a rung it has not given`);
 
+    // SECOND wrong = the cap (Item 50). No solution → reveal the answer
+    // (shown-answer) + "Next question →"; NO Hint 2, NO "Try again" loop. The
+    // earlier bubble stays (help accumulates, Law 4).
     await tapButton(S3(".cc-actions button"), /Try again/);
     await page.waitForTimeout(120);
     await enterWrong();
     await tap(S3(".pv-check"));
     await page.waitForTimeout(FILL_WAIT);
-    s = await st();
-    if (s.bubbles === 2 && s.allVisible && s.chips[1] === "Hint 2" && s.texts[1].includes(rungs[1]))
-      pass(`fallback [${label}]: second wrong advances to "Hint 2", rung 1 stays visible (Law 4)`);
-    else fail(`fallback [${label}]: second wrong advances to "Hint 2", rung 1 stays visible (Law 4)`, JSON.stringify({ bubbles: s.bubbles, chips: s.chips }));
-
-    await tapButton(S3(".cc-actions button"), /Try again/);
-    await page.waitForTimeout(120);
-    await enterWrong();
-    await tap(S3(".pv-check"));
-    await page.waitForTimeout(FILL_WAIT);
-    s = await st();
-    if (s.bubbles === 2 && !s.ghost && !s.walk && s.row.some((t) => /Try again/.test(t)))
-      pass(`fallback [${label}]: rungs exhausted → NO new bubble, row only, no walkthrough (none authored — Law 6 unchanged)`);
-    else fail(`fallback [${label}]: rungs exhausted → NO new bubble, row only, no walkthrough (none authored — Law 6 unchanged)`, JSON.stringify({ bubbles: s.bubbles, ghost: s.ghost, row: s.row }));
+    const cap = await page.evaluate((fid) => {
+      const f = document.getElementById(fid);
+      const qb = f.querySelector(".qbody");
+      const btns = [...f.querySelectorAll(".cc-actions button")].map((b) => b.textContent);
+      return {
+        locked: qb.classList.contains("cc-locked"),
+        shown: !!f.querySelector(".cc-shown"),
+        outcome: f.dataset.raoOutcome || null,
+        tryAgain: btns.some((t) => /try again/i.test(t)),
+        next: btns.some((t) => /next question/i.test(t)),
+        bubbles: f.querySelectorAll(".cc-msg").length,
+      };
+    }, id);
+    if (cap.locked && cap.shown && cap.next && !cap.tryAgain && cap.outcome === "shown-answer" && cap.bubbles >= 1)
+      pass(`fallback [${label}]: second wrong CAPS — answer shown, Next, no loop (Item 50)`, `outcome=${cap.outcome}, help retained (${cap.bubbles} bubble(s))`);
+    else fail(`fallback [${label}]: second wrong CAPS`, JSON.stringify(cap));
   }
   await driveFallback("fb2a", "fill-blanks", async () => {
     await page.evaluate(() => {

@@ -358,9 +358,10 @@ async function wrongMarkLaws(browser) {
          solved-with-help. (The voluntary-tap half of A9 is guarded by
          verify-calm.js b. LOCK-ON-OPEN and verify-touch.js §3; this section
          proves the second-wrong AUTO-OPEN path.)
-   Questions where canWalk() is FALSE are measured and left UNCHANGED —
-   parked with Venkat (see the report), the injected no-solution fixture
-   documents today's behaviour.
+   Where canWalk() is FALSE (no solution) the second wrong now CAPS to
+   shown-answer — the no-dead-end fix (BRIEF-PUBLISH-1 Item 50). The injected
+   no-solution fixture proves the answer is revealed and no retry is offered
+   (was: parked, "the child may keep retrying").
    ════════════════════════════════════════════════════════════════ */
 const NOWALK_FIXTURE = `
 <!--@q
@@ -489,14 +490,32 @@ async function capLaws(browser) {
     pass("A6 — lock holds after the open settles", `row: ${JSON.stringify(settled.row)}`);
   else fail("A6 — lock holds after the open settles", JSON.stringify(settled));
 
-  /* ── canWalk() FALSE — MEASURED, changed by nothing (parked with Venkat) ── */
+  /* ── canWalk() FALSE — the second wrong now CAPS to shown-answer (Item 50,
+     BRIEF-PUBLISH-1). This path used to loop ("Try again" forever); it was the
+     dead end Item 50 removed. No walkthrough exists, so the cap reveals the
+     answer instead. ── */
   await wrongOn("nowalk", "8");                    // wrong #1
   await tapTryAgain("nowalk");
   await page.waitForTimeout(200);
-  await wrongOn("nowalk", "8");                    // wrong #2
-  const gotRow = await tapTryAgain("nowalk") ? "Try again offered and functional" : "NO Try again";
-  const nowalk = await rowState("nowalk");
-  pass("parked (measured, unchanged) — canWalk()-false second wrong", `${gotRow}; no walkthrough (solOpen=${nowalk.solOpen}); the child may keep retrying`);
+  await wrongOn("nowalk", "8");                    // wrong #2 — the cap
+  await page.waitForTimeout(500);
+  const nw = await page.evaluate(() => {
+    const f = document.getElementById("nowalk");
+    const qb = f.querySelector(".qbody");
+    const btns = [...f.querySelectorAll(".cc-actions button")].map((b) => b.textContent);
+    return {
+      locked: qb.classList.contains("cc-locked"),
+      shown: !!f.querySelector(".cc-shown"),
+      correct: !!f.querySelector(".opt.is-correct"),
+      outcome: f.dataset.raoOutcome || null,
+      tryAgain: btns.some((t) => /try again/i.test(t)),
+      next: btns.some((t) => /next question/i.test(t)),
+      walk: !!f.querySelector(".sol-walk"),
+    };
+  });
+  if (nw.locked && nw.shown && nw.correct && nw.next && !nw.tryAgain && !nw.walk && nw.outcome === "shown-answer")
+    pass("A6/A7 — canWalk()-false second wrong CAPS to shown-answer (Item 50: no dead end)", `outcome=${nw.outcome}, answer revealed, Next present, NO Try again, no walkthrough`);
+  else fail("A6/A7 — canWalk()-false second wrong CAPS to shown-answer", JSON.stringify(nw));
 
   if (errors.length) fail("zero page errors (A6–A9 drive)", errors.join(" | "));
   else pass("zero page errors (A6–A9 drive)");
