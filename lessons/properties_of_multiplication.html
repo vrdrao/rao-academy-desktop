@@ -219,10 +219,10 @@ explain: "7×3=3×7 and 4×6=6×4 swap order (commutative); 8×1=8 and 1×12=12 
 solution:
   - type: step
     goal: Find the order-swappers.
-    working: "7×3=3×7 · 4×6=6×4 → commutative"
+    working: "7×3=3×7, 4×6=6×4 → commutative"
   - type: step
     goal: Find the ×1s.
-    working: "8×1=8 · 1×12=12 → identity"
+    working: "8×1=8, 1×12=12 → identity"
     reason: The 1 can stand on either side — it still changes nothing.
   - type: step
     goal: Find the ×0.
@@ -259,10 +259,10 @@ explain: "Tiles with only × in the brackets regroup (associative); tiles with a
 solution:
   - type: step
     goal: Check each tile's brackets.
-    working: "(2 × 5) → × inside · (5 + 1) → + inside · (2 + 4) → + inside · (3 × 2) → × inside"
+    working: "(2 × 5) → × inside, (5 + 1) → + inside, (2 + 4) → + inside, (3 × 2) → × inside"
   - type: step
     goal: Sort by the inner sign.
-    working: "× → associative · + → distributive"
+    working: "× → associative, + → distributive"
   - type: takeaway
     text: The sign INSIDE the brackets betrays the property — × regroups, + distributes.
   - type: verification
@@ -294,7 +294,7 @@ explain: "Swapping order = commutative; changing which factors multiply first = 
 solution:
   - type: step
     goal: Match each rule.
-    working: "swap order → commutative · regroup first → associative · split across a sum → distributive"
+    working: "swap order → commutative, regroup first → associative, split across a sum → distributive"
   - type: takeaway
     text: Properties are permissions — each one licenses a single specific move.
   - type: verification
@@ -333,7 +333,7 @@ whyWrong:
 solution:
   - type: step
     goal: Read the array both ways.
-    working: "3 rows of 5 = 15 · 5 columns of 3 = 15"
+    working: "3 rows of 5 = 15, 5 columns of 3 = 15"
   - type: step
     goal: Draw the conclusion.
     working: "3 × 5 = 5 × 3 — the same dots, so the same total"
@@ -427,7 +427,7 @@ whyWrong:
 solution:
   - type: step
     goal: Write both plantings as products.
-    working: "Priya: 6 × 4 · Arjun: 4 × 6"
+    working: "Priya: 6 × 4, Arjun: 4 × 6"
   - type: step
     goal: Apply the property.
     working: "6 × 4 = 4 × 6 → same number"
@@ -498,10 +498,10 @@ whyWrong:
 solution:
   - type: step
     goal: Scan for zero factors.
-    working: "0×9 ✓ · 15×0 ✓ · 7×0 ✓"
+    working: "0×9 ✓, 15×0 ✓, 7×0 ✓"
   - type: step
     goal: Check the ×1s survive.
-    working: "9×1 = 9 · 1×7 = 7 — both alive"
+    working: "9×1 = 9, 1×7 = 7 — both alive"
   - type: takeaway
     text: One 0 factor kills any product; a 1 factor touches nothing.
   - type: verification
@@ -539,7 +539,7 @@ whyWrong:
 solution:
   - type: step
     goal: Multiply each out.
-    working: "8×1 = 8 · 8×0 = 0 · 1×10 = 10 · 0×10 = 0 · 5×1 = 5"
+    working: "8×1 = 8, 8×0 = 0, 1×10 = 10, 0×10 = 0, 5×1 = 5"
   - type: step
     goal: Keep the unchanged ones.
     working: "8, 10 and 5 came through intact"
@@ -627,7 +627,7 @@ whyWrong:
 solution:
   - type: step
     goal: Evaluate each bracket.
-    working: "8 × 1 = 8 · 8 × 0 = 0"
+    working: "8 × 1 = 8, 8 × 0 = 0"
   - type: step
     goal: Add.
     working: "8 + 0 = 8"
@@ -892,7 +892,7 @@ solution:
     working: "7 × 4 = 28 = 4 × 7 ✓"
   - type: step
     goal: Expose the three imposters.
-    working: "9×1 = 9 (not 0) · 6×0 = 0 (not 6) · 3×8 = 24 ≠ 11"
+    working: "9×1 = 9 (not 0), 6×0 = 0 (not 6), 3×8 = 24 ≠ 11"
   - type: takeaway
     text: Properties are testable — plug in the numbers and false sentences collapse.
   - type: verification
@@ -929,7 +929,7 @@ whyWrong:
 solution:
   - type: step
     goal: Evaluate every expression.
-    working: "6×4 = 24 · (2×2)×6 = 24 · 4×(5+1) = 24 · 8×4 = 32 · 5×(2+3) = 25"
+    working: "6×4 = 24, (2×2)×6 = 24, 4×(5+1) = 24, 8×4 = 32, 5×(2+3) = 25"
   - type: step
     goal: Keep the 24s.
     working: "three expressions hit the target"
@@ -973,7 +973,7 @@ whyWrong:
 solution:
   - type: step
     goal: Evaluate all four.
-    working: "4×5 = 20 · 20×1 = 20 · 10×2 = 20 · 20×0 = 0"
+    working: "4×5 = 20, 20×1 = 20, 10×2 = 20, 20×0 = 0"
   - type: step
     goal: Spot the outsider.
     working: "20 × 0 = 0 — nothing like 20"

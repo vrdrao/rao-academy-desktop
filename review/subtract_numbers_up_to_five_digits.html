@@ -2101,11 +2101,11 @@ whyWrong:
 solution:
   - type: step
     goal: Ones and tens.
-    working: "12 − 7 = 5 · 6 − 3 = 3"
+    working: "12 − 7 = 5, 6 − 3 = 3"
     reason: The ones borrow a ten, so the tens digit 7 becomes 6.
   - type: step
     goal: Hundreds and thousands.
-    working: "12 − 7 = 5 · 4 − 1 = 3 → 3,535"
+    working: "12 − 7 = 5, 4 − 1 = 3 → 3,535"
     reason: The hundreds borrow a thousand, so 5 thousands become 4.
   - type: takeaway
     text: A borrow changes TWO columns — the taker grows by ten, the lender shrinks by one.
@@ -2229,7 +2229,7 @@ explain: "7,993−7,661 and 2,862−302 subtract cleanly; 5,577−4,208 (ones 7<
 solution:
   - type: step
     goal: Scan each ones column.
-    working: "3−1 ✓ · 7−8 ✗ borrow · 2−2 ✓ · 3−2 ✓"
+    working: "3−1 ✓, 7−8 ✗ borrow, 2−2 ✓, 3−2 ✓"
   - type: step
     goal: Keep scanning the doubtful ones.
     working: "4,403 − 3,862: tens 0 < 6 → borrow"
@@ -2271,7 +2271,7 @@ solution:
     working: "9 − 9 = 0"
   - type: step
     goal: Subtract the rest.
-    working: "9−6 = 3 · 7−6 = 1 · 7−6 = 1 → 311"
+    working: "9−6 = 3, 7−6 = 1, 7−6 = 1 → 311"
   - type: takeaway
     text: Matching leading digits vanish — what remains is a smaller, friendlier problem.
   - type: verification
@@ -2369,7 +2369,7 @@ solution:
     working: "1,722 over 906 — right edges together"
   - type: step
     goal: Subtract with a borrow.
-    working: "12 − 6 = 6 · 11 − 0 = 1 (borrowed) · 6 − 9 borrows → 8 → 816"
+    working: "12 − 6 = 6, 11 − 0 = 1 (borrowed), 6 − 9 borrows → 8 → 816"
   - type: takeaway
     text: Different-length numbers meet at the RIGHT edge — never the left.
   - type: verification
@@ -2436,7 +2436,7 @@ whyWrong:
 solution:
   - type: step
     goal: Subtract each place.
-    working: "3−0 = 3 · 8−1 = 7 · 9−1 = 8 · 6−0 = 6 · 4−1 = 3"
+    working: "3−0 = 3, 8−1 = 7, 9−1 = 8, 6−0 = 6, 4−1 = 3"
   - type: step
     goal: Read the answer.
     working: "36,873"
@@ -2503,10 +2503,10 @@ whyWrong:
 solution:
   - type: step
     goal: Test each ones column.
-    working: "4−8 borrow · 3−0 fine · 8−5 fine · 0−9 borrow · 7−6 fine"
+    working: "4−8 borrow, 3−0 fine, 8−5 fine, 0−9 borrow, 7−6 fine"
   - type: step
     goal: Watch where zeros meet borrows.
-    working: "7,014 and 4,450 borrow at/through a 0 · 7,068's 0 hundreds must lend to nobody — it must BE lent to for 0−4"
+    working: "7,014 and 4,450 borrow at/through a 0, 7,068's 0 hundreds must lend to nobody — it must BE lent to for 0−4"
     reason: A 0 that must lend or borrow forces the regrouping to hop an extra column.
   - type: takeaway
     text: Zeros make borrowing hop columns — that is what 'regrouping across a zero' means.
@@ -2754,7 +2754,7 @@ whyWrong:
 solution:
   - type: step
     goal: Round each number.
-    working: "61,208 → 61,000 · 29,875 → 30,000"
+    working: "61,208 → 61,000, 29,875 → 30,000"
   - type: step
     goal: Subtract the rounded pair.
     working: "61,000 − 30,000 = 31,000"
@@ -5105,10 +5105,10 @@ function enhanceInputWidgets(root) {
       if (exprInp.disabled) return;
       if (btn.classList.contains("exprpow-bksp")) {
         const s = exprInp.value; let a = exprInp.selectionStart, b = exprInp.selectionEnd; if (a == null) { a = s.length; b = s.length; }
-        if (a === b && a > 0) { if (s.slice(a - 3, a) === " · ") { exprInp.value = s.slice(0, a - 3) + s.slice(b); a -= 3; } else { exprInp.value = s.slice(0, a - 1) + s.slice(b); a -= 1; } }
+        if (a === b && a > 0) { if (s.slice(a - 3, a) === " × ") { exprInp.value = s.slice(0, a - 3) + s.slice(b); a -= 3; } else { exprInp.value = s.slice(0, a - 1) + s.slice(b); a -= 1; } }
         else if (a !== b) { exprInp.value = s.slice(0, a) + s.slice(b); }
         try { exprInp.focus(); exprInp.setSelectionRange(a, a); } catch (_) {}
-      } else { insertAtCursor(exprInp, btn.querySelector("sup") ? "^" : " · "); }
+      } else { insertAtCursor(exprInp, btn.querySelector("sup") ? "^" : " × "); }
       sync();
     }));
     sync();

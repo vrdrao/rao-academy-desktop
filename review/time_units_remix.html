@@ -4586,10 +4586,10 @@ function enhanceInputWidgets(root) {
       if (exprInp.disabled) return;
       if (btn.classList.contains("exprpow-bksp")) {
         const s = exprInp.value; let a = exprInp.selectionStart, b = exprInp.selectionEnd; if (a == null) { a = s.length; b = s.length; }
-        if (a === b && a > 0) { if (s.slice(a - 3, a) === " · ") { exprInp.value = s.slice(0, a - 3) + s.slice(b); a -= 3; } else { exprInp.value = s.slice(0, a - 1) + s.slice(b); a -= 1; } }
+        if (a === b && a > 0) { if (s.slice(a - 3, a) === " × ") { exprInp.value = s.slice(0, a - 3) + s.slice(b); a -= 3; } else { exprInp.value = s.slice(0, a - 1) + s.slice(b); a -= 1; } }
         else if (a !== b) { exprInp.value = s.slice(0, a) + s.slice(b); }
         try { exprInp.focus(); exprInp.setSelectionRange(a, a); } catch (_) {}
-      } else { insertAtCursor(exprInp, btn.querySelector("sup") ? "^" : " · "); }
+      } else { insertAtCursor(exprInp, btn.querySelector("sup") ? "^" : " × "); }
       sync();
     }));
     sync();

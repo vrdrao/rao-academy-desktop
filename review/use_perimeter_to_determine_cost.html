@@ -2105,11 +2105,11 @@ explain: "Jobs that travel along an edge are perimeter jobs; jobs that cover a s
 solution:
   - type: step
     goal: Spot the edge-runners.
-    working: "fencing a field · ribbon around a gift · trim around a ceiling · rope around a court"
+    working: "fencing a field, ribbon around a gift, trim around a ceiling, rope around a court"
     reason: Each of these materials travels along a boundary line.
   - type: step
     goal: Spot the surface-coverers.
-    working: "painting a wall · carpet for a room"
+    working: "painting a wall, carpet for a room"
     reason: Paint and carpet spread out to fill a whole surface.
   - type: takeaway
     text: "The word 'around' signals perimeter; covering signals area."
@@ -2254,7 +2254,7 @@ whyWrong:
 solution:
   - type: step
     goal: Fill in the missing sides.
-    working: "? opposite 14 m → 14 m · ? opposite 9 m → 9 m"
+    working: "? opposite 14 m → 14 m, ? opposite 9 m → 9 m"
     reason: Opposite sides of a rectangle are always equal.
   - type: step
     goal: Add all four.
@@ -2530,7 +2530,7 @@ whyWrong:
 solution:
   - type: step
     goal: See the problem backwards.
-    working: "total ₹240 · each metre ₹10 · metres = ?"
+    working: "total ₹240, each metre ₹10, metres = ?"
   - type: step
     goal: Divide.
     working: "240 ÷ 10 = 24 m"
@@ -2676,7 +2676,7 @@ solution:
     reason: The room decides the metres; the shops only decide the price.
   - type: step
     goal: Price both shops.
-    working: "A: 30 × ₹20 = ₹600 · B: 30 × ₹25 = ₹750"
+    working: "A: 30 × ₹20 = ₹600, B: 30 × ₹25 = ₹750"
   - type: step
     goal: Find the saving.
     working: "750 − 600 = ₹150"
@@ -2706,7 +2706,7 @@ hint:
   - "₹500 at ₹10 per metre buys exactly 50 m — that is the fence you have."
   - "Find each plot's perimeter, one at a time."
   - "A plot fits the budget when its perimeter is 50 m or less."
-explain: "Square 10 m: 40 m ✓ · Square 14 m: 56 m ✗ · 12 by 8 rectangle: 40 m ✓ — two plots fit inside 50 m."
+explain: "Square 10 m: 40 m ✓, Square 14 m: 56 m ✗, 12 by 8 rectangle: 40 m ✓ — two plots fit inside 50 m."
 whyWrong:
   "sq14":
     code: WRONG_NUMBER_PAIR
@@ -2717,10 +2717,10 @@ solution:
     working: "₹500 ÷ ₹10 = 50 m of fencing"
   - type: step
     goal: Find each perimeter.
-    working: "10 m square → 40 m · 14 m square → 56 m · 12 × 8 → 40 m"
+    working: "10 m square → 40 m, 14 m square → 56 m, 12 × 8 → 40 m"
   - type: step
     goal: Compare with 50 m.
-    working: "40 ✓ · 56 ✗ · 40 ✓"
+    working: "40 ✓, 56 ✗, 40 ✓"
   - type: takeaway
     text: Turning the money into metres first lets every plot be tested with one simple comparison.
   - type: verification
@@ -2759,7 +2759,7 @@ whyWrong:
 solution:
   - type: step
     goal: Find each perimeter.
-    working: "A: 4 × 6 = 24 m · B: 2 × (12 + 3) = 30 m"
+    working: "A: 4 × 6 = 24 m, B: 2 × (12 + 3) = 30 m"
     reason: Both cover 36 square metres inside, but their edges differ.
   - type: step
     goal: Compare the laps.
@@ -2905,7 +2905,7 @@ whyWrong:
 solution:
   - type: step
     goal: Find both perimeters.
-    working: "small: 2 × (6 + 4) = 20 m · big: 2 × (12 + 8) = 40 m"
+    working: "small: 2 × (6 + 4) = 20 m, big: 2 × (12 + 8) = 40 m"
   - type: step
     goal: Compare the costs.
     working: "₹200 versus ₹400 — twice as much"
@@ -5310,10 +5310,10 @@ function enhanceInputWidgets(root) {
       if (exprInp.disabled) return;
       if (btn.classList.contains("exprpow-bksp")) {
         const s = exprInp.value; let a = exprInp.selectionStart, b = exprInp.selectionEnd; if (a == null) { a = s.length; b = s.length; }
-        if (a === b && a > 0) { if (s.slice(a - 3, a) === " · ") { exprInp.value = s.slice(0, a - 3) + s.slice(b); a -= 3; } else { exprInp.value = s.slice(0, a - 1) + s.slice(b); a -= 1; } }
+        if (a === b && a > 0) { if (s.slice(a - 3, a) === " × ") { exprInp.value = s.slice(0, a - 3) + s.slice(b); a -= 3; } else { exprInp.value = s.slice(0, a - 1) + s.slice(b); a -= 1; } }
         else if (a !== b) { exprInp.value = s.slice(0, a) + s.slice(b); }
         try { exprInp.focus(); exprInp.setSelectionRange(a, a); } catch (_) {}
-      } else { insertAtCursor(exprInp, btn.querySelector("sup") ? "^" : " · "); }
+      } else { insertAtCursor(exprInp, btn.querySelector("sup") ? "^" : " × "); }
       sync();
     }));
     sync();

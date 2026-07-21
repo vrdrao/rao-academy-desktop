@@ -463,14 +463,14 @@ hint:
   - "For each event, ask how many of the 6 faces make it true."
   - "0 faces and 6 faces are the two special boxes."
   - "1 face of 6 is a small chance; 5 faces of 6 is a big one."
-explain: "Roll a 7: 0 faces (impossible) · Roll a 1: 1 face (unlikely) · Higher than 1: 5 faces (likely) · Less than 7: all 6 faces (certain)."
+explain: "Roll a 7: 0 faces (impossible), Roll a 1: 1 face (unlikely), Higher than 1: 5 faces (likely), Less than 7: all 6 faces (certain)."
 solution:
   - type: step
     goal: Count winning faces for each event.
-    working: "a 7 → 0 · a 1 → 1 · higher than 1 → 5 · less than 7 → 6"
+    working: "a 7 → 0, a 1 → 1, higher than 1 → 5, less than 7 → 6"
   - type: step
     goal: Match counts to boxes.
-    working: "0 → impossible · 1 of 6 → unlikely · 5 of 6 → likely · 6 of 6 → certain"
+    working: "0 → impossible, 1 of 6 → unlikely, 5 of 6 → likely, 6 of 6 → certain"
   - type: takeaway
     text: Likelihood words are face-counts in disguise — 0 and all are the two ends of the scale.
   - type: verification
@@ -542,10 +542,10 @@ whyWrong:
 solution:
   - type: step
     goal: Count parts per colour.
-    working: "red 2 · blue 2 · green 1 · yellow 1"
+    working: "red 2, blue 2, green 1, yellow 1"
   - type: step
     goal: Keep the single-part colours.
-    working: "green ✓ · yellow ✓"
+    working: "green ✓, yellow ✓"
   - type: takeaway
     text: On an equal-parts spinner, a colour's probability is just its part count over the total.
   - type: verification
@@ -604,7 +604,7 @@ explain: "Pink covers 1 part, blue 2, green 3 — least to most likely: pink, bl
 solution:
   - type: step
     goal: Count parts per colour.
-    working: "pink 1 · blue 2 · green 3"
+    working: "pink 1, blue 2, green 3"
   - type: step
     goal: Order by count.
     working: "1 < 2 < 3 → pink, blue, green"
@@ -719,7 +719,7 @@ solution:
     working: "green → 5 marbles"
   - type: step
     goal: Compare the others.
-    working: "red 2 < 5 ✓ · blue 3 < 5 ✓"
+    working: "red 2 < 5 ✓, blue 3 < 5 ✓"
   - type: takeaway
     text: Comparing likelihoods with the same bag is just comparing counts.
   - type: verification
@@ -811,7 +811,7 @@ hint:
   - "Work out each event's chance from the spinner."
   - "Half the spinner is red and half is blue — no other colour exists."
   - "Match each chance to its box: 0, 1/2 or 1."
-explain: "Green has no parts (impossible) · red covers half (even chance) · red-or-blue covers everything (certain)."
+explain: "Green has no parts (impossible), red covers half (even chance), red-or-blue covers everything (certain)."
 solution:
   - type: step
     goal: Chance of green.
@@ -845,11 +845,11 @@ hint:
   - "Work out each event's own probability first."
   - "One is impossible, one is certain — find them."
   - "The remaining event sits between them."
-explain: "A 7 cannot be rolled (0) · heads is 1/2 · every face is below 7 (1) — least to most likely."
+explain: "A 7 cannot be rolled (0), heads is 1/2, every face is below 7 (1) — least to most likely."
 solution:
   - type: step
     goal: Evaluate each event.
-    working: "roll a 7 → 0 · heads → 1/2 · below 7 → 1"
+    working: "roll a 7 → 0, heads → 1/2, below 7 → 1"
   - type: step
     goal: Order the probabilities.
     working: "0 < 1/2 < 1"
@@ -927,7 +927,7 @@ whyWrong:
 solution:
   - type: step
     goal: Write each bag's chance.
-    working: "Bag A → 1/4 · Bag B → 1/8"
+    working: "Bag A → 1/4, Bag B → 1/8"
   - type: step
     goal: Compare the fractions.
     working: "1/4 = 2/8 > 1/8 → Bag A"
@@ -1006,7 +1006,7 @@ whyWrong:
 solution:
   - type: step
     goal: Count each player's parts.
-    working: "red 2 · blue 2 (of 4)"
+    working: "red 2, blue 2 (of 4)"
   - type: step
     goal: Compare the chances.
     working: "1/2 = 1/2 → fair"

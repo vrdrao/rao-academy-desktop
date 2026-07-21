@@ -2253,7 +2253,7 @@ whyWrong:
 solution:
   - type: step
     goal: Read the bar.
-    working: "whole 500 · known part 285"
+    working: "whole 500, known part 285"
   - type: step
     goal: Subtract.
     working: "500 − 285 = 215"
@@ -2442,7 +2442,7 @@ solution:
     working: "156, 89, 67"
   - type: step
     goal: Add them all.
-    working: "156 + 89 = 245 · 245 + 67 = 312"
+    working: "156 + 89 = 245, 245 + 67 = 312"
   - type: takeaway
     text: Count the quantities in the story before adding — every kind gets a seat in the sum.
   - type: verification
@@ -2485,7 +2485,7 @@ solution:
     working: "5 hundreds → 4 hundreds, 9 tens, 10 ones"
   - type: step
     goal: Subtract.
-    working: "10−5 = 5 · 9−3 = 6 · 4−2 = 2 → 265"
+    working: "10−5 = 5, 9−3 = 6, 4−2 = 2 → 265"
   - type: takeaway
     text: Zeros borrow in a chain — the hundreds lend to the tens so the tens can lend to the ones.
   - type: verification
@@ -2528,7 +2528,7 @@ solution:
     working: "20 and 4"
   - type: step
     goal: Multiply and join.
-    working: "9×20 = 180 · 9×4 = 36 · 180 + 36 = 216"
+    working: "9×20 = 180, 9×4 = 36, 180 + 36 = 216"
   - type: takeaway
     text: Break-apart makes big products from friendly pieces.
   - type: verification
@@ -2571,7 +2571,7 @@ solution:
     working: "245 − 178"
   - type: step
     goal: Borrow twice.
-    working: "15−8 = 7 · 13−7 = 6 · 1−1 = 0 → 67"
+    working: "15−8 = 7, 13−7 = 6, 1−1 = 0 → 67"
   - type: takeaway
     text: Two shortfall columns mean two borrows — each one honest.
   - type: verification
@@ -2657,7 +2657,7 @@ solution:
     working: "30 and 6"
   - type: step
     goal: Multiply and join.
-    working: "25×30 = 750 · 25×6 = 150 · 750 + 150 = 900"
+    working: "25×30 = 750, 25×6 = 150, 750 + 150 = 900"
   - type: takeaway
     text: In a split, each digit keeps its place value — the 3 of 36 is thirty.
   - type: verification
@@ -3131,7 +3131,7 @@ whyWrong:
 solution:
   - type: step
     goal: Round both numbers.
-    working: "28 → 30 · 31 → 30"
+    working: "28 → 30, 31 → 30"
   - type: step
     goal: Multiply the friendly pair.
     working: "30 × 30 = 900"
@@ -5530,10 +5530,10 @@ function enhanceInputWidgets(root) {
       if (exprInp.disabled) return;
       if (btn.classList.contains("exprpow-bksp")) {
         const s = exprInp.value; let a = exprInp.selectionStart, b = exprInp.selectionEnd; if (a == null) { a = s.length; b = s.length; }
-        if (a === b && a > 0) { if (s.slice(a - 3, a) === " · ") { exprInp.value = s.slice(0, a - 3) + s.slice(b); a -= 3; } else { exprInp.value = s.slice(0, a - 1) + s.slice(b); a -= 1; } }
+        if (a === b && a > 0) { if (s.slice(a - 3, a) === " × ") { exprInp.value = s.slice(0, a - 3) + s.slice(b); a -= 3; } else { exprInp.value = s.slice(0, a - 1) + s.slice(b); a -= 1; } }
         else if (a !== b) { exprInp.value = s.slice(0, a) + s.slice(b); }
         try { exprInp.focus(); exprInp.setSelectionRange(a, a); } catch (_) {}
-      } else { insertAtCursor(exprInp, btn.querySelector("sup") ? "^" : " · "); }
+      } else { insertAtCursor(exprInp, btn.querySelector("sup") ? "^" : " × "); }
       sync();
     }));
     sync();

@@ -2145,7 +2145,7 @@ whyWrong:
 solution:
   - type: step
     goal: Test every card.
-    working: "5,900 ✗ · 6,001 ✓ · 7,240 ✓ · 600 ✗ · 6,000 ✗ (equal) · 8,150 ✓"
+    working: "5,900 ✗, 6,001 ✓, 7,240 ✓, 600 ✗, 6,000 ✗ (equal), 8,150 ✓"
   - type: step
     goal: Mind the boundary.
     working: "6,000 is not greater than itself"
@@ -2273,7 +2273,7 @@ solution:
     working: "9,999 → 4 digits → under"
   - type: step
     goal: Compare front digits with 5.
-    working: "62,150 ✓ · 71,004 ✓ · 48,300 ✗ · 38,720 ✗"
+    working: "62,150 ✓, 71,004 ✓, 48,300 ✗, 38,720 ✗"
   - type: step
     goal: Handle the tie.
     working: "50,900 → starts 5-0, then 9 hundreds push it past 50,000 → over"
@@ -2435,7 +2435,7 @@ solution:
     working: "60, 64, 60, 64 → the two 64s survive"
   - type: step
     goal: Compare the survivors' hundreds.
-    working: "64,701 has 7 · 64,071 has 0 → 64,701 wins"
+    working: "64,701 has 7, 64,071 has 0 → 64,701 wins"
   - type: takeaway
     text: Tournaments run left to right — each place eliminates before the next is consulted.
   - type: verification
@@ -2467,10 +2467,10 @@ explain: "By hundreds then tens: 8,607 < 8,670 < 8,706 < 8,760."
 solution:
   - type: step
     goal: Group by hundreds.
-    working: "6xx pair: 8,607 & 8,670 · 7xx pair: 8,706 & 8,760"
+    working: "6xx pair: 8,607 & 8,670, 7xx pair: 8,706 & 8,760"
   - type: step
     goal: Order inside each pair by tens.
-    working: "07 < 70 · 06 < 60"
+    working: "07 < 70, 06 < 60"
   - type: step
     goal: Read the line.
     working: "8,607 < 8,670 < 8,706 < 8,760"
@@ -2591,7 +2591,7 @@ whyWrong:
 solution:
   - type: step
     goal: Test every card.
-    working: "19,999 ✓ · 20,000 ✗ (equal) · 8,742 ✓ · 21,050 ✗ · 20,001 ✗ · 13,600 ✓"
+    working: "19,999 ✓, 20,000 ✗ (equal), 8,742 ✓, 21,050 ✗, 20,001 ✗, 13,600 ✓"
   - type: takeaway
     text: Boundaries are strict — one above fails, and equal fails too.
   - type: verification
@@ -2709,7 +2709,7 @@ solution:
     working: "5, 5, 4, 4 → the 5-hundreds pair leads"
   - type: step
     goal: Split each pair by tens.
-    working: "70,542 > 70,524 · 70,452 > 70,425"
+    working: "70,542 > 70,524, 70,452 > 70,425"
   - type: step
     goal: Read the line downhill.
     working: "70,542, 70,524, 70,452, 70,425"
@@ -2750,10 +2750,10 @@ whyWrong:
 solution:
   - type: step
     goal: Try each digit.
-    working: "3 → 43,318 · 4 → 44,318 · 5 → 45,318 · 6 → 46,318"
+    working: "3 → 43,318, 4 → 44,318, 5 → 45,318, 6 → 46,318"
   - type: step
     goal: Compare each with 45,000.
-    working: "43,318 ✗ · 44,318 ✗ · 45,318 ✓ · 46,318 ✓"
+    working: "43,318 ✗, 44,318 ✗, 45,318 ✓, 46,318 ✓"
     reason: With 5 in the gap the thousands tie — and then 318 beats 000.
   - type: takeaway
     text: A missing digit is an invitation to test — and ties pass the decision one place right.
@@ -2790,10 +2790,10 @@ solution:
     working: "9,860 → 4 digits → under"
   - type: step
     goal: Front digits against 2.
-    working: "31,470 over · 18,250 under"
+    working: "31,470 over, 18,250 under"
   - type: step
     goal: The 2x,xxx numbers.
-    working: "24,900 under · 27,300 over · 25,001 over (the 001 tips it)"
+    working: "24,900 under, 27,300 over, 25,001 over (the 001 tips it)"
   - type: takeaway
     text: Benchmarks with two working digits need two checks — ten-thousands, then thousands.
   - type: verification
@@ -2879,7 +2879,7 @@ solution:
     working: "below 40,000: knocks out 40,000 and 41,003"
   - type: step
     goal: Keep the double-passers.
-    working: "30,500 · 35,218 · 39,999"
+    working: "30,500, 35,218, 39,999"
   - type: takeaway
     text: "'Between' is two fences — a number must clear both to graze inside."
   - type: verification
@@ -2997,10 +2997,10 @@ explain: "4-digit pair first (9,087 < 9,870), then the 5-digit pair (10,870 < 18
 solution:
   - type: step
     goal: Group by length.
-    working: "4 digits: 9,087 & 9,870 · 5 digits: 10,870 & 18,700"
+    working: "4 digits: 9,087 & 9,870, 5 digits: 10,870 & 18,700"
   - type: step
     goal: Sort each group.
-    working: "9,087 < 9,870 (hundreds 0 < 8) · 10,870 < 18,700 (thousands 0 < 8)"
+    working: "9,087 < 9,870 (hundreds 0 < 8), 10,870 < 18,700 (thousands 0 < 8)"
   - type: step
     goal: Join the groups.
     working: "9,087 < 9,870 < 10,870 < 18,700"
@@ -3092,7 +3092,7 @@ solution:
     working: "every card starts 82 — compare tails against 150"
   - type: step
     goal: Test each tail.
-    working: "105 ✗ · 300 ✓ · 015 ✗ · 410 ✓ · 150 ✗ (equal)"
+    working: "105 ✗, 300 ✓, 015 ✗, 410 ✓, 150 ✗ (equal)"
   - type: takeaway
     text: Shared prefixes vanish from the contest — the first differing place does the judging.
   - type: verification
@@ -3167,7 +3167,7 @@ solution:
     reason: Its leading 4 is worth 4 thousands, not 4 ten-thousands.
   - type: step
     goal: Sort the rest.
-    working: "39,999 under · 40,001 over · 44,500 over · 38,000 under · 40,100 over"
+    working: "39,999 under, 40,001 over, 44,500 over, 38,000 under, 40,100 over"
   - type: takeaway
     text: A digit's value depends on its seat — the same 4 can mean 4,000 or 40,000.
   - type: verification
@@ -3239,10 +3239,10 @@ explain: "5,565, 5,600 and 6,000 top 5,555; 5,545, 5,455 and 5,554 sit below —
 solution:
   - type: step
     goal: The easy calls.
-    working: "6,000 over · 5,455 under (4 hundreds) · 5,600 over (6 hundreds)"
+    working: "6,000 over, 5,455 under (4 hundreds), 5,600 over (6 hundreds)"
   - type: step
     goal: The tens duels.
-    working: "5,545 → tens 4 < 5 → under · 5,565 → tens 6 > 5 → over"
+    working: "5,545 → tens 4 < 5 → under, 5,565 → tens 6 > 5 → over"
   - type: step
     goal: The ones duel.
     working: "5,554 → everything ties until the ones: 4 < 5 → under"
@@ -5595,10 +5595,10 @@ function enhanceInputWidgets(root) {
       if (exprInp.disabled) return;
       if (btn.classList.contains("exprpow-bksp")) {
         const s = exprInp.value; let a = exprInp.selectionStart, b = exprInp.selectionEnd; if (a == null) { a = s.length; b = s.length; }
-        if (a === b && a > 0) { if (s.slice(a - 3, a) === " · ") { exprInp.value = s.slice(0, a - 3) + s.slice(b); a -= 3; } else { exprInp.value = s.slice(0, a - 1) + s.slice(b); a -= 1; } }
+        if (a === b && a > 0) { if (s.slice(a - 3, a) === " × ") { exprInp.value = s.slice(0, a - 3) + s.slice(b); a -= 3; } else { exprInp.value = s.slice(0, a - 1) + s.slice(b); a -= 1; } }
         else if (a !== b) { exprInp.value = s.slice(0, a) + s.slice(b); }
         try { exprInp.focus(); exprInp.setSelectionRange(a, a); } catch (_) {}
-      } else { insertAtCursor(exprInp, btn.querySelector("sup") ? "^" : " · "); }
+      } else { insertAtCursor(exprInp, btn.querySelector("sup") ? "^" : " × "); }
       sync();
     }));
     sync();
