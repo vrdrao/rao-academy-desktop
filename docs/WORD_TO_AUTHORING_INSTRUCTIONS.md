@@ -348,6 +348,63 @@ number line, an array). Use a parametric tag when one fits; otherwise a faithful
 
 Keep SVG simple and **mathematically correct** (right counts, right shape).
 
+### The area model (partial-product box) — `data-show="area-model"`
+
+The box for two-/three-digit multiplication. Each factor is split into place values
+(`75 → 70 + 5`), giving a grid of partial-product cells. Attributes:
+
+| attribute | meaning |
+|---|---|
+| `data-top` | the top factor (splits into the **columns**, largest place first) |
+| `data-side` | the side factor (splits into the **rows**, largest place first) |
+| `data-mode` | `filled` (every product printed — a worked picture) · `blank` (empty dashed cells — a picture, **no inputs**) · **`type`** (each product cell is a typed `<input>` the child fills) |
+| `data-sums` | `hide` (product cells only) · `show` (row totals printed) · `blank` (row-total boxes shown; **in `mode="type"` they are ALSO inputs** — the next step of the same skill) |
+| `data-blank-start` | (only for `mode="type"`) the number the figure's blanks start at — `0` when the figure holds the question's only blanks |
+
+**`mode="type"` requires `type: fill-blanks`.** The cells are `<input class="blank-input">`
+elements; the fill-blanks grader collects every blank in the question by `data-blank` and
+grades **by position** — a right number typed into the wrong cell is marked **wrong** (that is
+the whole point of the box).
+
+**🚨 Blank-ordering convention — the `answer:` array MUST match reading order.** Blanks are
+numbered **for each row top→bottom, each product cell left→right, then (only when `sums="blank"`)
+that row's total box.** Write the `answer:` array in exactly that order. Values are **digit-only**
+(no commas): `"6300"`, never `"6,300"`.
+
+**Worked example — the real converted question `qukz2ne4j` (75 × 95):**
+
+```
+             70        5
+      90  [ 6300 ] [ 450 ]      ← reading order: 6300, then 450
+       5  [  350 ] [  25 ]      ← then 350, then 25
+```
+
+```html
+<!--@q
+id: qukz2ne4j
+type: fill-blanks
+answer: ["6300", "450", "350", "25"]
+description: Partial products of 75 x 95
+hint: Each cell is one column value x one row value.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Fill in each cell of the box for 75 x 95.</p>
+  <figure data-show="area-model" data-top="75" data-side="95" data-mode="type" data-sums="hide" data-blank-start="0"></figure>
+  <p class="explain">Each cell is a column value x a row value: 70 x 90 = 6,300, 5 x 90 = 450, 70 x 5 = 350, 5 x 5 = 25.</p>
+</div>
+```
+
+Derive each cell as `column × row` (`amDecomp` drops zero digits, so `860 → 800 + 60`,
+`30 → 30`). **Never lift the numbers from old multi-select options** — recompute them.
+
+**With row totals** (`data-sums="blank"`, `mode="type"`): each row's total box is also an
+input, appended after that row's cells. For 75 × 95 the reading order becomes
+`6300, 450, 6750, 350, 25, 375` (row totals `70×90+5×90=6750` and `70×5+5×5=375`), so
+`answer: ["6300", "450", "6750", "350", "25", "375"]`.
+
+`mode="filled"` and `mode="blank"` are unchanged pictures (SVG, no inputs) — use them as a
+worked example or a labelled-but-empty diagram beside a different question.
+
 ### 🚨 CRITICAL — the prompt is TEXT-ONLY. A figure is a SIBLING of the prompt, never inside it.
 
 The engine automatically **pulls every `<svg>`/`<figure>` out of the question's stimulus and

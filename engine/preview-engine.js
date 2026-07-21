@@ -202,7 +202,8 @@ function svgWrap(w, h, inner, cls) {
 
 // attrs: a plain object of the figure's data-* (without the "data-" prefix)
 /* merged: areaModel (from box_multiplication_remix-preview-engine.js) */
-function areaModel(top, side, mode, sums, hi) {
+function areaModel(top, side, mode, sums, hi, blankStart) {
+  if (mode === "type") return areaModelTyped(top, side, sums, blankStart);
   top = parseInt(top, 10) || 0; side = parseInt(side, 10) || 0;
   const cols = amDecomp(top), rows = amDecomp(side);
   const nC = cols.length, nR = rows.length;
@@ -247,6 +248,41 @@ function areaModel(top, side, mode, sums, hi) {
   }
   if (hiCell) P.push(hiCell);
   P.push("</svg></div>");
+  return P.join("");
+}
+/* Typed area model (Item 48): the partial-product box as an HTML grid of
+   <input class="blank-input"> cells — NOT SVG/foreignObject. Reuses the same
+   proven mechanism divisionTable() uses (cells hold blank-input; fill.serialize
+   collects every blank-input under the root by data-blank). blanks are numbered
+   in READING ORDER: for each row top→bottom, each product cell left→right, then
+   (only when sums="blank") that row's sum box. The answer: array must match that
+   order. sums: "hide" = product cells only; "blank" = row-sum boxes are ALSO
+   inputs (the next step of the same skill); "show" = row sums shown, not typed.
+   mode "filled"/"blank" are untouched — they still return the SVG above. */
+function areaModelTyped(top, side, sums, blankStart) {
+  top = parseInt(top, 10) || 0; side = parseInt(side, 10) || 0;
+  const cols = amDecomp(top), rows = amDecomp(side);
+  const nC = cols.length, nR = rows.length;
+  sums = (sums === "show" || sums === "hide") ? sums : "blank";
+  let b = parseInt(blankStart, 10); if (isNaN(b)) b = 0;
+  const P = [];
+  P.push('<div class="fig-wrap am-wrap"><table class="am-table" role="group" aria-label="Area model for ' + top + ' times ' + side + '"><tbody>');
+  // header row: empty corner, column place-values, optional "+" sum header
+  P.push('<tr><td class="am-corner" aria-hidden="true"></td>');
+  for (let j = 0; j < nC; j++) P.push('<th scope="col" class="am-ch">' + cols[j] + "</th>");
+  if (sums !== "hide") P.push('<th class="am-ch am-plus" aria-hidden="true">+</th>');
+  P.push("</tr>");
+  for (let i = 0; i < nR; i++) {
+    P.push('<tr><th scope="row" class="am-rh">' + rows[i] + "</th>");
+    for (let j = 0; j < nC; j++)
+      P.push('<td class="am-pc"><input class="blank-input" data-blank="' + (b++) + '" inputmode="numeric" maxlength="12" aria-label="partial product ' + cols[j] + " times " + rows[i] + '"></td>');
+    if (sums === "blank")
+      P.push('<td class="am-sum"><input class="blank-input" data-blank="' + (b++) + '" inputmode="numeric" maxlength="12" aria-label="row sum"></td>');
+    else if (sums === "show")
+      P.push('<td class="am-sum am-sumval">' + amGroup(rows[i] * top) + "</td>");
+    P.push("</tr>");
+  }
+  P.push("</tbody></table></div>");
   return P.join("");
 }
 /* merged: amGroup (from box_multiplication_remix-preview-engine.js) */
@@ -411,7 +447,7 @@ function renderFigure(show, attrs) {
     case "icons":
       return icons(attrs.icon || "circle", Number(attrs.count) || 0);
     case "area-model":
-      return areaModel(attrs.top, attrs.side, attrs.mode, attrs.sums, attrs.hi);
+      return areaModel(attrs.top, attrs.side, attrs.mode, attrs.sums, attrs.hi, attrs["blank-start"]);
     case "data-table":
       return dataTable(attrs);
     case "division-table":
