@@ -162,3 +162,19 @@
 .sol-row.sol-mark{background:#eefbf2;color:#047857;font-weight:700}
 .sol-absent{color:#b04a6a;background:#fff2f5}
 .sol-rule .sol-note{margin-bottom:8px}
+
+/* ── SOLUTION-PANEL-LAYOUT v1 (Item 81) — declared SEQUENCES columnise ─────────
+   A `.sol-seq` container (a single table, or a facts list — added by the renderer)
+   lays its items out ACROSS then wraps: CSS grid auto-flow row, columns as wide as
+   the sequence's own longest item (max-content), left-packed. The column COUNT is
+   `--sol-cols`, computed by RaoSolution.layoutSequences (floor(avail/(longest+24)),
+   capped 1..4 — Rulings R1/R2). Default 1 so it is single-column before the script
+   runs and if it never does (safe, = today's behaviour). NOT `column-count`, which
+   fills DOWN — forbidden for a sequence. An item wider than its column keeps its
+   mark on one line and takes its own horizontal scroll rail (Rule 3). */
+.sol-seq{display:grid;grid-auto-flow:row;gap:2px 24px;grid-template-columns:repeat(var(--sol-cols,1),max-content);justify-content:start;width:100%}
+.sol-seq>*{min-width:0;max-width:var(--sol-itemmax,100%);white-space:nowrap;overflow-x:auto}
+/* sol-working is BLOCK (Ruling R6): never itemised, never columnised. It is one
+   line; if it is wider than the panel it takes its own horizontal scroll rail and
+   the panel does not widen. (The walkthrough's working is `.cc-eq`, not touched.) */
+.sol-working{display:block;white-space:nowrap;overflow-x:auto;max-width:100%}

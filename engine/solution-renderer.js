@@ -224,7 +224,7 @@ function validTableEntry(t) {
   }
   return true;
 }
-function renderOneTable(t) {
+function renderOneTable(t, single) {
   var marks = {}; (t.mark || []).forEach(function (m) { marks[m] = true; });
   var absAfter = {}; (t.absent || []).forEach(function (a) { (absAfter[a.after] = absAfter[a.after] || []).push(a.value); });
   var rows = [];
@@ -232,7 +232,10 @@ function renderOneTable(t) {
     rows.push(eqRow(t.factor, m, !!marks[m]));
     if (absAfter[m]) absAfter[m].forEach(function (v) { rows.push(absentLine(v)); });
   }
-  return '<div class="sol-table">' + rows.join("") + "</div>";
+  // SOLUTION-PANEL-LAYOUT v1 (Item 81): a SINGLE table is a SEQUENCE — it carries
+  // the sol-seq marker and columnises (Rule 2). Two tables (sol-tables-2) already
+  // sit side by side and do NOT columnise internally (Ruling R7): no marker.
+  return '<div class="sol-table' + (single ? " sol-seq" : "") + '">' + rows.join("") + "</div>";
 }
 function renderTable(block) {
   var tables = block.tables;
@@ -240,7 +243,8 @@ function renderTable(block) {
     solWarn("table: invalid — " + JSON.stringify(tables));
     return "";
   }
-  var inner = tables.map(renderOneTable).join("");
+  var single = tables.length === 1;
+  var inner = tables.map(function (t) { return renderOneTable(t, single); }).join("");
   return (block.note ? '<p class="sol-note">' + escapeHtml(block.note) + "</p>" : "") +
     '<div class="sol-tables' + (tables.length === 2 ? " sol-tables-2" : "") + '">' + inner + "</div>" +
     (block.footer ? '<p class="sol-foot">' + escapeHtml(block.footer) + "</p>" : "");
@@ -261,8 +265,9 @@ function renderFacts(block) {
     block.mark.forEach(function (i) { marks[i] = true; });
   }
   var rows = items.map(function (it, i) { return eqRow(it[0], it[1], !!marks[i]); }).join("");
+  // a facts list is a SEQUENCE (Rule 1) — carries the sol-seq marker, columnises.
   return (block.note ? '<p class="sol-note">' + escapeHtml(block.note) + "</p>" : "") +
-    '<div class="sol-facts">' + rows + "</div>" +
+    '<div class="sol-facts sol-seq">' + rows + "</div>" +
     (block.footer ? '<p class="sol-foot">' + escapeHtml(block.footer) + "</p>" : "");
 }
 function renderRule(block) {
@@ -465,6 +470,101 @@ function wireWalkthrough(root, opts) {
 }
 
 // ════════════════════════════════════════════════════════════════
+// SOLUTION-PANEL-LAYOUT v1 (Item 81) — columnise declared SEQUENCES.
+//
+// A sequence container carries the `sol-seq` marker (added by renderTable for a
+// single table, and renderFacts). CSS lays it out as a grid whose column COUNT
+// is `--sol-cols`; this function computes that count per the contract:
+//   cols = clamp( floor(available_width / (longest_item_width + gutter)), 1, 4 )
+// Across-order and the max-content column width are pure CSS (grid auto-flow row).
+// A sol-working carries NO marker and is never touched here — it is BLOCK (R6).
+//
+// This is display-only: it reads geometry and writes one CSS custom property. It
+// never calls check(), never mutates the answer or the student response, and does
+// not import the grading module — the §13.1 firewall is intact.
+// ════════════════════════════════════════════════════════════════
+
+var SOL_GUTTER = 24;   // the contract's gutter; matches the grid column-gap in CSS
+
+// Available width MUST come from the panel/card, not the sequence's immediate
+// container. In the walkthrough the sequence sits inside a chat bubble (.cc-bub)
+// that shrink-wraps to its content, so seq.clientWidth there reports the ONE-column
+// width and the sequence never columnises (the Phase-4 failure). Walk up to the
+// nearest solution/card container, which fills the panel in every context.
+function panelWidthFor(seq) {
+  var panel = seq.closest ? seq.closest(".pv-solwrap, .sol-holder, .pv-card") : null;
+  if (panel) {
+    var cs = getComputedStyle(panel);
+    var w = panel.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+    if (w > 0) return w;
+  }
+  return seq.clientWidth;   // fallback: no known panel container
+}
+function layoutOneSequence(seq) {
+  try {
+    var kids = seq.children, n = kids.length;
+    if (!n) return;
+    // Reset to one column so each item reports its own intrinsic (max-content) width.
+    seq.style.setProperty("--sol-cols", "1");
+    var avail = panelWidthFor(seq);
+    var longest = 0;
+    for (var i = 0; i < n; i++) { var w = kids[i].scrollWidth; if (w > longest) longest = w; }
+    if (avail <= 0 || longest <= 0) return;
+    var cols = Math.floor(avail / (longest + SOL_GUTTER));
+    if (cols < 1) cols = 1; else if (cols > 4) cols = 4;   // Ruling R1: cap at 4
+    seq.style.setProperty("--sol-cols", String(cols));
+    // Cap each item at the panel width so an item wider than the panel takes its
+    // OWN scroll rail (Rule 3 tail) instead of widening the grid/panel. Clamping
+    // the item's max-width also clamps the max-content column, so the grid never
+    // exceeds `avail`.
+    seq.style.setProperty("--sol-itemmax", avail + "px");
+  } catch (e) { /* layout must never break the panel */ }
+}
+
+// Lay out every sol-seq under `root` (default: the whole document).
+function layoutSequences(root) {
+  if (typeof document === "undefined") return;
+  var scope = root && root.querySelectorAll ? root : document;
+  var list = scope.querySelectorAll(".sol-seq");
+  for (var i = 0; i < list.length; i++) layoutOneSequence(list[i]);
+  // `root` itself may be a bare sol-seq (e.g. observer handoff)
+  if (root && root.classList && root.classList.contains("sol-seq")) layoutOneSequence(root);
+}
+
+// Auto-run: sequences appear both directly (renderSolution) and inside walkthrough
+// bubbles as they type. A narrow observer lays out ONLY newly-added sol-seq nodes,
+// debounced to an animation frame. It never edits .sol-walk/.cc-bub or wireWalkthrough
+// — it only sets --sol-cols on the sequences those paths already emit.
+var _solSeqObserver = null;
+function installSequenceObserver() {
+  if (typeof window === "undefined" || typeof MutationObserver === "undefined" || typeof document === "undefined") return;
+  if (_solSeqObserver) return;
+  _solSeqObserver = new MutationObserver(function (muts) {
+    var found = [];
+    for (var i = 0; i < muts.length; i++) {
+      var added = muts[i].addedNodes;
+      for (var j = 0; j < added.length; j++) {
+        var node = added[j];
+        if (!node || node.nodeType !== 1) continue;
+        if (node.classList && node.classList.contains("sol-seq")) found.push(node);
+        if (node.querySelectorAll) { var inner = node.querySelectorAll(".sol-seq"); for (var k = 0; k < inner.length; k++) found.push(inner[k]); }
+      }
+    }
+    if (found.length) {
+      var raf = window.requestAnimationFrame || function (fn) { return setTimeout(fn, 16); };
+      raf(function () { for (var m = 0; m < found.length; m++) layoutOneSequence(found[m]); });
+    }
+  });
+  try { _solSeqObserver.observe(document.documentElement || document.body, { childList: true, subtree: true }); } catch (e) {}
+  // lay out anything already present at install time
+  try { layoutSequences(document); } catch (e) {}
+}
+if (typeof window !== "undefined") {
+  if (typeof document !== "undefined" && document.readyState !== "loading") installSequenceObserver();
+  else if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", installSequenceObserver);
+}
+
+// ════════════════════════════════════════════════════════════════
 // Exports
 // ════════════════════════════════════════════════════════════════
 
@@ -474,6 +574,7 @@ if (typeof module !== "undefined" && module.exports) {
     renderSolution: renderSolution,
     renderWalkthrough: renderWalkthrough,
     wireWalkthrough: wireWalkthrough,
+    layoutSequences: layoutSequences,
     bubbles: { wrap: chatWrap, msg: chatMsg, FILL_MS: BUBBLE_FILL_MS }
   };
 }
@@ -483,6 +584,7 @@ if (typeof window !== "undefined") {
     renderSolution: renderSolution,
     renderWalkthrough: renderWalkthrough,
     wireWalkthrough: wireWalkthrough,
+    layoutSequences: layoutSequences,
     bubbles: { wrap: chatWrap, msg: chatMsg, FILL_MS: BUBBLE_FILL_MS }
   };
 }
