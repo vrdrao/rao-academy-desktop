@@ -227,6 +227,7 @@ ${source}
       isWrongGone: !tried.classList.contains("is-wrong"),
       chips: [...f.querySelectorAll(".cc-schip")].map((c) => c.textContent),
       lastBubble: [...f.querySelectorAll(".cc-btxt")].pop()?.textContent || "",
+      whyClass: !!([...f.querySelectorAll(".cc-msg")].pop()?.classList.contains("cc-msg-why")),
       log: (window.__raoWhyWrongLog || []).map((e) => e.code),
       rowBtns: [...f.querySelectorAll(".cc-actions button")].map((b) => b.textContent),
       inert: f.querySelector(".qbody").inert,
@@ -242,9 +243,13 @@ ${source}
   else fail("wrong-mark presence (LAW 3 as amended by FR-2)", JSON.stringify(afterWrong));
   if (afterWrong.triedStyleEqualsRest) pass("tried option computed style == resting sibling", "border/bg/color/opacity identical");
   else fail("tried option styling", "differs from a resting option");
-  if (afterWrong.chips[1] === "Hint 2" && /far larger/.test(afterWrong.lastBubble))
-    pass("whyWrong IS the next hint rung", `chip "Hint 2", message "${afterWrong.lastBubble.slice(0, 50)}…"`);
-  else fail("whyWrong bubble", JSON.stringify({ chips: afterWrong.chips, last: afterWrong.lastBubble.slice(0, 60) }));
+  // RE-POINTED by BRIEF-G3-ENGINE-1 Change 2 (Item 66; REVERSES the "whyWrong IS
+  // the next hint rung" law): whyWrong is its OWN stream — chip "Not quite", never
+  // "Hint n", and warning-tinted (.cc-msg-why). THREE conditions where the
+  // repealed law asserted one (chip === "Hint 2").
+  if (afterWrong.chips[1] === "Not quite" && /far larger/.test(afterWrong.lastBubble) && afterWrong.whyClass)
+    pass("whyWrong is its OWN stream — 'Not quite', warning tint, NOT a hint number", `chip "Not quite", .cc-msg-why, "${afterWrong.lastBubble.slice(0, 40)}…"`);
+  else fail("whyWrong stream (Change 2)", JSON.stringify({ chips: afterWrong.chips, whyClass: afterWrong.whyClass, last: afterWrong.lastBubble.slice(0, 60) }));
   if (afterWrong.log.includes("ESTIMATE_WRONG_VALUE")) pass("whyWrong code logged", JSON.stringify(afterWrong.log));
   else fail("whyWrong code log", JSON.stringify(afterWrong.log));
   if (afterWrong.rowBtns.join("|") === "Give one more hint|Try again")
@@ -269,15 +274,24 @@ ${source}
       rowBtns: [...f.querySelectorAll(".cc-actions button")].map((b) => b.textContent),
     };
   });
-  if (ladder.bubbles === 4 && ladder.chips.join("|") === "Hint 1|Hint 2|Hint 3|Hint 4")
-    pass("hint ladder accumulates — 4 bubbles, numbering adapts", ladder.chips.join(", "));
-  else fail("ladder accumulation", JSON.stringify(ladder));
-  if (ladder.rowBtns.join("|") === "Walk me through it|I’ll try now")
-    pass('all hints used → "Walk me through it" appears', ladder.rowBtns.join(" / "));
-  else fail("walkthrough trigger", JSON.stringify(ladder.rowBtns));
+  // RE-POINTED (Change 2): the stream now interleaves the whyWrong "Not quite"
+  // bubble, but the HINT numbers stay consecutive (1,2,3) — proof the whyWrong did
+  // NOT consume a hint number. Two conditions where the repealed law had one.
+  const hintChips = ladder.chips.filter((c) => /^Hint \d+$/.test(c));
+  if (ladder.bubbles === 4 && ladder.chips.join("|") === "Hint 1|Not quite|Hint 2|Hint 3" && hintChips.join("|") === "Hint 1|Hint 2|Hint 3")
+    pass("hint ladder accumulates — whyWrong interleaved, hint numbering NOT consumed", ladder.chips.join(", "));
+  else fail("ladder accumulation (Change 2)", JSON.stringify(ladder));
+  // RE-POINTED (Change 1): the button is now "Show me the solution". STRICTER —
+  // also assert the OLD label appears NOWHERE in rao-card.js (a second condition).
+  const cardSrc = read("engine/rao-card.js");
+  if (ladder.rowBtns.join("|") === "Show me the solution|I’ll try now")
+    pass('all hints used → "Show me the solution" appears', ladder.rowBtns.join(" / "));
+  else fail("walkthrough trigger (Change 1)", JSON.stringify(ladder.rowBtns));
+  if (!/Walk me through it/.test(cardSrc)) pass('old label "Walk me through it" absent from rao-card.js');
+  else fail("old label lingers in rao-card.js", "'Walk me through it' still present");
 
   // ── 3. walkthrough: COMMIT on open, no retry anywhere, one button per step ──
-  await tapButton(S(".cc-actions button"), /Walk me through it/);
+  await tapButton(S(".cc-actions button"), /Show me the solution/);
   // assert the lock BEFORE the first bubble even fills — the commit is immediate
   const atOpen = await page.evaluate(() => {
     const f = document.getElementById("fixture");

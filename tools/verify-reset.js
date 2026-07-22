@@ -826,9 +826,11 @@ async function runViewport(browser, vp, touch) {
   else fail(`construct re-mount [${label}]`, `RaoGeo.mount NOT re-called (${mountsBefore} -> ${mountsAfter}) — board would keep its placed state`);
 
   /* ── FR-1 req 4: the reset is visual/input ONLY — progress survives ──
-     Ladder fixture (last card): wrong → Try again → SECOND wrong must offer
-     "Walk me through it" (wrongCount survived the reset) and the hint ladder
-     stays where it was (hint button label after a consumed rung). */
+     Ladder fixture (last card): wrong → Try again → SECOND wrong auto-opens the
+     solution ("Show me the solution", BRIEF-G3-ENGINE-1 Change 1; wrongCount
+     survived the reset). The hint label after the first wrong now reads "Hint",
+     not "Give one more hint": a whyWrong "Not quite" bubble does NOT consume a
+     hint number (Change 2, Item 66), so hintNum is unchanged. */
   try {
     const i = behaviors.length - 1;
     const id = "rst" + i;
@@ -846,14 +848,19 @@ async function runViewport(browser, vp, touch) {
         anyX: !!f.querySelector(".cc-x"),
         residualSel: !!f.querySelector(".qbody .is-sel"),
         hintLabel: (f.querySelector(".pv-hint") || {}).textContent || "",
+        whyClass: (() => { const m = [...f.querySelectorAll(".cc-msg")].pop(); return !!(m && m.classList.contains("cc-msg-why")); })(),
       };
     }, id);
     if (!mid.anyX && !mid.residualSel) pass(`${name} — task reset clean after wrong #1`, `bubbles kept: ${mid.bubbles}`);
     else fail(`${name} — task reset after wrong #1`, JSON.stringify(mid));
     if (mid.bubbles === 1) pass(`${name} — law 4: whyWrong bubble survives`);
     else fail(`${name} — law 4: whyWrong bubble survives`, `bubbles=${mid.bubbles}`);
-    if (mid.hintLabel === "Give one more hint") pass(`${name} — ladder position survives`, `"${mid.hintLabel}"`);
-    else fail(`${name} — ladder position survives`, `hint button reads "${mid.hintLabel}"`);
+    // RE-POINTED for Change 2 (Item 66): the whyWrong "Not quite" does NOT consume
+    // a hint number, so after the first wrong the hint button still reads "Hint"
+    // (hintNum unchanged) AND the surviving bubble carries the warning tint
+    // .cc-msg-why. Two conditions where the repealed law asserted one label.
+    if (mid.hintLabel === "Hint" && mid.whyClass) pass(`${name} — whyWrong is not a hint (label still "Hint", bubble .cc-msg-why)`, `"${mid.hintLabel}"`);
+    else fail(`${name} — whyWrong not a hint rung`, `hintLabel="${mid.hintLabel}" whyClass=${mid.whyClass} (expected "Hint" + tint)`);
     await tap(`#${id} .opt`, await optIdx(`#${id} .opt`, "60,000"));
     await tap(`#${id} .pv-check`);
     // FR-2 ruling 5: the SECOND wrong now auto-opens the walkthrough — its

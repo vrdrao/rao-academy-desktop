@@ -136,3 +136,29 @@
 /* when the takeaway panel (or the full walkthrough) has carried the teaching,
    the .explain one-liner would be a duplicate — keep it sealed */
 .rao-lesson [data-mode="adaptive"].is-checked.cc-hastake .explain{display:none}
+
+/* ── Change 2 (BRIEF-G3-ENGINE-1, Item 66): the whyWrong bubble is its OWN
+   stream. CREATED here, derived from .cc-bub — SAME geometry, warning tint only.
+   Reuses the existing warning-role tokens (.pv-why bg/border #fff2f5/#ffd3e0,
+   .pv-fb.bad text #b04a6a) — no new hue invented. ── */
+.cc-msg-why .cc-bub{background:#fff2f5;border-color:#ffd3e0}
+.cc-msg-why .cc-schip{color:#b04a6a;background:#ffe0e9}
+
+/* ── Change 5 (BRIEF-G3-ENGINE-1): solution table / facts / rule. Monospace fact
+   lines, one per row. Marked rows use the SUCCESS-role tokens (the .cc-take green
+   family: #eefbf2 / #047857); absent lines use the DANGER-role tokens (the
+   .pv-why / .cc-x pink-red: #fff2f5 / #b04a6a). No new colour.
+   ALIGNMENT IS LOAD-BEARING: every row carries identical padding — a marked row
+   differs in background, colour and weight ONLY, never position. JetBrains Mono
+   400 vs 700 was measured at identical advance width (87.97px for "8 × 5 = 40"),
+   so the weight change keeps the `=` column lined up. ── */
+.sol-tables{display:flex;gap:18px;flex-wrap:wrap;margin:4px 0 2px;align-items:flex-start}
+.sol-table{min-width:0}
+.sol-facts{margin:4px 0 2px}
+.sol-note{font-family:'Quicksand',sans-serif;color:#5a5673;font-weight:600;line-height:1.55;margin:0 0 8px}
+.sol-foot{font-family:'Quicksand',sans-serif;color:#5a5673;font-weight:600;line-height:1.55;margin:10px 0 0}
+.sol-row,.sol-absent{font-family:var(--fm,'JetBrains Mono',monospace);font-size:1rem;line-height:1.7;padding:3px 10px;border-radius:6px}
+.sol-eq{white-space:nowrap}
+.sol-row.sol-mark{background:#eefbf2;color:#047857;font-weight:700}
+.sol-absent{color:#b04a6a;background:#fff2f5}
+.sol-rule .sol-note{margin-bottom:8px}

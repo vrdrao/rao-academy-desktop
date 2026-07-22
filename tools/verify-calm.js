@@ -531,27 +531,39 @@ async function explainLaws(browser) {
         let answer; try { answer = JSON.parse(f.dataset.answer || "[]").map(String); } catch (e) { answer = []; }
         let solution = null; try { solution = JSON.parse(f.dataset.solution || "null"); } catch (e) { solution = null; }
         const hasTake = !!(solution || []).find((b) => b && b.type === "takeaway");
+        const hasSolution = !!(solution && solution.length);
         const qbody = f.querySelector(".qbody");
         const ex = qbody && qbody.querySelector(".explain");
-        const rec = { i: i + 1, behavior, hasTake, exists: !!ex, before: null, after: null, filled: false, outcome: null, panel: false };
+        const rec = { i: i + 1, behavior, hasTake, hasSolution, exists: !!ex, before: null, after: null, filled: false, outcome: null, panel: false, hastake: false, winPaint: false };
         if (!ex) { out.push(rec); continue; }
         rec.before = getComputedStyle(ex).display;
         rec.filled = fill(qbody, behavior, answer) !== false;
         const chk = f.querySelector(".pv-check");
         if (chk) chk.click();
-        await new Promise((r) => setTimeout(r, 750));   // celebrate's 550ms takeaway beat
+        await new Promise((r) => setTimeout(r, 750));   // celebrate's 550ms beat
         rec.after = getComputedStyle(ex).display;
         rec.outcome = f.dataset.raoOutcome || null;
         rec.panel = !!f.querySelector(".cc-take");
+        rec.hastake = qbody.classList.contains("cc-hastake");
+        rec.winPaint = !!f.querySelector(".cc-win");
         out.push(rec);
       }
       return out;
     }, t.idxs);
     for (const r of recs) {
       driven++;
-      const wantAfter = r.hasTake ? "none" : "block";
+      const isSel = r.behavior === "single-select" || r.behavior === "multi-select";
+      const wantAfter = r.hasSolution ? "none" : "block";
+      // RE-POINTED by BRIEF-G3-ENGINE-1 Change 4 (Item 65; REVERSES the takeaway
+      // panel). The repealed law asserted ONE thing: a takeaway question shows a
+      // .cc-take panel. This asserts FOUR, and is strictly stronger:
+      //   (a) NO .cc-take panel ever (the panel is gone);
+      //   (b) .explain sealed iff a solution exists, visible when legacy;
+      //   (c) cc-hastake present iff a solution exists — it is what seals .explain,
+      //       and the whole trap of Change 4 is that dropping it un-seals .explain;
+      //   (d) selects keep the green .cc-win (correct is still loud).
       const ok = r.exists && r.before === "none" && r.filled && r.outcome === "correct" &&
-                 r.after === wantAfter && (!r.hasTake || r.panel);
+                 !r.panel && r.after === wantAfter && (r.hastake === r.hasSolution) && (!isSel || r.winPaint);
       if (ok) revealOk++;
       else revealFails.push(`${path.basename(t.file)} q${r.i} (${r.behavior}): ${JSON.stringify(r)}`);
     }
@@ -562,8 +574,8 @@ async function explainLaws(browser) {
     revealFails.slice(0, 6).forEach((l) => console.log(`        ${C.r}·${C.x} ${l}`));
   } else {
     pass("g. EXPLAIN REVEAL (live)",
-      `${revealOk}/${driven} frontmatter-explain questions: hidden before Check, correct answer → ` +
-      `visible when legacy, suppressed (cc-hastake + takeaway panel) when the solution carries a takeaway`);
+      `${revealOk}/${driven} frontmatter-explain questions: hidden before Check; correct → NO .cc-take panel, ` +
+      `.explain sealed by cc-hastake when a solution exists (visible when legacy), green .cc-win on selects`);
   }
 }
 
@@ -686,11 +698,24 @@ async function fixtureLaws(browser) {
   if (r2 !== true) fail("fixture drive", `expected a "Give one more hint" row button; row = ${JSON.stringify(r2)}`);
   await page.waitForTimeout(FILL_WAIT);
 
-  // ── b: LOCK-ON-OPEN ──
+  // Change 3 (Item 63) clears the accumulated hint/whyWrong bubbles when the
+  // solution opens — so capture the hint chips HERE, while they still exist, for
+  // the HINT-LABEL BAN (f) below (it used to sample them after the open).
+  const preOpenHintChips = await page.evaluate(() => {
+    const f = document.getElementById("fx");
+    return [...f.querySelectorAll(".cc-schip")].filter((c) => !c.closest(".pv-solwrap")).map((c) => c.textContent);
+  });
+
+  // ── b: LOCK-ON-OPEN ──  RE-POINTED by BRIEF-G3-ENGINE-1 Change 1: the button is
+  // now "Show me the solution". STRICTER — also assert the OLD label appears
+  // NOWHERE in rao-card.js (a second condition where the repealed law had one).
+  if (!/Walk me through it/.test(require("fs").readFileSync(require("path").join(ROOT, "engine/rao-card.js"), "utf8")))
+    pass("b. LABEL — old 'Walk me through it' absent from rao-card.js");
+  else fail("b. LABEL — old label lingers", "'Walk me through it' still in rao-card.js");
   const checksBefore = await page.evaluate(() => window.__checkCalls);
-  const r3 = await clickRow(/Walk me through it/);
+  const r3 = await clickRow(/Show me the solution/);
   if (r3 !== true) {
-    fail("b. LOCK-ON-OPEN", `"Walk me through it" never appeared; row = ${JSON.stringify(r3)}`);
+    fail("b. LOCK-ON-OPEN", `"Show me the solution" never appeared; row = ${JSON.stringify(r3)}`);
     await page.close();
     return;
   }
@@ -757,15 +782,15 @@ async function fixtureLaws(browser) {
     pass("e. BUBBLE PARITY (append-only)", "MutationObserver saw ZERO mutations to earlier bubbles after their single fill");
   else fail("e. BUBBLE PARITY (append-only)", `${bubbleStats.mutationsToEarlier} mutation record(s) hit already-filled bubbles`);
 
-  // ── f: HINT-LABEL BAN ──
-  const chips = await page.evaluate(() => {
-    const f = document.getElementById("fx");
-    // hint chips = chips OUTSIDE the walkthrough panel (steps legitimately say "of")
-    return [...f.querySelectorAll(".cc-schip")].filter((c) => !c.closest(".pv-solwrap")).map((c) => c.textContent);
-  });
+  // ── f: HINT-LABEL BAN ──  RE-POINTED for Change 3 (Item 63): the hint bubbles
+  // are CLEARED when the solution opens, so the ban is checked on the chips
+  // captured BEFORE the open (preOpenHintChips). Same ban, correct sampling
+  // moment — no weakening. The stream now includes the whyWrong "Not quite" chip;
+  // none of them may say "of N".
+  const chips = preOpenHintChips;
   const banned = chips.filter((t) => /of\s+\d/.test(t));
   if (chips.length >= 4 && banned.length === 0)
-    pass("f. HINT-LABEL BAN", `${chips.length} hint chips rendered (${chips.join(", ")}) — none match /of\\s+\\d/`);
+    pass("f. HINT-LABEL BAN", `${chips.length} hint chips (pre-open: ${chips.join(", ")}) — none match /of\\s+\\d/`);
   else fail("f. HINT-LABEL BAN", banned.length ? `banned labels: ${banned.join(", ")}` : `only ${chips.length} chips rendered`);
 
   if (errors.length) fail("zero page errors (fixture drive)", errors.join(" | "));

@@ -50,6 +50,7 @@ const CARD_JS = path.join(ROOT, "engine", "rao-card.js");
 const SOLUTION_JS = path.join(ROOT, "engine", "solution-renderer.js");
 const ROBO_CSS = path.join(ROOT, "engine", "robo.css");
 const ROBO_JS = path.join(ROOT, "engine", "robo.js");
+const GEO = path.join(ROOT, "engine", "geometry-engine.js");
 const OUT_DIR = path.join(ROOT, "review");
 
 /* ---------- inputs: questions from the lesson, chrome from shared files --- */
@@ -64,6 +65,16 @@ function sourceOf(html) {
   const b = html.indexOf('<div id="preview"');
   return html.slice(a, b > a ? b : undefined);
 }
+
+/* Option B (BRIEF-FIX-GEO-WIRING-1): geometry-engine.js (~962 KB) is inlined ONLY
+   into pages whose lesson SOURCE contains a construct question — the only questions
+   that call window.RaoGeo. This is the ONE detector: build() decides wiring with it,
+   and tools/verify-geo-wired.js asserts the wired set EQUALS the construct-lesson set
+   with the SAME function, so the condition cannot silently drift for a future lesson.
+   Matches the frontmatter `type: construct` marker (source of truth, per CLAUDE.md),
+   the same marker the blast-radius census counted. */
+const CONSTRUCT_MARK = /(^|\n)[ \t]*type:[ \t]*construct[ \t]*(\r?\n|$)/;
+function sourceNeedsGeo(source) { return CONSTRUCT_MARK.test(source); }
 
 /* The card chrome now lives in engine/rao-card.css — a REAL shared file the app
    ships alongside rao.css. The review page links the same bytes the app does, so
@@ -277,6 +288,18 @@ function build(lessonPath, outName) {
   const fontsCss = inlineFonts();
   const refName = "engine/rao-card.js";
 
+  // Option B: only construct pages carry the geometry engine (see sourceNeedsGeo).
+  const needsGeo = sourceNeedsGeo(source);
+  const geoBlock = needsGeo
+    ? `<script>/* engine/geometry-engine.js — interactive geometry (CONSTRUCT behaviour),
+   verbatim. Inlined ONLY into pages whose lesson source has a construct question
+   (Option B, BRIEF-FIX-GEO-WIRING-1). Loaded BEFORE the card renderer so
+   window.RaoGeo exists when construct cards wire up. */
+${safeForScript(fs.readFileSync(GEO, "utf8").trim())}
+</script>
+`
+    : "";
+
   const title = path.basename(lessonPath).replace(/\.html?$/i, "");
   const page =
 `<!doctype html>
@@ -307,7 +330,7 @@ ${mount}</div>
 <script>/* engine/preview-engine.js — the CURRENT engine, verbatim */
 ${safeForScript(engine)}
 </script>
-<script>/* engine/solution-renderer.js — walkthrough renderer (display-only), verbatim.
+${geoBlock}<script>/* engine/solution-renderer.js — walkthrough renderer (display-only), verbatim.
    Loaded BEFORE the card renderer so window.RaoSolution exists when cards wire up. */
 ${safeForScript(fs.readFileSync(SOLUTION_JS, "utf8").trim())}
 </script>
@@ -348,4 +371,4 @@ if (require.main === module) {
   console.log("card from  engine/rao-card.css + engine/rao-card.js   theme: " + THEME);
 }
 
-module.exports = { build };
+module.exports = { build, sourceOf, sourceNeedsGeo };

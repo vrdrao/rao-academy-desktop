@@ -26,12 +26,23 @@
         tools/verify-reset.js A1–A5).
      4. HELP ACCUMULATES — hint bubbles and walkthrough steps only ever stack;
         nothing the card has told the child disappears while the question lives.
-     5. ONE HINT LADDER — the whyWrong message after a wrong attempt IS the next
-        hint rung ("Hint 1", "Hint 2", … — never "of N"). Presentation: typed
-        tutor bubbles (RaoSolution.bubbles — ONE copy, shared with the steps).
+        AMENDED by BRIEF-G3-ENGINE-1 (Item 63): opening the solution is the ONE
+        sanctioned exception — the accumulated hint/whyWrong bubbles clear at that
+        point so the panel stands alone (openWalkthrough / revealSolution). The
+        question DOM is still untouched; only the bubble stream (outside .qbody)
+        is removed, so the no-repaint law holds.
+     5. TWO SEPARATE STREAMS — hints and whyWrong are labelled apart (AMENDED by
+        BRIEF-G3-ENGINE-1, Item 66; REVERSES the old "whyWrong IS the next hint
+        rung"). A whyWrong message renders with the chip "Not quite" and does NOT
+        consume a hint number: after it, the next hint the child asks for is still
+        "Hint 1". Why: two adults on this project misread a whyWrong message as a
+        leaking hint rung on consecutive days, and a child would misread it every
+        time. Presentation: typed tutor bubbles (RaoSolution.bubbles — ONE copy,
+        shared with the steps); the whyWrong bubble carries .cc-msg-why (warning
+        tint), the hint bubble does not.
      6. WALKTHROUGH commit (amended by BRIEF FR-2, 2026-07-19, per HANDOFF-24
         ruling 7 — was "child-initiated only, never auto-opened"). The
-        walkthrough opens by EITHER path: the child taps "Walk me through it"
+        walkthrough opens by EITHER path: the child taps "Show me the solution"
         (offered once hints are used after a wrong attempt, never before the
         first attempt), or it AUTO-OPENS on the second wrong attempt where a
         solution exists (TWO ATTEMPTS IS THE CAP — no Try Again offered).
@@ -39,8 +50,13 @@
         solved-with-help. No retry inside. Final step reveals quietly —
         triumph ≠ rescue. Guards: verify-calm.js b (tap), verify-reset.js
         A6–A9 (auto-open).
-     7. CORRECT is the only loud moment: green option + cc-win + sparks + chime,
-        takeaway panel ("The idea to keep"), then "Next question →".
+     7. CORRECT stays loud but SILENT of text (AMENDED by BRIEF-G3-ENGINE-1,
+        Item 65; REVERSES the old "takeaway panel"). Green option + cc-win +
+        sparks + chime are unchanged; the .cc-take panel is GONE — nothing to
+        read by default. cc-hastake is still added (it seals the duplicate
+        .explain — drop it and .explain reappears). A ghost "Show me the solution"
+        is offered beside "Next question →" when a solution exists; tapping it
+        renders the full solution and leaves the outcome "correct".
      8. MODES — adaptive: all of the above. rapid: verdict flash + one-line
         explain + code log only. quiz: nothing during; review is the app's job.
 
@@ -197,7 +213,7 @@ function wireCard(frame) {
         removeRow();
         giveHint(function () { feedbackRow("I’ll try now"); });
       } },
-      walkOffered() && { label: "Walk me through it", ghost: true, onTap: openWalkthrough },
+      walkOffered() && { label: "Show me the solution", ghost: true, onTap: openWalkthrough },
       { label: solidLabel, ghost: false, onTap: resumeAnswering }
     ].filter(Boolean));
   }
@@ -288,15 +304,13 @@ function wireCard(frame) {
   // ── WALKTHROUGH — opened by the child's tap OR by the second-wrong
   //    auto-open (FR-2 ruling 7); EITHER path is THE COMMIT POINT (law 6 as
   //    amended): locks immediately, records solved-with-help. ──
-  function openWalkthrough() {
-    if (locked) return;
-    locked = true;
-    setOutcome("solved-with-help");     // recorded BEFORE anything renders
-    removeRow();
-    freezeTask(true);
-    hideFoot(true);                     // no Check, no retry — anywhere
-    quietChrome(true);
-    if (hintBtn) hintBtn.style.display = "none";
+  // The panel render is SHARED by two callers that set DIFFERENT outcomes:
+  //   openWalkthrough() — help path, locks + records solved-with-help
+  //   revealSolution()  — correct path (Change 4), outcome STAYS "correct"
+  // The DOM work lives here once so the two callers cannot drift (BRIEF-G3-ENGINE-1
+  // Change 4: "extract the rendering into a shared function, set the outcome
+  // separately"). It NEVER calls setOutcome — bookkeeping is the caller's.
+  function renderSolutionPanel() {
     var cardEl = frame.querySelector(".pv-card");
     var holder = frame.querySelector(".pv-solwrap");
     if (!holder) {
@@ -317,6 +331,32 @@ function wireCard(frame) {
         actionRow([{ label: "Next question →", ghost: false, onTap: nextQuestion }]);
       }
     });
+  }
+  function openWalkthrough() {
+    if (locked) return;
+    locked = true;
+    setOutcome("solved-with-help");     // recorded BEFORE anything renders
+    removeRow();
+    freezeTask(true);
+    hideFoot(true);                     // no Check, no retry — anywhere
+    quietChrome(true);
+    if (hintBtn) hintBtn.style.display = "none";
+    // Change 3 (Item 63, REVERSES law 4): the accumulated hint/whyWrong bubbles
+    // CLEAR when the solution opens — the panel becomes the only thing below the
+    // question. The chat lives OUTSIDE .qbody, so the question DOM is untouched
+    // (no repaint); only the bubble container is removed.
+    if (chat) { chat.remove(); chat = null; }
+    renderSolutionPanel();
+  }
+  // Change 4 (Item 65): the correct-answer reveal. The child ALREADY succeeded,
+  // so the outcome must STAY "correct" — setOutcome is deliberately NOT called
+  // here (that is the whole reason the render was extracted from openWalkthrough,
+  // which records solved-with-help). The card is already locked & frozen by
+  // celebrate(); this just swaps the action row for the panel.
+  function revealSolution() {
+    removeRow();
+    if (chat) { chat.remove(); chat = null; }
+    renderSolutionPanel();
   }
   function nextQuestion() {
     removeRow();
@@ -417,17 +457,20 @@ function wireCard(frame) {
       sparks(wins[i]);
     }
     ding();
-    var take = takeawayText();
+    // Change 4 (Item 65, REVERSES law 7): nothing to READ by default. The
+    // .cc-take panel is GONE — but cc-hastake MUST still be added where a
+    // solution exists, because that class is what seals the duplicate .explain
+    // (drop it and .explain reappears, swapping one block of text for another and
+    // defeating the ruling). Green paint + cc-win + sparks + chime are unchanged:
+    // correct is still loud. A ghost "Show me the solution" is offered beside
+    // "Next question →" when a solution exists; tapping it renders the full
+    // solution and LEAVES the outcome "correct" (revealSolution never re-records).
+    if (canWalk()) qbody.classList.add("cc-hastake");
     setTimeout(function () {
-      if (take) {
-        var cardEl = frame.querySelector(".pv-card");
-        var p = document.createElement("div");
-        p.className = "cc-take";
-        p.innerHTML = '<p><span class="cc-tag">The idea to keep</span>' + esc(take) + "</p>";
-        cardEl.insertBefore(p, foot);
-        qbody.classList.add("cc-hastake");   // the panel carries the teaching — hide the duplicate .explain
-      }
-      actionRow([{ label: "Next question →", ghost: false, onTap: nextQuestion }]);
+      actionRow([
+        canWalk() && { label: "Show me the solution", ghost: true, onTap: revealSolution },
+        { label: "Next question →", ghost: false, onTap: nextQuestion }
+      ].filter(Boolean));
     }, 550);
   }
 
@@ -466,11 +509,17 @@ function wireCard(frame) {
     if (msg && !shownWhys[msg]) {
       shownWhys[msg] = true;
       typing = true;
-      bubbles.msg(ensureChat(), "Hint " + hintNum++, esc(msg), function () {
+      // Change 2 (Item 66, REVERSES law 5): whyWrong is its OWN stream — chip
+      // "Not quite", warning tint, and it does NOT consume a hint number
+      // (hintNum untouched), so the next hint the child asks for is still
+      // "Hint 1". Calling it "Hint n" is what made two adults misread it as a
+      // leaking hint rung; a child would misread it every time.
+      var whyBub = bubbles.msg(ensureChat(), "Not quite", esc(msg), function () {
         typing = false;
         if (capped) commitCap();
         else feedbackRow("Try again");
       });
+      if (whyBub && whyBub.classList) whyBub.classList.add("cc-msg-why");
     } else if (capped) {
       commitCap();
     } else if (!allHintsUsed() && !typing) {

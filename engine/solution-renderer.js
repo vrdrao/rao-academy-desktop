@@ -51,7 +51,16 @@ function normalizeExplain(opts) {
           working: b.working || null,
           reason: b.reason || null,
           text: b.text || null,
-          html: b.html || null
+          html: b.html || null,
+          // Change 5 (BRIEF-G3-ENGINE-1) — table / facts / rule fields. Products
+          // are NEVER carried here: the renderer computes a × b itself, so a
+          // typo'd (or malicious) frontmatter product cannot reach the child.
+          tables: b.tables || null,
+          note: b.note || null,
+          footer: b.footer || null,
+          items: b.items || null,
+          mark: b.mark || null,
+          example: b.example || null
         };
       })
     };
@@ -112,6 +121,15 @@ function renderSolution(opts) {
       case "verification":
         parts.push(renderVerification(block));
         break;
+      case "table":
+        parts.push(renderTable(block));
+        break;
+      case "facts":
+        parts.push(renderFacts(block));
+        break;
+      case "rule":
+        parts.push(renderRule(block));
+        break;
       default:
         // Unknown block type — text fallback
         parts.push(renderFallback(block));
@@ -162,6 +180,104 @@ function renderVerification(block) {
 function renderFallback(block) {
   var text = block.text || "";
   return '<div class="sol-fallback">' + escapeHtml(text) + "</div>";
+}
+
+// ════════════════════════════════════════════════════════════════
+// Change 5 (BRIEF-G3-ENGINE-1) — table / facts / rule.
+//
+// THE ENGINE COMPUTES EVERY PRODUCT. The author supplies factor / upTo /
+// mark / [a, b] pairs; `a × b` is multiplied HERE. A frontmatter `product`
+// is never read — a typo'd times table across ~110 team-authored lessons is
+// therefore impossible, and a guard can verify every table in the corpus.
+//
+// Validation: every operand an integer 1–12 (rule.example.b may be 0, the
+// ONLY legal 0). An invalid block renders "" and is reported to
+// window.__raoSolWarn — never thrown, never rendered partially.
+// ════════════════════════════════════════════════════════════════
+
+function solWarn(msg) {
+  try { if (typeof window !== "undefined") (window.__raoSolWarn = window.__raoSolWarn || []).push(String(msg)); } catch (e) {}
+}
+function isInt1to12(n) { return typeof n === "number" && Math.floor(n) === n && n >= 1 && n <= 12; }
+// One monospace fact line. `marked` adds tint + weight ONLY — never padding
+// (alignment is load-bearing; the `=` column must line up down the table).
+function eqRow(a, b, marked) {
+  var product = a * b;   // COMPUTED — a frontmatter product is never consulted
+  return '<div class="sol-row' + (marked ? " sol-mark" : "") + '"><span class="sol-eq">' +
+    a + " × " + b + " = " + product + "</span></div>";
+}
+function absentLine(v) {
+  return '<div class="sol-absent"><span class="sol-eq">' + escapeHtml(String(v)) + " is not here</span></div>";
+}
+function validTableEntry(t) {
+  if (!t || !isInt1to12(t.factor) || !isInt1to12(t.upTo)) return false;
+  if (t.mark != null) {
+    if (!Array.isArray(t.mark)) return false;
+    for (var i = 0; i < t.mark.length; i++) if (!isInt1to12(t.mark[i]) || t.mark[i] > t.upTo) return false;
+  }
+  if (t.absent != null) {
+    if (!Array.isArray(t.absent)) return false;
+    for (var j = 0; j < t.absent.length; j++) {
+      var ab = t.absent[j];
+      if (!ab || Math.floor(ab.after) !== ab.after || ab.after < 1 || ab.after > t.upTo || typeof ab.value !== "number") return false;
+    }
+  }
+  return true;
+}
+function renderOneTable(t) {
+  var marks = {}; (t.mark || []).forEach(function (m) { marks[m] = true; });
+  var absAfter = {}; (t.absent || []).forEach(function (a) { (absAfter[a.after] = absAfter[a.after] || []).push(a.value); });
+  var rows = [];
+  for (var m = 1; m <= t.upTo; m++) {
+    rows.push(eqRow(t.factor, m, !!marks[m]));
+    if (absAfter[m]) absAfter[m].forEach(function (v) { rows.push(absentLine(v)); });
+  }
+  return '<div class="sol-table">' + rows.join("") + "</div>";
+}
+function renderTable(block) {
+  var tables = block.tables;
+  if (!Array.isArray(tables) || tables.length < 1 || tables.length > 2 || !tables.every(validTableEntry)) {
+    solWarn("table: invalid — " + JSON.stringify(tables));
+    return "";
+  }
+  var inner = tables.map(renderOneTable).join("");
+  return (block.note ? '<p class="sol-note">' + escapeHtml(block.note) + "</p>" : "") +
+    '<div class="sol-tables' + (tables.length === 2 ? " sol-tables-2" : "") + '">' + inner + "</div>" +
+    (block.footer ? '<p class="sol-foot">' + escapeHtml(block.footer) + "</p>" : "");
+}
+function renderFacts(block) {
+  var items = block.items;
+  if (!Array.isArray(items) || !items.length ||
+      !items.every(function (it) { return Array.isArray(it) && it.length === 2 && isInt1to12(it[0]) && isInt1to12(it[1]); })) {
+    solWarn("facts: invalid items — " + JSON.stringify(items));
+    return "";
+  }
+  var marks = {};
+  if (block.mark != null) {
+    if (!Array.isArray(block.mark) || !block.mark.every(function (i) { return Math.floor(i) === i && i >= 0 && i < items.length; })) {
+      solWarn("facts: invalid mark — " + JSON.stringify(block.mark));
+      return "";
+    }
+    block.mark.forEach(function (i) { marks[i] = true; });
+  }
+  var rows = items.map(function (it, i) { return eqRow(it[0], it[1], !!marks[i]); }).join("");
+  return (block.note ? '<p class="sol-note">' + escapeHtml(block.note) + "</p>" : "") +
+    '<div class="sol-facts">' + rows + "</div>" +
+    (block.footer ? '<p class="sol-foot">' + escapeHtml(block.footer) + "</p>" : "");
+}
+function renderRule(block) {
+  if (!block.text || typeof block.text !== "string") { solWarn("rule: missing text"); return ""; }
+  var ex = "";
+  if (block.example != null) {
+    var e = block.example;
+    // the rule is the ONLY block where a 0 operand is legal (9 × 0 = 0)
+    if (!Array.isArray(e) || e.length !== 2 || !isInt1to12(e[0]) || Math.floor(e[1]) !== e[1] || e[1] < 0 || e[1] > 12) {
+      solWarn("rule: invalid example — " + JSON.stringify(e));
+    } else {
+      ex = eqRow(e[0], e[1], true);
+    }
+  }
+  return '<div class="sol-rule"><p class="sol-note">' + escapeHtml(block.text) + "</p>" + ex + "</div>";
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -247,6 +363,9 @@ function walkChip(block, stepNum, stepTotal) {
   if (block.type === "step") return "Step " + stepNum + " of " + stepTotal;
   if (block.type === "takeaway") return "The idea to keep";
   if (block.type === "verification") return "Does it make sense?";
+  if (block.type === "table") return "The times table";
+  if (block.type === "facts") return "The facts";
+  if (block.type === "rule") return "The rule";
   return null;   // figure / legacy-explain / fallback: no chip
 }
 
@@ -259,6 +378,9 @@ function walkBody(block) {
     return parts.join("");
   }
   if (block.type === "figure") return block.html || escapeHtml(block.text || "[figure]");
+  if (block.type === "table") return renderTable(block);
+  if (block.type === "facts") return renderFacts(block);
+  if (block.type === "rule") return renderRule(block);
   // legacy explain strings pass through raw — same contract as renderSolution
   if (block.type === "legacy-explain") return block.text || "";
   return escapeHtml(block.text || "");
