@@ -1247,7 +1247,49 @@ h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
 
 /* when the takeaway panel (or the full walkthrough) has carried the teaching,
    the .explain one-liner would be a duplicate — keep it sealed */
-.rao-lesson [data-mode="adaptive"].is-checked.cc-hastake .explain{display:none}</style>
+.rao-lesson [data-mode="adaptive"].is-checked.cc-hastake .explain{display:none}
+
+/* ── Change 2 (BRIEF-G3-ENGINE-1, Item 66): the whyWrong bubble is its OWN
+   stream. CREATED here, derived from .cc-bub — SAME geometry, warning tint only.
+   Reuses the existing warning-role tokens (.pv-why bg/border #fff2f5/#ffd3e0,
+   .pv-fb.bad text #b04a6a) — no new hue invented. ── */
+.cc-msg-why .cc-bub{background:#fff2f5;border-color:#ffd3e0}
+.cc-msg-why .cc-schip{color:#b04a6a;background:#ffe0e9}
+
+/* ── Change 5 (BRIEF-G3-ENGINE-1): solution table / facts / rule. Monospace fact
+   lines, one per row. Marked rows use the SUCCESS-role tokens (the .cc-take green
+   family: #eefbf2 / #047857); absent lines use the DANGER-role tokens (the
+   .pv-why / .cc-x pink-red: #fff2f5 / #b04a6a). No new colour.
+   ALIGNMENT IS LOAD-BEARING: every row carries identical padding — a marked row
+   differs in background, colour and weight ONLY, never position. JetBrains Mono
+   400 vs 700 was measured at identical advance width (87.97px for "8 × 5 = 40"),
+   so the weight change keeps the `=` column lined up. ── */
+.sol-tables{display:flex;gap:18px;flex-wrap:wrap;margin:4px 0 2px;align-items:flex-start}
+.sol-table{min-width:0}
+.sol-facts{margin:4px 0 2px}
+.sol-note{font-family:'Quicksand',sans-serif;color:#5a5673;font-weight:600;line-height:1.55;margin:0 0 8px}
+.sol-foot{font-family:'Quicksand',sans-serif;color:#5a5673;font-weight:600;line-height:1.55;margin:10px 0 0}
+.sol-row,.sol-absent{font-family:var(--fm,'JetBrains Mono',monospace);font-size:1rem;line-height:1.7;padding:3px 10px;border-radius:6px}
+.sol-eq{white-space:nowrap}
+.sol-row.sol-mark{background:#eefbf2;color:#047857;font-weight:700}
+.sol-absent{color:#b04a6a;background:#fff2f5}
+.sol-rule .sol-note{margin-bottom:8px}
+
+/* ── SOLUTION-PANEL-LAYOUT v1 (Item 81) — declared SEQUENCES columnise ─────────
+   A `.sol-seq` container (a single table, or a facts list — added by the renderer)
+   lays its items out ACROSS then wraps: CSS grid auto-flow row, columns as wide as
+   the sequence's own longest item (max-content), left-packed. The column COUNT is
+   `--sol-cols`, computed by RaoSolution.layoutSequences (floor(avail/(longest+24)),
+   capped 1..4 — Rulings R1/R2). Default 1 so it is single-column before the script
+   runs and if it never does (safe, = today's behaviour). NOT `column-count`, which
+   fills DOWN — forbidden for a sequence. An item wider than its column keeps its
+   mark on one line and takes its own horizontal scroll rail (Rule 3). */
+.sol-seq{display:grid;grid-auto-flow:row;gap:2px 24px;grid-template-columns:repeat(var(--sol-cols,1),max-content);justify-content:start;width:100%}
+.sol-seq>*{min-width:0;max-width:var(--sol-itemmax,100%);white-space:nowrap;overflow-x:auto}
+/* sol-working is BLOCK (Ruling R6): never itemised, never columnised. It is one
+   line; if it is wider than the panel it takes its own horizontal scroll rail and
+   the panel does not widen. (The walkthrough's working is `.cc-eq`, not touched.) */
+.sol-working{display:block;white-space:nowrap;overflow-x:auto;max-width:100%}</style>
 <style>/* engine/robo.css — ROBO the mascot (Brief 7.7), the same file your app ships, verbatim */
 /* ============================================================================
    robo.css — ROBO, the mascot (Brief 7.7, engine rao-master-18).
@@ -2054,349 +2096,665 @@ h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
 <div id="source">
   <!--@q
 id: qdsstjm5x
-type: fill-blanks
+type: single-select
 answer: ["3"]
 description: Interpret the remainder: 83 chairs on racks of 5
 hint: Divide 83 by 5. The chairs that can't fill one more full rack of 5 go on the final rack.
+whyWrong:
+  "16":
+    code: REMAINDER_AS_ANSWER
+    message: "16 is how many racks are completely filled — the question asks how many chairs are on the last one."
+  "17":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "17 is the total number of racks, counting the part-full one — the question asks for the chairs on that last rack, not the number of racks."
+  "5":
+    code: DIVISOR_AS_ANSWER
+    message: "5 is how many chairs a full rack holds — that's a full rack, not the last one."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">There are 83 chairs set up in the gym for an assembly. After the assembly, all the chairs will be put away on racks that hold 5 chairs. How many chairs will be on the final rack? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">There are 83 chairs set up in the gym for an assembly. After the assembly, all the chairs will be put away on racks that hold 5 chairs. How many chairs will be on the final rack?</p>
+  <ul class="options"><li data-val="16">16</li><li data-val="17">17</li><li data-val="5">5</li><li data-val="3">3</li></ul>
   <p class="explain">83 ÷ 5 = 16 remainder 3, so the final rack holds 3 chairs.</p>
 </div>
 
 <!--@q
 id: qp4u9d7tx
-type: fill-blanks
+type: single-select
 answer: ["4"]
 description: Interpret the remainder: 95 miners, lift of 7
 hint: Divide 95 by 7. The full trips carry 7 each — the miners left after those trips ride last.
+whyWrong:
+  "7":
+    code: DIVISOR_AS_ANSWER
+    message: "7 is how many miners a full lift holds — that's a full trip, not the last one."
+  "14":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "14 is the total number of trips, counting the last part-full one — the question asks how many miners are on that trip, not the number of trips."
+  "13":
+    code: REMAINDER_AS_ANSWER
+    message: "13 is how many full trips the lift makes — the question asks how many miners ride on the last trip."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">95 miners need to ride the lift to the bottom of the mine. The lift can hold 7 miners at a time. How many miners will be in the lift on its last trip? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">95 miners need to ride the lift to the bottom of the mine. The lift can hold 7 miners at a time. How many miners will be in the lift on its last trip?</p>
+  <ul class="options"><li data-val="7">7</li><li data-val="4">4</li><li data-val="14">14</li><li data-val="13">13</li></ul>
   <p class="explain">95 ÷ 7 = 13 remainder 4, so 4 miners ride on the last trip.</p>
 </div>
 
 <!--@q
 id: qebysdusy
-type: fill-blanks
+type: single-select
 answer: ["7"]
 description: Interpret the remainder: 71 stickers among 8
 hint: Divide 71 by 8. Every student gets an equal share — what's too small to share out again is left over.
+whyWrong:
+  "9":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "9 is more stickers than each student can actually get — the question asks how many are left over after sharing."
+  "8":
+    code: REMAINDER_AS_ANSWER
+    message: "8 is how many stickers each student gets — the question asks how many are left over after sharing."
+  "6":
+    code: NEAR_MISS
+    message: "That's close — check the leftover once more."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Miss Hurst has 71 gold stickers. She wants to give the same number of stickers to each of her 8 students. If she gives away as many stickers as she can, how many stickers will be left over? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">Miss Hurst has 71 gold stickers. She wants to give the same number of stickers to each of her 8 students. If she gives away as many stickers as she can, how many stickers will be left over?</p>
+  <ul class="options"><li data-val="9">9</li><li data-val="8">8</li><li data-val="7">7</li><li data-val="6">6</li></ul>
   <p class="explain">71 ÷ 8 = 8 remainder 7, so 7 stickers are left over.</p>
 </div>
 
 <!--@q
 id: qw3vv7rah
-type: fill-blanks
+type: single-select
 answer: ["3"]
 description: Interpret the remainder: 99 people, lift of 6
 hint: Divide 99 by 6. The full trips carry 6 each — the people left after those trips ride last.
+whyWrong:
+  "6":
+    code: DIVISOR_AS_ANSWER
+    message: "6 is how many people a full lift holds — that's a full trip, not the last one."
+  "17":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "17 is the total number of trips, counting the last part-full one — the question asks how many people are on that trip, not the number of trips."
+  "16":
+    code: REMAINDER_AS_ANSWER
+    message: "16 is how many full trips the lift makes — the question asks how many people ride on the last trip."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">99 people need to ride the lift to the top of a skyscraper. The lift can hold 6 people at a time. How many people will be in the lift on the last trip to the top? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">99 people need to ride the lift to the top of a skyscraper. The lift can hold 6 people at a time. How many people will be in the lift on the last trip to the top?</p>
+  <ul class="options"><li data-val="6">6</li><li data-val="17">17</li><li data-val="16">16</li><li data-val="3">3</li></ul>
   <p class="explain">99 ÷ 6 = 16 remainder 3, so 3 people ride on the last trip.</p>
 </div>
 
 <!--@q
 id: qhxw9drpb
-type: fill-blanks
+type: single-select
 answer: ["5"]
 description: Interpret the remainder: 40 sofas, 7 per truck
 hint: Divide 40 by 7. The sofas that can't fill one more truck of 7 go in the partly full truck.
+whyWrong:
+  "6":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "6 is the total number of trucks, counting the part-full one — the question asks how many sofas are in that truck, not the number of trucks."
+  "4":
+    code: NEAR_MISS
+    message: "That's close — count the sofas in the part-full truck again."
+  "7":
+    code: DIVISOR_AS_ANSWER
+    message: "7 is how many sofas a full truck holds — that's a full truck, not the part-full one."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Lancaster Furniture needs to ship 40 sofas across the country. If they can fit 7 sofas in each truck, how many sofas will be in the partially full truck? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">Lancaster Furniture needs to ship 40 sofas across the country. If they can fit 7 sofas in each truck, how many sofas will be in the partially full truck?</p>
+  <ul class="options"><li data-val="6">6</li><li data-val="4">4</li><li data-val="5">5</li><li data-val="7">7</li></ul>
   <p class="explain">40 ÷ 7 = 5 remainder 5, so 5 sofas are in the partially full truck.</p>
 </div>
 
 <!--@q
 id: q877j9nhc
-type: fill-blanks
+type: single-select
 answer: ["3"]
 description: Interpret the remainder: ₹73, ads cost ₹7
 hint: Divide 73 by 7 to see how many ads she can buy. The money that can't buy one more ad is left over.
+whyWrong:
+  "7":
+    code: DIVISOR_AS_ANSWER
+    message: "7 is the cost of one ad — the question asks how much money is left after buying as many as she can."
+  "11":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "11 is more ads than ₹73 can pay for — the question asks how much money is left over, not how many ads."
+  "10":
+    code: REMAINDER_AS_ANSWER
+    message: "10 is how many ads she can buy — the question asks how much money is left over."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">A real estate agent has ₹73 to spend on newspaper ads. Each ad costs ₹7. After buying as many ads as she can afford, how much money will the real estate agent have left over? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">A real estate agent has ₹73 to spend on newspaper ads. Each ad costs ₹7. After buying as many ads as she can afford, how much money will the real estate agent have left over?</p>
+  <ul class="options"><li data-val="7">7</li><li data-val="11">11</li><li data-val="3">3</li><li data-val="10">10</li></ul>
   <p class="explain">73 ÷ 7 = 10 remainder 3, so ₹3 is left over.</p>
 </div>
 
 <!--@q
 id: q4vh6njzy
-type: fill-blanks
+type: single-select
 answer: ["2"]
 description: Interpret the remainder: 59 tickets, 3 per ride
 hint: Divide 59 by 3 to count her rides. The tickets that can't pay for one more ride are what's left.
+whyWrong:
+  "19":
+    code: REMAINDER_AS_ANSWER
+    message: "19 is how many rides Vivian can go on — the question asks how many tickets she has left."
+  "20":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "20 is more rides than Vivian's tickets can pay for — the question asks how many tickets are left, not how many rides."
+  "3":
+    code: DIVISOR_AS_ANSWER
+    message: "3 is how many tickets one ride costs — the question asks how many tickets are left over."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">At the fair, Vivian has 59 ride tickets. Each ride on the Ferris wheel costs 3 tickets. After riding the Ferris wheel as many times as possible, how many tickets will Vivian have left? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">At the fair, Vivian has 59 ride tickets. Each ride on the Ferris wheel costs 3 tickets. After riding the Ferris wheel as many times as possible, how many tickets will Vivian have left?</p>
+  <ul class="options"><li data-val="19">19</li><li data-val="20">20</li><li data-val="3">3</li><li data-val="2">2</li></ul>
   <p class="explain">59 ÷ 3 = 19 remainder 2, so 2 tickets are left.</p>
 </div>
 
 <!--@q
 id: q3twi4gtg
-type: fill-blanks
+type: single-select
 answer: ["4"]
 description: Interpret the remainder: 64 tickets, 5 per ride
 hint: Divide 64 by 5 to count his rides. The tickets that can't pay for one more ride are what's left.
+whyWrong:
+  "12":
+    code: REMAINDER_AS_ANSWER
+    message: "12 is how many rides Marcus can go on — the question asks how many tickets he has left."
+  "5":
+    code: DIVISOR_AS_ANSWER
+    message: "5 is how many tickets one ride costs — the question asks how many tickets are left over."
+  "13":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "13 is more rides than Marcus's tickets can pay for — the question asks how many tickets are left, not how many rides."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">At the fair, Marcus has 64 ride tickets. Each ride on the Ferris wheel costs 5 tickets. After riding the Ferris wheel as many times as possible, how many tickets will Marcus have left? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">At the fair, Marcus has 64 ride tickets. Each ride on the Ferris wheel costs 5 tickets. After riding the Ferris wheel as many times as possible, how many tickets will Marcus have left?</p>
+  <ul class="options"><li data-val="12">12</li><li data-val="4">4</li><li data-val="5">5</li><li data-val="13">13</li></ul>
   <p class="explain">64 ÷ 5 = 12 remainder 4, so 4 tickets are left.</p>
 </div>
 
 <!--@q
 id: q6uqmsuib
-type: fill-blanks
+type: single-select
 answer: ["2"]
 description: Interpret the remainder: 42 peaches, 8 per pie
 hint: Divide 42 by 8 to count the pies. The peaches that can't fill one more pie are left over.
+whyWrong:
+  "6":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "6 is more pies than the peaches can fill — the question asks how many peaches are left over, not how many pies."
+  "8":
+    code: DIVISOR_AS_ANSWER
+    message: "8 is how many peaches one pie needs — that's a full pie's worth, not the leftovers."
+  "5":
+    code: REMAINDER_AS_ANSWER
+    message: "5 is how many pies the bakery can make — the question asks how many peaches are left over."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">A bakery received a shipment of 42 peaches. If it takes 8 peaches to bake a peach pie, how many peaches will the bakery have left over after baking as many pies as possible? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">A bakery received a shipment of 42 peaches. If it takes 8 peaches to bake a peach pie, how many peaches will the bakery have left over after baking as many pies as possible?</p>
+  <ul class="options"><li data-val="6">6</li><li data-val="8">8</li><li data-val="2">2</li><li data-val="5">5</li></ul>
   <p class="explain">42 ÷ 8 = 5 remainder 2, so 2 peaches are left over.</p>
 </div>
 
 <!--@q
 id: q9yp3qucq
-type: fill-blanks
+type: single-select
 answer: ["1"]
 description: Interpret the remainder: 92 tickets, 7 per ride
 hint: Divide 92 by 7 to count his rides. The tickets that can't pay for one more ride are what's left.
+whyWrong:
+  "14":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "14 is more rides than the boy's tickets can pay for — the question asks how many tickets are left, not how many rides."
+  "13":
+    code: REMAINDER_AS_ANSWER
+    message: "13 is how many rides the boy can go on — the question asks how many tickets he has left."
+  "7":
+    code: DIVISOR_AS_ANSWER
+    message: "7 is how many tickets one ride costs — the question asks how many tickets are left over."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">A boy at a funfair has 92 ride tickets. Each ride on the rollercoaster costs 7 tickets. After riding the rollercoaster as many times as he can, how many tickets will the boy have left? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">A boy at a funfair has 92 ride tickets. Each ride on the rollercoaster costs 7 tickets. After riding the rollercoaster as many times as he can, how many tickets will the boy have left?</p>
+  <ul class="options"><li data-val="14">14</li><li data-val="13">13</li><li data-val="7">7</li><li data-val="1">1</li></ul>
   <p class="explain">92 ÷ 7 = 13 remainder 1, so 1 ticket is left.</p>
 </div>
 
 <!--@q
 id: qpi2bq8u4
-type: fill-blanks
+type: single-select
 answer: ["1"]
 description: Interpret the remainder: 31 skiers, chairs of 6
 hint: Divide 31 by 6. The full chairs seat 6 each — the skiers left after those chairs ride last.
+whyWrong:
+  "6":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "6 is how many skiers a full chair holds — the question asks how many are on the last chair, which isn't full."
+  "2":
+    code: NEAR_MISS
+    message: "That's close — count the skiers on the last chair again."
+  "5":
+    code: REMAINDER_AS_ANSWER
+    message: "5 is how many chairs are completely full — the question asks how many skiers are on the last one."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">There are 31 skiers in queue to ride the chair lift. If each chair seats 6 people, how many skiers will be on the last chair? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">There are 31 skiers in queue to ride the chair lift. If each chair seats 6 people, how many skiers will be on the last chair?</p>
+  <ul class="options"><li data-val="1">1</li><li data-val="6">6</li><li data-val="2">2</li><li data-val="5">5</li></ul>
   <p class="explain">31 ÷ 6 = 5 remainder 1, so 1 skier is on the last chair.</p>
 </div>
 
 <!--@q
 id: q43az8myv
-type: fill-blanks
+type: single-select
 answer: ["2"]
 description: Interpret the remainder: 67 people, boats of 5
 hint: Divide 67 by 5. The full boats hold 5 each — the people left after those boats ride last.
+whyWrong:
+  "14":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "14 is the total number of boats, counting the last part-full one — the question asks how many people are on that boat, not the number of boats."
+  "5":
+    code: DIVISOR_AS_ANSWER
+    message: "5 is how many people a full boat holds — that's a full boat, not the last one."
+  "13":
+    code: REMAINDER_AS_ANSWER
+    message: "13 is how many boats are completely full — the question asks how many people are on the last one."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">A group of 67 people is going on a boat tour. If each boat holds 5 people, how many people will be on the last boat? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">A group of 67 people is going on a boat tour. If each boat holds 5 people, how many people will be on the last boat?</p>
+  <ul class="options"><li data-val="14">14</li><li data-val="5">5</li><li data-val="13">13</li><li data-val="2">2</li></ul>
   <p class="explain">67 ÷ 5 = 13 remainder 2, so 2 people are on the last boat.</p>
 </div>
 
 <!--@q
 id: qectdw5ef
-type: fill-blanks
+type: single-select
 answer: ["1"]
 description: Interpret the remainder: 36 people, 7 per round
 hint: Divide 36 by 7. The full rounds take 7 each — the people left after those rounds go last.
+whyWrong:
+  "5":
+    code: REMAINDER_AS_ANSWER
+    message: "5 is how many rounds are completely full — the question asks how many people ride in the last round."
+  "7":
+    code: DIVISOR_AS_ANSWER
+    message: "7 is how many people ride in a full round — that's a full round, not the last one."
+  "6":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "6 is the total number of rounds, counting the last part-full one — the question asks how many people are in that round, not the number of rounds."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">There are 36 people in queue to ride the bumper cars. 7 people can go in each round. How many people will ride in the last round? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">There are 36 people in queue to ride the bumper cars. 7 people can go in each round. How many people will ride in the last round?</p>
+  <ul class="options"><li data-val="1">1</li><li data-val="5">5</li><li data-val="7">7</li><li data-val="6">6</li></ul>
   <p class="explain">36 ÷ 7 = 5 remainder 1, so 1 person rides in the last round.</p>
 </div>
 
 <!--@q
 id: qpzrahjtg
-type: fill-blanks
+type: single-select
 answer: ["1"]
 description: Interpret the remainder: 79 cars, ferry of 2
 hint: Divide 79 by 2. The full trips carry 2 each — the car left after those trips goes last.
+whyWrong:
+  "39":
+    code: REMAINDER_AS_ANSWER
+    message: "39 is how many full trips the ferry makes — the question asks how many cars are on the last trip."
+  "40":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "40 is the total number of trips, counting the last part-full one — the question asks how many cars are on that trip, not the number of trips."
+  "2":
+    code: DIVISOR_AS_ANSWER
+    message: "2 is how many cars a full ferry holds — that's a full trip, not the last one."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">A car dealership needs to transport 79 cars to an island. The ferry can hold 2 cars. How many cars will the ferry take on its last trip? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">A car dealership needs to transport 79 cars to an island. The ferry can hold 2 cars. How many cars will the ferry take on its last trip?</p>
+  <ul class="options"><li data-val="39">39</li><li data-val="1">1</li><li data-val="40">40</li><li data-val="2">2</li></ul>
   <p class="explain">79 ÷ 2 = 39 remainder 1, so 1 car goes on the last trip.</p>
 </div>
 
 <!--@q
 id: quhjhn9s2
-type: fill-blanks
+type: single-select
 answer: ["5"]
 description: Interpret the remainder: 33 plants, 7 per row
 hint: Divide 33 by 7. The plants that can't fill one more row of 7 go in the partly filled row.
+whyWrong:
+  "4":
+    code: REMAINDER_AS_ANSWER
+    message: "4 is how many rows are completely full — the question asks how many plants are in the partly filled row."
+  "7":
+    code: DIVISOR_AS_ANSWER
+    message: "7 is how many plants a full row holds — that's a full row, not the partly filled one."
+  "6":
+    code: NEAR_MISS
+    message: "That's close — count the plants in the partly filled row again."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">A farmer wants to plant 33 tomato plants. If he puts 7 plants in each full row, how many tomato plants will be in the partially filled row? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">A farmer wants to plant 33 tomato plants. If he puts 7 plants in each full row, how many tomato plants will be in the partially filled row?</p>
+  <ul class="options"><li data-val="4">4</li><li data-val="5">5</li><li data-val="7">7</li><li data-val="6">6</li></ul>
   <p class="explain">33 ÷ 7 = 4 remainder 5, so 5 plants are in the partially filled row.</p>
 </div>
 
 <!--@q
 id: qix6jkchx
-type: fill-blanks
+type: single-select
 answer: ["4"]
 description: Interpret the remainder: 19 people, cars of 5
 hint: Divide 19 by 5. The people who can't fill one more car of 5 ride in the partly full car.
+whyWrong:
+  "5":
+    code: DIVISOR_AS_ANSWER
+    message: "5 is how many people a full car holds — that's a full car, not the partly full one."
+  "3":
+    code: REMAINDER_AS_ANSWER
+    message: "3 is how many cars are completely full — the question asks how many people are in the partly full car."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">At a funfair, a group of 19 people wants to ride the rollercoaster. If each car on the rollercoaster holds 5 people, how many people will be in the partially full car? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">At a funfair, a group of 19 people wants to ride the rollercoaster. If each car on the rollercoaster holds 5 people, how many people will be in the partially full car?</p>
+  <ul class="options"><li data-val="4">4</li><li data-val="5">5</li><li data-val="3">3</li></ul>
   <p class="explain">19 ÷ 5 = 3 remainder 4, so 4 people are in the partially full car.</p>
 </div>
 
 <!--@q
 id: q6hxxe5gv
-type: fill-blanks
+type: single-select
 answer: ["3"]
 description: Interpret the remainder: ₹30, cartons cost ₹9
 hint: Divide 30 by 9 to see how many cartons they can buy. The money that can't buy one more carton is left over.
+whyWrong:
+  "4":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "4 is more cartons than ₹30 can pay for — the question asks how much money is left over, not how many cartons."
+  "2":
+    code: NEAR_MISS
+    message: "That's close — check the leftover once more."
+  "9":
+    code: DIVISOR_AS_ANSWER
+    message: "9 is the cost of one carton — the question asks how much money is left after buying as many as they can."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">The school party committee has ₹30 to buy ice cream. Each carton of ice cream costs ₹9. After buying as many cartons of ice cream as they can, how much money will the committee have left over? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">The school party committee has ₹30 to buy ice cream. Each carton of ice cream costs ₹9. After buying as many cartons of ice cream as they can, how much money will the committee have left over?</p>
+  <ul class="options"><li data-val="3">3</li><li data-val="4">4</li><li data-val="2">2</li><li data-val="9">9</li></ul>
   <p class="explain">30 ÷ 9 = 3 remainder 3, so ₹3 is left over.</p>
 </div>
 
 <!--@q
 id: qkrnerb6u
-type: fill-blanks
+type: single-select
 answer: ["2"]
 description: Interpret the remainder: 56 cups, trays of 6
 hint: Divide 56 by 6. The cups that can't fill one more tray of 6 go on the final tray.
+whyWrong:
+  "6":
+    code: DIVISOR_AS_ANSWER
+    message: "6 is how many cups a full tray holds — that's a full tray, not the final one."
+  "9":
+    code: REMAINDER_AS_ANSWER
+    message: "9 is how many trays are completely full — the question asks how many cups are on the final tray."
+  "10":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "10 is the total number of trays, counting the final part-full one — the question asks how many cups are on that tray, not the number of trays."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Carrie had 56 plastic cups. She arranged them on trays that can hold 6 cups. How many cups were on the final tray? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">Carrie had 56 plastic cups. She arranged them on trays that can hold 6 cups. How many cups were on the final tray?</p>
+  <ul class="options"><li data-val="6">6</li><li data-val="9">9</li><li data-val="2">2</li><li data-val="10">10</li></ul>
   <p class="explain">56 ÷ 6 = 9 remainder 2, so 2 cups are on the final tray.</p>
 </div>
 
 <!--@q
 id: qhsef57p2
-type: fill-blanks
+type: single-select
 answer: ["4"]
 description: Interpret the remainder: 40 stamps among 9
 hint: Divide 40 by 9. Every student gets an equal share — what's too small to share out again is left over.
+whyWrong:
+  "5":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "5 is more stamps than each student can actually get — the question asks how many are left over after sharing."
+  "3":
+    code: NEAR_MISS
+    message: "That's close — check the leftover once more."
+  "9":
+    code: DIVISOR_AS_ANSWER
+    message: "9 is how many students are sharing — the question asks how many stamps are left over, not how many students."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Mr. Garrett has 40 rubber stamps. He wants to give the same number of stamps to each of his 9 students. If he gives away as many stamps as he can, how many stamps will be left over? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">Mr. Garrett has 40 rubber stamps. He wants to give the same number of stamps to each of his 9 students. If he gives away as many stamps as he can, how many stamps will be left over?</p>
+  <ul class="options"><li data-val="4">4</li><li data-val="5">5</li><li data-val="3">3</li><li data-val="9">9</li></ul>
   <p class="explain">40 ÷ 9 = 4 remainder 4, so 4 stamps are left over.</p>
 </div>
 
 <!--@q
 id: qshtq6ydj
-type: fill-blanks
+type: single-select
 answer: ["3"]
 description: Interpret the remainder: 47 cheques, 4 per envelope
 hint: Divide 47 by 4. The cheques that can't fill one more envelope of 4 go in the final envelope.
+whyWrong:
+  "4":
+    code: DIVISOR_AS_ANSWER
+    message: "4 is how many cheques a full envelope holds — that's a full envelope, not the final one."
+  "12":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "12 is the total number of envelopes, counting the final part-full one — the question asks how many cheques are in that envelope, not the number of envelopes."
+  "11":
+    code: REMAINDER_AS_ANSWER
+    message: "11 is how many envelopes are completely full — the question asks how many cheques are in the final envelope."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Garrett's Floral Shop needs to post 47 cheques to the bank. If they can put 4 cheques in each envelope, how many cheques will be in the final envelope? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">Garrett's Floral Shop needs to post 47 cheques to the bank. If they can put 4 cheques in each envelope, how many cheques will be in the final envelope?</p>
+  <ul class="options"><li data-val="4">4</li><li data-val="12">12</li><li data-val="11">11</li><li data-val="3">3</li></ul>
   <p class="explain">47 ÷ 4 = 11 remainder 3, so 3 cheques are in the final envelope.</p>
 </div>
 
 <!--@q
 id: qzmyzmkv7
-type: fill-blanks
+type: single-select
 answer: ["3"]
 description: Interpret the remainder: 507 chairs, racks of 8
 hint: Divide 507 by 8. Work left to right through the hundreds, tens, then ones — the leftover at the end fills the final rack.
+whyWrong:
+  "8":
+    code: DIVISOR_AS_ANSWER
+    message: "8 is how many chairs a full rack holds — that's a full rack, not the last one."
+  "64":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "64 is the total number of racks, counting the part-full one — the question asks for the chairs on that last rack, not the number of racks."
+  "63":
+    code: REMAINDER_AS_ANSWER
+    message: "63 is how many racks are completely filled — the question asks how many chairs are on the last one."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">There are 507 chairs set up in the gym for an assembly. After the assembly, all the chairs will be put away on racks that hold 8 chairs. How many chairs will be on the final rack? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">There are 507 chairs set up in the gym for an assembly. After the assembly, all the chairs will be put away on racks that hold 8 chairs. How many chairs will be on the final rack?</p>
+  <ul class="options"><li data-val="8">8</li><li data-val="3">3</li><li data-val="64">64</li><li data-val="63">63</li></ul>
   <p class="explain">507 ÷ 8 = 63 remainder 3, so the final rack holds 3 chairs.</p>
 </div>
 
 <!--@q
 id: q8hbtbnnp
-type: fill-blanks
+type: single-select
 answer: ["2"]
 description: Interpret the remainder: 116 tickets, 3 per ride
 hint: Divide 116 by 3 to count his rides. The tickets that can't pay for one more ride are what's left.
+whyWrong:
+  "3":
+    code: DIVISOR_AS_ANSWER
+    message: "3 is how many tickets one ride costs — the question asks how many tickets are left over."
+  "38":
+    code: REMAINDER_AS_ANSWER
+    message: "38 is how many rides the boy can go on — the question asks how many tickets he has left."
+  "39":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "39 is more rides than the boy's tickets can pay for — the question asks how many tickets are left, not how many rides."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">A boy at a funfair has 116 ride tickets. Each ride on the rollercoaster costs 3 tickets. After riding the rollercoaster as many times as he can, how many tickets will the boy have left? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">A boy at a funfair has 116 ride tickets. Each ride on the rollercoaster costs 3 tickets. After riding the rollercoaster as many times as he can, how many tickets will the boy have left?</p>
+  <ul class="options"><li data-val="3">3</li><li data-val="2">2</li><li data-val="38">38</li><li data-val="39">39</li></ul>
   <p class="explain">116 ÷ 3 = 38 remainder 2, so 2 tickets are left.</p>
 </div>
 
 <!--@q
 id: qie6ztqij
-type: fill-blanks
+type: single-select
 answer: ["5"]
 description: Interpret the remainder: ₹536, cartons cost ₹9
 hint: Divide 536 by 9 to see how many cartons they can buy. The money that can't buy one more carton is left over.
+whyWrong:
+  "60":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "60 is more cartons than ₹536 can pay for — the question asks how much money is left over, not how many cartons."
+  "59":
+    code: REMAINDER_AS_ANSWER
+    message: "59 is how many cartons they can buy — the question asks how much money is left over."
+  "9":
+    code: DIVISOR_AS_ANSWER
+    message: "9 is the cost of one carton — the question asks how much money is left after buying as many as they can."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">The school party committee has ₹536 to buy ice cream. Each carton of ice cream costs ₹9. After buying as many cartons of ice cream as they can, how much money will the committee have left over? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">The school party committee has ₹536 to buy ice cream. Each carton of ice cream costs ₹9. After buying as many cartons of ice cream as they can, how much money will the committee have left over?</p>
+  <ul class="options"><li data-val="5">5</li><li data-val="60">60</li><li data-val="59">59</li><li data-val="9">9</li></ul>
   <p class="explain">536 ÷ 9 = 59 remainder 5, so ₹5 is left over.</p>
 </div>
 
 <!--@q
 id: qiknwb8q7
-type: fill-blanks
+type: single-select
 answer: ["2"]
 description: Interpret the remainder: 634 cups, trays of 8
 hint: Divide 634 by 8. The cups that can't fill one more tray of 8 go on the final tray.
+whyWrong:
+  "79":
+    code: REMAINDER_AS_ANSWER
+    message: "79 is how many trays are completely full — the question asks how many cups are on the final tray."
+  "80":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "80 is the total number of trays, counting the final part-full one — the question asks how many cups are on that tray, not the number of trays."
+  "8":
+    code: DIVISOR_AS_ANSWER
+    message: "8 is how many cups a full tray holds — that's a full tray, not the final one."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Annie had 634 plastic cups. She arranged them on trays that can hold 8 cups. How many cups were on the final tray? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">Annie had 634 plastic cups. She arranged them on trays that can hold 8 cups. How many cups were on the final tray?</p>
+  <ul class="options"><li data-val="79">79</li><li data-val="80">80</li><li data-val="2">2</li><li data-val="8">8</li></ul>
   <p class="explain">634 ÷ 8 = 79 remainder 2, so 2 cups are on the final tray.</p>
 </div>
 
 <!--@q
 id: q5y2u5cpu
-type: fill-blanks
+type: single-select
 answer: ["3"]
 description: Interpret the remainder: 955 people, boats of 4
 hint: Divide 955 by 4. The full boats hold 4 each — the people left after those boats ride last.
+whyWrong:
+  "238":
+    code: REMAINDER_AS_ANSWER
+    message: "238 is how many boats are completely full — the question asks how many people are on the last one."
+  "239":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "239 is the total number of boats, counting the last part-full one — the question asks how many people are on that boat, not the number of boats."
+  "4":
+    code: DIVISOR_AS_ANSWER
+    message: "4 is how many people a full boat holds — that's a full boat, not the last one."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">A group of 955 people is going on a boat tour. If each boat holds 4 people, how many people will be on the last boat? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">A group of 955 people is going on a boat tour. If each boat holds 4 people, how many people will be on the last boat?</p>
+  <ul class="options"><li data-val="238">238</li><li data-val="239">239</li><li data-val="3">3</li><li data-val="4">4</li></ul>
   <p class="explain">955 ÷ 4 = 238 remainder 3, so 3 people are on the last boat.</p>
 </div>
 
 <!--@q
 id: qmtuyc7fs
-type: fill-blanks
+type: single-select
 answer: ["1"]
 description: Interpret the remainder: 686 pieces, 5 per tin
 hint: Divide 686 by 5. The pieces that can't fill one more tin of 5 are left over.
+whyWrong:
+  "5":
+    code: DIVISOR_AS_ANSWER
+    message: "5 is how many pieces one tin holds — that's a full tin, not the leftovers."
+  "138":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "138 is more tins than the pieces can fill — the question asks how many pieces are left over, not how many tins."
+  "137":
+    code: REMAINDER_AS_ANSWER
+    message: "137 is how many tins Michael fills — the question asks how many pieces are left over."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Michael made 686 pieces of peanut brittle to share with his friends. He put 5 pieces of peanut brittle in each tin. How many pieces of peanut brittle did Michael have left over? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">Michael made 686 pieces of peanut brittle to share with his friends. He put 5 pieces of peanut brittle in each tin. How many pieces of peanut brittle did Michael have left over?</p>
+  <ul class="options"><li data-val="5">5</li><li data-val="1">1</li><li data-val="138">138</li><li data-val="137">137</li></ul>
   <p class="explain">686 ÷ 5 = 137 remainder 1, so 1 piece is left over.</p>
 </div>
 
 <!--@q
 id: qymm3u7h9
-type: fill-blanks
+type: single-select
 answer: ["8"]
 description: Interpret the remainder: 161 stamps among 9
 hint: Divide 161 by 9. Every student gets an equal share — what's too small to share out again is left over.
+whyWrong:
+  "18":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "18 is more stamps than each student can actually get — the question asks how many are left over after sharing."
+  "9":
+    code: DIVISOR_AS_ANSWER
+    message: "9 is how many students are sharing — the question asks how many stamps are left over, not how many students."
+  "17":
+    code: REMAINDER_AS_ANSWER
+    message: "17 is how many stamps each student gets — the question asks how many are left over after sharing."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Mr. McMillan has 161 rubber stamps. He wants to give the same number of stamps to each of his 9 students. If he gives away as many stamps as he can, how many stamps will be left over? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">Mr. McMillan has 161 rubber stamps. He wants to give the same number of stamps to each of his 9 students. If he gives away as many stamps as he can, how many stamps will be left over?</p>
+  <ul class="options"><li data-val="18">18</li><li data-val="9">9</li><li data-val="17">17</li><li data-val="8">8</li></ul>
   <p class="explain">161 ÷ 9 = 17 remainder 8, so 8 stamps are left over.</p>
 </div>
 
 <!--@q
 id: qeeeszu5x
-type: fill-blanks
+type: single-select
 answer: ["1"]
 description: Interpret the remainder: 595 cheques, 6 per envelope
 hint: Divide 595 by 6. The cheques that can't fill one more envelope of 6 go in the final envelope.
+whyWrong:
+  "6":
+    code: DIVISOR_AS_ANSWER
+    message: "6 is how many cheques a full envelope holds — that's a full envelope, not the final one."
+  "100":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "100 is the total number of envelopes, counting the final part-full one — the question asks how many cheques are in that envelope, not the number of envelopes."
+  "99":
+    code: REMAINDER_AS_ANSWER
+    message: "99 is how many envelopes are completely full — the question asks how many cheques are in the final envelope."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">Gina's Floral Shop needs to post 595 cheques to the bank. If they can put 6 cheques in each envelope, how many cheques will be in the final envelope? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">Gina's Floral Shop needs to post 595 cheques to the bank. If they can put 6 cheques in each envelope, how many cheques will be in the final envelope?</p>
+  <ul class="options"><li data-val="1">1</li><li data-val="6">6</li><li data-val="100">100</li><li data-val="99">99</li></ul>
   <p class="explain">595 ÷ 6 = 99 remainder 1, so 1 cheque is in the final envelope.</p>
 </div>
 
 <!--@q
 id: q77w8xe5n
-type: fill-blanks
+type: single-select
 answer: ["2"]
 description: Interpret the remainder: 218 tickets, 3 per ride
 hint: Divide 218 by 3 to count her rides. The tickets that can't pay for one more ride are what's left.
+whyWrong:
+  "72":
+    code: REMAINDER_AS_ANSWER
+    message: "72 is how many rides Lara can go on — the question asks how many tickets she has left."
+  "73":
+    code: QUOTIENT_OFF_BY_ONE
+    message: "73 is more rides than Lara's tickets can pay for — the question asks how many tickets are left, not how many rides."
+  "3":
+    code: DIVISOR_AS_ANSWER
+    message: "3 is how many tickets one ride costs — the question asks how many tickets are left over."
 -->
-<div class="question" data-type="fill-blanks">
-  <p class="prompt">At the fair, Lara has 218 ride tickets. Each ride on the Ferris wheel costs 3 tickets. After riding the Ferris wheel as many times as possible, how many tickets will Lara have left? []</p>
+<div class="question" data-type="single-select">
+  <p class="prompt">At the fair, Lara has 218 ride tickets. Each ride on the Ferris wheel costs 3 tickets. After riding the Ferris wheel as many times as possible, how many tickets will Lara have left?</p>
+  <ul class="options"><li data-val="72">72</li><li data-val="73">73</li><li data-val="3">3</li><li data-val="2">2</li></ul>
   <p class="explain">218 ÷ 3 = 72 remainder 2, so 2 tickets are left.</p>
 </div>
 </div>
@@ -5356,7 +5714,16 @@ function normalizeExplain(opts) {
           working: b.working || null,
           reason: b.reason || null,
           text: b.text || null,
-          html: b.html || null
+          html: b.html || null,
+          // Change 5 (BRIEF-G3-ENGINE-1) — table / facts / rule fields. Products
+          // are NEVER carried here: the renderer computes a × b itself, so a
+          // typo'd (or malicious) frontmatter product cannot reach the child.
+          tables: b.tables || null,
+          note: b.note || null,
+          footer: b.footer || null,
+          items: b.items || null,
+          mark: b.mark || null,
+          example: b.example || null
         };
       })
     };
@@ -5417,6 +5784,15 @@ function renderSolution(opts) {
       case "verification":
         parts.push(renderVerification(block));
         break;
+      case "table":
+        parts.push(renderTable(block));
+        break;
+      case "facts":
+        parts.push(renderFacts(block));
+        break;
+      case "rule":
+        parts.push(renderRule(block));
+        break;
       default:
         // Unknown block type — text fallback
         parts.push(renderFallback(block));
@@ -5467,6 +5843,109 @@ function renderVerification(block) {
 function renderFallback(block) {
   var text = block.text || "";
   return '<div class="sol-fallback">' + escapeHtml(text) + "</div>";
+}
+
+// ════════════════════════════════════════════════════════════════
+// Change 5 (BRIEF-G3-ENGINE-1) — table / facts / rule.
+//
+// THE ENGINE COMPUTES EVERY PRODUCT. The author supplies factor / upTo /
+// mark / [a, b] pairs; `a × b` is multiplied HERE. A frontmatter `product`
+// is never read — a typo'd times table across ~110 team-authored lessons is
+// therefore impossible, and a guard can verify every table in the corpus.
+//
+// Validation: every operand an integer 1–12 (rule.example.b may be 0, the
+// ONLY legal 0). An invalid block renders "" and is reported to
+// window.__raoSolWarn — never thrown, never rendered partially.
+// ════════════════════════════════════════════════════════════════
+
+function solWarn(msg) {
+  try { if (typeof window !== "undefined") (window.__raoSolWarn = window.__raoSolWarn || []).push(String(msg)); } catch (e) {}
+}
+function isInt1to12(n) { return typeof n === "number" && Math.floor(n) === n && n >= 1 && n <= 12; }
+// One monospace fact line. `marked` adds tint + weight ONLY — never padding
+// (alignment is load-bearing; the `=` column must line up down the table).
+function eqRow(a, b, marked) {
+  var product = a * b;   // COMPUTED — a frontmatter product is never consulted
+  return '<div class="sol-row' + (marked ? " sol-mark" : "") + '"><span class="sol-eq">' +
+    a + " × " + b + " = " + product + "</span></div>";
+}
+function absentLine(v) {
+  return '<div class="sol-absent"><span class="sol-eq">' + escapeHtml(String(v)) + " is not here</span></div>";
+}
+function validTableEntry(t) {
+  if (!t || !isInt1to12(t.factor) || !isInt1to12(t.upTo)) return false;
+  if (t.mark != null) {
+    if (!Array.isArray(t.mark)) return false;
+    for (var i = 0; i < t.mark.length; i++) if (!isInt1to12(t.mark[i]) || t.mark[i] > t.upTo) return false;
+  }
+  if (t.absent != null) {
+    if (!Array.isArray(t.absent)) return false;
+    for (var j = 0; j < t.absent.length; j++) {
+      var ab = t.absent[j];
+      if (!ab || Math.floor(ab.after) !== ab.after || ab.after < 1 || ab.after > t.upTo || typeof ab.value !== "number") return false;
+    }
+  }
+  return true;
+}
+function renderOneTable(t, single) {
+  var marks = {}; (t.mark || []).forEach(function (m) { marks[m] = true; });
+  var absAfter = {}; (t.absent || []).forEach(function (a) { (absAfter[a.after] = absAfter[a.after] || []).push(a.value); });
+  var rows = [];
+  for (var m = 1; m <= t.upTo; m++) {
+    rows.push(eqRow(t.factor, m, !!marks[m]));
+    if (absAfter[m]) absAfter[m].forEach(function (v) { rows.push(absentLine(v)); });
+  }
+  // SOLUTION-PANEL-LAYOUT v1 (Item 81): a SINGLE table is a SEQUENCE — it carries
+  // the sol-seq marker and columnises (Rule 2). Two tables (sol-tables-2) already
+  // sit side by side and do NOT columnise internally (Ruling R7): no marker.
+  return '<div class="sol-table' + (single ? " sol-seq" : "") + '">' + rows.join("") + "</div>";
+}
+function renderTable(block) {
+  var tables = block.tables;
+  if (!Array.isArray(tables) || tables.length < 1 || tables.length > 2 || !tables.every(validTableEntry)) {
+    solWarn("table: invalid — " + JSON.stringify(tables));
+    return "";
+  }
+  var single = tables.length === 1;
+  var inner = tables.map(function (t) { return renderOneTable(t, single); }).join("");
+  return (block.note ? '<p class="sol-note">' + escapeHtml(block.note) + "</p>" : "") +
+    '<div class="sol-tables' + (tables.length === 2 ? " sol-tables-2" : "") + '">' + inner + "</div>" +
+    (block.footer ? '<p class="sol-foot">' + escapeHtml(block.footer) + "</p>" : "");
+}
+function renderFacts(block) {
+  var items = block.items;
+  if (!Array.isArray(items) || !items.length ||
+      !items.every(function (it) { return Array.isArray(it) && it.length === 2 && isInt1to12(it[0]) && isInt1to12(it[1]); })) {
+    solWarn("facts: invalid items — " + JSON.stringify(items));
+    return "";
+  }
+  var marks = {};
+  if (block.mark != null) {
+    if (!Array.isArray(block.mark) || !block.mark.every(function (i) { return Math.floor(i) === i && i >= 0 && i < items.length; })) {
+      solWarn("facts: invalid mark — " + JSON.stringify(block.mark));
+      return "";
+    }
+    block.mark.forEach(function (i) { marks[i] = true; });
+  }
+  var rows = items.map(function (it, i) { return eqRow(it[0], it[1], !!marks[i]); }).join("");
+  // a facts list is a SEQUENCE (Rule 1) — carries the sol-seq marker, columnises.
+  return (block.note ? '<p class="sol-note">' + escapeHtml(block.note) + "</p>" : "") +
+    '<div class="sol-facts sol-seq">' + rows + "</div>" +
+    (block.footer ? '<p class="sol-foot">' + escapeHtml(block.footer) + "</p>" : "");
+}
+function renderRule(block) {
+  if (!block.text || typeof block.text !== "string") { solWarn("rule: missing text"); return ""; }
+  var ex = "";
+  if (block.example != null) {
+    var e = block.example;
+    // the rule is the ONLY block where a 0 operand is legal (9 × 0 = 0)
+    if (!Array.isArray(e) || e.length !== 2 || !isInt1to12(e[0]) || Math.floor(e[1]) !== e[1] || e[1] < 0 || e[1] > 12) {
+      solWarn("rule: invalid example — " + JSON.stringify(e));
+    } else {
+      ex = eqRow(e[0], e[1], true);
+    }
+  }
+  return '<div class="sol-rule"><p class="sol-note">' + escapeHtml(block.text) + "</p>" + ex + "</div>";
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -5552,6 +6031,9 @@ function walkChip(block, stepNum, stepTotal) {
   if (block.type === "step") return "Step " + stepNum + " of " + stepTotal;
   if (block.type === "takeaway") return "The idea to keep";
   if (block.type === "verification") return "Does it make sense?";
+  if (block.type === "table") return "The times table";
+  if (block.type === "facts") return "The facts";
+  if (block.type === "rule") return "The rule";
   return null;   // figure / legacy-explain / fallback: no chip
 }
 
@@ -5564,6 +6046,9 @@ function walkBody(block) {
     return parts.join("");
   }
   if (block.type === "figure") return block.html || escapeHtml(block.text || "[figure]");
+  if (block.type === "table") return renderTable(block);
+  if (block.type === "facts") return renderFacts(block);
+  if (block.type === "rule") return renderRule(block);
   // legacy explain strings pass through raw — same contract as renderSolution
   if (block.type === "legacy-explain") return block.text || "";
   return escapeHtml(block.text || "");
@@ -5648,6 +6133,101 @@ function wireWalkthrough(root, opts) {
 }
 
 // ════════════════════════════════════════════════════════════════
+// SOLUTION-PANEL-LAYOUT v1 (Item 81) — columnise declared SEQUENCES.
+//
+// A sequence container carries the `sol-seq` marker (added by renderTable for a
+// single table, and renderFacts). CSS lays it out as a grid whose column COUNT
+// is `--sol-cols`; this function computes that count per the contract:
+//   cols = clamp( floor(available_width / (longest_item_width + gutter)), 1, 4 )
+// Across-order and the max-content column width are pure CSS (grid auto-flow row).
+// A sol-working carries NO marker and is never touched here — it is BLOCK (R6).
+//
+// This is display-only: it reads geometry and writes one CSS custom property. It
+// never calls check(), never mutates the answer or the student response, and does
+// not import the grading module — the §13.1 firewall is intact.
+// ════════════════════════════════════════════════════════════════
+
+var SOL_GUTTER = 24;   // the contract's gutter; matches the grid column-gap in CSS
+
+// Available width MUST come from the panel/card, not the sequence's immediate
+// container. In the walkthrough the sequence sits inside a chat bubble (.cc-bub)
+// that shrink-wraps to its content, so seq.clientWidth there reports the ONE-column
+// width and the sequence never columnises (the Phase-4 failure). Walk up to the
+// nearest solution/card container, which fills the panel in every context.
+function panelWidthFor(seq) {
+  var panel = seq.closest ? seq.closest(".pv-solwrap, .sol-holder, .pv-card") : null;
+  if (panel) {
+    var cs = getComputedStyle(panel);
+    var w = panel.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+    if (w > 0) return w;
+  }
+  return seq.clientWidth;   // fallback: no known panel container
+}
+function layoutOneSequence(seq) {
+  try {
+    var kids = seq.children, n = kids.length;
+    if (!n) return;
+    // Reset to one column so each item reports its own intrinsic (max-content) width.
+    seq.style.setProperty("--sol-cols", "1");
+    var avail = panelWidthFor(seq);
+    var longest = 0;
+    for (var i = 0; i < n; i++) { var w = kids[i].scrollWidth; if (w > longest) longest = w; }
+    if (avail <= 0 || longest <= 0) return;
+    var cols = Math.floor(avail / (longest + SOL_GUTTER));
+    if (cols < 1) cols = 1; else if (cols > 4) cols = 4;   // Ruling R1: cap at 4
+    seq.style.setProperty("--sol-cols", String(cols));
+    // Cap each item at the panel width so an item wider than the panel takes its
+    // OWN scroll rail (Rule 3 tail) instead of widening the grid/panel. Clamping
+    // the item's max-width also clamps the max-content column, so the grid never
+    // exceeds `avail`.
+    seq.style.setProperty("--sol-itemmax", avail + "px");
+  } catch (e) { /* layout must never break the panel */ }
+}
+
+// Lay out every sol-seq under `root` (default: the whole document).
+function layoutSequences(root) {
+  if (typeof document === "undefined") return;
+  var scope = root && root.querySelectorAll ? root : document;
+  var list = scope.querySelectorAll(".sol-seq");
+  for (var i = 0; i < list.length; i++) layoutOneSequence(list[i]);
+  // `root` itself may be a bare sol-seq (e.g. observer handoff)
+  if (root && root.classList && root.classList.contains("sol-seq")) layoutOneSequence(root);
+}
+
+// Auto-run: sequences appear both directly (renderSolution) and inside walkthrough
+// bubbles as they type. A narrow observer lays out ONLY newly-added sol-seq nodes,
+// debounced to an animation frame. It never edits .sol-walk/.cc-bub or wireWalkthrough
+// — it only sets --sol-cols on the sequences those paths already emit.
+var _solSeqObserver = null;
+function installSequenceObserver() {
+  if (typeof window === "undefined" || typeof MutationObserver === "undefined" || typeof document === "undefined") return;
+  if (_solSeqObserver) return;
+  _solSeqObserver = new MutationObserver(function (muts) {
+    var found = [];
+    for (var i = 0; i < muts.length; i++) {
+      var added = muts[i].addedNodes;
+      for (var j = 0; j < added.length; j++) {
+        var node = added[j];
+        if (!node || node.nodeType !== 1) continue;
+        if (node.classList && node.classList.contains("sol-seq")) found.push(node);
+        if (node.querySelectorAll) { var inner = node.querySelectorAll(".sol-seq"); for (var k = 0; k < inner.length; k++) found.push(inner[k]); }
+      }
+    }
+    if (found.length) {
+      var raf = window.requestAnimationFrame || function (fn) { return setTimeout(fn, 16); };
+      raf(function () { for (var m = 0; m < found.length; m++) layoutOneSequence(found[m]); });
+    }
+  });
+  try { _solSeqObserver.observe(document.documentElement || document.body, { childList: true, subtree: true }); } catch (e) {}
+  // lay out anything already present at install time
+  try { layoutSequences(document); } catch (e) {}
+}
+if (typeof window !== "undefined") {
+  if (typeof document !== "undefined" && document.readyState !== "loading") installSequenceObserver();
+  else if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", installSequenceObserver);
+}
+
+// ════════════════════════════════════════════════════════════════
 // Exports
 // ════════════════════════════════════════════════════════════════
 
@@ -5657,6 +6237,7 @@ if (typeof module !== "undefined" && module.exports) {
     renderSolution: renderSolution,
     renderWalkthrough: renderWalkthrough,
     wireWalkthrough: wireWalkthrough,
+    layoutSequences: layoutSequences,
     bubbles: { wrap: chatWrap, msg: chatMsg, FILL_MS: BUBBLE_FILL_MS }
   };
 }
@@ -5666,6 +6247,7 @@ if (typeof window !== "undefined") {
     renderSolution: renderSolution,
     renderWalkthrough: renderWalkthrough,
     wireWalkthrough: wireWalkthrough,
+    layoutSequences: layoutSequences,
     bubbles: { wrap: chatWrap, msg: chatMsg, FILL_MS: BUBBLE_FILL_MS }
   };
 }
@@ -5699,12 +6281,23 @@ if (typeof window !== "undefined") {
         tools/verify-reset.js A1–A5).
      4. HELP ACCUMULATES — hint bubbles and walkthrough steps only ever stack;
         nothing the card has told the child disappears while the question lives.
-     5. ONE HINT LADDER — the whyWrong message after a wrong attempt IS the next
-        hint rung ("Hint 1", "Hint 2", … — never "of N"). Presentation: typed
-        tutor bubbles (RaoSolution.bubbles — ONE copy, shared with the steps).
+        AMENDED by BRIEF-G3-ENGINE-1 (Item 63): opening the solution is the ONE
+        sanctioned exception — the accumulated hint/whyWrong bubbles clear at that
+        point so the panel stands alone (openWalkthrough / revealSolution). The
+        question DOM is still untouched; only the bubble stream (outside .qbody)
+        is removed, so the no-repaint law holds.
+     5. TWO SEPARATE STREAMS — hints and whyWrong are labelled apart (AMENDED by
+        BRIEF-G3-ENGINE-1, Item 66; REVERSES the old "whyWrong IS the next hint
+        rung"). A whyWrong message renders with the chip "Not quite" and does NOT
+        consume a hint number: after it, the next hint the child asks for is still
+        "Hint 1". Why: two adults on this project misread a whyWrong message as a
+        leaking hint rung on consecutive days, and a child would misread it every
+        time. Presentation: typed tutor bubbles (RaoSolution.bubbles — ONE copy,
+        shared with the steps); the whyWrong bubble carries .cc-msg-why (warning
+        tint), the hint bubble does not.
      6. WALKTHROUGH commit (amended by BRIEF FR-2, 2026-07-19, per HANDOFF-24
         ruling 7 — was "child-initiated only, never auto-opened"). The
-        walkthrough opens by EITHER path: the child taps "Walk me through it"
+        walkthrough opens by EITHER path: the child taps "Show me the solution"
         (offered once hints are used after a wrong attempt, never before the
         first attempt), or it AUTO-OPENS on the second wrong attempt where a
         solution exists (TWO ATTEMPTS IS THE CAP — no Try Again offered).
@@ -5712,8 +6305,13 @@ if (typeof window !== "undefined") {
         solved-with-help. No retry inside. Final step reveals quietly —
         triumph ≠ rescue. Guards: verify-calm.js b (tap), verify-reset.js
         A6–A9 (auto-open).
-     7. CORRECT is the only loud moment: green option + cc-win + sparks + chime,
-        takeaway panel ("The idea to keep"), then "Next question →".
+     7. CORRECT stays loud but SILENT of text (AMENDED by BRIEF-G3-ENGINE-1,
+        Item 65; REVERSES the old "takeaway panel"). Green option + cc-win +
+        sparks + chime are unchanged; the .cc-take panel is GONE — nothing to
+        read by default. cc-hastake is still added (it seals the duplicate
+        .explain — drop it and .explain reappears). A ghost "Show me the solution"
+        is offered beside "Next question →" when a solution exists; tapping it
+        renders the full solution and leaves the outcome "correct".
      8. MODES — adaptive: all of the above. rapid: verdict flash + one-line
         explain + code log only. quiz: nothing during; review is the app's job.
 
@@ -5870,7 +6468,7 @@ function wireCard(frame) {
         removeRow();
         giveHint(function () { feedbackRow("I’ll try now"); });
       } },
-      walkOffered() && { label: "Walk me through it", ghost: true, onTap: openWalkthrough },
+      walkOffered() && { label: "Show me the solution", ghost: true, onTap: openWalkthrough },
       { label: solidLabel, ghost: false, onTap: resumeAnswering }
     ].filter(Boolean));
   }
@@ -5961,15 +6559,13 @@ function wireCard(frame) {
   // ── WALKTHROUGH — opened by the child's tap OR by the second-wrong
   //    auto-open (FR-2 ruling 7); EITHER path is THE COMMIT POINT (law 6 as
   //    amended): locks immediately, records solved-with-help. ──
-  function openWalkthrough() {
-    if (locked) return;
-    locked = true;
-    setOutcome("solved-with-help");     // recorded BEFORE anything renders
-    removeRow();
-    freezeTask(true);
-    hideFoot(true);                     // no Check, no retry — anywhere
-    quietChrome(true);
-    if (hintBtn) hintBtn.style.display = "none";
+  // The panel render is SHARED by two callers that set DIFFERENT outcomes:
+  //   openWalkthrough() — help path, locks + records solved-with-help
+  //   revealSolution()  — correct path (Change 4), outcome STAYS "correct"
+  // The DOM work lives here once so the two callers cannot drift (BRIEF-G3-ENGINE-1
+  // Change 4: "extract the rendering into a shared function, set the outcome
+  // separately"). It NEVER calls setOutcome — bookkeeping is the caller's.
+  function renderSolutionPanel() {
     var cardEl = frame.querySelector(".pv-card");
     var holder = frame.querySelector(".pv-solwrap");
     if (!holder) {
@@ -5990,6 +6586,32 @@ function wireCard(frame) {
         actionRow([{ label: "Next question →", ghost: false, onTap: nextQuestion }]);
       }
     });
+  }
+  function openWalkthrough() {
+    if (locked) return;
+    locked = true;
+    setOutcome("solved-with-help");     // recorded BEFORE anything renders
+    removeRow();
+    freezeTask(true);
+    hideFoot(true);                     // no Check, no retry — anywhere
+    quietChrome(true);
+    if (hintBtn) hintBtn.style.display = "none";
+    // Change 3 (Item 63, REVERSES law 4): the accumulated hint/whyWrong bubbles
+    // CLEAR when the solution opens — the panel becomes the only thing below the
+    // question. The chat lives OUTSIDE .qbody, so the question DOM is untouched
+    // (no repaint); only the bubble container is removed.
+    if (chat) { chat.remove(); chat = null; }
+    renderSolutionPanel();
+  }
+  // Change 4 (Item 65): the correct-answer reveal. The child ALREADY succeeded,
+  // so the outcome must STAY "correct" — setOutcome is deliberately NOT called
+  // here (that is the whole reason the render was extracted from openWalkthrough,
+  // which records solved-with-help). The card is already locked & frozen by
+  // celebrate(); this just swaps the action row for the panel.
+  function revealSolution() {
+    removeRow();
+    if (chat) { chat.remove(); chat = null; }
+    renderSolutionPanel();
   }
   function nextQuestion() {
     removeRow();
@@ -6090,17 +6712,20 @@ function wireCard(frame) {
       sparks(wins[i]);
     }
     ding();
-    var take = takeawayText();
+    // Change 4 (Item 65, REVERSES law 7): nothing to READ by default. The
+    // .cc-take panel is GONE — but cc-hastake MUST still be added where a
+    // solution exists, because that class is what seals the duplicate .explain
+    // (drop it and .explain reappears, swapping one block of text for another and
+    // defeating the ruling). Green paint + cc-win + sparks + chime are unchanged:
+    // correct is still loud. A ghost "Show me the solution" is offered beside
+    // "Next question →" when a solution exists; tapping it renders the full
+    // solution and LEAVES the outcome "correct" (revealSolution never re-records).
+    if (canWalk()) qbody.classList.add("cc-hastake");
     setTimeout(function () {
-      if (take) {
-        var cardEl = frame.querySelector(".pv-card");
-        var p = document.createElement("div");
-        p.className = "cc-take";
-        p.innerHTML = '<p><span class="cc-tag">The idea to keep</span>' + esc(take) + "</p>";
-        cardEl.insertBefore(p, foot);
-        qbody.classList.add("cc-hastake");   // the panel carries the teaching — hide the duplicate .explain
-      }
-      actionRow([{ label: "Next question →", ghost: false, onTap: nextQuestion }]);
+      actionRow([
+        canWalk() && { label: "Show me the solution", ghost: true, onTap: revealSolution },
+        { label: "Next question →", ghost: false, onTap: nextQuestion }
+      ].filter(Boolean));
     }, 550);
   }
 
@@ -6139,11 +6764,17 @@ function wireCard(frame) {
     if (msg && !shownWhys[msg]) {
       shownWhys[msg] = true;
       typing = true;
-      bubbles.msg(ensureChat(), "Hint " + hintNum++, esc(msg), function () {
+      // Change 2 (Item 66, REVERSES law 5): whyWrong is its OWN stream — chip
+      // "Not quite", warning tint, and it does NOT consume a hint number
+      // (hintNum untouched), so the next hint the child asks for is still
+      // "Hint 1". Calling it "Hint n" is what made two adults misread it as a
+      // leaking hint rung; a child would misread it every time.
+      var whyBub = bubbles.msg(ensureChat(), "Not quite", esc(msg), function () {
         typing = false;
         if (capped) commitCap();
         else feedbackRow("Try again");
       });
+      if (whyBub && whyBub.classList) whyBub.classList.add("cc-msg-why");
     } else if (capped) {
       commitCap();
     } else if (!allHintsUsed() && !typing) {
