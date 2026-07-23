@@ -2834,7 +2834,46 @@ function check(behavior, user, correct) {
     user = user.map(_tn); correct = correct.map(_tn);
   }
   if (behavior === "multi-select") { const a = [...user].sort(), b = [...correct].sort(); return a.length === b.length && a.every((v, i) => v === b[i]); }
-  if (behavior === "expression") { const norm = (s) => String(s).replace(/\s+/g, "").toLowerCase(); return norm(user[0]) === norm(correct[0]); }
+  if (behavior === "expression") {
+    // BRIEF-RETRY-STATE-2 (#109, 2026-07-23): accept a commutatively-restated
+    // sum. Venkat ruled ADDITION ONLY — an explicit operator allowlist of {+}.
+    // The ONLY shape normalised is "a+b+...=total" (digits and '+' left, digits
+    // right); its addends are sorted so operand ORDER stops mattering. Anything
+    // with another operator fails the /^[0-9+]+=[0-9]+$/ shape and falls through
+    // to exact match — so 4-9=5 and 12/3=4 are NEVER treated commutatively
+    // (subtraction and division are not commutative).
+    // '×' is DELIBERATELY EXCLUDED, not forgotten: Phase 0 found zero '×'
+    // typed-expression questions, so there is nothing to test it against. If one
+    // is ever authored, revisit this allowlist (see ISSUES.md #109).
+    const ex = (s) => String(s).replace(/\s+/g, "").toLowerCase();
+    const u = ex(user[0]), c = ex(correct[0]);
+    if (u === c) return true;
+    const commAdd = (x) => {
+      const m = /^([0-9+]+)=([0-9]+)$/.exec(x);
+      if (!m || m[1].indexOf("+") === -1) return null;
+      const parts = m[1].split("+");
+      if (parts.some((p) => p === "")) return null;   // reject "1++2", "+1", "1+"
+      return parts.slice().sort().join("+") + "=" + m[2];
+    };
+    const cu = commAdd(u), cc = commAdd(c);
+    return cu !== null && cc !== null && cu === cc;
+  }
+  if (behavior === "fill-blanks") {
+    // BRIEF-RETRY-STATE-2 (#84, 2026-07-23): accept comma-grouped numbers so a
+    // child is not marked wrong for writing 42,613 — or Indian 1,00,000 — for a
+    // digit-only key. Strip commas ONLY when they form a VALID grouping:
+    //   Western  /^\d{1,3}(,\d{3})+$/       100,000 / 1,000,000
+    //   Indian   /^\d{1,2}(,\d{2})+,\d{3}$/  1,00,000 / 12,34,567
+    // A MISPLACED comma (4,2613) matches neither, is left intact, and so fails
+    // the key match — the sabotage requirement. GRADING ONLY; display untouched.
+    const strip = (s) => {
+      s = String(s);
+      if (s.indexOf(",") === -1) return s;
+      if (/^\d{1,3}(,\d{3})+$/.test(s) || /^\d{1,2}(,\d{2})+,\d{3}$/.test(s)) return s.replace(/,/g, "");
+      return s;
+    };
+    return user.length === correct.length && user.every((v, i) => strip(v) === strip(correct[i]));
+  }
   return user.length === correct.length && user.every((v, i) => v === correct[i]);
 }
 

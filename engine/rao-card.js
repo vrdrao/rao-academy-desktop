@@ -17,13 +17,17 @@
         "✕ persists"). A wrong SELECTION is marked with a small red ✕ glyph
         before its text — never on a correct selection, never on an unselected
         option; multi-select marks EVERY wrong selection. Fill-blanks get NO
-        glyph: the wrong blank tints softly red (border + text) and the typed
-        value is NEVER cleared — erasing it reads as punishment. No is-wrong
+        glyph: the wrong blank tints softly red (border + text). The typed value
+        SURVIVES the Check that produced the wrong verdict — the child must see
+        the answer they are being told is wrong — but is CLEARED to empty on the
+        "Try again" tap (AMENDED by BRIEF-RETRY-STATE-2, 2026-07-23, Venkat's #88
+        ruling — REVERSES the old "the typed value is NEVER cleared"; a deliberate
+        reversal, not drift — do not restore it). No is-wrong
         red flood, no shake, no "Not quite" pill in adaptive mode; the bubble
         carries the feedback. On "Try again" every ✕/tint clears and the task
         returns to its first-attempt state — restored from a snapshot taken at
-        mount, with fill-blanks typed values preserved verbatim (guard:
-        tools/verify-reset.js A1–A5).
+        mount, with fill-blanks typed values now CLEARED (guard:
+        tools/verify-reset.js A1–A5, amended same brief).
      4. HELP ACCUMULATES — hint bubbles and walkthrough steps only ever stack;
         nothing the card has told the child disappears while the question lives.
         AMENDED by BRIEF-G3-ENGINE-1 (Item 63): opening the solution is the ONE
@@ -104,6 +108,22 @@ function wireCard(frame) {
   // "adaptive"; the app may pre-set data-mode on the qbody to pick rapid/quiz.
   if (qbody && !qbody.hasAttribute("data-mode")) qbody.setAttribute("data-mode", "adaptive");
   var mode = (qbody && qbody.getAttribute("data-mode")) || "adaptive";
+
+  // BRIEF-RETRY-STATE-2 (#111, 2026-07-23): dismiss STALE wrong-answer feedback
+  // the moment the child makes a new selection (taps a different option or edits
+  // a blank). Delegated on qbody in the CAPTURE phase so it (a) survives
+  // restoreTask's re-mount — only qbody's innerHTML is replaced, qbody itself
+  // persists — and (b) runs even if a behavior stops propagation. It only ever
+  // HIDES the whyWrong bubble (never removes it: no-repaint / append-only law);
+  // see hideStaleFeedback below.
+  if (qbody) {
+    var onNewSelection = function (e) {
+      var t = e.target;
+      if (t && t.closest && t.closest(".opt, .opt-fig, .hcell, .st-apple, .blank-input, .ans-input")) hideStaleFeedback();
+    };
+    qbody.addEventListener("click", onNewSelection, true);
+    qbody.addEventListener("input", onNewSelection, true);
+  }
 
   // ── shared data (absent on legacy questions) ──
   var hintBtn = frame.querySelector(".pv-hint"), hintBox = frame.querySelector(".pv-hintbox"), hintRaw = frame.dataset.hint;
@@ -225,23 +245,14 @@ function wireCard(frame) {
   // rungIdx, shownWhys) live in this closure and are deliberately NOT reset.
   function restoreTask() {
     if (!qbody || taskSnap == null || !window.RaoPreview || !window.RaoPreview.attach) return;
-    // FR-2 ruling 4: the typed value is the child's handwriting — NEVER
-    // cleared. The snapshot restore wipes input PROPERTIES (they are not
-    // attributes), so fill-blanks values are carried across the re-mount.
-    // Tints clear with the restore; values return. Fill-blanks only — every
-    // other behavior keeps the full FR-1 first-attempt restore.
-    var keep = null;
-    if (behavior === "fill-blanks") {
-      keep = [];
-      var inpsBefore = qbody.querySelectorAll(".blank-input");
-      for (var i = 0; i < inpsBefore.length; i++) keep.push(inpsBefore[i].value);
-    }
+    // BRIEF-RETRY-STATE-2 (#88, 2026-07-23): Venkat RULED the typed value IS
+    // CLEARED on "Try again" — REVERSES FR-2 ruling 4 ("the typed value is the
+    // child's handwriting — NEVER cleared"). An input's typed value never
+    // serialises into innerHTML, so restoring the mount snapshot and
+    // re-attaching returns every fill-blank to a clean, EMPTY slate. No value is
+    // carried across — a deliberate reversal of the old law, not drift.
     qbody.innerHTML = taskSnap;
     window.RaoPreview.attach(qbody, behavior);
-    if (keep) {
-      var inpsAfter = qbody.querySelectorAll(".blank-input");
-      for (var j = 0; j < inpsAfter.length; j++) if (keep[j] != null) inpsAfter[j].value = keep[j];
-    }
   }
   function resumeAnswering() {
     removeRow();
@@ -290,6 +301,22 @@ function wireCard(frame) {
     for (var i = 0; i < sel.length; i++) sel[i].classList.remove("is-sel");
     var c = qbody.querySelector("[data-st-count]");
     if (c) c.textContent = qbody.querySelectorAll(".st-apple.is-sel").length;
+  }
+  // BRIEF-RETRY-STATE-2 (#111): the whyWrong panel + its "Not quite" chip are
+  // one bubble (.cc-msg-why). HIDE it (display:none), NEVER detach — the
+  // no-repaint / append-only law forbids removing panel nodes. Hint bubbles
+  // (.cc-msg WITHOUT .cc-msg-why) stay visible — help accumulates (law 4).
+  // Also clear any residual prior-attempt whisper marks (✕ / cc-tried); the
+  // engine adds and removes those freely, so clearing them is not a repaint.
+  function hideStaleFeedback() {
+    var whys = frame.querySelectorAll(".cc-msg-why");
+    for (var i = 0; i < whys.length; i++) whys[i].style.display = "none";
+    if (qbody) {
+      var xs = qbody.querySelectorAll(".cc-x");
+      for (var j = 0; j < xs.length; j++) xs[j].remove();
+      var tr = qbody.querySelectorAll(".cc-tried");
+      for (var k = 0; k < tr.length; k++) tr[k].classList.remove("cc-tried");
+    }
   }
   // The quiet reveal (walkthrough final step): green the correct option(s),
   // nothing else moves. Triumph and rescue must feel different.

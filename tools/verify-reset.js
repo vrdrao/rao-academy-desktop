@@ -155,7 +155,14 @@ window.__firstDiff = function (a, b, skip) {
          "progress survives reset" section — wrongCount + ladder position).
      A5  fill-blanks: a wrong blank tints (border + text) with NO ✕ glyph;
          a correct blank in the same attempt is untouched; the typed value
-         is preserved VERBATIM through Check and through Try Again.
+         is preserved VERBATIM through Check, then CLEARED to empty on Try
+         Again.
+         AMENDED by BRIEF-RETRY-STATE-2 (2026-07-23): Venkat RULED the typed
+         value IS CLEARED on "Try again" (#88), REVERSING FR-2 ruling 4's
+         "preserved verbatim through Try Again". The split is deliberate:
+         through CHECK the value STAYS (the child must see their wrong answer
+         while reading why it is wrong); on TRY AGAIN it clears for a clean
+         slate. A future reader — this is a reversal, not drift.
    Assertions are computed-style on a really-rendered card, never markup.
    ════════════════════════════════════════════════════════════════ */
 const A5_FIXTURE = `
@@ -319,6 +326,9 @@ async function wrongMarkLaws(browser) {
   else fail("A5 — correct blank in the same attempt is untouched", JSON.stringify({ right: a5.right, rest: restRef, cls: a5.rightCls }));
   if (a5.glyphs === 0) pass("A5 — no ✕ glyph anywhere on fill-blanks");
   else fail("A5 — no ✕ glyph anywhere on fill-blanks", `${a5.glyphs} .cc-x node(s)`);
+  // DELIBERATELY NOT inverted by BRIEF-RETRY-STATE-2: through CHECK the typed
+  // value STAYS (the child reads the wrong-feedback beside their own answer).
+  // Only Try Again clears — see the assertion below.
   if (a5.values.join("|") === "13|20") pass("A5 — typed values preserved verbatim through Check", a5.values.join(", "));
   else fail("A5 — typed values preserved verbatim through Check", JSON.stringify(a5.values));
   await tryAgain("a5");
@@ -333,9 +343,13 @@ async function wrongMarkLaws(browser) {
       wrongBorder: c.borderTopColor, wrongText: c.color,
     };
   });
-  if (a5after.values.join("|") === "13|20")
-    pass("A5 — typed values preserved verbatim through Try Again", a5after.values.join(", "));
-  else fail("A5 — typed values preserved verbatim through Try Again", `values ${JSON.stringify(a5after.values)} — the child's handwriting was erased`);
+  // INVERTED by BRIEF-RETRY-STATE-2 (2026-07-23): Venkat RULED the typed value
+  // IS CLEARED on "Try again" (#88), REVERSING FR-2 ruling 4 ("preserved
+  // verbatim through Try Again"). Both blanks return to EMPTY on retry. This is
+  // a deliberate reversal of the old law, not drift — do not "restore" it.
+  if (a5after.values.join("|") === "|")
+    pass("A5 — typed values CLEARED on Try Again (BRIEF-RETRY-STATE-2 #88; reverses FR-2 ruling 4)", JSON.stringify(a5after.values));
+  else fail("A5 — typed values CLEARED on Try Again (BRIEF-RETRY-STATE-2 #88)", `values ${JSON.stringify(a5after.values)} — expected both empty; the wrong answer survived the retry`);
   if (a5after.wrongBorder !== RED_MARK && a5after.wrongText !== RED_MARK && a5after.classes.every((cl) => !/\b(in)?correct\b/.test(cl)))
     pass("A4/A5 — Try Again clears the tint (border + text back to resting)");
   else fail("A4/A5 — Try Again clears the tint", JSON.stringify(a5after));
@@ -682,8 +696,17 @@ async function runViewport(browser, vp, touch) {
     const diff = await page.evaluate(([a, b, skip]) => window.__firstDiff(a, b, skip),
       [before.state, after.state, opts.keepValues ? ["val"] : []]);
     if (opts.keepValues) {
-      if (!diff && after.ser === driven) pass(name, `marks cleared, typed values preserved verbatim (serialize ${driven}) — FR-2 ruling 4`);
-      else fail(name, diff || `serialize after Try Again ${after.ser} != driven ${driven} — the typed value was cleared (FR-1 behaviour; FR-2 ruling 4 forbids it)`);
+      // INVERTED by BRIEF-RETRY-STATE-2 (2026-07-23): Venkat RULED the typed
+      // value IS CLEARED on "Try again" (#88), REVERSING FR-2 ruling 4. The box
+      // returns to its mount-time EMPTY state, so serialize must read empty (not
+      // the driven value); the structural compare still skips `val`. A deliberate
+      // reversal of the old law — do not "restore" the preservation assertion.
+      // A fully-cleared fill-blank serialises to null (nothing entered =
+      // unanswered) OR to an all-empty array — both mean the box is empty.
+      const parsedAfter = JSON.parse(after.ser);
+      const emptied = parsedAfter == null || parsedAfter.every((v) => v == null || String(v) === "");
+      if (!diff && emptied) pass(name, `marks cleared AND typed value cleared to empty (serialize ${after.ser}) — BRIEF-RETRY-STATE-2 #88`);
+      else fail(name, diff || `serialize after Try Again ${after.ser} — expected EMPTY (BRIEF-RETRY-STATE-2 #88: the box clears on retry); driven was ${driven}`);
     } else if (!diff && before.ser === after.ser) pass(name, `state restored exactly (${before.state.length} els, serialize ${before.ser})`);
     else fail(name, diff || `serialize ${before.ser} -> ${after.ser}`);
     if (after.anyX || after.anyTried) fail(`${name} — no residual whisper mark`, `cc-x=${after.anyX} cc-tried=${after.anyTried}`);
@@ -709,12 +732,14 @@ async function runViewport(browser, vp, touch) {
     await tap(`#${id} .opt`, await optIdx(`#${id} .opt`, "3"));
   }, "(q2 'even numbers')");
 
-  // 2 fill-blanks — type a wrong value; per FR-2 ruling 4 it MUST survive the
-  // reset (the typed value is the child's handwriting — never erased), while
-  // the .incorrect tint clears. INVERTED from FR-1's "must NOT survive".
+  // 2 fill-blanks — type a wrong value; on Try again it MUST clear to empty
+  // (BRIEF-RETRY-STATE-2, 2026-07-23, Venkat's #88 ruling — REVERSES FR-2
+  // ruling 4's "the typed value survives the reset"), while the .incorrect tint
+  // clears too. The keepValues opt now asserts CLEARING, not preservation (see
+  // drillBody). Label kept as the flag name; behaviour is inverted.
   await drill(2, "fill-blanks", async (id) => {
     await setValue(`#${id} .blank-input`, null, "13");
-  }, "(typed value survives, tint clears)", { keepValues: true });
+  }, "(typed value CLEARED on retry, tint clears)", { keepValues: true });
 
   // 3 expression
   await drill(3, "expression", async (id) => {
