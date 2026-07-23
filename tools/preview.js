@@ -1,7 +1,7 @@
 /* ============================================================================
    preview.js — generates a fully interactive preview page for a lesson.
 
-   Usage:  node tools/preview.js lessons/incoming/foo.html
+   Usage:  node tools/preview.js lessons/foo.html
            node tools/preview.js lessons/foo.html
 
    Output: lessons/_preview/foo.preview.html  (opened in the default browser)

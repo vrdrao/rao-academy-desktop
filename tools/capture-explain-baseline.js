@@ -10,7 +10,8 @@
  *   { "<relative/path.html>:<qIndex>": "<html string>", ... }
  *
  * Keys use RELATIVE PATHS from lessons/, not basenames, to avoid collisions
- * when two files share a basename (e.g. lessons/foo.html vs lessons/incoming/foo.html).
+ * when two files share a basename (basenames are unique across lessons/ now that
+ * lessons/incoming/ has been merged in — BRIEF-CONSOLIDATE-1 Step 2).
  *
  * The HTML string is captured at the ENGINE level — the exact string that
  * parseQuestion() produces as _explainHtml — NOT a DOM serialization.

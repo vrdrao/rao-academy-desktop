@@ -20,7 +20,7 @@ const C = { r: "\x1b[31m", g: "\x1b[32m", b: "\x1b[1m", d: "\x1b[2m", x: "\x1b[0
 
 // Canonical homes for lesson files. A lesson may only live under one of these.
 const ALLOWED_PREFIXES = [
-  "lessons/",   // the deliverable lessons (incl. lessons/incoming/ and lessons/_preview/)
+  "lessons/",   // the deliverable lessons (incl. lessons/_preview/; lessons/incoming/ was merged into lessons/ by BRIEF-CONSOLIDATE-1 Step 2)
   "review/",    // rendered review pages (embed the lesson's #source)
   "archive/",   // archived/retired lessons, kept for history
 ];

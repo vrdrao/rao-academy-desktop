@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* ── assign-question-ids.js — GIVE EVERY QUESTION A PERMANENT NAME (BRIEF-ID-1) ──
  *
- * Walks lessons/ + lessons/incoming/ (NEVER lessons-g3/). For each question that
+ * Walks lessons/ (NEVER lessons-g3/). For each question that
  * LACKS an `id:` in its @q frontmatter, generates a fresh opaque id
  *   q + 8 chars from  23456789abcdefghijkmnpqrstuvwxyz   (Crockford: no 0/o/1/l/u)
  * and inserts it as the FIRST line of that block's frontmatter. A question that
@@ -40,10 +40,7 @@ function scanSet() {
   const top = path.join(ROOT, "lessons");
   for (const e of fs.readdirSync(top, { withFileTypes: true }))
     if (e.isFile() && e.name.endsWith(".html")) out.push(path.join(top, e.name));
-  const inc = path.join(top, "incoming");
-  if (fs.existsSync(inc))
-    for (const e of fs.readdirSync(inc, { withFileTypes: true }))
-      if (e.isFile() && e.name.endsWith(".html")) out.push(path.join(inc, e.name));
+  // lessons/incoming/ was merged into lessons/ (BRIEF-CONSOLIDATE-1 Step 2) — one folder now.
   return out.sort();
 }
 

@@ -19,7 +19,7 @@
  * Read-only. Exit 0 = all invariants hold. Exit 1 = at least one violation.
  *
  * Usage:  node tools/verify-mcq-92.js [path-to-lesson.html]
- *         (defaults to lessons/incoming/interpret-remainders.html)
+ *         (defaults to lessons/interpret-remainders.html)
  */
 
 "use strict";
@@ -28,7 +28,7 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
-const LESSON = process.argv[2] || path.join(ROOT, "lessons", "incoming", "interpret-remainders.html");
+const LESSON = process.argv[2] || path.join(ROOT, "lessons", "interpret-remainders.html");
 const C = { r: "\x1b[31m", g: "\x1b[32m", b: "\x1b[1m", x: "\x1b[0m" };
 
 const EXPECTED_COUNT = 29;

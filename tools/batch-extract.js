@@ -12,7 +12,8 @@
    This script extracts just that block for each file.
 
    Usage:  node tools/batch-extract.js <source-dir>
-           Copies every .html from source-dir into lessons/incoming/,
+           Copies every .html from source-dir into lessons/ (the single lesson
+           folder since BRIEF-CONSOLIDATE-1 Step 2 merged lessons/incoming/ in),
            extracts the #source content, and reports results.
 
    Does NOT validate, generate reviews, or take screenshots — that is
@@ -34,7 +35,9 @@ if (!fs.existsSync(abs)) {
 }
 
 const ROOT = path.join(__dirname, "..");
-const INCOMING = path.join(ROOT, "lessons", "incoming");
+// Import target: the single lessons/ folder (lessons/incoming/ was merged in by
+// BRIEF-CONSOLIDATE-1 Step 2). New imports land directly in lessons/.
+const INCOMING = path.join(ROOT, "lessons");
 fs.mkdirSync(INCOMING, { recursive: true });
 
 const files = fs.readdirSync(abs).filter(f => f.endsWith(".html"));
@@ -88,4 +91,4 @@ if (failed) {
   console.log(`FAILED:    ${failed}`);
   failures.forEach(f => console.log(`           - ${f}`));
 }
-console.log(`All files in: lessons/incoming/`);
+console.log(`All files in: lessons/`);

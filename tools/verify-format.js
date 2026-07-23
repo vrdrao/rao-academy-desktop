@@ -86,10 +86,11 @@ async function probe(page, file) {
 
 (async () => {
   const wanted = process.argv.slice(2);
-  // RECURSIVE discovery — lessons/incoming/ holds ~105 of the ~108 lessons.
-  // A flat readdirSync here is the exact bug that let the harness silently
-  // test 4% of the corpus for ~95 sessions (see STATUS.md); a review page
-  // for an incoming/ lesson was invisible to this guard until 2026-07-15.
+  // RECURSIVE discovery — lessons/ is a single flat folder now (lessons/incoming/
+  // was merged in by BRIEF-CONSOLIDATE-1 Step 2), but recursion stays: a flat
+  // readdirSync here is the exact bug that let the harness silently test 4% of the
+  // corpus for ~95 sessions (see STATUS.md), when ~105 lessons sat in a subfolder
+  // invisible to this guard until 2026-07-15.
   const collectLessons = (dir) => {
     let out = [];
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {

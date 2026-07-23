@@ -6,7 +6,7 @@
  * This guard enforces the permanent-ID scheme: each question in the source
  * frontmatter carries `id: q<8 Crockford chars>`, unique corpus-wide, opaque.
  *
- * Scan set: lessons/*.html + lessons/incoming/*.html.  NEVER lessons-g3/.
+ * Scan set: lessons/*.html.  NEVER lessons-g3/.
  *
  * Assertions:
  *   1. Every question has an `id:` in its @q frontmatter.        (count missing)
@@ -50,18 +50,13 @@ let failures = 0;
 function pass(n, d) { console.log(`  ${C.g}PASS${C.x}  ${n}${d ? " — " + d : ""}`); }
 function fail(n, d) { failures++; console.log(`  ${C.r}FAIL${C.x}  ${n}${d ? " — " + d : ""}`); }
 
-// The scan set — lessons/ (top level) + lessons/incoming/. Explicitly NOT lessons-g3.
+// The scan set — lessons/ (top level). Explicitly NOT lessons-g3. (lessons/incoming/
+// was merged into lessons/ by BRIEF-CONSOLIDATE-1 Step 2, so there is one folder now.)
 function scanSet() {
   const out = [];
   const top = path.join(ROOT, "lessons");
   for (const e of fs.readdirSync(top, { withFileTypes: true })) {
     if (e.isFile() && e.name.endsWith(".html")) out.push(path.join(top, e.name));
-  }
-  const inc = path.join(top, "incoming");
-  if (fs.existsSync(inc)) {
-    for (const e of fs.readdirSync(inc, { withFileTypes: true })) {
-      if (e.isFile() && e.name.endsWith(".html")) out.push(path.join(inc, e.name));
-    }
   }
   return out.sort();
 }
