@@ -207,14 +207,15 @@ async function checkLesson(page, file) {
   return problems;
 }
 
-/* ---- BUG 4: the explanation must actually REVEAL on Check --------------------
-   rao.css hides `.explain` by default and only un-hides it via
-   `[data-mode="…"].is-checked .explain`. For years nothing set those hooks, so
-   every explanation was emitted, styled — and permanently invisible. A grading
-   run can never catch this: the explanation's visibility has nothing to do with
-   whether the answer is right. So we build a card WITH an explanation, drive a
-   real Check click, and assert the paragraph goes from 0-height to visible.
-   No lesson currently ships `explain:`, hence the self-contained fixture. */
+/* ---- rule 13: the explanation must NEVER reveal (was BUG 4, now INVERTED) ----
+   HISTORY: rao.css once hid `.explain` and un-hid it via `.is-checked .explain`.
+   BUG 4 asserted that reveal fired (the old failure was "emitted but permanently
+   invisible"). AMENDED by BRIEF-INTERACTION-CONFORM-1 item 4 (rule 13, RULED
+   2026-07-23): THE EXPLAIN LINE IS REMOVED FROM THE PRODUCT — the reveal CSS is
+   deleted, so `.explain` stays display:none in every state. The failure mode has
+   flipped: this now asserts the explanation stays HIDDEN before AND after Check.
+   The <p class="explain"> element is still emitted (an inert hidden carrier), so
+   we still assert it exists — it just must never paint. Self-contained fixture. */
 async function checkExplainReveal(page) {
   const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8");
   const html =
@@ -261,10 +262,13 @@ async function checkExplainReveal(page) {
         mode: q && q.getAttribute("data-mode"), checked: q && q.classList.contains("is-checked"),
       };
     });
-    if (!(after.h > 0) || after.disp === "none")
+    // rule 13 (INVERTED from BUG 4): the explanation must STAY hidden after Check.
+    // is-checked is set on a correct answer, but the reveal CSS is gone, so display
+    // must remain "none" and height 0.
+    if (after.h > 0 || after.disp !== "none")
       problems.push(
-        `BUG 4: the explanation is STILL hidden after Check (height ${after.h}px, display ${after.disp}, ` +
-        `data-mode=${after.mode}, is-checked=${after.checked}) — the reveal hooks are not being set`);
+        `rule 13: the explanation is VISIBLE after Check (height ${after.h}px, display ${after.disp}, ` +
+        `data-mode=${after.mode}, is-checked=${after.checked}) — the explain LINE is removed; it must never paint`);
   } finally {
     try { fs.unlinkSync(tmp); } catch (e) {}
   }
@@ -1194,14 +1198,14 @@ async function checkSeqStrip(browser) {
     }
   }
 
-  // Bug 4 — explanation reveal, on its own fixture (no lesson ships `explain:` yet).
+  // rule 13 — the explanation must NEVER reveal (inverted from the old Bug-4 reveal).
   const explainProblems = await checkExplainReveal(page);
   if (explainProblems.length) {
     failed++;
-    console.log(`\nFAIL  explanation reveal`);
+    console.log(`\nFAIL  explanation stays hidden (rule 13)`);
     explainProblems.forEach((p) => console.log("      - " + p));
   } else {
-    console.log(`PASS  explanation reveal  (hidden by default, visible after Check)`);
+    console.log(`PASS  explanation stays hidden (rule 13: the explain line is removed — hidden before AND after Check)`);
   }
 
   // Mobile invariants — 380×800 viewport, self-contained fixture.

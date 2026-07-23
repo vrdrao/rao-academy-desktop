@@ -97,6 +97,15 @@
    to its siblings. v36 spec: glyph 0.8em, red, 7px right margin, bold. */
 .cc-x{font-size:.8em;color:#ef4444;margin-right:7px;font-weight:700}
 
+/* rule 12 (RULED 2026-07-23, BRIEF-INTERACTION-CONFORM-1): after a WRONG
+   multi-select attempt, a correctly-picked option must stay visibly chosen — the
+   child has to be able to tell what they picked. It keeps a quiet brand-tinted
+   edge (NOT the green correct look — rule 6 forbids revealing correctness while
+   an attempt remains, and NOT the resting look — that is the bug this fixes). No
+   ✕, no tick: just "you chose this." Cleared on Try again / a new selection. */
+.rao-lesson .opt.cc-kept, .rao-lesson .opt-fig.cc-kept, .rao-lesson .hcell.cc-kept{
+  border-color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.06);}
+
 /* — tutor conversation: hints and steps speak in one voice (law 5) — */
 .cc-chat{margin-top:14px;background:#f4f1ff;border:1px solid #e6e0ff;border-radius:14px;padding:14px 14px 16px}
 .cc-chat+.cc-chat{margin-top:10px}

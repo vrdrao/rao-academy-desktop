@@ -177,6 +177,7 @@ function wireCard(frame) {
   function hideFoot(on) { if (foot) foot.style.display = on ? "none" : ""; }
   function ensureChat() {
     if (!chat) { chat = bubbles.wrap(null); qbody.after(chat); }
+    chat.style.display = "";   // a prior reset may have collapsed an EMPTY chat — re-show it for the incoming bubble
     return chat;
   }
   function removeRow() {
@@ -259,7 +260,15 @@ function wireCard(frame) {
     freezeTask(false);
     hideFoot(false);
     quietChrome(false);
-    restoreTask();                   // LAW 3 (FR-1): first-attempt state back; bubbles STAY (law 4)
+    restoreTask();                   // LAW 3 (FR-1): first-attempt state back
+    // Rule 2 + rule 4 (amended 2026-07-23, BRIEF-INTERACTION-CONFORM-1 item 3):
+    // "Try again" is a fresh start. HIDE the wrong-answer feedback — the whyWrong
+    // panel + its "Not quite" chip (.cc-msg-why) — and clear any residual ✕ / kept
+    // marks. This EXTENDS the existing dismiss-on-new-selection path (#111), it
+    // does not replace it. The HINT is help the child EARNED: it is a .cc-msg
+    // WITHOUT .cc-msg-why, and hideStaleFeedback leaves it visible (law 4 narrowed:
+    // hints persist, answer-specific feedback does not). HIDE, never remove.
+    hideStaleFeedback();
     fb.className = "pv-fb"; fb.textContent = ""; fb.style.color = "";
     syncHintBtn();
   }
@@ -276,7 +285,7 @@ function wireCard(frame) {
     for (var i = 0; i < sel.length; i++) {
       var el = sel[i];
       var val = String(el.dataset.val != null ? el.dataset.val : (el.textContent || "").trim());
-      if (ans.indexOf(val) !== -1) continue;         // ruling 2: correct selections stay unmarked
+      if (ans.indexOf(val) !== -1) { el.classList.add("cc-kept"); continue; }   // rule 12: a correct pick stays visibly CHOSEN — a neutral brand edge (never the green correct look; rule 6). ruling 2 still holds: NO ✕ on a correct pick. Without this it lost its .is-sel and became identical to a never-chosen option.
       el.classList.add("cc-tried");
       if (!el.querySelector(".cc-x")) {
         var x = document.createElement("span");
@@ -316,6 +325,17 @@ function wireCard(frame) {
       for (var j = 0; j < xs.length; j++) xs[j].remove();
       var tr = qbody.querySelectorAll(".cc-tried");
       for (var k = 0; k < tr.length; k++) tr[k].classList.remove("cc-tried");
+      var kp = qbody.querySelectorAll(".cc-kept");   // rule 12's neutral "you picked this" edge clears with the rest of the stale feedback
+      for (var m = 0; m < kp.length; m++) kp[m].classList.remove("cc-kept");
+    }
+    // If hiding the whyWrong leaves the chat with NO visible bubble, collapse the
+    // empty container so a fresh start is truly the first-arrival state (rule 2) —
+    // otherwise an empty tutor box lingers where the "Not quite" panel was. A
+    // surviving hint keeps a visible .cc-msg, so the chat stays open for it.
+    if (chat) {
+      var anyVis = false, msgs = chat.querySelectorAll(".cc-msg");
+      for (var c = 0; c < msgs.length; c++) { if (msgs[c].style.display !== "none") { anyVis = true; break; } }
+      chat.style.display = anyVis ? "" : "none";
     }
   }
   // The quiet reveal (walkthrough final step): green the correct option(s),
@@ -686,17 +706,42 @@ function showWhyPanel(frame, entry) {
    child entered — and NEVER paint the correct answer on a wrong attempt: while the question
    is attemptable there is no green anywhere (Brief 7.6, law 2). `noGreen` suppresses the
    per-input green marks on a wrong adaptive attempt for the same reason. */
-var FB_STATES = ["is-correct", "is-wrong", "correct", "incorrect"];
+var FB_STATES = ["is-correct", "is-wrong", "correct", "incorrect", "tile-wrong"];
 function clearFeedback(qbody) {
-  qbody.querySelectorAll(".is-correct, .is-wrong, .correct, .incorrect").forEach(function (el) {
+  qbody.querySelectorAll(".is-correct, .is-wrong, .correct, .incorrect, .tile-wrong").forEach(function (el) {
     el.classList.remove.apply(el.classList, FB_STATES);
   });
+}
+// rule 14: on a WRONG ordering/sorting answer, mark WHICH tiles are out of place.
+// Display-only: compare each slot's placed tile value to the key at that position.
+// Recolours in place — nothing moves, nothing greens — so the correct order is
+// NOT revealed (rule 6 holds while an attempt remains). A tile whose value matches
+// the key at its slot stays at rest.
+function markMisplaced(qbody, slotSel, tileSel, ans) {
+  var slots = qbody.querySelectorAll(slotSel);
+  for (var i = 0; i < slots.length; i++) {
+    var t = slots[i].querySelector(tileSel);
+    if (t && String(t.dataset.val) !== ans[i]) t.classList.add("tile-wrong");
+  }
 }
 function markFeedback(qbody, behavior, user, answer, ok, noGreen) {
   clearFeedback(qbody);                       // idempotent — a re-check re-marks cleanly
   var ans = (answer || []).map(String);
   var u = (user || []).map(String);
-  var norm = function (s) { return String(s).replace(/\s+/g, "").toLowerCase(); };
+  // ONE source of truth for "is this field right": ask the GRADER, per field,
+  // instead of keeping a second copy of its normalisation here. Before this,
+  // fill-blanks compared raw strings and expression stripped only whitespace — so
+  // a child graded CORRECT for "42,613" / "1,00,000" / "16+31=47" still saw a red
+  // box (rules 10, 12). check() already knows comma/Indian grouping and
+  // commutative addition; consulting it means the painter can never drift from it
+  // (BRIEF-INTERACTION-CONFORM-1 item 1: do NOT duplicate the grader's logic).
+  var grade1 = function (b, uv, av) {
+    try {
+      if (window.RaoPreview && typeof window.RaoPreview.check === "function")
+        return !!window.RaoPreview.check(b, [uv], [av]);
+    } catch (e) { /* fall through to exact match */ }
+    return String(uv) === String(av);
+  };
 
   if (behavior === "single-select" || behavior === "multi-select") {
     qbody.querySelectorAll(".opt, .opt-fig, .hcell").forEach(function (o) {
@@ -713,7 +758,7 @@ function markFeedback(qbody, behavior, user, answer, ok, noGreen) {
   }
   if (behavior === "fill-blanks") {
     qbody.querySelectorAll(".blank-input").forEach(function (inp, i) {
-      var right = u[i] === ans[i];
+      var right = grade1(behavior, u[i], ans[i]);
       if (right && !noGreen) inp.classList.add("correct");
       else if (!right) inp.classList.add("incorrect");
     });
@@ -729,7 +774,7 @@ function markFeedback(qbody, behavior, user, answer, ok, noGreen) {
   }
   if (behavior === "expression") {
     qbody.querySelectorAll(".ans-input").forEach(function (inp, i) {
-      var right = norm(u[i]) === norm(ans[i] || "");
+      var right = grade1(behavior, u[i], ans[i] || "");
       if (right && !noGreen) inp.classList.add("correct");
       else if (!right) inp.classList.add("incorrect");
     });
@@ -737,10 +782,12 @@ function markFeedback(qbody, behavior, user, answer, ok, noGreen) {
   }
   if (behavior === "order") {
     var os = qbody.querySelector(".order-slots"); if (os) os.classList.add(ok ? "correct" : "incorrect");
+    if (!ok) markMisplaced(qbody, ".order-slot", ".tile", ans);   // rule 14
     return;
   }
   if (behavior === "sequence-build") {
     var ss = qbody.querySelector(".sb-slots"); if (ss) ss.classList.add(ok ? "correct" : "incorrect");
+    if (!ok) markMisplaced(qbody, ".sb-slot", ".sb-tile", ans);   // rule 14
     return;
   }
   // categorize / line-plot / time / bar-graph / construct: no per-option state exists in

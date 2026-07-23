@@ -383,10 +383,12 @@ async function sweepCorpus(browser) {
 }
 
 // ════════════════════════════════════════════════════════════════
-// g. EXPLAIN (Brief 7.6.1, rao-master-17) — the frontmatter `explain:`
-// form must render exactly like markup <p class="explain">, markup must
-// win when both exist, and the reveal-on-correct / cc-hastake suppression
-// must apply identically to both authoring forms.
+// g. EXPLAIN (Brief 7.6.1, rao-master-17; reveal amended by BRIEF-INTERACTION-
+// CONFORM-1 item 4 / rule 13) — the frontmatter `explain:` form must still
+// render exactly like markup <p class="explain">, and markup must win when both
+// exist (the element is retained as an inert hidden carrier). But it NO LONGER
+// reveals on a correct answer — rule 13 removed the explain LINE from the product,
+// so .explain stays display:none in every state, both authoring forms alike.
 // ════════════════════════════════════════════════════════════════
 function loadEngineNode() {
   global.window = {};
@@ -553,14 +555,18 @@ async function explainLaws(browser) {
     for (const r of recs) {
       driven++;
       const isSel = r.behavior === "single-select" || r.behavior === "multi-select";
-      const wantAfter = r.hasSolution ? "none" : "block";
+      // AMENDED by BRIEF-INTERACTION-CONFORM-1 item 4 (rule 13, RULED 2026-07-23):
+      // THE EXPLAIN LINE IS REMOVED FROM THE PRODUCT. It no longer reveals on a
+      // correct answer in ANY mode — the reveal CSS is gone, so .explain stays
+      // display:none in every state. The old law revealed it for legacy (no-
+      // solution) questions (wantAfter "block"); that is repealed. It stays "none".
+      const wantAfter = "none";
       // RE-POINTED by BRIEF-G3-ENGINE-1 Change 4 (Item 65; REVERSES the takeaway
-      // panel). The repealed law asserted ONE thing: a takeaway question shows a
-      // .cc-take panel. This asserts FOUR, and is strictly stronger:
+      // panel) and again by item 4 above. This asserts:
       //   (a) NO .cc-take panel ever (the panel is gone);
-      //   (b) .explain sealed iff a solution exists, visible when legacy;
-      //   (c) cc-hastake present iff a solution exists — it is what seals .explain,
-      //       and the whole trap of Change 4 is that dropping it un-seals .explain;
+      //   (b) .explain stays hidden ("none") on correct — rule 13, all forms;
+      //   (c) cc-hastake present iff a solution exists (unchanged — it still seals
+      //       .explain, now redundantly with the removed reveal, harmless);
       //   (d) selects keep the green .cc-win (correct is still loud).
       const ok = r.exists && r.before === "none" && r.filled && r.outcome === "correct" &&
                  !r.panel && r.after === wantAfter && (r.hastake === r.hasSolution) && (!isSel || r.winPaint);
@@ -575,7 +581,7 @@ async function explainLaws(browser) {
   } else {
     pass("g. EXPLAIN REVEAL (live)",
       `${revealOk}/${driven} frontmatter-explain questions: hidden before Check; correct → NO .cc-take panel, ` +
-      `.explain sealed by cc-hastake when a solution exists (visible when legacy), green .cc-win on selects`);
+      `.explain STAYS hidden in every state (rule 13: the explain line is removed), green .cc-win on selects`);
   }
 }
 
