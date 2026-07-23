@@ -142,6 +142,11 @@ working on stays exactly as legible as it was.
 
 ## 6. No answer reveal while the child can still try. RULED — legacy decision, date not recorded.
 
+> **AMENDED 2026-07-23 — one exception, multi-select only. See rule 18.** On a
+> wrong multi-select attempt, correct picks the child made turn green while an
+> attempt remains. This is a deliberate carve-out, made with the leak understood.
+> **It does not extend to any other question type.**
+
 No green, no highlight, no "the answer is…" while another attempt is possible.
 
 The reveal happens once: at the end of the walkthrough, or on a correct answer,
@@ -323,6 +328,126 @@ Why discard rather than resume: a child who left mid-question was not ready.
 Handing them a half-spent question a day later punishes them for stopping, and
 the attempt count would be meaningless anyway — they will not remember what they
 tried.
+
+## 16. A whyWrong exists only where the wrong answer is a known option. RULED 2026-07-23.
+
+**Where a whyWrong is required:** question types with a fixed, authored set of
+wrong answers — **single-select and multi-select.** The author knows in advance
+exactly what a child can pick, so the message can name what that child actually
+did.
+
+**Where a whyWrong is NOT authored:** fill-in-the-blank, ordering,
+sequence-build, categorize — any type where the child produces something the
+author did not enumerate. **The hint carries the teaching load instead.**
+
+Why not write a generic one anyway ("children often miss a carry")? Because a
+child who transposed two digits would be told they missed a carry. That is not
+feedback, it is a guess in the shape of feedback. A child who reads two or three
+messages that do not describe what they did will stop reading them — which
+damages the messages that *are* accurate. Silence is more honest than a
+confident wrong guess.
+
+**The known consequence, accepted:** in a lesson that is mostly fill-in-the-blank,
+a child who answers wrong sees the red mark and no explanation, twice, then the
+answer. The hint is available but only if they open it. This is a deliberate
+trade. **Revisit if real usage shows children stalling on fill-in questions** —
+that would be the signal that something more is needed there.
+
+**This is a second, stronger argument for preferring multiple-choice at Grade 4.**
+The first was that nine-year-olds should not do a lot of typing (ruled during the
+#92 conversion). The second is this: a fixed set of wrong answers is a set you can
+teach into. An open text box is not.
+
+---
+
+## 17. How a whyWrong is written. RULED 2026-07-23.
+
+**Name what the child did, plainly.** Not what to check, not what to reconsider.
+
+Worked example, from `add_5digit_word_problems` (`37,409 + 51,286 = 88,695`):
+
+| Child picked | Message |
+|---|---|
+| 87,695 (1,000 short) | "Looks like you forgot to carry into the thousands column." |
+| 88,685 (10 short) | "Looks like you forgot to carry into the tens column." |
+| 89,695 (1,000 over) | "Looks like you carried into the thousands, but nothing needed carrying there." |
+
+Rejected phrasing: *"Check the thousands column — there's a carry coming in from
+the hundreds."* Venkat: too indirect. Tell the child what happened, do not send
+them looking.
+
+Constraints, from existing rules:
+- **Never state the answer** (rule 6, and ISSUES #68). If tapping a wrong option
+  reveals the right one, guessing becomes cheaper than thinking.
+- **Never state distance from the answer** — no "you were close", no "off by
+  ten" (rule 12).
+- **Must match what the child actually did** (rule 12). ISSUES #114 is the
+  cautionary case: division messages assumed the answer was the quotient, so on
+  remainder questions every message told the child the opposite of what they
+  picked.
+
+> **Still open — the voice.** "Looks like you forgot…" is gentle and slightly
+> hedged. "You forgot to carry into the thousands column" is firmer and flatter.
+> Venkat has not ruled between them, and this sets the voice for every whyWrong
+> in the corpus.
+
+> **Still open — multiple missed carries.** When a distractor is short by, say,
+> 10,010, the child missed two carries. Name both columns, or say something
+> simpler like "looks like you missed a couple of carries"? Unruled.
+
+---
+
+## 18. Multi-select shows green on correct picks. RULED 2026-07-23.
+
+After a wrong multi-select attempt, **every option the child ticked stays
+visible as their pick.** The correct ones get a **green tick**; the incorrect
+one gets the red ✕.
+
+Worked example. "Tap all the even numbers": 2, 3, 4, 6. The child ticks 2 and 3.
+After Check: **2 shows green, 3 shows the red ✕.** Options 4 and 6 — never
+picked — stay unmarked.
+
+**SCOPE: MULTI-SELECT ONLY. RULED 2026-07-23.**
+Single-select is **unchanged**: a child who picks wrong sees only their own ✕,
+and nothing turns green until the question is over. Extending green to
+single-select would end the second attempt outright — the child would simply tap
+the green option — making the two-attempt cap decorative. **A brief-writer must
+not generalise this rule to other question types.**
+
+---
+
+### This is an AMENDMENT to rule 6, made deliberately
+
+Rule 6 says: no answer reveal while the child can still try. **This ruling carves
+out an exception for multi-select.** It was not a styling decision and must not be
+recorded as one.
+
+**The case against, put to Venkat and overruled:**
+- A green tick on 2 plus a ✕ on 3 resolves two of four options with an attempt
+  still in hand — on a four-option question, most of the puzzle.
+- It offers a strategy: tick one option, press Check, read the marks, adjust.
+  The child can walk out the answer without doing the arithmetic. Rule 6 exists
+  to prevent exactly this.
+
+**Venkat's ruling, and the reasoning:** the screen was incomplete and confusing —
+one option marked wrong and the rest blank reads as though the child's other
+picks did not register. Legibility for a nine-year-old outweighs the leak. The ✕
+already narrows the field substantially, so the added information is marginal in
+practice.
+
+**Two earlier positions this supersedes, both from 2026-07-23:**
+- the neutral soft-highlight shipped by BRIEF-INTERACTION-CONFORM-1 item 2
+  (commit `15dc637`) — it cleared the checkbox, so a box the child had ticked
+  appeared unticked;
+- an intermediate ruling that the ticks stay but nothing turns green.
+
+**Still governed by rule 2:** all of this clears on Try again.
+
+> **Watch this one.** If real usage shows children solving multi-select by
+> elimination — tick, Check, read, adjust — rather than by reasoning, this
+> exception is the cause. Revisit before concluding the questions are too easy.
+
+---
 
 ## Open questions for Venkat
 

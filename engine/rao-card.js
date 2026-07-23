@@ -285,20 +285,19 @@ function wireCard(frame) {
     for (var i = 0; i < sel.length; i++) {
       var el = sel[i];
       var val = String(el.dataset.val != null ? el.dataset.val : (el.textContent || "").trim());
-      if (ans.indexOf(val) !== -1) { el.classList.add("cc-kept"); continue; }   // rule 12: a correct pick stays visibly CHOSEN — a neutral brand edge (never the green correct look; rule 6). ruling 2 still holds: NO ✕ on a correct pick. Without this it lost its .is-sel and became identical to a never-chosen option.
-      el.classList.add("cc-tried");
-      if (!el.querySelector(".cc-x")) {
-        var x = document.createElement("span");
-        x.className = "cc-x";
-        x.textContent = "✕";
-        var txt = el.querySelector(".opt-text");
-        if (txt) txt.insertBefore(x, txt.firstChild);
-        else {
-          var ind = el.querySelector(".check-ind");
-          if (ind && ind.nextSibling) el.insertBefore(x, ind.nextSibling);
-          else el.insertBefore(x, el.firstChild);
-        }
+      if (ans.indexOf(val) !== -1) {
+        // rule 18 (RULED 2026-07-23): a correctly-ticked MULTI-select option turns
+        // GREEN with a ✓ — the child sees which of their picks were right. This is
+        // NOT an answer leak (rule 6): only the child's OWN picks are marked, and a
+        // multi-answer question still hides the correct options they did not pick.
+        // Single-select never reaches here on a wrong attempt (its only pick is the
+        // wrong one), so it keeps the neutral cc-kept edge — §5 greens MULTI ONLY.
+        if (behavior === "multi-select") { el.classList.add("cc-right"); ccGlyph(el, "cc-check", "✓"); }
+        else el.classList.add("cc-kept");   // rule 12 neutral "you chose this"; unreachable for single-select on a wrong attempt
+        continue;
       }
+      el.classList.add("cc-tried");
+      ccGlyph(el, "cc-x", "✕");
     }
   }
   // Selection returns to rest after marking. Queries .st-apple scene
@@ -327,6 +326,10 @@ function wireCard(frame) {
       for (var k = 0; k < tr.length; k++) tr[k].classList.remove("cc-tried");
       var kp = qbody.querySelectorAll(".cc-kept");   // rule 12's neutral "you picked this" edge clears with the rest of the stale feedback
       for (var m = 0; m < kp.length; m++) kp[m].classList.remove("cc-kept");
+      var rt = qbody.querySelectorAll(".cc-right");   // rule 18's green correct-pick edge clears on Try again too (rule 2 — a fresh start)
+      for (var r = 0; r < rt.length; r++) rt[r].classList.remove("cc-right");
+      var ck = qbody.querySelectorAll(".cc-check");   // and its ✓ glyph
+      for (var c2 = 0; c2 < ck.length; c2++) ck[c2].remove();
     }
     // If hiding the whyWrong leaves the chat with NO visible bubble, collapse the
     // empty container so a fresh start is truly the first-arrival state (rule 2) —
@@ -706,11 +709,30 @@ function showWhyPanel(frame, entry) {
    child entered — and NEVER paint the correct answer on a wrong attempt: while the question
    is attemptable there is no green anywhere (Brief 7.6, law 2). `noGreen` suppresses the
    per-input green marks on a wrong adaptive attempt for the same reason. */
-var FB_STATES = ["is-correct", "is-wrong", "correct", "incorrect", "tile-wrong"];
+var FB_STATES = ["is-correct", "is-wrong", "correct", "incorrect", "tile-wrong", "cc-right"];
+// ONE inserter for the per-option glyphs — the red ✕ on a wrong pick and the
+// green ✓ on a correct one (rule 18). Same placement, so tick and cross sit
+// identically. Used by BOTH the calm path (markWrongSelections) and the
+// degraded/review path (markFeedback), so the two can never drift.
+function ccGlyph(el, cls, ch) {
+  if (el.querySelector("." + cls)) return;
+  var g = document.createElement("span");
+  g.className = cls;
+  g.textContent = ch;
+  var txt = el.querySelector(".opt-text");
+  if (txt) txt.insertBefore(g, txt.firstChild);
+  else {
+    var ind = el.querySelector(".check-ind");
+    if (ind && ind.nextSibling) el.insertBefore(g, ind.nextSibling);
+    else el.insertBefore(g, el.firstChild);
+  }
+}
 function clearFeedback(qbody) {
-  qbody.querySelectorAll(".is-correct, .is-wrong, .correct, .incorrect, .tile-wrong").forEach(function (el) {
+  qbody.querySelectorAll(".is-correct, .is-wrong, .correct, .incorrect, .tile-wrong, .cc-right").forEach(function (el) {
     el.classList.remove.apply(el.classList, FB_STATES);
   });
+  // the rule-18 ✓ glyph is a real node (like the ✕) — drop it on a re-mark
+  qbody.querySelectorAll(".cc-check").forEach(function (g) { g.remove(); });
 }
 // rule 14: on a WRONG ordering/sorting answer, mark WHICH tiles are out of place.
 // Display-only: compare each slot's placed tile value to the key at that position.
@@ -749,8 +771,15 @@ function markFeedback(qbody, behavior, user, answer, ok, noGreen) {
       var chosen = o.classList.contains("is-sel");
       var right = ans.indexOf(val) !== -1;
       if (chosen) {
-        if (right && !noGreen) o.classList.add("is-correct");
-        else if (!right) o.classList.add("is-wrong");
+        if (right) {
+          // rule 18: a ticked-correct MULTI-select option is GREEN + ✓ even on a
+          // wrong (attemptable) attempt. is-correct is neutralised to brand while
+          // the card is not is-checked, so cc-right (a dedicated class the
+          // neutraliser does not touch) paints the green. Single-select is reached
+          // here only on a CORRECT answer, where the plain is-correct green is due.
+          if (behavior === "multi-select" && noGreen) { o.classList.add("cc-right"); ccGlyph(o, "cc-check", "✓"); }
+          else if (!noGreen) o.classList.add("is-correct");
+        } else o.classList.add("is-wrong");
       }
       // NEVER mark an unchosen correct option — that was the answer leak.
     });
@@ -790,7 +819,22 @@ function markFeedback(qbody, behavior, user, answer, ok, noGreen) {
     if (!ok) markMisplaced(qbody, ".sb-slot", ".sb-tile", ans);   // rule 14
     return;
   }
-  // categorize / line-plot / time / bar-graph / construct: no per-option state exists in
+  if (behavior === "categorize") {
+    // rule 14 extended to categorize (RULED 2026-07-23): on a wrong sort, mark each
+    // tile that is in the WRONG bin with the same soft red edge (.tile-wrong).
+    // IDENTITY-based, matching the grader: the tile with data-idx=i is judged
+    // against ans[i] — the region it should be in — NOT its tray position. Nothing
+    // moves, nothing greens, the correct grouping is NOT revealed (rule 6). A tile
+    // in the right bin is left at rest.
+    if (!ok) qbody.querySelectorAll(".vs-tile[data-idx]").forEach(function (t) {
+      var idx = Number(t.dataset.idx);
+      var zone = t.closest(".vs-zone");
+      var region = zone ? zone.dataset.region : null;
+      if (region !== ans[idx]) t.classList.add("tile-wrong");
+    });
+    return;
+  }
+  // line-plot / time / bar-graph / construct: no per-option state exists in
   // rao.css — pill + answer line only. See DEVELOPER-BRIEF.md ("Per-option feedback gaps").
 }
 (function(){

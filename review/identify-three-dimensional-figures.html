@@ -140,7 +140,7 @@
   font-weight:600;color:var(--ink);margin:18px 0;flex-wrap:wrap;}
 .rao-lesson .eqn .op{color:var(--sub);font-weight:500;}
 .rao-lesson .eqn .eq{color:var(--pink);font-weight:700;}
-.rao-lesson .blank-input{width:64px;text-align:center;font-family:var(--fm);font-size:1.4rem;font-weight:700;
+.rao-lesson .blank-input{width:96px;text-align:center;font-family:var(--fm);font-size:1.4rem;font-weight:700;
   border:2px solid var(--brand);border-radius:12px;background:rgba(var(--brand-rgb,123,92,255),.09);color:var(--brand);
   padding:6px 4px;outline:none;transition:all .15s;min-width:44px;min-height:44px;box-sizing:border-box;}
 .rao-lesson .blank-input:focus{border-style:solid;background:#fff;box-shadow:0 0 0 5px rgba(var(--brand-rgb,123,92,255),.12);}
@@ -281,6 +281,13 @@
 .rao-lesson .tile.locked{cursor:default;}
 .rao-lesson .order-slots.correct .tile{border-color:var(--green);background:rgba(16,185,129,.1);color:#047857;}
 .rao-lesson .order-slots.incorrect{animation:shake .4s;}
+/* rule 14 (RULED 2026-07-23, BRIEF-INTERACTION-CONFORM-1): a WRONG ordering marks
+   WHICH tiles are out of place — a soft red edge on each misplaced tile, the two
+   correctly-placed ones untouched. No green, nothing moves: the correct order is
+   NOT revealed (rule 6 holds while an attempt remains). Same whisper as the ✕. */
+.rao-lesson .order-slot .tile.tile-wrong, .rao-lesson .sb-slot .sb-tile.tile-wrong,
+.rao-lesson .vs-tile.tile-wrong{  /* rule 14 extended to categorize (§6): a mis-binned tile gets the same soft red edge */
+  border-color:var(--red,#ef4444);box-shadow:0 0 0 2px rgba(239,68,68,.14);}
 
 .rao-lesson /* DATA_TABLE — read-only lookup table */
 .data-wrap{display:flex;justify-content:center;margin:8px 0 14px;}
@@ -596,7 +603,7 @@
 
 .rao-lesson /* ── Line plot ── */
 .data-wrap{display:flex;justify-content:center;margin:8px 0 14px;}.rao-lesson .data-table{border-collapse:collapse;font-family:var(--fm, 'JetBrains Mono',monospace);min-width:260px;border-radius:10px;overflow:hidden; box-shadow:0 2px 10px rgba(var(--brand-rgb, 123,92,255),.1);}.rao-lesson .data-table caption{font-family:var(--fs, 'DM Sans',sans-serif);font-weight:700;font-size:.95rem;color:var(--ink, #2c2150);padding:0 0 8px;caption-side:top; display:flex;align-items:center;gap:7px;justify-content:center;}.rao-lesson .data-table th{padding:9px 22px;font-size:.9rem;font-weight:700;color:#fff;background:var(--brand,#7b5cff);}.rao-lesson .data-table td{padding:8px 22px;text-align:center;font-size:1.02rem;border:1.5px solid var(--line-soft,#e4e1f3);color:var(--ink, #2c2150);background:#fff;}.rao-lesson .data-table tr:nth-child(even) td{background:var(--tint,#f8f6fe);}.rao-lesson .data-table td:first-child{font-weight:600;}.rao-lesson .lp-row{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:28px;margin:8px 0 16px;}.rao-lesson .lp-srcwrap{flex:0 1 auto;display:flex;flex-direction:column;justify-content:flex-start;min-width:300px;max-width:100%;}
-.rao-lesson .lp-srcwrap .fig-wrap{margin:0;width:auto;}.rao-lesson .lp-src{margin:0;}.rao-lesson .lp-src caption{caption-side:top;font-weight:700;color:var(--ink, #2c2150);padding-bottom:6px;font-size:.92rem;}.rao-lesson .lp-plot{flex:0 1 auto;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto; grid-template-areas:"ylabel plot" ". xlabel" ". key";align-items:end;gap:2px 10px;}.rao-lesson .lp-ylabel{grid-area:ylabel;align-self:center;}.rao-lesson .lp-ylabel span{display:inline-block;writing-mode:vertical-rl;transform:rotate(180deg); font-size:.8rem;font-weight:700;color:var(--sub, #4b5563);white-space:nowrap;letter-spacing:.02em;}.rao-lesson .lp-plotarea{grid-area:plot;position:relative;padding:0 4px;}.rao-lesson .lp-gridlines{position:absolute;left:4px;right:4px;bottom:30px;top:0;pointer-events:none;}.rao-lesson .lp-gridline{position:absolute;left:0;right:0;height:1px;background:rgba(44,33,80,.06);}.rao-lesson .lp-cols{display:flex;align-items:flex-end;gap:10px;position:relative;}.rao-lesson .lp-col{position:relative;width:34px;display:flex;flex-direction:column;justify-content:flex-end; border-radius:8px 8px 0 0;cursor:pointer;transition:background .12s;}.rao-lesson .lp-col:hover{background:rgba(91,141,239,.06);}.rao-lesson .lp-slot{flex:0 0 24px;height:24px;width:100%;border:0;background:transparent;padding:0;cursor:pointer; display:flex;align-items:center;justify-content:center;position:relative;}.rao-lesson .lp-slot::before{content:"✕";font-size:1.15rem;font-weight:800;line-height:1;color:transparent;transition:color .1s;}.rao-lesson .lp-col:hover .lp-slot:hover::before{color:rgba(91,141,239,.4);}.rao-lesson .lp-col:hover .lp-slot:hover ~ .lp-slot::before{color:rgba(91,141,239,.4);}.rao-lesson .lp-baseline{height:3px;background:#2c2150;border-radius:2px;margin-top:0;}.rao-lesson .lp-ticks{display:flex;gap:10px;margin-top:5px;padding:0;}.rao-lesson .lp-tick{width:34px;text-align:center;font-size:.86rem;font-weight:700;color:var(--ink, #2c2150);}.rao-lesson .lp-xlabel{grid-area:xlabel;text-align:center;font-size:.8rem;font-weight:700;color:var(--sub, #4b5563);margin-top:3px;}.rao-lesson .lp-key{grid-area:key;text-align:center;font-size:.78rem;color:var(--sub, #4b5563);margin-top:2px;}.rao-lesson .lp-key-x{color:var(--brand,#5B8DEF);font-weight:800;}.rao-lesson .prompt{font-family:'Quicksand';font-weight:var(--rz-fw-prompt,700);color:var(--ink, #2c2150);font-size:var(--rz-fz-prompt,1.125rem);line-height:var(--rz-lh-prompt,1.5);letter-spacing:var(--rz-ls-prompt,0.01em);}/* SEQ_STRIP — the given terms ARE the stimulus: same size as the blanks so "5, 10, 15, [][][]" reads as one sequence */ .rao-lesson .seq-strip{font-family:var(--fm, 'JetBrains Mono',monospace);font-size:1.4rem;font-weight:700;color:var(--ink, #2c2150);text-align:center;margin:14px 0 6px;line-height:2.1;} .rao-lesson .seq-strip .blank-input{vertical-align:middle;} /* IN_OUT */ .rao-lesson .iox{display:flex;justify-content:center;margin:18px 0 8px;} .rao-lesson .iox-table{border-collapse:separate;border-spacing:0;font-family:var(--fm, 'JetBrains Mono',monospace);border:2px solid var(--brand,#7b5cff);border-radius:12px;overflow:hidden;} .rao-lesson .iox-table th{background:var(--brand,#7b5cff);color:#fff;font-family:var(--fs, 'DM Sans',sans-serif);font-weight:800;font-size:.9rem;letter-spacing:.04em;padding:7px 24px;} .rao-lesson .iox-table td{font-size:1.25rem;font-weight:700;color:var(--ink, #2c2150);text-align:center;padding:8px 24px;border-top:1.5px solid var(--line,#d4cdf2);} .rao-lesson .iox-table td:first-child{border-right:1.5px solid var(--line,#d4cdf2);} .rao-lesson .iox-table .blank-input{width:64px;font-size:1.05rem;} /* ROUND_SCAFFOLD */ .rao-lesson .rsf{display:flex;justify-content:center;margin:20px 0 8px;} .rao-lesson .rsf-grid{display:inline-grid;grid-template-columns:repeat(5,auto);align-items:center;justify-items:center;gap:6px 18px;} .rao-lesson .rsf-num{font-family:var(--fm);font-weight:700;font-size:1.7rem;color:var(--ink);} .rao-lesson .rsf-op{font-family:var(--fm);font-size:1.5rem;color:var(--sub);} .rao-lesson .rsf-eq{font-family:var(--fm);font-size:1.5rem;font-weight:700;color:var(--pink);} .rao-lesson .rsf-arrcell{display:flex;align-items:center;justify-content:center;} .rao-lesson .rsf-arr{color:var(--brand);animation:rsf-bob 1.8s ease-in-out infinite;} @keyframes rsf-bob{0%,100%{transform:translateY(-1px);}50%{transform:translateY(3px);}} .rao-lesson .rsf-blank{width:72px;} .rao-lesson .rsf-given{font-family:var(--fm, monospace);font-weight:700;font-size:1.5rem;color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.09);border-radius:10px;padding:2px 12px;white-space:nowrap;} @media(max-width:600px){.rao-lesson .rsf-num{font-size:1.4rem;}.rao-lesson .rsf-given{font-size:1.2rem;padding:2px 8px;}.rao-lesson .rsf-grid{gap:6px 10px;}.rao-lesson .rsf-blank{width:58px;}}/* CATEGORIZE_TILE_AFFORDANCE */ .rao-lesson .vs-tile{cursor:grab;border-radius:12px;transition:transform .12s,box-shadow .15s,border-color .15s;animation:vs-nudge 1s ease-in-out .25s 2;} .rao-lesson .vs-tile:active{cursor:grabbing;transform:scale(.96);} .rao-lesson .vs-text{display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border:2px solid var(--line,#d4cdf2);background:#fff;box-shadow:0 2px 7px rgba(var(--brand-rgb,123,92,255),.14);font-family:var(--fm, monospace);font-weight:600;font-size:1rem;color:var(--brand,#7b5cff);} .rao-lesson .vs-text:hover{transform:translateY(-2px);border-color:var(--brand,#7b5cff);box-shadow:0 6px 16px rgba(var(--brand-rgb,123,92,255),.24);} .rao-lesson .vs-grip{flex-shrink:0;fill:#b2aad4;} .rao-lesson .vs-text:hover .vs-grip{fill:var(--brand,#7b5cff);} .rao-lesson .vs-shape{display:inline-flex;align-items:center;justify-content:center;padding:5px;border:2px solid var(--line,#d4cdf2);background:#fff;border-radius:12px;box-shadow:0 2px 6px rgba(var(--brand-rgb,123,92,255),.12);} .rao-lesson .vs-shape:hover{transform:translateY(-2px);border-color:var(--brand,#7b5cff);box-shadow:0 5px 13px rgba(var(--brand-rgb,123,92,255),.22);} @keyframes vs-nudge{0%,100%{transform:none;}20%{transform:rotate(-3deg);}45%{transform:rotate(2.5deg);}70%{transform:rotate(-1.5deg);}} .rao-lesson .vs-fixed .vs-grip{display:none;}/* QPROMPT_SOLO */ .rao-lesson .prompt.qprompt-solo{display:flex;flex-direction:column;align-items:center;text-align:center;font-size:var(--rz-fz-prompt,1.125rem);gap:8px;line-height:var(--rz-lh-prompt,1.5);} .rao-lesson .prompt.qprompt-solo .blank-input{font-size:1.15em;} @media(max-width:600px){.rao-lesson .prompt.qprompt-solo{font-size:var(--rz-fz-prompt,1.125rem);}} .rao-lesson /* HELPER_FACT */ .helper-fact{display:flex;align-items:center;gap:9px;justify-content:center;margin:0 0 14px;flex-wrap:wrap;} .rao-lesson .hf-tag{background:var(--green, #10b981);color:#fff;font-family:var(--fs, sans-serif);font-weight:800;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:99px;} .rao-lesson .hf-val{font-family:var(--fm, monospace);font-weight:700;font-size:1.25rem;color:#047857;background:rgba(16,185,129,.12);padding:5px 13px;border-radius:9px;} .rao-lesson .prompt.qprompt-centered{display:flex;justify-content:center;text-align:center;font-size:clamp(1.05rem,calc(1.7rem - var(--pl,0)*0.011rem),1.5rem);line-height:1.4;} @media(max-width:600px){.rao-lesson .prompt.qprompt-centered{font-size:clamp(1rem,calc(1.5rem - var(--pl,0)*0.011rem),1.3rem);}} .rao-lesson /* QPROMPT_SPLIT */ .prompt.qprompt-split{display:flex;flex-direction:column;gap:12px;align-items:stretch;} .rao-lesson .prompt.qprompt-split .qp-lead{text-align:left;font-size:1.08rem;font-weight:700;color:var(--ink, #2c2150);line-height:1.4;} .rao-lesson .prompt.qprompt-split .qp-expr{text-align:center;font-family:var(--fm, 'JetBrains Mono',monospace);font-weight:600;font-size:1.75rem;color:var(--ink, #2c2150);letter-spacing:.01em;line-height:1.2;padding:4px 0 2px;} @media(max-width:600px){.rao-lesson .prompt.qprompt-split .qp-expr{font-size:1.5rem;}}.rao-lesson .prompt:has(.seq){display:block;}.rao-lesson .prompt:has(.seq) > span{display:block;}.rao-lesson .seq-lead{display:block;text-align:left;color:var(--sub, #4b5563);font-weight:600;font-size:1rem;margin-bottom:6px;}.rao-lesson .seq{display:block;text-align:center;font-family:var(--fm, 'JetBrains Mono',monospace);font-size:clamp(1.15rem, 5.4vw, 1.62rem);font-weight:600;color:#4d4a63;color:color-mix(in srgb, var(--ink, #2c2150) 76%, #ffffff);letter-spacing:.05em;line-height:1.5;background:linear-gradient(135deg,rgba(var(--brand-rgb,123,92,255),.06),rgba(90,200,250,.09));border:1.5px solid rgba(var(--brand-rgb,123,92,255),.15);border-radius:14px;padding:16px 18px;margin:2px 0 4px;}.rao-lesson .seq .sq{color:var(--brand,#7b5cff);font-weight:800;padding:0 3px;}.rao-lesson .seq .blank-input{width:clamp(42px, 12vw, 54px);font-size:clamp(1rem, 3.8vw, 1.3rem);vertical-align:middle;margin:0 3px;padding:6px 2px;}@media(max-width:600px){.rao-lesson .seq{padding:13px 12px;letter-spacing:.03em;}}.rao-lesson .sb-tile{font-family:var(--fm, 'JetBrains Mono',monospace);font-size:0.95rem;font-weight:700;color:var(--brand,#7b5cff);}
+.rao-lesson .lp-srcwrap .fig-wrap{margin:0;width:auto;}.rao-lesson .lp-src{margin:0;}.rao-lesson .lp-src caption{caption-side:top;font-weight:700;color:var(--ink, #2c2150);padding-bottom:6px;font-size:.92rem;}.rao-lesson .lp-plot{flex:0 1 auto;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto; grid-template-areas:"ylabel plot" ". xlabel" ". key";align-items:end;gap:2px 10px;}.rao-lesson .lp-ylabel{grid-area:ylabel;align-self:center;}.rao-lesson .lp-ylabel span{display:inline-block;writing-mode:vertical-rl;transform:rotate(180deg); font-size:.8rem;font-weight:700;color:var(--sub, #4b5563);white-space:nowrap;letter-spacing:.02em;}.rao-lesson .lp-plotarea{grid-area:plot;position:relative;padding:0 4px;}.rao-lesson .lp-gridlines{position:absolute;left:4px;right:4px;bottom:30px;top:0;pointer-events:none;}.rao-lesson .lp-gridline{position:absolute;left:0;right:0;height:1px;background:rgba(44,33,80,.06);}.rao-lesson .lp-cols{display:flex;align-items:flex-end;gap:10px;position:relative;}.rao-lesson .lp-col{position:relative;width:34px;display:flex;flex-direction:column;justify-content:flex-end; border-radius:8px 8px 0 0;cursor:pointer;transition:background .12s;}.rao-lesson .lp-col:hover{background:rgba(91,141,239,.06);}.rao-lesson .lp-slot{flex:0 0 24px;height:24px;width:100%;border:0;background:transparent;padding:0;cursor:pointer; display:flex;align-items:center;justify-content:center;position:relative;}.rao-lesson .lp-slot::before{content:"✕";font-size:1.15rem;font-weight:800;line-height:1;color:transparent;transition:color .1s;}.rao-lesson .lp-col:hover .lp-slot:hover::before{color:rgba(91,141,239,.4);}.rao-lesson .lp-col:hover .lp-slot:hover ~ .lp-slot::before{color:rgba(91,141,239,.4);}.rao-lesson .lp-baseline{height:3px;background:#2c2150;border-radius:2px;margin-top:0;}.rao-lesson .lp-ticks{display:flex;gap:10px;margin-top:5px;padding:0;}.rao-lesson .lp-tick{width:34px;text-align:center;font-size:.86rem;font-weight:700;color:var(--ink, #2c2150);}.rao-lesson .lp-xlabel{grid-area:xlabel;text-align:center;font-size:.8rem;font-weight:700;color:var(--sub, #4b5563);margin-top:3px;}.rao-lesson .lp-key{grid-area:key;text-align:center;font-size:.78rem;color:var(--sub, #4b5563);margin-top:2px;}.rao-lesson .lp-key-x{color:var(--brand,#5B8DEF);font-weight:800;}.rao-lesson .prompt{font-family:'Quicksand';font-weight:var(--rz-fw-prompt,700);color:var(--ink, #2c2150);font-size:var(--rz-fz-prompt,1.125rem);line-height:var(--rz-lh-prompt,1.5);letter-spacing:var(--rz-ls-prompt,0.01em);}/* SEQ_STRIP — the given terms ARE the stimulus: same size as the blanks so "5, 10, 15, [][][]" reads as one sequence */ .rao-lesson .seq-strip{font-family:var(--fm, 'JetBrains Mono',monospace);font-size:1.4rem;font-weight:700;color:var(--ink, #2c2150);text-align:center;margin:14px 0 6px;line-height:2.1;} .rao-lesson .seq-strip .blank-input{vertical-align:middle;} /* IN_OUT */ .rao-lesson .iox{display:flex;justify-content:center;margin:18px 0 8px;} .rao-lesson .iox-table{border-collapse:separate;border-spacing:0;font-family:var(--fm, 'JetBrains Mono',monospace);border:2px solid var(--brand,#7b5cff);border-radius:12px;overflow:hidden;} .rao-lesson .iox-table th{background:var(--brand,#7b5cff);color:#fff;font-family:var(--fs, 'DM Sans',sans-serif);font-weight:800;font-size:.9rem;letter-spacing:.04em;padding:7px 24px;} .rao-lesson .iox-table td{font-size:1.25rem;font-weight:700;color:var(--ink, #2c2150);text-align:center;padding:8px 24px;border-top:1.5px solid var(--line,#d4cdf2);} .rao-lesson .iox-table td:first-child{border-right:1.5px solid var(--line,#d4cdf2);} .rao-lesson .iox-table .blank-input{width:64px;font-size:1.05rem;} /* ROUND_SCAFFOLD */ .rao-lesson .rsf{display:flex;justify-content:center;margin:20px 0 8px;overflow-x:auto;} .rao-lesson .rsf-grid{display:inline-grid;grid-template-columns:repeat(5,auto);align-items:center;justify-items:center;gap:6px 18px;} .rao-lesson .rsf-num{font-family:var(--fm);font-weight:700;font-size:1.7rem;color:var(--ink);} .rao-lesson .rsf-op{font-family:var(--fm);font-size:1.5rem;color:var(--sub);} .rao-lesson .rsf-eq{font-family:var(--fm);font-size:1.5rem;font-weight:700;color:var(--pink);} .rao-lesson .rsf-arrcell{display:flex;align-items:center;justify-content:center;} .rao-lesson .rsf-arr{color:var(--brand);animation:rsf-bob 1.8s ease-in-out infinite;} @keyframes rsf-bob{0%,100%{transform:translateY(-1px);}50%{transform:translateY(3px);}} .rao-lesson .rsf-blank{width:84px;}.rao-lesson .rsf-grid>.rsf-blank:last-of-type{width:96px;} .rao-lesson .rsf-given{font-family:var(--fm, monospace);font-weight:700;font-size:1.5rem;color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.09);border-radius:10px;padding:2px 12px;white-space:nowrap;} @media(max-width:600px){.rao-lesson .rsf-num{font-size:1.4rem;}.rao-lesson .rsf-given{font-size:1.2rem;padding:2px 8px;}.rao-lesson .rsf-grid{gap:6px 10px;}.rao-lesson .rsf-blank{width:84px;}}/* CATEGORIZE_TILE_AFFORDANCE */ .rao-lesson .vs-tile{cursor:grab;border-radius:12px;transition:transform .12s,box-shadow .15s,border-color .15s;animation:vs-nudge 1s ease-in-out .25s 2;} .rao-lesson .vs-tile:active{cursor:grabbing;transform:scale(.96);} .rao-lesson .vs-text{display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border:2px solid var(--line,#d4cdf2);background:#fff;box-shadow:0 2px 7px rgba(var(--brand-rgb,123,92,255),.14);font-family:var(--fm, monospace);font-weight:600;font-size:1rem;color:var(--brand,#7b5cff);} .rao-lesson .vs-text:hover{transform:translateY(-2px);border-color:var(--brand,#7b5cff);box-shadow:0 6px 16px rgba(var(--brand-rgb,123,92,255),.24);} .rao-lesson .vs-grip{flex-shrink:0;fill:#b2aad4;} .rao-lesson .vs-text:hover .vs-grip{fill:var(--brand,#7b5cff);} .rao-lesson .vs-shape{display:inline-flex;align-items:center;justify-content:center;padding:5px;border:2px solid var(--line,#d4cdf2);background:#fff;border-radius:12px;box-shadow:0 2px 6px rgba(var(--brand-rgb,123,92,255),.12);} .rao-lesson .vs-shape:hover{transform:translateY(-2px);border-color:var(--brand,#7b5cff);box-shadow:0 5px 13px rgba(var(--brand-rgb,123,92,255),.22);} @keyframes vs-nudge{0%,100%{transform:none;}20%{transform:rotate(-3deg);}45%{transform:rotate(2.5deg);}70%{transform:rotate(-1.5deg);}} .rao-lesson .vs-fixed .vs-grip{display:none;}/* QPROMPT_SOLO */ .rao-lesson .prompt.qprompt-solo{display:flex;flex-direction:column;align-items:center;text-align:center;font-size:var(--rz-fz-prompt,1.125rem);gap:8px;line-height:var(--rz-lh-prompt,1.5);} .rao-lesson .prompt.qprompt-solo .blank-input{font-size:1.15em;} @media(max-width:600px){.rao-lesson .prompt.qprompt-solo{font-size:var(--rz-fz-prompt,1.125rem);}} .rao-lesson /* HELPER_FACT */ .helper-fact{display:flex;align-items:center;gap:9px;justify-content:center;margin:0 0 14px;flex-wrap:wrap;} .rao-lesson .hf-tag{background:var(--green, #10b981);color:#fff;font-family:var(--fs, sans-serif);font-weight:800;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:99px;} .rao-lesson .hf-val{font-family:var(--fm, monospace);font-weight:700;font-size:1.25rem;color:#047857;background:rgba(16,185,129,.12);padding:5px 13px;border-radius:9px;} .rao-lesson .prompt.qprompt-centered{display:flex;justify-content:center;text-align:center;font-size:clamp(1.05rem,calc(1.7rem - var(--pl,0)*0.011rem),1.5rem);line-height:1.4;} @media(max-width:600px){.rao-lesson .prompt.qprompt-centered{font-size:clamp(1rem,calc(1.5rem - var(--pl,0)*0.011rem),1.3rem);}} .rao-lesson /* QPROMPT_SPLIT */ .prompt.qprompt-split{display:flex;flex-direction:column;gap:12px;align-items:stretch;} .rao-lesson .prompt.qprompt-split .qp-lead{text-align:left;font-size:1.08rem;font-weight:700;color:var(--ink, #2c2150);line-height:1.4;} .rao-lesson .prompt.qprompt-split .qp-expr{text-align:center;font-family:var(--fm, 'JetBrains Mono',monospace);font-weight:600;font-size:1.75rem;color:var(--ink, #2c2150);letter-spacing:.01em;line-height:1.2;padding:4px 0 2px;} @media(max-width:600px){.rao-lesson .prompt.qprompt-split .qp-expr{font-size:1.5rem;}}.rao-lesson .prompt:has(.seq){display:block;}.rao-lesson .prompt:has(.seq) > span{display:block;}.rao-lesson .seq-lead{display:block;text-align:left;color:var(--sub, #4b5563);font-weight:600;font-size:1rem;margin-bottom:6px;}.rao-lesson .seq{display:block;text-align:center;font-family:var(--fm, 'JetBrains Mono',monospace);font-size:clamp(1.15rem, 5.4vw, 1.62rem);font-weight:600;color:#4d4a63;color:color-mix(in srgb, var(--ink, #2c2150) 76%, #ffffff);letter-spacing:.05em;line-height:1.5;background:linear-gradient(135deg,rgba(var(--brand-rgb,123,92,255),.06),rgba(90,200,250,.09));border:1.5px solid rgba(var(--brand-rgb,123,92,255),.15);border-radius:14px;padding:16px 18px;margin:2px 0 4px;}.rao-lesson .seq .sq{color:var(--brand,#7b5cff);font-weight:800;padding:0 3px;}.rao-lesson .seq .blank-input{width:clamp(42px, 12vw, 54px);font-size:clamp(1rem, 3.8vw, 1.3rem);vertical-align:middle;margin:0 3px;padding:6px 2px;}@media(max-width:600px){.rao-lesson .seq{padding:13px 12px;letter-spacing:.03em;}}.rao-lesson .sb-tile{font-family:var(--fm, 'JetBrains Mono',monospace);font-size:0.95rem;font-weight:700;color:var(--brand,#7b5cff);}
 .rao-lesson .vmul{display:flex;justify-content:center;margin:22px 0 6px;}.rao-lesson .vmul-grid{display:inline-flex;flex-direction:column;font-family:var(--fm);font-size:1.6rem;font-weight:600;color:var(--ink);align-items:stretch;}.rao-lesson .vm-row{display:flex;align-items:center;}.rao-lesson .vm-gut{width:26px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}.rao-lesson .vm-op{color:var(--sub);font-weight:500;}.rao-lesson .vm-d{width:52px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}.rao-lesson .vm-c{width:9px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}.rao-lesson .vm-comma{color:var(--sub);font-size:.72em;font-weight:500;align-self:flex-end;padding-bottom:.3em;}.rao-lesson .vm-top{height:44px;}.rao-lesson .vm-mult{height:44px;}.rao-lesson .vm-rulerow{height:14px;}.rao-lesson .vm-ans{height:48px;}.rao-lesson .vm-rule{border-top:3px solid var(--ink);height:0;}.rao-lesson .vm-cell{width:44px;height:44px;padding:0;font-size:1.35rem;}.rao-lesson .dt-wrap{display:flex;justify-content:center;margin:10px 0 16px;}.rao-lesson .dt-table{border-collapse:collapse;font-family:var(--fm, 'JetBrains Mono',monospace);border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(var(--brand-rgb, 123,92,255),.14);}.rao-lesson .dt-table th{padding:9px 14px;font-size:.82rem;font-weight:700;color:#fff;background:var(--brand,#7b5cff);text-align:center;line-height:1.25;font-family:var(--fs, 'DM Sans',sans-serif);}.rao-lesson .dt-table td{padding:7px 14px;text-align:center;font-size:1.05rem;font-weight:600;border:1.5px solid var(--line-soft,#e4e1f3);color:var(--ink, #2c2150);background:#fff;}.rao-lesson .dt-table tr:nth-child(even) td{background:var(--tint,#f8f6fe);}.rao-lesson .dt-table td.dt-blank{padding:5px 8px;}.rao-lesson .dt-table .blank-input{width:56px;font-size:1.15rem;padding:5px 3px;}@media(max-width:600px){.rao-lesson .dt-table th{padding:8px 6px;font-size:.68rem;}.rao-lesson .dt-table td{padding:6px 6px;font-size:.92rem;}.rao-lesson .dt-table .blank-input{width:42px;font-size:.98rem;}}.rao-lesson .am-wrap{display:flex;justify-content:center;margin:12px 0 16px;overflow-x:auto;}.rao-lesson .am-table{border-collapse:separate;border-spacing:6px;font-family:var(--fm, 'JetBrains Mono',monospace);}.rao-lesson .am-corner{border:0;background:transparent;padding:0;}.rao-lesson .am-ch,.rao-lesson .am-rh{font-size:.95rem;font-weight:800;color:var(--ink,#2c2150);background:transparent;border:0;padding:2px 4px;}.rao-lesson .am-ch{text-align:center;}.rao-lesson .am-rh{text-align:right;white-space:nowrap;}.rao-lesson .am-plus{color:var(--sub,#9ca3af);}.rao-lesson .am-pc{border:1.6px solid var(--line-soft,#cdc7e8);border-radius:8px;padding:3px;background:#fff;}.rao-lesson .am-pc .blank-input,.rao-lesson .am-sum .blank-input{width:70px;font-size:1rem;padding:6px 3px;text-align:center;border:0;background:transparent;}.rao-lesson .am-sum{padding:3px;}.rao-lesson .am-sum .blank-input{border:1.8px dashed var(--brand,#5A55E0);border-radius:8px;background:#f6f4ff;}.rao-lesson .am-sumval{border:1.8px solid var(--brand,#5A55E0);border-radius:8px;padding:8px 6px;text-align:center;font-weight:700;color:var(--brand,#5A55E0);background:#f1eeff;font-size:.95rem;}@media(max-width:600px){.rao-lesson .am-table{border-spacing:4px;}.rao-lesson .am-pc .blank-input,.rao-lesson .am-sum .blank-input{width:50px;font-size:.92rem;padding:5px 2px;}.rao-lesson .am-ch,.rao-lesson .am-rh{font-size:.82rem;}}/* prompt alignment: LEFT by default; centered only for genuine expressions via .qprompt-solo (needs a math symbol) / .qprompt-split / .qprompt-centered. The word-count-only .p-center path was Bug 2 and is retired. */.rao-lesson .prompt{justify-content:flex-start;text-align:left;}.rao-lesson .prompt > span{text-align:inherit;}.rao-lesson .prompt.qprompt-solo{justify-content:center;text-align:center;}.rao-lesson .prompt:has(.lbl){display:block;}.rao-lesson .prompt:has(.lbl) > span{display:block;text-align:center;}.rao-lesson .lbl{display:block;text-align:left;margin-bottom:6px;}.rao-lesson .prompt:has(.lbl) .lbl{text-align:left;}.rao-lesson .eqn{justify-content:center;}.rao-lesson .time-row{display:flex;gap:14px;align-items:stretch;justify-content:center;margin:18px 0 6px;flex-wrap:wrap;} .rao-lesson .time-input{width:130px;padding:12px 14px;border:2px solid var(--line,#d4cdf2);border-radius:12px;font-family:var(--fm, 'JetBrains Mono',monospace);font-size:1.3rem;font-weight:700;text-align:center;color:var(--brand,#7b5cff);background:#fff;outline:none;transition:border-color .2s,box-shadow .2s;} .rao-lesson .time-input::placeholder{color:#b9c0cf;font-weight:600;opacity:1;} .rao-lesson .time-input::-webkit-input-placeholder{color:#b9c0cf;font-weight:600;} .rao-lesson .time-input:focus{border-color:var(--brand,#7b5cff);box-shadow:0 0 0 4px rgba(var(--brand-rgb,123,92,255),.14);} .rao-lesson .ampm-toggle{display:inline-flex;align-items:stretch;padding:4px;background:#eef1f8;border:2px solid #dbe1f0;border-radius:13px;gap:4px;} .rao-lesson .ampm-btn{min-width:66px;padding:0 20px;display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:9px;font-family:var(--fs, 'DM Sans',sans-serif);font-size:1.05rem;font-weight:800;letter-spacing:.04em;color:#8a93a8;background:transparent;cursor:pointer;user-select:none;transition:background .15s,color .15s,box-shadow .15s,transform .08s;} .rao-lesson .ampm-btn:hover{color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.08);} .rao-lesson .ampm-btn:active{transform:scale(.96);} .rao-lesson .ampm-btn.is-sel{background:var(--brand,#7b5cff);color:#fff;box-shadow:0 3px 8px rgba(var(--brand-rgb,123,92,255),.35);} .rao-lesson .ampm-btn.is-sel:hover{background:var(--brand,#7b5cff);color:#fff;}
 .rao-lesson .barobj{height:30px;border-radius:6px;}
 .rao-lesson .bg-row{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:26px;margin:10px 0 16px;}
@@ -668,7 +675,12 @@
 
 .rao-lesson /* ADAPTIVE — answer, .rao-lesson press Check, .rao-lesson then the teaching. */
 [data-mode="adaptive"] .explain{display:none;}
-.rao-lesson [data-mode="adaptive"].is-checked .explain{display:block;animation:rao-reveal .3s ease-out;}
+/* rule 13 (RULED 2026-07-23, BRIEF-INTERACTION-CONFORM-1): THE EXPLAIN LINE IS
+   REMOVED FROM THE PRODUCT. The adaptive reveal-on-Check is deleted — .explain
+   now stays display:none in every state (base rule at .explain + line 653). The
+   <p class="explain"> element is retained as an inert hidden carrier the
+   walkthrough can still read as a fallback; the frontmatter explain: fields are
+   orphaned from any visible output (a later content brief strips them). */
 .rao-lesson [data-mode="adaptive"]:not(.is-checked) .opt.is-correct, .rao-lesson [data-mode="adaptive"]:not(.is-checked) .opt.is-wrong{
   border-color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.12);color:var(--brand,#7b5cff);
   box-shadow:0 3px 10px rgba(var(--brand-rgb,123,92,255),.18);animation:none;}
@@ -680,7 +692,7 @@
 .rao-lesson [data-mode="quiz"] .blank-input.correct, .rao-lesson [data-mode="quiz"] .blank-input.incorrect{
   border-color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.06);color:var(--brand,#7b5cff);animation:none;}
 .rao-lesson [data-mode="quiz"] .explain, .rao-lesson [data-mode="quiz"] .rao-check, .rao-lesson [data-mode="quiz"] .rao-hint{display:none;}
-.rao-lesson [data-mode="quiz"].is-review .explain{display:block;}
+/* rule 13 (BRIEF-INTERACTION-CONFORM-1): quiz-review explain reveal removed. */
 @keyframes rao-reveal{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
 
 .rao-lesson /* ---- tap-target floor: your own spec says >=44px ---- */
@@ -925,7 +937,7 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
   .rao-lesson .rsf-num   { font-size: 1.4rem; }
   .rao-lesson .rsf-given { font-size: 1.2rem; padding: 2px 8px; }
   .rao-lesson .rsf-grid  { gap: 6px 10px; }
-  .rao-lesson .rsf-blank { width: 58px; }
+  .rao-lesson .rsf-blank { width: 84px; }
 
   .rao-lesson .seq { padding: 13px 12px; letter-spacing: .03em; }
   .rao-lesson .prompt.qprompt-split .qp-expr { font-size: 1.5rem; }
@@ -1072,10 +1084,10 @@ html[data-theme="dark"] .rao-lesson .explain{background:rgba(155,124,255,.09);bo
 .rao-lesson .sol-walk-foot,.pv-solwrap .sol-walk-foot{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:12px}
 .rao-lesson .sol-next,.pv-solwrap .sol-next{font-family:'Baloo 2',cursive;font-weight:700;color:#fff;background:var(--brand,#7b5cff);border:none;border-radius:14px;padding:10px 18px;cursor:pointer;font-size:.95rem}
 .rao-lesson .sol-next:disabled,.pv-solwrap .sol-next:disabled{opacity:.55;cursor:default}
-/* RAPID FIRE shows the one-line explain AFTER Check — nothing more (§13.8).
-   Overrides the unconditional hide above; is-checked is the same reveal hook
-   adaptive uses. */
-.rao-lesson [data-mode="rapid"].is-checked .explain{display:block}
+/* rule 13 (RULED 2026-07-23, BRIEF-INTERACTION-CONFORM-1): the Rapid-Fire
+   explain reveal is removed too — "removed from the product" is mode-wide, not
+   adaptive-only. This supersedes CLAUDE.md §13.8's "Rapid Fire shows the
+   one-line explain"; the authority (STUDENT-INTERACTION-RULES.md rule 13) wins. */
 
 /* ── 7.7.3: the on-screen digit pad is TOUCH-ONLY. Devices whose PRIMARY
    pointer is fine (mouse/trackpad) have a physical keyboard — the pad is
@@ -1208,6 +1220,32 @@ h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
    wrong attempt, so the option is back to its resting look, byte-identical
    to its siblings. v36 spec: glyph 0.8em, red, 7px right margin, bold. */
 .cc-x{font-size:.8em;color:#ef4444;margin-right:7px;font-weight:700}
+/* rule 18's ✓ mirrors the ✕: same size/weight/margin, green instead of red. */
+.cc-check{font-size:.8em;color:#10b981;margin-right:7px;font-weight:700}
+
+/* rule 12 (RULED 2026-07-23, BRIEF-INTERACTION-CONFORM-1): after a WRONG
+   multi-select attempt, a correctly-picked option must stay visibly chosen — the
+   child has to be able to tell what they picked. It keeps a quiet brand-tinted
+   edge (NOT the green correct look — rule 6 forbids revealing correctness while
+   an attempt remains, and NOT the resting look — that is the bug this fixes). No
+   ✕, no tick: just "you chose this." Cleared on Try again / a new selection. */
+.rao-lesson .opt.cc-kept, .rao-lesson .opt-fig.cc-kept, .rao-lesson .hcell.cc-kept{
+  border-color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.06);}
+
+/* rule 18 (RULED 2026-07-23, BRIEF-CHILD-FACING-FIX-1 §5): SUPERSEDES the cc-kept
+   neutral edge for MULTI-SELECT. A correctly-ticked option turns GREEN (its own
+   pick, so not an answer leak — rule 6 still hides the correct options the child
+   did NOT pick). A dedicated class, NOT .opt.is-correct: the adaptive:not(.is-checked)
+   neutraliser in rao.css deliberately repaints is-correct/is-wrong to brand while
+   an attempt remains, and this green must survive that. Green tokens match
+   .opt.is-correct so triumph and this read the same. Cleared on Try again (rule 2). */
+.rao-lesson .opt.cc-right, .rao-lesson .opt.cc-right:not(:disabled),
+.rao-lesson .opt-fig.cc-right, .rao-lesson .hcell.cc-right{
+  /* :not(:disabled) matches the specificity of .opt.is-sel:not(:disabled) so the
+     green wins over the lingering selected-brand edge in the degraded/review path
+     (the calm path clears .is-sel; the review path keeps it). */
+  border-color:var(--green,#10b981);background:rgba(16,185,129,.12);color:#047857;
+  box-shadow:0 3px 10px rgba(16,185,129,.18);}
 
 /* — tutor conversation: hints and steps speak in one voice (law 5) — */
 .cc-chat{margin-top:14px;background:#f4f1ff;border:1px solid #e6e0ff;border-radius:14px;padding:14px 14px 16px}
@@ -1247,7 +1285,49 @@ h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
 
 /* when the takeaway panel (or the full walkthrough) has carried the teaching,
    the .explain one-liner would be a duplicate — keep it sealed */
-.rao-lesson [data-mode="adaptive"].is-checked.cc-hastake .explain{display:none}</style>
+.rao-lesson [data-mode="adaptive"].is-checked.cc-hastake .explain{display:none}
+
+/* ── Change 2 (BRIEF-G3-ENGINE-1, Item 66): the whyWrong bubble is its OWN
+   stream. CREATED here, derived from .cc-bub — SAME geometry, warning tint only.
+   Reuses the existing warning-role tokens (.pv-why bg/border #fff2f5/#ffd3e0,
+   .pv-fb.bad text #b04a6a) — no new hue invented. ── */
+.cc-msg-why .cc-bub{background:#fff2f5;border-color:#ffd3e0}
+.cc-msg-why .cc-schip{color:#b04a6a;background:#ffe0e9}
+
+/* ── Change 5 (BRIEF-G3-ENGINE-1): solution table / facts / rule. Monospace fact
+   lines, one per row. Marked rows use the SUCCESS-role tokens (the .cc-take green
+   family: #eefbf2 / #047857); absent lines use the DANGER-role tokens (the
+   .pv-why / .cc-x pink-red: #fff2f5 / #b04a6a). No new colour.
+   ALIGNMENT IS LOAD-BEARING: every row carries identical padding — a marked row
+   differs in background, colour and weight ONLY, never position. JetBrains Mono
+   400 vs 700 was measured at identical advance width (87.97px for "8 × 5 = 40"),
+   so the weight change keeps the `=` column lined up. ── */
+.sol-tables{display:flex;gap:18px;flex-wrap:wrap;margin:4px 0 2px;align-items:flex-start}
+.sol-table{min-width:0}
+.sol-facts{margin:4px 0 2px}
+.sol-note{font-family:'Quicksand',sans-serif;color:#5a5673;font-weight:600;line-height:1.55;margin:0 0 8px}
+.sol-foot{font-family:'Quicksand',sans-serif;color:#5a5673;font-weight:600;line-height:1.55;margin:10px 0 0}
+.sol-row,.sol-absent{font-family:var(--fm,'JetBrains Mono',monospace);font-size:1rem;line-height:1.7;padding:3px 10px;border-radius:6px}
+.sol-eq{white-space:nowrap}
+.sol-row.sol-mark{background:#eefbf2;color:#047857;font-weight:700}
+.sol-absent{color:#b04a6a;background:#fff2f5}
+.sol-rule .sol-note{margin-bottom:8px}
+
+/* ── SOLUTION-PANEL-LAYOUT v1 (Item 81) — declared SEQUENCES columnise ─────────
+   A `.sol-seq` container (a single table, or a facts list — added by the renderer)
+   lays its items out ACROSS then wraps: CSS grid auto-flow row, columns as wide as
+   the sequence's own longest item (max-content), left-packed. The column COUNT is
+   `--sol-cols`, computed by RaoSolution.layoutSequences (floor(avail/(longest+24)),
+   capped 1..4 — Rulings R1/R2). Default 1 so it is single-column before the script
+   runs and if it never does (safe, = today's behaviour). NOT `column-count`, which
+   fills DOWN — forbidden for a sequence. An item wider than its column keeps its
+   mark on one line and takes its own horizontal scroll rail (Rule 3). */
+.sol-seq{display:grid;grid-auto-flow:row;gap:2px 24px;grid-template-columns:repeat(var(--sol-cols,1),max-content);justify-content:start;width:100%}
+.sol-seq>*{min-width:0;max-width:var(--sol-itemmax,100%);white-space:nowrap;overflow-x:auto}
+/* sol-working is BLOCK (Ruling R6): never itemised, never columnised. It is one
+   line; if it is wider than the panel it takes its own horizontal scroll rail and
+   the panel does not widen. (The walkthrough's working is `.cc-eq`, not touched.) */
+.sol-working{display:block;white-space:nowrap;overflow-x:auto;max-width:100%}</style>
 <style>/* engine/robo.css — ROBO the mascot (Brief 7.7), the same file your app ships, verbatim */
 /* ============================================================================
    robo.css — ROBO, the mascot (Brief 7.7, engine rao-master-18).
@@ -5294,7 +5374,46 @@ function check(behavior, user, correct) {
     user = user.map(_tn); correct = correct.map(_tn);
   }
   if (behavior === "multi-select") { const a = [...user].sort(), b = [...correct].sort(); return a.length === b.length && a.every((v, i) => v === b[i]); }
-  if (behavior === "expression") { const norm = (s) => String(s).replace(/\s+/g, "").toLowerCase(); return norm(user[0]) === norm(correct[0]); }
+  if (behavior === "expression") {
+    // BRIEF-RETRY-STATE-2 (#109, 2026-07-23): accept a commutatively-restated
+    // sum. Venkat ruled ADDITION ONLY — an explicit operator allowlist of {+}.
+    // The ONLY shape normalised is "a+b+...=total" (digits and '+' left, digits
+    // right); its addends are sorted so operand ORDER stops mattering. Anything
+    // with another operator fails the /^[0-9+]+=[0-9]+$/ shape and falls through
+    // to exact match — so 4-9=5 and 12/3=4 are NEVER treated commutatively
+    // (subtraction and division are not commutative).
+    // '×' is DELIBERATELY EXCLUDED, not forgotten: Phase 0 found zero '×'
+    // typed-expression questions, so there is nothing to test it against. If one
+    // is ever authored, revisit this allowlist (see ISSUES.md #109).
+    const ex = (s) => String(s).replace(/\s+/g, "").toLowerCase();
+    const u = ex(user[0]), c = ex(correct[0]);
+    if (u === c) return true;
+    const commAdd = (x) => {
+      const m = /^([0-9+]+)=([0-9]+)$/.exec(x);
+      if (!m || m[1].indexOf("+") === -1) return null;
+      const parts = m[1].split("+");
+      if (parts.some((p) => p === "")) return null;   // reject "1++2", "+1", "1+"
+      return parts.slice().sort().join("+") + "=" + m[2];
+    };
+    const cu = commAdd(u), cc = commAdd(c);
+    return cu !== null && cc !== null && cu === cc;
+  }
+  if (behavior === "fill-blanks") {
+    // BRIEF-RETRY-STATE-2 (#84, 2026-07-23): accept comma-grouped numbers so a
+    // child is not marked wrong for writing 42,613 — or Indian 1,00,000 — for a
+    // digit-only key. Strip commas ONLY when they form a VALID grouping:
+    //   Western  /^\d{1,3}(,\d{3})+$/       100,000 / 1,000,000
+    //   Indian   /^\d{1,2}(,\d{2})+,\d{3}$/  1,00,000 / 12,34,567
+    // A MISPLACED comma (4,2613) matches neither, is left intact, and so fails
+    // the key match — the sabotage requirement. GRADING ONLY; display untouched.
+    const strip = (s) => {
+      s = String(s);
+      if (s.indexOf(",") === -1) return s;
+      if (/^\d{1,3}(,\d{3})+$/.test(s) || /^\d{1,2}(,\d{2})+,\d{3}$/.test(s)) return s.replace(/,/g, "");
+      return s;
+    };
+    return user.length === correct.length && user.every((v, i) => strip(v) === strip(correct[i]));
+  }
   return user.length === correct.length && user.every((v, i) => v === correct[i]);
 }
 
@@ -5411,7 +5530,16 @@ function normalizeExplain(opts) {
           working: b.working || null,
           reason: b.reason || null,
           text: b.text || null,
-          html: b.html || null
+          html: b.html || null,
+          // Change 5 (BRIEF-G3-ENGINE-1) — table / facts / rule fields. Products
+          // are NEVER carried here: the renderer computes a × b itself, so a
+          // typo'd (or malicious) frontmatter product cannot reach the child.
+          tables: b.tables || null,
+          note: b.note || null,
+          footer: b.footer || null,
+          items: b.items || null,
+          mark: b.mark || null,
+          example: b.example || null
         };
       })
     };
@@ -5472,6 +5600,15 @@ function renderSolution(opts) {
       case "verification":
         parts.push(renderVerification(block));
         break;
+      case "table":
+        parts.push(renderTable(block));
+        break;
+      case "facts":
+        parts.push(renderFacts(block));
+        break;
+      case "rule":
+        parts.push(renderRule(block));
+        break;
       default:
         // Unknown block type — text fallback
         parts.push(renderFallback(block));
@@ -5522,6 +5659,109 @@ function renderVerification(block) {
 function renderFallback(block) {
   var text = block.text || "";
   return '<div class="sol-fallback">' + escapeHtml(text) + "</div>";
+}
+
+// ════════════════════════════════════════════════════════════════
+// Change 5 (BRIEF-G3-ENGINE-1) — table / facts / rule.
+//
+// THE ENGINE COMPUTES EVERY PRODUCT. The author supplies factor / upTo /
+// mark / [a, b] pairs; `a × b` is multiplied HERE. A frontmatter `product`
+// is never read — a typo'd times table across ~110 team-authored lessons is
+// therefore impossible, and a guard can verify every table in the corpus.
+//
+// Validation: every operand an integer 1–12 (rule.example.b may be 0, the
+// ONLY legal 0). An invalid block renders "" and is reported to
+// window.__raoSolWarn — never thrown, never rendered partially.
+// ════════════════════════════════════════════════════════════════
+
+function solWarn(msg) {
+  try { if (typeof window !== "undefined") (window.__raoSolWarn = window.__raoSolWarn || []).push(String(msg)); } catch (e) {}
+}
+function isInt1to12(n) { return typeof n === "number" && Math.floor(n) === n && n >= 1 && n <= 12; }
+// One monospace fact line. `marked` adds tint + weight ONLY — never padding
+// (alignment is load-bearing; the `=` column must line up down the table).
+function eqRow(a, b, marked) {
+  var product = a * b;   // COMPUTED — a frontmatter product is never consulted
+  return '<div class="sol-row' + (marked ? " sol-mark" : "") + '"><span class="sol-eq">' +
+    a + " × " + b + " = " + product + "</span></div>";
+}
+function absentLine(v) {
+  return '<div class="sol-absent"><span class="sol-eq">' + escapeHtml(String(v)) + " is not here</span></div>";
+}
+function validTableEntry(t) {
+  if (!t || !isInt1to12(t.factor) || !isInt1to12(t.upTo)) return false;
+  if (t.mark != null) {
+    if (!Array.isArray(t.mark)) return false;
+    for (var i = 0; i < t.mark.length; i++) if (!isInt1to12(t.mark[i]) || t.mark[i] > t.upTo) return false;
+  }
+  if (t.absent != null) {
+    if (!Array.isArray(t.absent)) return false;
+    for (var j = 0; j < t.absent.length; j++) {
+      var ab = t.absent[j];
+      if (!ab || Math.floor(ab.after) !== ab.after || ab.after < 1 || ab.after > t.upTo || typeof ab.value !== "number") return false;
+    }
+  }
+  return true;
+}
+function renderOneTable(t, single) {
+  var marks = {}; (t.mark || []).forEach(function (m) { marks[m] = true; });
+  var absAfter = {}; (t.absent || []).forEach(function (a) { (absAfter[a.after] = absAfter[a.after] || []).push(a.value); });
+  var rows = [];
+  for (var m = 1; m <= t.upTo; m++) {
+    rows.push(eqRow(t.factor, m, !!marks[m]));
+    if (absAfter[m]) absAfter[m].forEach(function (v) { rows.push(absentLine(v)); });
+  }
+  // SOLUTION-PANEL-LAYOUT v1 (Item 81): a SINGLE table is a SEQUENCE — it carries
+  // the sol-seq marker and columnises (Rule 2). Two tables (sol-tables-2) already
+  // sit side by side and do NOT columnise internally (Ruling R7): no marker.
+  return '<div class="sol-table' + (single ? " sol-seq" : "") + '">' + rows.join("") + "</div>";
+}
+function renderTable(block) {
+  var tables = block.tables;
+  if (!Array.isArray(tables) || tables.length < 1 || tables.length > 2 || !tables.every(validTableEntry)) {
+    solWarn("table: invalid — " + JSON.stringify(tables));
+    return "";
+  }
+  var single = tables.length === 1;
+  var inner = tables.map(function (t) { return renderOneTable(t, single); }).join("");
+  return (block.note ? '<p class="sol-note">' + escapeHtml(block.note) + "</p>" : "") +
+    '<div class="sol-tables' + (tables.length === 2 ? " sol-tables-2" : "") + '">' + inner + "</div>" +
+    (block.footer ? '<p class="sol-foot">' + escapeHtml(block.footer) + "</p>" : "");
+}
+function renderFacts(block) {
+  var items = block.items;
+  if (!Array.isArray(items) || !items.length ||
+      !items.every(function (it) { return Array.isArray(it) && it.length === 2 && isInt1to12(it[0]) && isInt1to12(it[1]); })) {
+    solWarn("facts: invalid items — " + JSON.stringify(items));
+    return "";
+  }
+  var marks = {};
+  if (block.mark != null) {
+    if (!Array.isArray(block.mark) || !block.mark.every(function (i) { return Math.floor(i) === i && i >= 0 && i < items.length; })) {
+      solWarn("facts: invalid mark — " + JSON.stringify(block.mark));
+      return "";
+    }
+    block.mark.forEach(function (i) { marks[i] = true; });
+  }
+  var rows = items.map(function (it, i) { return eqRow(it[0], it[1], !!marks[i]); }).join("");
+  // a facts list is a SEQUENCE (Rule 1) — carries the sol-seq marker, columnises.
+  return (block.note ? '<p class="sol-note">' + escapeHtml(block.note) + "</p>" : "") +
+    '<div class="sol-facts sol-seq">' + rows + "</div>" +
+    (block.footer ? '<p class="sol-foot">' + escapeHtml(block.footer) + "</p>" : "");
+}
+function renderRule(block) {
+  if (!block.text || typeof block.text !== "string") { solWarn("rule: missing text"); return ""; }
+  var ex = "";
+  if (block.example != null) {
+    var e = block.example;
+    // the rule is the ONLY block where a 0 operand is legal (9 × 0 = 0)
+    if (!Array.isArray(e) || e.length !== 2 || !isInt1to12(e[0]) || Math.floor(e[1]) !== e[1] || e[1] < 0 || e[1] > 12) {
+      solWarn("rule: invalid example — " + JSON.stringify(e));
+    } else {
+      ex = eqRow(e[0], e[1], true);
+    }
+  }
+  return '<div class="sol-rule"><p class="sol-note">' + escapeHtml(block.text) + "</p>" + ex + "</div>";
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -5607,6 +5847,9 @@ function walkChip(block, stepNum, stepTotal) {
   if (block.type === "step") return "Step " + stepNum + " of " + stepTotal;
   if (block.type === "takeaway") return "The idea to keep";
   if (block.type === "verification") return "Does it make sense?";
+  if (block.type === "table") return "The times table";
+  if (block.type === "facts") return "The facts";
+  if (block.type === "rule") return "The rule";
   return null;   // figure / legacy-explain / fallback: no chip
 }
 
@@ -5619,6 +5862,9 @@ function walkBody(block) {
     return parts.join("");
   }
   if (block.type === "figure") return block.html || escapeHtml(block.text || "[figure]");
+  if (block.type === "table") return renderTable(block);
+  if (block.type === "facts") return renderFacts(block);
+  if (block.type === "rule") return renderRule(block);
   // legacy explain strings pass through raw — same contract as renderSolution
   if (block.type === "legacy-explain") return block.text || "";
   return escapeHtml(block.text || "");
@@ -5703,6 +5949,101 @@ function wireWalkthrough(root, opts) {
 }
 
 // ════════════════════════════════════════════════════════════════
+// SOLUTION-PANEL-LAYOUT v1 (Item 81) — columnise declared SEQUENCES.
+//
+// A sequence container carries the `sol-seq` marker (added by renderTable for a
+// single table, and renderFacts). CSS lays it out as a grid whose column COUNT
+// is `--sol-cols`; this function computes that count per the contract:
+//   cols = clamp( floor(available_width / (longest_item_width + gutter)), 1, 4 )
+// Across-order and the max-content column width are pure CSS (grid auto-flow row).
+// A sol-working carries NO marker and is never touched here — it is BLOCK (R6).
+//
+// This is display-only: it reads geometry and writes one CSS custom property. It
+// never calls check(), never mutates the answer or the student response, and does
+// not import the grading module — the §13.1 firewall is intact.
+// ════════════════════════════════════════════════════════════════
+
+var SOL_GUTTER = 24;   // the contract's gutter; matches the grid column-gap in CSS
+
+// Available width MUST come from the panel/card, not the sequence's immediate
+// container. In the walkthrough the sequence sits inside a chat bubble (.cc-bub)
+// that shrink-wraps to its content, so seq.clientWidth there reports the ONE-column
+// width and the sequence never columnises (the Phase-4 failure). Walk up to the
+// nearest solution/card container, which fills the panel in every context.
+function panelWidthFor(seq) {
+  var panel = seq.closest ? seq.closest(".pv-solwrap, .sol-holder, .pv-card") : null;
+  if (panel) {
+    var cs = getComputedStyle(panel);
+    var w = panel.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+    if (w > 0) return w;
+  }
+  return seq.clientWidth;   // fallback: no known panel container
+}
+function layoutOneSequence(seq) {
+  try {
+    var kids = seq.children, n = kids.length;
+    if (!n) return;
+    // Reset to one column so each item reports its own intrinsic (max-content) width.
+    seq.style.setProperty("--sol-cols", "1");
+    var avail = panelWidthFor(seq);
+    var longest = 0;
+    for (var i = 0; i < n; i++) { var w = kids[i].scrollWidth; if (w > longest) longest = w; }
+    if (avail <= 0 || longest <= 0) return;
+    var cols = Math.floor(avail / (longest + SOL_GUTTER));
+    if (cols < 1) cols = 1; else if (cols > 4) cols = 4;   // Ruling R1: cap at 4
+    seq.style.setProperty("--sol-cols", String(cols));
+    // Cap each item at the panel width so an item wider than the panel takes its
+    // OWN scroll rail (Rule 3 tail) instead of widening the grid/panel. Clamping
+    // the item's max-width also clamps the max-content column, so the grid never
+    // exceeds `avail`.
+    seq.style.setProperty("--sol-itemmax", avail + "px");
+  } catch (e) { /* layout must never break the panel */ }
+}
+
+// Lay out every sol-seq under `root` (default: the whole document).
+function layoutSequences(root) {
+  if (typeof document === "undefined") return;
+  var scope = root && root.querySelectorAll ? root : document;
+  var list = scope.querySelectorAll(".sol-seq");
+  for (var i = 0; i < list.length; i++) layoutOneSequence(list[i]);
+  // `root` itself may be a bare sol-seq (e.g. observer handoff)
+  if (root && root.classList && root.classList.contains("sol-seq")) layoutOneSequence(root);
+}
+
+// Auto-run: sequences appear both directly (renderSolution) and inside walkthrough
+// bubbles as they type. A narrow observer lays out ONLY newly-added sol-seq nodes,
+// debounced to an animation frame. It never edits .sol-walk/.cc-bub or wireWalkthrough
+// — it only sets --sol-cols on the sequences those paths already emit.
+var _solSeqObserver = null;
+function installSequenceObserver() {
+  if (typeof window === "undefined" || typeof MutationObserver === "undefined" || typeof document === "undefined") return;
+  if (_solSeqObserver) return;
+  _solSeqObserver = new MutationObserver(function (muts) {
+    var found = [];
+    for (var i = 0; i < muts.length; i++) {
+      var added = muts[i].addedNodes;
+      for (var j = 0; j < added.length; j++) {
+        var node = added[j];
+        if (!node || node.nodeType !== 1) continue;
+        if (node.classList && node.classList.contains("sol-seq")) found.push(node);
+        if (node.querySelectorAll) { var inner = node.querySelectorAll(".sol-seq"); for (var k = 0; k < inner.length; k++) found.push(inner[k]); }
+      }
+    }
+    if (found.length) {
+      var raf = window.requestAnimationFrame || function (fn) { return setTimeout(fn, 16); };
+      raf(function () { for (var m = 0; m < found.length; m++) layoutOneSequence(found[m]); });
+    }
+  });
+  try { _solSeqObserver.observe(document.documentElement || document.body, { childList: true, subtree: true }); } catch (e) {}
+  // lay out anything already present at install time
+  try { layoutSequences(document); } catch (e) {}
+}
+if (typeof window !== "undefined") {
+  if (typeof document !== "undefined" && document.readyState !== "loading") installSequenceObserver();
+  else if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", installSequenceObserver);
+}
+
+// ════════════════════════════════════════════════════════════════
 // Exports
 // ════════════════════════════════════════════════════════════════
 
@@ -5712,6 +6053,7 @@ if (typeof module !== "undefined" && module.exports) {
     renderSolution: renderSolution,
     renderWalkthrough: renderWalkthrough,
     wireWalkthrough: wireWalkthrough,
+    layoutSequences: layoutSequences,
     bubbles: { wrap: chatWrap, msg: chatMsg, FILL_MS: BUBBLE_FILL_MS }
   };
 }
@@ -5721,6 +6063,7 @@ if (typeof window !== "undefined") {
     renderSolution: renderSolution,
     renderWalkthrough: renderWalkthrough,
     wireWalkthrough: wireWalkthrough,
+    layoutSequences: layoutSequences,
     bubbles: { wrap: chatWrap, msg: chatMsg, FILL_MS: BUBBLE_FILL_MS }
   };
 }
@@ -5745,21 +6088,36 @@ if (typeof window !== "undefined") {
         "✕ persists"). A wrong SELECTION is marked with a small red ✕ glyph
         before its text — never on a correct selection, never on an unselected
         option; multi-select marks EVERY wrong selection. Fill-blanks get NO
-        glyph: the wrong blank tints softly red (border + text) and the typed
-        value is NEVER cleared — erasing it reads as punishment. No is-wrong
+        glyph: the wrong blank tints softly red (border + text). The typed value
+        SURVIVES the Check that produced the wrong verdict — the child must see
+        the answer they are being told is wrong — but is CLEARED to empty on the
+        "Try again" tap (AMENDED by BRIEF-RETRY-STATE-2, 2026-07-23, Venkat's #88
+        ruling — REVERSES the old "the typed value is NEVER cleared"; a deliberate
+        reversal, not drift — do not restore it). No is-wrong
         red flood, no shake, no "Not quite" pill in adaptive mode; the bubble
         carries the feedback. On "Try again" every ✕/tint clears and the task
         returns to its first-attempt state — restored from a snapshot taken at
-        mount, with fill-blanks typed values preserved verbatim (guard:
-        tools/verify-reset.js A1–A5).
+        mount, with fill-blanks typed values now CLEARED (guard:
+        tools/verify-reset.js A1–A5, amended same brief).
      4. HELP ACCUMULATES — hint bubbles and walkthrough steps only ever stack;
         nothing the card has told the child disappears while the question lives.
-     5. ONE HINT LADDER — the whyWrong message after a wrong attempt IS the next
-        hint rung ("Hint 1", "Hint 2", … — never "of N"). Presentation: typed
-        tutor bubbles (RaoSolution.bubbles — ONE copy, shared with the steps).
+        AMENDED by BRIEF-G3-ENGINE-1 (Item 63): opening the solution is the ONE
+        sanctioned exception — the accumulated hint/whyWrong bubbles clear at that
+        point so the panel stands alone (openWalkthrough / revealSolution). The
+        question DOM is still untouched; only the bubble stream (outside .qbody)
+        is removed, so the no-repaint law holds.
+     5. TWO SEPARATE STREAMS — hints and whyWrong are labelled apart (AMENDED by
+        BRIEF-G3-ENGINE-1, Item 66; REVERSES the old "whyWrong IS the next hint
+        rung"). A whyWrong message renders with the chip "Not quite" and does NOT
+        consume a hint number: after it, the next hint the child asks for is still
+        "Hint 1". Why: two adults on this project misread a whyWrong message as a
+        leaking hint rung on consecutive days, and a child would misread it every
+        time. Presentation: typed tutor bubbles (RaoSolution.bubbles — ONE copy,
+        shared with the steps); the whyWrong bubble carries .cc-msg-why (warning
+        tint), the hint bubble does not.
      6. WALKTHROUGH commit (amended by BRIEF FR-2, 2026-07-19, per HANDOFF-24
         ruling 7 — was "child-initiated only, never auto-opened"). The
-        walkthrough opens by EITHER path: the child taps "Walk me through it"
+        walkthrough opens by EITHER path: the child taps "Show me the solution"
         (offered once hints are used after a wrong attempt, never before the
         first attempt), or it AUTO-OPENS on the second wrong attempt where a
         solution exists (TWO ATTEMPTS IS THE CAP — no Try Again offered).
@@ -5767,8 +6125,13 @@ if (typeof window !== "undefined") {
         solved-with-help. No retry inside. Final step reveals quietly —
         triumph ≠ rescue. Guards: verify-calm.js b (tap), verify-reset.js
         A6–A9 (auto-open).
-     7. CORRECT is the only loud moment: green option + cc-win + sparks + chime,
-        takeaway panel ("The idea to keep"), then "Next question →".
+     7. CORRECT stays loud but SILENT of text (AMENDED by BRIEF-G3-ENGINE-1,
+        Item 65; REVERSES the old "takeaway panel"). Green option + cc-win +
+        sparks + chime are unchanged; the .cc-take panel is GONE — nothing to
+        read by default. cc-hastake is still added (it seals the duplicate
+        .explain — drop it and .explain reappears). A ghost "Show me the solution"
+        is offered beside "Next question →" when a solution exists; tapping it
+        renders the full solution and leaves the outcome "correct".
      8. MODES — adaptive: all of the above. rapid: verdict flash + one-line
         explain + code log only. quiz: nothing during; review is the app's job.
 
@@ -5816,6 +6179,22 @@ function wireCard(frame) {
   // "adaptive"; the app may pre-set data-mode on the qbody to pick rapid/quiz.
   if (qbody && !qbody.hasAttribute("data-mode")) qbody.setAttribute("data-mode", "adaptive");
   var mode = (qbody && qbody.getAttribute("data-mode")) || "adaptive";
+
+  // BRIEF-RETRY-STATE-2 (#111, 2026-07-23): dismiss STALE wrong-answer feedback
+  // the moment the child makes a new selection (taps a different option or edits
+  // a blank). Delegated on qbody in the CAPTURE phase so it (a) survives
+  // restoreTask's re-mount — only qbody's innerHTML is replaced, qbody itself
+  // persists — and (b) runs even if a behavior stops propagation. It only ever
+  // HIDES the whyWrong bubble (never removes it: no-repaint / append-only law);
+  // see hideStaleFeedback below.
+  if (qbody) {
+    var onNewSelection = function (e) {
+      var t = e.target;
+      if (t && t.closest && t.closest(".opt, .opt-fig, .hcell, .st-apple, .blank-input, .ans-input")) hideStaleFeedback();
+    };
+    qbody.addEventListener("click", onNewSelection, true);
+    qbody.addEventListener("input", onNewSelection, true);
+  }
 
   // ── shared data (absent on legacy questions) ──
   var hintBtn = frame.querySelector(".pv-hint"), hintBox = frame.querySelector(".pv-hintbox"), hintRaw = frame.dataset.hint;
@@ -5869,6 +6248,7 @@ function wireCard(frame) {
   function hideFoot(on) { if (foot) foot.style.display = on ? "none" : ""; }
   function ensureChat() {
     if (!chat) { chat = bubbles.wrap(null); qbody.after(chat); }
+    chat.style.display = "";   // a prior reset may have collapsed an EMPTY chat — re-show it for the incoming bubble
     return chat;
   }
   function removeRow() {
@@ -5925,7 +6305,7 @@ function wireCard(frame) {
         removeRow();
         giveHint(function () { feedbackRow("I’ll try now"); });
       } },
-      walkOffered() && { label: "Walk me through it", ghost: true, onTap: openWalkthrough },
+      walkOffered() && { label: "Show me the solution", ghost: true, onTap: openWalkthrough },
       { label: solidLabel, ghost: false, onTap: resumeAnswering }
     ].filter(Boolean));
   }
@@ -5937,30 +6317,29 @@ function wireCard(frame) {
   // rungIdx, shownWhys) live in this closure and are deliberately NOT reset.
   function restoreTask() {
     if (!qbody || taskSnap == null || !window.RaoPreview || !window.RaoPreview.attach) return;
-    // FR-2 ruling 4: the typed value is the child's handwriting — NEVER
-    // cleared. The snapshot restore wipes input PROPERTIES (they are not
-    // attributes), so fill-blanks values are carried across the re-mount.
-    // Tints clear with the restore; values return. Fill-blanks only — every
-    // other behavior keeps the full FR-1 first-attempt restore.
-    var keep = null;
-    if (behavior === "fill-blanks") {
-      keep = [];
-      var inpsBefore = qbody.querySelectorAll(".blank-input");
-      for (var i = 0; i < inpsBefore.length; i++) keep.push(inpsBefore[i].value);
-    }
+    // BRIEF-RETRY-STATE-2 (#88, 2026-07-23): Venkat RULED the typed value IS
+    // CLEARED on "Try again" — REVERSES FR-2 ruling 4 ("the typed value is the
+    // child's handwriting — NEVER cleared"). An input's typed value never
+    // serialises into innerHTML, so restoring the mount snapshot and
+    // re-attaching returns every fill-blank to a clean, EMPTY slate. No value is
+    // carried across — a deliberate reversal of the old law, not drift.
     qbody.innerHTML = taskSnap;
     window.RaoPreview.attach(qbody, behavior);
-    if (keep) {
-      var inpsAfter = qbody.querySelectorAll(".blank-input");
-      for (var j = 0; j < inpsAfter.length; j++) if (keep[j] != null) inpsAfter[j].value = keep[j];
-    }
   }
   function resumeAnswering() {
     removeRow();
     freezeTask(false);
     hideFoot(false);
     quietChrome(false);
-    restoreTask();                   // LAW 3 (FR-1): first-attempt state back; bubbles STAY (law 4)
+    restoreTask();                   // LAW 3 (FR-1): first-attempt state back
+    // Rule 2 + rule 4 (amended 2026-07-23, BRIEF-INTERACTION-CONFORM-1 item 3):
+    // "Try again" is a fresh start. HIDE the wrong-answer feedback — the whyWrong
+    // panel + its "Not quite" chip (.cc-msg-why) — and clear any residual ✕ / kept
+    // marks. This EXTENDS the existing dismiss-on-new-selection path (#111), it
+    // does not replace it. The HINT is help the child EARNED: it is a .cc-msg
+    // WITHOUT .cc-msg-why, and hideStaleFeedback leaves it visible (law 4 narrowed:
+    // hints persist, answer-specific feedback does not). HIDE, never remove.
+    hideStaleFeedback();
     fb.className = "pv-fb"; fb.textContent = ""; fb.style.color = "";
     syncHintBtn();
   }
@@ -5977,20 +6356,19 @@ function wireCard(frame) {
     for (var i = 0; i < sel.length; i++) {
       var el = sel[i];
       var val = String(el.dataset.val != null ? el.dataset.val : (el.textContent || "").trim());
-      if (ans.indexOf(val) !== -1) continue;         // ruling 2: correct selections stay unmarked
-      el.classList.add("cc-tried");
-      if (!el.querySelector(".cc-x")) {
-        var x = document.createElement("span");
-        x.className = "cc-x";
-        x.textContent = "✕";
-        var txt = el.querySelector(".opt-text");
-        if (txt) txt.insertBefore(x, txt.firstChild);
-        else {
-          var ind = el.querySelector(".check-ind");
-          if (ind && ind.nextSibling) el.insertBefore(x, ind.nextSibling);
-          else el.insertBefore(x, el.firstChild);
-        }
+      if (ans.indexOf(val) !== -1) {
+        // rule 18 (RULED 2026-07-23): a correctly-ticked MULTI-select option turns
+        // GREEN with a ✓ — the child sees which of their picks were right. This is
+        // NOT an answer leak (rule 6): only the child's OWN picks are marked, and a
+        // multi-answer question still hides the correct options they did not pick.
+        // Single-select never reaches here on a wrong attempt (its only pick is the
+        // wrong one), so it keeps the neutral cc-kept edge — §5 greens MULTI ONLY.
+        if (behavior === "multi-select") { el.classList.add("cc-right"); ccGlyph(el, "cc-check", "✓"); }
+        else el.classList.add("cc-kept");   // rule 12 neutral "you chose this"; unreachable for single-select on a wrong attempt
+        continue;
       }
+      el.classList.add("cc-tried");
+      ccGlyph(el, "cc-x", "✕");
     }
   }
   // Selection returns to rest after marking. Queries .st-apple scene
@@ -6002,6 +6380,37 @@ function wireCard(frame) {
     for (var i = 0; i < sel.length; i++) sel[i].classList.remove("is-sel");
     var c = qbody.querySelector("[data-st-count]");
     if (c) c.textContent = qbody.querySelectorAll(".st-apple.is-sel").length;
+  }
+  // BRIEF-RETRY-STATE-2 (#111): the whyWrong panel + its "Not quite" chip are
+  // one bubble (.cc-msg-why). HIDE it (display:none), NEVER detach — the
+  // no-repaint / append-only law forbids removing panel nodes. Hint bubbles
+  // (.cc-msg WITHOUT .cc-msg-why) stay visible — help accumulates (law 4).
+  // Also clear any residual prior-attempt whisper marks (✕ / cc-tried); the
+  // engine adds and removes those freely, so clearing them is not a repaint.
+  function hideStaleFeedback() {
+    var whys = frame.querySelectorAll(".cc-msg-why");
+    for (var i = 0; i < whys.length; i++) whys[i].style.display = "none";
+    if (qbody) {
+      var xs = qbody.querySelectorAll(".cc-x");
+      for (var j = 0; j < xs.length; j++) xs[j].remove();
+      var tr = qbody.querySelectorAll(".cc-tried");
+      for (var k = 0; k < tr.length; k++) tr[k].classList.remove("cc-tried");
+      var kp = qbody.querySelectorAll(".cc-kept");   // rule 12's neutral "you picked this" edge clears with the rest of the stale feedback
+      for (var m = 0; m < kp.length; m++) kp[m].classList.remove("cc-kept");
+      var rt = qbody.querySelectorAll(".cc-right");   // rule 18's green correct-pick edge clears on Try again too (rule 2 — a fresh start)
+      for (var r = 0; r < rt.length; r++) rt[r].classList.remove("cc-right");
+      var ck = qbody.querySelectorAll(".cc-check");   // and its ✓ glyph
+      for (var c2 = 0; c2 < ck.length; c2++) ck[c2].remove();
+    }
+    // If hiding the whyWrong leaves the chat with NO visible bubble, collapse the
+    // empty container so a fresh start is truly the first-arrival state (rule 2) —
+    // otherwise an empty tutor box lingers where the "Not quite" panel was. A
+    // surviving hint keeps a visible .cc-msg, so the chat stays open for it.
+    if (chat) {
+      var anyVis = false, msgs = chat.querySelectorAll(".cc-msg");
+      for (var c = 0; c < msgs.length; c++) { if (msgs[c].style.display !== "none") { anyVis = true; break; } }
+      chat.style.display = anyVis ? "" : "none";
+    }
   }
   // The quiet reveal (walkthrough final step): green the correct option(s),
   // nothing else moves. Triumph and rescue must feel different.
@@ -6016,15 +6425,13 @@ function wireCard(frame) {
   // ── WALKTHROUGH — opened by the child's tap OR by the second-wrong
   //    auto-open (FR-2 ruling 7); EITHER path is THE COMMIT POINT (law 6 as
   //    amended): locks immediately, records solved-with-help. ──
-  function openWalkthrough() {
-    if (locked) return;
-    locked = true;
-    setOutcome("solved-with-help");     // recorded BEFORE anything renders
-    removeRow();
-    freezeTask(true);
-    hideFoot(true);                     // no Check, no retry — anywhere
-    quietChrome(true);
-    if (hintBtn) hintBtn.style.display = "none";
+  // The panel render is SHARED by two callers that set DIFFERENT outcomes:
+  //   openWalkthrough() — help path, locks + records solved-with-help
+  //   revealSolution()  — correct path (Change 4), outcome STAYS "correct"
+  // The DOM work lives here once so the two callers cannot drift (BRIEF-G3-ENGINE-1
+  // Change 4: "extract the rendering into a shared function, set the outcome
+  // separately"). It NEVER calls setOutcome — bookkeeping is the caller's.
+  function renderSolutionPanel() {
     var cardEl = frame.querySelector(".pv-card");
     var holder = frame.querySelector(".pv-solwrap");
     if (!holder) {
@@ -6045,6 +6452,32 @@ function wireCard(frame) {
         actionRow([{ label: "Next question →", ghost: false, onTap: nextQuestion }]);
       }
     });
+  }
+  function openWalkthrough() {
+    if (locked) return;
+    locked = true;
+    setOutcome("solved-with-help");     // recorded BEFORE anything renders
+    removeRow();
+    freezeTask(true);
+    hideFoot(true);                     // no Check, no retry — anywhere
+    quietChrome(true);
+    if (hintBtn) hintBtn.style.display = "none";
+    // Change 3 (Item 63, REVERSES law 4): the accumulated hint/whyWrong bubbles
+    // CLEAR when the solution opens — the panel becomes the only thing below the
+    // question. The chat lives OUTSIDE .qbody, so the question DOM is untouched
+    // (no repaint); only the bubble container is removed.
+    if (chat) { chat.remove(); chat = null; }
+    renderSolutionPanel();
+  }
+  // Change 4 (Item 65): the correct-answer reveal. The child ALREADY succeeded,
+  // so the outcome must STAY "correct" — setOutcome is deliberately NOT called
+  // here (that is the whole reason the render was extracted from openWalkthrough,
+  // which records solved-with-help). The card is already locked & frozen by
+  // celebrate(); this just swaps the action row for the panel.
+  function revealSolution() {
+    removeRow();
+    if (chat) { chat.remove(); chat = null; }
+    renderSolutionPanel();
   }
   function nextQuestion() {
     removeRow();
@@ -6145,17 +6578,20 @@ function wireCard(frame) {
       sparks(wins[i]);
     }
     ding();
-    var take = takeawayText();
+    // Change 4 (Item 65, REVERSES law 7): nothing to READ by default. The
+    // .cc-take panel is GONE — but cc-hastake MUST still be added where a
+    // solution exists, because that class is what seals the duplicate .explain
+    // (drop it and .explain reappears, swapping one block of text for another and
+    // defeating the ruling). Green paint + cc-win + sparks + chime are unchanged:
+    // correct is still loud. A ghost "Show me the solution" is offered beside
+    // "Next question →" when a solution exists; tapping it renders the full
+    // solution and LEAVES the outcome "correct" (revealSolution never re-records).
+    if (canWalk()) qbody.classList.add("cc-hastake");
     setTimeout(function () {
-      if (take) {
-        var cardEl = frame.querySelector(".pv-card");
-        var p = document.createElement("div");
-        p.className = "cc-take";
-        p.innerHTML = '<p><span class="cc-tag">The idea to keep</span>' + esc(take) + "</p>";
-        cardEl.insertBefore(p, foot);
-        qbody.classList.add("cc-hastake");   // the panel carries the teaching — hide the duplicate .explain
-      }
-      actionRow([{ label: "Next question →", ghost: false, onTap: nextQuestion }]);
+      actionRow([
+        canWalk() && { label: "Show me the solution", ghost: true, onTap: revealSolution },
+        { label: "Next question →", ghost: false, onTap: nextQuestion }
+      ].filter(Boolean));
     }, 550);
   }
 
@@ -6194,11 +6630,17 @@ function wireCard(frame) {
     if (msg && !shownWhys[msg]) {
       shownWhys[msg] = true;
       typing = true;
-      bubbles.msg(ensureChat(), "Hint " + hintNum++, esc(msg), function () {
+      // Change 2 (Item 66, REVERSES law 5): whyWrong is its OWN stream — chip
+      // "Not quite", warning tint, and it does NOT consume a hint number
+      // (hintNum untouched), so the next hint the child asks for is still
+      // "Hint 1". Calling it "Hint n" is what made two adults misread it as a
+      // leaking hint rung; a child would misread it every time.
+      var whyBub = bubbles.msg(ensureChat(), "Not quite", esc(msg), function () {
         typing = false;
         if (capped) commitCap();
         else feedbackRow("Try again");
       });
+      if (whyBub && whyBub.classList) whyBub.classList.add("cc-msg-why");
     } else if (capped) {
       commitCap();
     } else if (!allHintsUsed() && !typing) {
@@ -6338,17 +6780,61 @@ function showWhyPanel(frame, entry) {
    child entered — and NEVER paint the correct answer on a wrong attempt: while the question
    is attemptable there is no green anywhere (Brief 7.6, law 2). `noGreen` suppresses the
    per-input green marks on a wrong adaptive attempt for the same reason. */
-var FB_STATES = ["is-correct", "is-wrong", "correct", "incorrect"];
+var FB_STATES = ["is-correct", "is-wrong", "correct", "incorrect", "tile-wrong", "cc-right"];
+// ONE inserter for the per-option glyphs — the red ✕ on a wrong pick and the
+// green ✓ on a correct one (rule 18). Same placement, so tick and cross sit
+// identically. Used by BOTH the calm path (markWrongSelections) and the
+// degraded/review path (markFeedback), so the two can never drift.
+function ccGlyph(el, cls, ch) {
+  if (el.querySelector("." + cls)) return;
+  var g = document.createElement("span");
+  g.className = cls;
+  g.textContent = ch;
+  var txt = el.querySelector(".opt-text");
+  if (txt) txt.insertBefore(g, txt.firstChild);
+  else {
+    var ind = el.querySelector(".check-ind");
+    if (ind && ind.nextSibling) el.insertBefore(g, ind.nextSibling);
+    else el.insertBefore(g, el.firstChild);
+  }
+}
 function clearFeedback(qbody) {
-  qbody.querySelectorAll(".is-correct, .is-wrong, .correct, .incorrect").forEach(function (el) {
+  qbody.querySelectorAll(".is-correct, .is-wrong, .correct, .incorrect, .tile-wrong, .cc-right").forEach(function (el) {
     el.classList.remove.apply(el.classList, FB_STATES);
   });
+  // the rule-18 ✓ glyph is a real node (like the ✕) — drop it on a re-mark
+  qbody.querySelectorAll(".cc-check").forEach(function (g) { g.remove(); });
+}
+// rule 14: on a WRONG ordering/sorting answer, mark WHICH tiles are out of place.
+// Display-only: compare each slot's placed tile value to the key at that position.
+// Recolours in place — nothing moves, nothing greens — so the correct order is
+// NOT revealed (rule 6 holds while an attempt remains). A tile whose value matches
+// the key at its slot stays at rest.
+function markMisplaced(qbody, slotSel, tileSel, ans) {
+  var slots = qbody.querySelectorAll(slotSel);
+  for (var i = 0; i < slots.length; i++) {
+    var t = slots[i].querySelector(tileSel);
+    if (t && String(t.dataset.val) !== ans[i]) t.classList.add("tile-wrong");
+  }
 }
 function markFeedback(qbody, behavior, user, answer, ok, noGreen) {
   clearFeedback(qbody);                       // idempotent — a re-check re-marks cleanly
   var ans = (answer || []).map(String);
   var u = (user || []).map(String);
-  var norm = function (s) { return String(s).replace(/\s+/g, "").toLowerCase(); };
+  // ONE source of truth for "is this field right": ask the GRADER, per field,
+  // instead of keeping a second copy of its normalisation here. Before this,
+  // fill-blanks compared raw strings and expression stripped only whitespace — so
+  // a child graded CORRECT for "42,613" / "1,00,000" / "16+31=47" still saw a red
+  // box (rules 10, 12). check() already knows comma/Indian grouping and
+  // commutative addition; consulting it means the painter can never drift from it
+  // (BRIEF-INTERACTION-CONFORM-1 item 1: do NOT duplicate the grader's logic).
+  var grade1 = function (b, uv, av) {
+    try {
+      if (window.RaoPreview && typeof window.RaoPreview.check === "function")
+        return !!window.RaoPreview.check(b, [uv], [av]);
+    } catch (e) { /* fall through to exact match */ }
+    return String(uv) === String(av);
+  };
 
   if (behavior === "single-select" || behavior === "multi-select") {
     qbody.querySelectorAll(".opt, .opt-fig, .hcell").forEach(function (o) {
@@ -6356,8 +6842,15 @@ function markFeedback(qbody, behavior, user, answer, ok, noGreen) {
       var chosen = o.classList.contains("is-sel");
       var right = ans.indexOf(val) !== -1;
       if (chosen) {
-        if (right && !noGreen) o.classList.add("is-correct");
-        else if (!right) o.classList.add("is-wrong");
+        if (right) {
+          // rule 18: a ticked-correct MULTI-select option is GREEN + ✓ even on a
+          // wrong (attemptable) attempt. is-correct is neutralised to brand while
+          // the card is not is-checked, so cc-right (a dedicated class the
+          // neutraliser does not touch) paints the green. Single-select is reached
+          // here only on a CORRECT answer, where the plain is-correct green is due.
+          if (behavior === "multi-select" && noGreen) { o.classList.add("cc-right"); ccGlyph(o, "cc-check", "✓"); }
+          else if (!noGreen) o.classList.add("is-correct");
+        } else o.classList.add("is-wrong");
       }
       // NEVER mark an unchosen correct option — that was the answer leak.
     });
@@ -6365,7 +6858,7 @@ function markFeedback(qbody, behavior, user, answer, ok, noGreen) {
   }
   if (behavior === "fill-blanks") {
     qbody.querySelectorAll(".blank-input").forEach(function (inp, i) {
-      var right = u[i] === ans[i];
+      var right = grade1(behavior, u[i], ans[i]);
       if (right && !noGreen) inp.classList.add("correct");
       else if (!right) inp.classList.add("incorrect");
     });
@@ -6381,7 +6874,7 @@ function markFeedback(qbody, behavior, user, answer, ok, noGreen) {
   }
   if (behavior === "expression") {
     qbody.querySelectorAll(".ans-input").forEach(function (inp, i) {
-      var right = norm(u[i]) === norm(ans[i] || "");
+      var right = grade1(behavior, u[i], ans[i] || "");
       if (right && !noGreen) inp.classList.add("correct");
       else if (!right) inp.classList.add("incorrect");
     });
@@ -6389,13 +6882,30 @@ function markFeedback(qbody, behavior, user, answer, ok, noGreen) {
   }
   if (behavior === "order") {
     var os = qbody.querySelector(".order-slots"); if (os) os.classList.add(ok ? "correct" : "incorrect");
+    if (!ok) markMisplaced(qbody, ".order-slot", ".tile", ans);   // rule 14
     return;
   }
   if (behavior === "sequence-build") {
     var ss = qbody.querySelector(".sb-slots"); if (ss) ss.classList.add(ok ? "correct" : "incorrect");
+    if (!ok) markMisplaced(qbody, ".sb-slot", ".sb-tile", ans);   // rule 14
     return;
   }
-  // categorize / line-plot / time / bar-graph / construct: no per-option state exists in
+  if (behavior === "categorize") {
+    // rule 14 extended to categorize (RULED 2026-07-23): on a wrong sort, mark each
+    // tile that is in the WRONG bin with the same soft red edge (.tile-wrong).
+    // IDENTITY-based, matching the grader: the tile with data-idx=i is judged
+    // against ans[i] — the region it should be in — NOT its tray position. Nothing
+    // moves, nothing greens, the correct grouping is NOT revealed (rule 6). A tile
+    // in the right bin is left at rest.
+    if (!ok) qbody.querySelectorAll(".vs-tile[data-idx]").forEach(function (t) {
+      var idx = Number(t.dataset.idx);
+      var zone = t.closest(".vs-zone");
+      var region = zone ? zone.dataset.region : null;
+      if (region !== ans[idx]) t.classList.add("tile-wrong");
+    });
+    return;
+  }
+  // line-plot / time / bar-graph / construct: no per-option state exists in
   // rao.css — pill + answer line only. See DEVELOPER-BRIEF.md ("Per-option feedback gaps").
 }
 (function(){

@@ -38,7 +38,12 @@ const C = { r: "\x1b[31m", g: "\x1b[32m", b: "\x1b[1m", x: "\x1b[0m" };
 //                 lessons archived to archive/lessons-1to1/. 347 questions
 //                 removed from the live corpus. Their IDs remain permanently
 //                 taken in docs/question-ids.json, which did not shrink.
-const EXPECTED = 2668;
+//   2668 -> 2666  BRIEF-CHILD-FACING-FIX-1, 2026-07-23: two unanswerable/inert
+//                 questions dropped — qhhmpihb4 (§1, no statement on card) from
+//                 compare_numbers_up_to_five_digits.html and q8gwp2qc7 (§2,
+//                 round-then-order that tests nothing) from incoming/rounding_remix.html.
+//                 Their IDs remain permanently taken in docs/question-ids.json.
+const EXPECTED = 2666;
 const ID_RE = /^q[23456789abcdefghijkmnpqrstuvwxyz]{8}$/;
 
 let failures = 0;

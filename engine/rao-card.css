@@ -96,6 +96,8 @@
    wrong attempt, so the option is back to its resting look, byte-identical
    to its siblings. v36 spec: glyph 0.8em, red, 7px right margin, bold. */
 .cc-x{font-size:.8em;color:#ef4444;margin-right:7px;font-weight:700}
+/* rule 18's ✓ mirrors the ✕: same size/weight/margin, green instead of red. */
+.cc-check{font-size:.8em;color:#10b981;margin-right:7px;font-weight:700}
 
 /* rule 12 (RULED 2026-07-23, BRIEF-INTERACTION-CONFORM-1): after a WRONG
    multi-select attempt, a correctly-picked option must stay visibly chosen — the
@@ -105,6 +107,21 @@
    ✕, no tick: just "you chose this." Cleared on Try again / a new selection. */
 .rao-lesson .opt.cc-kept, .rao-lesson .opt-fig.cc-kept, .rao-lesson .hcell.cc-kept{
   border-color:var(--brand,#7b5cff);background:rgba(var(--brand-rgb,123,92,255),.06);}
+
+/* rule 18 (RULED 2026-07-23, BRIEF-CHILD-FACING-FIX-1 §5): SUPERSEDES the cc-kept
+   neutral edge for MULTI-SELECT. A correctly-ticked option turns GREEN (its own
+   pick, so not an answer leak — rule 6 still hides the correct options the child
+   did NOT pick). A dedicated class, NOT .opt.is-correct: the adaptive:not(.is-checked)
+   neutraliser in rao.css deliberately repaints is-correct/is-wrong to brand while
+   an attempt remains, and this green must survive that. Green tokens match
+   .opt.is-correct so triumph and this read the same. Cleared on Try again (rule 2). */
+.rao-lesson .opt.cc-right, .rao-lesson .opt.cc-right:not(:disabled),
+.rao-lesson .opt-fig.cc-right, .rao-lesson .hcell.cc-right{
+  /* :not(:disabled) matches the specificity of .opt.is-sel:not(:disabled) so the
+     green wins over the lingering selected-brand edge in the degraded/review path
+     (the calm path clears .is-sel; the review path keeps it). */
+  border-color:var(--green,#10b981);background:rgba(16,185,129,.12);color:#047857;
+  box-shadow:0 3px 10px rgba(16,185,129,.18);}
 
 /* — tutor conversation: hints and steps speak in one voice (law 5) — */
 .cc-chat{margin-top:14px;background:#f4f1ff;border:1px solid #e6e0ff;border-radius:14px;padding:14px 14px 16px}

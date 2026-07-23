@@ -275,6 +275,142 @@ async function checkExplainReveal(page) {
   return problems;
 }
 
+/* ---- §5 / rule 18: MULTI-SELECT GREEN ON CORRECT PICKS ────────────────────
+   After a WRONG multi-select attempt, every option the child ticked stays
+   visible: the correctly-ticked ones turn GREEN (rule 18), the wrongly-ticked
+   one carries the red ✕, and options never picked stay unmarked (no answer
+   leak — rule 6). A wrong SINGLE-select attempt must show NO green at all
+   (sabotage assertion — greening the picked-correct there would end the second
+   attempt). Drives real clicks; asserts on COMPUTED border colour. */
+async function checkMultiSelectGreen(page) {
+  const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8");
+  const GREEN = "rgb(16, 185, 129)";   // --green #10b981
+  // withSolution=true bundles solution-renderer.js → the CALM path the child sees
+  // (markWrongSelections). false → the degraded/review path (markFeedback). Rule 18
+  // must hold on BOTH, or review and app drift.
+  const wrap = (src, withSolution) =>
+    `<!doctype html><html><head><meta charset="utf-8">` +
+    `<style>${read("engine/rao.css")}</style>` +
+    `<style>${read("engine/rao-card.css")}</style></head><body>` +
+    `<div id="source">${src}</div>` +
+    `<div id="preview" class="rao-lesson" data-theme="grape"></div>` +
+    `<script>${read("engine/preview-engine.js")}</script>` +
+    (withSolution ? `<script>${read("engine/solution-renderer.js")}</script>` : "") +
+    `<script>${read("engine/rao-card.js")}</script></body></html>`;
+  const problems = [];
+
+  // ── multi-select: pick one right (2) + one wrong (3); 4 is right-but-unpicked.
+  //    Run on BOTH the calm (child) and degraded (review) render paths.
+  const msSrc =
+    `<!--@q\ntype: multi-select\nanswer: ["2","4"]\n-->` +
+    `<div class="question" data-type="multi-select">` +
+    `<p class="prompt">Tap all the even numbers.</p>` +
+    `<ul class="options"><li data-val="2">2</li><li data-val="3">3</li>` +
+    `<li data-val="4">4</li><li data-val="6">6</li></ul></div>`;
+  for (const calm of [true, false]) {
+    const label = calm ? "calm/app" : "degraded/review";
+    const tmp = path.join(ROOT, "review", `__ms_green_${calm ? "calm" : "deg"}.html`);
+    fs.writeFileSync(tmp, wrap(msSrc, calm));
+    try {
+      await page.goto("file://" + tmp);
+      await page.waitForFunction(() => document.querySelector('.pv-frame .opt[data-val="2"]'), { timeout: 15000 }).catch(() => {});
+      await page.locator('.pv-frame .opt[data-val="2"]').click();
+      await page.locator('.pv-frame .opt[data-val="3"]').click();
+      await page.locator(".pv-frame .pv-check").click();
+      await page.waitForTimeout(400);
+      const r = await page.evaluate(() => {
+        const g = (v) => { const o = document.querySelector('.pv-frame .opt[data-val="' + v + '"]'); return o ? { border: getComputedStyle(o).borderTopColor, check: !!o.querySelector(".cc-check"), wrong: !!o.querySelector(".cc-x") || /\bis-wrong\b|\bcc-tried\b/.test(o.className), cls: o.className } : { missing: true }; };
+        return { two: g("2"), three: g("3"), four: g("4"), six: g("6") };
+      });
+      if (r.two.missing) problems.push(`MS[${label}]: option 2 vanished from the card`);
+      else {
+        if (r.two.border !== GREEN) problems.push(`MS[${label}] rule 18: a ticked-CORRECT option is not green (border ${r.two.border}, expected ${GREEN}) — correct picks must turn green on a wrong multi-select attempt`);
+        if (!r.two.check) problems.push(`MS[${label}] rule 18: the ticked-correct option has no green ✓ (class "${r.two.cls}")`);
+      }
+      if (!r.three.wrong) problems.push(`MS[${label}]: the ticked-WRONG option (3) is not marked wrong (class "${r.three.cls}")`);
+      if (r.four.border === GREEN) problems.push(`MS[${label}] rule 6: an UNPICKED correct option (4) turned green (${r.four.border}) — that leaks the answer`);
+      if (r.six.border === GREEN) problems.push(`MS[${label}]: an unpicked option (6) turned green (${r.six.border})`);
+    } finally { try { fs.unlinkSync(tmp); } catch (e) {} }
+  }
+
+  // ── SABOTAGE: single-select wrong attempt must show NO green anywhere (both paths)
+  const ssSrc =
+    `<!--@q\ntype: single-select\nanswer: ["4"]\n-->` +
+    `<div class="question" data-type="single-select">` +
+    `<p class="prompt">What is 2 + 2?</p>` +
+    `<ul class="options"><li data-val="2">2</li><li data-val="3">3</li><li data-val="4">4</li></ul></div>`;
+  for (const calm of [true, false]) {
+    const label = calm ? "calm/app" : "degraded/review";
+    const tmp2 = path.join(ROOT, "review", `__ss_nogreen_${calm ? "calm" : "deg"}.html`);
+    fs.writeFileSync(tmp2, wrap(ssSrc, calm));
+    try {
+      await page.goto("file://" + tmp2);
+      await page.waitForFunction(() => document.querySelector('.pv-frame .opt[data-val="2"]'), { timeout: 15000 }).catch(() => {});
+      await page.locator('.pv-frame .opt[data-val="2"]').click();   // wrong
+      await page.locator(".pv-frame .pv-check").click();
+      await page.waitForTimeout(400);
+      const anyGreen = await page.evaluate((GREEN) => Array.from(document.querySelectorAll(".pv-frame .opt")).some((o) => getComputedStyle(o).borderTopColor === GREEN), GREEN);
+      if (anyGreen) problems.push(`SABOTAGE[${label}] (single-select): a wrong single-select attempt painted an option GREEN — single-select must never green a pick while an attempt remains (rule 6); §5 is multi-select ONLY`);
+    } finally { try { fs.unlinkSync(tmp2); } catch (e) {} }
+  }
+
+  return problems;
+}
+
+/* ---- §6 / rule 14 extended: CATEGORIZE MARKS THE MISPLACED TILES ──────────
+   On a WRONG categorize attempt, each tile in the WRONG bin gets the same soft
+   red edge order/sequence misplaced tiles get (.tile-wrong). Correctly-binned
+   tiles stay clean; nothing greens; the correct grouping is NOT revealed
+   (rule 6). Identity-based (grades by tile, not tray position). Drives real
+   tap-to-place; asserts on COMPUTED border colour. */
+async function checkCategorizeMisplaced(page) {
+  const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8");
+  const RED = "rgb(239, 68, 68)";      // --red #ef4444
+  const src =
+    `<!--@q\ntype: categorize\nlayout: bins\nregions: [{"id":"A","label":"Group A"},{"id":"B","label":"Group B"}]\nanswer: ["A","B","A"]\n-->` +
+    `<div class="question" data-type="categorize">` +
+    `<p class="prompt">Sort the tiles into the right group.</p>` +
+    `<ul class="tiles"><li>one</li><li>two</li><li>three</li></ul></div>`;
+  const html =
+    `<!doctype html><html><head><meta charset="utf-8">` +
+    `<style>${read("engine/rao.css")}</style>` +
+    `<style>${read("engine/rao-card.css")}</style></head><body>` +
+    `<div id="source">${src}</div>` +
+    `<div id="preview" class="rao-lesson" data-theme="grape"></div>` +
+    `<script>${read("engine/preview-engine.js")}</script>` +
+    `<script>${read("engine/rao-card.js")}</script></body></html>`;
+  const tmp = path.join(ROOT, "review", "__cat_misplaced_fixture.html");
+  fs.writeFileSync(tmp, html);
+  const problems = [];
+  const place = async (idx, region) => {
+    await page.locator('.pv-frame .vs-tile[data-idx="' + idx + '"]').click();
+    await page.locator('.pv-frame .vs-zone[data-region="' + region + '"]').click();
+    await page.waitForTimeout(60);
+  };
+  try {
+    await page.goto("file://" + tmp);
+    await page.waitForFunction(() => document.querySelector('.pv-frame .vs-tile[data-idx="0"]'), { timeout: 15000 }).catch(() => {});
+    await place(0, "B");   // WRONG (belongs in A)
+    await place(1, "B");   // right
+    await place(2, "A");   // right
+    await page.locator(".pv-frame .pv-check").click();
+    await page.waitForTimeout(400);
+    const r = await page.evaluate(() => {
+      const g = (i) => { const t = document.querySelector('.pv-frame .vs-tile[data-idx="' + i + '"]'); return t ? { wrong: t.classList.contains("tile-wrong"), border: getComputedStyle(t).borderTopColor, correct: t.classList.contains("is-correct") } : { missing: true }; };
+      return { t0: g(0), t1: g(1), t2: g(2) };
+    });
+    if (r.t0.missing) problems.push("CAT: tile 0 vanished from the card");
+    else {
+      if (!r.t0.wrong) problems.push("CAT rule 14: the mis-binned tile (0, placed in B but belongs in A) has NO .tile-wrong — categorize must mark which tiles are out of place");
+      if (r.t0.border !== RED) problems.push(`CAT: the mis-binned tile's border is not the soft red (${r.t0.border}, expected ${RED})`);
+    }
+    if (r.t1.wrong) problems.push("CAT: a correctly-binned tile (1) was marked .tile-wrong");
+    if (r.t2.wrong) problems.push("CAT: a correctly-binned tile (2) was marked .tile-wrong");
+    if (r.t0.correct || r.t1.correct || r.t2.correct) problems.push("CAT rule 6: a tile turned green (is-correct) — categorize must not reveal the correct grouping while an attempt remains");
+  } finally { try { fs.unlinkSync(tmp); } catch (e) {} }
+  return problems;
+}
+
 /* ---- MOBILE INVARIANTS (380×800) ─────────────────────────────────────────
    These run on a self-contained fixture at phone width. Each guards one of
    the four mobile bugs that a desktop-viewport test can never catch:
@@ -1208,6 +1344,26 @@ async function checkSeqStrip(browser) {
     console.log(`PASS  explanation stays hidden (rule 13: the explain line is removed — hidden before AND after Check)`);
   }
 
+  // §5 / rule 18 — multi-select greens correct picks; single-select never does.
+  const msGreenProblems = await checkMultiSelectGreen(page);
+  if (msGreenProblems.length) {
+    failed++;
+    console.log(`\nFAIL  multi-select green on correct picks (rule 18)`);
+    msGreenProblems.forEach((p) => console.log("      - " + p));
+  } else {
+    console.log(`PASS  multi-select green on correct picks (rule 18: ticked-correct green, ticked-wrong ✕, unpicked unmarked; single-select shows no green)`);
+  }
+
+  // §6 / rule 14 extended — categorize marks the mis-binned tiles.
+  const catProblems = await checkCategorizeMisplaced(page);
+  if (catProblems.length) {
+    failed++;
+    console.log(`\nFAIL  categorize marks misplaced tiles (rule 14)`);
+    catProblems.forEach((p) => console.log("      - " + p));
+  } else {
+    console.log(`PASS  categorize marks misplaced tiles (rule 14: mis-binned tile red, correct tiles clean, no reveal)`);
+  }
+
   // Mobile invariants — 380×800 viewport, self-contained fixture.
   const mobileProblems = await checkMobileInvariants(browser);
   if (mobileProblems.length) {
@@ -1279,7 +1435,7 @@ async function checkSeqStrip(browser) {
   }
 
   await browser.close();
-  const total = files.length + 8;   // +1 explain, +1 mobile, +1 card look, +1 figures, +1 ladder, +1 render1, +1 venn, +1 seq-strip
+  const total = files.length + 10;   // +1 explain, +1 ms-green, +1 categorize, +1 mobile, +1 card look, +1 figures, +1 ladder, +1 render1, +1 venn, +1 seq-strip
   console.log(failed ? `\n${failed}/${total} FAILED` : `\nselection styling is clean`);
   process.exit(failed ? 1 : 0);
 })();

@@ -268,7 +268,8 @@
    WHICH tiles are out of place — a soft red edge on each misplaced tile, the two
    correctly-placed ones untouched. No green, nothing moves: the correct order is
    NOT revealed (rule 6 holds while an attempt remains). Same whisper as the ✕. */
-.rao-lesson .order-slot .tile.tile-wrong, .rao-lesson .sb-slot .sb-tile.tile-wrong{
+.rao-lesson .order-slot .tile.tile-wrong, .rao-lesson .sb-slot .sb-tile.tile-wrong,
+.rao-lesson .vs-tile.tile-wrong{  /* rule 14 extended to categorize (§6): a mis-binned tile gets the same soft red edge */
   border-color:var(--red,#ef4444);box-shadow:0 0 0 2px rgba(239,68,68,.14);}
 
 .rao-lesson /* DATA_TABLE — read-only lookup table */

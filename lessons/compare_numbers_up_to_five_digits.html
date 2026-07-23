@@ -534,7 +534,7 @@ explain: "19,999, 8,742 and 13,600 sit below 20,000; 21,050 and 20,001 are above
 whyWrong:
   "20,000":
     code: COMPARISON_EQUAL_WRONG
-    message: "20,000 IS the line — 'less than' means strictly below it."
+    message: "Looks like you counted 20,000 itself — but a number is never less than itself, so it stays out."
   "21,050":
     code: WRONG_NUMBER_PAIR
     message: "21,050 starts with 21 thousands — above the 20-thousand line."
@@ -551,7 +551,7 @@ solution:
     text: "19,999 is the largest keeper, exactly 1 below the line — the boundary held."
 -->
 <div class="question" data-type="multi-select">
-  <p class="prompt">Tap every number that is less than 20,000. Be careful: 20,000 itself is not less than 20,000.</p>
+  <p class="prompt">Tap every number that is less than 20,000.</p>
   <ul class="options">
     <li data-val="19,999">19,999</li>
     <li data-val="20,000">20,000</li>
@@ -681,48 +681,6 @@ solution:
     <li>70,524</li>
   </ol>
   <p class="explain">All are 70,___ so compare hundreds: 5, 5, 4, 4. The two 5s go first, split by their tens.</p>
-</div>
-
-<!--@q
-id: qhhmpihb4
-type: multi-select
-answer: ["5","6"]
-description: Which digits make 4_,318 greater than 45,000?
-hint:
-  - "Try each digit in the empty place and read the number it makes."
-  - "Compare each try against 45,000."
-  - "Careful with the digit that makes the thousands tie — the hundreds then decide."
-explain: "45,318 > 45,000 (the 318 pushes it past) and 46,318 > 45,000; 43,318 and 44,318 fall short."
-whyWrong:
-  "3":
-    code: WRONG_NUMBER_PAIR
-    message: "43,318 sits below 45,000 — 3 thousands is too small."
-  "4":
-    code: WRONG_NUMBER_PAIR
-    message: "44,318 is still under 45,000 — the 4 leaves it a thousand short."
-solution:
-  - type: step
-    goal: Try each digit.
-    working: "3 → 43,318, 4 → 44,318, 5 → 45,318, 6 → 46,318"
-  - type: step
-    goal: Compare each with 45,000.
-    working: "43,318 ✗, 44,318 ✗, 45,318 ✓, 46,318 ✓"
-    reason: With 5 in the gap the thousands tie — and then 318 beats 000.
-  - type: takeaway
-    text: A missing digit is an invitation to test — and ties pass the decision one place right.
-  - type: verification
-    text: "The boundary case: 45,318 − 45,000 = 318 — genuinely greater, not equal."
--->
-<div class="question" data-type="multi-select">
-  <p class="prompt">A digit is missing. Tap every digit that makes this statement true.</p>
-  
-  <ul class="options">
-    <li data-val="3">3</li>
-    <li data-val="4">4</li>
-    <li data-val="5">5</li>
-    <li data-val="6">6</li>
-  </ul>
-  <p class="explain">5 gives 45,318, which is just above 45,000. 6 gives 46,318, also above. 3 and 4 give 43,318 and 44,318 — both too small.</p>
 </div>
 
 <!--@q
