@@ -128,7 +128,31 @@ hint: Count on from five.
 <div class="question" data-type="single-select">
   <p class="prompt">What is 5 + 2?</p>
   <ul class="options"><li>6</li><li>7</li><li>8</li></ul>
+</div>
+<!--@q
+id: nq-f
+type: single-select
+answer: ["16"]
+hint: Double the eight.
+-->
+<div class="question" data-type="single-select">
+  <p class="prompt">What is 8 + 8?</p>
+  <ul class="options"><li>15</li><li>16</li><li>17</li></ul>
+</div>
+<!--@q
+id: nq-g
+type: fill-blanks
+answer: ["14"]
+hint: Think of a doubles fact.
+-->
+<div class="question" data-type="fill-blanks">
+  <p class="prompt">Add: 7 + 7 = []</p>
 </div>`;
+
+/* The shown-answer panel line — VERBATIM from BRIEF-SHOWN-ANSWER-1 (ruled by
+   Venkat 2026-07-24, closes #89). The old line "Here's the answer — you've
+   got this!" read as praise for failing twice and must never come back. */
+const LINE_SHOWN = "No worries, let's try a new one!";
 
 (async () => {
   console.log(`\n${C.b}══ verify-notquite — instant pill + gentle shake on wrong (BRIEF-NOTQUITE-1) ══${C.x}`);
@@ -289,6 +313,83 @@ hint: Count on from five.
     else fail("D wrong #2 — no pill with shown-answer", JSON.stringify(pD2) + " — a pill here contradicts the panel");
     if (shown) pass("D wrong #2 — shown-answer commit unchanged");
     else fail("D wrong #2 — shown-answer commit", "outcome is not shown-answer");
+
+    /* ── BRIEF-SHOWN-ANSWER-1 (ruled 2026-07-24, closes #89): the shown-answer
+       commit clears the accumulated hints (Item 63's sanctioned exception now
+       covers all THREE commit paths) and says "No worries, let's try a new
+       one!" — never the old praise-for-failing line. Hint delivered first so
+       there ARE bubbles to clear. ── */
+
+    /* FXF (select, hint, NO solution): two wrongs → hints cleared + new line + green */
+    await tapOpt(5, "15");
+    await tapCheck(5);
+    if (!(await waitRow(5, "Try again", 9000))) fail("F — reach Try again", "no Try again row");
+    const fBubblesAtWrong = await page.evaluate(() =>
+      document.querySelectorAll(".pv-frame")[5].querySelectorAll(".cc-msg").length);
+    if (fBubblesAtWrong >= 1) pass("F — a hint bubble exists before the cap (something to clear)", `${fBubblesAtWrong} bubble(s)`);
+    else fail("F — precondition: hint typed on wrong #1", `${fBubblesAtWrong} bubbles — the clear assertion would be vacuous`);
+    await tapRowBtn(5, "Try again");
+    await page.waitForTimeout(250);
+    await tapOpt(5, "15");
+    await tapCheck(5);
+    await page.waitForTimeout(600);
+    const fState = await page.evaluate(() => {
+      const f = document.querySelectorAll(".pv-frame")[5];
+      const line = f.querySelector(".cc-shown-line");
+      return {
+        chatGone: !f.querySelector(".cc-chat"),
+        bubbles: f.querySelectorAll(".cc-msg").length,
+        shown: !!f.querySelector(".cc-shown"),
+        line: line ? (line.textContent || "").trim() : null,
+        greened: !!f.querySelector(".opt.is-correct"),
+        outcome: f.dataset.raoOutcome || null,
+      };
+    });
+    if (fState.chatGone && fState.bubbles === 0)
+      pass("F — hints CLEAR at the shown-answer commit (chat container gone)", "0 bubbles");
+    else fail("F — hints clear on shown-answer (Item 63, third path)", `chatGone=${fState.chatGone} bubbles=${fState.bubbles} — the reveal panel must stand alone, as on the walkthrough paths`);
+    if (fState.shown && fState.line === LINE_SHOWN)
+      pass("F — panel line is EXACTLY the ruled text", `"${fState.line}"`);
+    else fail("F — panel line (closes #89)", `shown=${fState.shown} line=${JSON.stringify(fState.line)} — must be "${LINE_SHOWN}"`);
+    if (fState.greened) pass("F — correct option still greens (unchanged behaviour)");
+    else fail("F — correct option greens", "no .opt.is-correct after the reveal");
+    if (fState.outcome === "shown-answer") pass("F — outcome recorded as shown-answer");
+    else fail("F — outcome shown-answer", `outcome=${fState.outcome}`);
+
+    /* FXG (fill-blanks, hint, NO solution): the plain Answer line still renders */
+    const typeWrong = () => page.evaluate(() => {
+      const f = document.querySelectorAll(".pv-frame")[6];
+      f.scrollIntoView({ block: "center" });
+      const inp = f.querySelector(".blank-input, .ans-input");
+      inp.value = "13";
+      inp.dispatchEvent(new Event("input", { bubbles: true }));
+      f.querySelector(".pv-check").click();
+    });
+    await typeWrong();
+    if (!(await waitRow(6, "Try again", 9000))) fail("G — reach Try again", "no Try again row");
+    await tapRowBtn(6, "Try again");
+    await page.waitForTimeout(250);
+    await typeWrong();
+    await page.waitForTimeout(600);
+    const gState = await page.evaluate(() => {
+      const f = document.querySelectorAll(".pv-frame")[6];
+      const line = f.querySelector(".cc-shown-line");
+      const ans = f.querySelector(".cc-shown-ans");
+      return {
+        chatGone: !f.querySelector(".cc-chat"),
+        bubbles: f.querySelectorAll(".cc-msg").length,
+        line: line ? (line.textContent || "").trim() : null,
+        ansPresent: !!ans,
+        ansText: ans ? (ans.textContent || "") : "",
+        outcome: f.dataset.raoOutcome || null,
+      };
+    });
+    if (gState.chatGone && gState.bubbles === 0)
+      pass("G — hints CLEAR on the non-select shown-answer too", "0 bubbles");
+    else fail("G — hints clear (non-select)", `chatGone=${gState.chatGone} bubbles=${gState.bubbles}`);
+    if (gState.line === LINE_SHOWN && gState.ansPresent && /14/.test(gState.ansText) && gState.outcome === "shown-answer")
+      pass("G — ruled line + plain Answer line render (unchanged behaviour)", `"${gState.ansText.trim()}"`);
+    else fail("G — non-select reveal", JSON.stringify(gState));
 
     /* ── 8. FXE: correct answer → pill never exists ── */
     await tapOpt(4, "7");

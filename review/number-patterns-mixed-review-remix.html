@@ -6211,9 +6211,11 @@ if (typeof window !== "undefined") {
         nothing the card has told the child disappears while the question lives.
         AMENDED by BRIEF-G3-ENGINE-1 (Item 63): opening the solution is the ONE
         sanctioned exception — the accumulated hint/whyWrong bubbles clear at that
-        point so the panel stands alone (openWalkthrough / revealSolution). The
-        question DOM is still untouched; only the bubble stream (outside .qbody)
-        is removed, so the no-repaint law holds.
+        point so the panel stands alone. AMENDED by BRIEF-SHOWN-ANSWER-1
+        (2026-07-24): the exception covers all THREE commit paths —
+        openWalkthrough, revealSolution, AND showAnswer. The question DOM is
+        still untouched; only the bubble stream (outside .qbody) is removed,
+        so the no-repaint law holds.
      5. TWO SEPARATE STREAMS — hints and whyWrong are labelled apart (AMENDED by
         BRIEF-G3-ENGINE-1, Item 66; REVERSES the old "whyWrong IS the next hint
         rung"). A whyWrong message renders with the chip "Not quite" and does NOT
@@ -6681,12 +6683,21 @@ function wireCard(frame) {
     hideFoot(true);                     // no Check, no retry — anywhere
     quietChrome(true);
     if (hintBtn) hintBtn.style.display = "none";
+    // BRIEF-SHOWN-ANSWER-1 (RULED by Venkat 2026-07-24): the shown-answer
+    // commit clears the accumulated hint bubbles EXACTLY as openWalkthrough
+    // and revealSolution do — Item 63's sanctioned exception now covers all
+    // THREE commit paths. The chat lives OUTSIDE .qbody, so the no-repaint
+    // law holds here the same way it does on the other two.
+    if (chat) { chat.remove(); chat = null; }
     revealCorrect();                    // greens the correct option(s); no-op for non-select (reused, not duplicated)
     qbody.classList.add("is-checked");  // rao.css paints the green AND reveals the authored .explain (if any)
     var cardEl = frame.querySelector(".pv-card");
     var panel = document.createElement("div");
     panel.className = "cc-shown";       // calm, NOT the celebratory green band — rescue must feel unlike triumph
-    var html = '<p class="cc-shown-line">Here’s the answer — you’ve got this!</p>';
+    // BRIEF-SHOWN-ANSWER-1 (same ruling, closes #89): the old line "Here's the
+    // answer — you've got this!" read as praise for failing twice. Replaced
+    // verbatim per the ruling — do not restore the old line from a stale note.
+    var html = '<p class="cc-shown-line">No worries, let\'s try a new one!</p>';
     // Select is already revealed by revealCorrect(); non-select has no green
     // option, so state the answer plainly (honest — never a fabricated reason).
     if (!isSelect) {

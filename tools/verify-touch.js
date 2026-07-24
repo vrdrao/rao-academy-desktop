@@ -520,8 +520,13 @@ ${source}
     else fail(`fallback [${label}]: ghost label truthful`, `${s.bubbles} rung(s) delivered but ghost=${JSON.stringify(s.ghost)} — the label promises a rung it has not given`);
 
     // SECOND wrong = the cap (Item 50). No solution → reveal the answer
-    // (shown-answer) + "Next question →"; NO Hint 2, NO "Try again" loop. The
-    // earlier bubble stays (help accumulates, Law 4).
+    // (shown-answer) + "Next question →"; NO Hint 2, NO "Try again" loop.
+    // AMENDED 2026-07-24 (BRIEF-SHOWN-ANSWER-1, ruled by Venkat): the hint
+    // bubbles now CLEAR at the shown-answer commit — Item 63's sanctioned
+    // exception covers all THREE commit paths, so the reveal panel stands
+    // alone here exactly as it does on the walkthrough paths. The old
+    // "earlier bubble stays" assertion is REVERSED — do not restore it from
+    // a stale note.
     await tapButton(S3(".cc-actions button"), /Try again/);
     await page.waitForTimeout(120);
     await enterWrong();
@@ -540,9 +545,9 @@ ${source}
         bubbles: f.querySelectorAll(".cc-msg").length,
       };
     }, id);
-    if (cap.locked && cap.shown && cap.next && !cap.tryAgain && cap.outcome === "shown-answer" && cap.bubbles >= 1)
-      pass(`fallback [${label}]: second wrong CAPS — answer shown, Next, no loop (Item 50)`, `outcome=${cap.outcome}, help retained (${cap.bubbles} bubble(s))`);
-    else fail(`fallback [${label}]: second wrong CAPS`, JSON.stringify(cap));
+    if (cap.locked && cap.shown && cap.next && !cap.tryAgain && cap.outcome === "shown-answer" && cap.bubbles === 0)
+      pass(`fallback [${label}]: second wrong CAPS — answer shown, Next, no loop (Item 50), hints cleared (SHOWN-ANSWER-1)`, `outcome=${cap.outcome}, 0 bubbles`);
+    else fail(`fallback [${label}]: second wrong CAPS`, JSON.stringify(cap) + " — bubbles must be 0: the shown-answer commit clears the chat (BRIEF-SHOWN-ANSWER-1)");
   }
   await driveFallback("fb2a", "fill-blanks", async () => {
     await page.evaluate(() => {

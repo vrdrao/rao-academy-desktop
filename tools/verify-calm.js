@@ -192,8 +192,11 @@ async function fallbackLaws(browser) {
     else fail(`5f. TRUTHFUL GHOST LABEL [${cse.name}]`, `${s.bubbles} rung(s) delivered but ghost=${JSON.stringify(s.ghost)} — the label promises a rung it has not given`);
 
     // SECOND wrong = the cap (Item 50). No solution here → reveal the answer
-    // (shown-answer), offer Next, no Try again, no Hint 2. The earlier bubbles
-    // stay (help accumulates, Law 4).
+    // (shown-answer), offer Next, no Try again, no Hint 2.
+    // AMENDED 2026-07-24 (BRIEF-SHOWN-ANSWER-1, ruled by Venkat): the hint
+    // bubbles now CLEAR at the shown-answer commit — Item 63's exception
+    // covers all three commit paths. The old "earlier bubbles stay" claim is
+    // REVERSED — do not restore it from a stale note.
     await tryAgain(cse.idx);
     await page.waitForTimeout(150);
     await cse.goWrong(cse.idx);
@@ -211,9 +214,9 @@ async function fallbackLaws(browser) {
         bubbles: f.querySelectorAll(".cc-msg").length,
       };
     }, cse.idx);
-    if (cap.locked && cap.shown && cap.next && !cap.tryAgain && cap.outcome === "shown-answer" && cap.bubbles >= 1)
-      pass(`5f. SECOND WRONG CAPS — answer shown, no loop [${cse.name}]`, `outcome=${cap.outcome}, Next present, NO Try again, help retained (${cap.bubbles} bubble(s))`);
-    else fail(`5f. SECOND WRONG CAPS [${cse.name}]`, JSON.stringify(cap));
+    if (cap.locked && cap.shown && cap.next && !cap.tryAgain && cap.outcome === "shown-answer" && cap.bubbles === 0)
+      pass(`5f. SECOND WRONG CAPS — answer shown, no loop, hints cleared [${cse.name}]`, `outcome=${cap.outcome}, Next present, NO Try again, 0 bubbles (SHOWN-ANSWER-1)`);
+    else fail(`5f. SECOND WRONG CAPS [${cse.name}]`, JSON.stringify(cap) + " — bubbles must be 0: the shown-answer commit clears the chat (BRIEF-SHOWN-ANSWER-1)");
   }
   if (errors.length) fail("zero page errors (fallback drive)", errors.join(" | "));
   else pass("zero page errors (fallback drive)");

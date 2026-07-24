@@ -118,8 +118,12 @@ The distinction, and it is the whole reasoning:
 The old rule read "every bubble stays visible after a reset." That is now too
 broad and is superseded by the above. Do not restore it.
 
-Second sanctioned exception: opening the solution clears the accumulated bubbles
-so the solution panel stands alone.
+Second sanctioned exception: the COMMIT clears the accumulated bubbles so the
+closing panel stands alone. AMENDED 2026-07-24 (BRIEF-SHOWN-ANSWER-1): this
+covers all THREE commit paths — the walkthrough opening (openWalkthrough), the
+correct-path reveal (revealSolution), AND the shown-answer fallback
+(showAnswer). Before this ruling the shown-answer path kept the hints on
+screen beside the revealed answer; now every commit stands alone.
 
 Rule 2 is not a violation of this rule — a fresh start is a reset the child asked
 for, not the card silently withdrawing help.
@@ -498,12 +502,10 @@ visible, and land where the child is already looking.
 
 ## Open questions for Venkat
 
-1. **"Here's the answer — you've got this!" after failing twice.** (ISSUES #89.)
-   This encouragement line shows on the lock screen *after* the child got it
-   wrong twice. "You've got this" reads as praise for succeeding and misdescribes
-   what happened. With the explain line now removed (rule 13) it is one of the
-   few things left on that screen, so it carries more weight than it used to.
-   Keep it, reword it, or drop it?
+1. ~~**"Here's the answer — you've got this!" after failing twice.** (ISSUES #89.)~~
+   **RESOLVED 2026-07-24** (BRIEF-SHOWN-ANSWER-1): Venkat ruled — the line is
+   now "No worries, let's try a new one!", and the hint bubbles clear at that
+   commit like the other two paths. See ISSUES #89 (closed) for the record.
 2. **Multi-select gives no instruction on a wrong answer.** (ISSUES #87.) A child
    who picks some but not all of the correct options is told they are wrong, with
    nothing saying "select every correct one". Rule 13 permits this — an
