@@ -461,6 +461,41 @@ practice.
 
 ---
 
+## 19. Wrong gets an instant playful pill and a gentle shake. RULED by Venkat 2026-07-24.
+
+**(BRIEF-NOTQUITE-1. This REVERSES the old law-3 clause "no shake, no 'Not
+quite' pill in adaptive mode" — a deliberate ruling, not drift.)**
+
+On a wrong first attempt in calm mode, the child gets an explicit, **instant**
+signal — a pill under the question plus **one gentle shake of the card**.
+Reason: young children did not register that they were wrong from the quiet
+feedback alone (✕ marks + a hint arriving). The signal must be instant,
+visible, and land where the child is already looking.
+
+- **The pill points to the hint** ("…the hint below") — the promise is kept by
+  the auto-typed hint that follows.
+- **The joke lands on the QUESTION, never on the child** ("Ooh, tricky one!" —
+  never "you got it wrong").
+- **Second attempt gets no joke.** With a walkthrough coming, the plain
+  doorway line "Let's work it out together"; with no walkthrough, **no pill at
+  all** — the shown-answer panel carries its own line, and a pill would
+  contradict it.
+- If no hint will follow (ladder exhausted, or none authored), the pool's
+  "below" promise would be false — the plain fallback line shows instead.
+- **The pools are grade-keyed FIXED ENGINE LINES** (`NOTQUITE_POOLS` in
+  `engine/rao-card.js`), rotated with no immediate repeat — **never
+  per-question content**. Only the Grade 4 pool exists today; a new grade adds
+  a key, nothing else. No runtime grade signal exists yet, so the engine
+  defaults to the "4" pool.
+- **Rule 12 applies to every line**: no "close", no "almost", no "nearly" —
+  linted by `tools/verify-notquite.js`.
+- The shake is one short animation (~380ms), respects
+  `prefers-reduced-motion`, and never repeats until the next wrong Check.
+- **Still governed by rule 2:** the pill clears on Try again and on any new
+  selection.
+
+---
+
 ## Open questions for Venkat
 
 1. **"Here's the answer — you've got this!" after failing twice.** (ISSUES #89.)

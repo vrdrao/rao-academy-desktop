@@ -204,3 +204,13 @@
    line; if it is wider than the panel it takes its own horizontal scroll rail and
    the panel does not widen. (The walkthrough's working is `.cc-eq`, not touched.) */
 .sol-working{display:block;white-space:nowrap;overflow-x:auto;max-width:100%}
+
+/* ── BRIEF-NOTQUITE-1 (RULED by Venkat 2026-07-24): the instant wrong-attempt
+   signal — a playful pill under the question + ONE gentle shake of the card.
+   The pill is chrome (it lives OUTSIDE .qbody, class/style-toggled only — the
+   no-repaint law holds); warning-role tokens shared with the old .pv-why skin.
+   The shake respects prefers-reduced-motion: no motion when the device asks. */
+.cc-pill{display:block;width:fit-content;margin:12px 2px 0;padding:9px 16px;border-radius:999px;background:#fff2f5;border:1px solid #ffd3e0;color:#8a3b57;font-weight:700;font-size:.95rem;line-height:1.4}
+.pv-card.cc-shake{animation:ccShake .38s ease-in-out}
+@keyframes ccShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+@media (prefers-reduced-motion: reduce){.pv-card.cc-shake{animation:none}}

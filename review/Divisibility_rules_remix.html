@@ -1327,7 +1327,17 @@ h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
 /* sol-working is BLOCK (Ruling R6): never itemised, never columnised. It is one
    line; if it is wider than the panel it takes its own horizontal scroll rail and
    the panel does not widen. (The walkthrough's working is `.cc-eq`, not touched.) */
-.sol-working{display:block;white-space:nowrap;overflow-x:auto;max-width:100%}</style>
+.sol-working{display:block;white-space:nowrap;overflow-x:auto;max-width:100%}
+
+/* ── BRIEF-NOTQUITE-1 (RULED by Venkat 2026-07-24): the instant wrong-attempt
+   signal — a playful pill under the question + ONE gentle shake of the card.
+   The pill is chrome (it lives OUTSIDE .qbody, class/style-toggled only — the
+   no-repaint law holds); warning-role tokens shared with the old .pv-why skin.
+   The shake respects prefers-reduced-motion: no motion when the device asks. */
+.cc-pill{display:block;width:fit-content;margin:12px 2px 0;padding:9px 16px;border-radius:999px;background:#fff2f5;border:1px solid #ffd3e0;color:#8a3b57;font-weight:700;font-size:.95rem;line-height:1.4}
+.pv-card.cc-shake{animation:ccShake .38s ease-in-out}
+@keyframes ccShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+@media (prefers-reduced-motion: reduce){.pv-card.cc-shake{animation:none}}</style>
 <style>/* engine/robo.css — ROBO the mascot (Brief 7.7), the same file your app ships, verbatim */
 /* ============================================================================
    robo.css — ROBO, the mascot (Brief 7.7, engine rao-master-18).
@@ -6090,9 +6100,15 @@ if (typeof window !== "undefined") {
         the answer they are being told is wrong — but is CLEARED to empty on the
         "Try again" tap (AMENDED by BRIEF-RETRY-STATE-2, 2026-07-23, Venkat's #88
         ruling — REVERSES the old "the typed value is NEVER cleared"; a deliberate
-        reversal, not drift — do not restore it). No is-wrong
-        red flood, no shake, no "Not quite" pill in adaptive mode; the bubble
-        carries the feedback. On "Try again" every ✕/tint clears and the task
+        reversal, not drift — do not restore it). No is-wrong red flood.
+        AMENDED by BRIEF-NOTQUITE-1 (RULED by Venkat 2026-07-24 — REVERSES the
+        old "no shake, no 'Not quite' pill in adaptive mode; the bubble carries
+        the feedback" clause): a wrong Check now shows an INSTANT playful pill
+        (.cc-pill — grade-keyed engine lines, NOTQUITE_POOLS) and ONE gentle
+        card shake (.cc-shake) — young children did not register the quiet
+        feedback as "wrong". The pill clears on Try again / new selection; do
+        not restore the old no-pill clause from a stale note.
+        On "Try again" every ✕/tint clears and the task
         returns to its first-attempt state — restored from a snapshot taken at
         mount, with fill-blanks typed values now CLEARED (guard:
         tools/verify-reset.js A1–A5, amended same brief).
@@ -6138,6 +6154,41 @@ if (typeof window !== "undefined") {
 var WHYWRONG_VISIBLE = false; // RULED OFF by Venkat 2026-07-24 (BRIEF-WHYWRONG-OFF-1).
                               // Authored content retained in lessons; analytics event still fires.
                               // Do not re-enable without a new dated ruling.
+
+// ── The "not quite" pools — BRIEF-NOTQUITE-1, RULED by Venkat 2026-07-24. ──
+// On a wrong first attempt in calm mode the child gets an INSTANT playful pill
+// + one gentle card shake (this REVERSES the old law-3 clause "no 'Not quite'
+// pill in adaptive mode" — a dated ruling, not drift). Fixed ENGINE lines,
+// zero per-question authoring; the joke lands on the QUESTION, never the
+// child; rule 12 bans distance words ("close"/"almost"/"nearly") in every
+// line (linted by tools/verify-notquite.js). Keyed by grade so each grade can
+// have its own voice later — a new grade adds a key HERE, no other change.
+// NO runtime grade signal exists today (no lesson frontmatter, no data-attr,
+// no config reaches the card), so the engine defaults to the "4" pool —
+// reported in BRIEF-NOTQUITE-1's Phase 0, per its stop-gate.
+var NOTQUITE_POOLS = {
+  "4": {
+    firstWithHint: [                       // attempt 1, a hint will type below
+      "Ooh, tricky one! The hint below will help",
+      "The answer is still hiding — your clue is below!",
+      "Keep hunting, detective! Check the hint below",
+      "Oops-a-daisy! The hint below will help you",
+      "Hmm, nope! Let's peek at the hint below"
+    ],
+    firstNoHint: "Hmm, not that one — try again!",   // attempt 1, ladder exhausted / none authored
+    secondWithWalkthrough: "Let's work it out together"   // attempt 2, the walkthrough doorway
+  }
+};
+var NOTQUITE_GRADE = "4";
+// Module-level so "never the same line twice in a row" holds ACROSS cards on a
+// page, not just within one card (a card only ever has one first attempt).
+var notquiteLastIdx = -1;
+function pickNotquite(pool) {
+  var i;
+  do { i = Math.floor(Math.random() * pool.length); } while (pool.length > 1 && i === notquiteLastIdx);
+  notquiteLastIdx = i;
+  return pool[i];
+}
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; });
 }
@@ -6246,6 +6297,31 @@ function wireCard(frame) {
   // colors/opacity stay byte-identical (task-immutability law, guard c).
   function freezeTask(on) { if (qbody) { qbody.inert = !!on; qbody.classList.toggle("cc-locked", !!on); } }
   function hideFoot(on) { if (foot) foot.style.display = on ? "none" : ""; }
+  // ── BRIEF-NOTQUITE-1 (RULED 2026-07-24): the instant wrong-attempt signal. ──
+  // The pill is CHROME, not task DOM — it lives OUTSIDE .qbody (pinned right
+  // after it, ABOVE the hint chat so "the hint below" stays true) and is only
+  // ever class/style-toggled, so the no-repaint law is untouched. It cannot
+  // use the .pv-fb slot: calmWrong hides the whole .pv-foot (hideFoot(true)),
+  // so anything written there is invisible in the feedback state.
+  var pillEl = null;
+  function showPill(text) {
+    if (!pillEl) { pillEl = document.createElement("div"); pillEl.className = "cc-pill"; }
+    pillEl.textContent = text;
+    pillEl.style.display = "";
+    if (qbody) qbody.after(pillEl);   // (re)pin under the question, above the chat
+  }
+  function hidePill() { if (pillEl) pillEl.style.display = "none"; }
+  // ONE gentle shake of the card per wrong Check — class toggle only. The
+  // class sheds on animationend, with a timeout fallback because
+  // prefers-reduced-motion disables the animation and animationend never fires.
+  function shakeCard() {
+    var c = frame.querySelector(".pv-card");
+    if (!c || c.classList.contains("cc-shake")) return;
+    c.classList.add("cc-shake");
+    var shed = function () { c.classList.remove("cc-shake"); c.removeEventListener("animationend", shed); };
+    c.addEventListener("animationend", shed);
+    setTimeout(shed, 600);
+  }
   function ensureChat() {
     if (!chat) { chat = bubbles.wrap(null); qbody.after(chat); }
     chat.style.display = "";   // a prior reset may have collapsed an EMPTY chat — re-show it for the incoming bubble
@@ -6390,6 +6466,12 @@ function wireCard(frame) {
   function hideStaleFeedback() {
     var whys = frame.querySelectorAll(".cc-msg-why");
     for (var i = 0; i < whys.length; i++) whys[i].style.display = "none";
+    // BRIEF-NOTQUITE-1: the pill is answer-specific feedback — it clears with
+    // the rest (Try again AND the #111 new-selection path both land here).
+    // The shake class normally sheds itself; drop it too for a clean slate.
+    hidePill();
+    var pc = frame.querySelector(".pv-card.cc-shake");
+    if (pc) pc.classList.remove("cc-shake");
     if (qbody) {
       var xs = qbody.querySelectorAll(".cc-x");
       for (var j = 0; j < xs.length; j++) xs[j].remove();
@@ -6613,7 +6695,7 @@ function wireCard(frame) {
     freezeTask(true);
     hideFoot(true);
     quietChrome(true);
-    fb.className = "pv-fb"; fb.textContent = "";   // no "Not quite" — the bubble carries it
+    fb.className = "pv-fb"; fb.textContent = "";   // the foot is hidden in this state; the cc-pill carries the signal (BRIEF-NOTQUITE-1 — the old "the bubble carries it" note is obsolete since WHYWRONG-OFF-1)
     // ── TWO ATTEMPTS IS THE CAP (FR-2 ruling 5, extended by BRIEF-PUBLISH-1
     //    Item 50): the second wrong attempt locks the question and commits —
     //    no Try Again is offered, and no decision is demanded of a child who
@@ -6626,6 +6708,19 @@ function wireCard(frame) {
     //    the commit happens instead of the action row. No green at open
     //    (ruling 6) — the reveal stays at the walkthrough's final step.
     var capped = wrongCount >= 2;
+    // BRIEF-NOTQUITE-1 (RULED by Venkat 2026-07-24): the instant signal — pill
+    // + one gentle shake, BEFORE any bubble types. Slots: attempt 1 with a
+    // hint still to come → playful pool line (rotated, no immediate repeat);
+    // attempt 1 with the ladder exhausted (or none authored) → the plain
+    // fallback line; attempt 2 with a walkthrough → the doorway line;
+    // attempt 2 with NO walkthrough → NO pill (the shown-answer panel carries
+    // its own line — a pill here would contradict it).
+    var nqPool = NOTQUITE_POOLS[NOTQUITE_GRADE] || NOTQUITE_POOLS["4"];
+    var nqText = null;
+    if (!capped) nqText = allHintsUsed() ? nqPool.firstNoHint : pickNotquite(nqPool.firstWithHint);
+    else if (canWalk()) nqText = nqPool.secondWithWalkthrough;
+    if (nqText) showPill(nqText);
+    shakeCard();
     // BRIEF-WHYWRONG-OFF-1 (2026-07-24): whyWrong is RULED OFF product-wide.
     // msg stays null, so the bubble branch below never runs and the flow falls
     // through to the proven no-whyWrong path (capped → commitCap, else
