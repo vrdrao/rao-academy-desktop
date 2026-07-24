@@ -272,7 +272,7 @@ marked open:
 may still say otherwise** — verify against the files, not the log.
 
 **#114 narrowed by measurement:** the child-facing defect **no longer exists**.
-Zero inverted division messages corpus-wide across 5 lessons / 45 questions. What
+Zero inverted division messages corpus-wide across 4 lessons / 38 questions. What
 remains is **14 questions in `interpret-remainders` where the analytics code
 `REMAINDER_AS_ANSWER` sits on a quotient option** — a labelling mismatch no child
 sees. **Venkat ruled Route B:** the structural fix to `docs/MISCONCEPTIONS.md`
