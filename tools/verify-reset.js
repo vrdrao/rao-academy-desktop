@@ -682,8 +682,8 @@ async function runViewport(browser, vp, touch) {
       const f = document.getElementById(fid), q = f.querySelector(".qbody");
       const msgs = [...f.querySelectorAll(".cc-msg")];
       const vis = (m) => m.getBoundingClientRect().height > 0 && parseFloat(getComputedStyle(m).opacity) > 0.99 && getComputedStyle(m).display !== "none";
-      // Rule 4 narrowed (2026-07-23): hints persist VISIBLE; answer-specific
-      // whyWrong feedback survives as a NODE but is HIDDEN. Split the two by class.
+      // Rule 4 narrowed (2026-07-23): hints persist VISIBLE. AMENDED 2026-07-24
+      // (BRIEF-WHYWRONG-OFF-1): whyWrong is OFF — no .cc-msg-why may ever exist.
       const hints = msgs.filter((m) => !m.classList.contains("cc-msg-why"));
       const whys  = msgs.filter((m) => m.classList.contains("cc-msg-why"));
       return { state: window.__stateOf(q),
@@ -723,13 +723,18 @@ async function runViewport(browser, vp, touch) {
     // bubbles survive":
     //   (a) NO-REPAINT — every bubble NODE that existed at feedback still exists.
     //   (b) HINTS stay VISIBLE — help the child earned is never withdrawn.
-    //   (c) whyWrong verdicts are HIDDEN — the verdict on the discarded attempt goes.
+    //   (c) whyWrong bubbles NEVER EXIST — AMENDED 2026-07-24 (BRIEF-WHYWRONG-OFF-1),
+    //       was "present but hidden"; the feature is ruled off product-wide.
     if (after.bubbles === bubblesAtFeedback) pass(`${name} — law 4: every bubble NODE survives the reset (no-repaint)`, `${after.bubbles} node(s)`);
     else fail(`${name} — law 4: bubble NODES survive (no-repaint)`, `bubbles ${bubblesAtFeedback} -> ${after.bubbles} — a bubble node was removed (hide, never remove)`);
     if (after.hintTotal === 0 || after.hintVisible) { if (after.hintTotal > 0) pass(`${name} — law 4: the HINT(s) stay VISIBLE`, `${after.hintTotal} hint bubble(s)`); }
     else fail(`${name} — law 4: the HINT(s) stay VISIBLE`, `${after.hintTotal} hint bubble(s), not all visible — a fresh start must not withdraw earned help`);
-    if (after.whyTotal === 0 || after.whyHidden) { if (after.whyTotal > 0) pass(`${name} — law 4 (narrowed): whyWrong verdict(s) HIDDEN but present`, `${after.whyTotal} cc-msg-why`); }
-    else fail(`${name} — law 4 (narrowed): whyWrong HIDDEN on reset`, `${after.whyTotal} cc-msg-why still visible — the verdict on a discarded attempt must clear (rule 2)`);
+    // AMENDED 2026-07-24 (BRIEF-WHYWRONG-OFF-1, ruled by Venkat): whyWrong is
+    // OFF product-wide — the bubble must NEVER EXIST, a strictly stronger claim
+    // than the old "present but hidden". Do not restore the old form without a
+    // new dated ruling.
+    if (after.whyTotal === 0) { /* the only legal state — nothing to print */ }
+    else fail(`${name} — whyWrong OFF: no cc-msg-why may exist`, `${after.whyTotal} cc-msg-why node(s) found — whyWrong is ruled off (BRIEF-WHYWRONG-OFF-1)`);
     return after;
   }
 
@@ -867,9 +872,17 @@ async function runViewport(browser, vp, touch) {
   /* ── FR-1 req 4: the reset is visual/input ONLY — progress survives ──
      Ladder fixture (last card): wrong → Try again → SECOND wrong auto-opens the
      solution ("Show me the solution", BRIEF-G3-ENGINE-1 Change 1; wrongCount
-     survived the reset). The hint label after the first wrong now reads "Hint",
-     not "Give one more hint": a whyWrong "Not quite" bubble does NOT consume a
-     hint number (Change 2, Item 66), so hintNum is unchanged. */
+     survived the reset).
+     AMENDED 2026-07-24 (BRIEF-WHYWRONG-OFF-1, ruled by Venkat): whyWrong is
+     SWITCHED OFF product-wide. The first wrong no longer types a "Not quite"
+     bubble — it auto-types the next forward rung ("Hint 1", consuming a hint
+     number), exactly the path every no-whyWrong question takes. So: NO
+     .cc-msg-why may ever exist (stronger than the old present-but-hidden); the
+     auto-typed HINT survives Try again VISIBLE (law 4) so the chat stays OPEN
+     (the old empty-chat-collapse case can no longer arise here — that collapse
+     is still proven by drills whose fixtures author no help at all); and the
+     hint label after wrong #1 reads "Give one more hint" (a rung HAS been
+     delivered). Do not restore the old assertions without a new dated ruling. */
   try {
     const i = behaviors.length - 1;
     const id = "rst" + i;
@@ -877,46 +890,35 @@ async function runViewport(browser, vp, touch) {
     await scrollTo(`#${id} .qbody`);
     await tap(`#${id} .opt`, await optIdx(`#${id} .opt`, "130,000"));
     await tap(`#${id} .pv-check`);
-    await waitForButton(id, /Try again/, 8000);   // whyWrong bubble types first
+    await waitForButton(id, /Try again/, 8000);   // the auto-typed hint fills first
     await tapRowButton(id, /Try again/);
     await page.waitForTimeout(300);
     const mid = await page.evaluate((fid) => {
       const f = document.getElementById(fid);
-      const why = f.querySelector(".cc-msg-why");
       const vis = (m) => !!(m && m.getBoundingClientRect().height > 0 && getComputedStyle(m).display !== "none" && parseFloat(getComputedStyle(m).opacity) > 0.99);
+      const msgs = [...f.querySelectorAll(".cc-msg")];
+      const hint = msgs.find((m) => !m.classList.contains("cc-msg-why"));
       return {
-        bubbles: f.querySelectorAll(".cc-msg").length,
+        bubbles: msgs.length,
+        whyNodes: f.querySelectorAll(".cc-msg-why").length,
         anyX: !!f.querySelector(".cc-x"),
         residualSel: !!f.querySelector(".qbody .is-sel"),
         hintLabel: (f.querySelector(".pv-hint") || {}).textContent || "",
-        whyClass: (() => { const m = [...f.querySelectorAll(".cc-msg")].pop(); return !!(m && m.classList.contains("cc-msg-why")); })(),
-        whyPresent: !!why,
-        whyVisible: vis(why),
+        hintChip: hint ? ((hint.querySelector(".cc-schip") || {}).textContent || "") : null,
+        hintVisible: vis(hint),
         chatVisible: (() => { const c = f.querySelector(".cc-chat"); return !!(c && c.getBoundingClientRect().height > 0 && getComputedStyle(c).display !== "none"); })(),
       };
     }, id);
     if (!mid.anyX && !mid.residualSel) pass(`${name} — task reset clean after wrong #1`, `bubbles kept: ${mid.bubbles}`);
     else fail(`${name} — task reset after wrong #1`, JSON.stringify(mid));
-    // LAW 4 amended (BRIEF-INTERACTION-CONFORM-1 item 3): the whyWrong verdict on
-    // the discarded attempt survives as a NODE (no-repaint) but is HIDDEN on Try
-    // again — it is not help, it is a verdict on an attempt the child abandoned
-    // (rule 2). NOT weakened to "the bubble survives": present AND hidden, both.
-    if (mid.whyPresent) pass(`${name} — law 4: the whyWrong bubble NODE survives (no-repaint)`);
-    else fail(`${name} — law 4: whyWrong node survives (no-repaint)`, `whyPresent=${mid.whyPresent} — hide, never remove`);
-    if (!mid.whyVisible) pass(`${name} — law 4 (narrowed): the whyWrong verdict is HIDDEN on Try again`);
-    else fail(`${name} — law 4 (narrowed): whyWrong hidden on Try again`, `still visible — the verdict on a discarded attempt must clear (rule 2)`);
-    // The whyWrong was the ONLY bubble here (no hint opened), so hiding it must
-    // COLLAPSE the empty chat container — a fresh start is the first-arrival state
-    // (rule 2), not an empty tutor box lingering where "Not quite" was. (When a
-    // hint survives, the chat stays open — the construct/hint drills cover that.)
-    if (!mid.chatVisible) pass(`${name} — the empty chat collapses on Try again (fresh start, rule 2)`);
-    else fail(`${name} — empty chat collapses on Try again`, `an empty tutor box lingered after the whyWrong was hidden (rule 2)`);
-    // RE-POINTED for Change 2 (Item 66): the whyWrong "Not quite" does NOT consume
-    // a hint number, so after the first wrong the hint button still reads "Hint"
-    // (hintNum unchanged) AND the surviving bubble carries the warning tint
-    // .cc-msg-why. Two conditions where the repealed law asserted one label.
-    if (mid.hintLabel === "Hint" && mid.whyClass) pass(`${name} — whyWrong is not a hint (label still "Hint", bubble .cc-msg-why)`, `"${mid.hintLabel}"`);
-    else fail(`${name} — whyWrong not a hint rung`, `hintLabel="${mid.hintLabel}" whyClass=${mid.whyClass} (expected "Hint" + tint)`);
+    if (mid.whyNodes === 0) pass(`${name} — whyWrong OFF: no .cc-msg-why ever exists`, "0 nodes");
+    else fail(`${name} — whyWrong OFF: no .cc-msg-why ever exists`, `${mid.whyNodes} node(s) — a child can see a whyWrong message (BRIEF-WHYWRONG-OFF-1)`);
+    if (mid.hintChip === "Hint 1" && mid.hintVisible) pass(`${name} — law 4: the auto-typed HINT survives Try again VISIBLE`, `"${mid.hintChip}"`);
+    else fail(`${name} — law 4: the auto-typed hint survives visible`, `chip=${JSON.stringify(mid.hintChip)} visible=${mid.hintVisible} — earned help must not be withdrawn`);
+    if (mid.chatVisible) pass(`${name} — the chat stays OPEN (a surviving hint lives in it)`);
+    else fail(`${name} — chat stays open`, `the chat collapsed although a hint bubble survives (law 4)`);
+    if (mid.hintLabel === "Give one more hint") pass(`${name} — hint label counts the delivered rung`, `"${mid.hintLabel}"`);
+    else fail(`${name} — hint label counts the delivered rung`, `hintLabel="${mid.hintLabel}" (expected "Give one more hint" — one rung was auto-delivered on the wrong)`);
     await tap(`#${id} .opt`, await optIdx(`#${id} .opt`, "60,000"));
     await tap(`#${id} .pv-check`);
     // FR-2 ruling 5: the SECOND wrong now auto-opens the walkthrough — its

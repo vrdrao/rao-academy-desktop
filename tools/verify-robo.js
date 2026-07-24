@@ -315,11 +315,11 @@ const COMEBACK = ["You didn’t give up!", "You fixed it yourself!",
     await page.setContent(buildPage(), { waitUntil: "load" });
     const h = makeHelpers(page);
 
-    // FR-2 ruling 5: the SECOND wrong attempt AUTO-opens the walkthrough (the
-    // fixture picks the same wrong option, whose whyWrong was already spoken,
-    // so the open fires straight from Check). Was: two wrongs → voluntary
-    // "Walk me through it" tap. The silence contract is unchanged — the open
-    // (either path) is the commit point.
+    // FR-2 ruling 5: the SECOND wrong attempt AUTO-opens the walkthrough — the
+    // open fires straight from Check (whyWrong is OFF product-wide since
+    // BRIEF-WHYWRONG-OFF-1, 2026-07-24, so no bubble ever types ahead of the
+    // commit). Was: two wrongs → voluntary "Walk me through it" tap. The
+    // silence contract is unchanged — the open (either path) is the commit point.
     await h.fixtureWrong();
     await page.waitForTimeout(FILL_WAIT + 300);
     await h.tapRowButton(/Try again/);

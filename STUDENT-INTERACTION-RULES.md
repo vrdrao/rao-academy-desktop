@@ -331,6 +331,13 @@ tried.
 
 ## 16. A whyWrong exists only where the wrong answer is a known option. RULED 2026-07-23.
 
+> **DORMANT as of 2026-07-24, not repealed** (BRIEF-WHYWRONG-OFF-1): the
+> whyWrong feature is suppressed product-wide — no child sees any whyWrong
+> message in any mode (`WHYWRONG_VISIBLE = false` in `engine/rao-card.js`).
+> Authored content stays in the lesson files, and the analytics stream still
+> fires. This rule governs the content if the feature is ever re-enabled,
+> which requires a new dated ruling.
+
 **Where a whyWrong is required:** question types with a fixed, authored set of
 wrong answers — **single-select and multi-select.** The author knows in advance
 exactly what a child can pick, so the message can name what that child actually
@@ -361,6 +368,11 @@ teach into. An open text box is not.
 ---
 
 ## 17. How a whyWrong is written. RULED 2026-07-23.
+
+> **DORMANT as of 2026-07-24, not repealed** (BRIEF-WHYWRONG-OFF-1): the
+> whyWrong feature is suppressed product-wide; no child sees these messages.
+> This rule governs the content if the feature is ever re-enabled, which
+> requires a new dated ruling.
 
 **Name what the child did, plainly.** Not what to check, not what to reconsider.
 

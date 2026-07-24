@@ -10,9 +10,10 @@
                RULED BY VENKAT 2026-07-23: the typed value IS CLEARED. This
                REVERSES the old "typed value is NEVER cleared" law; the sister
                inversion lives in verify-reset.js (A5 + the keepValues drill).
-     G2 (#111) stale whyWrong feedback is DISMISSED on any new selection — the
-               .cc-msg-why panel + "Not quite" chip HIDE (never node-removal),
-               and prior-attempt ✕/tint clear. RULED BY VENKAT 2026-07-22.
+     G2 (#111) AMENDED by BRIEF-WHYWRONG-OFF-1 (2026-07-24): whyWrong is OFF —
+               the .cc-msg-why panel NEVER APPEARS (stronger than the old
+               "appears, then hides"); the hint fallback types instead, and
+               prior-attempt ✕/tint still clear on a new selection.
      G3 (#84)  a comma-grouped numeric answer grades CORRECT ("42,613" == 42613);
                a MISPLACED comma is NOT accepted (sabotage).
      G4 (#85)  the fill-blank box is WIDE ENOUGH for the full key digit count —
@@ -32,8 +33,9 @@
          Sabotage: "4-9=5" stays graded wrong AND painted wrong.
      G11 multi-select shows what the child picked (rule 12). A correct pick stays
          visually distinct from an option never chosen; a wrong pick keeps its ✕.
-     G12 "Try again" is a fresh start (rule 2). whyWrong panel + "Not quite" chip
-         HIDDEN; typed/selection/tint cleared; nodes still present; hint SURVIVES.
+     G12 "Try again" is a fresh start (rule 2). AMENDED by BRIEF-WHYWRONG-OFF-1
+         (2026-07-24): no whyWrong ever appears; typed/selection/tint cleared;
+         the hint bubbles SURVIVE.
      G13 the explain line is gone (rule 13). No state renders it — including the
          rule-6 case (first wrong, no whyWrong): red mark, and NO answer reveal.
      G14 ordering marks the misplaced tiles (rule 14). The two out-of-place tiles
@@ -370,51 +372,55 @@ async function g1(browser) {
   finally { await page.close(); }
 }
 
-/* ══════ G2 — stale whyWrong dismissed on any new selection (#111) ══════ */
+/* ══════ G2 — no whyWrong ever; marks still clear on a new selection ══════
+   AMENDED 2026-07-24 (BRIEF-WHYWRONG-OFF-1, ruled by Venkat): whyWrong is
+   SWITCHED OFF product-wide. The old G2 (#111) asserted the panel APPEARS,
+   then HIDES on a new selection. The amended G2 asserts the strictly stronger
+   claim: the .cc-msg-why panel NEVER APPEARS AT ALL — the hint fallback types
+   instead — while the #111 mark-clearing on a new selection still holds.
+   Do not restore the old "appears then hides" form without a new dated ruling. */
 async function g2(browser) {
-  console.log(`\n${C.b}── G2 (#111): a new selection HIDES the stale whyWrong panel (node stays) ──${C.x}`);
+  console.log(`\n${C.b}── G2 (WHYWRONG-OFF): no whyWrong panel ever; ✕/tint still clear on a new selection ──${C.x}`);
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
   const errs = []; page.on("pageerror", (e) => errs.push(String(e)));
   try {
     await page.setContent(makePage(FX_WHYWRONG), { waitUntil: "load" });
     await page.waitForSelector(".pv-frame .opt", { timeout: 8000 });
-    // Wrong pick 45 -> Check -> the "Not quite" whyWrong panel types in.
+    // Wrong pick 45 (the authored-whyWrong option) -> Check -> the HINT types.
     await clickOption(page, "45");
     await clickCheck(page);
-    // Wait for the whyWrong bubble to exist and finish typing.
-    await page.waitForSelector(".cc-msg-why", { timeout: 8000 });
     if (!(await waitForRetry(page, 9000))) { fail("G2 — reach Try again", "no Try again after a wrong pick"); return; }
-    // Confirm it really is on screen BEFORE the new selection.
     const before = await page.evaluate(() => {
-      const el = document.querySelector(".cc-msg-why");
-      const r = el.getBoundingClientRect();
-      return { present: !!el, visible: r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== "hidden" && getComputedStyle(el).display !== "none" };
+      const vis = (n) => { if (!n) return false; const r = n.getBoundingClientRect(); const cs = getComputedStyle(n); return r.width > 0 && r.height > 0 && cs.visibility !== "hidden" && cs.display !== "none"; };
+      const hint = [...document.querySelectorAll(".cc-msg")].find((m) => !m.classList.contains("cc-msg-why"));
+      return {
+        whyNodes: document.querySelectorAll(".cc-msg-why").length,
+        hintChip: hint ? ((hint.querySelector(".cc-schip") || {}).textContent || "") : null,
+        hintVisible: vis(hint),
+      };
     });
-    if (!before.visible) { fail("G2 — precondition: panel visible after wrong", JSON.stringify(before)); return; }
+    if (before.whyNodes === 0) pass("G2 — no .cc-msg-why after the wrong pick (whyWrong is OFF)", "0 nodes");
+    else fail("G2 — no .cc-msg-why after the wrong pick", `${before.whyNodes} node(s) — a child can see a whyWrong message (BRIEF-WHYWRONG-OFF-1)`);
+    if (before.hintChip === "Hint 1" && before.hintVisible) pass("G2 — hint fallback typed instead", `"${before.hintChip}"`);
+    else fail("G2 — hint fallback typed instead", `expected a visible "Hint 1" bubble, got chip=${JSON.stringify(before.hintChip)} visible=${before.hintVisible}`);
     // Try again (unfreezes), then tap a DIFFERENT option (the correct 54).
     await clickRetry(page);
     await clickOption(page, "54");
     const after = await page.evaluate(() => {
-      const el = document.querySelector(".cc-msg-why");
-      const chip = el ? el.querySelector(".cc-schip") : null;
       const vis = (n) => { if (!n) return false; const r = n.getBoundingClientRect(); const cs = getComputedStyle(n); return r.width > 0 && r.height > 0 && cs.visibility !== "hidden" && cs.display !== "none"; };
+      const hint = [...document.querySelectorAll(".cc-msg")].find((m) => !m.classList.contains("cc-msg-why"));
       return {
-        panelPresent: !!el,
-        panelVisible: vis(el),
-        chipPresent: !!chip,
-        chipVisible: vis(chip),
+        whyNodes: document.querySelectorAll(".cc-msg-why").length,
+        hintVisible: vis(hint),
         priorMarks: document.querySelectorAll(".pv-frame .cc-x, .pv-frame .cc-tried").length
       };
     });
-    // The bug: the panel is still visible. Fix: hidden, but node still present.
-    if (!after.panelVisible) pass("G2 — whyWrong panel HIDDEN after new selection", "not visible");
-    else fail("G2 — whyWrong panel HIDDEN after new selection", "panel still visible — stale 'Not quite' survives the retry. #111.");
-    if (!after.chipVisible) pass("G2 — 'Not quite' chip hidden", "not visible");
-    else fail("G2 — 'Not quite' chip hidden", "chip still visible. #111.");
+    if (after.whyNodes === 0) pass("G2 — still no .cc-msg-why after the new selection", "0 nodes");
+    else fail("G2 — still no .cc-msg-why after the new selection", `${after.whyNodes} node(s) appeared (BRIEF-WHYWRONG-OFF-1)`);
     if (after.priorMarks === 0) pass("G2 — prior-attempt ✕/tint cleared", "0 marks");
     else fail("G2 — prior-attempt ✕/tint cleared", `${after.priorMarks} stale mark(s)`);
-    if (after.panelPresent && after.chipPresent) pass("G2 — HIDE not remove: nodes still in the DOM", "panel + chip present");
-    else fail("G2 — HIDE not remove: nodes still in the DOM", JSON.stringify(after) + " — a fix that removes the node violates the no-repaint law.");
+    if (after.hintVisible) pass("G2 — the hint SURVIVES the retry (help accumulates, law 4)", "hint bubble still visible");
+    else fail("G2 — the hint survives the retry", "the hint vanished — earned help must not be withdrawn (law 4)");
     if (errs.length) fail("G2 — zero page errors", errs.join(" | "));
   } catch (e) { fail("G2 — drive", e.message); }
   finally { await page.close(); }
@@ -594,9 +600,17 @@ async function g11(browser) {
   finally { await page.close(); }
 }
 
-/* ══ G12 — Try again is a fresh start; the hint survives (rule 2) ══ */
+/* ══ G12 — Try again is a fresh start; the hint survives (rule 2) ══
+   AMENDED 2026-07-24 (BRIEF-WHYWRONG-OFF-1, ruled by Venkat): whyWrong is
+   SWITCHED OFF product-wide. The old G12 asserted the whyWrong panel appears
+   on the wrong pick and is HIDDEN after Try again. Amended to the strictly
+   stronger claim: NO .cc-msg-why ever appears in any state. The hint-survival
+   assertions (rule 2) are UNCHANGED — the wrong pick now auto-types the next
+   forward rung ("Hint 2" here, after the pre-attempt "Hint 1"), and both
+   survive the fresh start. Do not restore "appears then hides" without a new
+   dated ruling. */
 async function g12(browser) {
-  console.log(`\n${C.b}── G12: "Try again" clears the wrong-answer feedback but KEEPS the hint (rule 2) ──${C.x}`);
+  console.log(`\n${C.b}── G12: "Try again" clears the wrong-answer feedback but KEEPS the hint (rule 2; whyWrong OFF) ──${C.x}`);
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
   const errs = []; page.on("pageerror", (e) => errs.push(String(e)));
   try {
@@ -604,37 +618,34 @@ async function g12(browser) {
     await page.waitForSelector(".pv-frame .opt", { timeout: 8000 });
     await clickHint(page);                              // open a hint BEFORE answering
     await page.waitForSelector(".cc-msg", { timeout: 8000 });
-    await clickOption(page, "45");                      // wrong pick
+    await page.waitForTimeout(800);                     // let the bubble FINISH typing (fill is 650ms)
+    await clickOption(page, "45");                      // wrong pick (authored whyWrong)
     await clickCheck(page);
-    await page.waitForSelector(".cc-msg-why", { timeout: 8000 });
     if (!(await waitForRetry(page, 9000))) { fail("G12 — reach Try again", "no Try again after a wrong pick"); return; }
+    const atWrong = await page.evaluate(() => document.querySelectorAll(".cc-msg-why").length);
+    if (atWrong === 0) pass("G12 — no .cc-msg-why on the wrong pick (whyWrong is OFF)", "0 nodes");
+    else fail("G12 — no .cc-msg-why on the wrong pick", `${atWrong} node(s) — a child can see a whyWrong message (BRIEF-WHYWRONG-OFF-1)`);
     await clickRetry(page);
     const st = await page.evaluate((visSrc) => {
       const vis = eval("(" + visSrc + ")");
-      const why = document.querySelector(".cc-msg-why");
-      const chip = why ? why.querySelector(".cc-schip") : null;
-      const hint = [...document.querySelectorAll(".cc-msg")].find((m) => !m.classList.contains("cc-msg-why"));
+      const hints = [...document.querySelectorAll(".cc-msg")].filter((m) => !m.classList.contains("cc-msg-why"));
       const q = document.querySelector(".pv-frame .qbody");
       return {
-        whyHidden: !vis(why), whyPresent: !!why,
-        chipHidden: !vis(chip), chipPresent: !!chip,
-        hintVisible: vis(hint), hintPresent: !!hint,
+        whyNodes: document.querySelectorAll(".cc-msg-why").length,
+        hintCount: hints.length,
+        hintsVisible: hints.length > 0 && hints.every(vis),
         selCleared: q.querySelectorAll(".is-sel").length === 0,
         marksCleared: q.querySelectorAll(".cc-x, .cc-tried, .incorrect").length === 0,
       };
     }, VIS_FN);
-    if (st.whyHidden) pass("G12 — whyWrong panel HIDDEN after Try again", "not visible");
-    else fail("G12 — whyWrong panel HIDDEN after Try again", "stale 'Not quite' explanation survives the fresh start (rule 2)");
-    if (st.chipHidden) pass("G12 — 'Not quite' chip hidden after Try again", "not visible");
-    else fail("G12 — 'Not quite' chip hidden after Try again", "chip still visible (rule 2)");
+    if (st.whyNodes === 0) pass("G12 — still no .cc-msg-why after Try again", "0 nodes");
+    else fail("G12 — still no .cc-msg-why after Try again", `${st.whyNodes} node(s) (BRIEF-WHYWRONG-OFF-1)`);
     if (st.selCleared) pass("G12 — selection cleared", "0 selected");
     else fail("G12 — selection cleared", "a selection survived Try again");
     if (st.marksCleared) pass("G12 — red tint / ✕ marks cleared", "0 marks");
     else fail("G12 — red tint / ✕ marks cleared", "prior-attempt marks survived Try again");
-    if (st.whyPresent && st.chipPresent && st.hintPresent) pass("G12 — HIDE not remove: nodes still in the DOM", "why + chip + hint present");
-    else fail("G12 — HIDE not remove: nodes still in the DOM", `present why=${st.whyPresent} chip=${st.chipPresent} hint=${st.hintPresent} — no-repaint law forbids node removal`);
-    if (st.hintVisible) pass("G12 — the HINT survives Try again (rule 2: help the child earned stays)", "hint bubble still visible");
-    else fail("G12 — the HINT survives Try again", "the hint vanished — a fresh start must not withdraw earned help (rule 2)");
+    if (st.hintCount >= 2 && st.hintsVisible) pass("G12 — the HINTS survive Try again (rule 2: help the child earned stays)", `${st.hintCount} hint bubble(s) visible`);
+    else fail("G12 — the HINTS survive Try again", `expected the pre-attempt hint + the auto-typed rung both visible, got count=${st.hintCount} allVisible=${st.hintsVisible} (rule 2)`);
     if (errs.length) fail("G12 — zero page errors", errs.join(" | "));
   } catch (e) { fail("G12 — drive", e.message); }
   finally { await page.close(); }

@@ -6731,6 +6731,9 @@ if (typeof window !== "undefined") {
    The app can load this file and call card()/wireCard() itself, or keep its
    own mount. The trailing IIFE mounts every question in #source into #preview.
    ========================================================================== */
+var WHYWRONG_VISIBLE = false; // RULED OFF by Venkat 2026-07-24 (BRIEF-WHYWRONG-OFF-1).
+                              // Authored content retained in lessons; analytics event still fires.
+                              // Do not re-enable without a new dated ruling.
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; });
 }
@@ -7219,7 +7222,12 @@ function wireCard(frame) {
     //    the commit happens instead of the action row. No green at open
     //    (ruling 6) — the reveal stays at the walkthrough's final step.
     var capped = wrongCount >= 2;
-    var msg = entry && entry.message ? String(entry.message) : null;
+    // BRIEF-WHYWRONG-OFF-1 (2026-07-24): whyWrong is RULED OFF product-wide.
+    // msg stays null, so the bubble branch below never runs and the flow falls
+    // through to the proven no-whyWrong path (capped → commitCap, else
+    // giveHint, else "Try again") — the path 1,365 questions already take.
+    // The rao:whywrong dispatch + __raoWhyWrongLog above are NOT gated.
+    var msg = WHYWRONG_VISIBLE && entry && entry.message ? String(entry.message) : null;
     if (msg && !shownWhys[msg]) {
       shownWhys[msg] = true;
       typing = true;
@@ -7332,7 +7340,8 @@ function wireCard(frame) {
         qbody.dispatchEvent(new CustomEvent("rao:whywrong", { bubbles: true, detail: { code: entry.code } }));
       } catch (e) { /* logging must never break the card */ }
     }
-    if (mode === "adaptive") showWhyPanel(frame, entry);
+    // BRIEF-WHYWRONG-OFF-1 (2026-07-24): degraded-path panel gated the same way.
+    if (WHYWRONG_VISIBLE && mode === "adaptive") showWhyPanel(frame, entry);
   });
 }
 

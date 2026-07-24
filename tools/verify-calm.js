@@ -643,7 +643,10 @@ async function fixtureLaws(browser) {
     chatObserver.observe(document.getElementById("fx"), { childList: true, subtree: true });
   });
 
-  // ── hint 1 (pre-attempt), hint 2 = whyWrong after wrong, hint 3+4 forward ──
+  // ── hint 1 (pre-attempt); the wrong AUTO-TYPES hint 2; hint 3 exhausts ──
+  // AMENDED 2026-07-24 (BRIEF-WHYWRONG-OFF-1, ruled by Venkat): whyWrong is OFF
+  // product-wide, so the wrong attempt types the next FORWARD RUNG instead of a
+  // "Not quite" bubble — one manual rung then exhausts the 3-rung ladder.
   await page.click("#fx .pv-hint");
   await page.waitForTimeout(FILL_WAIT);
   const d1 = await page.evaluate(() => document.querySelectorAll("#fx .cc-msg").length);
@@ -699,10 +702,14 @@ async function fixtureLaws(browser) {
   if (hDiffs.length) fail("c. TASK-IMMUTABILITY (hint state)", `changed paint: ${hDiffs.join(", ")}`);
   else pass("c. TASK-IMMUTABILITY (hint state)", "identical again");
 
-  // exhaust hints → walkthrough offered
-  const r2 = await clickRow(/Give one more hint/);
-  if (r2 !== true) fail("fixture drive", `expected a "Give one more hint" row button; row = ${JSON.stringify(r2)}`);
-  await page.waitForTimeout(FILL_WAIT);
+  // hints are now EXHAUSTED (rung 2 auto-typed on the wrong, rung 3 above) —
+  // the walkthrough is already offered; no further hint button may exist.
+  // (AMENDED by BRIEF-WHYWRONG-OFF-1 — the old drive needed a second manual
+  // rung here because the wrong used to type a whyWrong instead of a rung.)
+  const noMoreHint = await page.evaluate(() =>
+    ![...document.querySelectorAll("#fx .cc-actions button")].some((b) => /Give one more hint/.test(b.textContent || "")));
+  if (noMoreHint) pass("ladder exhausted after the auto-rung + one manual rung (WHYWRONG-OFF)");
+  else fail("ladder exhaustion (BRIEF-WHYWRONG-OFF-1)", 'a "Give one more hint" button survived a fully-delivered ladder');
 
   // Change 3 (Item 63) clears the accumulated hint/whyWrong bubbles when the
   // solution opens — so capture the hint chips HERE, while they still exist, for
@@ -781,7 +788,9 @@ async function fixtureLaws(browser) {
     count: window.__bubbleLog.length,
   }));
   const offTiming = bubbleStats.fills.filter((ms) => ms < 600 || ms > 700);
-  if (bubbleStats.count >= 7 && offTiming.length === 0)
+  // count floor 7 → 6 (BRIEF-WHYWRONG-OFF-1): the whyWrong bubble no longer
+  // exists — 3 hint bubbles + 3 walkthrough steps is the full stream.
+  if (bubbleStats.count >= 6 && offTiming.length === 0)
     pass("e. BUBBLE PARITY (live timing)", `${bubbleStats.fills.length} bubbles filled dots→content in [${Math.min(...bubbleStats.fills)}–${Math.max(...bubbleStats.fills)}]ms (650±50 required)`);
   else fail("e. BUBBLE PARITY (live timing)", `fills=${JSON.stringify(bubbleStats.fills)} offTiming=${JSON.stringify(offTiming)} count=${bubbleStats.count}`);
   if (bubbleStats.mutationsToEarlier === 0)
@@ -791,11 +800,11 @@ async function fixtureLaws(browser) {
   // ── f: HINT-LABEL BAN ──  RE-POINTED for Change 3 (Item 63): the hint bubbles
   // are CLEARED when the solution opens, so the ban is checked on the chips
   // captured BEFORE the open (preOpenHintChips). Same ban, correct sampling
-  // moment — no weakening. The stream now includes the whyWrong "Not quite" chip;
-  // none of them may say "of N".
+  // moment — no weakening. Chip floor 4 → 3 (BRIEF-WHYWRONG-OFF-1): the
+  // "Not quite" chip no longer exists; the stream is the 3 hint chips.
   const chips = preOpenHintChips;
   const banned = chips.filter((t) => /of\s+\d/.test(t));
-  if (chips.length >= 4 && banned.length === 0)
+  if (chips.length >= 3 && banned.length === 0)
     pass("f. HINT-LABEL BAN", `${chips.length} hint chips (pre-open: ${chips.join(", ")}) — none match /of\\s+\\d/`);
   else fail("f. HINT-LABEL BAN", banned.length ? `banned labels: ${banned.join(", ")}` : `only ${chips.length} chips rendered`);
 

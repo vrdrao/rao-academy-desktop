@@ -220,24 +220,29 @@ ${source}
   // FX indices: injected 4 are frames 0..3; real _type-coverage frames follow.
   const FX1 = 0, FX2 = 1, FX3 = 2, FX4 = 3;
 
-  // ════════ ASSERTION 2 — whyWrong identity ════════
+  // ════════ ASSERTION 2 — no whyWrong; the hint fallback speaks ════════
+  // AMENDED 2026-07-24 (BRIEF-WHYWRONG-OFF-1, ruled by Venkat): whyWrong is
+  // SWITCHED OFF product-wide — the old assertion ("Not quite" chip appears,
+  // numbering not consumed) is replaced by the stronger claim: NO "Not quite"
+  // chip / .cc-msg-why ever exists; the wrong types "Hint 1" (the forward
+  // rung), which DOES consume a hint number. Do not restore the old assertions
+  // without a new dated ruling.
   await tapOpt(FX1, "6"); await tapCheck(FX1);
   await page.waitForTimeout(FILL_WAIT);
   let s = await stateOf(FX1);
-  if (s.chips[0] === "Not quite") pass("2. whyWrong bubble chip reads 'Not quite'", `chip "${s.chips[0]}"`);
-  else fail("2. whyWrong chip 'Not quite'", `chips=${JSON.stringify(s.chips)}`);
-  // then request one hint — the NEW bubble (chips[1]) must read Hint 1 (numbering not consumed)
+  if (s.chips[0] === "Hint 1" && !s.chips.includes("Not quite")) pass("2. wrong types 'Hint 1' — no 'Not quite' chip (WHYWRONG-OFF)", `chips ${JSON.stringify(s.chips)}`);
+  else fail("2. wrong-attempt hint fallback (BRIEF-WHYWRONG-OFF-1)", `chips=${JSON.stringify(s.chips)}`);
+  // then request one hint — the NEW bubble must read Hint 2 (numbering continues)
   await tapRowBtn(FX1, /hint/i);
   await page.waitForTimeout(FILL_WAIT);
   s = await stateOf(FX1);
-  if (s.chips[1] === "Hint 1") pass("2. hint after whyWrong reads 'Hint 1' (numbering not consumed)", `chips ${JSON.stringify(s.chips)}`);
-  else fail("2. hint numbering not consumed", `chips=${JSON.stringify(s.chips)} — expected chips[1]='Hint 1'`);
+  if (s.chips[1] === "Hint 2") pass("2. next hint reads 'Hint 2' (numbering consecutive)", `chips ${JSON.stringify(s.chips)}`);
+  else fail("2. hint numbering consecutive", `chips=${JSON.stringify(s.chips)} — expected chips[1]='Hint 2'`);
 
   // ════════ ASSERTION 1 — label + ASSERTION 3 — bubbles clear ════════
-  // use the LAST rung so the walkthrough is offered, then check the label
-  await tapRowBtn(FX1, /hint/i);
-  await page.waitForTimeout(FILL_WAIT);
-  s = await stateOf(FX1);
+  // FX1's 2-rung ladder is now exhausted (auto rung + manual rung), so the
+  // walkthrough is already offered — no further hint tap needed (AMENDED by
+  // BRIEF-WHYWRONG-OFF-1; the old drive spent a third tap here).
   const beforeBubbles = s.bubbles, beforeQid = s.qbodyId;
   if (s.rowBtns.some((t) => /Show me the solution/.test(t))) pass("1. offered button reads 'Show me the solution'", s.rowBtns.join(" / "));
   else fail("1. label 'Show me the solution'", `rowBtns=${JSON.stringify(s.rowBtns)}`);

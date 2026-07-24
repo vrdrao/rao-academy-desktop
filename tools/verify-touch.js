@@ -11,8 +11,9 @@
  *      accumulates one bubble per tap; options stay live while hinting.
  *   2. Wrong is a whisper, AND THE WHISPER DOES NOT LINGER (LAW 3 as amended
  *      by BRIEF FR-1, 2026-07-19) — a wrong attempt leaves NO mark: no ✕, no
- *      cc-tried, is-sel comes off, NO pill, NO red flood; the whyWrong message
- *      types as the next "Hint n" bubble and its code is logged. After
+ *      cc-tried, is-sel comes off, NO pill, NO red flood; the NEXT FORWARD
+ *      HINT RUNG types (whyWrong is OFF product-wide — BRIEF-WHYWRONG-OFF-1,
+ *      2026-07-24; its code is still logged, analytics-only). After
  *      "Try again" the task is back to its first-attempt state (✕ ABSENT —
  *      inverted from the superseded "✕ persists" assertion, per FR-1
  *      Amendment 1 ruling 2; full state-restore proof is tools/verify-reset.js).
@@ -208,7 +209,13 @@ ${source}
     window.RaoPreview.check = function () { window.__checkCalls++; return orig.apply(this, arguments); };
   });
 
-  // ── 2. wrong answer → whisper + whyWrong bubble + code log ──
+  // ── 2. wrong answer → whisper + hint fallback + code log ──
+  // AMENDED 2026-07-24 (BRIEF-WHYWRONG-OFF-1, ruled by Venkat): whyWrong is
+  // SWITCHED OFF product-wide — no .cc-msg-why / "Not quite" bubble may EVER
+  // appear. The wrong attempt now auto-types the NEXT FORWARD RUNG ("Hint 2"
+  // here, after the pre-attempt "Hint 1") — the same path every no-whyWrong
+  // question takes. The rao:whywrong code log is analytics-only and MUST still
+  // fire. Do not restore the "Not quite" assertions without a new dated ruling.
   const idx130 = await page.evaluate((sel) =>
     Array.from(document.querySelectorAll(sel)).findIndex((o) => (o.dataset.val || "").trim() === "130,000"), S(".opt"));
   await tap(S(".opt"), idx130);
@@ -227,7 +234,7 @@ ${source}
       isWrongGone: !tried.classList.contains("is-wrong"),
       chips: [...f.querySelectorAll(".cc-schip")].map((c) => c.textContent),
       lastBubble: [...f.querySelectorAll(".cc-btxt")].pop()?.textContent || "",
-      whyClass: !!([...f.querySelectorAll(".cc-msg")].pop()?.classList.contains("cc-msg-why")),
+      whyNodes: f.querySelectorAll(".cc-msg-why").length,
       log: (window.__raoWhyWrongLog || []).map((e) => e.code),
       rowBtns: [...f.querySelectorAll(".cc-actions button")].map((b) => b.textContent),
       inert: f.querySelector(".qbody").inert,
@@ -243,15 +250,14 @@ ${source}
   else fail("wrong-mark presence (LAW 3 as amended by FR-2)", JSON.stringify(afterWrong));
   if (afterWrong.triedStyleEqualsRest) pass("tried option computed style == resting sibling", "border/bg/color/opacity identical");
   else fail("tried option styling", "differs from a resting option");
-  // RE-POINTED by BRIEF-G3-ENGINE-1 Change 2 (Item 66; REVERSES the "whyWrong IS
-  // the next hint rung" law): whyWrong is its OWN stream — chip "Not quite", never
-  // "Hint n", and warning-tinted (.cc-msg-why). THREE conditions where the
-  // repealed law asserted one (chip === "Hint 2").
-  if (afterWrong.chips[1] === "Not quite" && /far larger/.test(afterWrong.lastBubble) && afterWrong.whyClass)
-    pass("whyWrong is its OWN stream — 'Not quite', warning tint, NOT a hint number", `chip "Not quite", .cc-msg-why, "${afterWrong.lastBubble.slice(0, 40)}…"`);
-  else fail("whyWrong stream (Change 2)", JSON.stringify({ chips: afterWrong.chips, whyClass: afterWrong.whyClass, last: afterWrong.lastBubble.slice(0, 60) }));
-  if (afterWrong.log.includes("ESTIMATE_WRONG_VALUE")) pass("whyWrong code logged", JSON.stringify(afterWrong.log));
-  else fail("whyWrong code log", JSON.stringify(afterWrong.log));
+  // AMENDED (BRIEF-WHYWRONG-OFF-1): the wrong types the NEXT FORWARD RUNG
+  // ("Hint 2" — pre-attempt Hint 1 consumed rung 1), and NO whyWrong bubble
+  // exists anywhere. Three conditions: chip, rung text, zero .cc-msg-why.
+  if (afterWrong.chips[1] === "Hint 2" && /digit just to the right/.test(afterWrong.lastBubble) && afterWrong.whyNodes === 0)
+    pass("wrong types the next forward rung — no whyWrong bubble (WHYWRONG-OFF)", `chip "Hint 2", 0 cc-msg-why, "${afterWrong.lastBubble.slice(0, 40)}…"`);
+  else fail("wrong-attempt hint fallback (BRIEF-WHYWRONG-OFF-1)", JSON.stringify({ chips: afterWrong.chips, whyNodes: afterWrong.whyNodes, last: afterWrong.lastBubble.slice(0, 60) }));
+  if (afterWrong.log.includes("ESTIMATE_WRONG_VALUE")) pass("whyWrong code still logged (analytics-only stream preserved)", JSON.stringify(afterWrong.log));
+  else fail("whyWrong code log (must keep firing — BRIEF-WHYWRONG-OFF-1)", JSON.stringify(afterWrong.log));
   if (afterWrong.rowBtns.join("|") === "Give one more hint|Try again")
     pass("action row after wrong", afterWrong.rowBtns.join(" / "));
   else fail("action row after wrong", JSON.stringify(afterWrong.rowBtns));
@@ -261,9 +267,10 @@ ${source}
 
   await auditTargets("feedback row");
 
-  // ── ladder: two more rungs exhaust the hints; walkthrough is then offered ──
-  await tapButton(S(".cc-actions button"), /Give one more hint/);
-  await page.waitForTimeout(FILL_WAIT);
+  // ── ladder: ONE more rung exhausts the hints; walkthrough is then offered ──
+  // AMENDED (BRIEF-WHYWRONG-OFF-1): the wrong attempt consumed rung 2, so a
+  // single "Give one more hint" delivers rung 3 and exhausts the ladder. The
+  // stream is pure hints — no "Not quite" bubble anywhere.
   await tapButton(S(".cc-actions button"), /Give one more hint/);
   await page.waitForTimeout(FILL_WAIT);
   const ladder = await page.evaluate(() => {
@@ -271,16 +278,13 @@ ${source}
     return {
       chips: [...f.querySelectorAll(".cc-schip")].map((c) => c.textContent),
       bubbles: f.querySelectorAll(".cc-msg").length,
+      whyNodes: f.querySelectorAll(".cc-msg-why").length,
       rowBtns: [...f.querySelectorAll(".cc-actions button")].map((b) => b.textContent),
     };
   });
-  // RE-POINTED (Change 2): the stream now interleaves the whyWrong "Not quite"
-  // bubble, but the HINT numbers stay consecutive (1,2,3) — proof the whyWrong did
-  // NOT consume a hint number. Two conditions where the repealed law had one.
-  const hintChips = ladder.chips.filter((c) => /^Hint \d+$/.test(c));
-  if (ladder.bubbles === 4 && ladder.chips.join("|") === "Hint 1|Not quite|Hint 2|Hint 3" && hintChips.join("|") === "Hint 1|Hint 2|Hint 3")
-    pass("hint ladder accumulates — whyWrong interleaved, hint numbering NOT consumed", ladder.chips.join(", "));
-  else fail("ladder accumulation (Change 2)", JSON.stringify(ladder));
+  if (ladder.bubbles === 3 && ladder.chips.join("|") === "Hint 1|Hint 2|Hint 3" && ladder.whyNodes === 0)
+    pass("hint ladder accumulates — consecutive numbering, zero whyWrong bubbles (WHYWRONG-OFF)", ladder.chips.join(", "));
+  else fail("ladder accumulation (BRIEF-WHYWRONG-OFF-1)", JSON.stringify(ladder));
   // RE-POINTED (Change 1): the button is now "Show me the solution". STRICTER —
   // also assert the OLD label appears NOWHERE in rao-card.js (a second condition).
   const cardSrc = read("engine/rao-card.js");
