@@ -1264,9 +1264,15 @@ h1{font-size:1.2rem}.sub{font-size:.8rem;color:#8a7bbd;font-weight:600}
 
 /* — feedback-state action rows: ghost = help, solid = forward — */
 .cc-actions{display:flex;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
-.cc-btn-ghost{font-family:'Baloo 2',cursive;font-weight:700;font-size:.95rem;padding:11px 18px;border:2px solid #e7ddf8;border-radius:14px;background:#fff;color:#6b5b9a;cursor:pointer}
+/* BRIEF-BTN-TRIM-1 (RULED by Venkat 2026-07-24): "Option 1 — compact solid,
+   ghost trimmed to preserve hierarchy". Both families shrink together (~25%)
+   so solid-vs-ghost contrast is unchanged; the ghost border stays 2px. The
+   44px tap floor above is PERMANENT and outranks the aesthetic — guarded by
+   computed style in tools/verify-styles.js (button trim). Old sizes recorded
+   in docs/ISSUES.md #127 — do not restore them from a stale note. */
+.cc-btn-ghost{font-family:'Baloo 2',cursive;font-weight:700;font-size:.85rem;padding:8px 14px;border:2px solid #e7ddf8;border-radius:10px;background:#fff;color:#6b5b9a;cursor:pointer}
 .cc-btn-ghost:hover{border-color:var(--brand,#7b5cff);color:var(--brand,#7b5cff)}
-.cc-btn-solid{font-family:'Baloo 2',cursive;font-weight:800;font-size:.95rem;padding:11px 24px;border:none;border-radius:14px;background:var(--brand,#7b5cff);color:#fff;cursor:pointer;margin-left:auto}
+.cc-btn-solid{font-family:'Baloo 2',cursive;font-weight:700;font-size:.85rem;padding:8px 16px;border:none;border-radius:10px;background:var(--brand,#7b5cff);color:#fff;cursor:pointer;margin-left:auto}
 
 /* — correct: the ONLY loud moment (law 7) — */
 .opt.cc-win,.opt-fig.cc-win,.hcell.cc-win{animation:cc-win .55s cubic-bezier(.3,1.4,.5,1)}

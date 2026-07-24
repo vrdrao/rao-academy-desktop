@@ -647,6 +647,99 @@ async function checkCardLook(browser) {
   return problems;
 }
 
+/* ---- BUTTON TRIM (BRIEF-BTN-TRIM-1, RULED by Venkat 2026-07-24) ----
+   "Option 1 — compact solid": .cc-btn-solid .85rem / 700 / 8px 16px / r10;
+   .cc-btn-ghost .85rem / 700 / 8px 14px / r10 / 2px border — both families
+   trimmed together so the solid-vs-ghost hierarchy is preserved. Measured on a
+   REALLY rendered feedback row (a wrong Check in calm mode drives actionRow),
+   via getComputedStyle — never the stylesheet text — at 1280px and 380px.
+   THE 44px TAP FLOOR IS PERMANENT: it must survive ANY future resize. */
+async function checkButtonTrim(browser) {
+  const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8");
+  const html =
+    `<!doctype html><html><head><meta charset="utf-8">` +
+    `<meta name="viewport" content="width=device-width">` +
+    `<style>${read("engine/rao.css")}</style>` +
+    `<style>${read("engine/rao-card.css")}</style></head><body style="margin:0;padding:0">` +
+    `<div id="source">` +
+    `<!--@q\ntype: single-select\nanswer: ["4"]\nhint:\n  - "Count on from 2."\n  - "Two and two more."\n-->` +
+    `<div class="question" data-type="single-select">` +
+    `<p class="prompt">What is 2 + 2?</p>` +
+    `<ul class="options"><li data-val="3">3</li><li data-val="4">4</li></ul>` +
+    `</div></div>` +
+    `<div id="preview" class="rao-lesson" data-theme="grape"></div>` +
+    `<script>${read("engine/preview-engine.js")}</script>` +
+    `<script>${read("engine/solution-renderer.js").replace(/<\/script>/gi, "<\\/script>")}</script>` +
+    `<script>${read("engine/rao-card.js")}</script>` +
+    `</body></html>`;
+  const tmp = path.join(ROOT, "review", "__btntrim_fixture.html");
+  if (!fs.existsSync(path.dirname(tmp))) fs.mkdirSync(path.dirname(tmp), { recursive: true });
+  fs.writeFileSync(tmp, html);
+  const problems = [];
+  try {
+    for (const vp of [{ width: 1280, height: 800 }, { width: 380, height: 844 }]) {
+      const page = await browser.newPage({ viewport: vp });
+      try {
+        await page.goto("file://" + tmp);
+        await page.waitForFunction(() => document.querySelectorAll(".pv-frame").length > 0, { timeout: 15000 }).catch(() => {});
+        // Drive a wrong Check — the ONLY thing that mints .cc-btn-* buttons
+        // (actionRow in rao-card.js). The 2-rung ladder guarantees the row
+        // carries BOTH families: ghost "Give one more hint" + solid "Try again".
+        await page.evaluate(() => {
+          document.querySelector('.opt[data-val="3"]').click();
+          document.querySelector(".pv-check").click();
+        });
+        const ok = await page.waitForFunction(() => {
+          const g = document.querySelector(".cc-btn-ghost"), s = document.querySelector(".cc-btn-solid");
+          const vis = (n) => { if (!n) return false; const r = n.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+          return vis(g) && vis(s);
+        }, { timeout: 9000 }).catch(() => null);
+        const at = `${vp.width}px`;
+        if (!ok) { problems.push(`${at}: feedback row never rendered both button families — cannot verify sizes`); continue; }
+        const m = await page.evaluate(() => {
+          const card = document.querySelector(".pv-card").getBoundingClientRect();
+          const grab = (sel) => {
+            const el = document.querySelector(sel);
+            const cs = getComputedStyle(el), r = el.getBoundingClientRect();
+            return {
+              fontSize: cs.fontSize, weight: cs.fontWeight,
+              pad: [cs.paddingTop, cs.paddingRight, cs.paddingBottom, cs.paddingLeft],
+              radius: cs.borderTopLeftRadius, borderW: cs.borderTopWidth,
+              h: r.height, left: r.left, right: r.right, top: r.top, bottom: r.bottom,
+              vis: r.width > 0 && r.height > 0 && cs.display !== "none" && cs.visibility !== "hidden",
+            };
+          };
+          return { ghost: grab(".cc-btn-ghost"), solid: grab(".cc-btn-solid"), card: { left: card.left, right: card.right }, vw: window.innerWidth };
+        });
+        for (const [name, b, padWant] of [["solid", m.solid, ["8px", "16px", "8px", "16px"]], ["ghost", m.ghost, ["8px", "14px", "8px", "14px"]]]) {
+          if (b.fontSize !== "13.6px")
+            problems.push(`${at}: .cc-btn-${name} font-size is ${b.fontSize} — must be 13.6px (.85rem, Option 1 — compact solid)`);
+          if (b.weight !== "700")
+            problems.push(`${at}: .cc-btn-${name} font-weight is ${b.weight} — must be 700`);
+          if (!b.pad.every((v, i) => v === padWant[i]))
+            problems.push(`${at}: .cc-btn-${name} padding is ${b.pad.join("/")} — must be ${padWant.join("/")}`);
+          if (b.radius !== "10px")
+            problems.push(`${at}: .cc-btn-${name} border-radius is ${b.radius} — must be 10px`);
+          // THE PERMANENT FLOOR — outranks any aesthetic; must survive every future resize.
+          if (b.h < 44)
+            problems.push(`${at}: .cc-btn-${name} rendered height is ${b.h.toFixed(1)}px — BELOW the 44px child tap-target floor`);
+          if (!b.vis)
+            problems.push(`${at}: .cc-btn-${name} is not visible`);
+          if (b.left < m.card.left - 1 || b.right > m.card.right + 1 || b.right > m.vw)
+            problems.push(`${at}: .cc-btn-${name} escapes its container (btn ${b.left.toFixed(0)}–${b.right.toFixed(0)}, card ${m.card.left.toFixed(0)}–${m.card.right.toFixed(0)}, viewport ${m.vw})`);
+        }
+        if (m.ghost.borderW !== "2px")
+          problems.push(`${at}: .cc-btn-ghost border-width is ${m.ghost.borderW} — must stay 2px (hierarchy contrast must not shrink)`);
+      } finally {
+        await page.close();
+      }
+    }
+  } finally {
+    try { fs.unlinkSync(tmp); } catch (e) {}
+  }
+  return problems;
+}
+
 /* ---- FIGURES (rao-master-19 Parts A+B) — equal-groups + sequence must PAINT ----
    The 7 defect questions (Division_facts_to_10 q1-q2, number-patterns-word-problems-
    remix q2/q7/q12/q19/q24) once requested these figure types and rendered NOTHING —
@@ -1384,6 +1477,16 @@ async function checkSeqStrip(browser) {
     console.log(`PASS  card look  (frame 3px, radius 25px, halo 9/21@.34, ledge 5@.12, white page, checker .09 @ 30px — at 1280px and 390px)`);
   }
 
+  // BRIEF-BTN-TRIM-1 — compact action buttons (Option 1), 44px floor PERMANENT.
+  const btnProblems = await checkButtonTrim(browser);
+  if (btnProblems.length) {
+    failed++;
+    console.log(`\nFAIL  button trim (1280px + 380px)`);
+    btnProblems.forEach((p) => console.log("      - " + p));
+  } else {
+    console.log(`PASS  button trim  (.cc-btn-solid/.cc-btn-ghost .85rem/700, 8px 16px|14px, r10, ghost 2px border, ≥44px floor — at 1280px and 380px)`);
+  }
+
   // Figures — equal-groups + sequence paint on real cards, 1280px and 390px (rao-master-19).
   const figureProblems = await checkFigures(browser);
   if (figureProblems.length) {
@@ -1435,7 +1538,7 @@ async function checkSeqStrip(browser) {
   }
 
   await browser.close();
-  const total = files.length + 10;   // +1 explain, +1 ms-green, +1 categorize, +1 mobile, +1 card look, +1 figures, +1 ladder, +1 render1, +1 venn, +1 seq-strip
+  const total = files.length + 11;   // +1 explain, +1 ms-green, +1 categorize, +1 mobile, +1 card look, +1 button trim, +1 figures, +1 ladder, +1 render1, +1 venn, +1 seq-strip
   console.log(failed ? `\n${failed}/${total} FAILED` : `\nselection styling is clean`);
   process.exit(failed ? 1 : 0);
 })();
