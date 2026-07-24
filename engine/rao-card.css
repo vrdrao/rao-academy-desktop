@@ -220,3 +220,19 @@
 .pv-card.cc-shake{animation:ccShake .38s ease-in-out}
 @keyframes ccShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
 @media (prefers-reduced-motion: reduce){.pv-card.cc-shake{animation:none}}
+
+/* ── BRIEF-CELEBRATE-1 (RULED by Venkat 2026-07-24): tiered celebrations.
+   The fx layer is chrome — an absolute overlay on .pv-frame (outside .qbody),
+   pointer-events none, overflow hidden (nothing can push page overflow),
+   every node self-removes. Grand adds the confetti shower; the flourish pill
+   announces streak milestones. Reduced motion kills all of it in CSS too
+   (belt and braces — the JS already skips creating the nodes). */
+.pv-frame{position:relative}
+.cc-fx{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:6;border-radius:28px}
+.cc-burst{position:absolute;left:50%;top:45%;border-radius:50%;pointer-events:none;animation:ccBurst var(--dur,1s) ease-out forwards}
+@keyframes ccBurst{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(calc(-50% + var(--sx)),calc(-50% + var(--sy))) scale(.35);opacity:0}}
+.cc-confetti{position:absolute;top:-14px;width:6px;height:10px;border-radius:2px;pointer-events:none;animation:ccFall var(--dur,1.4s) ease-in forwards}
+@keyframes ccFall{0%{transform:translateY(0) rotate(0);opacity:1}85%{opacity:1}100%{transform:translateY(var(--fy,420px)) rotate(var(--rot,540deg));opacity:0}}
+.cc-flourish{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:7;background:var(--brand,#7b5cff);color:#fff;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.05rem;padding:8px 18px;border-radius:999px;box-shadow:0 6px 16px rgba(123,92,255,.35);pointer-events:none;animation:ccFlourish 1.6s ease forwards}
+@keyframes ccFlourish{0%{opacity:0;transform:translateX(-50%) scale(.6)}15%{opacity:1;transform:translateX(-50%) scale(1.08)}25%{transform:translateX(-50%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translateX(-50%) scale(.9)}}
+@media (prefers-reduced-motion: reduce){.cc-burst,.cc-confetti,.cc-flourish{animation:none;display:none}}

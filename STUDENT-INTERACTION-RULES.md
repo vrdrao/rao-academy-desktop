@@ -500,6 +500,42 @@ visible, and land where the child is already looking.
 
 ---
 
+## 20. Celebrations are tiered, grade-keyed, and streak-aware. RULED by Venkat 2026-07-24.
+
+**(BRIEF-CELEBRATE-1.)** Levels, all defined as presets in `engine/rao-card.js`
+(`CELEBRATE_PROFILES` — the NOTQUITE_POOLS pattern: a new grade adds a key,
+never an engine change):
+
+- **subtle** — the old exact behaviour (6 small sparks), preserved as a preset
+  for later grades.
+- **pronounced** — the Grade-4 base: a bigger radial burst, no shower.
+- **grand** — burst PLUS a confetti shower. **Reserved for 5-streaks and the
+  lesson finale** — so a grade whose base is already pronounced steps up at
+  3-in-a-row to an intensified burst, not to grand.
+
+**Streaks (chat's definition, Venkat may veto):** any wrong ATTEMPT resets the
+counter to 0; every outcome "correct" adds 1 (first- or second-attempt correct
+both count); outcomes "solved-with-help" and "shown-answer" reset to 0 and do
+NOT celebrate; the counter lives per lesson page. 3 in a row → one level up
+plus the flourish line ("3 in a row!"); 5 in a row → grand plus "5 in a row!";
+milestone sounds/lines fire at exactly 3 and exactly 5.
+
+**Lesson complete → the grand finale** (full shower + the finale sound),
+regardless of streak and regardless of how the last question ended.
+
+**Sounds** are per-grade WebAudio recipes in the same profile (marimba pluck /
+climbing ladder / retro level-up / full finale), ding()'s envelope, no audio
+files. **Wrong answers are silent — no sound ever marks failure.** Sound is a
+garnish, never a dependency.
+
+**Floors (permanent):** `prefers-reduced-motion` collapses every level to the
+green paint + chip bounce (no particles, no shower); particles are chrome
+overlay only (outside `.qbody`, no-repaint law) and always self-remove — 
+nothing accumulates across a 32-question lesson. Guard:
+`tools/verify-celebrate.js`.
+
+---
+
 ## Open questions for Venkat
 
 1. ~~**"Here's the answer — you've got this!" after failing twice.** (ISSUES #89.)~~

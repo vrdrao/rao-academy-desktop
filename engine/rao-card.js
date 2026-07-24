@@ -113,6 +113,160 @@ function pickNotquite(pool) {
   notquiteLastIdx = i;
   return pool[i];
 }
+
+// ── Celebration profiles — BRIEF-CELEBRATE-1, RULED by Venkat 2026-07-24. ──
+// Grade-keyed, exactly like NOTQUITE_POOLS: base level, streak flourish copy,
+// and the four WebAudio sound recipes all live in the profile — a new grade
+// adds a key HERE, never an engine change. Only "4" ships now (no runtime
+// grade signal exists; same finding and default-to-"4" as BRIEF-NOTQUITE-1).
+// Levels: subtle (today's exact sparks, preserved as a preset for later
+// grades) < pronounced (the Grade-4 base) < grand (burst + confetti shower).
+// GRAND IS RESERVED for 5-streaks and the lesson finale, so a grade whose
+// base is already "pronounced" steps up at 3-in-a-row to an INTENSIFIED
+// burst ("pronounced-plus"), not to grand.
+// Sound recipe rows are [freqHz, startS, durS, peakGain, waveform] played
+// with ding()'s exact envelope (.001 → peak over .02s → .001 by start+dur).
+// Wrong answers are SILENT — no sound ever marks failure.
+var CELEBRATE_PROFILES = {
+  "4": {
+    base: "pronounced",
+    streak3Line: "3 in a row!",
+    streak5Line: "5 in a row!",
+    sounds: {
+      base: [                                     // "marimba pluck"
+        [523.25, 0, .35, .08, "sine"], [1046.5, 0, .18, .03, "sine"]],
+      streak3: [                                  // "climbing ladder"
+        [523.25, 0, .2, .06, "triangle"], [587.33, .08, .2, .06, "triangle"],
+        [659.25, .16, .2, .06, "triangle"], [783.99, .24, .2, .06, "triangle"]],
+      streak5: [                                  // "retro level-up"
+        [523.25, 0, .12, .045, "square"], [659.25, .09, .12, .045, "square"],
+        [783.99, .18, .12, .045, "square"], [1046.5, .27, .12, .045, "square"],
+        [1318.5, .36, .45, .05, "square"]],
+      finale: [                                   // "full finale": bass + ta-da fanfare + flourish
+        [98, 0, .25, .09, "sine"],
+        [392, 0, .22, .035, "sawtooth"], [523.25, 0, .22, .035, "sawtooth"], [659.25, 0, .22, .035, "sawtooth"],
+        [523.25, .24, .6, .035, "sawtooth"], [659.25, .24, .6, .035, "sawtooth"],
+        [783.99, .24, .6, .035, "sawtooth"], [1046.5, .24, .6, .035, "sawtooth"],
+        [1046.5, .5, .4, .045, "triangle"], [1318.5, .58, .4, .045, "triangle"],
+        [1567.98, .66, .4, .045, "triangle"], [2093, .74, .4, .045, "triangle"]]
+    }
+  }
+};
+var CELEBRATE_GRADE = "4";
+
+// One page-level module: streak state, tier decisions, fx overlay, sounds.
+// The fx are CHROME — an absolutely-positioned overlay appended to .pv-frame
+// (outside .qbody, class/style only, self-removing) so the no-repaint law
+// holds; nothing accumulates across questions. prefers-reduced-motion
+// collapses every level to green paint + chip bounce (sound still plays —
+// audio is not motion). __raoCelebrateLog is the guard seam (log-only, like
+// __raoWhyWrongLog — it never changes behaviour).
+var RaoCelebrate = (function () {
+  var streak = 0, finaleDone = false;
+  var FX = {
+    pronounced:        { burst: 20, szMin: 9,  szMax: 13, rMin: 70, rMax: 130, dur: 1000, confetti: 0 },
+    "pronounced-plus": { burst: 30, szMin: 10, szMax: 15, rMin: 80, rMax: 150, dur: 1100, confetti: 0 },
+    grand:             { burst: 30, szMin: 10, szMax: 15, rMin: 80, rMax: 150, dur: 1100, confetti: 48 }
+  };
+  var COL = ["#10b981", "#7b5cff", "#fbbf24", "#34d399", "#a78bfa", "#f472b6"];
+  function profile() { return CELEBRATE_PROFILES[CELEBRATE_GRADE] || CELEBRATE_PROFILES["4"]; }
+  function reduced() { try { return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches); } catch (e) { return false; } }
+  function log(tier, sound) { try { (window.__raoCelebrateLog = window.__raoCelebrateLog || []).push({ tier: tier, sound: sound, ts: Date.now() }); } catch (e) { /* seam only */ } }
+  function play(name) {
+    var rec = (profile().sounds || {})[name];
+    if (!rec || !rec.length) return;
+    try {
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      rec.forEach(function (n) {
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = n[4] || "sine"; o.frequency.value = n[0];
+        g.gain.setValueAtTime(.001, ctx.currentTime + n[1]);
+        g.gain.exponentialRampToValueAtTime(n[3], ctx.currentTime + n[1] + .02);
+        g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + n[1] + n[2]);
+        o.connect(g).connect(ctx.destination);
+        o.start(ctx.currentTime + n[1]); o.stop(ctx.currentTime + n[1] + n[2] + .05);
+      });
+    } catch (e) { /* sound is a garnish, never a dependency */ }
+  }
+  function fxRender(frame, levelName) {
+    if (reduced()) return;                       // paint + chip bounce only
+    var spec = FX[levelName]; if (!spec) return;
+    var ttl = Math.max(spec.dur, spec.confetti ? 1700 : 0) + 200;
+    var fx = document.createElement("div"); fx.className = "cc-fx";
+    frame.appendChild(fx);
+    setTimeout(function () { fx.remove(); }, ttl);
+    for (var i = 0; i < spec.burst; i++) {
+      var s = document.createElement("span"); s.className = "cc-burst";
+      var sz = spec.szMin + Math.random() * (spec.szMax - spec.szMin);
+      var ang = Math.random() * Math.PI * 2, r = spec.rMin + Math.random() * (spec.rMax - spec.rMin);
+      s.style.width = s.style.height = Math.round(sz) + "px";
+      s.style.setProperty("--sx", Math.round(Math.cos(ang) * r) + "px");
+      s.style.setProperty("--sy", Math.round(Math.sin(ang) * r) + "px");
+      s.style.setProperty("--dur", spec.dur + "ms");
+      s.style.background = COL[i % COL.length];
+      fx.appendChild(s);
+    }
+    var fh = Math.round(frame.getBoundingClientRect().height + 30);
+    for (var j = 0; j < spec.confetti; j++) {
+      var c = document.createElement("span"); c.className = "cc-confetti";
+      c.style.left = Math.round(Math.random() * 100) + "%";
+      c.style.setProperty("--fy", fh + "px");
+      c.style.setProperty("--rot", Math.round(360 + Math.random() * 540) + "deg");
+      c.style.setProperty("--dur", Math.round(1200 + Math.random() * 300) + "ms");
+      c.style.animationDelay = Math.round(Math.random() * 200) + "ms";
+      c.style.background = COL[j % COL.length];
+      fx.appendChild(c);
+    }
+  }
+  function flourish(frame, text) {
+    if (!text || reduced()) return;
+    var f = document.createElement("div"); f.className = "cc-flourish"; f.textContent = text;
+    frame.appendChild(f);
+    setTimeout(function () { f.remove(); }, 1700);
+  }
+  function lessonComplete() {
+    var frames = document.querySelectorAll(".pv-frame");
+    if (!frames.length) return false;
+    for (var i = 0; i < frames.length; i++) if (!frames[i].dataset.raoOutcome) return false;
+    return true;
+  }
+  function finale(frame) {
+    if (finaleDone) return;
+    finaleDone = true;
+    fxRender(frame, "grand");                    // the full shower, regardless of streak
+    log("finale", "finale"); play("finale");
+  }
+  function stepUp(base) { return base === "subtle" ? "pronounced" : "pronounced-plus"; }
+  function correct(frame, wins, subtleFn) {
+    streak++;
+    if (lessonComplete()) { finale(frame); return "finale"; }
+    var base = profile().base || "pronounced";
+    var level, sound = "base", line = null;
+    if (streak >= 5) { level = "grand"; if (streak === 5) { sound = "streak5"; line = profile().streak5Line; } }
+    else if (streak >= 3) { level = base === "grand" ? "grand" : stepUp(base); if (streak === 3) { sound = "streak3"; line = profile().streak3Line; } }
+    else level = base;
+    if (level === "subtle") { if (!reduced() && subtleFn && wins) for (var i = 0; i < wins.length; i++) subtleFn(wins[i]); }
+    else fxRender(frame, level);
+    flourish(frame, line);
+    log(level, sound); play(sound);
+    return level;
+  }
+  // Resets ride the EXISTING page-level signals (robo.js precedent): any wrong
+  // attempt zeroes the streak; help outcomes zero it silently and may still
+  // complete the lesson (the finale fires regardless of how the last question
+  // ended — ruling 3). "correct" is handled by the direct correct() call from
+  // celebrate(), never double-counted here.
+  document.addEventListener("rao:wrong", function () { streak = 0; });
+  document.addEventListener("rao:outcome", function (e) {
+    var o = e.detail && e.detail.outcome;
+    if (o === "solved-with-help" || o === "shown-answer") {
+      streak = 0;
+      var f = e.target && e.target.closest ? e.target.closest(".pv-frame") : null;
+      if (f && lessonComplete()) finale(f);
+    }
+  });
+  return { correct: correct };
+})();
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; });
 }
@@ -590,9 +744,14 @@ function wireCard(frame) {
       // the selection state has done its job; drop it so the green wins.
       wins[i].classList.remove("is-sel");
       wins[i].classList.add("cc-win");
-      sparks(wins[i]);
     }
-    ding();
+    // BRIEF-CELEBRATE-1 (RULED by Venkat 2026-07-24): the tiered, grade-keyed
+    // celebration replaces the flat sparks()+ding(). sparks() is passed as the
+    // "subtle" preset callback so that level stays byte-equivalent to today's
+    // behaviour; ding() below is kept but unused by the graded path — the
+    // profile's base recipe replaces it. Streaks, the lesson finale and the
+    // reduced-motion collapse all live in RaoCelebrate.
+    RaoCelebrate.correct(frame, Array.prototype.slice.call(wins), sparks);
     // Change 4 (Item 65, REVERSES law 7): nothing to READ by default. The
     // .cc-take panel is GONE — but cc-hastake MUST still be added where a
     // solution exists, because that class is what seals the duplicate .explain
